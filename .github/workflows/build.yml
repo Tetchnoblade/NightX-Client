@@ -1,0 +1,31 @@
+name: build
+
+on:
+  push:
+    branches: [ thank-you ]
+  pull_request:
+    branches: [ thank-you ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Java setup
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: 8
+          check-latest: true
+      - uses: burrunan/gradle-cache-action@v1
+        name: Build
+        with:
+          job-id: jdk8
+          arguments: build --no-build-cache
+          gradle-version: wrapper
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nightx
+          path: build/libs/nightx.jar
