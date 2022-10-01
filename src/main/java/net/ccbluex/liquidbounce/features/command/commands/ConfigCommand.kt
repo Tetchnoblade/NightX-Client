@@ -9,7 +9,7 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 
-class ConfigCommand : Command("config", emptyArray()) {
+class ConfigCommand : Command("config", arrayOf("c")) {
     /**
      * Execute commands with provided [args]
      */
