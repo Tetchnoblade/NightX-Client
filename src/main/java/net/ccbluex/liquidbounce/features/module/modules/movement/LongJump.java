@@ -61,24 +61,20 @@ public class LongJump extends Module {
     private final FloatValue damageTimerValue = new FloatValue("Damage-Timer", 1F, 0.05F, 10F, () -> modeValue.get().equalsIgnoreCase("damage"));
     private final BoolValue damageNoMoveValue = new BoolValue("Damage-NoMove", false, () -> modeValue.get().equalsIgnoreCase("damage"));
     private final BoolValue damageARValue = new BoolValue("Damage-AutoReset", false, () -> modeValue.get().equalsIgnoreCase("damage"));
-
+    private final MSTimer dmgTimer = new MSTimer();
+    private final PosLookInstance posLookInstance = new PosLookInstance();
     private boolean jumped;
     private boolean canBoost;
     private boolean teleported;
     private boolean canMineplexBoost;
     private int ticks = 0;
     private float currentTimer = 1F;
-
     private boolean verusDmged, hpxDamage, damaged = false;
     private int verusJumpTimes = 0;
     private int pearlState = 0;
-
     private double lastMotX, lastMotY, lastMotZ;
     private boolean flagged = false;
     private boolean hasFell = false;
-
-    private final MSTimer dmgTimer = new MSTimer();
-    private final PosLookInstance posLookInstance = new PosLookInstance();
 
     private void debug(String message) {
         if (matrixDebugValue.get())

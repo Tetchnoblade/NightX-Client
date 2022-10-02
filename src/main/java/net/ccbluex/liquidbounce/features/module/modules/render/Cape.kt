@@ -38,7 +38,8 @@ class Cape : Module() {
     fun getCapeLocation(value: String): ResourceLocation {
         if (capeCache[value.uppercase(Locale.getDefault())] == null) {
             try {
-                capeCache[value.uppercase(Locale.getDefault())] = CapeStyle.valueOf(value.uppercase(Locale.getDefault()))
+                capeCache[value.uppercase(Locale.getDefault())] =
+                    CapeStyle.valueOf(value.uppercase(Locale.getDefault()))
             } catch (e: Exception) {
                 capeCache[value.uppercase(Locale.getDefault())] = CapeStyle.NONE
             }

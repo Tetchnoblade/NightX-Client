@@ -1,10 +1,3 @@
-/*
- * LiquidBounce+ Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
- * https://github.com/WYSI-Foundation/LiquidBouncePlus/
- *
- * This code belongs to WYSI-Foundation. Please give credits when using this in your repository.
- */
 package net.ccbluex.liquidbounce.features.module.modules.render;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
@@ -40,17 +33,20 @@ public class Crosshair extends Module {
     //Color
     public ListValue colorModeValue = new ListValue("Color", new String[]{"Custom", "Rainbow", "LiquidSlowly", "Sky", "Fade", "Mixer"}, "Custom");
     public IntegerValue colorRedValue = new IntegerValue("Red", 255, 0, 255);
-    public IntegerValue colorGreenValue = new IntegerValue("Green", 0, 0, 255);
-    public IntegerValue colorBlueValue = new IntegerValue("Blue", 0, 0, 255);
+    public IntegerValue colorGreenValue = new IntegerValue("Green", 255, 0, 255);
+    public IntegerValue colorBlueValue = new IntegerValue("Blue", 255, 0, 255);
     public IntegerValue colorAlphaValue = new IntegerValue("Alpha", 255, 0, 255);
     //Size, width, hitmarker
     public FloatValue widthVal = new FloatValue("Width", 0.3F, 0.25F, 10);
-    public FloatValue sizeVal = new FloatValue("Size/Length", 8, 0.25F, 15);
-    public FloatValue gapVal = new FloatValue("Gap", 6, 0.25F, 15);
-    public BoolValue dynamicVal = new BoolValue("Dynamic", true);
+    public FloatValue sizeVal = new FloatValue("Size/Length", 4, 0.25F, 15);
+    public FloatValue gapVal = new FloatValue("Gap", 2.5F, 0.25F, 15);
+    public BoolValue dynamicVal = new BoolValue("Dynamic", false);
     public BoolValue hitMarkerVal = new BoolValue("HitMarker", false);
     public BoolValue noVanillaCH = new BoolValue("NoVanillaCrossHair", true);
 
+    public void onInitialize() {
+        setState(true);
+    }
 
     @EventTarget
     public void onRender2D(Render2DEvent event) {

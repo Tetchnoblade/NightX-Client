@@ -1,10 +1,3 @@
-/*
- * LiquidBounce+ Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
- * https://github.com/WYSI-Foundation/LiquidBouncePlus/
- *
- * This code belongs to WYSI-Foundation. Please give credits when using this in your repository.
- */
 package net.ccbluex.liquidbounce.features.module.modules.misc;
 
 import com.google.gson.JsonObject;
@@ -22,11 +15,11 @@ import net.ccbluex.liquidbounce.value.IntegerValue;
 @ModuleInfo(name = "BanStats", spacedName = "Ban Stats", description = "", category = ModuleCategory.MISC)
 public class BanStats extends Module {
 
+    // no u
+    private static final String API_PUNISHMENT = aB("68747470733a2f2f6170692e706c616e636b652e696f2f6879706978656c2f76312f70756e6973686d656e745374617473");
     public static int WATCHDOG_BAN_LAST_MIN = 0;
     public static int LAST_TOTAL_STAFF = -1;
     public static int STAFF_BAN_LAST_MIN = 0;
-    // no u
-    private static final String API_PUNISHMENT = aB("68747470733a2f2f6170692e706c616e636b652e696f2f6879706978656c2f76312f70756e6973686d656e745374617473");
     public final BoolValue alertValue = new BoolValue("Alert", true);
     public final BoolValue serverCheckValue = new BoolValue("ServerCheck", true);
     public final IntegerValue alertTimeValue = new IntegerValue("Alert-Time", 10, 1, 50, " seconds");

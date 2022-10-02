@@ -100,7 +100,8 @@ public class Speed extends Module {
             new VerusLowHop(),
             new VerusHard()
     };
-    public final BoolValue modifySprint = new BoolValue("ModifySprinting", false);    public final ListValue typeValue = new ListValue("Type", new String[]{"NCP", "AAC", "Spartan", "Spectre", "Hypixel", "Verus", "Custom", "Other"}, "Custom") {
+    public final BoolValue modifySprint = new BoolValue("ModifySprinting", false);
+    public final BoolValue NoBob = new BoolValue("NoBob", true);    public final ListValue typeValue = new ListValue("Type", new String[]{"NCP", "AAC", "Spartan", "Spectre", "Hypixel", "Verus", "Custom", "Other"}, "Custom") {
 
         @Override
         protected void onChange(final String oldValue, final String newValue) {
@@ -114,7 +115,21 @@ public class Speed extends Module {
                 onEnable();
         }
     };
-    public final BoolValue NoBob = new BoolValue("NoBob", true);    public final ListValue ncpModeValue = new ListValue("NCP-Mode", new String[]{"BHop", "FHop", "SBHop", "Hop", "YPort"}, "BHop", () -> typeValue.get().equalsIgnoreCase("ncp")) {
+    public final ListValue tagDisplay = new ListValue("Tag", new String[]{"Type", "FullName", "All"}, "Type");
+
+    @EventTarget
+    public void onUpdate(final UpdateEvent event) {
+        if (mc.thePlayer.isSneaking())
+            return;
+
+        if (MovementUtils.isMoving() && modifySprint.get())
+            mc.thePlayer.setSprinting(!getModeName().equalsIgnoreCase("verushard"));
+
+        final SpeedMode speedMode = getMode();
+
+        if (speedMode != null)
+            speedMode.onUpdate();
+    }    public final ListValue ncpModeValue = new ListValue("NCP-Mode", new String[]{"BHop", "FHop", "SBHop", "Hop", "YPort"}, "BHop", () -> typeValue.get().equalsIgnoreCase("ncp")) {
 
         @Override
         protected void onChange(final String oldValue, final String newValue) {
@@ -128,7 +143,33 @@ public class Speed extends Module {
                 onEnable();
         }
     };
-    public final ListValue tagDisplay = new ListValue("Tag", new String[]{"Type", "FullName", "All"}, "Type");    public final ListValue aacModeValue = new ListValue("AAC-Mode", new String[]{
+
+    @EventTarget
+    public void onMotion(final MotionEvent event) {
+        if (mc.thePlayer.isSneaking() || event.getEventState() != EventState.PRE)
+            return;
+
+        if (MovementUtils.isMoving() && modifySprint.get())
+            mc.thePlayer.setSprinting(!getModeName().equalsIgnoreCase("verushard"));
+
+        final SpeedMode speedMode = getMode();
+
+        if (speedMode != null) {
+            speedMode.onMotion(event);
+            speedMode.onMotion();
+        }
+    }
+
+    @EventTarget
+    public void onMove(MoveEvent event) {
+        if (mc.thePlayer.isSneaking())
+            return;
+
+        final SpeedMode speedMode = getMode();
+
+        if (speedMode != null)
+            speedMode.onMove(event);
+    }    public final ListValue aacModeValue = new ListValue("AAC-Mode", new String[]{
             "4Hop",
             "4SlowHop",
             "v4BHop",
@@ -167,17 +208,22 @@ public class Speed extends Module {
     };
 
     @EventTarget
-    public void onUpdate(final UpdateEvent event) {
+    public void onTick(final TickEvent event) {
         if (mc.thePlayer.isSneaking())
             return;
-
-        if (MovementUtils.isMoving() && modifySprint.get())
-            mc.thePlayer.setSprinting(!getModeName().equalsIgnoreCase("verushard"));
 
         final SpeedMode speedMode = getMode();
 
         if (speedMode != null)
-            speedMode.onUpdate();
+            speedMode.onTick();
+    }
+
+    @EventTarget
+    public void onJump(JumpEvent event) {
+        final SpeedMode speedMode = getMode();
+
+        if (speedMode != null)
+            speedMode.onJump(event);
     }    public final ListValue hypixelModeValue = new ListValue("Hypixel-Mode", new String[]{"Boost", "Stable", "Custom"}, "Custom", () -> typeValue.get().equalsIgnoreCase("hypixel")) { // the worst hypixel bypass ever existed
 
         @Override
@@ -192,91 +238,6 @@ public class Speed extends Module {
                 onEnable();
         }
     };
-
-    @EventTarget
-    public void onMotion(final MotionEvent event) {
-        if (mc.thePlayer.isSneaking() || event.getEventState() != EventState.PRE)
-            return;
-
-        if (MovementUtils.isMoving() && modifySprint.get())
-            mc.thePlayer.setSprinting(!getModeName().equalsIgnoreCase("verushard"));
-
-        final SpeedMode speedMode = getMode();
-
-        if (speedMode != null) {
-            speedMode.onMotion(event);
-            speedMode.onMotion();
-        }
-    }    public final ListValue spectreModeValue = new ListValue("Spectre-Mode", new String[]{"BHop", "LowHop", "OnGround"}, "BHop", () -> typeValue.get().equalsIgnoreCase("spectre")) {
-
-        @Override
-        protected void onChange(final String oldValue, final String newValue) {
-            if (getState())
-                onDisable();
-        }
-
-        @Override
-        protected void onChanged(final String oldValue, final String newValue) {
-            if (getState())
-                onEnable();
-        }
-    };
-
-    @EventTarget
-    public void onMove(MoveEvent event) {
-        if (mc.thePlayer.isSneaking())
-            return;
-
-        final SpeedMode speedMode = getMode();
-
-        if (speedMode != null)
-            speedMode.onMove(event);
-    }    public final ListValue otherModeValue = new ListValue("Other-Mode", new String[]{"YPort", "YPort2", "Boost", "Frame", "MiJump", "OnGround", "SlowHop", "Jump", "Legit", "AEMine", "GWEN", "HiveHop", "MineplexGround", "TeleportCubeCraft"}, "Boost", () -> typeValue.get().equalsIgnoreCase("other")) {
-
-        @Override
-        protected void onChange(final String oldValue, final String newValue) {
-            if (getState())
-                onDisable();
-        }
-
-        @Override
-        protected void onChanged(final String oldValue, final String newValue) {
-            if (getState())
-                onEnable();
-        }
-    };
-
-    @EventTarget
-    public void onTick(final TickEvent event) {
-        if (mc.thePlayer.isSneaking())
-            return;
-
-        final SpeedMode speedMode = getMode();
-
-        if (speedMode != null)
-            speedMode.onTick();
-    }    public final ListValue verusModeValue = new ListValue("Verus-Mode", new String[]{"Hop", "LowHop", "Hard"}, "LowHop", () -> typeValue.get().equalsIgnoreCase("verus")) {
-
-        @Override
-        protected void onChange(final String oldValue, final String newValue) {
-            if (getState())
-                onDisable();
-        }
-
-        @Override
-        protected void onChanged(final String oldValue, final String newValue) {
-            if (getState())
-                onEnable();
-        }
-    };
-
-    @EventTarget
-    public void onJump(JumpEvent event) {
-        final SpeedMode speedMode = getMode();
-
-        if (speedMode != null)
-            speedMode.onJump(event);
-    }
 
     @Override
     public void onEnable() {
@@ -297,7 +258,7 @@ public class Speed extends Module {
 
         if (speedMode != null)
             speedMode.onEnable();
-    }    public final BoolValue timerValue = new BoolValue("UseTimer", true, () -> getModeName().equalsIgnoreCase("hypixelcustom"));
+    }
 
     @Override
     public void onDisable() {
@@ -315,7 +276,20 @@ public class Speed extends Module {
 
         if (speedMode != null)
             speedMode.onDisable();
-    }    public final BoolValue smoothStrafe = new BoolValue("SmoothStrafe", true, () -> getModeName().equalsIgnoreCase("hypixelcustom"));
+    }    public final ListValue spectreModeValue = new ListValue("Spectre-Mode", new String[]{"BHop", "LowHop", "OnGround"}, "BHop", () -> typeValue.get().equalsIgnoreCase("spectre")) {
+
+        @Override
+        protected void onChange(final String oldValue, final String newValue) {
+            if (getState())
+                onDisable();
+        }
+
+        @Override
+        protected void onChanged(final String oldValue, final String newValue) {
+            if (getState())
+                onEnable();
+        }
+    };
 
     @Override
     public String getTag() {
@@ -326,7 +300,7 @@ public class Speed extends Module {
             return getModeName();
 
         return typeValue.get() == "Other" ? otherModeValue.get() : typeValue.get() == "Custom" ? "Custom" : typeValue.get() + ", " + getOnlySingleName();
-    }    public final FloatValue customSpeedValue = new FloatValue("StrSpeed", 0.42f, 0.2f, 2f, () -> getModeName().equalsIgnoreCase("hypixelcustom"));
+    }
 
     private String getOnlySingleName() {
         String mode = "";
@@ -351,7 +325,20 @@ public class Speed extends Module {
                 break;
         }
         return mode;
-    }    public final FloatValue motionYValue = new FloatValue("MotionY", 0.42f, 0f, 2f, () -> getModeName().equalsIgnoreCase("hypixelcustom"));
+    }    public final ListValue otherModeValue = new ListValue("Other-Mode", new String[]{"YPort", "YPort2", "Boost", "Frame", "MiJump", "OnGround", "SlowHop", "Jump", "Legit", "AEMine", "GWEN", "HiveHop", "MineplexGround", "TeleportCubeCraft"}, "Boost", () -> typeValue.get().equalsIgnoreCase("other")) {
+
+        @Override
+        protected void onChange(final String oldValue, final String newValue) {
+            if (getState())
+                onDisable();
+        }
+
+        @Override
+        protected void onChanged(final String oldValue, final String newValue) {
+            if (getState())
+                onEnable();
+        }
+    };
 
     public String getModeName() {
         String mode = "";
@@ -384,7 +371,7 @@ public class Speed extends Module {
                 break;
         }
         return mode;
-    }    public final FloatValue verusTimer = new FloatValue("Verus-Timer", 1F, 0.1F, 10F, () -> getModeName().equalsIgnoreCase("verushard"));
+    }
 
     public SpeedMode getMode() {
         for (final SpeedMode speedMode : speedModes)
@@ -392,7 +379,46 @@ public class Speed extends Module {
                 return speedMode;
 
         return null;
-    }    public final FloatValue speedValue = new FloatValue("CustomSpeed", 1.0f, 0.2f, 2f, () -> typeValue.get().equalsIgnoreCase("custom"));
+    }    public final ListValue verusModeValue = new ListValue("Verus-Mode", new String[]{"Hop", "LowHop", "Hard"}, "LowHop", () -> typeValue.get().equalsIgnoreCase("verus")) {
+
+        @Override
+        protected void onChange(final String oldValue, final String newValue) {
+            if (getState())
+                onDisable();
+        }
+
+        @Override
+        protected void onChanged(final String oldValue, final String newValue) {
+            if (getState())
+                onEnable();
+        }
+    };
+
+
+
+
+
+    public final BoolValue timerValue = new BoolValue("UseTimer", true, () -> getModeName().equalsIgnoreCase("hypixelcustom"));
+
+
+
+    public final BoolValue smoothStrafe = new BoolValue("SmoothStrafe", true, () -> getModeName().equalsIgnoreCase("hypixelcustom"));
+
+
+
+    public final FloatValue customSpeedValue = new FloatValue("StrSpeed", 0.42f, 0.2f, 2f, () -> getModeName().equalsIgnoreCase("hypixelcustom"));
+
+
+
+    public final FloatValue motionYValue = new FloatValue("MotionY", 0.42f, 0f, 2f, () -> getModeName().equalsIgnoreCase("hypixelcustom"));
+
+
+
+    public final FloatValue verusTimer = new FloatValue("Verus-Timer", 1F, 0.1F, 10F, () -> getModeName().equalsIgnoreCase("verushard"));
+
+
+
+    public final FloatValue speedValue = new FloatValue("CustomSpeed", 1.0f, 0.2f, 2f, () -> typeValue.get().equalsIgnoreCase("custom"));
     public final FloatValue launchSpeedValue = new FloatValue("CustomLaunchSpeed", 1.6f, 0.2f, 2f, () -> typeValue.get().equalsIgnoreCase("custom"));
     public final FloatValue addYMotionValue = new FloatValue("CustomAddYMotion", 0f, 0f, 2f, () -> typeValue.get().equalsIgnoreCase("custom"));
     public final FloatValue yValue = new FloatValue("CustomY", 0.42f, 0f, 4f, () -> typeValue.get().equalsIgnoreCase("custom"));
@@ -422,28 +448,6 @@ public class Speed extends Module {
 
     public final FloatValue cubecraftPortLengthValue = new FloatValue("CubeCraft-PortLength", 1F, 0.1F, 2F, () -> getModeName().equalsIgnoreCase("teleportcubecraft"));
     public final FloatValue mineplexGroundSpeedValue = new FloatValue("MineplexGround-Speed", 0.6F, 0.1F, 1F, () -> getModeName().equalsIgnoreCase("mineplexground"));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -31,8 +31,8 @@ import java.util.*
 
 @ElementInfo(name = "Notifications", single = true)
 class Notifications(
-    x: Double = 1.0, y: Double = 52.0, scale: Float = 1F,
-    side: Side = Side(Side.Horizontal.RIGHT, Side.Vertical.DOWN)
+    x: Double = -61.0, y: Double = 5.0, scale: Float = 1F,
+    side: Side = Side(Side.Horizontal.MIDDLE, Side.Vertical.MIDDLE)
 ) : Element(x, y, scale, side) {
 
     val styleValue = ListValue("Style", arrayOf("Full", "Compact", "Material"), "Full")

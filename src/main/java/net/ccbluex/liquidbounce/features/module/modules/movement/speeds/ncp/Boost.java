@@ -9,6 +9,7 @@ public class Boost extends SpeedMode {
 
     private int motionDelay;
     private float ground;
+
     public Boost() {
         super("Boost");
     }

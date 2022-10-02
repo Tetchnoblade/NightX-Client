@@ -18,10 +18,10 @@ import java.util.Random;
 
 public final class RotationUtils extends MinecraftInstance implements Listenable {
 
+    private static final Random random = new Random();
     public static Rotation targetRotation;
     public static Rotation serverRotation = new Rotation(90F, 90F);
     public static boolean keepCurrentRotation = false;
-    private static final Random random = new Random();
     private static int keepLength;
     private static double x = random.nextDouble();
     private static double y = random.nextDouble();

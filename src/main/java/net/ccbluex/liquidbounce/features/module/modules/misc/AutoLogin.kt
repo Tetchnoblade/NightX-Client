@@ -17,7 +17,13 @@ import net.minecraft.network.play.client.C01PacketChatMessage
 import net.minecraft.network.play.server.S02PacketChat
 import net.minecraft.network.play.server.S45PacketTitle
 
-@ModuleInfo(name = "AutoLogin", spacedName = "Auto Login", description = "", category = ModuleCategory.MISC)
+@ModuleInfo(
+    name = "AutoLogin",
+    spacedName = "Auto Login",
+    description = "",
+    category = ModuleCategory.MISC,
+    array = false
+)
 class AutoLogin : Module() {
 
     private val password = TextValue("Password", "Aspw95639535")

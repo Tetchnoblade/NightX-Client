@@ -30,7 +30,7 @@ class Arraylist(
     side: Side = Side(Horizontal.RIGHT, Vertical.UP)
 ) : Element(x, y, scale, side) {
     private val colorModeValue =
-        ListValue("Color", arrayOf("Custom", "Random", "Sky", "CRainbow", "LiquidSlowly", "Fade", "Mixer"), "Fade")
+        ListValue("Color", arrayOf("Custom", "Random", "Sky", "CRainbow", "LiquidSlowly", "Fade", "Mixer"), "Custom")
     private val blurValue = BoolValue("Blur", false)
     private val blurStrength = FloatValue("Blur-Strength", 5F, 0F, 30F, { blurValue.get() })
     private val shadowShaderValue = BoolValue("Shadow", false)
@@ -56,9 +56,9 @@ class Arraylist(
         0,
         255,
         { shadowShaderValue.get() && shadowColorMode.get().equals("custom", true) })
-    val colorRedValue = IntegerValue("Red", 154, 0, 255)
-    val colorGreenValue = IntegerValue("Green", 114, 0, 255)
-    val colorBlueValue = IntegerValue("Blue", 175, 0, 255)
+    val colorRedValue = IntegerValue("Red", 240, 0, 255)
+    val colorGreenValue = IntegerValue("Green", 240, 0, 255)
+    val colorBlueValue = IntegerValue("Blue", 240, 0, 255)
     val colorAlphaValue = IntegerValue("Alpha", 255, 0, 255)
     private val saturationValue = FloatValue("Saturation", 0.5f, 0f, 1f)
     private val brightnessValue = FloatValue("Brightness", 1f, 0f, 1f)
@@ -69,19 +69,19 @@ class Arraylist(
     private val mixerDistValue = IntegerValue("Mixer-Distance", 2, 0, 10)
     private val liquidSlowlyDistanceValue = IntegerValue("LiquidSlowly-Distance", 90, 1, 90)
     private val fadeDistanceValue = IntegerValue("Fade-Distance", 85, 1, 100)
-    private val hAnimation = ListValue("HorizontalAnimation", arrayOf("Default", "None", "Slide", "Astolfo"), "Astolfo")
+    private val hAnimation = ListValue("HorizontalAnimation", arrayOf("Default", "None", "Slide", "Astolfo"), "None")
     private val vAnimation =
-        ListValue("VerticalAnimation", arrayOf("None", "LiquidSense", "Slide", "Rise", "Astolfo"), "Slide")
+        ListValue("VerticalAnimation", arrayOf("None", "LiquidSense", "Slide", "Rise", "Astolfo"), "None")
     private val animationSpeed = FloatValue("Animation-Speed", 0.4F, 0.01F, 1F)
     private val nameBreak = BoolValue("NameBreak", false)
     private val abcOrder = BoolValue("Alphabetical-Order", false)
-    private val tags = BoolValue("Tags", false)
-    private val tagsStyleValue = ListValue("TagsStyle", arrayOf("-", "|", "()", "[]", "<>", "Default"), "-")
+    private val tags = BoolValue("Tags", true)
+    private val tagsStyleValue = ListValue("TagsStyle", arrayOf("-", "|", "()", "[]", "<>", "Default"), "()")
     private val shadow = BoolValue("ShadowText", true)
     private val backgroundColorRedValue = IntegerValue("Background-R", 0, 0, 255)
     private val backgroundColorGreenValue = IntegerValue("Background-G", 0, 0, 255)
     private val backgroundColorBlueValue = IntegerValue("Background-B", 0, 0, 255)
-    private val backgroundColorAlphaValue = IntegerValue("Background-Alpha", 80, 0, 255)
+    private val backgroundColorAlphaValue = IntegerValue("Background-Alpha", 0, 0, 255)
     private val rectRightValue =
         ListValue("Rect-Right", arrayOf("None", "Left", "Right", "Outline", "Special", "Top"), "None")
     private val rectLeftValue = ListValue("Rect-Left", arrayOf("None", "Left", "Right"), "None")
@@ -90,7 +90,7 @@ class Arraylist(
     private val textHeightValue = FloatValue("TextHeight", 11F, 1F, 20F)
     private val textYValue = FloatValue("TextY", 1.8F, 0F, 20F)
     private val tagsArrayColor = BoolValue("TagsArrayColor", false)
-    private val fontValue = FontValue("Font", Fonts.fontSFUI40)
+    private val fontValue = FontValue("Font", Fonts.minecraftFont)
 
     private var x2 = 0
     private var y2 = 0F

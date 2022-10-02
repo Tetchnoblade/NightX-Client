@@ -35,8 +35,8 @@ public final class RenderUtils extends MinecraftInstance {
     private static final Map<Integer, Boolean> glCapMap = new HashMap<>();
     private static final int[] DISPLAY_LISTS_2D = new int[4];
     private static final Frustum frustrum = new Frustum();
-    public static int deltaTime;
     private static final float zLevel = 0F;
+    public static int deltaTime;
 
     static {
         for (int i = 0; i < DISPLAY_LISTS_2D.length; i++) {

@@ -119,7 +119,6 @@ class ModuleManager : Listenable {
             DamageParticle::class.java,
             AntiVanish::class.java,
             Skeletal::class.java,
-            ItemPhysics::class.java,
             AutoLogin::class.java,
             AuthBypass::class.java,
             Gapple::class.java,

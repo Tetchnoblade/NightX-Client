@@ -29,7 +29,7 @@ class Stealer : Module() {
      * OPTIONS
      */
 
-    private val maxDelayValue: IntegerValue = object : IntegerValue("MaxDelay", 8, 0, 400, "ms") {
+    private val maxDelayValue: IntegerValue = object : IntegerValue("MaxDelay", 80, 0, 400, "ms") {
         override fun onChanged(oldValue: Int, newValue: Int) {
             val i = minDelayValue.get()
             if (i > newValue)

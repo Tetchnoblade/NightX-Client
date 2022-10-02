@@ -1,10 +1,3 @@
-/*
- * LiquidBounce+ Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
- * https://github.com/WYSI-Foundation/LiquidBouncePlus/
- *
- * This code belongs to WYSI-Foundation. Please give credits when using this in your repository.
- */
 package net.ccbluex.liquidbounce.features.module.modules.render
 
 import net.ccbluex.liquidbounce.LiquidBounce
@@ -31,15 +24,15 @@ import java.awt.Color
 
 @ModuleInfo(name = "TargetESP", spacedName = "Target ESP", description = "", category = ModuleCategory.RENDER)
 class TargetESP : Module() {
-    val radius = FloatValue("Radius", 0.8f, 0.1f, 4.0f, "m")
+    val radius = FloatValue("Radius", 0.3f, 0.1f, 4.0f, "m")
     private val render = BoolValue("Render", true)
     val thirdPerson = BoolValue("ThirdPerson", false)
     private val colorType =
         ListValue("Color", arrayOf("Custom", "Dynamic", "Rainbow", "Rainbow2", "Sky", "Fade", "Mixer"), "Custom")
-    private val redValue = IntegerValue("Red", 173, 0, 255)
+    private val redValue = IntegerValue("Red", 255, 0, 255)
     private val greenValue = IntegerValue("Green", 255, 0, 255)
-    private val blueValue = IntegerValue("Blue", 47, 0, 255)
-    private val saturationValue = FloatValue("Saturation", 0.7F, 0F, 1F)
+    private val blueValue = IntegerValue("Blue", 255, 0, 255)
+    private val saturationValue = FloatValue("Saturation", 0.5F, 0F, 1F)
     private val brightnessValue = FloatValue("Brightness", 1F, 0F, 1F)
     private val mixerSecondsValue = IntegerValue("Mixer-Seconds", 2, 1, 10)
     private val accuracyValue = IntegerValue("Accuracy", 10, 0, 59)

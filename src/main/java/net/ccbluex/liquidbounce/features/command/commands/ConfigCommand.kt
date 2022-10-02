@@ -55,7 +55,8 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                                 }
 
                             val option =
-                                if (args.size > 3) StringUtils.toCompleteString(args, 3).lowercase(Locale.getDefault()) else "all"
+                                if (args.size > 3) StringUtils.toCompleteString(args, 3)
+                                    .lowercase(Locale.getDefault()) else "all"
                             val values = option.contains("all") || option.contains("values")
                             val binds = option.contains("all") || option.contains("binds")
                             val states = option.contains("all") || option.contains("states")

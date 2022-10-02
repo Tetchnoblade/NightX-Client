@@ -1,10 +1,3 @@
-/*
- * LiquidBounce+ Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
- * https://github.com/WYSI-Foundation/LiquidBouncePlus/
- *
- * This code belongs to WYSI-Foundation. Please give credits when using this in your repository.
- */
 package net.ccbluex.liquidbounce.features.module.modules.cool;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
@@ -58,7 +51,7 @@ import java.util.List;
 @ModuleInfo(name = "2DTags", description = "", category = ModuleCategory.COOL)
 public final class TwoDTags extends Module {
     public static List collectedEntities = new ArrayList();
-    public final BoolValue outline = new BoolValue("Outline", true);
+    public final BoolValue outline = new BoolValue("Outline", false);
     public final ListValue boxMode = new ListValue("Mode", new String[]{"Box", "Corners"}, "Box");
     public final BoolValue healthBar = new BoolValue("Health-bar", true);
     public final ListValue hpBarMode = new ListValue("HBar-Mode", new String[]{"Dot", "Line"}, "Dot", () -> healthBar.get());

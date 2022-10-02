@@ -48,22 +48,10 @@ public abstract class MixinGuiConnecting extends GuiScreen {
     private void headConnect(final String ip, final int port, CallbackInfo callbackInfo) {
         ServerUtils.serverData = new ServerData("", ip + ":" + port, false);
     }
-/*
-    @Inject(method = "connect", at = @At(value = "NEW", target = "net/minecraft/network/login/client/C00PacketLoginStart"), cancellable = true)
-    private void mcLeaks(CallbackInfo callbackInfo) {
-        if(MCLeaks.isAltActive()) {
-            networkManager.sendPacket(new C00PacketLoginStart(new GameProfile(null, MCLeaks.getSession().getUsername())));
-            callbackInfo.cancel();
-        }
-    }
-*/
 
-    /**
-     * @author CCBlueX
-     */
     @Overwrite
     private void connect(final String ip, final int port) {
-        logger.info("Connecting...");
+        logger.info("Authenticating to " + ip + ", " + port);
 
         new Thread(() -> {
             InetAddress inetaddress = null;
@@ -117,7 +105,8 @@ public abstract class MixinGuiConnecting extends GuiScreen {
         if (serverData != null)
             ip = serverData.serverIP;
 
-        Fonts.font40.drawCenteredString("Connecting...", scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 4 + 110, 0xFFFFFF, true);
+        Fonts.fontSFUI40.drawCenteredString("Authenticating to", scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 4 + 110, 0xFFFFFF, true);
+        Fonts.fontSFUI35.drawCenteredString(ip, scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 4 + 120, 0x5281FB, true);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }

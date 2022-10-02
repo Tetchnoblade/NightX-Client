@@ -13,10 +13,10 @@ public class BlockAnimations extends Module {
 
     // some ListValue
     public static final ListValue Sword = new ListValue("Style", new String[]{
-            "Old", "SlideFull", "Slide", "Push", "Dash", "Flux1", "Flux2", "NightX", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Leaked", "OldAstolfo", "Sigma3", "Sigma4", "Okura", "Bruh",
+            "Old", "SlideFull", "Slide", "Push", "Flux1", "Flux2", "NightX", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Leaked", "OldAstolfo", "Sigma3", "Sigma4", "Okura", "Bruh",
             "Leet", "Dortware1", "Dortware2", "Cool", "ETB", "Zoom", "Avatar", "Tap1", "Tap2", "Poke", "Push1", "Push2", "Up", "Shield", "Akrien", "VisionFX",
             "Lucky", "Rotate360", "SmoothFloat", "Strange", "Move", "Stab", "OldSwang", "Jello"
-    }, "Swank");
+    }, "Swang");
 
     // item general scale
     public static final FloatValue Scale = new FloatValue("Scale", 0.4f, 0f, 4f);
@@ -28,11 +28,11 @@ public class BlockAnimations extends Module {
 
     // change Position Blocking Sword
     public static final FloatValue blockPosX = new FloatValue("BlockingX", 0f, -1f, 1f);
-    public static final FloatValue blockPosY = new FloatValue("BlockingY", 0.1f, -1f, 1f);
-    public static final FloatValue blockPosZ = new FloatValue("BlockingZ", 0f, -1f, 1f);
+    public static final FloatValue blockPosY = new FloatValue("BlockingY", 0.16f, -1f, 1f);
+    public static final FloatValue blockPosZ = new FloatValue("BlockingZ", 0.06f, -1f, 1f);
 
     // modify item swing and rotate
-    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 13, -100, 20);
+    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 16, -100, 20);
     public static final BoolValue RotateItems = new BoolValue("Rotate-Items", false);
     public static final FloatValue SpeedRotate = new FloatValue("Rotate-Speed", 0f, 0f, 10f, () -> RotateItems.get() || Sword.get().equalsIgnoreCase("smoothfloat") || Sword.get().equalsIgnoreCase("rotate360"));
 

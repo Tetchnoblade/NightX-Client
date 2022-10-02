@@ -17,7 +17,7 @@ import java.awt.Color
 class Exhibition(inst: Target) : TargetStyle("Exhibition", inst, false) {
 
     override fun drawTarget(entity: EntityPlayer) {
-        val font = Fonts.fontSFUI40
+        val font = Fonts.fontTahoma
         val minWidth = 126F.coerceAtLeast(47F + font.getStringWidth(entity.name))
 
         RenderUtils.drawExhiRect(0F, 0F, minWidth, 45F, 1F - targetInstance.getFadeProgress())

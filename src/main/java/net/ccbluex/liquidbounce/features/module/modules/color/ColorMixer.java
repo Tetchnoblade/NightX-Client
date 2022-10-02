@@ -1,10 +1,3 @@
-/*
- * LiquidBounce+ Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
- * https://github.com/WYSI-Foundation/LiquidBouncePlus/
- *
- * This code belongs to WYSI-Foundation. Please give credits when using this in your repository.
- */
 package net.ccbluex.liquidbounce.features.module.modules.color;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
@@ -28,13 +21,13 @@ public class ColorMixer extends Module {
         regenerateColors();
     }
     */
-    public final ColorElement col1RedValue = new ColorElement(1, ColorElement.Material.RED);    public final IntegerValue blendAmount = new IntegerValue("Mixer-Amount", 2, 2, 10) {
+    public final ColorElement col1RedValue = new ColorElement(1, ColorElement.Material.RED);
+    public final ColorElement col1GreenValue = new ColorElement(1, ColorElement.Material.GREEN);    public final IntegerValue blendAmount = new IntegerValue("Mixer-Amount", 2, 2, 10) {
         @Override
         protected void onChanged(final Integer oldValue, final Integer newValue) {
             regenerateColors(oldValue != newValue);
         }
     };
-    public final ColorElement col1GreenValue = new ColorElement(1, ColorElement.Material.GREEN);
     public final ColorElement col1BlueValue = new ColorElement(1, ColorElement.Material.BLUE);
     public final ColorElement col2RedValue = new ColorElement(2, ColorElement.Material.RED);
     public final ColorElement col2GreenValue = new ColorElement(2, ColorElement.Material.GREEN);
@@ -99,7 +92,11 @@ public class ColorMixer extends Module {
 
             lastFraction = colorFraction;
         }
-    }    public final ColorElement col3RedValue = new ColorElement(3, ColorElement.Material.RED, blendAmount);
+    }
+
+
+
+    public final ColorElement col3RedValue = new ColorElement(3, ColorElement.Material.RED, blendAmount);
     public final ColorElement col3GreenValue = new ColorElement(3, ColorElement.Material.GREEN, blendAmount);
     public final ColorElement col3BlueValue = new ColorElement(3, ColorElement.Material.BLUE, blendAmount);
 
@@ -130,9 +127,6 @@ public class ColorMixer extends Module {
     public final ColorElement col10RedValue = new ColorElement(10, ColorElement.Material.RED, blendAmount);
     public final ColorElement col10GreenValue = new ColorElement(10, ColorElement.Material.GREEN, blendAmount);
     public final ColorElement col10BlueValue = new ColorElement(10, ColorElement.Material.BLUE, blendAmount);
-
-
-
 
 
 }

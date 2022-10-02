@@ -17,7 +17,8 @@ import java.util.Random;
 @ModuleInfo(name = "Spammer", description = "", category = ModuleCategory.MISC)
 public class Spammer extends Module {
 
-    private final TextValue messageValue = new TextValue("Message", "こめたろぁE�Eごみ�E�Ew)こめたろぁE�Eごみ�E�Ew)こめたろぁE�Eごみ�E�Ew)こめたろぁE�Eごみ�E�Ew)");    private final IntegerValue maxDelayValue = new IntegerValue("MaxDelay", 1500, 0, 5000, "ms") {
+    private final TextValue messageValue = new TextValue("Message", "こめたろぁE�Eごみ�E�Ew)こめたろぁE�Eごみ�E�Ew)こめたろぁE�Eごみ�E�Ew)こめたろぁE�Eごみ�E�Ew)");
+    private final BoolValue customValue = new BoolValue("Custom", true);    private final IntegerValue maxDelayValue = new IntegerValue("MaxDelay", 1500, 0, 5000, "ms") {
         @Override
         protected void onChanged(final Integer oldValue, final Integer newValue) {
             final int minDelayValueObject = minDelayValue.get();
@@ -27,7 +28,8 @@ public class Spammer extends Module {
             delay = TimeUtils.randomDelay(minDelayValue.get(), maxDelayValue.get());
         }
     };
-    private final BoolValue customValue = new BoolValue("Custom", true);    private final IntegerValue minDelayValue = new IntegerValue("MinDelay", 1500, 0, 5000, "ms") {
+    private final TextValue blankText = new TextValue("Placeholder guide", "", () -> customValue.get());
+    private final TextValue guideFloat = new TextValue("%f", "Random float", () -> customValue.get());    private final IntegerValue minDelayValue = new IntegerValue("MinDelay", 1500, 0, 5000, "ms") {
 
         @Override
         protected void onChanged(final Integer oldValue, final Integer newValue) {
@@ -38,8 +40,6 @@ public class Spammer extends Module {
             delay = TimeUtils.randomDelay(minDelayValue.get(), maxDelayValue.get());
         }
     };
-    private final TextValue blankText = new TextValue("Placeholder guide", "", () -> customValue.get());
-    private final TextValue guideFloat = new TextValue("%f", "Random float", () -> customValue.get());
     private final TextValue guideInt = new TextValue("%i", "Random integer (max length 10000)", () -> customValue.get());
     private final TextValue guideString = new TextValue("%s", "Random string (max length 9)", () -> customValue.get());
     private final TextValue guideShortString = new TextValue("%ss", "Random short string (max length 5)", () -> customValue.get());
@@ -74,10 +74,12 @@ public class Spammer extends Module {
             object = object.substring(0, object.indexOf("%ls")) + RandomUtils.randomString(r.nextInt(15) + 1) + object.substring(object.indexOf("%ls") + "%ls".length());
         return object;
     }
+
+
+
+
+
     private long delay = TimeUtils.randomDelay(minDelayValue.get(), maxDelayValue.get());
-
-
-
 
 
 }

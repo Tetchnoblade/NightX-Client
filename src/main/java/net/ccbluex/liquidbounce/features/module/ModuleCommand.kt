@@ -78,7 +78,13 @@ class ModuleCommand(val module: Module, val values: List<Value<*>> = module.valu
                         }
 
                         value.set(id)
-                        chat("§7${module.name} §8${args[1].lowercase(Locale.getDefault())}§7 was set to §8${BlockUtils.getBlockName(id)}§7.")
+                        chat(
+                            "§7${module.name} §8${args[1].lowercase(Locale.getDefault())}§7 was set to §8${
+                                BlockUtils.getBlockName(
+                                    id
+                                )
+                            }§7."
+                        )
                         playEdit()
                         return
                     }

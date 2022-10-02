@@ -10,6 +10,7 @@ public class Frame extends SpeedMode {
     private final TickTimer tickTimer = new TickTimer();
     private int motionTicks;
     private boolean move;
+
     public Frame() {
         super("Frame");
     }

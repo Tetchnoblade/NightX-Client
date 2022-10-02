@@ -32,10 +32,6 @@ public class Trails extends Module {
 
     private double lastX, lastY, lastZ = 0;
 
-    public void onInitialize() {
-        setState(true);
-    }
-
     @EventTarget
     public void onRender3D(Render3DEvent event) {
         final Color color = colorRainbow.get() ? ColorUtils.rainbow() : new Color(colorRedValue.get(), colorGreenValue.get(), colorBlueValue.get());

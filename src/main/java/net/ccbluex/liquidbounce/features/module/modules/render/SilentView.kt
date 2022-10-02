@@ -18,9 +18,9 @@ import net.minecraft.network.play.client.C03PacketPlayer
 @ModuleInfo(name = "SilentView", description = "", category = ModuleCategory.RENDER)
 class SilentView : Module() {
 
-    var mode = ListValue("Mode", arrayOf("Head", "Full"),"Full")
+    var mode = ListValue("Mode", arrayOf("Head", "Full"), "Full")
 
-    public var playerYaw: Float? = null
+    var playerYaw: Float? = null
 
     @EventTarget
     fun onRender3D(event: Render3DEvent) {

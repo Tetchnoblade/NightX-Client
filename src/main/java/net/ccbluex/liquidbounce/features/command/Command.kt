@@ -41,9 +41,13 @@ abstract class Command(val command: String, val alias: Array<String>) : Minecraf
         ClientUtils.displayChatMessage("§c>> §3Syntax:")
 
         for (syntax in syntaxes)
-            ClientUtils.displayChatMessage("§8> §7${LiquidBounce.commandManager.prefix}$command ${syntax.lowercase(
-                Locale.getDefault()
-            )}")
+            ClientUtils.displayChatMessage(
+                "§8> §7${LiquidBounce.commandManager.prefix}$command ${
+                    syntax.lowercase(
+                        Locale.getDefault()
+                    )
+                }"
+            )
     }
 
     /**

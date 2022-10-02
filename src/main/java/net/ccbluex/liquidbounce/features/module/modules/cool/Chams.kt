@@ -1,4 +1,4 @@
-package net.ccbluex.liquidbounce.features.module.modules.render
+package net.ccbluex.liquidbounce.features.module.modules.cool
 
 import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
@@ -8,7 +8,7 @@ import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.IntegerValue
 import net.ccbluex.liquidbounce.value.ListValue
 
-@ModuleInfo(name = "Chams", description = "", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "Chams", description = "", category = ModuleCategory.COOL)
 class Chams : Module() {
     val targetsValue = BoolValue("Targets", true)
     val chestsValue = BoolValue("Chests", false)
@@ -19,10 +19,10 @@ class Chams : Module() {
     val colorModeValue = ListValue(
         "Color",
         arrayOf("Custom", "Rainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"),
-        "Custom",
+        "Rainbow",
         { !legacyMode.get() })
     val behindColorModeValue =
-        ListValue("Behind-Color", arrayOf("Same", "Opposite", "Red"), "Red", { !legacyMode.get() })
+        ListValue("Behind-Color", arrayOf("Same", "Opposite", "Red"), "Opposite", { !legacyMode.get() })
     val redValue = IntegerValue("Red", 0, 0, 255, { !legacyMode.get() })
     val greenValue = IntegerValue("Green", 200, 0, 255, { !legacyMode.get() })
     val blueValue = IntegerValue("Blue", 0, 0, 255, { !legacyMode.get() })

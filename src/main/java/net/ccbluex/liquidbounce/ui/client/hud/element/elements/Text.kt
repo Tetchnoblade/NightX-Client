@@ -53,7 +53,7 @@ class Text(
 
             text.displayString.set("NightX [%fps% FPS] [%ping%ms] [%portalVersion%]")
             text.shadow.set(true)
-            text.fontValue.set(Fonts.fontSFUI40)
+            text.fontValue.set(Fonts.minecraftFont)
             text.setColor(Color(255, 0, 255))
 
             return text
@@ -83,7 +83,7 @@ class Text(
     private val distanceValue = IntegerValue("Line-Distance", 0, 0, 400)
     private val gradientAmountValue = IntegerValue("Gradient-Amount", 25, 1, 50)
     private val shadow = BoolValue("Shadow", true)
-    private var fontValue = FontValue("Font", Fonts.fontSFUI40)
+    private var fontValue = FontValue("Font", Fonts.minecraftFont)
 
     private var editMode = false
     private var editTicks = 0

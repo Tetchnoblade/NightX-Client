@@ -22,7 +22,7 @@ class HUD : Module() {
     val fontType = FontValue("Font", Fonts.font40, { fontChatValue.get() })
     val chatRectValue = BoolValue("ChatRect", true)
     val chatCombineValue = BoolValue("ChatCombine", false)
-    val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.04F, 0.01F, 4.0F)
+    val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 4.0F, 0.01F, 4.0F)
     private val toggleMessageValue = BoolValue("DisplayToggleMessage", false)
     private val toggleSoundValue = ListValue("ToggleSound", arrayOf("None", "Default", "Custom"), "None")
     private val toggleVolumeValue =
@@ -30,7 +30,7 @@ class HUD : Module() {
     val guiButtonStyle =
         ListValue("Button-Style", arrayOf("Minecraft", "LiquidBounce", "Rounded", "LiquidBounce+"), "Minecraft")
 
-    val containerBackground = BoolValue("Container-Background", true)
+    val containerBackground = BoolValue("Container-Background", false)
     val containerButton = ListValue("Container-Button", arrayOf("TopLeft", "TopRight", "Off"), "Off")
     val invEffectOffset = BoolValue("InvEffect-Offset", false)
     val domainValue = TextValue("Scoreboard-Domain", ".hud scoreboard-domain NightX-Client")
