@@ -41,15 +41,15 @@ public class Sensor extends Module {
     private final IntegerValue colorRedValue = new IntegerValue("Red", 255, 0, 255);
     private final IntegerValue colorGreenValue = new IntegerValue("Green", 120, 0, 255);
     private final IntegerValue colorBlueValue = new IntegerValue("Blue", 255, 0, 255);
-    private final IntegerValue colorAlphaValue = new IntegerValue("Alpha", 255, 0, 255);
+    private final IntegerValue colorAlphaValue = new IntegerValue("Alpha", 120, 0, 255);
     private final IntegerValue colorEndAlphaValue = new IntegerValue("EndAlpha", 60, 0, 255);
     private final FloatValue saturationValue = new FloatValue("Saturation", 1F, 0F, 1F);
     private final FloatValue brightnessValue = new FloatValue("Brightness", 1F, 0F, 1F);
     private final IntegerValue mixerSecondsValue = new IntegerValue("Seconds", 2, 1, 10);
     private final IntegerValue spaceValue = new IntegerValue("Color-Space", 100, 0, 100);
-    private final BoolValue noFirstPerson = new BoolValue("NoFirstPerson", true);
+    private final BoolValue noFirstPerson = new BoolValue("NoFirstPerson", false);
     private final BoolValue hatBorder = new BoolValue("HatBorder", false);
-    private final BoolValue hatRotation = new BoolValue("HatRotation", false);
+    private final BoolValue hatRotation = new BoolValue("HatRotation", true);
     private final IntegerValue borderAlphaValue = new IntegerValue("BorderAlpha", 120, 0, 255);
     private final FloatValue borderWidthValue = new FloatValue("BorderWidth", 1F, 0.1F, 4F);
 
@@ -122,7 +122,7 @@ public class Sensor extends Module {
         checkPosition(radius);
 
         GL11.glPushMatrix();
-        GlStateManager.translate(viewX + posX, viewY + posY + height - 0.4, viewZ + posZ);
+        GlStateManager.translate(viewX + posX, viewY + posY + height - 3, viewZ + posZ);
 
         pre3D();
 
@@ -215,5 +215,4 @@ public class Sensor extends Module {
                 return ColorUtils.fade(new Color(colorRedValue.get(), colorGreenValue.get(), colorBlueValue.get()), index, 100);
         }
     }
-
 }

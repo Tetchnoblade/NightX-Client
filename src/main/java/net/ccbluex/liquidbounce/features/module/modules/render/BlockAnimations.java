@@ -32,7 +32,7 @@ public class BlockAnimations extends Module {
     public static final FloatValue blockPosZ = new FloatValue("BlockingZ", 0f, -1f, 1f);
 
     // modify item swing and rotate
-    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 16, -100, 20);
+    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 13, -100, 20);
     public static final BoolValue RotateItems = new BoolValue("Rotate-Items", false);
     public static final FloatValue SpeedRotate = new FloatValue("Rotate-Speed", 0f, 0f, 10f, () -> RotateItems.get() || Sword.get().equalsIgnoreCase("smoothfloat") || Sword.get().equalsIgnoreCase("rotate360"));
 

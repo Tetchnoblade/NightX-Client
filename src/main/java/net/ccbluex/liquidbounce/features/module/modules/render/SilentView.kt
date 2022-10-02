@@ -18,26 +18,24 @@ import net.minecraft.network.play.client.C03PacketPlayer
 @ModuleInfo(name = "SilentView", description = "", category = ModuleCategory.RENDER)
 class SilentView : Module() {
 
-    val modeValue = ListValue("Mode", arrayOf("Head", "Full"), "Full")
+    var mode = ListValue("Mode", arrayOf("Head", "Full"),"Full")
 
-    private var playerYaw: Float? = null
+    public var playerYaw: Float? = null
 
     @EventTarget
     fun onRender3D(event: Render3DEvent) {
-        if (modeValue.get().equals("head", true) && RotationUtils.serverRotation != null)
+        if (RotationUtils.serverRotation != null && mode.get().equals("Head"))
             mc.thePlayer.rotationYawHead = RotationUtils.serverRotation.yaw
     }
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
-        if (modeValue.get().equals("head", true) || !shouldRotate() || mc.thePlayer == null) {
-            playerYaw = null
+        if (!mode.get().equals("Full") || !shouldRotate() || mc.thePlayer == null)
             return
-        }
 
         val packet = event.packet
-        if (packet is C03PacketPlayer && packet.rotating) {
-            playerYaw = packet.yaw
+        if (packet is C03PacketPlayer.C06PacketPlayerPosLook || packet is C03PacketPlayer.C05PacketPlayerLook) {
+            playerYaw = (packet as C03PacketPlayer).yaw
             mc.thePlayer.renderYawOffset = packet.getYaw()
             mc.thePlayer.rotationYawHead = packet.getYaw()
         } else {
