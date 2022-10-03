@@ -101,7 +101,7 @@ public class Speed extends Module {
             new VerusHard()
     };
     public final BoolValue modifySprint = new BoolValue("ModifySprinting", false);
-    public final BoolValue NoBob = new BoolValue("NoBob", true);    public final ListValue typeValue = new ListValue("Type", new String[]{"NCP", "AAC", "Spartan", "Spectre", "Hypixel", "Verus", "Custom", "Other"}, "Custom") {
+    public final BoolValue NoBob = new BoolValue("NoBob", false);    public final ListValue typeValue = new ListValue("Type", new String[]{"NCP", "AAC", "Spartan", "Spectre", "Hypixel", "Verus", "Custom", "Other"}, "Custom") {
 
         @Override
         protected void onChange(final String oldValue, final String newValue) {

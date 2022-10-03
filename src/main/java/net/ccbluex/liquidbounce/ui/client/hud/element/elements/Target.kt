@@ -24,7 +24,7 @@ import java.awt.Color
  */
 @ElementInfo(name = "Target", disableScale = true, retrieveDamage = true)
 class Target(
-    x: Double = -11.0, y: Double = -40.0, scale: Float = 1F,
+    x: Double = -6.0, y: Double = -16.0, scale: Float = 1F,
     side: Side = Side(Side.Horizontal.MIDDLE, Side.Vertical.MIDDLE)
 ) : Element(x, y, scale, side) {
 
@@ -68,7 +68,7 @@ class Target(
     val bgRedValue = IntegerValue("Background-Red", 0, 0, 255)
     val bgGreenValue = IntegerValue("Background-Green", 0, 0, 255)
     val bgBlueValue = IntegerValue("Background-Blue", 0, 0, 255)
-    val bgAlphaValue = IntegerValue("Background-Alpha", 0, 0, 255)
+    val bgAlphaValue = IntegerValue("Background-Alpha", 120, 0, 255)
 
     override val values: List<Value<*>>
         get() {
@@ -86,7 +86,7 @@ class Target(
                 Exhibition(this),
                 Remix(this),
                 Slowly(this)
-            ).toTypedArray(), "Exhibition"
+            ).toTypedArray(), "Slowly"
         )
     }
 

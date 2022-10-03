@@ -14,9 +14,9 @@ public class BlockAnimations extends Module {
     // some ListValue
     public static final ListValue Sword = new ListValue("Style", new String[]{
             "Old", "SlideFull", "Slide", "Push", "Flux1", "Flux2", "NightX", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Leaked", "OldAstolfo", "Sigma3", "Sigma4", "Okura", "Bruh",
-            "Leet", "Dortware1", "Dortware2", "Cool", "ETB", "Zoom", "Avatar", "Tap1", "Tap2", "Poke", "Push1", "Push2", "Up", "Shield", "Akrien", "VisionFX",
+            "Leet", "Dortware1", "Dortware2", "Smart", "Cool", "ETB", "Zoom", "Avatar", "Tap1", "Tap2", "Poke", "Push1", "Push2", "Up", "Shield", "Akrien", "VisionFX",
             "Lucky", "Rotate360", "SmoothFloat", "Strange", "Move", "Stab", "OldSwang", "Jello"
-    }, "Swang");
+    }, "Swank");
 
     // item general scale
     public static final FloatValue Scale = new FloatValue("Scale", 0.4f, 0f, 4f);

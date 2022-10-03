@@ -486,7 +486,7 @@ public abstract class MixinItemRenderer {
                                 }
                                 case "Leaked": {
                                     float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
-                                    GL11.glTranslated(0.12D, 0.02D, -0.08D);
+                                    GL11.glTranslated(0.02D, 0.02D, -0.08D);
                                     this.transformFirstPersonItem(f / 10.0F, 0.0f);
                                     GlStateManager.rotate(-var9 * -40.0F, var9 / 2.0F, 1.0F, 4.0F);
                                     GlStateManager.rotate(-var9 * 0.0F, 1.0F, var9 / 3.0F, -0.0F);
@@ -737,12 +737,21 @@ public abstract class MixinItemRenderer {
                                     this.func_178103_d(0.2F);
                                     break;
                                 }
+                                case "Smart": {
+                                    transformFirstPersonItem(f / 2.0F, f1);
+                                    GL11.glTranslated(0.0D, 0.16D, 0.0D);
+                                    float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                    GlStateManager.rotate(Swang * 25.0F / 2.0F, -Swang, -0.0F, 9.0F);
+                                    GlStateManager.rotate(Swang * 15.0F, 1.0F, -Swang / 2.0F, -0.0F);
+                                    doBlockTransformations();
+                                    break;
+                                }
                                 case "Swank": {
                                     transformFirstPersonItem(f / 2.0F, f1);
-                                    GL11.glTranslated(0.0D, 0.2D, 0.0D);
+                                    GL11.glTranslated(0.0D, 0.16D, 0.0D);
                                     float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
-                                    GlStateManager.rotate(Swang * 30.0F / 2.0F, -Swang, -0.0F, 9.0F);
-                                    GlStateManager.rotate(Swang * 40.0F, 1.0F, -Swang / 2.0F, -0.0F);
+                                    GlStateManager.rotate(Swang * 35.0F / 2.0F, -Swang, -0.0F, 9.0F);
+                                    GlStateManager.rotate(Swang * 45.0F, 1.0F, -Swang / 2.0F, -0.0F);
                                     doBlockTransformations();
                                     break;
                                 }

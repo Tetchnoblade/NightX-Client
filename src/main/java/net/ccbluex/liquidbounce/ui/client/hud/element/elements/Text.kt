@@ -51,7 +51,7 @@ class Text(
         fun defaultClient(): Text {
             val text = Text(x = 5.0, y = 5.0, scale = 1F)
 
-            text.displayString.set("NightX [%fps% FPS] [%ping%ms] [%portalVersion%]")
+            text.displayString.set("%clientName% [%fps% FPS] [%ping%ms] [%portalVersion%]")
             text.shadow.set(true)
             text.fontValue.set(Fonts.minecraftFont)
             text.setColor(Color(255, 0, 255))
@@ -61,7 +61,7 @@ class Text(
 
     }
 
-    private val displayString = TextValue("DisplayText", "NightX [%fps% FPS] [%ping%ms] [%portalVersion%]")
+    private val displayString = TextValue("DisplayText", "%clientName% [%fps% FPS] [%ping%ms] [%portalVersion%]")
     private val backgroundValue = BoolValue("Background", false)
     private val skeetRectValue = BoolValue("SkeetRect", false)
     private val lineValue = BoolValue("Line", false)

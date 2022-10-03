@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.RenderHelper
  */
 @ElementInfo(name = "Armor")
 class Armor(
-    x: Double = -9.0, y: Double = 54.0, scale: Float = 1F,
+    x: Double = -9.0, y: Double = 55.0, scale: Float = 1F,
     side: Side = Side(Side.Horizontal.MIDDLE, Side.Vertical.DOWN)
 ) : Element(x, y, scale, side) {
 

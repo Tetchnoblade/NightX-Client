@@ -171,7 +171,7 @@ public class Flight extends Module {
 
     // Visuals
     private final BoolValue fakeDmgValue = new BoolValue("FakeDamage", false);
-    private final BoolValue bobbingValue = new BoolValue("Bobbing", true);
+    private final BoolValue bobbingValue = new BoolValue("Bobbing", false);
     private final FloatValue bobbingAmountValue = new FloatValue("BobbingAmount", 0.1F, 0F, 1F, () -> bobbingValue.get());
     private final BoolValue markValue = new BoolValue("Mark", false);
     private final MSTimer flyTimer = new MSTimer();

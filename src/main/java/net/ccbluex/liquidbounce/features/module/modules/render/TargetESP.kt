@@ -24,9 +24,8 @@ import java.awt.Color
 
 @ModuleInfo(name = "TargetESP", spacedName = "Target ESP", description = "", category = ModuleCategory.RENDER)
 class TargetESP : Module() {
-    val radius = FloatValue("Radius", 0.3f, 0.1f, 4.0f, "m")
+    val radius = FloatValue("Radius", 1.2f, 0.1f, 4.0f, "m")
     private val render = BoolValue("Render", true)
-    val thirdPerson = BoolValue("ThirdPerson", false)
     private val colorType =
         ListValue("Color", arrayOf("Custom", "Dynamic", "Rainbow", "Rainbow2", "Sky", "Fade", "Mixer"), "Custom")
     private val redValue = IntegerValue("Red", 255, 0, 255)
@@ -58,17 +57,6 @@ class TargetESP : Module() {
 
     @EventTarget
     fun onMotion(event: MotionEvent) {
-        if (thirdPerson.get()) { // smart change back lol
-            if (canStrafe) {
-                if (hasChangedThirdPerson) lastView = mc.gameSettings.thirdPersonView
-                mc.gameSettings.thirdPersonView = 1
-                hasChangedThirdPerson = false
-            } else if (!hasChangedThirdPerson) {
-                mc.gameSettings.thirdPersonView = lastView
-                hasChangedThirdPerson = true
-            }
-        }
-
         if (event.eventState == EventState.PRE) {
             if (mc.thePlayer.isCollidedHorizontally)
                 this.direction = -this.direction

@@ -31,7 +31,7 @@ class Cape : Module() {
             "Migration",
             "Vanilla"
         ),
-        "None"
+        "NightX"
     )
 
     private val capeCache = hashMapOf<String, CapeStyle>()

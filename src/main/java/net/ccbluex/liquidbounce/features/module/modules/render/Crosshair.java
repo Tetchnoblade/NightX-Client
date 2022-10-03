@@ -43,11 +43,6 @@ public class Crosshair extends Module {
     public BoolValue dynamicVal = new BoolValue("Dynamic", false);
     public BoolValue hitMarkerVal = new BoolValue("HitMarker", false);
     public BoolValue noVanillaCH = new BoolValue("NoVanillaCrossHair", true);
-
-    public void onInitialize() {
-        setState(true);
-    }
-
     @EventTarget
     public void onRender2D(Render2DEvent event) {
         final ScaledResolution scaledRes = new ScaledResolution(mc);
