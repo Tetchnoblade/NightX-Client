@@ -9,7 +9,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemArmor
 
-@ModuleInfo(name = "Teams", description = "", category = ModuleCategory.MISC)
+@ModuleInfo(name = "Teams", category = ModuleCategory.MISC)
 class Teams : Module() {
 
     private val scoreboardValue = BoolValue("ScoreboardTeam", true)

@@ -19,7 +19,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C07PacketPlayerDigging
 import java.util.*
 
-@ModuleInfo(name = "Criticals", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "Criticals", category = ModuleCategory.COMBAT)
 class Criticals : Module() {
 
     val modeValue = ListValue(
@@ -35,7 +35,6 @@ class Criticals : Module() {
             "Hop",
             "TPHop",
             "Jump",
-            "Visual",
             "Edit",
             "MiniPhase",
             "NanoPacket",
@@ -88,7 +87,6 @@ class Criticals : Module() {
                     mc.netHandler.addToSendQueue(C04PacketPlayerPosition(x, y + 0.00150000001304, z, false))
                     mc.netHandler.addToSendQueue(C04PacketPlayerPosition(x, y + 0.01400000001304, z, false))
                     mc.netHandler.addToSendQueue(C04PacketPlayerPosition(x, y + 0.00150000001304, z, false))
-                    mc.thePlayer.onCriticalHit(entity)
                 }
 
                 "packet" -> {
@@ -96,7 +94,6 @@ class Criticals : Module() {
                     mc.netHandler.addToSendQueue(C04PacketPlayerPosition(x, y, z, false))
                     mc.netHandler.addToSendQueue(C04PacketPlayerPosition(x, y + 1.1E-5, z, false))
                     mc.netHandler.addToSendQueue(C04PacketPlayerPosition(x, y, z, false))
-                    mc.thePlayer.onCriticalHit(entity)
                 }
 
                 "packet2" -> {
@@ -138,7 +135,6 @@ class Criticals : Module() {
                     mc.netHandler.addToSendQueue(C04PacketPlayerPosition(x, y + 0.11, z, false))
                     mc.netHandler.addToSendQueue(C04PacketPlayerPosition(x, y + 0.1100013579, z, false))
                     mc.netHandler.addToSendQueue(C04PacketPlayerPosition(x, y + 0.0000013579, z, false))
-                    mc.thePlayer.onCriticalHit(entity)
                 }
 
                 "aacv4" -> {
@@ -217,8 +213,6 @@ class Criticals : Module() {
                     if (counter >= 5)
                         counter = 0
                 }
-
-                "visual" -> mc.thePlayer.onCriticalHit(entity)
             }
 
             readyCrits = true

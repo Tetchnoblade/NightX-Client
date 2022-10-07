@@ -20,7 +20,7 @@ import net.minecraft.util.BlockPos
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
-@ModuleInfo(name = "BlockOverlay", spacedName = "Block Overlay", description = "", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "BlockOverlay", spacedName = "Block Overlay", category = ModuleCategory.RENDER)
 class BlockOverlay : Module() {
     private val colorRedValue = IntegerValue("R", 154, 0, 255)
     private val colorGreenValue = IntegerValue("G", 115, 0, 255)

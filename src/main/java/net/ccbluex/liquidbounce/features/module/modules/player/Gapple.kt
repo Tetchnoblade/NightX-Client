@@ -19,7 +19,7 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
 import net.minecraft.network.play.client.C09PacketHeldItemChange
 import java.util.*
 
-@ModuleInfo(name = "Gapple", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "Gapple", category = ModuleCategory.PLAYER)
 class Gapple : Module() {
     val modeValue = ListValue("Mode", arrayOf("Auto", "Once", "Head"), "Once")
 

@@ -16,7 +16,7 @@ import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C16PacketClientStatus
 import java.util.*
 
-@ModuleInfo(name = "Inventory", spacedName = "Inventory", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Inventory", spacedName = "Inventory", category = ModuleCategory.MOVEMENT)
 class Inventory : Module() {
 
     val modeValue = ListValue("Mode", arrayOf("Vanilla", "Silent", "Blink"), "Silent")

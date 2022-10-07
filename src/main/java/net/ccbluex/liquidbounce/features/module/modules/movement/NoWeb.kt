@@ -11,7 +11,7 @@ import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.ListValue
 import java.util.*
 
-@ModuleInfo(name = "NoWeb", spacedName = "No Web", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "NoWeb", spacedName = "No Web", category = ModuleCategory.MOVEMENT)
 class NoWeb : Module() {
 
     private val modeValue = ListValue(

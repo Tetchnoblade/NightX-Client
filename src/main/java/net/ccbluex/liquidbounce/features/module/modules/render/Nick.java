@@ -21,7 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 
-@ModuleInfo(name = "Nick", spacedName = "Nick", description = "", category = ModuleCategory.RENDER, array = false)
+@ModuleInfo(name = "Nick", spacedName = "Nick", category = ModuleCategory.RENDER, array = false)
 public class Nick extends Module {
 
     public final BoolValue selfValue = new BoolValue("Yourself", true);
@@ -69,9 +69,5 @@ public class Nick extends Module {
         if (allPlayersValue.get())
             for (final NetworkPlayerInfo playerInfo : mc.getNetHandler().getPlayerInfoMap())
                 event.setText(StringUtils.replace(event.getText(), playerInfo.getGameProfile().getName(), ColorUtils.translateAlternateColorCodes(allFakeNameValue.get()) + "§f"));
-    }
-
-    public void onInitialize() {
-        setState(true);
     }
 }

@@ -10,7 +10,7 @@ import net.ccbluex.liquidbounce.utils.MovementUtils
 import net.ccbluex.liquidbounce.value.BoolValue
 import net.ccbluex.liquidbounce.value.FloatValue
 
-@ModuleInfo(name = "Timer", description = "", category = ModuleCategory.WORLD)
+@ModuleInfo(name = "Timer", category = ModuleCategory.WORLD)
 class Timer : Module() {
 
     private val speedValue = FloatValue("Speed", 2F, 0.1F, 10F, "x")

@@ -24,7 +24,7 @@ import org.lwjgl.opengl.GL11
 import java.awt.Color
 import kotlin.math.abs
 
-@ModuleInfo(name = "SuperheroFX", spacedName = "Superhero FX", description = "", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "SuperheroFX", spacedName = "Superhero FX", category = ModuleCategory.RENDER)
 class SuperheroFX : Module() {
 
     private val textParticles = mutableListOf<FXParticle>()

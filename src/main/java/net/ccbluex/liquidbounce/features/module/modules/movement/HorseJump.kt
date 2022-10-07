@@ -6,7 +6,7 @@ import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 
-@ModuleInfo(name = "HorseJump", "Horse Jump", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "HorseJump", "Horse Jump", category = ModuleCategory.MOVEMENT)
 class HorseJump : Module() {
 
     @EventTarget

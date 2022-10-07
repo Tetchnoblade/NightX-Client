@@ -10,7 +10,7 @@ import net.ccbluex.liquidbounce.value.ListValue;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
-@ModuleInfo(name = "Brightness", description = "", category = ModuleCategory.COOL)
+@ModuleInfo(name = "Brightness", category = ModuleCategory.COOL)
 public class Brightness extends Module {
     private final ListValue modeValue = new ListValue("Mode", new String[]{"Gamma", "NightVision"}, "NightVision");
 

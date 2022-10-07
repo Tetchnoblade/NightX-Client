@@ -8,7 +8,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.utils.timer.MSTimer
 import net.minecraft.item.ItemFishingRod
 
-@ModuleInfo(name = "AutoFish", spacedName = "Auto Fish", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "AutoFish", spacedName = "Auto Fish", category = ModuleCategory.PLAYER)
 class AutoFish : Module() {
 
     private val rodOutTimer = MSTimer()

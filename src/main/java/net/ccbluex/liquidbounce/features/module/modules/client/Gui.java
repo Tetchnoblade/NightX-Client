@@ -15,7 +15,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 
-@ModuleInfo(name = "Gui", description = "", category = ModuleCategory.CLIENT, keyBind = Keyboard.KEY_RSHIFT, forceNoSound = true, onlyEnable = true, array = false)
+@ModuleInfo(name = "Gui", category = ModuleCategory.CLIENT, keyBind = Keyboard.KEY_RSHIFT, forceNoSound = true, onlyEnable = true, array = false)
 public class Gui extends Module {
     public static final BoolValue fastRenderValue = new BoolValue("FastRender", false);
 

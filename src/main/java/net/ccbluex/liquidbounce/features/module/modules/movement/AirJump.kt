@@ -4,5 +4,5 @@ import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 
-@ModuleInfo(name = "AirJump", spacedName = "Air Jump", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "AirJump", spacedName = "Air Jump", category = ModuleCategory.MOVEMENT)
 class AirJump : Module()

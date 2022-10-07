@@ -30,7 +30,7 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.settings.GameSettings;
 
-@ModuleInfo(name = "Speed", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Speed", category = ModuleCategory.MOVEMENT)
 public class Speed extends Module {
 
     public final SpeedMode[] speedModes = new SpeedMode[]{

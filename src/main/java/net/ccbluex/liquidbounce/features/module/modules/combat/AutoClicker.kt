@@ -13,7 +13,7 @@ import net.ccbluex.liquidbounce.value.IntegerValue
 import net.minecraft.client.settings.KeyBinding
 import kotlin.random.Random
 
-@ModuleInfo(name = "AutoClicker", spacedName = "Auto Clicker", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AutoClicker", spacedName = "Auto Clicker", category = ModuleCategory.COMBAT)
 class AutoClicker : Module() {
     private val maxCPSValue: IntegerValue = object : IntegerValue("MaxCPS", 12, 1, 20) {
 

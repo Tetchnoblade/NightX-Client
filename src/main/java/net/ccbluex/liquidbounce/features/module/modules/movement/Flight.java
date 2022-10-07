@@ -33,7 +33,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
-@ModuleInfo(name = "Flight", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Flight", category = ModuleCategory.MOVEMENT)
 public class Flight extends Module {
 
     public final ListValue modeValue = new ListValue("Mode", new String[]{

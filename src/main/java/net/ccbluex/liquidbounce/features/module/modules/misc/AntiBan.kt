@@ -15,7 +15,7 @@ import net.ccbluex.liquidbounce.utils.timer.MSTimer
 import net.minecraft.network.play.server.*
 import kotlin.concurrent.thread
 
-@ModuleInfo(name = "AntiBan", spacedName = "Anti Ban", description = "", category = ModuleCategory.MISC)
+@ModuleInfo(name = "AntiBan", spacedName = "Anti Ban", category = ModuleCategory.MISC)
 class AntiBan : Module() {
 
     private var obStaffs = "_"

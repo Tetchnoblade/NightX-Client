@@ -22,7 +22,7 @@ import net.minecraft.network.play.server.S30PacketWindowItems
 import net.minecraft.util.ResourceLocation
 import kotlin.random.Random
 
-@ModuleInfo(name = "Stealer", spacedName = "Stealer", description = "", category = ModuleCategory.WORLD)
+@ModuleInfo(name = "Stealer", spacedName = "Stealer", category = ModuleCategory.WORLD)
 class Stealer : Module() {
 
     /**

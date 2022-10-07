@@ -12,7 +12,7 @@ import net.ccbluex.liquidbounce.utils.timer.MSTimer;
 import net.ccbluex.liquidbounce.value.BoolValue;
 import net.ccbluex.liquidbounce.value.IntegerValue;
 
-@ModuleInfo(name = "BanStats", spacedName = "Ban Stats", description = "", category = ModuleCategory.MISC)
+@ModuleInfo(name = "BanStats", spacedName = "Ban Stats", category = ModuleCategory.MISC)
 public class BanStats extends Module {
 
     // no u

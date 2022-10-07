@@ -27,7 +27,7 @@ import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
-@ModuleInfo(name = "PointerESP", spacedName = "Pointer ESP", description = "", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "PointerESP", spacedName = "Pointer ESP", category = ModuleCategory.RENDER)
 class PointerESP : Module() {
     private val modeValue = ListValue("Mode", arrayOf("Solid", "Line"), "Line")
     private val redValue = IntegerValue("Red", 255, 0, 255)

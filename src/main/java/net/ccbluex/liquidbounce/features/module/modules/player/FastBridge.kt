@@ -9,7 +9,7 @@ import net.minecraft.client.settings.GameSettings
 import net.minecraft.init.Blocks
 import net.minecraft.util.BlockPos
 
-@ModuleInfo(name = "FastBridge", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "FastBridge", category = ModuleCategory.PLAYER)
 class FastBridge : Module() {
 
     @EventTarget

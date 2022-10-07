@@ -27,7 +27,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@ModuleInfo(name = "Sensor", spacedName = "Sensor", description = "", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "Sensor", spacedName = "Sensor", category = ModuleCategory.RENDER)
 public class Sensor extends Module {
 
     private final ListValue colorModeValue = new ListValue("Color", new String[]{"Custom", "Rainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"}, "Custom");

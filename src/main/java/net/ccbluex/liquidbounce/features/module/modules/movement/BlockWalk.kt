@@ -9,7 +9,7 @@ import net.ccbluex.liquidbounce.value.BoolValue
 import net.minecraft.init.Blocks
 import net.minecraft.util.AxisAlignedBB
 
-@ModuleInfo(name = "BlockWalk", spacedName = "Block Walk", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "BlockWalk", spacedName = "Block Walk", category = ModuleCategory.MOVEMENT)
 class BlockWalk : Module() {
     private val cobwebValue = BoolValue("Cobweb", true)
     private val snowValue = BoolValue("Snow", true)

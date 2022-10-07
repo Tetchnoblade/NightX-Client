@@ -20,7 +20,6 @@ import net.minecraft.network.play.server.S45PacketTitle
 @ModuleInfo(
     name = "AutoLogin",
     spacedName = "Auto Login",
-    description = "",
     category = ModuleCategory.MISC,
     array = false
 )

@@ -13,7 +13,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 
-@ModuleInfo(name = "IceSpeed", spacedName = "Ice Speed", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "IceSpeed", spacedName = "Ice Speed", category = ModuleCategory.MOVEMENT)
 public class IceSpeed extends Module {
 
     private final ListValue modeValue = new ListValue("Mode", new String[]{"NCP", "AAC", "Spartan"}, "NCP");

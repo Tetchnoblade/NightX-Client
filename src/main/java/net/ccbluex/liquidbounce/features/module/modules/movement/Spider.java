@@ -14,7 +14,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 
-@ModuleInfo(name = "Spider", spacedName = "Spider", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Spider", spacedName = "Spider", category = ModuleCategory.MOVEMENT)
 public class Spider extends Module {
 
     private final ListValue modeValue = new ListValue("Mode", new String[]{"Simple", "CheckerClimb", "Clip", "AAC3.3.12", "AACGlide", "Verus"}, "Simple");

@@ -10,7 +10,7 @@ import net.ccbluex.liquidbounce.value.IntegerValue;
 import java.awt.*;
 import java.lang.reflect.Field;
 
-@ModuleInfo(name = "ColorMixer", description = "", category = ModuleCategory.COLOR, canEnable = false)
+@ModuleInfo(name = "ColorMixer", category = ModuleCategory.COLOR, canEnable = false)
 public class ColorMixer extends Module {
 
     public static Color[] lastColors = new Color[]{};

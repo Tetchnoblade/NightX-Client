@@ -15,7 +15,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 import org.lwjgl.input.Keyboard;
 
-@ModuleInfo(name = "Freecam", spacedName = "Free cam", description = "", category = ModuleCategory.RENDER, keyBind = Keyboard.KEY_F8)
+@ModuleInfo(name = "Freecam", spacedName = "Free cam", category = ModuleCategory.RENDER, keyBind = Keyboard.KEY_F8)
 public class Freecam extends Module {
     private final FloatValue speedValue = new FloatValue("Speed", 1F, 0.1F, 2F, "m");
     private final BoolValue flyValue = new BoolValue("Fly", true);

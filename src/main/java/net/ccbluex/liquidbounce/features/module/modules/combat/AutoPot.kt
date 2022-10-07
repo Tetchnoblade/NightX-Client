@@ -25,7 +25,7 @@ import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.potion.Potion
 import net.minecraft.potion.PotionEffect
 
-@ModuleInfo(name = "AutoPot", spacedName = "Auto Pot", category = ModuleCategory.COMBAT, description = "")
+@ModuleInfo(name = "AutoPot", spacedName = "Auto Pot", category = ModuleCategory.COMBAT)
 class AutoPot : Module() {
 
     private val modeValue = ListValue("Mode", arrayOf("JumpOnly", "Floor"), "JumpOnly")

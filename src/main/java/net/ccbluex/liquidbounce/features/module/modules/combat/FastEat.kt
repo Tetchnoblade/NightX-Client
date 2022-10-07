@@ -17,7 +17,7 @@ import net.minecraft.item.ItemPotion
 import net.minecraft.network.play.client.C03PacketPlayer
 import java.util.*
 
-@ModuleInfo(name = "FastEat", spacedName = "Fast Eat", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "FastEat", spacedName = "Fast Eat", category = ModuleCategory.COMBAT)
 class FastEat : Module() {
 
     private val modeValue = ListValue("Mode", arrayOf("Instant", "NCP", "AAC", "CustomDelay", "AACv4_2"), "Instant")

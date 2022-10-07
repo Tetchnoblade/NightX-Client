@@ -13,7 +13,7 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.Vec3
 
-@ModuleInfo(name = "AntiObbyTrap", description = "", category = ModuleCategory.WORLD)
+@ModuleInfo(name = "AntiObbyTrap", category = ModuleCategory.WORLD)
 class AntiObbyTrap : Module() {
 
     @EventTarget

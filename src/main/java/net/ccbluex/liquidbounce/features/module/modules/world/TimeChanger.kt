@@ -19,7 +19,7 @@ import net.ccbluex.liquidbounce.value.ListValue
 import net.minecraft.network.play.server.S03PacketTimeUpdate
 import java.util.*
 
-@ModuleInfo(name = "TimeChanger", description = "", category = ModuleCategory.WORLD)
+@ModuleInfo(name = "TimeChanger", spacedName = "Time Changer", category = ModuleCategory.WORLD)
 class TimeChanger : Module() {
     val timeModeValue = ListValue("Time", arrayOf("Static", "Cycle"), "Static")
     val cycleSpeedValue = IntegerValue("CycleSpeed", 30, -30, 100, { timeModeValue.get().equals("cycle", true) })

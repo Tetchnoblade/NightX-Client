@@ -25,7 +25,7 @@ import java.util.LinkedList;
 
 import static org.lwjgl.opengl.GL11.*;
 
-@ModuleInfo(name = "AntiFall", spacedName = "Anti Fall", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "AntiFall", spacedName = "Anti Fall", category = ModuleCategory.PLAYER)
 public class AntiFall extends Module {
 
     public final ListValue voidDetectionAlgorithm = new ListValue("Detect-Method", new String[]{"Collision", "Predict"}, "Collision");

@@ -10,7 +10,7 @@ import net.ccbluex.liquidbounce.value.BoolValue
 import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 
-@ModuleInfo(name = "NoRotate", spacedName = "No Rotate", description = "", category = ModuleCategory.MISC)
+@ModuleInfo(name = "NoRotate", spacedName = "No Rotate", category = ModuleCategory.MISC)
 class NoRotate : Module() {
 
     private val confirmValue = BoolValue("Confirm", true)

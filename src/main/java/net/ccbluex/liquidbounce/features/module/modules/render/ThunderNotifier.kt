@@ -12,7 +12,7 @@ import net.ccbluex.liquidbounce.value.BoolValue
 import net.minecraft.network.play.server.S2CPacketSpawnGlobalEntity
 import kotlin.math.roundToInt
 
-@ModuleInfo(name = "ThunderNotifier", description = "", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "ThunderNotifier", spacedName = "Thunder Notifier", category = ModuleCategory.RENDER)
 class ThunderNotifier : Module() {
     val chatValue = BoolValue("Chat", true)
     val notifValue = BoolValue("Notification", false)

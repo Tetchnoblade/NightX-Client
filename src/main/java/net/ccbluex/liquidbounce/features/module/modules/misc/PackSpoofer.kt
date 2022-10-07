@@ -12,7 +12,7 @@ import java.io.File
 import java.net.URI
 import java.net.URISyntaxException
 
-@ModuleInfo(name = "PackSpoofer", spacedName = "Pack Spoofer", description = "", category = ModuleCategory.MISC)
+@ModuleInfo(name = "PackSpoofer", spacedName = "Pack Spoofer", category = ModuleCategory.MISC)
 class PackSpoofer : Module() {
 
     @EventTarget

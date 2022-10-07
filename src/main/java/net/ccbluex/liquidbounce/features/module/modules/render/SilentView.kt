@@ -15,7 +15,7 @@ import net.ccbluex.liquidbounce.utils.RotationUtils
 import net.ccbluex.liquidbounce.value.ListValue
 import net.minecraft.network.play.client.C03PacketPlayer
 
-@ModuleInfo(name = "SilentView", description = "", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "SilentView", category = ModuleCategory.RENDER)
 class SilentView : Module() {
 
     var mode = ListValue("Mode", arrayOf("Head", "Full"), "Full")

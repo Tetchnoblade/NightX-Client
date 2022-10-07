@@ -25,7 +25,7 @@ import java.awt.*;
 
 import static org.lwjgl.opengl.GL11.*;
 
-@ModuleInfo(name = "ChestESP", spacedName = "Chest ESP", description = "", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "ChestESP", spacedName = "Chest ESP", category = ModuleCategory.RENDER)
 public class ChestESP extends Module {
     private final ListValue modeValue = new ListValue("Mode", new String[]{"Box", "OtherBox", "Outline", "ShaderOutline", "ShaderGlow", "2D", "WireFrame"}, "OtherBox");
 

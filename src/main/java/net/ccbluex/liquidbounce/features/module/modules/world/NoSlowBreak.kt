@@ -5,7 +5,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.value.BoolValue
 
-@ModuleInfo(name = "NoSlowBreak", spacedName = "No Slow Break", description = "", category = ModuleCategory.WORLD)
+@ModuleInfo(name = "NoSlowBreak", spacedName = "No Slow Break", category = ModuleCategory.WORLD)
 class NoSlowBreak : Module() {
     val airValue = BoolValue("Air", true)
     val waterValue = BoolValue("Water", false)

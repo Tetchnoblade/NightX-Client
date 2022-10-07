@@ -436,14 +436,12 @@ public abstract class MixinItemRenderer {
                                     break;
                                 }
                                 case "Sigma3": {
-                                    this.func_178096_b(f, f1);
-                                    if (BlockAnimations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.doBlockTransformations();
-                                    GlStateManager.translate(0.5F, 0.2F, 0.0F);
-                                    if (BlockAnimations.RotateItems.get())
-                                        rotateItemAnim();
+                                    transformFirstPersonItem(f / 2.0F, f1);
+                                    GL11.glTranslated(0.14D, -0.03D, -0.3D);
+                                    float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                    GlStateManager.rotate(Swang * 25.0F / 2.0F, -Swang, -0.0F, 9.0F);
+                                    GlStateManager.rotate(Swang * 15.0F, 1.0F, -Swang / 2.0F, -0.0F);
+                                    doBlockTransformations();
                                     break;
                                 }
                                 case "Okura": {
@@ -655,6 +653,11 @@ public abstract class MixinItemRenderer {
                                         rotateItemAnim();
                                     break;
                                 }
+                                case "1.8":{
+                                    transformFirstPersonItem(0F,0F);
+                                    doBlockTransformations();
+                                    break;
+                                }
                                 case "Sigma4": {
                                     float var15 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927f);
                                     this.sigmaold(f * 0.5f, 0);
@@ -669,6 +672,17 @@ public abstract class MixinItemRenderer {
                                     GlStateManager.scale(1.2f, 1.2f, 1.2f);
                                     if (BlockAnimations.RotateItems.get())
                                         rotateItemAnim();
+                                    break;
+                                }
+                                case "Swift": {
+                                    sigmaold(f, f1);
+                                    float var15 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                    GlStateManager.rotate(-var15 * 55.0F / 2.0F, -8.0F, -0.0F, 9.0F);
+                                    GlStateManager.rotate(-var15 * 45.0F, 1.0F, var15 / 2.0F, -0.0F);
+                                    doBlockTransformations();
+                                    GL11.glTranslated(1.2D, 0.3D, 0.5D);
+                                    GL11.glTranslatef(-1.0F, mc.thePlayer.isSneaking() ? -0.1F : -0.2F, 0.2F);
+                                    GlStateManager.scale(1.2F, 1.2F, 1.2F);
                                     break;
                                 }
                                 case "SmoothFloat": {
@@ -872,7 +886,8 @@ public abstract class MixinItemRenderer {
                             rotateItemAnim();
                 }
             } else {
-                this.doItemUsedTransformations(f1);
+                if (!BlockAnimations.swingAnimValue.get())
+                    this.doItemUsedTransformations(f1);
                 this.transformFirstPersonItem(f, f1);
                 if (LiquidBounce.moduleManager.getModule(BlockAnimations.class).getState() && BlockAnimations.RotateItems.get())
                     rotateItemAnim();

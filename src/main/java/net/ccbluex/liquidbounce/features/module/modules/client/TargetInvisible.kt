@@ -5,7 +5,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.utils.EntityUtils
 
-@ModuleInfo(name = "TargetInvisible", description = "", category = ModuleCategory.CLIENT, array = false)
+@ModuleInfo(name = "TargetInvisible", category = ModuleCategory.CLIENT, array = false)
 class TargetInvisible : Module() {
     override fun onEnable() {
         super.onEnable()

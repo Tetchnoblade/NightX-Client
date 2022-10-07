@@ -16,7 +16,7 @@ import net.ccbluex.liquidbounce.value.BoolValue
 import net.minecraft.network.play.client.C0BPacketEntityAction
 import net.minecraft.potion.Potion
 
-@ModuleInfo(name = "Sprint", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Sprint", category = ModuleCategory.MOVEMENT)
 class Sprint : Module() {
 
     val allDirectionsValue = BoolValue("AllDirections", true)

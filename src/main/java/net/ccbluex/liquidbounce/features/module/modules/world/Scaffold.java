@@ -42,7 +42,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
-@ModuleInfo(name = "Scaffold", description = "", category = ModuleCategory.WORLD)
+@ModuleInfo(name = "Scaffold", category = ModuleCategory.WORLD)
 public class Scaffold extends Module {
 
     /**

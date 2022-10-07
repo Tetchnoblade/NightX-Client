@@ -16,7 +16,6 @@ open class Module : MinecraftInstance(), Listenable {
     // TODO: Remove ModuleInfo and change to constructor (#Kotlin)
     var name: String
     var spacedName: String
-    var description: String
     var category: ModuleCategory
     var keyBind = Keyboard.CHAR_NONE
         set(keyBind) {
@@ -44,7 +43,6 @@ open class Module : MinecraftInstance(), Listenable {
 
         name = moduleInfo.name
         spacedName = if (moduleInfo.spacedName == "") name else moduleInfo.spacedName
-        description = moduleInfo.description
         category = moduleInfo.category
         keyBind = moduleInfo.keyBind
         array = moduleInfo.array

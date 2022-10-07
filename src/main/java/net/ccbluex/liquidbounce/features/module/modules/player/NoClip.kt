@@ -6,7 +6,7 @@ import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 
-@ModuleInfo(name = "NoClip", spacedName = "No Clip", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "NoClip", spacedName = "No Clip", category = ModuleCategory.PLAYER)
 class NoClip : Module() {
 
     override fun onDisable() {

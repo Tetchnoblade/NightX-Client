@@ -5,7 +5,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.utils.EntityUtils
 
-@ModuleInfo(name = "TargetMobs", description = "", category = ModuleCategory.CLIENT, array = false)
+@ModuleInfo(name = "TargetMobs", category = ModuleCategory.CLIENT, array = false)
 class TargetMobs : Module() {
     override fun onEnable() {
         super.onEnable()

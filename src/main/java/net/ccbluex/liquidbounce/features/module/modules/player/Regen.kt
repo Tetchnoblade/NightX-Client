@@ -13,7 +13,7 @@ import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.potion.Potion
 import java.util.*
 
-@ModuleInfo(name = "Regen", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "Regen", category = ModuleCategory.PLAYER)
 class Regen : Module() {
 
     private val modeValue = ListValue("Mode", arrayOf("Vanilla", "Spartan"), "Vanilla")

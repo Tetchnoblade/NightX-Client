@@ -7,7 +7,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.value.BoolValue
 
-@ModuleInfo(name = "SafeWalk", spacedName = "Safe Walk", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "SafeWalk", spacedName = "Safe Walk", category = ModuleCategory.MOVEMENT)
 class SafeWalk : Module() {
 
     private val airSafeValue = BoolValue("AirSafe", false)

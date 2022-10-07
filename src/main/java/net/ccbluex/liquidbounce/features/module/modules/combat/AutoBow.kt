@@ -13,7 +13,7 @@ import net.minecraft.network.play.client.C07PacketPlayerDigging.Action
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 
-@ModuleInfo(name = "AutoBow", spacedName = "Auto Bow", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AutoBow", spacedName = "Auto Bow", category = ModuleCategory.COMBAT)
 class AutoBow : Module() {
 
     private val waitForBowAimbot = BoolValue("WaitForBowAimbot", true)

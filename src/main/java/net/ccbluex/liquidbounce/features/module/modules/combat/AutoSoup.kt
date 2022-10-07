@@ -17,7 +17,7 @@ import net.minecraft.network.play.client.*
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 
-@ModuleInfo(name = "AutoSoup", spacedName = "Auto Soup", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AutoSoup", spacedName = "Auto Soup", category = ModuleCategory.COMBAT)
 class AutoSoup : Module() {
 
     private val healthValue = FloatValue("Health", 15f, 0f, 20f)

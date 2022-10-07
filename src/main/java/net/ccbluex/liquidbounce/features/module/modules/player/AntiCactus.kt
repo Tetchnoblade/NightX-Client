@@ -8,7 +8,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.minecraft.block.BlockCactus
 import net.minecraft.util.AxisAlignedBB
 
-@ModuleInfo(name = "AntiCactus", spacedName = "Anti Cactus", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "AntiCactus", spacedName = "Anti Cactus", category = ModuleCategory.PLAYER)
 class AntiCactus : Module() {
 
     @EventTarget

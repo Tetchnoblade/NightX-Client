@@ -37,7 +37,6 @@ import java.util.stream.IntStream
 @ModuleInfo(
     name = "InventoryCleaner",
     spacedName = "Inventory Cleaner",
-    description = "",
     category = ModuleCategory.PLAYER
 )
 class InventoryCleaner : Module() {

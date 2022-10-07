@@ -12,7 +12,7 @@ import net.ccbluex.liquidbounce.value.ListValue;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 
-@ModuleInfo(name = "Sneak", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Sneak", category = ModuleCategory.MOVEMENT)
 public class Sneak extends Module {
 
     public final ListValue modeValue = new ListValue("Mode", new String[]{"Normal", "Legit", "Vanilla", "Switch", "AAC3.6.4"}, "Normal");

@@ -22,7 +22,7 @@ import net.minecraft.util.AxisAlignedBB
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
-@ModuleInfo(name = "TargetESP", spacedName = "Target ESP", description = "", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "TargetESP", spacedName = "Target ESP", category = ModuleCategory.RENDER)
 class TargetESP : Module() {
     val radius = FloatValue("Radius", 1.2f, 0.1f, 4.0f, "m")
     private val render = BoolValue("Render", true)

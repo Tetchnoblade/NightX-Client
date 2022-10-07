@@ -11,7 +11,7 @@ import net.ccbluex.liquidbounce.utils.AnimationUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
 import net.ccbluex.liquidbounce.value.*
 
-@ModuleInfo(name = "HUD", description = "", category = ModuleCategory.RENDER, array = false)
+@ModuleInfo(name = "HUD", category = ModuleCategory.RENDER, array = false)
 class HUD : Module() {
     val tabHead = BoolValue("Tab-HeadOverlay", false)
     val animHotbarValue = BoolValue("AnimatedHotbar", false)

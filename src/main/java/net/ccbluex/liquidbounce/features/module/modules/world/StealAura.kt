@@ -24,7 +24,7 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.Vec3
 
-@ModuleInfo(name = "StealAura", spacedName = "Steal Aura", description = "", category = ModuleCategory.WORLD)
+@ModuleInfo(name = "StealAura", spacedName = "Steal Aura", category = ModuleCategory.WORLD)
 object StealAura : Module() {
 
     private val rangeValue = FloatValue("Range", 4F, 1F, 6F, "m")

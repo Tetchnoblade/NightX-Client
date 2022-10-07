@@ -45,7 +45,7 @@ import kotlin.concurrent.schedule
 import kotlin.math.ceil
 import kotlin.math.sqrt
 
-@ModuleInfo(name = "NoFall", spacedName = "No Fall", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "NoFall", spacedName = "No Fall", category = ModuleCategory.PLAYER)
 class NoFall : Module() {
     val typeValue = ListValue(
         "Type",

@@ -15,7 +15,7 @@ import net.minecraft.client.settings.GameSettings
 import net.minecraft.client.settings.KeyBinding
 import java.util.*
 
-@ModuleInfo(name = "AntiAFK", spacedName = "Anti AFK", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "AntiAFK", spacedName = "Anti AFK", category = ModuleCategory.PLAYER)
 class AntiAFK : Module() {
 
     private val swingDelayTimer = MSTimer()

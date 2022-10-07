@@ -26,7 +26,7 @@ import net.minecraft.util.EnumFacing;
 
 import java.awt.*;
 
-@ModuleInfo(name = "BowLongJump", spacedName = "Bow Long Jump", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "BowLongJump", spacedName = "Bow Long Jump", category = ModuleCategory.MOVEMENT)
 public class BowLongJump extends Module {
 
     private final FloatValue boostValue = new FloatValue("Boost", 0.96F, 0F, 10F, "x");

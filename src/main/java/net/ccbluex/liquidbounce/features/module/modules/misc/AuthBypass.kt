@@ -32,7 +32,7 @@ import net.minecraft.network.play.server.S2FPacketSetSlot
 import org.apache.commons.io.IOUtils
 import java.util.*
 
-@ModuleInfo(name = "AuthBypass", spacedName = "Auth Bypass", description = "", category = ModuleCategory.MISC)
+@ModuleInfo(name = "AuthBypass", spacedName = "Auth Bypass", category = ModuleCategory.MISC)
 class AuthBypass : Module() {
     private val delayValue = IntegerValue("Delay", 100, 100, 5000, "ms")
 

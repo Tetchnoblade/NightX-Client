@@ -5,7 +5,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleCategory;
 import net.ccbluex.liquidbounce.features.module.ModuleInfo;
 import net.ccbluex.liquidbounce.value.BoolValue;
 
-@ModuleInfo(name = "Patcher", description = "", category = ModuleCategory.MISC, canEnable = false)
+@ModuleInfo(name = "Patcher", category = ModuleCategory.MISC, canEnable = false)
 public class Patcher extends Module {
 
     public static final BoolValue noHitDelay = new BoolValue("NoHitDelay", true);

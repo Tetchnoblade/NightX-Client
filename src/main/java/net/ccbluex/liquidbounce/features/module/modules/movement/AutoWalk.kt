@@ -7,7 +7,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.minecraft.client.settings.GameSettings
 
-@ModuleInfo(name = "AutoWalk", spacedName = "Auto Walk", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "AutoWalk", spacedName = "Auto Walk", category = ModuleCategory.MOVEMENT)
 class AutoWalk : Module() {
 
     @EventTarget

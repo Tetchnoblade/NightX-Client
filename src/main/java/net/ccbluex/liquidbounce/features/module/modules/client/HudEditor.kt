@@ -7,7 +7,6 @@ import net.ccbluex.liquidbounce.ui.client.hud.designer.GuiHudDesigner
 
 @ModuleInfo(
     name = "HudEditor",
-    description = "",
     category = ModuleCategory.CLIENT,
     forceNoSound = true,
     onlyEnable = true,

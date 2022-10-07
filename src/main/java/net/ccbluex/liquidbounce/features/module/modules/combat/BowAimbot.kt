@@ -18,7 +18,7 @@ import net.minecraft.item.ItemBow
 import java.awt.Color
 import java.util.*
 
-@ModuleInfo(name = "BowAimbot", spacedName = "Bow Aimbot", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "BowAimbot", spacedName = "Bow Aimbot", category = ModuleCategory.COMBAT)
 class BowAimbot : Module() {
 
     private val silentValue = BoolValue("Silent", true)

@@ -29,7 +29,7 @@ import net.minecraft.util.Vec3
 import java.awt.Color
 import java.util.*
 
-@ModuleInfo(name = "BedNuker", description = "", category = ModuleCategory.WORLD)
+@ModuleInfo(name = "BedNuker", category = ModuleCategory.WORLD)
 object BedNuker : Module() {
 
     /**

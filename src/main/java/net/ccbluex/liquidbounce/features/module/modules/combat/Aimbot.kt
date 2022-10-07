@@ -15,7 +15,7 @@ import net.ccbluex.liquidbounce.value.BoolValue
 import net.ccbluex.liquidbounce.value.FloatValue
 import kotlin.random.Random
 
-@ModuleInfo(name = "Aimbot", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "Aimbot", category = ModuleCategory.COMBAT)
 class Aimbot : Module() {
 
     private val rangeValue = FloatValue("Range", 1000F, 1F, 1000F, "m")

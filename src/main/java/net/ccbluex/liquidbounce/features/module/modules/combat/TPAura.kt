@@ -37,7 +37,7 @@ import java.awt.Color
 import java.util.*
 
 @ModuleInfo(
-    name = "TPAura", spacedName = "TP Aura", description = "",
+    name = "TPAura", spacedName = "TP Aura",
     category = ModuleCategory.COMBAT
 )
 class TPAura : Module() {

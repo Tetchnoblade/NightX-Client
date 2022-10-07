@@ -17,7 +17,6 @@ import net.minecraft.entity.player.EntityPlayer
 @ModuleInfo(
     name = "NoRender",
     spacedName = "No Render",
-    description = "",
     category = ModuleCategory.RENDER,
     array = false
 )

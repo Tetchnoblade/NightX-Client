@@ -24,7 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static org.lwjgl.opengl.GL11.*;
 
-@ModuleInfo(name = "Blink", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "Blink", category = ModuleCategory.PLAYER)
 public class Blink extends Module {
 
     public final BoolValue pulseValue = new BoolValue("Pulse", true);

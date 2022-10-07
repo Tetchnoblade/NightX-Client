@@ -8,7 +8,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.init.Blocks
 
-@ModuleInfo(name = "AutoBreak", spacedName = "Auto Break", description = "", category = ModuleCategory.WORLD)
+@ModuleInfo(name = "AutoBreak", spacedName = "Auto Break", category = ModuleCategory.WORLD)
 class AutoBreak : Module() {
 
     @EventTarget

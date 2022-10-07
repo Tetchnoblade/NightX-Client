@@ -34,7 +34,7 @@ import net.minecraft.util.Vec3
 import java.awt.Color
 import kotlin.math.roundToInt
 
-@ModuleInfo(name = "Nuker", description = "", category = ModuleCategory.WORLD)
+@ModuleInfo(name = "Nuker", category = ModuleCategory.WORLD)
 class Nuker : Module() {
 
     /**

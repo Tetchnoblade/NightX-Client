@@ -9,7 +9,7 @@ import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.value.Value
 
 @Suppress("unused")
-@ModuleInfo(name = "ScriptModule", description = "Empty", category = ModuleCategory.MISC)
+@ModuleInfo(name = "ScriptModule", category = ModuleCategory.MISC)
 class ScriptModule(private val moduleObject: JSObject) : Module() {
 
     private val events = HashMap<String, JSObject>()
@@ -23,7 +23,6 @@ class ScriptModule(private val moduleObject: JSObject) : Module() {
 
     init {
         name = moduleObject.getMember("name") as String
-        description = moduleObject.getMember("description") as String
 
         if (moduleObject.hasMember("spacedName"))
             spacedName = moduleObject.getMember("spacedName") as String

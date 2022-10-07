@@ -1,10 +1,3 @@
-/*
- * LiquidBounce+ Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
- * https://github.com/WYSI-Foundation/LiquidBouncePlus/
- *
- * This code was taken from UnlegitMC/FDPClient, modified. Please credit them and us when using this code in your repository.
- */
 package net.ccbluex.liquidbounce.features.module.modules.misc
 
 import net.ccbluex.liquidbounce.LiquidBounce
@@ -27,12 +20,12 @@ import net.minecraft.util.IChatComponent
 import java.util.*
 import kotlin.concurrent.schedule
 
-@ModuleInfo(name = "AutoPlay", spacedName = "Auto Play", description = "", category = ModuleCategory.MISC)
+@ModuleInfo(name = "AutoPlay", spacedName = "Auto Play", category = ModuleCategory.MISC)
 class AutoPlay : Module() {
     private var clickState = 0
     private val modeValue = ListValue(
         "Server",
-        arrayOf("RedeSky", "BlocksMC", "Minemora", "Hypixel", "Jartex", "MineFC/HeroMC_Bedwars"),
+        arrayOf("RedeSky", "BlocksMC", "Minemora", "Hypixel", "Jartex"),
         "Hypixel"
     )
     private val bwModeValue = ListValue(
@@ -201,40 +194,6 @@ class AutoPlay : Module() {
                         }
                     }
                     process(packet.chatComponent)
-                }
-
-                "minefc/heromc_bedwars" -> {
-                    if (text.contains("Bạn đã bị loại!", false)
-                        || text.contains("đã thắng trò chơi", false)
-                    ) {
-                        mc.thePlayer.sendChatMessage("/bw leave")
-                        waitForLobby = true
-                    }
-                    if (((waitForLobby || autoStartValue.get()) && text.contains("¡Hiển thị", false))
-                        || (replayWhenKickedValue.get() && text.contains(
-                            "[Anticheat] You have been kicked from the server!",
-                            false
-                        ))
-                    ) {
-                        queueAutoPlay {
-                            mc.thePlayer.sendChatMessage("/bw join ${bwModeValue.get()}")
-                        }
-                        waitForLobby = false
-                    }
-                    if (showGuiWhenFailedValue.get() && text.contains("giây", false) && text.contains(
-                            "thất bại",
-                            false
-                        )
-                    ) {
-                        LiquidBounce.hud.addNotification(
-                            Notification(
-                                "Failed to join, showing GUI...",
-                                Notification.Type.ERROR,
-                                1000L
-                            )
-                        )
-                        mc.thePlayer.sendChatMessage("/bw gui ${bwModeValue.get()}")
-                    }
                 }
             }
         }

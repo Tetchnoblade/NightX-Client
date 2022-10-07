@@ -17,7 +17,7 @@ import net.minecraft.util.MathHelper
 import kotlin.math.cos
 import kotlin.math.sin
 
-@ModuleInfo(name = "Step", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Step", category = ModuleCategory.MOVEMENT)
 class Step : Module() {
 
     /**

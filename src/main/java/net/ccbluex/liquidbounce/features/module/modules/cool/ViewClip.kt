@@ -4,5 +4,5 @@ import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 
-@ModuleInfo(name = "ViewClip", spacedName = "View Clip", description = "", category = ModuleCategory.COOL)
+@ModuleInfo(name = "ViewClip", spacedName = "View Clip", category = ModuleCategory.COOL)
 class ViewClip : Module()

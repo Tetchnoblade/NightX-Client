@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
 
-@ModuleInfo(name = "Trails", description = "", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "Trails", category = ModuleCategory.RENDER)
 public class Trails extends Module {
     public final BoolValue unlimitedValue = new BoolValue("Unlimited", false);
     public final FloatValue lineWidth = new FloatValue("LineWidth", 5F, 1F, 10F);

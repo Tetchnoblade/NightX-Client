@@ -14,10 +14,10 @@ import net.ccbluex.liquidbounce.value.TextValue;
 
 import java.util.Random;
 
-@ModuleInfo(name = "Spammer", description = "", category = ModuleCategory.MISC)
+@ModuleInfo(name = "Spammer", category = ModuleCategory.MISC)
 public class Spammer extends Module {
 
-    private final TextValue messageValue = new TextValue("Message", "こめたろぁE�Eごみ�E�Ew)こめたろぁE�Eごみ�E�Ew)こめたろぁE�Eごみ�E�Ew)こめたろぁE�Eごみ�E�Ew)");
+    private final TextValue messageValue = new TextValue("Message", "こめたろぁE�E�Eごみ�E�E�E�Ew)こめたろぁE�E�Eごみ�E�E�E�Ew)こめたろぁE�E�Eごみ�E�E�E�Ew)こめたろぁE�E�Eごみ�E�E�E�Ew)");
     private final BoolValue customValue = new BoolValue("Custom", true);    private final IntegerValue maxDelayValue = new IntegerValue("MaxDelay", 1500, 0, 5000, "ms") {
         @Override
         protected void onChanged(final Integer oldValue, final Integer newValue) {

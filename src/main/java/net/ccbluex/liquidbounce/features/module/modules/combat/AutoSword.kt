@@ -15,7 +15,7 @@ import net.minecraft.item.ItemSword
 import net.minecraft.network.play.client.C02PacketUseEntity
 import net.minecraft.network.play.client.C09PacketHeldItemChange
 
-@ModuleInfo(name = "AutoSword", spacedName = "Auto Sword", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AutoSword", spacedName = "Auto Sword", category = ModuleCategory.COMBAT)
 class AutoSword : Module() {
 
     private val silentValue = BoolValue("SpoofItem", false)

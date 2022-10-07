@@ -43,7 +43,7 @@ import kotlin.math.min
 import kotlin.math.sin
 
 @ModuleInfo(
-    name = "KillAura", spacedName = "Kill Aura", description = "",
+    name = "KillAura", spacedName = "Kill Aura",
     category = ModuleCategory.COMBAT
 )
 class KillAura : Module() {
@@ -155,7 +155,7 @@ class KillAura : Module() {
     // Bypass
     private val swingValue = BoolValue("Swing", true)
     private val swingOrderValue = BoolValue("1.9OrderCheck", true, { swingValue.get() })
-    private val keepSprintValue = BoolValue("KeepSprint", true)
+    private val keepSprintValue = BoolValue("NoKeepSprint", false)
 
     // AutoBlock
     private val autoBlockModeValue =

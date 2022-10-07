@@ -38,7 +38,7 @@ import java.text.DecimalFormat;
 import static net.ccbluex.liquidbounce.utils.render.WorldToScreen.getMatrix;
 import static org.lwjgl.opengl.GL11.*;
 
-@ModuleInfo(name = "ESP", description = "", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "ESP", category = ModuleCategory.RENDER)
 public class ESP extends Module {
 
     public static boolean renderNameTags = true;

@@ -16,7 +16,7 @@ import net.minecraft.block.BlockVine
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 
-@ModuleInfo(name = "FastLadder", spacedName = "Fast Ladder", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "FastLadder", spacedName = "Fast Ladder", category = ModuleCategory.MOVEMENT)
 class FastLadder : Module() {
 
     val modeValue = ListValue(

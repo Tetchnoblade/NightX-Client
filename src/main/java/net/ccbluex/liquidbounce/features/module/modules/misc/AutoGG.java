@@ -24,7 +24,7 @@ import net.minecraft.util.MathHelper;
 import java.awt.*;
 import java.text.DecimalFormat;
 
-@ModuleInfo(name = "AutoGG", spacedName = "Auto GG", description = "", category = ModuleCategory.MISC)
+@ModuleInfo(name = "AutoGG", spacedName = "Auto GG", category = ModuleCategory.MISC)
 public class AutoGG extends Module {
 
     public static String gameMode = "NONE";

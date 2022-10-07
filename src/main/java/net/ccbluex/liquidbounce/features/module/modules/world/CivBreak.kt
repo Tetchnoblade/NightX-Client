@@ -17,7 +17,7 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import java.awt.Color
 
-@ModuleInfo(name = "CivBreak", spacedName = "Civ Break", description = "", category = ModuleCategory.WORLD)
+@ModuleInfo(name = "CivBreak", spacedName = "Civ Break", category = ModuleCategory.WORLD)
 class CivBreak : Module() {
 
     private var blockPos: BlockPos? = null

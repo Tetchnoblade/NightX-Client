@@ -7,7 +7,7 @@ import net.ccbluex.liquidbounce.value.FloatValue;
 import net.ccbluex.liquidbounce.value.IntegerValue;
 import net.ccbluex.liquidbounce.value.ListValue;
 
-@ModuleInfo(name = "EnchantColor", spacedName = "Enchant Color", description = "", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "EnchantColor", spacedName = "Enchant Color", category = ModuleCategory.RENDER)
 public class EnchantColor extends Module {
     public IntegerValue redValue = new IntegerValue("Red", 180, 0, 255);
     public IntegerValue greenValue = new IntegerValue("Green", 0, 0, 255);

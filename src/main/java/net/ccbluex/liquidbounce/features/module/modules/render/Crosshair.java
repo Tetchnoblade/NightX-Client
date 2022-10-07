@@ -23,7 +23,7 @@ import java.awt.*;
 
 import static org.lwjgl.opengl.GL11.*;
 
-@ModuleInfo(name = "Crosshair", description = "", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "Crosshair", category = ModuleCategory.RENDER)
 public class Crosshair extends Module {
 
     //Rainbow thingy
