@@ -184,7 +184,8 @@ class ModuleManager : Listenable {
             TargetMobs::class.java,
             TargetPlayers::class.java,
             TargetAnimals::class.java,
-            TargetInvisible::class.java
+            TargetInvisible::class.java,
+            AutoArmor::class.java
         )
 
         registerModule(BedNuker)

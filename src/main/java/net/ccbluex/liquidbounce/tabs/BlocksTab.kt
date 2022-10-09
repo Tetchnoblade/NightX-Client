@@ -6,7 +6,7 @@ import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-class BlocksTab : CreativeTabs("Special blocks") {
+class BlocksTab : CreativeTabs("Mod Items") {
 
     /**
      * Initialize of special blocks tab
@@ -30,6 +30,7 @@ class BlocksTab : CreativeTabs("Special blocks") {
         itemList.add(ItemStack(Blocks.farmland))
         itemList.add(ItemStack(Blocks.mob_spawner))
         itemList.add(ItemStack(Blocks.lit_furnace))
+        itemList.add(ItemStack(Items.spawn_egg))
     }
 
     /**
@@ -44,7 +45,7 @@ class BlocksTab : CreativeTabs("Special blocks") {
      *
      * @return tab name
      */
-    override fun getTranslatedTabLabel() = "Special blocks"
+    override fun getTranslatedTabLabel() = "Mod Items"
 
     /**
      * @return searchbar status

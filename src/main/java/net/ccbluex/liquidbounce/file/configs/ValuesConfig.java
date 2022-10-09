@@ -78,22 +78,22 @@ public class ValuesConfig extends FileConfig {
 
                 if (jsonValue.has("DarkMode"))
                     LiquidBounce.INSTANCE.setDarkMode(jsonValue.get("DarkMode").getAsBoolean());
-                if (jsonValue.has("AntiForge"))
-                    AntiForge.enabled = jsonValue.get("AntiForge").getAsBoolean();
-                if (jsonValue.has("AntiForgeFML"))
-                    AntiForge.blockFML = jsonValue.get("AntiForgeFML").getAsBoolean();
-                if (jsonValue.has("AntiForgeProxy"))
-                    AntiForge.blockProxyPacket = jsonValue.get("AntiForgeProxy").getAsBoolean();
-                if (jsonValue.has("AntiForgePayloads"))
-                    AntiForge.blockPayloadPackets = jsonValue.get("AntiForgePayloads").getAsBoolean();
-                if (jsonValue.has("BungeeSpoof"))
-                    BungeeCordSpoof.enabled = jsonValue.get("BungeeSpoof").getAsBoolean();
+                if (jsonValue.has("VanillaSpoof"))
+                    AntiForge.enabled = jsonValue.get("VanillaSpoof").getAsBoolean();
+                if (jsonValue.has("FMLSpoof"))
+                    AntiForge.blockFML = jsonValue.get("FMLSpoof").getAsBoolean();
+                if (jsonValue.has("ProxySpoof"))
+                    AntiForge.blockProxyPacket = jsonValue.get("ProxySpoof").getAsBoolean();
+                if (jsonValue.has("PayloadsSpoof"))
+                    AntiForge.blockPayloadPackets = jsonValue.get("PayloadsSpoof").getAsBoolean();
+                if (jsonValue.has("BungeeExploit"))
+                    BungeeCordSpoof.enabled = jsonValue.get("BungeeExploit").getAsBoolean();
             } else if (entry.getKey().equalsIgnoreCase("thealtening")) {
                 JsonObject jsonValue = (JsonObject) entry.getValue();
 
                 if (jsonValue.has("API-Key"))
                     GuiTheAltening.Companion.setApiKey(jsonValue.get("API-Key").getAsString());
-            } else if (entry.getKey().equalsIgnoreCase("MainMenuParallax")) {
+            } else if (entry.getKey().equalsIgnoreCase("MainMenuMoveable")) {
                 GuiMainMenu.Companion.setUseParallax(entry.getValue().getAsBoolean());
             } else if (entry.getKey().equalsIgnoreCase("Background")) {
                 JsonObject jsonValue = (JsonObject) entry.getValue();
@@ -150,18 +150,18 @@ public class ValuesConfig extends FileConfig {
 
         final JsonObject jsonFeatures = new JsonObject();
         jsonFeatures.addProperty("DarkMode", LiquidBounce.INSTANCE.getDarkMode());
-        jsonFeatures.addProperty("AntiForge", AntiForge.enabled);
-        jsonFeatures.addProperty("AntiForgeFML", AntiForge.blockFML);
-        jsonFeatures.addProperty("AntiForgeProxy", AntiForge.blockProxyPacket);
-        jsonFeatures.addProperty("AntiForgePayloads", AntiForge.blockPayloadPackets);
-        jsonFeatures.addProperty("BungeeSpoof", BungeeCordSpoof.enabled);
+        jsonFeatures.addProperty("VanillaSpoof", AntiForge.enabled);
+        jsonFeatures.addProperty("FMLSpoof", AntiForge.blockFML);
+        jsonFeatures.addProperty("ProxySpoof", AntiForge.blockProxyPacket);
+        jsonFeatures.addProperty("PayloadsSpoof", AntiForge.blockPayloadPackets);
+        jsonFeatures.addProperty("BungeeExploit", BungeeCordSpoof.enabled);
         jsonObject.add("features", jsonFeatures);
 
         final JsonObject theAlteningObject = new JsonObject();
         theAlteningObject.addProperty("API-Key", GuiTheAltening.Companion.getApiKey());
         jsonObject.add("thealtening", theAlteningObject);
 
-        jsonObject.addProperty("MainMenuParallax", GuiMainMenu.Companion.getUseParallax());
+        jsonObject.addProperty("MainMenuMoveable", GuiMainMenu.Companion.getUseParallax());
 
         final JsonObject backgroundObject = new JsonObject();
         backgroundObject.addProperty("Enabled", GuiBackground.Companion.getEnabled());

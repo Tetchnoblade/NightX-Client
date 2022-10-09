@@ -24,7 +24,7 @@ import net.ccbluex.liquidbounce.value.IntegerValue
 import net.ccbluex.liquidbounce.value.ListValue
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.gui.inventory.GuiInventory
-import net.minecraft.enchantment.EnchantmentHelper
+import net.minecraft.client.settings.KeyBinding
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityArmorStand
@@ -79,7 +79,7 @@ class KillAura : Module() {
     private val rangeSprintReducementValue = FloatValue("RangeSprintReducement", 0.02f, 0f, 0.4f, "m")
 
     // Modes
-    private val rotations = ListValue("RotationMode", arrayOf("Vanilla", "BackTrack", "Spin", "None"), "Vanilla")
+    private val rotations = ListValue("RotationMode", arrayOf("Vanilla", "BackTrack", "Spin", "None"), "BackTrack")
 
     private val spinHurtTimeValue =
         IntegerValue("Spin-HitHurtTime", 10, 0, 10, { rotations.get().equals("spin", true) })
@@ -159,7 +159,7 @@ class KillAura : Module() {
 
     // AutoBlock
     private val autoBlockModeValue =
-        ListValue("AutoBlock", arrayOf("None", "Packet", "AfterTick", "NCP", "OldHypixel"), "Packet")
+        ListValue("AutoBlock", arrayOf("None", "Interact", "Packet", "AfterTick", "NCP", "OldHypixel"), "Interact")
 
     private val displayAutoBlockSettings =
         BoolValue("Open", true, { !autoBlockModeValue.get().equals("None", true) })
@@ -1064,6 +1064,10 @@ class KillAura : Module() {
             )
             blockingStatus = true
             return
+        }
+
+        if (autoBlockModeValue.get().equals("interact", true)) {
+            KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
         }
 
         if (autoBlockModeValue.get().equals("oldhypixel", true)) {

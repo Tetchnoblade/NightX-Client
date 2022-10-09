@@ -64,11 +64,10 @@ class InventoryCleaner : Module() {
 
     // Inventory options
     private val invOpenValue = BoolValue("InvOpen", false)
-    private val invSpoof = BoolValue("InvSpoof", true)
+    private val invSpoof = BoolValue("InvSpoof", false)
     private val invSpoofOld = BoolValue("InvSpoof-Old", false, { invSpoof.get() })
 
     // Others
-    private val armorsValue = BoolValue("WearArmors", true)
     private val noMoveValue = BoolValue("NoMove", false)
     private val noScaffoldValue = BoolValue("NoScaffold", true)
     private val hotbarValue = BoolValue("Hotbar", false)
@@ -210,28 +209,6 @@ class InventoryCleaner : Module() {
         if (invSpoof.get() && !invSpoofOld.get())
             spoofInventory = true
 
-        if (armorsValue.get()) {
-            // Swap armor
-            for (i in 0..3) {
-                val ArmorPart = armorQueue[i] ?: continue
-                val armorSlot = 3 - i
-                val oldArmor: ItemStack? = mc.thePlayer.inventory.armorItemInSlot(armorSlot)
-                if (oldArmor == null || oldArmor.item !is ItemArmor || ItemHelper.compareArmor(
-                        ArmorPart(oldArmor, -1),
-                        ArmorPart,
-                        nbtArmorPriority.get(),
-                        goal
-                    ) < 0
-                ) {
-                    if (oldArmor != null && move(8 - armorSlot, true))
-                        return
-
-                    if (mc.thePlayer.inventory.armorItemInSlot(armorSlot) == null && move(ArmorPart.slot, false))
-                        return
-                }
-            }
-        }
-
         if (cleanGarbageValue.get()) while (InventoryUtils.CLICK_TIMER.hasTimePassed(delay)) {
             val garbageItems = garbageQueue.keys.toMutableList()
 
@@ -292,8 +269,6 @@ class InventoryCleaner : Module() {
     private fun findQueueItems() {
         garbageQueue.clear()
         garbageQueue = items(9, 45).filter { !isUseful(it.value, it.key) }.toMutableMap()
-
-        if (armorsValue.get()) armorQueue = findBestArmor()
     }
 
     private fun findBestArmor(): Array<ArmorPart?> {

@@ -5,12 +5,18 @@ import de.enzaxd.viaforge.util.AttackOrder;
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.event.*;
 import net.ccbluex.liquidbounce.features.module.modules.combat.AutoClicker;
+import net.ccbluex.liquidbounce.features.module.modules.combat.KillAura;
+import net.ccbluex.liquidbounce.features.module.modules.exploit.Disabler;
 import net.ccbluex.liquidbounce.features.module.modules.exploit.KeepBreaking;
+import net.ccbluex.liquidbounce.features.module.modules.misc.Annoy;
 import net.ccbluex.liquidbounce.features.module.modules.misc.Patcher;
+import net.ccbluex.liquidbounce.features.module.modules.render.SilentView;
 import net.ccbluex.liquidbounce.features.module.modules.world.FastPlace;
+import net.ccbluex.liquidbounce.features.module.modules.world.Scaffold;
 import net.ccbluex.liquidbounce.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
 import net.ccbluex.liquidbounce.ui.client.GuiMainMenu;
 import net.ccbluex.liquidbounce.utils.CPSCounter;
+import net.ccbluex.liquidbounce.utils.RotationUtils;
 import net.ccbluex.liquidbounce.utils.render.RenderUtils;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -25,6 +31,8 @@ import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.stream.IStream;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -38,6 +46,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft {
@@ -66,6 +75,8 @@ public abstract class MixinMinecraft {
     public int rightClickDelayTimer;
     @Shadow
     public GameSettings gameSettings;
+    @Shadow
+    private Entity renderViewEntity;
     @Shadow
     private boolean fullscreen;
     @Shadow
@@ -229,6 +240,51 @@ public abstract class MixinMinecraft {
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
     private void loadWorld(WorldClient p_loadWorld_1_, String p_loadWorld_2_, final CallbackInfo callbackInfo) {
         LiquidBounce.eventManager.callEvent(new WorldEvent(p_loadWorld_1_));
+    }
+
+    @Inject(method = "getRenderViewEntity", at = @At("HEAD"))
+    public void getRenderViewEntity(CallbackInfoReturnable<Entity> cir) {
+        if (renderViewEntity instanceof EntityLivingBase && RotationUtils.serverRotation != null && thePlayer != null) {
+            final SilentView silentView = LiquidBounce.moduleManager.getModule(SilentView.class);
+            final KillAura killAura = LiquidBounce.moduleManager.getModule(KillAura.class);
+            final Scaffold scaffold = LiquidBounce.moduleManager.getModule(Scaffold.class);
+            final Disabler disabler = LiquidBounce.moduleManager.getModule(Disabler.class);
+            final Annoy annoy = LiquidBounce.moduleManager.getModule(Annoy.class);
+            final EntityLivingBase entityLivingBase = (EntityLivingBase) renderViewEntity;
+            final float yaw = RotationUtils.serverRotation.getYaw();
+            if (killAura.getTarget() != null && silentView.getHeadValue().get()) {
+                entityLivingBase.rotationYawHead = yaw;
+                entityLivingBase.prevRotationYawHead = yaw;
+            }
+            if (killAura.getTarget() != null && silentView.getBodyValue().get()) {
+                entityLivingBase.renderYawOffset = yaw;
+                entityLivingBase.prevRenderYawOffset = yaw;
+            }
+            if (scaffold.getState() && silentView.getHeadValue().get()) {
+                entityLivingBase.rotationYawHead = yaw;
+                entityLivingBase.prevRotationYawHead = yaw;
+            }
+            if (scaffold.getState() && silentView.getBodyValue().get()) {
+                entityLivingBase.renderYawOffset = yaw;
+                entityLivingBase.prevRenderYawOffset = yaw;
+            }
+            if (disabler.getCanRenderInto3D() && silentView.getHeadValue().get()) {
+                entityLivingBase.rotationYawHead = yaw;
+                entityLivingBase.prevRotationYawHead = yaw;
+            }
+            if (disabler.getCanRenderInto3D() && silentView.getBodyValue().get()) {
+                entityLivingBase.renderYawOffset = yaw;
+                entityLivingBase.prevRenderYawOffset = yaw;
+            }
+            if (annoy.getState() && silentView.getHeadValue().get()) {
+                entityLivingBase.rotationYawHead = yaw;
+                entityLivingBase.prevRotationYawHead = yaw;
+            }
+            if (annoy.getState() && silentView.getBodyValue().get()) {
+                entityLivingBase.renderYawOffset = yaw;
+                entityLivingBase.prevRenderYawOffset = yaw;
+            }
+        }
     }
 
     @Inject(method = "toggleFullscreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setFullscreen(Z)V", remap = false))
