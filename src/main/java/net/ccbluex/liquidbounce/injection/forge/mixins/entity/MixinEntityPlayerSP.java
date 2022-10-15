@@ -274,7 +274,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         boolean flag2 = this.movementInput.moveForward >= f;
         this.movementInput.updatePlayerMoveState();
 
-        final NoSlowdown noSlow = LiquidBounce.moduleManager.getModule(NoSlowdown.class);
+        final NoSlow noSlow = LiquidBounce.moduleManager.getModule(NoSlow.class);
         final KillAura killAura = LiquidBounce.moduleManager.getModule(KillAura.class);
 
         if (getHeldItem() != null && (this.isUsingItem() || (getHeldItem().getItem() instanceof ItemSword && killAura.getBlockingStatus())) && !this.isRiding()) {
@@ -307,7 +307,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         }
 
         final Scaffold scaffold = LiquidBounce.moduleManager.getModule(Scaffold.class);
-        NoSlowdown noslow = LiquidBounce.moduleManager.getModule(NoSlowdown.class);
+        NoSlow noslow = LiquidBounce.moduleManager.getModule(NoSlow.class);
 
         if ((scaffold.getState() && scaffold.towerActivation() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || (scaffold.getState() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || (sprint.getState() && sprint.getCheckServerSide().get() && (onGround || !sprint.getCheckServerSideGround().get()) && !sprint.getAllDirectionsValue().get() && RotationUtils.targetRotation != null && RotationUtils.getRotationDifference(new Rotation(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch)) > 30))
             this.setSprinting(false);

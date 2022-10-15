@@ -3,7 +3,7 @@ package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.event.Render2DEvent;
 import net.ccbluex.liquidbounce.features.module.modules.cool.AntiBlind;
-import net.ccbluex.liquidbounce.features.module.modules.misc.AutoGG;
+import net.ccbluex.liquidbounce.features.module.modules.misc.AutoHypixel;
 import net.ccbluex.liquidbounce.features.module.modules.render.Crosshair;
 import net.ccbluex.liquidbounce.features.module.modules.render.HUD;
 import net.ccbluex.liquidbounce.ui.font.AWTFontRenderer;
@@ -49,7 +49,7 @@ public abstract class MixinGuiInGame extends MixinGui {
 
     @Inject(method = "renderScoreboard", at = @At("HEAD"), cancellable = true)
     private void renderScoreboard(ScoreObjective scoreObjective, ScaledResolution scaledResolution, CallbackInfo callbackInfo) {
-        if (scoreObjective != null) AutoGG.gameMode = ColorUtils.stripColor(scoreObjective.getDisplayName());
+        if (scoreObjective != null) AutoHypixel.gameMode = ColorUtils.stripColor(scoreObjective.getDisplayName());
 
         final AntiBlind antiBlind = LiquidBounce.moduleManager.getModule(AntiBlind.class);
         if ((antiBlind.getState() && antiBlind.getScoreBoard().get()) || LiquidBounce.moduleManager.getModule(HUD.class).getState())

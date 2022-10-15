@@ -24,8 +24,8 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import java.util.*
 
-@ModuleInfo(name = "NoSlowdown", spacedName = "No Slow down", category = ModuleCategory.MOVEMENT)
-class NoSlowdown : Module() {
+@ModuleInfo(name = "NoSlow", spacedName = "No Slow", category = ModuleCategory.MOVEMENT)
+class NoSlow : Module() {
     private val msTimer = MSTimer()
     private val modeValue = ListValue(
         "PacketMode",

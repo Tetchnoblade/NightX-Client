@@ -48,7 +48,7 @@ class CategoryElement(val category: ModuleCategory) : MinecraftInstance() {
                 3F,
                 ColorManager.border.rgb
             )
-        Fonts.font40.drawString(name, x + 10F, y + height / 2F - Fonts.font40.FONT_HEIGHT / 2F + 2F, -1)
+        Fonts.fontSFUI40.drawString(name, x + 10F, y + height / 2F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F, -1)
     }
 
     fun drawPanel(mX: Int, mY: Int, x: Float, y: Float, width: Float, height: Float, wheel: Int, accentColor: Color) {

@@ -62,10 +62,11 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         GL11.glPushMatrix()
         renderSwitchButton()
         renderDarkModeButton()
-        Fonts.font40.drawStringWithShadow("NightX Client (#260722)", 2F, height - 12F, -1)
-        Fonts.font40.drawStringWithShadow(
+        Fonts.fontSFUI40.drawStringWithShadow("NightX Client (#260722)", 2F, height - 12F, -1)
+        Fonts.fontLarge.drawCenteredString("Aspw-w/NightX-Client", width / 2F, this.height / 2.4F, -1)
+        Fonts.fontSFUI40.drawStringWithShadow(
             creditInfo,
-            width - 3F - Fonts.font40.getStringWidth(creditInfo),
+            width - 3F - Fonts.fontSFUI40.getStringWidth(creditInfo),
             height - 12F,
             -1
         )
@@ -192,7 +193,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
     fun renderSwitchButton() {
         sliderX = (sliderX + (if (useParallax) 2F else -2F)).coerceIn(0F, 12F)
-        Fonts.font40.drawStringWithShadow("Moveable", 28F, height - 25F, -1)
+        Fonts.fontSFUI40.drawStringWithShadow("Moveable", 28F, height - 25F, -1)
         RenderUtils.drawRoundedRect(
             4F,
             height - 24F,
@@ -243,7 +244,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             staticX + 240F,
             staticY + 20F,
             10F,
-            (if (LiquidBounce.darkMode) Color(0, 0, 0, 100) else Color(255, 255, 255, 100)).rgb
+            (if (LiquidBounce.darkMode) Color(0, 0, 0, 120) else Color(255, 255, 255, 100)).rgb
         )
 
         var index: Int = 0
@@ -310,9 +311,9 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             }
 
         if (displayString != null)
-            Fonts.font35.drawCenteredString(displayString, width / 2F, staticY + 30F, -1)
+            Fonts.fontSFUI35.drawCenteredString(displayString, width / 2F, staticY + 30F, -1)
         else
-            Fonts.font35.drawCenteredString("", width / 2F, staticY + 30F, -1)
+            Fonts.fontSFUI35.drawCenteredString("", width / 2F, staticY + 30F, -1)
 
         if (shouldAnimate) {
             if (fade == 0F)

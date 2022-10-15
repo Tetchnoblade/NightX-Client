@@ -20,7 +20,6 @@ public class Fonts {
     @FontDetails(fontName = "Minecraft Font")
     public static final FontRenderer minecraftFont = Minecraft.getMinecraft().fontRendererObj;
     private static final List<GameFontRenderer> CUSTOM_FONT_RENDERERS = new ArrayList<>();
-    // in fact these "roboto medium" is product sans lol
     @FontDetails(fontName = "Roboto Medium", fontSize = 35)
     public static GameFontRenderer font35;
     @FontDetails(fontName = "Roboto Medium", fontSize = 40)
@@ -35,8 +34,12 @@ public class Fonts {
     public static GameFontRenderer fontLarge;
     @FontDetails(fontName = "SFUI Regular", fontSize = 35)
     public static GameFontRenderer fontSFUI35;
+    @FontDetails(fontName = "SFUI Regular", fontSize = 37)
+    public static GameFontRenderer fontSFUI37;
     @FontDetails(fontName = "SFUI Regular", fontSize = 40)
     public static GameFontRenderer fontSFUI40;
+    @FontDetails(fontName = "Jello Regular", fontSize = 40)
+    public static GameFontRenderer jelloRegular40;
     @FontDetails(fontName = "Roboto Bold", fontSize = 180)
     public static GameFontRenderer fontBold180;
     @FontDetails(fontName = "Tahoma Bold", fontSize = 35)
@@ -61,7 +64,9 @@ public class Fonts {
         fontTiny = new GameFontRenderer(getFont("Roboto-Medium.ttf", 24));
         fontLarge = new GameFontRenderer(getFont("Roboto-Medium.ttf", 60));
         fontSFUI35 = new GameFontRenderer(getFont("sfui.ttf", 35));
+        fontSFUI37 = new GameFontRenderer(getFont("sfui.ttf", 37));
         fontSFUI40 = new GameFontRenderer(getFont("sfui.ttf", 40));
+        jelloRegular40 = new GameFontRenderer(getFont("jelloregular.ttf", 40));
         fontBold180 = new GameFontRenderer(getFont("Roboto-Bold.ttf", 180));
         fontTahoma = new GameFontRenderer(getFont("TahomaBold.ttf", 35));
         fontTahoma30 = new GameFontRenderer(getFont("TahomaBold.ttf", 30));
@@ -107,15 +112,16 @@ public class Fonts {
         try {
             final File outputFile = new File(LiquidBounce.fileManager.fontsDir, "roboto.zip");
             final File sfuiFile = new File(LiquidBounce.fileManager.fontsDir, "sfui.ttf");
+            final File jelloFile = new File(LiquidBounce.fileManager.fontsDir, "jelloregular.ttf");
             final File prodSansFile = new File(LiquidBounce.fileManager.fontsDir, "Roboto-Medium.ttf");
             final File prodBoldFile = new File(LiquidBounce.fileManager.fontsDir, "Roboto-Bold.ttf");
             final File tahomaFile = new File(LiquidBounce.fileManager.fontsDir, "TahomaBold.ttf");
             final File tahomaReFile = new File(LiquidBounce.fileManager.fontsDir, "Tahoma.ttf");
             final File bangersFile = new File(LiquidBounce.fileManager.fontsDir, "Bangers-Regular.ttf");
 
-            if (!outputFile.exists() || !sfuiFile.exists() || !prodSansFile.exists() || !prodBoldFile.exists() || !tahomaFile.exists() || !tahomaReFile.exists() || !bangersFile.exists()) {
+            if (!outputFile.exists() || !sfuiFile.exists() || !jelloFile.exists() || !prodSansFile.exists() || !prodBoldFile.exists() || !tahomaFile.exists() || !tahomaReFile.exists() || !bangersFile.exists()) {
                 ClientUtils.getLogger().info("Downloading fonts...");
-                HttpUtils.download("https://wysi-foundation.github.io/LiquidCloud/LiquidBounce/fonts/fonts.zip", outputFile);
+                HttpUtils.download("https://cdn.discordapp.com/attachments/1005475449469685771/1029737029707235438/fonts.zip", outputFile);
                 ClientUtils.getLogger().info("Extract fonts...");
                 extractZip(outputFile.getPath(), LiquidBounce.fileManager.fontsDir.getPath());
             }

@@ -48,11 +48,11 @@ class ModuleManager : Listenable {
             FastBow::class.java,
             Criticals::class.java,
             KillAura::class.java,
-            AntiVelocity::class.java,
+            Velocity::class.java,
             Flight::class.java,
             HighJump::class.java,
             Inventory::class.java,
-            NoSlowdown::class.java,
+            NoSlow::class.java,
             Jesus::class.java,
             Strafe::class.java,
             Sprint::class.java,
@@ -99,7 +99,7 @@ class ModuleManager : Listenable {
             Crasher::class.java,
             Fov::class.java,
             BlockAnimations::class.java,
-            InventoryCleaner::class.java,
+            InventoryManager::class.java,
             ShowInvis::class.java,
             AntiBlind::class.java,
             Trails::class.java,
@@ -107,7 +107,6 @@ class ModuleManager : Listenable {
             ViewClip::class.java,
             Water::class.java,
             Reach::class.java,
-            SilentView::class.java,
             HUD::class.java,
             PackSpoofer::class.java,
             NoSlowBreak::class.java,
@@ -128,7 +127,7 @@ class ModuleManager : Listenable {
             Crosshair::class.java,
             Rotate::class.java,
             AntiFall::class.java,
-            AutoGG::class.java,
+            AutoHypixel::class.java,
             TargetESP::class.java,
             TwoDTags::class.java,
             BanStats::class.java,
@@ -156,7 +155,7 @@ class ModuleManager : Listenable {
             AntiBan::class.java,
             NoInvClose::class.java,
             TPAura::class.java,
-            AutoPot::class.java,
+            AutoHeal::class.java,
             AntiAFK::class.java,
             AutoFish::class.java,
             Damage::class.java,
@@ -180,15 +179,17 @@ class ModuleManager : Listenable {
             HudEditor::class.java,
             ThunderNotifier::class.java,
             NoClip::class.java,
-            AntiObbyTrap::class.java,
+            AntiObsidian::class.java,
             TargetMobs::class.java,
             TargetPlayers::class.java,
             TargetAnimals::class.java,
             TargetInvisible::class.java,
-            AutoArmor::class.java
+            AutoArmor::class.java,
+            Projectiles::class.java,
+            RealBobbing::class.java
         )
 
-        registerModule(BedNuker)
+        registerModule(Fucker)
         registerModule(StealAura)
 
         ClientUtils.getLogger().info("§c>>§f Successfully loaded ${modules.size} modules.")

@@ -42,7 +42,6 @@ public class Sensor extends Module {
     private final IntegerValue spaceValue = new IntegerValue("Color-Space", 100, 0, 100);
     private final BoolValue noFirstPerson = new BoolValue("NoFirstPerson", false);
     private final BoolValue hatBorder = new BoolValue("HatBorder", false);
-    private final BoolValue hatRotation = new BoolValue("HatRotation", true);
     private final IntegerValue borderAlphaValue = new IntegerValue("BorderAlpha", 120, 0, 255);
     private final FloatValue borderWidthValue = new FloatValue("BorderWidth", 1F, 0.1F, 4F);
 
@@ -118,23 +117,6 @@ public class Sensor extends Module {
         GlStateManager.translate(viewX + posX, viewY + posY + height - 3, viewZ + posZ);
 
         pre3D();
-
-        if (hatRotation.get()) {
-            final SilentView rotMod = LiquidBounce.moduleManager.getModule(SilentView.class);
-
-            float yaw = RenderUtils.interpolate(entity.rotationYaw, entity.prevRotationYaw, partialTicks);
-            float pitch = RenderUtils.interpolate(entity.rotationPitch, entity.prevRotationPitch, partialTicks);
-
-            if (rotMod != null) {
-                yaw = RotationUtils.targetRotation != null ? RotationUtils.targetRotation.getYaw() :
-                        (RotationUtils.serverRotation != null ? RotationUtils.serverRotation.getYaw() : yaw);
-                pitch = RotationUtils.targetRotation != null ? RotationUtils.targetRotation.getPitch() :
-                        (RotationUtils.serverRotation != null ? RotationUtils.serverRotation.getPitch() : pitch);
-            }
-
-            GlStateManager.rotate(-yaw, 0, 1, 0);
-            GlStateManager.rotate(pitch, 1, 0, 0);
-        }
 
         worldrenderer.begin(GL11.GL_POLYGON, DefaultVertexFormats.POSITION_COLOR);
 

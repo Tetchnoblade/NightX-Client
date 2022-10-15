@@ -13,8 +13,8 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.Vec3
 
-@ModuleInfo(name = "AntiObbyTrap", category = ModuleCategory.WORLD)
-class AntiObbyTrap : Module() {
+@ModuleInfo(name = "AntiObsidian", spacedName = "Anti Obsidian", category = ModuleCategory.WORLD)
+class AntiObsidian : Module() {
 
     @EventTarget
     fun onUpdate(e: UpdateEvent) {

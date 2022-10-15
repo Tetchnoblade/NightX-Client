@@ -68,7 +68,7 @@ public final class TwoDTags extends Module {
     public final BoolValue tagsBGValue = new BoolValue("Tags-Background", false, () -> tagsValue.get());
     public final BoolValue itemTagsValue = new BoolValue("Item-Tags", false);
     public final BoolValue clearNameValue = new BoolValue("Use-Clear-Name", false);
-    public final BoolValue localPlayer = new BoolValue("Local-Player", true);
+    public final BoolValue localPlayer = new BoolValue("Local-Player", false);
     public final BoolValue droppedItems = new BoolValue("Dropped-Items", false);
     private final ListValue colorModeValue = new ListValue("Color", new String[]{"Custom", "Rainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"}, "Custom");
     private final IntegerValue colorRedValue = new IntegerValue("Red", 255, 0, 255);

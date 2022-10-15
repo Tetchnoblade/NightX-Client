@@ -21,8 +21,8 @@ import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 
-@ModuleInfo(name = "AntiVelocity",  spacedName = "Anti Velocity", category = ModuleCategory.COMBAT)
-class AntiVelocity : Module() {
+@ModuleInfo(name = "Velocity", category = ModuleCategory.COMBAT)
+class Velocity : Module() {
 
     /**
      * OPTIONS

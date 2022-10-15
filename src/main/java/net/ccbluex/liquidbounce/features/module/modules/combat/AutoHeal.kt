@@ -25,10 +25,10 @@ import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.potion.Potion
 import net.minecraft.potion.PotionEffect
 
-@ModuleInfo(name = "AutoPot", spacedName = "Auto Pot", category = ModuleCategory.COMBAT)
-class AutoPot : Module() {
+@ModuleInfo(name = "AutoHeal", spacedName = "Auto Heal", category = ModuleCategory.COMBAT)
+class AutoHeal : Module() {
 
-    private val modeValue = ListValue("Mode", arrayOf("JumpOnly", "Floor"), "JumpOnly")
+    private val modeValue = ListValue("Mode", arrayOf("JumpOnly", "Ground"), "Ground")
 
     private val healthValue = FloatValue("Health", 6F, 0F, 100F, "%")
     private val delayValue = IntegerValue("Delay", 300, 0, 5000, "ms")
@@ -161,7 +161,7 @@ class AutoPot : Module() {
     fun onMotionPost(event: MotionEvent) {
         if (event.eventState == EventState.POST) {
             if (throwing && mc.currentScreen !is GuiContainer
-                && ((mc.thePlayer.onGround && modeValue.get().equals("floor", true)) ||
+                && ((mc.thePlayer.onGround && modeValue.get().equals("ground", true)) ||
                         (!mc.thePlayer.onGround && modeValue.get().equals("jumponly", true)))
                 && (!noCombatValue.get() || !killAura.state || killAura.target == null) && !scaffold.state
             ) {
@@ -250,6 +250,6 @@ class AutoPot : Module() {
     }
 
     override val tag: String
-        get() = "${if (modeValue.get().equals("JumpOnly", true)) "Jump Only" else "Floor"}"
+        get() = "${if (modeValue.get().equals("JumpOnly", true)) "Jump Only" else "Ground"}"
 
 }

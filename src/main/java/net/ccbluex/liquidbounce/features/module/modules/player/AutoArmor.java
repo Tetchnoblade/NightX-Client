@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-@ModuleInfo(name = "AutoArmor", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "AutoArmor", spacedName = "Auto Armor", category = ModuleCategory.PLAYER)
 public class AutoArmor extends Module {
 
     public static final ArmorComparator ARMOR_COMPARATOR = new ArmorComparator();

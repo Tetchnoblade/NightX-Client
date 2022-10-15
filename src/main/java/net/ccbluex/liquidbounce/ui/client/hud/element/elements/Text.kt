@@ -51,30 +51,30 @@ class Text(
         fun defaultClient(): Text {
             val text = Text(x = 5.0, y = 5.0, scale = 1F)
 
-            text.displayString.set("%clientName% [%fps% FPS] [%ping%ms] [%portalVersion%]")
+            text.displayString.set("%clientName% [%fps% FPS] [%portalVersion%]")
             text.shadow.set(true)
-            text.fontValue.set(Fonts.minecraftFont)
-            text.setColor(Color(255, 0, 255))
+            text.fontValue.set(Fonts.fontSFUI40)
+            text.setColor(Color(255, 255, 255))
 
             return text
         }
 
     }
 
-    private val displayString = TextValue("DisplayText", "%clientName% [%fps% FPS] [%ping%ms] [%portalVersion%]")
+    private val displayString = TextValue("DisplayText", "%clientName% [%fps% FPS] [%portalVersion%]")
     private val backgroundValue = BoolValue("Background", false)
     private val skeetRectValue = BoolValue("SkeetRect", false)
     private val lineValue = BoolValue("Line", false)
     private val blurValue = BoolValue("Blur", false)
     private val blurStrength = FloatValue("BlurStrength", 6F, 0F, 30F)
     private val redValue = IntegerValue("Red", 255, 0, 255)
-    private val greenValue = IntegerValue("Green", 0, 0, 255)
+    private val greenValue = IntegerValue("Green", 255, 0, 255)
     private val blueValue = IntegerValue("Blue", 255, 0, 255)
     private val alphaValue = IntegerValue("Alpha", 255, 0, 255)
     private val bgredValue = IntegerValue("Background-Red", 0, 0, 255)
     private val bggreenValue = IntegerValue("Background-Green", 0, 0, 255)
     private val bgblueValue = IntegerValue("Background-Blue", 0, 0, 255)
-    private val bgalphaValue = IntegerValue("Background-Alpha", 40, 0, 255)
+    private val bgalphaValue = IntegerValue("Background-Alpha", 100, 0, 255)
     private val rainbowList =
         ListValue("Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Sky")
     private val saturationValue = FloatValue("Saturation", 0.5f, 0f, 1f)
@@ -83,7 +83,7 @@ class Text(
     private val distanceValue = IntegerValue("Line-Distance", 0, 0, 400)
     private val gradientAmountValue = IntegerValue("Gradient-Amount", 25, 1, 50)
     private val shadow = BoolValue("Shadow", true)
-    private var fontValue = FontValue("Font", Fonts.minecraftFont)
+    private var fontValue = FontValue("Font", Fonts.fontSFUI40)
 
     private var editMode = false
     private var editTicks = 0

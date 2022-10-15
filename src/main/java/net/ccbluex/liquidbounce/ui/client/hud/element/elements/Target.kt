@@ -24,8 +24,8 @@ import java.awt.Color
  */
 @ElementInfo(name = "Target", disableScale = true, retrieveDamage = true)
 class Target(
-    x: Double = -6.0, y: Double = -16.0, scale: Float = 1F,
-    side: Side = Side(Side.Horizontal.MIDDLE, Side.Vertical.MIDDLE)
+    x: Double = 215.0, y: Double = 160.0, scale: Float = 1F,
+    side: Side = Side(Side.Horizontal.LEFT, Side.Vertical.UP)
 ) : Element(x, y, scale, side) {
 
     val styleList = mutableListOf<TargetStyle>()
@@ -48,8 +48,8 @@ class Target(
     val shadowColorBlueValue =
         IntegerValue("Shadow-Blue", 255, 0, 255, { shadowValue.get() && shadowColorMode.get().equals("custom", true) })
 
-    val fadeValue = BoolValue("FadeAnim", false)
-    val fadeSpeed = FloatValue("Fade-Speed", 0.8F, 0F, 5F, { fadeValue.get() })
+    val fadeValue = BoolValue("FadeAnim", true)
+    val fadeSpeed = FloatValue("Fade-Speed", 1.2F, 0F, 5F, { fadeValue.get() })
 
     val noAnimValue = BoolValue("No-Animation", true)
     val globalAnimSpeed = FloatValue("Global-AnimSpeed", 6F, 1F, 9F, { !noAnimValue.get() })
@@ -62,7 +62,7 @@ class Target(
     val redValue = IntegerValue("Red", 255, 0, 255)
     val greenValue = IntegerValue("Green", 255, 0, 255)
     val blueValue = IntegerValue("Blue", 255, 0, 255)
-    val saturationValue = FloatValue("Saturation", 0.5F, 0F, 1F)
+    val saturationValue = FloatValue("Saturation", 0.45F, 0F, 1F)
     val brightnessValue = FloatValue("Brightness", 1F, 0F, 1F)
     val waveSecondValue = IntegerValue("Seconds", 2, 1, 10)
     val bgRedValue = IntegerValue("Background-Red", 0, 0, 255)

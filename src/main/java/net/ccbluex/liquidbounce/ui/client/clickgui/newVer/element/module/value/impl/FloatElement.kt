@@ -25,10 +25,10 @@ class FloatElement(val savedValue: FloatValue) : ValueElement<Float>(savedValue)
         accentColor: Color
     ): Float {
         val valueDisplay =
-            30F + Fonts.font40.getStringWidth("${savedValue.maximum.toInt().toFloat() + 0.01F}${savedValue.suffix}")
-        val maxLength = Fonts.font40.getStringWidth("${savedValue.maximum}${savedValue.suffix}")
-        val minLength = Fonts.font40.getStringWidth("${savedValue.minimum}${savedValue.suffix}")
-        val nameLength = Fonts.font40.getStringWidth(value.name)
+            30F + Fonts.fontSFUI40.getStringWidth("${savedValue.maximum.toInt().toFloat() + 0.01F}${savedValue.suffix}")
+        val maxLength = Fonts.fontSFUI40.getStringWidth("${savedValue.maximum}${savedValue.suffix}")
+        val minLength = Fonts.fontSFUI40.getStringWidth("${savedValue.minimum}${savedValue.suffix}")
+        val nameLength = Fonts.fontSFUI40.getStringWidth(value.name)
         val sliderWidth = width - 50F - nameLength - maxLength - minLength - valueDisplay
         val startPoint = x + width - 20F - sliderWidth - maxLength - valueDisplay
         if (dragged)
@@ -38,17 +38,17 @@ class FloatElement(val savedValue: FloatValue) : ValueElement<Float>(savedValue)
                     savedValue.maximum
                 )
             )
-        val currLength = Fonts.font40.getStringWidth("${round(savedValue.get())}${savedValue.suffix}")
-        Fonts.font40.drawString(value.name, x + 10F, y + 10F - Fonts.font40.FONT_HEIGHT / 2F + 2F, -1)
-        Fonts.font40.drawString(
+        val currLength = Fonts.fontSFUI40.getStringWidth("${round(savedValue.get())}${savedValue.suffix}")
+        Fonts.fontSFUI40.drawString(value.name, x + 10F, y + 10F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F, -1)
+        Fonts.fontSFUI40.drawString(
             "${savedValue.maximum}${savedValue.suffix}",
             x + width - 10F - maxLength - valueDisplay,
-            y + 10F - Fonts.font40.FONT_HEIGHT / 2F + 2F, -1
+            y + 10F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F, -1
         )
-        Fonts.font40.drawString(
+        Fonts.fontSFUI40.drawString(
             "${savedValue.minimum}${savedValue.suffix}",
             x + width - 30F - sliderWidth - maxLength - minLength - valueDisplay,
-            y + 10F - Fonts.font40.FONT_HEIGHT / 2F + 2F, -1
+            y + 10F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F, -1
         )
         slider.setValue(
             savedValue.get().coerceIn(savedValue.minimum, savedValue.maximum),
@@ -86,24 +86,24 @@ class FloatElement(val savedValue: FloatValue) : ValueElement<Float>(savedValue)
             4F,
             ColorManager.buttonOutline.rgb
         )
-        Fonts.font40.drawString(
+        Fonts.fontSFUI40.drawString(
             "${round(savedValue.get())}${savedValue.suffix}",
             x + width + 6F - valueDisplay,
-            y + 10F - Fonts.font40.FONT_HEIGHT / 2F + 2F,
+            y + 10F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F,
             -1
         )
-        Fonts.font40.drawString("-", x + width - 3F - valueDisplay, y + 10F - Fonts.font40.FONT_HEIGHT / 2F + 2F, -1)
-        Fonts.font40.drawString("+", x + width - 17F, y + 10F - Fonts.font40.FONT_HEIGHT / 2F + 2F, -1)
+        Fonts.fontSFUI40.drawString("-", x + width - 3F - valueDisplay, y + 10F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F, -1)
+        Fonts.fontSFUI40.drawString("+", x + width - 17F, y + 10F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F, -1)
 
         return valueHeight
     }
 
     override fun onClick(mouseX: Int, mouseY: Int, x: Float, y: Float, width: Float) {
         val valueDisplay =
-            30F + Fonts.font40.getStringWidth("${savedValue.maximum.toInt().toFloat() + 0.01F}${savedValue.suffix}")
-        val maxLength = Fonts.font40.getStringWidth("${savedValue.maximum}${savedValue.suffix}")
-        val minLength = Fonts.font40.getStringWidth("${savedValue.minimum}${savedValue.suffix}")
-        val nameLength = Fonts.font40.getStringWidth(value.name)
+            30F + Fonts.fontSFUI40.getStringWidth("${savedValue.maximum.toInt().toFloat() + 0.01F}${savedValue.suffix}")
+        val maxLength = Fonts.fontSFUI40.getStringWidth("${savedValue.maximum}${savedValue.suffix}")
+        val minLength = Fonts.fontSFUI40.getStringWidth("${savedValue.minimum}${savedValue.suffix}")
+        val nameLength = Fonts.fontSFUI40.getStringWidth(value.name)
         val sliderWidth = width - 50F - nameLength - maxLength - minLength - valueDisplay
         val startPoint = x + width - 30F - sliderWidth - valueDisplay - maxLength
         val endPoint = x + width - 10F - valueDisplay - maxLength

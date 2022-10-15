@@ -10,7 +10,6 @@ import net.ccbluex.liquidbounce.features.module.modules.exploit.Disabler;
 import net.ccbluex.liquidbounce.features.module.modules.exploit.KeepBreaking;
 import net.ccbluex.liquidbounce.features.module.modules.misc.Annoy;
 import net.ccbluex.liquidbounce.features.module.modules.misc.Patcher;
-import net.ccbluex.liquidbounce.features.module.modules.render.SilentView;
 import net.ccbluex.liquidbounce.features.module.modules.world.FastPlace;
 import net.ccbluex.liquidbounce.features.module.modules.world.Scaffold;
 import net.ccbluex.liquidbounce.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
@@ -245,42 +244,33 @@ public abstract class MixinMinecraft {
     @Inject(method = "getRenderViewEntity", at = @At("HEAD"))
     public void getRenderViewEntity(CallbackInfoReturnable<Entity> cir) {
         if (renderViewEntity instanceof EntityLivingBase && RotationUtils.serverRotation != null && thePlayer != null) {
-            final SilentView silentView = LiquidBounce.moduleManager.getModule(SilentView.class);
             final KillAura killAura = LiquidBounce.moduleManager.getModule(KillAura.class);
             final Scaffold scaffold = LiquidBounce.moduleManager.getModule(Scaffold.class);
             final Disabler disabler = LiquidBounce.moduleManager.getModule(Disabler.class);
             final Annoy annoy = LiquidBounce.moduleManager.getModule(Annoy.class);
             final EntityLivingBase entityLivingBase = (EntityLivingBase) renderViewEntity;
             final float yaw = RotationUtils.serverRotation.getYaw();
-            if (killAura.getTarget() != null && silentView.getHeadValue().get()) {
+            if (killAura.getTarget() != null) {
                 entityLivingBase.rotationYawHead = yaw;
                 entityLivingBase.prevRotationYawHead = yaw;
-            }
-            if (killAura.getTarget() != null && silentView.getBodyValue().get()) {
                 entityLivingBase.renderYawOffset = yaw;
                 entityLivingBase.prevRenderYawOffset = yaw;
             }
-            if (scaffold.getState() && silentView.getHeadValue().get()) {
+            if (scaffold.getState()) {
                 entityLivingBase.rotationYawHead = yaw;
                 entityLivingBase.prevRotationYawHead = yaw;
-            }
-            if (scaffold.getState() && silentView.getBodyValue().get()) {
                 entityLivingBase.renderYawOffset = yaw;
                 entityLivingBase.prevRenderYawOffset = yaw;
             }
-            if (disabler.getCanRenderInto3D() && silentView.getHeadValue().get()) {
+            if (disabler.getCanRenderInto3D()) {
                 entityLivingBase.rotationYawHead = yaw;
                 entityLivingBase.prevRotationYawHead = yaw;
-            }
-            if (disabler.getCanRenderInto3D() && silentView.getBodyValue().get()) {
                 entityLivingBase.renderYawOffset = yaw;
                 entityLivingBase.prevRenderYawOffset = yaw;
             }
-            if (annoy.getState() && silentView.getHeadValue().get()) {
+            if (annoy.getState()) {
                 entityLivingBase.rotationYawHead = yaw;
                 entityLivingBase.prevRotationYawHead = yaw;
-            }
-            if (annoy.getState() && silentView.getBodyValue().get()) {
                 entityLivingBase.renderYawOffset = yaw;
                 entityLivingBase.prevRenderYawOffset = yaw;
             }

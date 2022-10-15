@@ -1,4 +1,4 @@
-package net.ccbluex.liquidbounce.features.module.modules.movement.speeds.hypixel;
+package net.ccbluex.liquidbounce.features.module.modules.movement.speeds.watchdog;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.event.MoveEvent;
@@ -6,10 +6,10 @@ import net.ccbluex.liquidbounce.features.module.modules.movement.Speed;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMode;
 import net.ccbluex.liquidbounce.utils.MovementUtils;
 
-public class HypixelBoost extends SpeedMode {
+public class WatchdogStable extends SpeedMode {
 
-    public HypixelBoost() {
-        super("HypixelBoost");
+    public WatchdogStable() {
+        super("WatchdogStable");
     }
 
     @Override
@@ -24,10 +24,10 @@ public class HypixelBoost extends SpeedMode {
 
     @Override
     public void onMove(MoveEvent event) {
+        mc.timer.timerSpeed = 1F;
         final Speed speed = LiquidBounce.moduleManager.getModule(Speed.class);
         if (speed == null) return;
 
-        mc.timer.timerSpeed = 1F;
         if (MovementUtils.isMoving() && !(mc.thePlayer.isInWater() || mc.thePlayer.isInLava()) && !mc.gameSettings.keyBindJump.isKeyDown()) {
             double moveSpeed = Math.max(MovementUtils.getBaseMoveSpeed() * speed.baseStrengthValue.get(), MovementUtils.getSpeed());
 
@@ -40,8 +40,6 @@ public class HypixelBoost extends SpeedMode {
             } else if (speed.glideStrengthValue.get() > 0 && event.getY() < 0) {
                 event.setY(mc.thePlayer.motionY += speed.glideStrengthValue.get());
             }
-
-            mc.timer.timerSpeed = Math.max(speed.baseTimerValue.get() + Math.abs((float) mc.thePlayer.motionY) * speed.baseMTimerValue.get(), 1F);
         }
     }
 }

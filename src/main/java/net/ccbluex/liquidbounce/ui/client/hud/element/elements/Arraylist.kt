@@ -60,7 +60,7 @@ class Arraylist(
     val colorGreenValue = IntegerValue("Green", 255, 0, 255)
     val colorBlueValue = IntegerValue("Blue", 255, 0, 255)
     val colorAlphaValue = IntegerValue("Alpha", 255, 0, 255)
-    private val saturationValue = FloatValue("Saturation", 0.5f, 0f, 1f)
+    private val saturationValue = FloatValue("Saturation", 0.45f, 0f, 1f)
     private val brightnessValue = FloatValue("Brightness", 1f, 0f, 1f)
     private val skyDistanceValue = IntegerValue("Sky-Distance", 1, 0, 4)
     private val cRainbowSecValue = IntegerValue("CRainbow-Seconds", 2, 1, 10)
@@ -68,15 +68,15 @@ class Arraylist(
     private val mixerSecValue = IntegerValue("Mixer-Seconds", 2, 1, 10)
     private val mixerDistValue = IntegerValue("Mixer-Distance", 2, 0, 10)
     private val liquidSlowlyDistanceValue = IntegerValue("LiquidSlowly-Distance", 90, 1, 90)
-    private val fadeDistanceValue = IntegerValue("Fade-Distance", 85, 1, 100)
+    private val fadeDistanceValue = IntegerValue("Fade-Distance", 95, 1, 100)
     private val hAnimation = ListValue("HorizontalAnimation", arrayOf("Default", "None", "Slide", "Astolfo"), "Astolfo")
     private val vAnimation =
-        ListValue("VerticalAnimation", arrayOf("None", "LiquidSense", "Slide", "Rise", "Astolfo"), "Astolfo")
-    private val animationSpeed = FloatValue("Animation-Speed", 0.5F, 0.01F, 1F)
-    private val nameBreak = BoolValue("NameBreak", false)
+        ListValue("VerticalAnimation", arrayOf("None", "LiquidSense", "Slide", "Rise", "Astolfo"), "Slide")
+    private val animationSpeed = FloatValue("Animation-Speed", 0.4F, 0.01F, 1F)
+    private val nameBreak = BoolValue("NameBreak", true)
     private val abcOrder = BoolValue("Alphabetical-Order", false)
     private val tags = BoolValue("Tags", true)
-    private val tagsStyleValue = ListValue("TagsStyle", arrayOf("-", "|", "()", "[]", "<>", "Default"), "-")
+    private val tagsStyleValue = ListValue("TagsStyle", arrayOf("-", "|", "()", "[]", "<>", "Default"), "Default")
     private val shadow = BoolValue("ShadowText", true)
     private val backgroundColorRedValue = IntegerValue("Background-R", 0, 0, 255)
     private val backgroundColorGreenValue = IntegerValue("Background-G", 0, 0, 255)
@@ -90,7 +90,7 @@ class Arraylist(
     private val textHeightValue = FloatValue("TextHeight", 11F, 1F, 20F)
     private val textYValue = FloatValue("TextY", 1.8F, 0F, 20F)
     private val tagsArrayColor = BoolValue("TagsArrayColor", false)
-    private val fontValue = FontValue("Font", Fonts.minecraftFont)
+    private val fontValue = FontValue("Font", Fonts.fontSFUI40)
 
     private var x2 = 0
     private var y2 = 0F

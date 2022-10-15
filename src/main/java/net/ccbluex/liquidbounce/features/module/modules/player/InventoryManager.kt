@@ -35,11 +35,11 @@ import java.util.stream.Collectors
 import java.util.stream.IntStream
 
 @ModuleInfo(
-    name = "InventoryCleaner",
-    spacedName = "Inventory Cleaner",
+    name = "InventoryManager",
+    spacedName = "Inventory Manager",
     category = ModuleCategory.PLAYER
 )
-class InventoryCleaner : Module() {
+class InventoryManager : Module() {
 
     /**
      * OPTIONS

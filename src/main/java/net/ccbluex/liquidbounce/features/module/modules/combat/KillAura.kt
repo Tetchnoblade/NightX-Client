@@ -159,7 +159,7 @@ class KillAura : Module() {
 
     // AutoBlock
     private val autoBlockModeValue =
-        ListValue("AutoBlock", arrayOf("None", "Interact", "Packet", "AfterTick", "NCP", "OldHypixel"), "Interact")
+        ListValue("AutoBlock", arrayOf("None", "Interact", "Packet", "AfterTick", "NCP", "OldHypixel"), "Packet")
 
     private val displayAutoBlockSettings =
         BoolValue("Open", true, { !autoBlockModeValue.get().equals("None", true) })

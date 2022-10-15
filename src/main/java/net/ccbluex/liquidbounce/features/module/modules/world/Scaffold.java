@@ -50,7 +50,7 @@ public class Scaffold extends Module {
      */
     // Global settings
     private final BoolValue towerEnabled = new BoolValue("EnableTower", true);
-    private final ListValue towerModeValue = new ListValue("TowerMode", new String[] {
+    private final ListValue towerModeValue = new ListValue("TowerMode", new String[]{
             "Jump", "Motion", "StableMotion", "ConstantMotion", "MotionTP", "Packet", "Teleport", "AAC3.3.9", "AAC3.6.4", "Verus"
     }, "ConstantMotion", () -> towerEnabled.get());
     private final ListValue towerPlaceModeValue = new ListValue("Tower-PlaceTiming", new String[]{"Pre", "Post"}, "Post");
@@ -116,7 +116,7 @@ public class Scaffold extends Module {
     private final BoolValue stayAutoBlock = new BoolValue("LiteSpoof", true, () -> !autoBlockMode.get().equalsIgnoreCase("false"));
 
     //make sprint compatible with tower.add sprint tricks
-    public final ListValue sprintModeValue = new ListValue("SprintMode",  new String[]{"Same", "Ground", "Air", "Off"}, "Same");
+    public final ListValue sprintModeValue = new ListValue("SprintMode", new String[]{"Same", "Ground", "Air", "Off"}, "Same");
     // Basic stuff
     private final BoolValue swingValue = new BoolValue("Swing", false);
     private final BoolValue downValue = new BoolValue("Down", true);
@@ -171,7 +171,7 @@ public class Scaffold extends Module {
 
     private final BoolValue keepRotationValue = new BoolValue("KeepRotation", true, () -> rotationsValue.get());
     private final IntegerValue keepLengthValue = new IntegerValue("KeepRotationLength", 0, 0, 20, () -> rotationsValue.get() && !keepRotationValue.get());
-    private final ListValue placeConditionValue = new ListValue("Place-Condition", new String[] {"Air", "FallDown", "NegativeMotion", "Always"}, "Always");
+    private final ListValue placeConditionValue = new ListValue("Place-Condition", new String[]{"Air", "FallDown", "NegativeMotion", "Always"}, "Always");
 
     private final BoolValue rotationStrafeValue = new BoolValue("RotationStrafe", false);
 
@@ -532,7 +532,8 @@ public class Scaffold extends Module {
         if (shouldGoDown) {
             launchY = (int) mc.thePlayer.posY - 1;
         } else if (!sameYValue.get()) {
-            if ((!autoJumpValue.get() && !(smartSpeedValue.get() && LiquidBounce.moduleManager.getModule(Speed.class).getState())) || GameSettings.isKeyDown(mc.gameSettings.keyBindJump) || mc.thePlayer.posY < launchY) launchY = (int) mc.thePlayer.posY;
+            if ((!autoJumpValue.get() && !(smartSpeedValue.get() && LiquidBounce.moduleManager.getModule(Speed.class).getState())) || GameSettings.isKeyDown(mc.gameSettings.keyBindJump) || mc.thePlayer.posY < launchY)
+                launchY = (int) mc.thePlayer.posY;
             if (autoJumpValue.get() && !LiquidBounce.moduleManager.getModule(Speed.class).getState() && MovementUtils.isMoving() && mc.thePlayer.onGround && mc.thePlayer.jumpTicks == 0) {
                 mc.thePlayer.jump();
                 mc.thePlayer.jumpTicks = 10;
@@ -724,7 +725,7 @@ public class Scaffold extends Module {
 
             final boolean isHeldItemBlock = mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemBlock;
             if (InventoryUtils.findAutoBlockBlock() != -1 || isHeldItemBlock) {
-                launchY = (int)mc.thePlayer.posY;
+                launchY = (int) mc.thePlayer.posY;
 
                 if (towerModeValue.get().equalsIgnoreCase("verus") || !stopWhenBlockAbove.get() || BlockUtils.getBlock(new BlockPos(mc.thePlayer.posX,
                         mc.thePlayer.posY + 2, mc.thePlayer.posZ)) instanceof BlockAir) {
@@ -812,8 +813,9 @@ public class Scaffold extends Module {
 
         // blacklist check
         if (itemStack != null && itemStack.getItem() != null && itemStack.getItem() instanceof ItemBlock) {
-            Block block = ((ItemBlock)itemStack.getItem()).getBlock();
-            if (InventoryUtils.BLOCK_BLACKLIST.contains(block) || !block.isFullCube() || itemStack.stackSize <= 0) return;
+            Block block = ((ItemBlock) itemStack.getItem()).getBlock();
+            if (InventoryUtils.BLOCK_BLACKLIST.contains(block) || !block.isFullCube() || itemStack.stackSize <= 0)
+                return;
         }
 
         if (mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, itemStack, (towerActive ? towerPlace : targetPlace).getBlockPos(),
@@ -1163,17 +1165,4 @@ public class Scaffold extends Module {
 
         return amount;
     }
-
-    @Override
-    public String getTag() {
-        return (towerActivation()) ? "Tower, " + towerPlaceModeValue.get() : placeModeValue.get();
-    }
-
-
-
-
-
-
-
-
 }

@@ -1,4 +1,4 @@
-package net.ccbluex.liquidbounce.features.module.modules.movement.speeds.hypixel
+package net.ccbluex.liquidbounce.features.module.modules.movement.speeds.watchdog;
 
 import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.event.JumpEvent
@@ -11,7 +11,7 @@ import net.ccbluex.liquidbounce.features.module.modules.world.Timer
 import net.ccbluex.liquidbounce.utils.MovementUtils.*
 import kotlin.math.max
 
-class HypixelCustom : SpeedMode("HypixelCustom") {
+class WatchdogCustom : SpeedMode("WatchdogCustom") {
 
     override fun onJump(event: JumpEvent) {
         if (mc.thePlayer != null && isMoving())

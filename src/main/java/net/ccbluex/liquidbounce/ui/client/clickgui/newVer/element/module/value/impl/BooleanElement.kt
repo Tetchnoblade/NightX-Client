@@ -22,7 +22,7 @@ class BooleanElement(value: BoolValue) : ValueElement<Boolean>(value) {
     ): Float {
         checkbox.state = value.get()
         checkbox.onDraw(x + 10F, y + 5F, 10F, 10F, bgColor, accentColor)
-        Fonts.font40.drawString(value.name, x + 25F, y + 10F - Fonts.font40.FONT_HEIGHT / 2F + 2F, -1)
+        Fonts.fontSFUI40.drawString(value.name, x + 25F, y + 10F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F, -1)
         return valueHeight
     }
 

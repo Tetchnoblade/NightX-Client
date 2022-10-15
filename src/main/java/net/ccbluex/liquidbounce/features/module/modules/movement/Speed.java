@@ -8,9 +8,6 @@ import net.ccbluex.liquidbounce.features.module.ModuleInfo;
 import net.ccbluex.liquidbounce.features.module.modules.exploit.Disabler;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMode;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.aac.*;
-import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.hypixel.HypixelBoost;
-import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.hypixel.HypixelCustom;
-import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.hypixel.HypixelStable;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.ncp.*;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.other.*;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.spartan.SpartanYPort;
@@ -20,6 +17,9 @@ import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.spectre.
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.verus.VerusHard;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.verus.VerusHop;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.verus.VerusLowHop;
+import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.watchdog.WatchdogBoost;
+import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.watchdog.WatchdogCustom;
+import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.watchdog.WatchdogStable;
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.Notification;
 import net.ccbluex.liquidbounce.utils.MovementUtils;
 import net.ccbluex.liquidbounce.value.BoolValue;
@@ -65,10 +65,10 @@ public class Speed extends Module {
             new AACYPort(),
             new AACYPort2(),
 
-            // Hypixel
-            new HypixelBoost(),
-            new HypixelStable(),
-            new HypixelCustom(),
+            // Watchdog
+            new WatchdogBoost(),
+            new WatchdogStable(),
+            new WatchdogCustom(),
 
             // Spartan
             new SpartanYPort(),
@@ -80,7 +80,7 @@ public class Speed extends Module {
 
             // Other
             new SlowHop(),
-            new VanillaHop(),
+            new VanillaBhop(),
             new Jump(),
             new Legit(),
             new AEMine(),
@@ -101,7 +101,7 @@ public class Speed extends Module {
             new VerusHard()
     };
     public final BoolValue modifySprint = new BoolValue("ModifySprinting", false);
-    public final BoolValue NoBob = new BoolValue("NoBob", false);    public final ListValue typeValue = new ListValue("Type", new String[]{"NCP", "AAC", "Spartan", "Spectre", "Hypixel", "Verus", "VanillaHop", "Other"}, "VanillaHop") {
+    public final BoolValue NoBob = new BoolValue("NoBob", false);    public final ListValue typeValue = new ListValue("Type", new String[]{"NCP", "AAC", "Spartan", "Spectre", "Watchdog", "Verus", "VanillaBhop", "Other"}, "VanillaBhop") {
 
         @Override
         protected void onChange(final String oldValue, final String newValue) {
@@ -224,7 +224,7 @@ public class Speed extends Module {
 
         if (speedMode != null)
             speedMode.onJump(event);
-    }    public final ListValue hypixelModeValue = new ListValue("Hypixel-Mode", new String[]{"Boost", "Stable", "Custom"}, "Custom", () -> typeValue.get().equalsIgnoreCase("hypixel")) { // the worst hypixel bypass ever existed
+    }    public final ListValue hypixelModeValue = new ListValue("Watchdog-Mode", new String[]{"Boost", "Stable", "Custom"}, "Custom", () -> typeValue.get().equalsIgnoreCase("watchdog")) { // the worst hypixel bypass ever existed
 
         @Override
         protected void onChange(final String oldValue, final String newValue) {
@@ -248,8 +248,8 @@ public class Speed extends Module {
         if (mc.thePlayer == null)
             return;
 
-        if (bypassWarning.get() && typeValue.get().equalsIgnoreCase("hypixel") && !LiquidBounce.moduleManager.getModule(Disabler.class).getState()) {
-            LiquidBounce.hud.addNotification(new Notification("Disabler is OFF! Disable this notification in settings.", Notification.Type.WARNING, 3000L));
+        if (bypassWarning.get() && typeValue.get().equalsIgnoreCase("watchdog") && !LiquidBounce.moduleManager.getModule(Disabler.class).getState()) {
+            LiquidBounce.hud.addNotification(new Notification("Disabler got patched! Don't use watchdog custom speed!", Notification.Type.WARNING, 3000L));
         }
 
         mc.timer.timerSpeed = 1F;
@@ -299,7 +299,7 @@ public class Speed extends Module {
         if (tagDisplay.get().equalsIgnoreCase("fullname"))
             return getModeName();
 
-        return typeValue.get() == "Other" ? otherModeValue.get() : typeValue.get() == "VanillaHop" ? "VanillaHop" : typeValue.get() + ", " + getOnlySingleName();
+        return typeValue.get() == "Other" ? otherModeValue.get() : typeValue.get() == "VanillaBhop" ? "VanillaBhop" : typeValue.get() + ", " + getOnlySingleName();
     }
 
     private String getOnlySingleName() {
@@ -317,7 +317,7 @@ public class Speed extends Module {
             case "Spectre":
                 mode = spectreModeValue.get();
                 break;
-            case "Hypixel":
+            case "Watchdog":
                 mode = hypixelModeValue.get();
                 break;
             case "Verus":
@@ -357,14 +357,14 @@ public class Speed extends Module {
             case "Spectre":
                 mode = "Spectre" + spectreModeValue.get();
                 break;
-            case "Hypixel":
-                mode = "Hypixel" + hypixelModeValue.get();
+            case "Watchdog":
+                mode = "Watchdog" + hypixelModeValue.get();
                 break;
             case "Verus":
                 mode = "Verus" + verusModeValue.get();
                 break;
-            case "VanillaHop":
-                mode = "VanillaHop";
+            case "VanillaBhop":
+                mode = "VanillaBhop";
                 break;
             case "Other":
                 mode = otherModeValue.get();
@@ -398,19 +398,19 @@ public class Speed extends Module {
 
 
 
-    public final BoolValue timerValue = new BoolValue("UseTimer", true, () -> getModeName().equalsIgnoreCase("hypixelcustom"));
+    public final BoolValue timerValue = new BoolValue("UseTimer", true, () -> getModeName().equalsIgnoreCase("watchdogcustom"));
 
 
 
-    public final BoolValue smoothStrafe = new BoolValue("SmoothStrafe", true, () -> getModeName().equalsIgnoreCase("hypixelcustom"));
+    public final BoolValue smoothStrafe = new BoolValue("SmoothStrafe", true, () -> getModeName().equalsIgnoreCase("watchdogcustom"));
 
 
 
-    public final FloatValue customSpeedValue = new FloatValue("StrSpeed", 0.42f, 0.2f, 2f, () -> getModeName().equalsIgnoreCase("hypixelcustom"));
+    public final FloatValue customSpeedValue = new FloatValue("StrSpeed", 0.42f, 0.2f, 2f, () -> getModeName().equalsIgnoreCase("watchdogcustom"));
 
 
 
-    public final FloatValue motionYValue = new FloatValue("MotionY", 0.42f, 0f, 2f, () -> getModeName().equalsIgnoreCase("hypixelcustom"));
+    public final FloatValue motionYValue = new FloatValue("MotionY", 0.42f, 0f, 2f, () -> getModeName().equalsIgnoreCase("watchdogcustom"));
 
 
 
@@ -418,30 +418,30 @@ public class Speed extends Module {
 
 
 
-    public final FloatValue speedValue = new FloatValue("CustomSpeed", 1.0f, 0.2f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillahop"));
-    public final FloatValue launchSpeedValue = new FloatValue("CustomLaunchSpeed", 1.6f, 0.2f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillahop"));
-    public final FloatValue addYMotionValue = new FloatValue("CustomAddYMotion", 0f, 0f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillahop"));
-    public final FloatValue yValue = new FloatValue("CustomY", 0.42f, 0f, 4f, () -> typeValue.get().equalsIgnoreCase("vanillahop"));
-    public final FloatValue upTimerValue = new FloatValue("CustomUpTimer", 1f, 0.1f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillahop"));
-    public final FloatValue downTimerValue = new FloatValue("CustomDownTimer", 1f, 0.1f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillahop"));
-    public final ListValue strafeValue = new ListValue("CustomStrafe", new String[]{"Strafe", "Boost", "Plus", "PlusOnlyUp", "Non-Strafe"}, "Strafe", () -> typeValue.get().equalsIgnoreCase("vanillahop"));
-    public final IntegerValue groundStay = new IntegerValue("CustomGroundStay", 0, 0, 10, () -> typeValue.get().equalsIgnoreCase("vanillahop"));
-    public final BoolValue groundResetXZValue = new BoolValue("CustomGroundResetXZ", false, () -> typeValue.get().equalsIgnoreCase("vanillahop"));
-    public final BoolValue resetXZValue = new BoolValue("CustomResetXZ", false, () -> typeValue.get().equalsIgnoreCase("vanillahop"));
-    public final BoolValue resetYValue = new BoolValue("CustomResetY", false, () -> typeValue.get().equalsIgnoreCase("vanillahop"));
-    public final BoolValue doLaunchSpeedValue = new BoolValue("CustomDoLaunchSpeed", false, () -> typeValue.get().equalsIgnoreCase("vanillahop"));
+    public final FloatValue speedValue = new FloatValue("CustomSpeed", 1.0f, 0.2f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
+    public final FloatValue launchSpeedValue = new FloatValue("CustomLaunchSpeed", 1.6f, 0.2f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
+    public final FloatValue addYMotionValue = new FloatValue("CustomAddYMotion", 0f, 0f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
+    public final FloatValue yValue = new FloatValue("CustomY", 0.42f, 0f, 4f, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
+    public final FloatValue upTimerValue = new FloatValue("CustomUpTimer", 1f, 0.1f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
+    public final FloatValue downTimerValue = new FloatValue("CustomDownTimer", 1f, 0.1f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
+    public final ListValue strafeValue = new ListValue("CustomStrafe", new String[]{"Strafe", "Boost", "Plus", "PlusOnlyUp", "Non-Strafe"}, "Strafe", () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
+    public final IntegerValue groundStay = new IntegerValue("CustomGroundStay", 0, 0, 10, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
+    public final BoolValue groundResetXZValue = new BoolValue("CustomGroundResetXZ", false, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
+    public final BoolValue resetXZValue = new BoolValue("CustomResetXZ", false, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
+    public final BoolValue resetYValue = new BoolValue("CustomResetY", false, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
+    public final BoolValue doLaunchSpeedValue = new BoolValue("CustomDoLaunchSpeed", false, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
 
     public final BoolValue jumpStrafe = new BoolValue("JumpStrafe", false, () -> typeValue.get().equalsIgnoreCase("other"));
 
-    public final BoolValue sendJumpValue = new BoolValue("SendJump", true, () -> (typeValue.get().equalsIgnoreCase("hypixel") && !getModeName().equalsIgnoreCase("hypixelcustom")));
-    public final BoolValue recalcValue = new BoolValue("ReCalculate", false, () -> (typeValue.get().equalsIgnoreCase("hypixel") && sendJumpValue.get() && !getModeName().equalsIgnoreCase("hypixelcustom")));
-    public final FloatValue glideStrengthValue = new FloatValue("GlideStrength", 0F, 0F, 0.05F, () -> (typeValue.get().equalsIgnoreCase("hypixel") && !getModeName().equalsIgnoreCase("hypixelcustom")));
-    public final FloatValue moveSpeedValue = new FloatValue("MoveSpeed", 1.7F, 1F, 1.7F, () -> (typeValue.get().equalsIgnoreCase("hypixel") && !getModeName().equalsIgnoreCase("hypixelcustom")));
-    public final FloatValue jumpYValue = new FloatValue("JumpY", 0.42F, 0F, 1F, () -> (typeValue.get().equalsIgnoreCase("hypixel") && !getModeName().equalsIgnoreCase("hypixelcustom")));
-    public final FloatValue baseStrengthValue = new FloatValue("BaseMultiplier", 1F, 0.5F, 1F, () -> (typeValue.get().equalsIgnoreCase("hypixel") && !getModeName().equalsIgnoreCase("hypixelcustom")));
-    public final FloatValue baseTimerValue = new FloatValue("BaseTimer", 1.5F, 1F, 3F, () -> getModeName().equalsIgnoreCase("hypixelboost"));
-    public final FloatValue baseMTimerValue = new FloatValue("BaseMultiplierTimer", 1F, 0F, 3F, () -> getModeName().equalsIgnoreCase("hypixelboost"));
-    public final BoolValue bypassWarning = new BoolValue("BypassWarning", false, () -> (typeValue.get().equalsIgnoreCase("hypixel") && !getModeName().equalsIgnoreCase("hypixelcustom")));
+    public final BoolValue sendJumpValue = new BoolValue("SendJump", true, () -> (typeValue.get().equalsIgnoreCase("watchdog") && !getModeName().equalsIgnoreCase("watchdogcustom")));
+    public final BoolValue recalcValue = new BoolValue("ReCalculate", false, () -> (typeValue.get().equalsIgnoreCase("watchdog") && sendJumpValue.get() && !getModeName().equalsIgnoreCase("watchdogcustom")));
+    public final FloatValue glideStrengthValue = new FloatValue("GlideStrength", 0F, 0F, 0.05F, () -> (typeValue.get().equalsIgnoreCase("watchdog") && !getModeName().equalsIgnoreCase("watchdogcustom")));
+    public final FloatValue moveSpeedValue = new FloatValue("MoveSpeed", 1.7F, 1F, 1.7F, () -> (typeValue.get().equalsIgnoreCase("watchdog") && !getModeName().equalsIgnoreCase("watchdogcustom")));
+    public final FloatValue jumpYValue = new FloatValue("JumpY", 0.42F, 0F, 1F, () -> (typeValue.get().equalsIgnoreCase("watchdog") && !getModeName().equalsIgnoreCase("watchdogcustom")));
+    public final FloatValue baseStrengthValue = new FloatValue("BaseMultiplier", 1F, 0.5F, 1F, () -> (typeValue.get().equalsIgnoreCase("watchdog") && !getModeName().equalsIgnoreCase("watchdogcustom")));
+    public final FloatValue baseTimerValue = new FloatValue("BaseTimer", 1.5F, 1F, 3F, () -> getModeName().equalsIgnoreCase("watchdogboost"));
+    public final FloatValue baseMTimerValue = new FloatValue("BaseMultiplierTimer", 1F, 0F, 3F, () -> getModeName().equalsIgnoreCase("watchdogboost"));
+    public final BoolValue bypassWarning = new BoolValue("BypassWarning", false, () -> (typeValue.get().equalsIgnoreCase("watchdog") && !getModeName().equalsIgnoreCase("watchdogcustom")));
 
     public final FloatValue portMax = new FloatValue("AAC-PortLength", 1, 1, 20, () -> typeValue.get().equalsIgnoreCase("aac"));
     public final FloatValue aacGroundTimerValue = new FloatValue("AACGround-Timer", 3F, 1.1F, 10F, () -> typeValue.get().equalsIgnoreCase("aac"));

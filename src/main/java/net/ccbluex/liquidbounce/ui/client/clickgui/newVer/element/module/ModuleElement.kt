@@ -89,15 +89,15 @@ class ModuleElement(val module: Module) : MinecraftInstance() {
         )
         Stencil.erase(true)
         RenderUtils.newDrawRect(x + 10F, y + height - 5F, x + width - 10F, y + height - 4.5F, 4281348144L.toInt())
-        Fonts.font40.drawString(module.name, x + 20F, y + height / 2F - Fonts.font40.FONT_HEIGHT + 3F, -1)
+        Fonts.fontSFUI40.drawString(module.name, x + 20F, y + height / 2F - Fonts.fontSFUI40.FONT_HEIGHT + 3F, -1)
 
         val keyName = if (listeningToKey) "Listening" else Keyboard.getKeyName(module.keyBind)
 
         if (MouseUtils.mouseWithinBounds(
                 mouseX, mouseY,
-                x + 25F + Fonts.font40.getStringWidth(module.name),
-                y + height / 2F - Fonts.font40.FONT_HEIGHT + 2F,
-                x + 35F + Fonts.font40.getStringWidth(module.name) + Fonts.fontTiny.getStringWidth(keyName),
+                x + 25F + Fonts.fontSFUI40.getStringWidth(module.name),
+                y + height / 2F - Fonts.fontSFUI40.FONT_HEIGHT + 2F,
+                x + 35F + Fonts.fontSFUI40.getStringWidth(module.name) + Fonts.fontTiny.getStringWidth(keyName),
                 y + height / 2F
             )
         )
@@ -106,17 +106,17 @@ class ModuleElement(val module: Module) : MinecraftInstance() {
             fadeKeybind = (fadeKeybind - 0.1F * RenderUtils.deltaTime * 0.025F).coerceIn(0F, 1F)
 
         RenderUtils.originalRoundedRect(
-            x + 25F + Fonts.font40.getStringWidth(module.name),
-            y + height / 2F - Fonts.font40.FONT_HEIGHT + 2F,
-            x + 35F + Fonts.font40.getStringWidth(module.name) + Fonts.fontTiny.getStringWidth(keyName),
+            x + 25F + Fonts.fontSFUI40.getStringWidth(module.name),
+            y + height / 2F - Fonts.fontSFUI40.FONT_HEIGHT + 2F,
+            x + 35F + Fonts.fontSFUI40.getStringWidth(module.name) + Fonts.fontTiny.getStringWidth(keyName),
             y + height / 2F,
             2F,
             BlendUtils.blend(Color(4282729797L.toInt()), Color(4281677109L.toInt()), fadeKeybind.toDouble()).rgb
         )
         Fonts.fontTiny.drawString(
             keyName,
-            x + 30.5F + Fonts.font40.getStringWidth(module.name),
-            y + height / 2F - Fonts.font40.FONT_HEIGHT + 5.5F,
+            x + 30.5F + Fonts.fontSFUI40.getStringWidth(module.name),
+            y + height / 2F - Fonts.fontSFUI40.FONT_HEIGHT + 5.5F,
             -1
         )
 
@@ -175,12 +175,12 @@ class ModuleElement(val module: Module) : MinecraftInstance() {
             resetState()
             return
         }
-        val keyName = if (listeningToKey) "Listening" else Keyboard.getKeyName(module.keyBind)
+        val keyName = if (listeningToKey) "Press key" else Keyboard.getKeyName(module.keyBind)
         if (MouseUtils.mouseWithinBounds(
                 mouseX, mouseY,
-                x + 25F + Fonts.font40.getStringWidth(module.name),
-                y + height / 2F - Fonts.font40.FONT_HEIGHT + 2F,
-                x + 35F + Fonts.font40.getStringWidth(module.name) + Fonts.fontTiny.getStringWidth(keyName),
+                x + 25F + Fonts.fontSFUI40.getStringWidth(module.name),
+                y + height / 2F - Fonts.fontSFUI40.FONT_HEIGHT + 2F,
+                x + 35F + Fonts.fontSFUI40.getStringWidth(module.name) + Fonts.fontTiny.getStringWidth(keyName),
                 y + height / 2F
             )
         ) {

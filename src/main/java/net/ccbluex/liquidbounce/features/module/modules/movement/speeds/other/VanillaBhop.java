@@ -8,12 +8,12 @@ import net.ccbluex.liquidbounce.features.module.modules.movement.Speed;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMode;
 import net.ccbluex.liquidbounce.utils.MovementUtils;
 
-public class VanillaHop extends SpeedMode {
+public class VanillaBhop extends SpeedMode {
 
     private int groundTick = 0;
 
-    public VanillaHop() {
-        super("VanillaHop");
+    public VanillaBhop() {
+        super("VanillaBhop");
     }
 
     @Override
