@@ -9,7 +9,8 @@ import net.ccbluex.liquidbounce.features.module.modules.misc.Patcher;
 import net.ccbluex.liquidbounce.features.module.modules.movement.AirJump;
 import net.ccbluex.liquidbounce.features.module.modules.movement.Jesus;
 import net.ccbluex.liquidbounce.features.module.modules.movement.Sprint;
-import net.ccbluex.liquidbounce.features.module.modules.render.BlockAnimations;
+import net.ccbluex.liquidbounce.features.module.modules.movement.TargetStrafe;
+import net.ccbluex.liquidbounce.features.module.modules.render.Animations;
 import net.ccbluex.liquidbounce.features.module.modules.render.TargetESP;
 import net.ccbluex.liquidbounce.utils.MovementUtils;
 import net.ccbluex.liquidbounce.utils.RotationUtils;
@@ -100,7 +101,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
         if (this.isSprinting()) {
             final KillAura auraMod = LiquidBounce.moduleManager.getModule(KillAura.class);
             final Sprint sprintMod = LiquidBounce.moduleManager.getModule(Sprint.class);
-            final TargetESP tsMod = LiquidBounce.moduleManager.getModule(TargetESP.class);
+            final TargetStrafe tsMod = LiquidBounce.moduleManager.getModule(TargetStrafe.class);
             float yaw = this.rotationYaw;
             if (tsMod.getCanStrafe())
                 yaw = tsMod.getMovingYaw();
@@ -156,7 +157,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
     //visionfx sucks
     @Overwrite
     private int getArmSwingAnimationEnd() {
-        int speed = LiquidBounce.moduleManager.getModule(BlockAnimations.class).getState() ? 2 + (20 - BlockAnimations.SpeedSwing.get()) : 6;
+        int speed = LiquidBounce.moduleManager.getModule(Animations.class).getState() ? 2 + (20 - Animations.SpeedSwing.get()) : 6;
         return this.isPotionActive(Potion.digSpeed) ? speed - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) : (this.isPotionActive(Potion.digSlowdown) ? speed + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : speed);
     }
 

@@ -1,6 +1,6 @@
 package net.ccbluex.liquidbounce.injection.forge.mixins.render;
 
-import net.ccbluex.liquidbounce.features.module.modules.render.BlockAnimations;
+import net.ccbluex.liquidbounce.features.module.modules.render.Animations;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityParticleEmitter;
 import org.spongepowered.asm.mixin.Mixin;
@@ -52,7 +52,7 @@ public abstract class MixinEffectRenderer {
             }, at = @At("HEAD"), cancellable = true
     )
     private void removeBlockBreakingParticles(CallbackInfo ci) {
-        if (BlockAnimations.noBlockParticles.get())
+        if (Animations.noBlockParticles.get())
             ci.cancel();
     }
 
@@ -62,7 +62,7 @@ public abstract class MixinEffectRenderer {
             at = @At("HEAD"), cancellable = true, remap = false
     )
     private void removeBlockBreakingParticles_Forge(CallbackInfo ci) {
-        if (BlockAnimations.noBlockParticles.get())
+        if (Animations.noBlockParticles.get())
             ci.cancel();
     }
 }

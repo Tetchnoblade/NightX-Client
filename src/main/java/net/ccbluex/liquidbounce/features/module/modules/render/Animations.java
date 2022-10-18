@@ -8,8 +8,8 @@ import net.ccbluex.liquidbounce.value.FloatValue;
 import net.ccbluex.liquidbounce.value.IntegerValue;
 import net.ccbluex.liquidbounce.value.ListValue;
 
-@ModuleInfo(name = "BlockAnimations", category = ModuleCategory.RENDER, array = false)
-public class BlockAnimations extends Module {
+@ModuleInfo(name = "Animations", category = ModuleCategory.RENDER, array = false)
+public class Animations extends Module {
 
     // some ListValue
     public static final ListValue Sword = new ListValue("Style", new String[]{

@@ -9,6 +9,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.features.module.modules.exploit.Disabler
 import net.ccbluex.liquidbounce.features.module.modules.misc.AntiBot
 import net.ccbluex.liquidbounce.features.module.modules.misc.Teams
+import net.ccbluex.liquidbounce.features.module.modules.movement.TargetStrafe
 import net.ccbluex.liquidbounce.features.module.modules.player.Blink
 import net.ccbluex.liquidbounce.features.module.modules.render.Freecam
 import net.ccbluex.liquidbounce.features.module.modules.render.TargetESP
@@ -410,7 +411,7 @@ class KillAura : Module() {
      */
     @EventTarget
     fun onStrafe(event: StrafeEvent) {
-        val targetStrafe = LiquidBounce.moduleManager.getModule(TargetESP::class.java)!!
+        val targetStrafe = LiquidBounce.moduleManager.getModule(TargetStrafe::class.java)!!
         if (rotationStrafeValue.get().equals("Off", true) && !targetStrafe.state)
             return
 

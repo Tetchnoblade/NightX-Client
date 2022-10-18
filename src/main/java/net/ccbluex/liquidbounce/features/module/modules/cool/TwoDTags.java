@@ -48,7 +48,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-@ModuleInfo(name = "2DTags", category = ModuleCategory.COOL)
+@ModuleInfo(name = "2DTags", spacedName = "2D Tags", category = ModuleCategory.COOL)
 public final class TwoDTags extends Module {
     public static List collectedEntities = new ArrayList();
     public final BoolValue outline = new BoolValue("Outline", true);

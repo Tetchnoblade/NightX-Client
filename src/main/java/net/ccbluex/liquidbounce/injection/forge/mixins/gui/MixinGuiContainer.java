@@ -3,7 +3,7 @@ package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.features.module.modules.combat.KillAura;
 import net.ccbluex.liquidbounce.features.module.modules.player.InventoryManager;
-import net.ccbluex.liquidbounce.features.module.modules.render.BlockAnimations;
+import net.ccbluex.liquidbounce.features.module.modules.render.Animations;
 import net.ccbluex.liquidbounce.features.module.modules.render.HUD;
 import net.ccbluex.liquidbounce.features.module.modules.world.Stealer;
 import net.ccbluex.liquidbounce.utils.render.EaseUtils;
@@ -106,13 +106,13 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
     @Inject(method = "drawScreen", at = @At("HEAD"), cancellable = true)
     private void drawScreenHead(CallbackInfo callbackInfo) {
-        final BlockAnimations animMod = LiquidBounce.moduleManager.getModule(BlockAnimations.class);
+        final Animations animMod = LiquidBounce.moduleManager.getModule(Animations.class);
         Stealer chestStealer = LiquidBounce.moduleManager.getModule(Stealer.class);
         final HUD hud = LiquidBounce.moduleManager.getModule(HUD.class);
         final Minecraft mc = Minecraft.getMinecraft();
 
         if (progress >= 1F) progress = 1F;
-        else progress = (float) (System.currentTimeMillis() - lastMS) / (float) BlockAnimations.animTimeValue.get();
+        else progress = (float) (System.currentTimeMillis() - lastMS) / (float) Animations.animTimeValue.get();
 
         double trueAnim = EaseUtils.easeOutQuart(progress);
 
@@ -127,13 +127,13 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
         if (animMod != null && animMod.getState() && !(mc.currentScreen instanceof GuiChest && checkFullSilence)) {
             GL11.glPushMatrix();
-            switch (BlockAnimations.guiAnimations.get()) {
+            switch (Animations.guiAnimations.get()) {
                 case "Zoom":
                     GL11.glTranslated((1 - trueAnim) * (width / 2D), (1 - trueAnim) * (height / 2D), 0D);
                     GL11.glScaled(trueAnim, trueAnim, trueAnim);
                     break;
                 case "Slide":
-                    switch (BlockAnimations.hSlideValue.get()) {
+                    switch (Animations.hSlideValue.get()) {
                         case "Right":
                             GL11.glTranslated((1 - trueAnim) * -width, 0D, 0D);
                             break;
@@ -141,7 +141,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
                             GL11.glTranslated((1 - trueAnim) * width, 0D, 0D);
                             break;
                     }
-                    switch (BlockAnimations.vSlideValue.get()) {
+                    switch (Animations.vSlideValue.get()) {
                         case "Upward":
                             GL11.glTranslated(0D, (1 - trueAnim) * height, 0D);
                             break;
@@ -206,7 +206,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
     @Inject(method = "drawScreen", at = @At("RETURN"))
     public void drawScreenReturn(CallbackInfo callbackInfo) {
-        final BlockAnimations animMod = LiquidBounce.moduleManager.getModule(BlockAnimations.class);
+        final Animations animMod = LiquidBounce.moduleManager.getModule(Animations.class);
         Stealer chestStealer = LiquidBounce.moduleManager.getModule(Stealer.class);
         final Minecraft mc = Minecraft.getMinecraft();
         boolean checkFullSilence = chestStealer.getState() && chestStealer.getSilenceValue().get() && !chestStealer.getStillDisplayValue().get();

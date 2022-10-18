@@ -98,7 +98,7 @@ class ModuleManager : Listenable {
             Phase::class.java,
             Crasher::class.java,
             Fov::class.java,
-            BlockAnimations::class.java,
+            Animations::class.java,
             InventoryManager::class.java,
             ShowInvis::class.java,
             AntiBlind::class.java,
@@ -186,7 +186,9 @@ class ModuleManager : Listenable {
             TargetInvisible::class.java,
             AutoArmor::class.java,
             Projectiles::class.java,
-            RealBobbing::class.java
+            RealBobbing::class.java,
+            TargetStrafe::class.java,
+            AirHop::class.java
         )
 
         registerModule(Fucker)

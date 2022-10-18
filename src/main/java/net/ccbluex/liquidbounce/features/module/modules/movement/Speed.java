@@ -101,7 +101,7 @@ public class Speed extends Module {
             new VerusHard()
     };
     public final BoolValue modifySprint = new BoolValue("ModifySprinting", false);
-    public final BoolValue NoBob = new BoolValue("NoBob", false);    public final ListValue typeValue = new ListValue("Type", new String[]{"NCP", "AAC", "Spartan", "Spectre", "Watchdog", "Verus", "VanillaBhop", "Other"}, "VanillaBhop") {
+    public final ListValue typeValue = new ListValue("Type", new String[]{"NCP", "AAC", "Spartan", "Spectre", "Watchdog", "Verus", "VanillaBhop", "Other"}, "VanillaBhop") {
 
         @Override
         protected void onChange(final String oldValue, final String newValue) {
@@ -129,7 +129,9 @@ public class Speed extends Module {
 
         if (speedMode != null)
             speedMode.onUpdate();
-    }    public final ListValue ncpModeValue = new ListValue("NCP-Mode", new String[]{"BHop", "FHop", "SBHop", "Hop", "YPort"}, "BHop", () -> typeValue.get().equalsIgnoreCase("ncp")) {
+    }
+
+    public final ListValue ncpModeValue = new ListValue("NCP-Mode", new String[]{"BHop", "FHop", "SBHop", "Hop", "YPort"}, "BHop", () -> typeValue.get().equalsIgnoreCase("ncp")) {
 
         @Override
         protected void onChange(final String oldValue, final String newValue) {
@@ -146,6 +148,9 @@ public class Speed extends Module {
 
     @EventTarget
     public void onMotion(final MotionEvent event) {
+            mc.thePlayer.cameraYaw = 0.0F;
+        mc.thePlayer.prevCameraYaw = 0.0F;
+
         if (mc.thePlayer.isSneaking() || event.getEventState() != EventState.PRE)
             return;
 
@@ -242,9 +247,6 @@ public class Speed extends Module {
     @Override
     public void onEnable() {
 
-        if (NoBob.get())
-            mc.gameSettings.viewBobbing = false;
-
         if (mc.thePlayer == null)
             return;
 
@@ -262,9 +264,6 @@ public class Speed extends Module {
 
     @Override
     public void onDisable() {
-
-        if (NoBob.get())
-            mc.gameSettings.viewBobbing = true;
 
         if (mc.thePlayer == null)
             return;

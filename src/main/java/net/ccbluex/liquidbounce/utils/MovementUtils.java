@@ -2,6 +2,7 @@ package net.ccbluex.liquidbounce.utils;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.event.MoveEvent;
+import net.ccbluex.liquidbounce.features.module.modules.movement.TargetStrafe;
 import net.ccbluex.liquidbounce.features.module.modules.render.TargetESP;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockIce;
@@ -94,7 +95,7 @@ public final class MovementUtils extends MinecraftInstance {
     }
 
     public static double getDirection() {
-        final TargetESP ts = LiquidBounce.moduleManager.getModule(TargetESP.class);
+        final TargetStrafe ts = LiquidBounce.moduleManager.getModule(TargetStrafe.class);
         return ts.getCanStrafe() ? ts.getMovingDir() : getDirectionRotation(mc.thePlayer.rotationYaw, mc.thePlayer.moveStrafing, mc.thePlayer.moveForward);
     }
 
