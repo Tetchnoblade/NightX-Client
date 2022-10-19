@@ -85,7 +85,4 @@ class Inventory : Module() {
         "aacap",
         true
     ) && mc.currentScreen != null && mc.currentScreen !is GuiChat && mc.currentScreen !is GuiIngameMenu && (!noDetectableValue.get() || mc.currentScreen !is GuiContainer)
-
-    override val tag: String
-        get() = modeValue.get()
 }

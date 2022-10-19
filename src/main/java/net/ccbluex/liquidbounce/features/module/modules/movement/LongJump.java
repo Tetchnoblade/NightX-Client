@@ -16,6 +16,7 @@ import net.ccbluex.liquidbounce.value.FloatValue;
 import net.ccbluex.liquidbounce.value.IntegerValue;
 import net.ccbluex.liquidbounce.value.ListValue;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C03PacketPlayer;
@@ -29,7 +30,6 @@ import net.minecraft.util.EnumFacing;
 public class LongJump extends Module {
 
     private final ListValue modeValue = new ListValue("Mode", new String[]{"NCP", "Damage", "AACv1", "AACv2", "AACv3", "AACv4", "Mineplex", "Mineplex2", "Mineplex3", "RedeskyMaki", "Redesky", "InfiniteRedesky", "MatrixFlag", "VerusDmg", "Pearl"}, "NCP");
-    private final BoolValue autoJumpValue = new BoolValue("AutoJump", false);
 
     private final FloatValue ncpBoostValue = new FloatValue("NCPBoost", 3F, 1F, 10F, () -> modeValue.get().equalsIgnoreCase("ncp"));
 
@@ -61,17 +61,26 @@ public class LongJump extends Module {
     private final FloatValue damageTimerValue = new FloatValue("Damage-Timer", 1F, 0.05F, 10F, () -> modeValue.get().equalsIgnoreCase("damage"));
     private final BoolValue damageNoMoveValue = new BoolValue("Damage-NoMove", false, () -> modeValue.get().equalsIgnoreCase("damage"));
     private final BoolValue damageARValue = new BoolValue("Damage-AutoReset", false, () -> modeValue.get().equalsIgnoreCase("damage"));
+    private final BoolValue autoDisableValue = new BoolValue("AutoDisable", true);
     private final MSTimer dmgTimer = new MSTimer();
     private final PosLookInstance posLookInstance = new PosLookInstance();
+    private boolean hasJumped = false;
+    private boolean no = false;
+
     private boolean jumped;
+
+    private int jumpState = 0;
     private boolean canBoost;
     private boolean teleported;
     private boolean canMineplexBoost;
     private int ticks = 0;
+    public double rendery = 0.0;
     private float currentTimer = 1F;
+
     private boolean verusDmged, hpxDamage, damaged = false;
     private int verusJumpTimes = 0;
     private int pearlState = 0;
+
     private double lastMotX, lastMotY, lastMotZ;
     private boolean flagged = false;
     private boolean hasFell = false;
@@ -81,11 +90,21 @@ public class LongJump extends Module {
             ClientUtils.displayChatMessage(message);
     }
 
+    @EventTarget
+    public void onMotion(final MotionEvent event) {
+        mc.thePlayer.cameraYaw = 0.1F;
+        mc.thePlayer.prevCameraYaw = 0.1F;
+    }
+
     public void onEnable() {
         if (mc.thePlayer == null) return;
         if (modeValue.get().equalsIgnoreCase("redesky") && redeskyTimerBoostValue.get())
             currentTimer = redeskyTimerBoostStartValue.get();
 
+        jumped = false;
+        hasJumped = false;
+        no = false;
+        jumpState = 0;
         ticks = 0;
         verusDmged = false;
         hpxDamage = false;
@@ -97,6 +116,8 @@ public class LongJump extends Module {
 
         dmgTimer.reset();
         posLookInstance.reset();
+
+        rendery = mc.thePlayer.posY;
 
         double x = mc.thePlayer.posX;
         double y = mc.thePlayer.posY;
@@ -147,6 +168,18 @@ public class LongJump extends Module {
 
     @EventTarget
     public void onUpdate(final UpdateEvent event) {
+        if (!no && mc.thePlayer.onGround) {
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), true);
+            jumped = true;
+            if (hasJumped && autoDisableValue.get()) {
+                jumpState = 0;
+                this.setState(false);
+                return;
+            }
+            mc.thePlayer.jump();
+            hasJumped = true;
+        }
+
         if (modeValue.get().equalsIgnoreCase("matrixflag")) {
             if (hasFell) {
                 if (!flagged && !matrixSilentValue.get()) {
@@ -244,7 +277,7 @@ public class LongJump extends Module {
             return;
         }
 
-        if (jumped) {
+        if(jumped) {
             final String mode = modeValue.get();
 
             if (mc.thePlayer.onGround || mc.thePlayer.capabilities.isFlying) {
@@ -348,17 +381,12 @@ public class LongJump extends Module {
                     ticks++;
                     break;
                 case "infiniteredesky":
-                    if (mc.thePlayer.fallDistance > 0.6F)
+                    if(mc.thePlayer.fallDistance > 0.6F)
                         mc.thePlayer.motionY += 0.02F;
 
                     MovementUtils.strafe((float) Math.min(0.85, Math.max(0.25, MovementUtils.getSpeed() * 1.05878)));
                     break;
             }
-        }
-
-        if (autoJumpValue.get() && mc.thePlayer.onGround && MovementUtils.isMoving()) {
-            jumped = true;
-            mc.thePlayer.jump();
         }
     }
 
@@ -367,7 +395,7 @@ public class LongJump extends Module {
         final String mode = modeValue.get();
 
         if (mode.equalsIgnoreCase("mineplex3")) {
-            if (mc.thePlayer.fallDistance != 0)
+            if(mc.thePlayer.fallDistance != 0)
                 mc.thePlayer.motionY += 0.037;
         } else if (mode.equalsIgnoreCase("ncp") && !MovementUtils.isMoving() && jumped) {
             mc.thePlayer.motionX = 0;
@@ -436,13 +464,13 @@ public class LongJump extends Module {
         canBoost = true;
         teleported = false;
 
-        if (getState()) {
-            switch (modeValue.get().toLowerCase()) {
+        if(getState()) {
+            switch(modeValue.get().toLowerCase()) {
                 case "mineplex":
                     event.setMotion(event.getMotion() * 4.08f);
                     break;
                 case "mineplex2":
-                    if (mc.thePlayer.isCollidedHorizontally) {
+                    if(mc.thePlayer.isCollidedHorizontally) {
                         event.setMotion(2.31f);
                         canMineplexBoost = true;
                         mc.thePlayer.onGround = false;
@@ -457,7 +485,7 @@ public class LongJump extends Module {
     }
 
     private int getPearlSlot() {
-        for (int i = 36; i < 45; ++i) {
+        for(int i = 36; i < 45; ++i) {
             ItemStack stack = mc.thePlayer.inventoryContainer.getSlot(i).getStack();
             if (stack != null && stack.getItem() instanceof ItemEnderPearl) {
                 return i - 36;
@@ -466,7 +494,8 @@ public class LongJump extends Module {
         return -1;
     }
 
-    public void onDisable() {
+    public void onDisable(){
+        KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), false);
         mc.timer.timerSpeed = 1.0F;
         mc.thePlayer.speedInAir = 0.02F;
     }

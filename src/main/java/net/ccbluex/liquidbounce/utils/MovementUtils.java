@@ -3,7 +3,6 @@ package net.ccbluex.liquidbounce.utils;
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.event.MoveEvent;
 import net.ccbluex.liquidbounce.features.module.modules.movement.TargetStrafe;
-import net.ccbluex.liquidbounce.features.module.modules.render.TargetESP;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockIce;
 import net.minecraft.block.BlockPackedIce;

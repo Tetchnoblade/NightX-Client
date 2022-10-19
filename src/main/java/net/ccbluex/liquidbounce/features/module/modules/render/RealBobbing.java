@@ -11,9 +11,14 @@ public class RealBobbing extends Module {
 
     @EventTarget
     public void onMotion(final MotionEvent event) {
+        if (!mc.thePlayer.onGround) {
+            mc.thePlayer.cameraYaw = 0.0F;
+            mc.thePlayer.prevCameraYaw = 0.0F;
+        }
+
         if (mc.thePlayer.onGround) {
-            mc.thePlayer.cameraYaw = 0.02F;
-            mc.thePlayer.prevCameraYaw = 0.02F;
+            mc.thePlayer.cameraYaw = 0.03F;
+            mc.thePlayer.prevCameraYaw = 0.03F;
         }
     }
 }

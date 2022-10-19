@@ -14,6 +14,7 @@ import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.spartan.
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.spectre.SpectreBHop;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.spectre.SpectreLowHop;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.spectre.SpectreOnGround;
+import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.vanillabhop.VanillaBhop;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.verus.VerusHard;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.verus.VerusHop;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.verus.VerusLowHop;
@@ -70,6 +71,9 @@ public class Speed extends Module {
             new WatchdogStable(),
             new WatchdogCustom(),
 
+            // Vanilla
+            new VanillaBhop(),
+
             // Spartan
             new SpartanYPort(),
 
@@ -80,7 +84,7 @@ public class Speed extends Module {
 
             // Other
             new SlowHop(),
-            new VanillaBhop(),
+            new Custom(),
             new Jump(),
             new Legit(),
             new AEMine(),
@@ -100,8 +104,7 @@ public class Speed extends Module {
             new VerusLowHop(),
             new VerusHard()
     };
-    public final BoolValue modifySprint = new BoolValue("ModifySprinting", false);
-    public final ListValue typeValue = new ListValue("Type", new String[]{"NCP", "AAC", "Spartan", "Spectre", "Watchdog", "Verus", "VanillaBhop", "Other"}, "VanillaBhop") {
+    public final ListValue typeValue = new ListValue("Type", new String[]{"NCP", "AAC", "Spartan", "Spectre", "Watchdog", "Verus", "Custom", "VanillaBhop", "Other"}, "VanillaBhop") {
 
         @Override
         protected void onChange(final String oldValue, final String newValue) {
@@ -121,9 +124,6 @@ public class Speed extends Module {
     public void onUpdate(final UpdateEvent event) {
         if (mc.thePlayer.isSneaking())
             return;
-
-        if (MovementUtils.isMoving() && modifySprint.get())
-            mc.thePlayer.setSprinting(!getModeName().equalsIgnoreCase("verushard"));
 
         final SpeedMode speedMode = getMode();
 
@@ -153,9 +153,6 @@ public class Speed extends Module {
 
         if (mc.thePlayer.isSneaking() || event.getEventState() != EventState.PRE)
             return;
-
-        if (MovementUtils.isMoving() && modifySprint.get())
-            mc.thePlayer.setSprinting(!getModeName().equalsIgnoreCase("verushard"));
 
         final SpeedMode speedMode = getMode();
 
@@ -264,6 +261,7 @@ public class Speed extends Module {
 
     @Override
     public void onDisable() {
+        MovementUtils.strafe(0.2f);
 
         if (mc.thePlayer == null)
             return;
@@ -298,7 +296,7 @@ public class Speed extends Module {
         if (tagDisplay.get().equalsIgnoreCase("fullname"))
             return getModeName();
 
-        return typeValue.get() == "Other" ? otherModeValue.get() : typeValue.get() == "VanillaBhop" ? "VanillaBhop" : typeValue.get() + ", " + getOnlySingleName();
+        return typeValue.get() == "Other" ? otherModeValue.get() : typeValue.get() == "Custom" ? "Custom" : typeValue.get() + ", " + getOnlySingleName();
     }
 
     private String getOnlySingleName() {
@@ -365,6 +363,9 @@ public class Speed extends Module {
             case "VanillaBhop":
                 mode = "VanillaBhop";
                 break;
+            case "Custom":
+                mode = "Custom";
+                break;
             case "Other":
                 mode = otherModeValue.get();
                 break;
@@ -417,18 +418,18 @@ public class Speed extends Module {
 
 
 
-    public final FloatValue speedValue = new FloatValue("CustomSpeed", 1.0f, 0.2f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
-    public final FloatValue launchSpeedValue = new FloatValue("CustomLaunchSpeed", 1.6f, 0.2f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
-    public final FloatValue addYMotionValue = new FloatValue("CustomAddYMotion", 0f, 0f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
-    public final FloatValue yValue = new FloatValue("CustomY", 0.42f, 0f, 4f, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
-    public final FloatValue upTimerValue = new FloatValue("CustomUpTimer", 1f, 0.1f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
-    public final FloatValue downTimerValue = new FloatValue("CustomDownTimer", 1f, 0.1f, 2f, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
-    public final ListValue strafeValue = new ListValue("CustomStrafe", new String[]{"Strafe", "Boost", "Plus", "PlusOnlyUp", "Non-Strafe"}, "Strafe", () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
-    public final IntegerValue groundStay = new IntegerValue("CustomGroundStay", 0, 0, 10, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
-    public final BoolValue groundResetXZValue = new BoolValue("CustomGroundResetXZ", false, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
-    public final BoolValue resetXZValue = new BoolValue("CustomResetXZ", false, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
-    public final BoolValue resetYValue = new BoolValue("CustomResetY", false, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
-    public final BoolValue doLaunchSpeedValue = new BoolValue("CustomDoLaunchSpeed", false, () -> typeValue.get().equalsIgnoreCase("vanillabhop"));
+    public final FloatValue speedValue = new FloatValue("CustomSpeed", 1.0f, 0.2f, 2f, () -> typeValue.get().equalsIgnoreCase("custom"));
+    public final FloatValue launchSpeedValue = new FloatValue("CustomLaunchSpeed", 1.6f, 0.2f, 2f, () -> typeValue.get().equalsIgnoreCase("custom"));
+    public final FloatValue addYMotionValue = new FloatValue("CustomAddYMotion", 0f, 0f, 2f, () -> typeValue.get().equalsIgnoreCase("custom"));
+    public final FloatValue yValue = new FloatValue("CustomY", 0.42f, 0f, 4f, () -> typeValue.get().equalsIgnoreCase("custom"));
+    public final FloatValue upTimerValue = new FloatValue("CustomUpTimer", 1f, 0.1f, 2f, () -> typeValue.get().equalsIgnoreCase("custom"));
+    public final FloatValue downTimerValue = new FloatValue("CustomDownTimer", 1f, 0.1f, 2f, () -> typeValue.get().equalsIgnoreCase("custom"));
+    public final ListValue strafeValue = new ListValue("CustomStrafe", new String[]{"Strafe", "Boost", "Plus", "PlusOnlyUp", "Non-Strafe"}, "Strafe", () -> typeValue.get().equalsIgnoreCase("custom"));
+    public final IntegerValue groundStay = new IntegerValue("CustomGroundStay", 0, 0, 10, () -> typeValue.get().equalsIgnoreCase("custom"));
+    public final BoolValue groundResetXZValue = new BoolValue("CustomGroundResetXZ", false, () -> typeValue.get().equalsIgnoreCase("custom"));
+    public final BoolValue resetXZValue = new BoolValue("CustomResetXZ", false, () -> typeValue.get().equalsIgnoreCase("custom"));
+    public final BoolValue resetYValue = new BoolValue("CustomResetY", false, () -> typeValue.get().equalsIgnoreCase("custom"));
+    public final BoolValue doLaunchSpeedValue = new BoolValue("CustomDoLaunchSpeed", false, () -> typeValue.get().equalsIgnoreCase("custom"));
 
     public final BoolValue jumpStrafe = new BoolValue("JumpStrafe", false, () -> typeValue.get().equalsIgnoreCase("other"));
 

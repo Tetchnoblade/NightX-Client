@@ -19,7 +19,6 @@ class TimeChanger : Module() {
     val staticTimeValue = IntegerValue("StaticTime", 18000, 0, 24000, { timeModeValue.get().equals("static", true) })
     val weatherModeValue = ListValue("Weather", arrayOf("Clear", "Rain", "NoModification"), "Clear")
     val rainStrengthValue = FloatValue("RainStrength", 1F, 0.01F, 1F, { weatherModeValue.get().equals("rain", true) })
-    val tagValue = ListValue("Tag", arrayOf("TimeOnly", "Simplified", "Detailed", "None"), "TimeOnly")
 
     private var timeCycle = 0L
 
@@ -50,22 +49,4 @@ class TimeChanger : Module() {
                 if (weatherModeValue.get().equals("clear", true)) 0F else rainStrengthValue.get()
             )
     }
-
-    override val tag: String?
-        get() = when (tagValue.get().lowercase(Locale.getDefault())) {
-            "timeonly" -> if (timeModeValue.get().equals("static", true)) staticTimeValue.get()
-                .toString() else timeCycle.toString()
-
-            "simplified" -> "${
-                if (timeModeValue.get().equals("static", true)) staticTimeValue.get()
-                    .toString() else timeCycle.toString()
-            }, ${weatherModeValue.get()}"
-
-            "detailed" -> "Time: ${
-                if (timeModeValue.get().equals("static", true)) staticTimeValue.get()
-                    .toString() else "Cycle, $timeCycle"
-            }, Weather: ${weatherModeValue.get()}"
-
-            else -> null
-        }
 }

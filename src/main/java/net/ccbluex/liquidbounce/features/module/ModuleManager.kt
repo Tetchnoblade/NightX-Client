@@ -92,7 +92,6 @@ class ModuleManager : Listenable {
             LongJump::class.java,
             AutoClicker::class.java,
             BlockOverlay::class.java,
-            NoFriends::class.java,
             Chams::class.java,
             Clip::class.java,
             Phase::class.java,

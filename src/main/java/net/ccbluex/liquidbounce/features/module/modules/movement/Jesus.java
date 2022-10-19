@@ -20,9 +20,8 @@ import net.minecraft.util.BlockPos;
 @ModuleInfo(name = "Jesus", spacedName = "Jesus", category = ModuleCategory.MOVEMENT)
 public class Jesus extends Module {
 
-    public final ListValue modeValue = new ListValue("Mode", new String[]{"Vanilla", "NCP", "AAC", "AAC3.3.11", "AACFlight", "AAC4.2.1", "Horizon1.4.6", "Twillight", "Matrix", "Dolphin", "Swim"}, "NCP");
+    public final ListValue modeValue = new ListValue("Mode", new String[]{"Vanilla", "NCP", "AAC", "AAC3.3.11", "AACFlight", "AAC4.2.1", "Horizon1.4.6", "Twillight", "MatrixFast", "Dolphin", "Swim"}, "NCP");
     private final BoolValue noJumpValue = new BoolValue("NoJump", false);
-    private final FloatValue matrixSpeedValue = new FloatValue("MatrixSpeed", 1.25F, 0.1F, 2.0F, () -> modeValue.get().equalsIgnoreCase("matrix"));
 
     private boolean nextTick;
 
@@ -67,25 +66,10 @@ public class Jesus extends Module {
                 if (mc.thePlayer.hurtTime != 0)
                     mc.thePlayer.onGround = false;
                 break;
-            //just rename. cuz this jesus patched in spartan
-            case "matrix":
+            case "matrixfast":
                 if (mc.thePlayer.isInWater()) {
-                    mc.gameSettings.keyBindJump.pressed = false;
-                    if (mc.thePlayer.isCollidedHorizontally) {
-                        mc.thePlayer.motionY = 0.09;
-                        return;
-                    }
-
-                    final Block block = BlockUtils.getBlock(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY + 1, mc.thePlayer.posZ));
-                    final Block blockUp = BlockUtils.getBlock(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY + 1.1D, mc.thePlayer.posZ));
-
-                    if (blockUp instanceof BlockLiquid) {
-                        mc.thePlayer.motionY = 0.1;
-                    } else if (block instanceof BlockLiquid) {
-                        mc.thePlayer.motionY = 0;
-                    }
-                    mc.thePlayer.motionX *= matrixSpeedValue.get();
-                    mc.thePlayer.motionZ *= matrixSpeedValue.get();
+                    mc.thePlayer.motionY = 0;
+                    MovementUtils.strafe(0.6f);
                 }
                 break;
             case "aac3.3.11":

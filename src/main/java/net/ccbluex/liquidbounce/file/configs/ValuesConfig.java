@@ -76,8 +76,6 @@ public class ValuesConfig extends FileConfig {
             } else if (entry.getKey().equalsIgnoreCase("features")) {
                 JsonObject jsonValue = (JsonObject) entry.getValue();
 
-                if (jsonValue.has("DarkMode"))
-                    LiquidBounce.INSTANCE.setDarkMode(jsonValue.get("DarkMode").getAsBoolean());
                 if (jsonValue.has("VanillaSpoof"))
                     AntiForge.enabled = jsonValue.get("VanillaSpoof").getAsBoolean();
                 if (jsonValue.has("FMLSpoof"))
@@ -93,8 +91,6 @@ public class ValuesConfig extends FileConfig {
 
                 if (jsonValue.has("API-Key"))
                     GuiTheAltening.Companion.setApiKey(jsonValue.get("API-Key").getAsString());
-            } else if (entry.getKey().equalsIgnoreCase("MainMenuMoveable")) {
-                GuiMainMenu.Companion.setUseParallax(entry.getValue().getAsBoolean());
             } else if (entry.getKey().equalsIgnoreCase("Background")) {
                 JsonObject jsonValue = (JsonObject) entry.getValue();
 
@@ -149,7 +145,6 @@ public class ValuesConfig extends FileConfig {
         jsonObject.add("macros", jsonMacros);
 
         final JsonObject jsonFeatures = new JsonObject();
-        jsonFeatures.addProperty("DarkMode", LiquidBounce.INSTANCE.getDarkMode());
         jsonFeatures.addProperty("VanillaSpoof", AntiForge.enabled);
         jsonFeatures.addProperty("FMLSpoof", AntiForge.blockFML);
         jsonFeatures.addProperty("ProxySpoof", AntiForge.blockProxyPacket);
@@ -160,8 +155,6 @@ public class ValuesConfig extends FileConfig {
         final JsonObject theAlteningObject = new JsonObject();
         theAlteningObject.addProperty("API-Key", GuiTheAltening.Companion.getApiKey());
         jsonObject.add("thealtening", theAlteningObject);
-
-        jsonObject.addProperty("MainMenuMoveable", GuiMainMenu.Companion.getUseParallax());
 
         final JsonObject backgroundObject = new JsonObject();
         backgroundObject.addProperty("Enabled", GuiBackground.Companion.getEnabled());

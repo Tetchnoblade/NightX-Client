@@ -33,9 +33,6 @@ object LiquidBounce {
     const val CLIENT_CLOUD = "https://www.youtube.com/As0452"
 
     var isStarting = false
-    var mainMenuPrep = false
-
-    var darkMode = true
 
     // Managers
     lateinit var moduleManager: ModuleManager

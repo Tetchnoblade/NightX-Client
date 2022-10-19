@@ -12,7 +12,6 @@ import net.ccbluex.liquidbounce.features.module.modules.misc.Teams
 import net.ccbluex.liquidbounce.features.module.modules.movement.TargetStrafe
 import net.ccbluex.liquidbounce.features.module.modules.player.Blink
 import net.ccbluex.liquidbounce.features.module.modules.render.Freecam
-import net.ccbluex.liquidbounce.features.module.modules.render.TargetESP
 import net.ccbluex.liquidbounce.features.module.modules.world.Scaffold
 import net.ccbluex.liquidbounce.utils.*
 import net.ccbluex.liquidbounce.utils.extensions.getDistanceToEntityBox
@@ -823,9 +822,6 @@ class KillAura : Module() {
                 if (entity.isSpectator || AntiBot.isBot(entity))
                     return false
 
-                if (EntityUtils.isFriend(entity) && !LiquidBounce.moduleManager[NoFriends::class.java]!!.state)
-                    return false
-
                 val teams = LiquidBounce.moduleManager[Teams::class.java] as Teams
 
                 return !teams.state || !teams.isInYourTeam(entity)
@@ -1024,7 +1020,7 @@ class KillAura : Module() {
             }
 
             if (raycastValue.get() && raycastedEntity is EntityLivingBase
-                && (LiquidBounce.moduleManager[NoFriends::class.java]!!.state || !EntityUtils.isFriend(raycastedEntity))
+                && (!EntityUtils.isFriend(raycastedEntity))
             )
                 currentTarget = raycastedEntity
 
@@ -1068,7 +1064,7 @@ class KillAura : Module() {
         }
 
         if (autoBlockModeValue.get().equals("interact", true)) {
-            KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), true);
         }
 
         if (autoBlockModeValue.get().equals("oldhypixel", true)) {
@@ -1146,9 +1142,10 @@ class KillAura : Module() {
                         EnumFacing.DOWN
                     )
                 )
-
-            blockingStatus = false
+            if (autoBlockModeValue.get().equals("interact", true))
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
         }
+        blockingStatus = false
     }
 
     /**

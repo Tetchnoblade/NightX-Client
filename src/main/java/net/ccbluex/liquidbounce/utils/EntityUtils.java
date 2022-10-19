@@ -1,7 +1,6 @@
 package net.ccbluex.liquidbounce.utils;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
-import net.ccbluex.liquidbounce.features.module.modules.combat.NoFriends;
 import net.ccbluex.liquidbounce.features.module.modules.misc.AntiBot;
 import net.ccbluex.liquidbounce.features.module.modules.misc.Teams;
 import net.ccbluex.liquidbounce.utils.render.ColorUtils;
@@ -36,9 +35,6 @@ public final class EntityUtils extends MinecraftInstance {
 
                     if (canAttackCheck) {
                         if (AntiBot.isBot(entityPlayer))
-                            return false;
-
-                        if (isFriend(entityPlayer) && !LiquidBounce.moduleManager.getModule(NoFriends.class).getState())
                             return false;
 
                         if (entityPlayer.isSpectator())

@@ -22,10 +22,6 @@ import kotlin.concurrent.thread
 
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
-    val bigLogo = ResourceLocation("liquidbounce+/big.png")
-    val darkIcon = ResourceLocation("liquidbounce+/menu/dark.png")
-    val lightIcon = ResourceLocation("liquidbounce+/menu/light.png")
-
     var slideX: Float = 0F
     var fade: Float = 0F
 
@@ -41,7 +37,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     var extendedBackgroundMode = false
 
     companion object {
-        var useParallax = false
     }
 
     override fun initGui() {
@@ -60,40 +55,21 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         val creditInfo = "Welcome, §a${mc.session.username}"
         drawBackground(0)
         GL11.glPushMatrix()
-        renderSwitchButton()
-        renderDarkModeButton()
         Fonts.fontSFUI40.drawStringWithShadow("NightX Client (#260722)", 2F, height - 12F, -1)
-        Fonts.fontLarge.drawCenteredString("Aspw-w/NightX-Client", width / 2F, this.height / 2.4F, -1)
         Fonts.fontSFUI40.drawStringWithShadow(
             creditInfo,
             width - 3F - Fonts.fontSFUI40.getStringWidth(creditInfo),
             height - 12F,
             -1
         )
-        if (useParallax) moveMouseEffect(mouseX, mouseY, 10F)
-        GlStateManager.disableAlpha()
-        RenderUtils.drawImage2(bigLogo, width / 2F - 50F, height / 2F - 90F, 100, 100)
         GlStateManager.enableAlpha()
         renderBar(mouseX, mouseY, partialTicks)
         GL11.glPopMatrix()
         super.drawScreen(mouseX, mouseY, partialTicks)
-
-        if (!LiquidBounce.mainMenuPrep) {
-            val animProgress = ((System.currentTimeMillis() - lastAnimTick).toFloat() / 1500F).coerceIn(0F, 1F)
-            RenderUtils.drawRect(0F, 0F, width.toFloat(), height.toFloat(), Color(0F, 0F, 0F, 1F - animProgress))
-            if (animProgress >= 1F)
-                LiquidBounce.mainMenuPrep = true
-        }
     }
 
     override fun mouseClicked(mouseX: Int, mouseY: Int, mouseButton: Int) {
-        if (!LiquidBounce.mainMenuPrep || mouseButton != 0) return
-
-        if (isMouseHover(2F, height - 26F, 28F, height - 16F, mouseX, mouseY))
-            useParallax = !useParallax
-
-        if (isMouseHover(2F, height - 38F, 28F, height - 28F, mouseX, mouseY))
-            LiquidBounce.darkMode = !LiquidBounce.darkMode
+        if (isMouseHover(2F, height - 38F, 28F, height - 28F, mouseX, mouseY));
 
         val staticX = width / 2F - 120F
         val staticY = height / 2F + 20F
@@ -182,58 +158,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         super.mouseClicked(mouseX, mouseY, mouseButton)
     }
 
-    fun moveMouseEffect(mouseX: Int, mouseY: Int, strength: Float) {
-        val mX = mouseX - width / 2
-        val mY = mouseY - height / 2
-        val xDelta = mX.toFloat() / (width / 2).toFloat()
-        val yDelta = mY.toFloat() / (height / 2).toFloat()
-
-        GL11.glTranslatef(xDelta * strength, yDelta * strength, 0F)
-    }
-
-    fun renderSwitchButton() {
-        sliderX = (sliderX + (if (useParallax) 2F else -2F)).coerceIn(0F, 12F)
-        Fonts.fontSFUI40.drawStringWithShadow("Moveable", 28F, height - 25F, -1)
-        RenderUtils.drawRoundedRect(
-            4F,
-            height - 24F,
-            22F,
-            height - 18F,
-            3F,
-            if (useParallax) Color(0, 111, 255, 255).rgb else (if (LiquidBounce.darkMode) Color(
-                70,
-                70,
-                70,
-                255
-            ) else Color(140, 140, 140, 255)).rgb
-        )
-        RenderUtils.drawRoundedRect(2F + sliderX, height - 26F, 12F + sliderX, height - 16F, 5F, Color.white.rgb)
-    }
-
-    fun renderDarkModeButton() {
-        sliderDarkX = (sliderDarkX + (if (LiquidBounce.darkMode) 2F else -2F)).coerceIn(0F, 12F)
-        GlStateManager.disableAlpha()
-        RenderUtils.drawImage3(darkIcon, 28F, height - 40F, 14, 14, 1F, 1F, 1F, sliderDarkX / 12F)
-        RenderUtils.drawImage3(lightIcon, 28F, height - 40F, 14, 14, 1F, 1F, 1F, 1F - (sliderDarkX / 12F))
-        GlStateManager.enableAlpha()
-        RenderUtils.drawRoundedRect(
-            4F,
-            height - 36F,
-            22F,
-            height - 30F,
-            3F,
-            (if (LiquidBounce.darkMode) Color(70, 70, 70, 255) else Color(140, 140, 140, 255)).rgb
-        )
-        RenderUtils.drawRoundedRect(
-            2F + sliderDarkX,
-            height - 38F,
-            12F + sliderDarkX,
-            height - 28F,
-            5F,
-            Color.white.rgb
-        )
-    }
-
     fun renderBar(mouseX: Int, mouseY: Int, partialTicks: Float) {
         val staticX = width / 2F - 120F
         val staticY = height / 2F + 20F
@@ -244,7 +168,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             staticX + 240F,
             staticY + 20F,
             10F,
-            (if (LiquidBounce.darkMode) Color(0, 0, 0, 120) else Color(255, 255, 255, 100)).rgb
+            (Color(70, 70, 70, 255)).rgb
         )
 
         var index: Int = 0
@@ -339,12 +263,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                 slideX + 40F,
                 staticY + 20F,
                 10F,
-                (if (LiquidBounce.darkMode) Color(0F, 0F, 0F, fade / 100F * 0.6F) else Color(
-                    1F,
-                    1F,
-                    1F,
-                    fade / 100F * 0.6F
-                )).rgb
+                (Color(70, 70, 70, 255)).rgb
             )
 
         index = 0
@@ -352,46 +271,17 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         if (extendedModMode) {
             if (extendedBackgroundMode)
                 for (i in ExtendedBackgroundButton.values()) {
-                    if (LiquidBounce.darkMode)
                         RenderUtils.drawImage2(i.texture, staticX + 40F * index + 11F, staticY + 1F, 18, 18)
-                    else
-                        RenderUtils.drawImage3(
-                            i.texture,
-                            staticX + 40F * index + 11F,
-                            staticY + 1F,
-                            18,
-                            18,
-                            0F,
-                            0F,
-                            0F,
-                            1F
-                        )
                     index++
                 }
             else
                 for (i in ExtendedImageButton.values()) {
-                    if (LiquidBounce.darkMode)
                         RenderUtils.drawImage2(i.texture, staticX + 40F * index + 11F, staticY + 1F, 18, 18)
-                    else
-                        RenderUtils.drawImage3(
-                            i.texture,
-                            staticX + 40F * index + 11F,
-                            staticY + 1F,
-                            18,
-                            18,
-                            0F,
-                            0F,
-                            0F,
-                            1F
-                        )
                     index++
                 }
         } else
             for (i in ImageButton.values()) {
-                if (LiquidBounce.darkMode)
                     RenderUtils.drawImage2(i.texture, staticX + 40F * index + 11F, staticY + 1F, 18, 18)
-                else
-                    RenderUtils.drawImage3(i.texture, staticX + 40F * index + 11F, staticY + 1F, 18, 18, 0F, 0F, 0F, 1F)
                 index++
             }
         GlStateManager.enableAlpha()

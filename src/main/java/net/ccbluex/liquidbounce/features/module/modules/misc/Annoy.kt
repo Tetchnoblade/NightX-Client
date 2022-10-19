@@ -12,7 +12,7 @@ import net.ccbluex.liquidbounce.value.ListValue
 
 @ModuleInfo(name = "Annoy", category = ModuleCategory.MISC)
 class Annoy : Module() {
-    private val yawModeValue = ListValue("YawMove", arrayOf("Jitter", "Spin", "Back"), "Jitter")
+    private val yawModeValue = ListValue("YawMove", arrayOf("Jitter", "Spin", "Back"), "Spin")
     private val pitchModeValue = ListValue("PitchMode", arrayOf("Down", "Up", "Jitter"), "Down")
     private val rotateValue = BoolValue("SilentRotate", true)
 
