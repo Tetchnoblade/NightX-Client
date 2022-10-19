@@ -343,9 +343,6 @@ class KillAura : Module() {
 
     var spinYaw = 0F
 
-    // I don't know
-    //var focusEntityName = mutableListOf<String>()
-
     /**
      * Enable kill aura module
      */
