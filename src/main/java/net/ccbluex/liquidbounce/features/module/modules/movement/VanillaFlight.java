@@ -21,8 +21,5 @@ public class VanillaFlight extends Module {
 
         if (mc.thePlayer.capabilities.isCreativeMode)
             mc.thePlayer.capabilities.allowFlying = true;
-
-        if (mc.thePlayer.capabilities.isCreativeMode && mc.thePlayer.capabilities.isFlying)
-            mc.thePlayer.capabilities.isFlying = true;
     }
 }
