@@ -430,14 +430,12 @@ public class Flight extends Module {
 
         if (resetMotionValue.get() && (!mode.toUpperCase().startsWith("AAC") && !mode.equalsIgnoreCase("Hypixel") &&
                 !mode.equalsIgnoreCase("CubeCraft") && !mode.equalsIgnoreCase("Collide") && !mode.equalsIgnoreCase("Verus") && !mode.equalsIgnoreCase("Jump") && !mode.equalsIgnoreCase("creative")) || (mode.equalsIgnoreCase("pearl") && pearlState != -1)) {
-            mc.thePlayer.motionX = 0;
             mc.thePlayer.motionY = 0;
-            mc.thePlayer.motionZ = 0;
+            MovementUtils.strafe(0.3f);
         }
 
         if (resetMotionValue.get() && boostTicks > 0 && mode.equalsIgnoreCase("Verus")) {
-            mc.thePlayer.motionX = 0;
-            mc.thePlayer.motionZ = 0;
+            MovementUtils.strafe(0.3f);
         }
 
         if (mode.equalsIgnoreCase("AAC5-Vanilla") && !mc.isIntegratedServerRunning()) {

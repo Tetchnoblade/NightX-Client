@@ -8,8 +8,8 @@ import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.value.BoolValue
 import net.minecraft.client.gui.GuiGameOver
 
-@ModuleInfo(name = "AutoRespawn", spacedName = "Auto Respawn", category = ModuleCategory.PLAYER)
-class AutoRespawn : Module() {
+@ModuleInfo(name = "Respawn", category = ModuleCategory.PLAYER)
+class Respawn : Module() {
 
     private val instantValue = BoolValue("Instant", true)
 

@@ -16,7 +16,7 @@ public class Animations extends Module {
             "1.8", "Old", "SlideFull", "Slide", "Push", "Flux1", "Flux2", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Leaked", "Sigma3", "Sigma4", "Okura", "Bruh",
             "Leet", "Moon", "Swift", "Dortware1", "Dortware2", "Smart", "Cool", "ETB", "Zoom", "Avatar", "Tap1", "Tap2", "Poke", "Push1", "Push2", "Up", "Shield", "Akrien", "VisionFX",
             "Lucky", "Rotate360", "SmoothFloat", "Strange", "Move", "Stab", "OldSwang", "Jello"
-    }, "Swang");
+    }, "Swank");
 
     // item general scale
     public static final FloatValue Scale = new FloatValue("Scale", 0.4f, 0f, 4f);

@@ -79,7 +79,7 @@ class KillAura : Module() {
     private val rangeSprintReducementValue = FloatValue("RangeSprintReducement", 0.02f, 0f, 0.4f, "m")
 
     // Modes
-    private val rotations = ListValue("RotationMode", arrayOf("Vanilla", "BackTrack", "Spin", "None"), "BackTrack")
+    private val rotations = ListValue("RotationMode", arrayOf("Vanilla", "BackTrack", "Spin", "None"), "Vanilla")
 
     private val spinHurtTimeValue =
         IntegerValue("Spin-HitHurtTime", 10, 0, 10, { rotations.get().equals("spin", true) })
@@ -819,6 +819,9 @@ class KillAura : Module() {
                 if (entity.isSpectator || AntiBot.isBot(entity))
                     return false
 
+                if (EntityUtils.isFriend(entity))
+                    return false
+
                 val teams = LiquidBounce.moduleManager[Teams::class.java] as Teams
 
                 return !teams.state || !teams.isInYourTeam(entity)
@@ -1017,8 +1020,7 @@ class KillAura : Module() {
             }
 
             if (raycastValue.get() && raycastedEntity is EntityLivingBase
-                && (!EntityUtils.isFriend(raycastedEntity))
-            )
+                && (!EntityUtils.isFriend(raycastedEntity)))
                 currentTarget = raycastedEntity
 
             hitable = if (maxTurnSpeed.get() > 0F) currentTarget == raycastedEntity else true

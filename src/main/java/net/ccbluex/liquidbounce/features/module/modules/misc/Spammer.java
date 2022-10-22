@@ -17,7 +17,7 @@ import java.util.Random;
 @ModuleInfo(name = "Spammer", category = ModuleCategory.MISC)
 public class Spammer extends Module {
 
-    private final TextValue messageValue = new TextValue("Message", "縺薙ａ縺溘ｍ縺・・ｽE縺斐∩・ｽE・ｽEw)縺薙ａ縺溘ｍ縺・・ｽE縺斐∩・ｽE・ｽEw)縺薙ａ縺溘ｍ縺・・ｽE縺斐∩・ｽE・ｽEw)縺薙ａ縺溘ｍ縺・・ｽE縺斐∩・ｽE・ｽEw)");
+    private final TextValue messageValue = new TextValue("Message", "D.o.w.n.l.o.a.d. .N.i.g.h.t.X. .C.l.i.e.n.t.");
     private final BoolValue customValue = new BoolValue("Custom", true);    private final IntegerValue maxDelayValue = new IntegerValue("MaxDelay", 1500, 0, 5000, "ms") {
         @Override
         protected void onChanged(final Integer oldValue, final Integer newValue) {

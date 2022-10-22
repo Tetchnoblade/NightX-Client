@@ -74,7 +74,7 @@ class ModuleManager : Listenable {
             ChestESP::class.java,
             Bypass::class.java,
             Step::class.java,
-            AutoRespawn::class.java,
+            Respawn::class.java,
             AutoTool::class.java,
             NoWeb::class.java,
             NoBob::class.java,
@@ -187,7 +187,10 @@ class ModuleManager : Listenable {
             Projectiles::class.java,
             RealBobbing::class.java,
             TargetStrafe::class.java,
-            AirHop::class.java
+            AirHop::class.java,
+            Bhop::class.java,
+            VanillaFlight::class.java,
+            Wings::class.java
         )
 
         registerModule(Fucker)

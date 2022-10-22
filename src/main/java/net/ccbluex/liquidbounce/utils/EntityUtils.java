@@ -37,6 +37,9 @@ public final class EntityUtils extends MinecraftInstance {
                         if (AntiBot.isBot(entityPlayer))
                             return false;
 
+                        if (isFriend(entityPlayer))
+                            return false;
+
                         if (entityPlayer.isSpectator())
                             return false;
 

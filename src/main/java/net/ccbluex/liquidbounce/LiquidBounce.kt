@@ -31,6 +31,7 @@ object LiquidBounce {
     const val CLIENT_VERSION = "260722"
     const val CLIENT_CREATOR = "As_pw"
     const val CLIENT_CLOUD = "https://www.youtube.com/As0452"
+    const val CLIENT_CONFIGS = "https://sites.google.com/view/nightx-client"
 
     var isStarting = false
 

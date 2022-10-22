@@ -44,16 +44,16 @@ public class MixinModelBiped {
             if (spinBot.getState() && !spinBot.getPitchMode().get().equalsIgnoreCase("none"))
                 this.bipedHead.rotateAngleX = spinBot.getPitch() / (180F / (float) Math.PI);
             if (killAura.getTarget() != null) {
-                this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (200F / (float) Math.PI);
+                this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
             if (scaffold.getState()) {
-                this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (200F / (float) Math.PI);
+                this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
             if (disabler.getCanRenderInto3D()) {
-                this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (200F / (float) Math.PI);
+                this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
             if (annoy.getState()) {
-                this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (200F / (float) Math.PI);
+                this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
         }
     }
