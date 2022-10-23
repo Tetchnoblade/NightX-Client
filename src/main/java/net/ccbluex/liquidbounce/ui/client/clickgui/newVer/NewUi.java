@@ -32,6 +32,7 @@ public class NewUi extends GuiScreen {
     private float endYAnim = height / 2F;
     private SearchElement searchElement;
     private float fading = 0F;
+    public int scroll = 0;
 
     private NewUi() {
         for (ModuleCategory c : ModuleCategory.values())
@@ -109,6 +110,7 @@ public class NewUi extends GuiScreen {
 
         final float elementHeight = 24;
         float startY = 140F;
+        scroll = Mouse.getDWheel();
         for (CategoryElement ce : categoryElements) {
             ce.drawLabel(mouseX, mouseY, 30F, startY, 200F, elementHeight);
             if (ce.getFocused()) {
@@ -116,6 +118,7 @@ public class NewUi extends GuiScreen {
                 endYAnim = Gui.fastRenderValue.get() ? startY + elementHeight - 6F : AnimationUtils.animate(startY + elementHeight - 6F, endYAnim, (endYAnim - (startY + elementHeight - 5F) < 0 ? 0.65F : 0.55F) * RenderUtils.deltaTime * 0.025F);
 
                 ce.drawPanel(mouseX, mouseY, 230, 50, width - 260, height - 80, Mouse.getDWheel(), accentColor);
+                ce.drawPanel(mouseX, mouseY, 230, 50, width - 260, height - 80, scroll, accentColor);
             }
             startY += elementHeight;
         }
@@ -144,6 +147,12 @@ public class NewUi extends GuiScreen {
     }
 
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        if(keyCode == Keyboard.KEY_UP) {
+            scroll = 1;
+        } else if (keyCode == Keyboard.KEY_DOWN) {
+            scroll = -1;
+        }
+
         for (CategoryElement ce : categoryElements) {
             if (ce.getFocused()) {
                 if (ce.handleKeyTyped(typedChar, keyCode))

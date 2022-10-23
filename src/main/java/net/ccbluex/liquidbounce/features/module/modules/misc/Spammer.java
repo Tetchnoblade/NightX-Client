@@ -18,7 +18,7 @@ import java.util.Random;
 public class Spammer extends Module {
 
     private final TextValue messageValue = new TextValue("Message", "D.o.w.n.l.o.a.d. .N.i.g.h.t.X. .C.l.i.e.n.t.");
-    private final BoolValue customValue = new BoolValue("Custom", true);    private final IntegerValue maxDelayValue = new IntegerValue("MaxDelay", 1500, 0, 5000, "ms") {
+    private final BoolValue customValue = new BoolValue("Custom", false);    private final IntegerValue maxDelayValue = new IntegerValue("MaxDelay", 1500, 0, 5000, "ms") {
         @Override
         protected void onChanged(final Integer oldValue, final Integer newValue) {
             final int minDelayValueObject = minDelayValue.get();
