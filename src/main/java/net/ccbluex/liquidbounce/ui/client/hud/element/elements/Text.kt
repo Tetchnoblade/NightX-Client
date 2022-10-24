@@ -51,7 +51,7 @@ class Text(
         fun defaultClient(): Text {
             val text = Text(x = 5.0, y = 5.0, scale = 1F)
 
-            text.displayString.set("%clientName% [%fps% FPS] [%portalVersion%]")
+            text.displayString.set("%clientName% [%clientVersion%] | %userName% | ping: %ping%ms | version: %portalVersion%")
             text.shadow.set(true)
             text.fontValue.set(Fonts.fontSFUI40)
             text.setColor(Color(255, 255, 255))
@@ -61,22 +61,22 @@ class Text(
 
     }
 
-    private val displayString = TextValue("DisplayText", "%clientName% [%fps% FPS] [%portalVersion%]")
-    private val backgroundValue = BoolValue("Background", false)
+    private val displayString = TextValue("DisplayText", "%clientName% [%clientVersion%] | %userName% | ping: %ping%ms | version: %portalVersion%")
+    private val backgroundValue = BoolValue("Background", true)
     private val skeetRectValue = BoolValue("SkeetRect", false)
-    private val lineValue = BoolValue("Line", false)
+    private val lineValue = BoolValue("Line", true)
     private val blurValue = BoolValue("Blur", false)
     private val blurStrength = FloatValue("BlurStrength", 6F, 0F, 30F)
     private val redValue = IntegerValue("Red", 255, 0, 255)
     private val greenValue = IntegerValue("Green", 255, 0, 255)
     private val blueValue = IntegerValue("Blue", 255, 0, 255)
-    private val alphaValue = IntegerValue("Alpha", 255, 0, 255)
+    private val alphaValue = IntegerValue("Alpha", 180, 0, 255)
     private val bgredValue = IntegerValue("Background-Red", 0, 0, 255)
     private val bggreenValue = IntegerValue("Background-Green", 0, 0, 255)
     private val bgblueValue = IntegerValue("Background-Blue", 0, 0, 255)
     private val bgalphaValue = IntegerValue("Background-Alpha", 100, 0, 255)
     private val rainbowList =
-        ListValue("Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Sky")
+        ListValue("Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Off")
     private val saturationValue = FloatValue("Saturation", 0.5f, 0f, 1f)
     private val brightnessValue = FloatValue("Brightness", 1f, 0f, 1f)
     private val cRainbowSecValue = IntegerValue("Seconds", 2, 1, 10)

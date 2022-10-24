@@ -16,7 +16,7 @@ public class Animations extends Module {
             "1.8", "Old", "SlideFull", "Slide", "Push", "Flux1", "Flux2", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Leaked", "Sigma3", "Sigma4", "Okura", "Bruh",
             "Leet", "Moon", "Swift", "Dortware1", "Dortware2", "Smart", "Cool", "ETB", "Zoom", "Avatar", "Tap1", "Tap2", "Poke", "Push1", "Push2", "Up", "Shield", "Akrien", "VisionFX",
             "Lucky", "Rotate360", "SmoothFloat", "Strange", "Move", "Stab", "OldSwang", "Jello"
-    }, "Swank");
+    }, "Moon");
 
     // item general scale
     public static final FloatValue Scale = new FloatValue("Scale", 0.4f, 0f, 4f);
@@ -32,7 +32,7 @@ public class Animations extends Module {
     public static final FloatValue blockPosZ = new FloatValue("BlockingZ", 0f, -1f, 1f);
 
     // modify item swing and rotate
-    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 16, -100, 20);
+    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 7, -100, 20);
     public static final BoolValue RotateItems = new BoolValue("Rotate-Items", false);
     public static final FloatValue SpeedRotate = new FloatValue("Rotate-Speed", 0f, 0f, 10f, () -> RotateItems.get() || Sword.get().equalsIgnoreCase("smoothfloat") || Sword.get().equalsIgnoreCase("rotate360"));
 

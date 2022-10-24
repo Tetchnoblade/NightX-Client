@@ -25,17 +25,8 @@ class AntiBan : Module() {
 
     private var updater = MSTimer()
 
-    private lateinit var staff_main: String
-    private lateinit var staff_fallback: String
-
-    init {
-        staff_main = "https://add-my-brain.exit-scammed.repl.co/staff/"
-        staff_fallback = "${LiquidBounce.CLIENT_CLOUD}/staffs.txt"
-    }
-
     override fun onInitialize() {
         thread {
-            obStaffs = HttpUtils.get(staff_fallback)
             totalCount = obStaffs.filter { it.isWhitespace() }.count()
             println("[Staff/fallback] ${obStaffs}")
         }
@@ -155,7 +146,4 @@ class AntiBan : Module() {
             }
         }
     }
-
-    override val tag: String
-        get() = "${totalCount}"
 }

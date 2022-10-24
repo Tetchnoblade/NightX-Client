@@ -1,5 +1,6 @@
 package net.ccbluex.liquidbounce.ui.client.clickgui.newVer;
 
+import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.features.module.ModuleCategory;
 import net.ccbluex.liquidbounce.features.module.modules.client.Gui;
 import net.ccbluex.liquidbounce.ui.client.clickgui.newVer.element.CategoryElement;
@@ -100,8 +101,6 @@ public class NewUi extends GuiScreen {
             glPopMatrix();
         }
         Stencil.dispose();
-
-        Fonts.fontLarge.drawString("   NightX Client #260722", 40, 78 - Fonts.fontLarge.FONT_HEIGHT + 15, -1);
 
         if (searchElement.drawBox(mouseX, mouseY, accentColor)) {
             searchElement.drawPanel(mouseX, mouseY, 230, 50, width - 260, height - 80, Mouse.getDWheel(), categoryElements, accentColor);

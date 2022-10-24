@@ -74,7 +74,7 @@ class InventoryManager : Module() {
     private val randomSlotValue = BoolValue("RandomSlot", false)
     private val sortValue = BoolValue("Sort", true)
     private val cleanGarbageValue = BoolValue("CleanGarbage", true)
-    private val itemDelayValue = IntegerValue("ItemDelay", 0, 0, 5000, "ms")
+    private val itemDelayValue = IntegerValue("ItemDelay", 300, 0, 5000, "ms")
     private val ignoreVehiclesValue = BoolValue("IgnoreVehicles", true)
     private val onlyPositivePotionValue = BoolValue("OnlyPositivePotion", true)
 

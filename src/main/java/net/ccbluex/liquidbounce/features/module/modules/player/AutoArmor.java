@@ -40,7 +40,7 @@ public class AutoArmor extends Module {
         }
     };
     private final BoolValue noMoveValue = new BoolValue("NoMove", false);
-    private final IntegerValue itemDelayValue = new IntegerValue("ItemDelay", 200, 0, 5000);    private final IntegerValue minDelayValue = new IntegerValue("MinDelay", 10, 0, 1000) {
+    private final IntegerValue itemDelayValue = new IntegerValue("ItemDelay", 300, 0, 5000);    private final IntegerValue minDelayValue = new IntegerValue("MinDelay", 10, 0, 1000) {
 
         @Override
         protected void onChanged(final Integer oldValue, final Integer newValue) {

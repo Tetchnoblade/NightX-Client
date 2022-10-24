@@ -3,10 +3,12 @@ package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 import de.enzaxd.viaforge.ViaForge;
 import de.enzaxd.viaforge.protocol.ProtocolCollection;
 import net.ccbluex.liquidbounce.ui.elements.ToolDropdown;
+import net.ccbluex.liquidbounce.ui.font.Fonts;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraftforge.fml.client.config.GuiSlider;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -59,5 +61,4 @@ public abstract class MixinGuiMultiplayer extends MixinGuiScreen {
         if (button.id == 997)
             ToolDropdown.toggleState();
     }
-
 }

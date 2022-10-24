@@ -49,7 +49,7 @@ public class Platform implements ViaPlatform<UUID> {
 
     @Override
     public String getPlatformName() {
-        return "ViaForge";
+        return "ViaMCP";
     }
 
     @Override

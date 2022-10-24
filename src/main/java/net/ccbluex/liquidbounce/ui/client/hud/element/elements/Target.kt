@@ -85,8 +85,9 @@ class Target(
                 Rice(this),
                 Exhibition(this),
                 Remix(this),
-                Slowly(this)
-            ).toTypedArray(), "Exhibition"
+                Slowly(this),
+                NightX(this)
+            ).toTypedArray(), "NightX"
         )
     }
 

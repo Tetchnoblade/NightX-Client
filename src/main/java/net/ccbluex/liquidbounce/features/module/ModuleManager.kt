@@ -190,7 +190,8 @@ class ModuleManager : Listenable {
             AirHop::class.java,
             Bhop::class.java,
             VanillaFlight::class.java,
-            Wings::class.java
+            Wings::class.java,
+            NoC0Fs::class.java
         )
 
         registerModule(Fucker)

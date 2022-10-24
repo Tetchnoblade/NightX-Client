@@ -55,7 +55,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         val creditInfo = "Welcome, §a${mc.session.username}"
         drawBackground(0)
         GL11.glPushMatrix()
-        Fonts.fontSFUI40.drawStringWithShadow("NightX Client (#260722)", 2F, height - 12F, -1)
+        Fonts.fontSFUI40.drawStringWithShadow("NightX Client (#" + LiquidBounce.CLIENT_VERSION + ")", 2F, height - 12F, -1)
         Fonts.fontSFUI40.drawStringWithShadow(
             creditInfo,
             width - 3F - Fonts.fontSFUI40.getStringWidth(creditInfo),

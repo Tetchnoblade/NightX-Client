@@ -489,25 +489,6 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         val altService = AltService()
         private val activeGenerators = mutableMapOf<String, Boolean>()
 
-        fun loadActiveGenerators() {
-            try {
-                // Read versions json from cloud
-                val jsonElement = JsonParser().parse(get(LiquidBounce.CLIENT_CLOUD + "/generators.json"))
-
-                // Check json is valid object
-                if (jsonElement.isJsonObject) {
-                    // Get json object of element
-                    val jsonObject = jsonElement.asJsonObject
-                    jsonObject.entrySet().forEach(Consumer { (key, value): Map.Entry<String, JsonElement> ->
-                        activeGenerators[key] = value.asBoolean
-                    })
-                }
-            } catch (throwable: Throwable) {
-                // Print throwable to console
-                ClientUtils.getLogger().error("Failed to load enabled generators.", throwable)
-            }
-        }
-
         fun login(
             minecraftAccount: MinecraftAccount,
             success: () -> Unit,
