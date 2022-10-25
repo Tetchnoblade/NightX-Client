@@ -1,7 +1,9 @@
 package net.ccbluex.liquidbounce.features.command.commands
 
+import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.features.command.Command
 import net.ccbluex.liquidbounce.features.module.modules.misc.AntiBot
+import net.ccbluex.liquidbounce.ui.client.hud.element.elements.Notification
 
 class TeleportCommand : Command("tp", emptyArray()) {
 
@@ -20,10 +22,20 @@ class TeleportCommand : Command("tp", emptyArray()) {
             // Attempt to teleport to player's position.
             if (targetPlayer != null) {
                 mc.thePlayer.setPositionAndUpdate(targetPlayer.posX, targetPlayer.posY, targetPlayer.posZ)
-                chat("Attempted to teleport you to §a${targetPlayer.name}§3.")
+                LiquidBounce.hud.addNotification(
+                    Notification(
+                        "Successfully teleported to §a${targetPlayer.name}",
+                        Notification.Type.SUCCESS
+                    )
+                )
                 return
             } else {
-                chat("§6We couldn't find any player in the current world with that name.")
+                LiquidBounce.hud.addNotification(
+                    Notification(
+                        "Failed to teleport",
+                        Notification.Type.ERROR
+                    )
+                )
                 return
             }
         } else if (args.size == 4) {
@@ -33,10 +45,20 @@ class TeleportCommand : Command("tp", emptyArray()) {
                 val posZ = if (args[3].equals("~", true)) mc.thePlayer.posZ else args[3].toDouble()
 
                 mc.thePlayer.setPositionAndUpdate(posX, posY, posZ)
-                chat("Attempted to teleport you to §a$posX, $posY, $posZ§3.")
+                LiquidBounce.hud.addNotification(
+                    Notification(
+                        "Successfully teleported to §a$posX, $posY, $posZ",
+                        Notification.Type.SUCCESS
+                    )
+                )
                 return
             } catch (e: NumberFormatException) {
-                chat("§6Please check if you have typed the numbers correctly, and try again.")
+                LiquidBounce.hud.addNotification(
+                    Notification(
+                        "Failed to teleport",
+                        Notification.Type.ERROR
+                    )
+                )
                 return
             }
         }

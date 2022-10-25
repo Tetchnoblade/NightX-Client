@@ -70,9 +70,6 @@ class TPAura : Module() {
     private val attackDelay: Long
         get() = 1000L / apsValue.get().toLong()
 
-    override val tag: String
-        get() = "APS ${apsValue.get()}, Range ${rangeValue.get()}"
-
     override fun onEnable() {
         clickTimer.reset()
         tpVectors.clear()

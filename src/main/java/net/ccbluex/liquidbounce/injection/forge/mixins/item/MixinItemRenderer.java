@@ -893,7 +893,7 @@ public abstract class MixinItemRenderer {
         RenderHelper.disableStandardItemLighting();
 
         if (LiquidBounce.moduleManager.getModule(Animations.class).getState())
-            GL11.glTranslated(-Animations.itemPosX.get().doubleValue(), -Animations.itemPosY.get().doubleValue(), -Animations.itemPosZ.get().doubleValue() + 0.06);
+            GL11.glTranslated(-Animations.itemPosX.get().doubleValue(), -Animations.itemPosY.get().doubleValue(), -Animations.itemPosZ.get().doubleValue());
     }
 
     private void rotateItemAnim() {

@@ -19,7 +19,7 @@ import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.Vec3;
 
-@ModuleInfo(name = "TPReach", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "TPReach", spacedName = "TP Reach", category = ModuleCategory.COMBAT)
 public class TPReach extends Module {
     private EntityLivingBase targetEntity;
     private boolean shouldHit;
@@ -46,7 +46,6 @@ public class TPReach extends Module {
                 return;
             }
 
-            if (thePlayer.fallDistance > 0F) {
                 final Vec3 rotationVector = RotationUtils.getVectorForRotation(new Rotation(mc.thePlayer.rotationYaw, 0F));
                 final double x = mc.thePlayer.posX + rotationVector.xCoord * (mc.thePlayer.getDistanceToEntity(targetEntity) - 1.0F);
                 final double z = mc.thePlayer.posZ + rotationVector.zCoord * (mc.thePlayer.getDistanceToEntity(targetEntity) - 1.0F);
@@ -54,13 +53,9 @@ public class TPReach extends Module {
 
                 PathUtils.findPath(x, y + 1.0D, z, 4D).forEach(pos -> mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(pos.getX(), pos.getY(), pos.getZ(), false)));
 
-                thePlayer.swingItem();
                 mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(targetEntity, C02PacketUseEntity.Action.ATTACK));
-                thePlayer.onCriticalHit(targetEntity);
                 shouldHit = false;
                 targetEntity = null;
-            } else if (thePlayer.onGround)
-                thePlayer.jump();
         } else
             shouldHit = false;
     }

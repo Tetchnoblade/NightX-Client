@@ -36,7 +36,6 @@ class CommandManager {
         registerCommand(PrefixCommand())
         registerCommand(HideCommand())
         registerCommand(TeleportCommand())
-        registerCommand(PathfindingTeleportCommand())
         registerCommand(ConnectCommand())
         registerCommand(EnchantCommand())
         registerCommand(GiveCommand())
