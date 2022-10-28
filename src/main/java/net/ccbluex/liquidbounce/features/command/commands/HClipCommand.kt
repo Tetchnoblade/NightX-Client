@@ -1,6 +1,8 @@
 package net.ccbluex.liquidbounce.features.command.commands
 
+import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.features.command.Command
+import net.ccbluex.liquidbounce.ui.client.hud.element.elements.Notification
 import net.ccbluex.liquidbounce.utils.MovementUtils
 
 class HClipCommand : Command("hclip", emptyArray()) {
@@ -11,7 +13,12 @@ class HClipCommand : Command("hclip", emptyArray()) {
         if (args.size > 1) {
             try {
                 MovementUtils.forward(args[1].toDouble())
-                chat("You were teleported.")
+                LiquidBounce.hud.addNotification(
+                    Notification(
+                        "Successfully Teleported!",
+                        Notification.Type.SUCCESS
+                    )
+                )
             } catch (exception: NumberFormatException) {
                 chatSyntaxError()
             }

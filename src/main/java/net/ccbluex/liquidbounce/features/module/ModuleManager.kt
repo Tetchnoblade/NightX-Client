@@ -191,7 +191,9 @@ class ModuleManager : Listenable {
             Bhop::class.java,
             VanillaFlight::class.java,
             Wings::class.java,
-            NoC0Fs::class.java
+            NoC0Fs::class.java,
+            SilentView::class.java,
+            PlayerEdit::class.java
         )
 
         registerModule(Fucker)

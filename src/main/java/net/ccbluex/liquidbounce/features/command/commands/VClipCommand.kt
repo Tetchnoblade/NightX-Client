@@ -1,6 +1,8 @@
 package net.ccbluex.liquidbounce.features.command.commands
 
+import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.features.command.Command
+import net.ccbluex.liquidbounce.ui.client.hud.element.elements.Notification
 
 class VClipCommand : Command("vclip", emptyArray()) {
     /**
@@ -13,7 +15,12 @@ class VClipCommand : Command("vclip", emptyArray()) {
                 val entity = if (mc.thePlayer.isRiding) mc.thePlayer.ridingEntity else mc.thePlayer
 
                 entity.setPosition(entity.posX, entity.posY + y, entity.posZ)
-                chat("You were teleported.")
+                LiquidBounce.hud.addNotification(
+                    Notification(
+                        "Successfully Teleported!",
+                        Notification.Type.SUCCESS
+                    )
+                )
             } catch (ex: NumberFormatException) {
                 chatSyntaxError()
             }

@@ -5,6 +5,7 @@ import net.ccbluex.liquidbounce.features.module.modules.combat.KillAura;
 import net.ccbluex.liquidbounce.features.module.modules.exploit.Disabler;
 import net.ccbluex.liquidbounce.features.module.modules.misc.Annoy;
 import net.ccbluex.liquidbounce.features.module.modules.render.Rotate;
+import net.ccbluex.liquidbounce.features.module.modules.render.SilentView;
 import net.ccbluex.liquidbounce.features.module.modules.world.Scaffold;
 import net.ccbluex.liquidbounce.utils.RotationUtils;
 import net.minecraft.client.Minecraft;
@@ -36,6 +37,7 @@ public class MixinModelBiped {
             this.bipedRightArm.rotateAngleY = 0F;
 
         if (p_setRotationAngles_7_ instanceof EntityPlayer && p_setRotationAngles_7_.equals(Minecraft.getMinecraft().thePlayer)) {
+            final SilentView silentView = LiquidBounce.moduleManager.getModule(SilentView.class);
             final Rotate spinBot = LiquidBounce.moduleManager.getModule(Rotate.class);
             final KillAura killAura = LiquidBounce.moduleManager.getModule(KillAura.class);
             final Scaffold scaffold = LiquidBounce.moduleManager.getModule(Scaffold.class);
@@ -43,16 +45,16 @@ public class MixinModelBiped {
             final Annoy annoy = LiquidBounce.moduleManager.getModule(Annoy.class);
             if (spinBot.getState() && !spinBot.getPitchMode().get().equalsIgnoreCase("none"))
                 this.bipedHead.rotateAngleX = spinBot.getPitch() / (180F / (float) Math.PI);
-            if (killAura.getTarget() != null) {
+            if (silentView.getState() && killAura.getTarget() != null) {
                 this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
-            if (scaffold.getState()) {
+            if (silentView.getState() && scaffold.getState()) {
                 this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
-            if (disabler.getCanRenderInto3D()) {
+            if (silentView.getState() && disabler.getCanRenderInto3D()) {
                 this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
-            if (annoy.getState()) {
+            if (silentView.getState() && annoy.getState()) {
                 this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
         }
