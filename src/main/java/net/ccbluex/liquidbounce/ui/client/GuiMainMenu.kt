@@ -271,17 +271,17 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         if (extendedModMode) {
             if (extendedBackgroundMode)
                 for (i in ExtendedBackgroundButton.values()) {
-                        RenderUtils.drawImage2(i.texture, staticX + 40F * index + 11F, staticY + 1F, 18, 18)
+                    RenderUtils.drawImage2(i.texture, staticX + 40F * index + 11F, staticY + 1F, 18, 18)
                     index++
                 }
             else
                 for (i in ExtendedImageButton.values()) {
-                        RenderUtils.drawImage2(i.texture, staticX + 40F * index + 11F, staticY + 1F, 18, 18)
+                    RenderUtils.drawImage2(i.texture, staticX + 40F * index + 11F, staticY + 1F, 18, 18)
                     index++
                 }
         } else
             for (i in ImageButton.values()) {
-                    RenderUtils.drawImage2(i.texture, staticX + 40F * index + 11F, staticY + 1F, 18, 18)
+                RenderUtils.drawImage2(i.texture, staticX + 40F * index + 11F, staticY + 1F, 18, 18)
                 index++
             }
         GlStateManager.enableAlpha()

@@ -6,7 +6,7 @@ import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 
-@ModuleInfo(name = "NoBob", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "NoBob", spacedName = "No Bob", category = ModuleCategory.RENDER)
 class NoBob : Module() {
 
     @EventTarget

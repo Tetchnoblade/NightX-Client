@@ -53,9 +53,4 @@ public class Brightness extends Module {
     public void onShutdown(final ClientShutdownEvent event) {
         onDisable();
     }
-
-    @Override
-    public String getTag() {
-        return modeValue.get();
-    }
 }

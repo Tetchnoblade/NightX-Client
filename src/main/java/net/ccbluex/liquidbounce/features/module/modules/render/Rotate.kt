@@ -10,7 +10,7 @@ import net.ccbluex.liquidbounce.value.IntegerValue
 import net.ccbluex.liquidbounce.value.ListValue
 import java.util.*
 
-@ModuleInfo(name = "Rotate", spacedName = "Rotate", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "Rotate", category = ModuleCategory.RENDER)
 class Rotate : Module() {
     private val yawMode = ListValue("Yaw", arrayOf("Static", "Offset", "Random", "Jitter", "Spin", "None"), "None")
     val pitchMode = ListValue("Pitch", arrayOf("Static", "Offset", "Random", "Jitter", "None"), "Static")
@@ -70,7 +70,4 @@ class Rotate : Module() {
             }
         }
     }
-
-    override val tag: String
-        get() = "${yawMode.get()}, ${pitchMode.get()}"
 }

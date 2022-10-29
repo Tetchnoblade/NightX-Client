@@ -13,10 +13,10 @@ public class Animations extends Module {
 
     // some ListValue
     public static final ListValue Sword = new ListValue("Style", new String[]{
-            "1.8", "Old", "SlideFull", "Slide", "Push", "Flux1", "Flux2", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Leaked", "Sigma3", "Sigma4", "Okura", "Bruh",
-            "Leet", "Moon", "Swift", "Dortware1", "Dortware2", "Smart", "Cool", "ETB", "Zoom", "Avatar", "Tap1", "Tap2", "Poke", "Push1", "Push2", "Up", "Shield", "Akrien", "VisionFX",
+            "1.8", "Old", "SlideFull", "Slide", "Flux1", "Flux2", "Swing", "Push", "Swank", "Swong", "Swang", "Swaing", "Stella", "Leaked", "Sigma3", "Sigma4", "Okura",
+            "Leet", "Moon", "Dortware1", "Dortware2", "Smart", "Cool", "ETB", "Zoom", "Avatar", "Tap1", "Tap2", "Poke", "Push1", "Push2", "Up", "Shield", "Akrien", "VisionFX",
             "Lucky", "Rotate360", "SmoothFloat", "Strange", "Move", "Stab", "OldSwang", "Jello"
-    }, "Swang");
+    }, "Swank");
 
     // item general scale
     public static final FloatValue Scale = new FloatValue("Scale", 0.4f, 0f, 4f);
@@ -28,7 +28,7 @@ public class Animations extends Module {
 
     // change Position Blocking Sword
     public static final FloatValue blockPosX = new FloatValue("BlockingX", 0f, -1f, 1f);
-    public static final FloatValue blockPosY = new FloatValue("BlockingY", 0.1f, -1f, 1f);
+    public static final FloatValue blockPosY = new FloatValue("BlockingY", 0.06f, -1f, 1f);
     public static final FloatValue blockPosZ = new FloatValue("BlockingZ", 0f, -1f, 1f);
 
     // modify item swing and rotate
