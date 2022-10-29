@@ -276,11 +276,6 @@ public class Scaffold extends Module {
         lastSlot = mc.thePlayer.inventory.currentItem;
         slot = mc.thePlayer.inventory.currentItem;
 
-        if (autoDisableSpeedValue.get() && LiquidBounce.moduleManager.getModule(Speed.class).getState()) {
-            LiquidBounce.moduleManager.getModule(Speed.class).setState(false);
-            LiquidBounce.hud.addNotification(new Notification("Speed is disabled.", Notification.Type.WARNING));
-        }
-
         faceBlock = false;
         lastMS = System.currentTimeMillis();
     }
@@ -423,6 +418,11 @@ public class Scaffold extends Module {
      */
     @EventTarget
     public void onUpdate(final UpdateEvent event) {
+        if (autoDisableSpeedValue.get() && LiquidBounce.moduleManager.getModule(Speed.class).getState()) {
+            LiquidBounce.moduleManager.getModule(Speed.class).setState(false);
+            LiquidBounce.hud.addNotification(new Notification("Speed is disabled.", Notification.Type.WARNING));
+        }
+
         if (towerActivation()) {
             shouldGoDown = false;
             mc.gameSettings.keyBindSneak.pressed = false;

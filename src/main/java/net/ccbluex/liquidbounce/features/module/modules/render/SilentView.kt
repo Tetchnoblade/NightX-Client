@@ -19,7 +19,7 @@ class SilentView : Module() {
     var R = FloatValue("R", 0f, 0f, 255f)
     var G = FloatValue("G", 255f, 0f, 255f)
     var B = FloatValue("B", 0f, 0f, 255f)
-    var Alpha = FloatValue("Alpha", 100f, 0f, 255f)
+    var Alpha = FloatValue("Alpha", 80f, 0f, 255f)
 
     private fun getState(module: Class<out Module>) = LiquidBounce.moduleManager[module]!!.state
 

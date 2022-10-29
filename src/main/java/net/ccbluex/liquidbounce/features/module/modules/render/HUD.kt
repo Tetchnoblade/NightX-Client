@@ -14,7 +14,7 @@ import net.ccbluex.liquidbounce.value.*
 @ModuleInfo(name = "HUD", category = ModuleCategory.RENDER, array = false)
 class HUD : Module() {
     val tabHead = BoolValue("Tab-HeadOverlay", false)
-    val animHotbarValue = BoolValue("AnimatedHotbar", false)
+    val animHotbarValue = BoolValue("AnimatedHotbar", true)
     val blackHotbarValue = BoolValue("BlackHotbar", false)
     val inventoryParticle = BoolValue("InventoryParticle", false)
     val fontChatValue = BoolValue("FontChat", false)
@@ -22,7 +22,7 @@ class HUD : Module() {
     val fontType = FontValue("Font", Fonts.fontSFUI40, { fontChatValue.get() })
     val chatRectValue = BoolValue("ChatRect", true)
     val chatCombineValue = BoolValue("ChatCombine", false)
-    val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 4.0F, 0.01F, 4.0F)
+    val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.03F, 0.01F, 4.0F)
     private val toggleMessageValue = BoolValue("DisplayToggleMessage", false)
     private val toggleSoundValue = ListValue("ToggleSound", arrayOf("None", "Default", "Custom"), "None")
     private val toggleVolumeValue =
@@ -33,7 +33,7 @@ class HUD : Module() {
     val containerBackground = BoolValue("Container-Background", true)
     val containerButton = ListValue("Container-Button", arrayOf("TopLeft", "TopRight", "Off"), "Off")
     val invEffectOffset = BoolValue("InvEffect-Offset", false)
-    val domainValue = TextValue("Scoreboard-Domain", ".hud scoreboard-domain NightX-Client")
+    val domainValue = TextValue("Scoreboard-Domain", "NightX-Client")
 
     private var hotBarX = 0F
 

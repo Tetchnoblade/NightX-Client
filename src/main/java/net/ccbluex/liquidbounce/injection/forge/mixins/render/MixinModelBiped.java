@@ -45,16 +45,16 @@ public class MixinModelBiped {
             final Annoy annoy = LiquidBounce.moduleManager.getModule(Annoy.class);
             if (spinBot.getState() && !spinBot.getPitchMode().get().equalsIgnoreCase("none"))
                 this.bipedHead.rotateAngleX = spinBot.getPitch() / (180F / (float) Math.PI);
-            if (silentView.getState() && killAura.getTarget() != null) {
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && killAura.getTarget() != null) {
                 this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
-            if (silentView.getState() && scaffold.getState()) {
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && scaffold.getState()) {
                 this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
-            if (silentView.getState() && disabler.getCanRenderInto3D()) {
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && disabler.getCanRenderInto3D()) {
                 this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
-            if (silentView.getState() && annoy.getState()) {
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && annoy.getState()) {
                 this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
         }

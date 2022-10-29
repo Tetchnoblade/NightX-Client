@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@ModuleInfo(name = "PluginsChecker", category = ModuleCategory.CLIENT, array = false)
+@ModuleInfo(name = "PluginsChecker", spacedName = "Plugins Checker", category = ModuleCategory.CLIENT, array = false)
 public class PluginsChecker extends Module {
 
     private final TickTimer tickTimer = new TickTimer();
@@ -70,5 +70,4 @@ public class PluginsChecker extends Module {
             tickTimer.reset();
         }
     }
-
 }
