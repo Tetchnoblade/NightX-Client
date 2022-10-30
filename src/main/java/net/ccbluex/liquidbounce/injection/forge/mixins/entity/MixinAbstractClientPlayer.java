@@ -2,7 +2,6 @@ package net.ccbluex.liquidbounce.injection.forge.mixins.entity;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.features.module.modules.render.Cape;
-import net.ccbluex.liquidbounce.features.module.modules.render.EnchantColor;
 import net.ccbluex.liquidbounce.features.module.modules.render.Fov;
 import net.ccbluex.liquidbounce.features.module.modules.render.Nick;
 import net.minecraft.client.Minecraft;

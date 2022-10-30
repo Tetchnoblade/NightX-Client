@@ -7,10 +7,6 @@ import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.utils.RenderWings
 import net.ccbluex.liquidbounce.value.BoolValue
-import net.ccbluex.liquidbounce.value.ListValue
-
-import net.minecraft.util.ResourceLocation
-import java.util.*
 
 @ModuleInfo(name = "Wings", category = ModuleCategory.RENDER, array = false)
 class Wings : Module() {

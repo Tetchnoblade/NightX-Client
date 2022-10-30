@@ -13,7 +13,7 @@ import net.ccbluex.liquidbounce.value.*
 
 @ModuleInfo(name = "HUD", category = ModuleCategory.RENDER, array = false)
 class HUD : Module() {
-    val tabHead = BoolValue("Tab-HeadOverlay", false)
+    val tabHead = BoolValue("Tab-HeadOverlay", true)
     val animHotbarValue = BoolValue("AnimatedHotbar", true)
     val blackHotbarValue = BoolValue("BlackHotbar", false)
     val inventoryParticle = BoolValue("InventoryParticle", false)

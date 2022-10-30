@@ -10,7 +10,6 @@ import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.IntegerValue
 import net.ccbluex.liquidbounce.value.ListValue
 import net.minecraft.network.play.server.S03PacketTimeUpdate
-import java.util.*
 
 @ModuleInfo(name = "TimeChanger", spacedName = "Time Changer", category = ModuleCategory.WORLD)
 class TimeChanger : Module() {

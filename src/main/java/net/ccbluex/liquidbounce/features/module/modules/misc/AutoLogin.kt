@@ -20,8 +20,7 @@ import net.minecraft.network.play.server.S45PacketTitle
 @ModuleInfo(
     name = "AutoLogin",
     spacedName = "Auto Login",
-    category = ModuleCategory.MISC,
-    array = false
+    category = ModuleCategory.MISC
 )
 class AutoLogin : Module() {
 
@@ -104,8 +103,4 @@ class AutoLogin : Module() {
         regTimer.reset()
         logTimer.reset()
     }
-
-    override val tag: String
-        get() = password.get()
-
 }

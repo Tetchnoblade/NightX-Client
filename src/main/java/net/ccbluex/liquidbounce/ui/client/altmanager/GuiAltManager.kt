@@ -5,8 +5,6 @@
  */
 package net.ccbluex.liquidbounce.ui.client.altmanager
 
-import com.google.gson.JsonElement
-import com.google.gson.JsonParser
 import com.thealtening.AltService
 import me.liuli.elixir.account.CrackedAccount
 import me.liuli.elixir.account.MicrosoftAccount
@@ -23,7 +21,6 @@ import net.ccbluex.liquidbounce.ui.font.Fonts
 import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.utils.login.LoginUtils
 import net.ccbluex.liquidbounce.utils.login.UserUtils.isValidTokenOffline
-import net.ccbluex.liquidbounce.utils.misc.HttpUtils.get
 import net.ccbluex.liquidbounce.utils.misc.MiscUtils
 import net.ccbluex.liquidbounce.utils.misc.RandomUtils
 import net.minecraft.client.Minecraft
@@ -37,7 +34,6 @@ import java.awt.Color
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 import java.util.*
-import java.util.function.Consumer
 import kotlin.concurrent.thread
 
 
