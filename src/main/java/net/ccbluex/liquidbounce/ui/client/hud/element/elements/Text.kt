@@ -3,7 +3,7 @@ package net.ccbluex.liquidbounce.ui.client.hud.element.elements
 import de.enzaxd.viaforge.ViaForge
 import de.enzaxd.viaforge.protocol.ProtocolCollection
 import net.ccbluex.liquidbounce.LiquidBounce
-import net.ccbluex.liquidbounce.features.module.modules.color.ColorMixer
+import net.ccbluex.liquidbounce.features.module.modules.client.ColorMixer
 import net.ccbluex.liquidbounce.features.module.modules.misc.BanStats
 import net.ccbluex.liquidbounce.ui.client.hud.designer.GuiHudDesigner
 import net.ccbluex.liquidbounce.ui.client.hud.element.Border

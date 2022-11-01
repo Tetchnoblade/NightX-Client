@@ -9,18 +9,15 @@ import net.ccbluex.liquidbounce.utils.misc.MiscUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.client.renderer.texture.DynamicTexture
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.client.GuiModList
 import org.lwjgl.opengl.GL11
 import java.awt.Color
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.nio.file.Files
-import javax.imageio.ImageIO
 import kotlin.concurrent.thread
 
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
+
+    val kawaiiLogo = ResourceLocation("liquidbounce+/kawaii.png")
 
     var slideX: Float = 0F
     var fade: Float = 0F
@@ -62,6 +59,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             height - 12F,
             -1
         )
+        RenderUtils.drawImage2(kawaiiLogo, width / 2F - 50F, height / 2F - 90F, 100, 100)
         GlStateManager.enableAlpha()
         renderBar(mouseX, mouseY, partialTicks)
         GL11.glPopMatrix()

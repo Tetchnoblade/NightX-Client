@@ -5,7 +5,6 @@ import net.ccbluex.liquidbounce.event.EventTarget
 import net.ccbluex.liquidbounce.event.KeyEvent
 import net.ccbluex.liquidbounce.event.Listenable
 import net.ccbluex.liquidbounce.features.module.modules.client.*
-import net.ccbluex.liquidbounce.features.module.modules.color.ColorMixer
 import net.ccbluex.liquidbounce.features.module.modules.combat.*
 import net.ccbluex.liquidbounce.features.module.modules.cool.*
 import net.ccbluex.liquidbounce.features.module.modules.exploit.*
@@ -36,7 +35,7 @@ class ModuleManager : Listenable {
      * Register all modules
      */
     fun registerModules() {
-        ClientUtils.getLogger().info("§c>>§f Loading modules...")
+        ClientUtils.getLogger().info("Loading modules...")
 
         registerModules(
             Patcher::class.java,
@@ -120,7 +119,6 @@ class ModuleManager : Listenable {
             AutoLogin::class.java,
             AuthBypass::class.java,
             Gapple::class.java,
-            ColorMixer::class.java,
             Disabler::class.java,
             CustomDisabler::class.java,
             Crosshair::class.java,
@@ -199,7 +197,7 @@ class ModuleManager : Listenable {
         registerModule(Fucker)
         registerModule(StealAura)
 
-        ClientUtils.getLogger().info("§c>>§f Successfully loaded ${modules.size} modules.")
+        ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")
     }
 
     /**

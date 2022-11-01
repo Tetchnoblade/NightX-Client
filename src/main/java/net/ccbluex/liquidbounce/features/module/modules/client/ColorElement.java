@@ -1,8 +1,6 @@
-package net.ccbluex.liquidbounce.features.module.modules.color;
+package net.ccbluex.liquidbounce.features.module.modules.client;
 
 import net.ccbluex.liquidbounce.value.IntegerValue;
-
-import static net.ccbluex.liquidbounce.features.module.modules.color.ColorMixer.regenerateColors;
 
 public class ColorElement extends IntegerValue {
 
@@ -16,7 +14,6 @@ public class ColorElement extends IntegerValue {
 
     @Override
     protected void onChanged(final Integer oldValue, final Integer newValue) {
-        regenerateColors(true);
     }
 
     enum Material {

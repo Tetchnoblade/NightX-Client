@@ -6,7 +6,6 @@ import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.event.*;
 import net.ccbluex.liquidbounce.features.module.modules.combat.AutoClicker;
 import net.ccbluex.liquidbounce.features.module.modules.combat.KillAura;
-import net.ccbluex.liquidbounce.features.module.modules.exploit.Disabler;
 import net.ccbluex.liquidbounce.features.module.modules.exploit.KeepBreaking;
 import net.ccbluex.liquidbounce.features.module.modules.misc.Annoy;
 import net.ccbluex.liquidbounce.features.module.modules.misc.Patcher;
@@ -248,7 +247,6 @@ public abstract class MixinMinecraft {
             final SilentView silentView = LiquidBounce.moduleManager.getModule(SilentView.class);
             final KillAura killAura = LiquidBounce.moduleManager.getModule(KillAura.class);
             final Scaffold scaffold = LiquidBounce.moduleManager.getModule(Scaffold.class);
-            final Disabler disabler = LiquidBounce.moduleManager.getModule(Disabler.class);
             final Annoy annoy = LiquidBounce.moduleManager.getModule(Annoy.class);
             final EntityLivingBase entityLivingBase = (EntityLivingBase) renderViewEntity;
             final float yaw = RotationUtils.serverRotation.getYaw();
@@ -259,12 +257,6 @@ public abstract class MixinMinecraft {
                 entityLivingBase.prevRenderYawOffset = yaw;
             }
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && scaffold.getState()) {
-                entityLivingBase.rotationYawHead = yaw;
-                entityLivingBase.prevRotationYawHead = yaw;
-                entityLivingBase.renderYawOffset = yaw;
-                entityLivingBase.prevRenderYawOffset = yaw;
-            }
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && disabler.getCanRenderInto3D()) {
                 entityLivingBase.rotationYawHead = yaw;
                 entityLivingBase.prevRotationYawHead = yaw;
                 entityLivingBase.renderYawOffset = yaw;

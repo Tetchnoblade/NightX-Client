@@ -2,7 +2,6 @@ package net.ccbluex.liquidbounce.injection.forge.mixins.render;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.features.module.modules.combat.KillAura;
-import net.ccbluex.liquidbounce.features.module.modules.exploit.Disabler;
 import net.ccbluex.liquidbounce.features.module.modules.misc.Annoy;
 import net.ccbluex.liquidbounce.features.module.modules.render.Rotate;
 import net.ccbluex.liquidbounce.features.module.modules.render.SilentView;
@@ -41,7 +40,6 @@ public class MixinModelBiped {
             final Rotate spinBot = LiquidBounce.moduleManager.getModule(Rotate.class);
             final KillAura killAura = LiquidBounce.moduleManager.getModule(KillAura.class);
             final Scaffold scaffold = LiquidBounce.moduleManager.getModule(Scaffold.class);
-            final Disabler disabler = LiquidBounce.moduleManager.getModule(Disabler.class);
             final Annoy annoy = LiquidBounce.moduleManager.getModule(Annoy.class);
             if (spinBot.getState() && !spinBot.getPitchMode().get().equalsIgnoreCase("none"))
                 this.bipedHead.rotateAngleX = spinBot.getPitch() / (180F / (float) Math.PI);
@@ -49,9 +47,6 @@ public class MixinModelBiped {
                 this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && scaffold.getState()) {
-                this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
-            }
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && disabler.getCanRenderInto3D()) {
                 this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (220F / (float) Math.PI);
             }
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && annoy.getState()) {

@@ -3,7 +3,6 @@ package net.ccbluex.liquidbounce.features.module.modules.client;
 import net.ccbluex.liquidbounce.features.module.Module;
 import net.ccbluex.liquidbounce.features.module.ModuleCategory;
 import net.ccbluex.liquidbounce.features.module.ModuleInfo;
-import net.ccbluex.liquidbounce.features.module.modules.color.ColorMixer;
 import net.ccbluex.liquidbounce.ui.client.clickgui.newVer.NewUi;
 import net.ccbluex.liquidbounce.utils.render.ColorUtils;
 import net.ccbluex.liquidbounce.utils.render.RenderUtils;
