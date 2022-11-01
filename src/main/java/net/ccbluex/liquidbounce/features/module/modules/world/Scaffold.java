@@ -54,7 +54,7 @@ public class Scaffold extends Module {
             "Jump", "Motion", "StableMotion", "ConstantMotion", "MotionTP", "Packet", "Teleport", "AAC3.3.9", "AAC3.6.4", "Verus"
     }, "ConstantMotion", () -> towerEnabled.get());
     private final ListValue towerPlaceModeValue = new ListValue("Tower-PlaceTiming", new String[]{"Pre", "Post"}, "Post");
-    private final BoolValue stopWhenBlockAbove = new BoolValue("StopWhenBlockAbove", false, () -> towerEnabled.get());
+    private final BoolValue stopWhenBlockAbove = new BoolValue("StopWhenBlockAbove", true, () -> towerEnabled.get());
     private final BoolValue onJumpValue = new BoolValue("OnJump", true, () -> towerEnabled.get());
     private final BoolValue noMoveOnlyValue = new BoolValue("NoMove", true, () -> towerEnabled.get());
     private final BoolValue noMoveFreezeValue = new BoolValue("NoMoveFreezePlayer", true, () -> towerEnabled.get() && noMoveOnlyValue.get());
@@ -116,7 +116,7 @@ public class Scaffold extends Module {
     private final BoolValue stayAutoBlock = new BoolValue("LiteSpoof", true, () -> !autoBlockMode.get().equalsIgnoreCase("false"));
 
     //make sprint compatible with tower.add sprint tricks
-    public final ListValue sprintModeValue = new ListValue("SprintMode", new String[]{"Same", "Ground", "Air", "Off"}, "Same");
+    public final ListValue sprintModeValue = new ListValue("SprintMode", new String[]{"Same", "Silent", "Ground", "Air", "Off"}, "Same");
     // Basic stuff
     private final BoolValue swingValue = new BoolValue("Swing", false);
     private final BoolValue downValue = new BoolValue("Down", true);
@@ -547,6 +547,13 @@ public class Scaffold extends Module {
             return;
 
         final Packet<?> packet = event.getPacket();
+
+        // Sprint
+        if (sprintModeValue.get().equalsIgnoreCase("silent")) {
+            if (packet instanceof C0BPacketEntityAction &&
+            (((C0BPacketEntityAction) packet).getAction() == C0BPacketEntityAction.Action.STOP_SPRINTING || ((C0BPacketEntityAction) packet).getAction() == C0BPacketEntityAction.Action.START_SPRINTING))
+                event.cancelEvent();
+        }
 
         // AutoBlock
         if (packet instanceof C09PacketHeldItemChange) {
