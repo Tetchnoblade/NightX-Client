@@ -15,12 +15,14 @@ class Cape : Module() {
         "Style",
         arrayOf(
             "None",
-            "NightX",
+            "NewNightX",
+            "OldNightX",
             "Infinity",
             "As",
             "Defoko1",
             "Defoko2",
             "Defoko3",
+            "Defoko4",
             "Astolfo",
             "Exhibition",
             "Nuta",
@@ -31,7 +33,7 @@ class Cape : Module() {
             "Migration",
             "Vanilla"
         ),
-        "NightX"
+        "NewNightX"
     )
 
     private val capeCache = hashMapOf<String, CapeStyle>()
@@ -49,12 +51,14 @@ class Cape : Module() {
 
     enum class CapeStyle(val location: ResourceLocation) {
         NONE(ResourceLocation("liquidbounce+/cape/dark.png")),
-        NIGHTX(ResourceLocation("liquidbounce+/cape/nightx.png")),
+        NEWNIGHTX(ResourceLocation("liquidbounce+/cape/newnightx.png")),
+        OLDNIGHTX(ResourceLocation("liquidbounce+/cape/oldnightx.png")),
         INFINITY(ResourceLocation("liquidbounce+/cape/darker.png")),
         AS(ResourceLocation("liquidbounce+/cape/light.png")),
         DEFOKO1(ResourceLocation("liquidbounce+/cape/special1.png")),
         DEFOKO2(ResourceLocation("liquidbounce+/cape/special2.png")),
         DEFOKO3(ResourceLocation("liquidbounce+/cape/special3.png")),
+        DEFOKO4(ResourceLocation("liquidbounce+/cape/special4.png")),
         ASTOLFO(ResourceLocation("liquidbounce+/cape/astolfo.png")),
         EXHIBITION(ResourceLocation("liquidbounce+/cape/exhibition.png")),
         NUTA(ResourceLocation("liquidbounce+/cape/nuta.png")),

@@ -84,24 +84,22 @@ class ClientRichPresence : MinecraftInstance() {
         builder.setStartTimestamp(timestamp)
 
         // Check assets contains logo and set logo
-        if (assets.containsKey("new"))
-            builder.setLargeImage(assets["new"], "build ${LiquidBounce.CLIENT_VERSION}")
+        if (assets.containsKey("logo"))
+            builder.setLargeImage(assets["logo"], "${LiquidBounce.CLIENT_VERSION} Build")
 
         val serverData = mc.currentServerData
 
         // Set display infos
-        builder.setDetails(if (Display.isActive()) (if (mc.isIntegratedServerRunning || serverData != null) "youtube.com/As0452" else "youtube.com/As0452") else "youtube.com/As0452")
-        builder.setState("Username: ${mc.session.username}")
+        builder.setDetails(if (Display.isActive()) (if (mc.isIntegratedServerRunning || serverData != null) "Username: ${mc.session.username}" else "Username: ${mc.session.username}") else "Username: ${mc.session.username}")
+        builder.setState("github.com/Aspw-w/NightX-Client")
 
         if (mc.isIntegratedServerRunning || serverData != null)
             builder.setSmallImage(
-                assets["astolfo"],
-                "${if (mc.isIntegratedServerRunning || serverData == null) "youtube.com/As0452" else serverData.serverIP} - Enabled ${LiquidBounce.moduleManager.modules.count { it.state }}/${LiquidBounce.moduleManager.modules.size}."
+                assets["minecraft_background"],
             )
         else
             builder.setSmallImage(
-                assets["astolfo"],
-                "Enabled ${LiquidBounce.moduleManager.modules.count { it.state }}/${LiquidBounce.moduleManager.modules.size}."
+                assets["minecraft_background"],
             )
 
         // Check ipc client is connected and send rpc
@@ -126,7 +124,7 @@ class ClientRichPresence : MinecraftInstance() {
 
     private fun loadConfiguration() {
         appID = 905789396010295316
-        assets["new"] = "new"
-        assets["astolfo"] = "astolfo"
+        assets["logo"] = "logo"
+        assets["minecraft_background"] = "minecraft_background"
     }
 }

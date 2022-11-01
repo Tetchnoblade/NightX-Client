@@ -14,7 +14,7 @@ import net.ccbluex.liquidbounce.value.ListValue
 @ModuleInfo(name = "SilentView", spacedName = "Silent View", category = ModuleCategory.RENDER)
 class SilentView : Module() {
 
-    var mode = ListValue("Mode", arrayOf("Normal", "CSGO"),"CSGO")
+    var mode = ListValue("Mode", arrayOf("Normal", "CSGO"),"Normal")
     var R = FloatValue("R", 154f, 0f, 255f)
     var G = FloatValue("G", 114f, 0f, 255f)
     var B = FloatValue("B", 175f, 0f, 255f)

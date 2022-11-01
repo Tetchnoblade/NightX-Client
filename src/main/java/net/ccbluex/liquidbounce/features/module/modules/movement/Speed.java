@@ -261,7 +261,8 @@ public class Speed extends Module {
 
     @Override
     public void onDisable() {
-        MovementUtils.strafe(0.3f);
+        if (!mc.thePlayer.isSneaking())
+            MovementUtils.strafe(0.3f);
 
         if (mc.thePlayer == null)
             return;

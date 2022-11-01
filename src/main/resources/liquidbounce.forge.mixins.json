@@ -1,5 +1,5 @@
 {
-  "required": true,
+  "required": false,
   "package": "net.ccbluex.liquidbounce.injection.forge.mixins",
   "refmap": "liquidbounce.mixins.refmap.json",
   "compatibilityLevel": "JAVA_8",

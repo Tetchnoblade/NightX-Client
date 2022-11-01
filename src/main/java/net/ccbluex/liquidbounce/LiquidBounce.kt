@@ -27,7 +27,7 @@ object LiquidBounce {
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = ".nightx"
-    const val CLIENT_VERSION = "DEVELOPMENT"
+    const val CLIENT_VERSION = "Development"
     const val CLIENT_CREATOR = "As_pw"
     const val CLIENT_CONFIGS = "https://sites.google.com/view/nightx-client"
 

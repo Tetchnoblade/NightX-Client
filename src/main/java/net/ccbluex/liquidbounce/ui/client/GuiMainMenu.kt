@@ -106,20 +106,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                         val file = MiscUtils.openFileChooser() ?: return
                         if (file.isDirectory) return
 
-                        try {
-                            Files.copy(file.toPath(), FileOutputStream(LiquidBounce.fileManager.backgroundFile))
-
-                            val image = ImageIO.read(FileInputStream(LiquidBounce.fileManager.backgroundFile))
-                            LiquidBounce.background = ResourceLocation("liquidbounce+/userbackground.png")
-                            mc.textureManager.loadTexture(LiquidBounce.background, DynamicTexture(image))
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                            MiscUtils.showErrorPopup(
-                                "Error",
-                                "Exception class: " + e.javaClass.name + "\nMessage: " + e.message
-                            )
-                            LiquidBounce.fileManager.backgroundFile.delete()
-                        }
                     } else if (extendedModMode) {
                         val rpc = LiquidBounce.clientRichPresence
                         rpc.showRichPresenceValue = when (val state = !rpc.showRichPresenceValue) {
@@ -146,7 +132,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
                     4 -> if (extendedBackgroundMode) {
                         LiquidBounce.background = null
-                        LiquidBounce.fileManager.backgroundFile.delete()
                     } else if (extendedModMode) extendedBackgroundMode = true else extendedModMode = true
 
                     5 -> mc.shutdown()
