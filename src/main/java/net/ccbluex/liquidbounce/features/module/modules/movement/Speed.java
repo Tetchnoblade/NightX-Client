@@ -248,7 +248,7 @@ public class Speed extends Module {
             return;
 
         if (bypassWarning.get() && typeValue.get().equalsIgnoreCase("watchdog") && !LiquidBounce.moduleManager.getModule(Disabler.class).getState()) {
-            LiquidBounce.hud.addNotification(new Notification("Disabler got patched! Don't use watchdog custom speed!", Notification.Type.WARNING, 3000L));
+            LiquidBounce.hud.addNotification(new Notification("Turn on Disabler module to not getting banned!", Notification.Type.WARNING, 3000L));
         }
 
         mc.timer.timerSpeed = 1F;

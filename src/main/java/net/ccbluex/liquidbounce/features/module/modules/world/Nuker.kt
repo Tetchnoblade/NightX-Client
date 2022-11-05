@@ -42,7 +42,7 @@ class Nuker : Module() {
      */
 
     private val radiusValue = FloatValue("Radius", 4.2F, 1F, 6F)
-    private val throughWallsValue = BoolValue("ThroughWalls", false)
+    private val throughWallsValue = BoolValue("ThroughWalls", true)
     private val priorityValue = ListValue("Priority", arrayOf("Distance", "Hardness"), "Distance")
     private val rotationsValue = BoolValue("Rotations", true)
     private val layerValue = BoolValue("Layer", false)
@@ -246,25 +246,10 @@ class Nuker : Module() {
         }
     }
 
-    @EventTarget
-    fun onRender3D(event: Render3DEvent) {
-        // Safe block
-        if (!layerValue.get()) {
-            val safePos = BlockPos(mc.thePlayer!!.posX, mc.thePlayer!!.posY - 1, mc.thePlayer!!.posZ)
-            val safeBlock = BlockUtils.getBlock(safePos)
-            if (safeBlock != null && validBlock(safeBlock))
-                RenderUtils.drawBlockBox(safePos, Color.GREEN, true)
-        }
-
-        // Just draw all blocks
-        for (blockPos in attackedBlocks)
-            RenderUtils.drawBlockBox(blockPos, Color.RED, true)
-    }
-
     /**
      * Check if [block] is a valid block to break
      */
-    private fun validBlock(block: Block) = block != Blocks.air && block !is BlockLiquid && block != Blocks.bedrock
+    private fun validBlock(block: Block) = block != Blocks.air && block !is BlockLiquid
 
     companion object {
         var currentDamage = 0F

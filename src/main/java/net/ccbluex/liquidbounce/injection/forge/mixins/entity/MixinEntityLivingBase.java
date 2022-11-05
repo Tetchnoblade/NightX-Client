@@ -156,7 +156,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
     //visionfx sucks
     @Overwrite
     private int getArmSwingAnimationEnd() {
-        int speed = LiquidBounce.moduleManager.getModule(Animations.class).getState() ? 2 + (20 - Animations.SpeedSwing.get()) : 6;
+        int speed = LiquidBounce.moduleManager.getModule(Animations.class).getState() ? 2 + (20 - Animations.SpeedSwing.get() - 10) : 6;
         return this.isPotionActive(Potion.digSpeed) ? speed - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) : (this.isPotionActive(Potion.digSlowdown) ? speed + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : speed);
     }
 

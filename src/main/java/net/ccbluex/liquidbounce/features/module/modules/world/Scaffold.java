@@ -198,7 +198,7 @@ public class Scaffold extends Module {
     private final BoolValue autoDisableSpeedValue = new BoolValue("AutoDisable-Speed", false);
 
     // Visuals
-    public final ListValue counterDisplayValue = new ListValue("Counter", new String[]{"Off", "Exhibition", "Advanced", "Sigma", "Novoline"}, "Exhibition");
+    public final ListValue counterDisplayValue = new ListValue("Counter", new String[]{"Off", "NightX", "Exhibition", "Advanced", "Sigma", "Novoline"}, "NightX");
 
     private final BoolValue markValue = new BoolValue("Mark", false);
     private final IntegerValue redValue = new IntegerValue("Red", 255, 0, 255, () -> markValue.get());
@@ -976,7 +976,6 @@ public class Scaffold extends Module {
 
         if (counterMode.equalsIgnoreCase("novoline")) {
             if (slot >= 0 && slot < 9 && mc.thePlayer.inventory.mainInventory[slot] != null && mc.thePlayer.inventory.mainInventory[slot].getItem() != null && mc.thePlayer.inventory.mainInventory[slot].getItem() instanceof ItemBlock) {
-                //RenderUtils.drawRect(scaledResolution.getScaledWidth() / 2 - (infoWidth / 2) - 4, scaledResolution.getScaledHeight() / 2 - 26, scaledResolution.getScaledWidth() / 2 + (infoWidth / 2) + 4, scaledResolution.getScaledHeight() / 2 - 5, 0xA0000000);
                 GlStateManager.pushMatrix();
                 GlStateManager.translate(scaledResolution.getScaledWidth() / 2 - 22, scaledResolution.getScaledHeight() / 2 + 16, scaledResolution.getScaledWidth() / 2 - 22);
                 renderItemStack(mc.thePlayer.inventory.mainInventory[slot], 0, 0);
@@ -985,6 +984,16 @@ public class Scaffold extends Module {
             GlStateManager.resetColor();
 
             Fonts.minecraftFont.drawString(getBlocksAmount() + " blocks", scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 2 + 20, -1, true);
+        }
+
+        if (counterMode.equalsIgnoreCase("nightx")) {
+            if (slot >= 0 && slot < 9 && mc.thePlayer.inventory.mainInventory[slot] != null && mc.thePlayer.inventory.mainInventory[slot].getItem() != null && mc.thePlayer.inventory.mainInventory[slot].getItem() instanceof ItemBlock) {
+                GlStateManager.pushMatrix();
+                GlStateManager.popMatrix();
+            }
+            GlStateManager.resetColor();
+
+            Fonts.minecraftFont.drawString(getBlocksAmount() + " Blocks", scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 2 + 20, -1, true);
         }
     }
 

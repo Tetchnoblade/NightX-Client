@@ -373,7 +373,7 @@ public abstract class MixinItemRenderer {
                         break;
                     case BLOCK:
                         if (LiquidBounce.moduleManager.getModule(Animations.class).getState()) {
-                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.1, Animations.blockPosZ.get().doubleValue() + 0.06);
                             final String z = Animations.Sword.get();
                             switch (z) {
                                 case "Old": {
