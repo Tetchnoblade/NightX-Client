@@ -32,7 +32,7 @@ class NameTags : Module() {
     private val pingValue = BoolValue("Ping", false)
     private val distanceValue = BoolValue("Distance", false)
     private val armorValue = BoolValue("Armor", false)
-    private val enchantValue = BoolValue("Enchant", true)
+    private val enchantValue = BoolValue("Enchant", false)
     private val potionValue = BoolValue("Potions", false)
     private val clearNamesValue = BoolValue("ClearNames", false)
     private val fontValue = FontValue("Font", Fonts.font40)
@@ -245,11 +245,7 @@ class NameTags : Module() {
                     continue
 
                 mc.renderItem.zLevel = -147F
-                mc.renderItem.renderItemAndEffectIntoGUI(
-                    entity.getEquipmentInSlot(index),
-                    -50 + index * 20,
-                    if (potionValue.get() && foundPotion) -42 else -22
-                )
+                mc.renderItem.renderItemAndEffectIntoGUI(entity.getEquipmentInSlot(index), -50 + index * 20, if (potionValue.get() && foundPotion) -42 else -22)
             }
 
             enableAlpha()
@@ -257,8 +253,6 @@ class NameTags : Module() {
             enableTexture2D()
         }
 
-        // Pop
-        glPopMatrix()
         if (enchantValue.get() && entity is EntityPlayer) {
             glPushMatrix()
             for (index in 0..4) {
@@ -282,5 +276,12 @@ class NameTags : Module() {
 
             glPopMatrix()
         }
+
+        // Reset color
+        resetColor()
+        glColor4f(1F, 1F, 1F, 1F)
+
+        // Pop
+        glPopMatrix()
     }
 }
