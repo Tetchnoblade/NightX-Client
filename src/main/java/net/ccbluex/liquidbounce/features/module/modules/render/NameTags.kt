@@ -9,6 +9,7 @@ import net.ccbluex.liquidbounce.features.module.modules.misc.AntiBot
 import net.ccbluex.liquidbounce.ui.font.Fonts
 import net.ccbluex.liquidbounce.utils.EntityUtils
 import net.ccbluex.liquidbounce.utils.render.ColorUtils
+import net.ccbluex.liquidbounce.utils.render.RenderUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtils.*
 import net.ccbluex.liquidbounce.value.BoolValue
 import net.ccbluex.liquidbounce.value.FloatValue
@@ -256,6 +257,8 @@ class NameTags : Module() {
             enableTexture2D()
         }
 
+        // Pop
+        glPopMatrix()
         if (enchantValue.get() && entity is EntityPlayer) {
             glPushMatrix()
             for (index in 0..4) {
@@ -279,6 +282,5 @@ class NameTags : Module() {
 
             glPopMatrix()
         }
-
     }
 }
