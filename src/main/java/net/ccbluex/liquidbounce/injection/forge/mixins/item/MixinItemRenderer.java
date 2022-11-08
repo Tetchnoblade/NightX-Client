@@ -373,11 +373,22 @@ public abstract class MixinItemRenderer {
                         break;
                     case BLOCK:
                         if (LiquidBounce.moduleManager.getModule(Animations.class).getState()) {
-                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.1, Animations.blockPosZ.get().doubleValue() + 0.06);
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.12, Animations.blockPosZ.get().doubleValue() + 0.08);
                             final String z = Animations.Sword.get();
                             switch (z) {
                                 case "Old": {
                                     this.transformFirstPersonItem(f + 0.1F, f1);
+                                    if (Animations.RotateItems.get())
+                                        rotateItemAnim();
+
+                                    this.doBlockTransformations();
+                                    GlStateManager.translate(-0.35F, 0.2F, 0.0F);
+                                    if (Animations.RotateItems.get())
+                                        rotateItemAnim();
+                                    break;
+                                }
+                                case "OldFull": {
+                                    this.transformFirstPersonItem(0f, f1);
                                     if (Animations.RotateItems.get())
                                         rotateItemAnim();
 
@@ -460,7 +471,7 @@ public abstract class MixinItemRenderer {
                                 }
                                 case "Leaked": {
                                     float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
-                                    GL11.glTranslated(0.02D, 0.02D, -0.08D);
+                                    GL11.glTranslated(-0.04D, 0.02D, -0.08D);
                                     this.transformFirstPersonItem(f / 1000.0F, 0.0f);
                                     GlStateManager.rotate(-var9 * -40.0F, var9 / 2.0F, 1.0F, 4.0F);
                                     GlStateManager.rotate(-var9 * 0.0F, 1.0F, var9 / 3.0F, -0.0F);
@@ -749,6 +760,24 @@ public abstract class MixinItemRenderer {
                                     this.transformFirstPersonItem(f / 2.5F, 0.0f);
                                     GlStateManager.rotate(-var9 * -70.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
                                     GlStateManager.rotate(-var9 * 17.5F, 1.0F, var9 / 3.0F, -0.0F);
+                                    this.func_178103_d(0.2F);
+                                    break;
+                                }
+                                case "Sweet": {
+                                    float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
+                                    GL11.glTranslated(-0.04D, 0.06D, 0.0D);
+                                    this.transformFirstPersonItem(f / 2.5F, 0.0f);
+                                    GlStateManager.rotate(-var9 * 70.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
+                                    GlStateManager.rotate(-var9 * 17.5F, 1.0F, var9 / 3.0F, -0.0F);
+                                    this.func_178103_d(0.2F);
+                                    break;
+                                }
+                                case "Pumpkin": {
+                                    float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
+                                    GL11.glTranslated(-0.04D, 0.06D, 0.0D);
+                                    this.transformFirstPersonItem(f / 2.5F, 0.0f);
+                                    GlStateManager.rotate(-var9 * -70.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
+                                    GlStateManager.rotate(-var9 * -17.5F, 1.0F, var9 / 3.0F, -0.0F);
                                     this.func_178103_d(0.2F);
                                     break;
                                 }

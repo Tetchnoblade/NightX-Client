@@ -5,6 +5,7 @@ import net.ccbluex.liquidbounce.event.*;
 import net.ccbluex.liquidbounce.features.module.Module;
 import net.ccbluex.liquidbounce.features.module.ModuleCategory;
 import net.ccbluex.liquidbounce.features.module.ModuleInfo;
+import net.ccbluex.liquidbounce.features.module.modules.exploit.Damage;
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.Notification;
 import net.ccbluex.liquidbounce.utils.*;
 import net.ccbluex.liquidbounce.utils.misc.RandomUtils;
@@ -58,12 +59,13 @@ public class Flight extends Module {
             // New Fly using exploits.
             "AAC5-Vanilla",
             "Exploit",
+            "Zoom",
 
             // For other servers, mostly outdated.
-            "CubeCraft",
+            "Cubecraft",
             "Rewinside",
             "TeleportRewinside",
-            "FunCraft",
+            "Funcraft",
             "Mineplex",
             "NeruxVace",
             "Minesucht",
@@ -165,9 +167,6 @@ public class Flight extends Module {
     private final BoolValue fakeNoMoveValue = new BoolValue("FakeNoMove", false, () -> {
         return modeValue.get().toLowerCase().contains("exploit");
     });
-
-    // General
-    private final BoolValue resetMotionValue = new BoolValue("ResetMotion", true);
 
     // Visuals
     private final BoolValue fakeDmgValue = new BoolValue("FakeDamage", false);
@@ -349,7 +348,13 @@ public class Flight extends Module {
             case "funcraft":
                 if (mc.thePlayer.onGround)
                     mc.thePlayer.jump();
-                moveSpeed = 1;
+                moveSpeed = 1.6;
+                break;
+            case "zoom":
+                LiquidBounce.moduleManager.getModule(Damage.class).setState(true);
+                if (mc.thePlayer.onGround)
+                    mc.thePlayer.jump();
+                moveSpeed = 2;
                 break;
             case "slime":
                 expectItemStack = getSlimeSlot();
@@ -428,13 +433,13 @@ public class Flight extends Module {
 
         final String mode = modeValue.get();
 
-        if (resetMotionValue.get() && (!mode.toUpperCase().startsWith("AAC") && !mode.equalsIgnoreCase("Hypixel") &&
+        if ((!mode.toUpperCase().startsWith("AAC") && !mode.equalsIgnoreCase("Hypixel") &&
                 !mode.equalsIgnoreCase("CubeCraft") && !mode.equalsIgnoreCase("Collide") && !mode.equalsIgnoreCase("Verus") && !mode.equalsIgnoreCase("Jump") && !mode.equalsIgnoreCase("creative")) || (mode.equalsIgnoreCase("pearl") && pearlState != -1)) {
             mc.thePlayer.motionY = 0;
             MovementUtils.strafe(0.3f);
         }
 
-        if (resetMotionValue.get() && boostTicks > 0 && mode.equalsIgnoreCase("Verus")) {
+        if (boostTicks > 0 && mode.equalsIgnoreCase("Verus")) {
             MovementUtils.strafe(0.3f);
         }
 
@@ -954,6 +959,24 @@ public class Flight extends Module {
 
         switch (modeValue.get().toLowerCase()) {
             case "funcraft":
+                mc.timer.timerSpeed = 1.4f;
+                event.setOnGround(true);
+                if (!MovementUtils.isMoving())
+                    moveSpeed = 0.25;
+                if (moveSpeed > 0.25) {
+                    moveSpeed -= moveSpeed / 159.0;
+                }
+                if (event.getEventState() == EventState.PRE) {
+                    mc.thePlayer.capabilities.isFlying = false;
+                    mc.thePlayer.motionY = 0;
+                    mc.thePlayer.motionX = 0;
+                    mc.thePlayer.motionZ = 0;
+
+                    MovementUtils.strafe((float) moveSpeed);
+                    mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY - 8e-6, mc.thePlayer.posZ);
+                }
+                break;
+            case "zoom":
                 event.setOnGround(true);
                 if (!MovementUtils.isMoving())
                     moveSpeed = 0.25;
@@ -1320,7 +1343,7 @@ public class Flight extends Module {
         final String mode = modeValue.get();
 
         if (mode.equalsIgnoreCase("Hypixel") || mode.equalsIgnoreCase("BoostHypixel") ||
-                mode.equalsIgnoreCase("Rewinside") || (mode.equalsIgnoreCase("Mineplex") && mc.thePlayer.inventory.getCurrentItem() == null) || (mode.equalsIgnoreCase("FunCraft") && moveSpeed > 0) || (mode.equalsIgnoreCase("exploit") && wdState >= 1) || (mode.equalsIgnoreCase("slime") && wdState >= 1))
+                mode.equalsIgnoreCase("Rewinside") || (mode.equalsIgnoreCase("Mineplex") && mc.thePlayer.inventory.getCurrentItem() == null) || (mode.equalsIgnoreCase("funcraft") && moveSpeed > 0) || (mode.equalsIgnoreCase("exploit") && wdState >= 1) || (mode.equalsIgnoreCase("slime") && wdState >= 1))
             e.cancelEvent();
     }
 
@@ -1329,7 +1352,7 @@ public class Flight extends Module {
         final String mode = modeValue.get();
 
         if (mode.equalsIgnoreCase("Hypixel") || mode.equalsIgnoreCase("BoostHypixel") ||
-                mode.equalsIgnoreCase("Rewinside") || (mode.equalsIgnoreCase("Mineplex") && mc.thePlayer.inventory.getCurrentItem() == null) || mode.equalsIgnoreCase("FunCraft") || (mode.equalsIgnoreCase("exploit") && wdState > 2) || mode.equalsIgnoreCase("slime"))
+                mode.equalsIgnoreCase("Rewinside") || (mode.equalsIgnoreCase("Mineplex") && mc.thePlayer.inventory.getCurrentItem() == null) || mode.equalsIgnoreCase("funcraft") || (mode.equalsIgnoreCase("exploit") && wdState > 2) || mode.equalsIgnoreCase("slime"))
             e.setStepHeight(0F);
     }
 

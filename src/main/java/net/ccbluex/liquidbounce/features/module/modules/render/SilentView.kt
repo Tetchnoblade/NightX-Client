@@ -10,14 +10,17 @@ import net.ccbluex.liquidbounce.features.module.modules.world.Scaffold
 import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.ListValue
 
-@ModuleInfo(name = "SilentView", spacedName = "Silent View", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "SilentView", category = ModuleCategory.RENDER)
 class SilentView : Module() {
 
-    var mode = ListValue("Mode", arrayOf("Normal", "CSGO"),"CSGO")
+    var mode = ListValue("Mode", arrayOf("Normal", "CSGO"),"Normal")
     var R = FloatValue("R", 154f, 0f, 255f)
     var G = FloatValue("G", 114f, 0f, 255f)
     var B = FloatValue("B", 175f, 0f, 255f)
     var Alpha = FloatValue("Alpha", 50f, 0f, 255f)
+
+    override val tag: String
+        get() = mode.get()
 
     private fun getState(module: Class<out Module>) = LiquidBounce.moduleManager[module]!!.state
 

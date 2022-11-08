@@ -47,6 +47,7 @@ class CommandManager {
         registerCommand(XrayCommand())
         registerCommand(ThemeCommand())
         registerCommand(CloudConfigCommand())
+        registerCommand(LoginCommand())
     }
 
     /**

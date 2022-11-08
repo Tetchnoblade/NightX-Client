@@ -26,7 +26,7 @@ public class Trails extends Module {
     public final IntegerValue colorRedValue = new IntegerValue("R", 255, 0, 255);
     public final IntegerValue colorGreenValue = new IntegerValue("G", 80, 0, 255);
     public final IntegerValue colorBlueValue = new IntegerValue("B", 255, 0, 255);
-    public final IntegerValue fadeSpeedValue = new IntegerValue("Fade-Speed", 1, 0, 255);
+    public final IntegerValue fadeSpeedValue = new IntegerValue("Fade-Speed", 2, 0, 255);
     public final BoolValue colorRainbow = new BoolValue("Rainbow", false);
     private final LinkedList<Dot> positions = new LinkedList<>();
 
@@ -49,7 +49,7 @@ public class Trails extends Module {
             glBegin(GL_LINE_STRIP);
 
             final double renderPosX = mc.getRenderManager().viewerPosX;
-            final double renderPosY = mc.getRenderManager().viewerPosY - 1.4;
+            final double renderPosY = mc.getRenderManager().viewerPosY - 0.5;
             final double renderPosZ = mc.getRenderManager().viewerPosZ;
 
             List<Dot> removeQueue = new ArrayList<>();

@@ -21,7 +21,7 @@ public class FileManager extends MinecraftInstance {
     public final File oldDir = new File(mc.mcDataDir, LiquidBounce.CLIENT_FOLDER + "");
     public File dir = new File(mc.mcDataDir, LiquidBounce.CLIENT_FOLDER);
     public final File fontsDir = new File(dir, "fonts");
-    public final File settingsDir = new File(dir, "settings");
+    public final File settingsDir = new File(dir, "configs");
     public final File soundsDir = new File(dir, "sounds");
     public final File themesDir = new File(dir, "themes");
     public final FileConfig modulesConfig = new ModulesConfig(new File(dir, "modules.json"));

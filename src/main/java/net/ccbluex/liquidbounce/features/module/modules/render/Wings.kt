@@ -11,6 +11,7 @@ import net.ccbluex.liquidbounce.value.BoolValue
 @ModuleInfo(name = "Wings", category = ModuleCategory.RENDER, array = false)
 class Wings : Module() {
     private val onlyThirdPerson = BoolValue("OnlyThirdPerson", true)
+
     @EventTarget
     fun onRenderPlayer(event: Render3DEvent) {
         if (onlyThirdPerson.get() && mc.gameSettings.thirdPersonView == 0) return

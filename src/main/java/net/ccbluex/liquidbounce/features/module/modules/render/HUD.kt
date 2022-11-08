@@ -14,7 +14,7 @@ import net.ccbluex.liquidbounce.value.*
 @ModuleInfo(name = "HUD", category = ModuleCategory.RENDER, array = false)
 class HUD : Module() {
     val tabHead = BoolValue("Tab-HeadOverlay", true)
-    val animHotbarValue = BoolValue("AnimatedHotbar", true)
+    val animHotbarValue = BoolValue("AnimatedHotbar", false)
     val blackHotbarValue = BoolValue("BlackHotbar", false)
     val inventoryParticle = BoolValue("InventoryParticle", false)
     val fontChatValue = BoolValue("FontChat", false)
@@ -22,7 +22,7 @@ class HUD : Module() {
     val fontType = FontValue("Font", Fonts.fontSFUI40, { fontChatValue.get() })
     val chatRectValue = BoolValue("ChatRect", true)
     val chatCombineValue = BoolValue("ChatCombine", false)
-    val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.03F, 0.01F, 4.0F)
+    val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 10.0F, 0.01F, 10.0F)
     private val toggleMessageValue = BoolValue("DisplayToggleMessage", false)
     private val toggleSoundValue = ListValue("ToggleSound", arrayOf("None", "Default", "Custom"), "None")
     private val toggleVolumeValue =

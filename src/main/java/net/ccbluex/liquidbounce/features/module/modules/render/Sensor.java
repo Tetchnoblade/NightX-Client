@@ -112,7 +112,7 @@ public class Sensor extends Module {
         checkPosition(radius);
 
         GL11.glPushMatrix();
-        GlStateManager.translate(viewX + posX, viewY + posY + height - 3, viewZ + posZ);
+        GlStateManager.translate(viewX + posX, viewY + posY + height - 0.4, viewZ + posZ);
 
         pre3D();
 
