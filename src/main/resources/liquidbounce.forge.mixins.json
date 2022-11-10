@@ -17,7 +17,6 @@
     "client.MixinMinecraft",
     "client.MixinMovementInputFromOptions",
     "client.MixinResourcePackRepository",
-    "crash.MixinCrashReport",
     "entity.MixinAbstractClientPlayer",
     "entity.MixinEntity",
     "entity.MixinEntityLivingBase",
