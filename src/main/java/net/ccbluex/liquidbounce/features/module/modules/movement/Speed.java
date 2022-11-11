@@ -8,6 +8,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleInfo;
 import net.ccbluex.liquidbounce.features.module.modules.exploit.Disabler;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMode;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.aac.*;
+import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.blocksmc.BlocksMC;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.ncp.*;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.other.*;
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.spartan.SpartanYPort;
@@ -102,9 +103,12 @@ public class Speed extends Module {
             // Verus
             new VerusHop(),
             new VerusLowHop(),
-            new VerusHard()
+            new VerusHard(),
+
+            // BlocksMC
+            new BlocksMC()
     };
-    public final ListValue typeValue = new ListValue("Type", new String[]{"NCP", "AAC", "Spartan", "Spectre", "Watchdog", "Verus", "Custom", "VanillaBhop", "Other"}, "VanillaBhop") {
+    public final ListValue typeValue = new ListValue("Type", new String[]{"NCP", "AAC", "Spartan", "Spectre", "Watchdog", "Verus", "BlocksMC", "Custom", "VanillaBhop", "Other"}, "VanillaBhop") {
 
         @Override
         protected void onChange(final String oldValue, final String newValue) {
@@ -324,7 +328,6 @@ public class Speed extends Module {
         }
         return mode;
     }    public final ListValue otherModeValue = new ListValue("Other-Mode", new String[]{"YPort", "YPort2", "Boost", "Frame", "MiJump", "OnGround", "SlowHop", "Jump", "Legit", "AEMine", "GWEN", "HiveHop", "MineplexGround", "TeleportCubeCraft"}, "Boost", () -> typeValue.get().equalsIgnoreCase("other")) {
-
         @Override
         protected void onChange(final String oldValue, final String newValue) {
             if (getState())
@@ -360,6 +363,9 @@ public class Speed extends Module {
                 break;
             case "Verus":
                 mode = "Verus" + verusModeValue.get();
+                break;
+            case "BlocksMC":
+                mode = "BlocksMC";
                 break;
             case "VanillaBhop":
                 mode = "VanillaBhop";
@@ -405,7 +411,7 @@ public class Speed extends Module {
 
     public final BoolValue smoothStrafe = new BoolValue("SmoothStrafe", true, () -> getModeName().equalsIgnoreCase("watchdogcustom"));
 
-
+    public final BoolValue strafing = new BoolValue("Strafing", true, () -> getModeName().equalsIgnoreCase("blocksmc"));
 
     public final FloatValue customSpeedValue = new FloatValue("StrSpeed", 0.42f, 0.2f, 2f, () -> getModeName().equalsIgnoreCase("watchdogcustom"));
 
