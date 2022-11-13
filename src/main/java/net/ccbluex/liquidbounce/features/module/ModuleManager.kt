@@ -192,7 +192,8 @@ class ModuleManager : Listenable {
             NoC0Fs::class.java,
             SilentView::class.java,
             PlayerEdit::class.java,
-            NoClickDelay::class.java
+            NoClickDelay::class.java,
+            PacketFlight::class.java
         )
 
         registerModule(Fucker)

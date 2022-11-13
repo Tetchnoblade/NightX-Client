@@ -98,9 +98,6 @@ public class AntiFall extends Module {
 
                     if (scaffoldValue.get() && !LiquidBounce.moduleManager.getModule(Scaffold.class).getState())
                         LiquidBounce.moduleManager.getModule(Scaffold.class).setState(true);
-
-                    /*if (towerValue.get() && !LiquidBounce.moduleManager.getModule(Tower.class).getState())
-                        LiquidBounce.moduleManager.getModule(Tower.class).setState(true);*/
                 }
             }
         } else {
@@ -256,11 +253,6 @@ public class AntiFall extends Module {
     public void onEnable() {
         reset();
         super.onEnable();
-    }
-
-    @Override
-    public String getTag() {
-        return setBackModeValue.get();
     }
 
     private void reset() {

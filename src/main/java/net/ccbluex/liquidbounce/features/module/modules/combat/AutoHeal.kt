@@ -248,8 +248,4 @@ class AutoHeal : Module() {
         }
         return !mc.thePlayer.isPotionActive(id) && (!smartValue.get() || !throwQueue.contains(id))
     }
-
-    override val tag: String
-        get() = "${if (modeValue.get().equals("JumpOnly", true)) "Jump Only" else "Ground"}"
-
 }
