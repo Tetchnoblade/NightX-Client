@@ -22,7 +22,7 @@ class PacketFlight : Module() {
         var x = -Math.sin(playerYaw) * 0.2873;
         var z = Math.cos(playerYaw) * 0.2873;
 
-        if (!GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
+        if (MovementUtils.isMoving() || !GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
             mc.netHandler.addToSendQueue(
                 C04PacketPlayerPosition(
                     mc.thePlayer.posX + x,
@@ -54,6 +54,25 @@ class PacketFlight : Module() {
                 C04PacketPlayerPosition(
                     mc.thePlayer.posX,
                     mc.thePlayer.posY + 20,
+                    mc.thePlayer.posZ,
+                    true
+                )
+            )
+        }
+
+        if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
+            mc.netHandler.addToSendQueue(
+                C04PacketPlayerPosition(
+                    mc.thePlayer.posX,
+                    mc.thePlayer.posY,
+                    mc.thePlayer.posZ,
+                    false
+                )
+            )
+            mc.netHandler.addToSendQueue(
+                C04PacketPlayerPosition(
+                    mc.thePlayer.posX,
+                    mc.thePlayer.posY - 20,
                     mc.thePlayer.posZ,
                     true
                 )
