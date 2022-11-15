@@ -1,5 +1,6 @@
 package net.ccbluex.liquidbounce.features.module.modules.combat
 
+import de.enzaxd.viaforge.ViaForge
 import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.event.*
 import net.ccbluex.liquidbounce.features.module.Module
@@ -152,6 +153,8 @@ class KillAura : Module() {
         IntegerValue("SwitchDelay", 1000, 1, 2000, "ms", { targetModeValue.get().equals("switch", true) })
 
     // Bypass
+    private val swingValue = BoolValue("Swing", true)
+    private val swingOrderValue = BoolValue("1.9OrderCheck", true, { swingValue.get() })
     private val keepSprintValue = BoolValue("NoKeepSprint", false)
 
     // AutoBlock
@@ -287,6 +290,7 @@ class KillAura : Module() {
 
     // Bypass
     private val failRateValue = FloatValue("FailRate", 0f, 0f, 100f)
+    private val fakeSwingValue = BoolValue("FakeSwing", false)
     private val noInventoryAttackValue = BoolValue("NoInvAttack", false)
     private val noInventoryDelayValue = IntegerValue("NoInvDelay", 200, 0, 500, "ms", { noInventoryAttackValue.get() })
     private val limitedMultiTargetsValue =
@@ -668,6 +672,7 @@ class KillAura : Module() {
 
         // Settings
         val failRate = failRateValue.get()
+        val swing = swingValue.get()
         val multi = targetModeValue.get().equals("Multi", ignoreCase = true)
         val openInventory = aacValue.get() && mc.currentScreen is GuiInventory
         val failHit = failRate > 0 && Random().nextInt(100) <= failRate
@@ -678,7 +683,7 @@ class KillAura : Module() {
 
         // Check is not hitable or check failrate
         if (!hitable || failHit) {
-            if (failHit)
+            if (swing && (fakeSwingValue.get() || failHit))
                 mc.thePlayer.swingItem()
         } else {
             // Attack
@@ -833,9 +838,6 @@ class KillAura : Module() {
      * Attack [entity]
      */
     private fun attackEntity(entity: EntityLivingBase) {
-        mc.thePlayer.swingItem()
-        mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
-
         // Stop blocking
         if (mc.thePlayer.isBlocking || blockingStatus)
             stopBlocking()
@@ -861,8 +863,13 @@ class KillAura : Module() {
         }
 
         // Attack target
-        mc.thePlayer.swingItem()
+        if (swingValue.get() && (!swingOrderValue.get() || ViaForge.getInstance().version <= 47)) // version fix
+            mc.thePlayer.swingItem()
+
         mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
+
+        if (swingValue.get() && swingOrderValue.get() && ViaForge.getInstance().version > 47)
+            mc.thePlayer.swingItem()
 
         if (keepSprintValue.get()) {
             if (mc.playerController.currentGameType != WorldSettings.GameType.SPECTATOR)
@@ -1115,6 +1122,8 @@ class KillAura : Module() {
      * Stop blocking
      */
     private fun stopBlocking() {
+        fakeBlock = false
+
         if (blockingStatus) {
             if (autoBlockModeValue.get().equals("oldhypixel", true))
                 mc.netHandler.addToSendQueue(

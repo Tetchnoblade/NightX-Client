@@ -13,8 +13,7 @@ class LagBack : Module() {
     private val longJumpValue = BoolValue("LongJump", value = true)
     private val speedValue = BoolValue("Speed", value = true)
     private val bowLongJumpValue = BoolValue("BowLongJump", value = true)
-    private val tpAuraValue = BoolValue("TPAura", value = true)
-    private val valueList = arrayOf(longJumpValue,speedValue,bowLongJumpValue,tpAuraValue)
+    private val valueList = arrayOf(longJumpValue,speedValue,bowLongJumpValue)
     @EventTarget
     fun onPacket(event: PacketEvent) {
         if(event.packet is S08PacketPlayerPosLook) {
