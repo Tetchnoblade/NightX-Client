@@ -4,8 +4,9 @@ import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.features.command.Command
 import net.ccbluex.liquidbounce.features.module.modules.misc.AntiBot
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.Notification
+import net.minecraft.network.play.client.C03PacketPlayer
 
-class TeleportCommand : Command("tp", emptyArray()) {
+class PacketTeleportCommand : Command("ptp", emptyArray()) {
 
     /**
      * Execute commands with provided [args]
@@ -21,7 +22,14 @@ class TeleportCommand : Command("tp", emptyArray()) {
 
             // Attempt to teleport to player's position.
             if (targetPlayer != null) {
-                mc.thePlayer.setPositionAndUpdate(targetPlayer.posX, targetPlayer.posY, targetPlayer.posZ)
+                mc.netHandler.addToSendQueue(
+                    C03PacketPlayer.C04PacketPlayerPosition(
+                        targetPlayer.posX,
+                        targetPlayer.posY,
+                        targetPlayer.posZ,
+                        false
+                    )
+                )
                 LiquidBounce.hud.addNotification(
                     Notification(
                         "Successfully teleported to §a${targetPlayer.name}",
@@ -44,7 +52,14 @@ class TeleportCommand : Command("tp", emptyArray()) {
                 val posY = if (args[2].equals("~", true)) mc.thePlayer.posY else args[2].toDouble()
                 val posZ = if (args[3].equals("~", true)) mc.thePlayer.posZ else args[3].toDouble()
 
-                mc.thePlayer.setPositionAndUpdate(posX, posY, posZ)
+                mc.netHandler.addToSendQueue(
+                    C03PacketPlayer.C04PacketPlayerPosition(
+                        posX,
+                        posY,
+                        posZ,
+                        false
+                    )
+                )
                 LiquidBounce.hud.addNotification(
                     Notification(
                         "Successfully teleported to §a$posX, $posY, $posZ",
@@ -63,7 +78,7 @@ class TeleportCommand : Command("tp", emptyArray()) {
             }
         }
 
-        chatSyntax("tp <player name/x y z>")
+        chatSyntax("ptp <player name/x y z>")
     }
 
     override fun tabComplete(args: Array<String>): List<String> {

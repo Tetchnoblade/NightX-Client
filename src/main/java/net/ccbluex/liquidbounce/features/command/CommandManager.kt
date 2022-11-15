@@ -48,6 +48,8 @@ class CommandManager {
         registerCommand(ThemeCommand())
         registerCommand(CloudConfigCommand())
         registerCommand(LoginCommand())
+        registerCommand(PacketTeleportCommand())
+        registerCommand(PacketVClipCommand())
     }
 
     /**

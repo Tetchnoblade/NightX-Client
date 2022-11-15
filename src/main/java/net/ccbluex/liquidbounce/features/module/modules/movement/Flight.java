@@ -19,6 +19,7 @@ import net.ccbluex.liquidbounce.value.ListValue;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockSlime;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
@@ -176,7 +177,6 @@ public class Flight extends Module {
     private final MSTimer flyTimer = new MSTimer();
     private final MSTimer groundTimer = new MSTimer();
     private final MSTimer boostTimer = new MSTimer();
-    private final MSTimer wdTimer = new MSTimer();
     private final MSTimer mineSecureVClipTimer = new MSTimer();
     private final MSTimer mineplexTimer = new MSTimer();
     private final TickTimer spartanTimer = new TickTimer();
