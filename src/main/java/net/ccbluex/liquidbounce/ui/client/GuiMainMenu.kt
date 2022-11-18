@@ -17,7 +17,7 @@ import kotlin.concurrent.thread
 
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
-    val kawaiiLogo = ResourceLocation("liquidbounce+/kawaii.png")
+    val kawaiiLogo = ResourceLocation("nightx/kawaii.png")
 
     var slideX: Float = 0F
     var fade: Float = 0F
@@ -274,30 +274,30 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         mouseX >= x && mouseX < x2 && mouseY >= y && mouseY < y2
 
     enum class ImageButton(val buttonName: String, val texture: ResourceLocation) {
-        Single("Single Player", ResourceLocation("liquidbounce+/menu/singleplayer.png")),
-        Multi("Multi Player", ResourceLocation("liquidbounce+/menu/multiplayer.png")),
-        Alts("Alt Manager", ResourceLocation("liquidbounce+/menu/alt.png")),
-        Settings("Options", ResourceLocation("liquidbounce+/menu/settings.png")),
-        Mods("Other", ResourceLocation("liquidbounce+/menu/mods.png")),
-        Exit("Quit", ResourceLocation("liquidbounce+/menu/exit.png"))
+        Single("Single Player", ResourceLocation("nightx/menu/singleplayer.png")),
+        Multi("Multi Player", ResourceLocation("nightx/menu/multiplayer.png")),
+        Alts("Alt Manager", ResourceLocation("nightx/menu/alt.png")),
+        Settings("Options", ResourceLocation("nightx/menu/settings.png")),
+        Mods("Other", ResourceLocation("nightx/menu/mods.png")),
+        Exit("Quit", ResourceLocation("nightx/menu/exit.png"))
     }
 
     enum class ExtendedImageButton(val buttonName: String, val texture: ResourceLocation) {
-        Back("Done", ResourceLocation("liquidbounce+/clickgui/back.png")),
-        Mods("Mods", ResourceLocation("liquidbounce+/menu/mods.png")),
-        Scripts("Scripts", ResourceLocation("liquidbounce+/clickgui/docs.png")),
-        DiscordRPC("Discord RPC", ResourceLocation("liquidbounce+/menu/discord.png")),
-        Background("Background", ResourceLocation("liquidbounce+/menu/wallpaper.png")),
-        Exit("Quit", ResourceLocation("liquidbounce+/menu/exit.png"))
+        Back("Done", ResourceLocation("nightx/clickgui/back.png")),
+        Mods("Mods", ResourceLocation("nightx/menu/mods.png")),
+        Scripts("Scripts", ResourceLocation("nightx/clickgui/docs.png")),
+        DiscordRPC("Discord RPC", ResourceLocation("nightx/menu/discord.png")),
+        Background("Background", ResourceLocation("nightx/menu/wallpaper.png")),
+        Exit("Quit", ResourceLocation("nightx/menu/exit.png"))
     }
 
     enum class ExtendedBackgroundButton(val buttonName: String, val texture: ResourceLocation) {
-        Back("Done", ResourceLocation("liquidbounce+/clickgui/back.png")),
-        Enabled("Enabled", ResourceLocation("liquidbounce+/notification/new/checkmark.png")),
-        Particles("Gui Particles", ResourceLocation("liquidbounce+/clickgui/brush.png")),
-        Change("Change wallpaper", ResourceLocation("liquidbounce+/clickgui/import.png")),
-        Reset("Reset wallpaper", ResourceLocation("liquidbounce+/clickgui/reload.png")),
-        Exit("Quit", ResourceLocation("liquidbounce+/menu/exit.png"))
+        Back("Done", ResourceLocation("nightx/clickgui/back.png")),
+        Enabled("Enabled", ResourceLocation("nightx/notification/new/checkmark.png")),
+        Particles("Gui Particles", ResourceLocation("nightx/clickgui/brush.png")),
+        Change("Change wallpaper", ResourceLocation("nightx/clickgui/import.png")),
+        Reset("Reset wallpaper", ResourceLocation("nightx/clickgui/reload.png")),
+        Exit("Quit", ResourceLocation("nightx/menu/exit.png"))
     }
 
     override fun keyTyped(typedChar: Char, keyCode: Int) {}

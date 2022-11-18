@@ -13,9 +13,9 @@ class TipSoundManager {
         val disableSoundFile = File(LiquidBounce.fileManager.soundsDir, "disable.wav")
 
         if (!enableSoundFile.exists())
-            FileUtils.unpackFile(enableSoundFile, "assets/minecraft/liquidbounce+/sound/enable.wav")
+            FileUtils.unpackFile(enableSoundFile, "assets/minecraft/nightx/sound/enable.wav")
         if (!disableSoundFile.exists())
-            FileUtils.unpackFile(disableSoundFile, "assets/minecraft/liquidbounce+/sound/disable.wav")
+            FileUtils.unpackFile(disableSoundFile, "assets/minecraft/nightx/sound/disable.wav")
 
         enableSound = TipSoundPlayer(enableSoundFile)
         disableSound = TipSoundPlayer(disableSoundFile)

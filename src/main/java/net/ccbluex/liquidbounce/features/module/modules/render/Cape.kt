@@ -51,25 +51,25 @@ class Cape : Module() {
     }
 
     enum class CapeStyle(val location: ResourceLocation) {
-        NONE(ResourceLocation("liquidbounce+/cape/dark.png")),
-        NEWNIGHTX(ResourceLocation("liquidbounce+/cape/newnightx.png")),
-        OLDNIGHTX(ResourceLocation("liquidbounce+/cape/oldnightx.png")),
-        INFINITY(ResourceLocation("liquidbounce+/cape/darker.png")),
-        AS(ResourceLocation("liquidbounce+/cape/light.png")),
-        DEFOKO1(ResourceLocation("liquidbounce+/cape/special1.png")),
-        DEFOKO2(ResourceLocation("liquidbounce+/cape/special2.png")),
-        DEFOKO3(ResourceLocation("liquidbounce+/cape/special3.png")),
-        DEFOKO4(ResourceLocation("liquidbounce+/cape/special4.png")),
-        ASTOLFO(ResourceLocation("liquidbounce+/cape/astolfo.png")),
-        EXHIBITION(ResourceLocation("liquidbounce+/cape/exhibition.png")),
-        NUTA(ResourceLocation("liquidbounce+/cape/nuta.png")),
-        MOON(ResourceLocation("liquidbounce+/cape/moon.png")),
-        RISE(ResourceLocation("liquidbounce+/cape/rise.png")),
-        TENACITY(ResourceLocation("liquidbounce+/cape/tenacity.png")),
-        FDP(ResourceLocation("liquidbounce+/cape/fdp.png")),
-        LUNAR(ResourceLocation("liquidbounce+/cape/lunar.png")),
-        MIGRATION(ResourceLocation("liquidbounce+/cape/migration.png")),
-        VANILLA(ResourceLocation("liquidbounce+/cape/vanilla.png"))
+        NONE(ResourceLocation("nightx/cape/dark.png")),
+        NEWNIGHTX(ResourceLocation("nightx/cape/newnightx.png")),
+        OLDNIGHTX(ResourceLocation("nightx/cape/oldnightx.png")),
+        INFINITY(ResourceLocation("nightx/cape/darker.png")),
+        AS(ResourceLocation("nightx/cape/light.png")),
+        DEFOKO1(ResourceLocation("nightx/cape/special1.png")),
+        DEFOKO2(ResourceLocation("nightx/cape/special2.png")),
+        DEFOKO3(ResourceLocation("nightx/cape/special3.png")),
+        DEFOKO4(ResourceLocation("nightx/cape/special4.png")),
+        ASTOLFO(ResourceLocation("nightx/cape/astolfo.png")),
+        EXHIBITION(ResourceLocation("nightx/cape/exhibition.png")),
+        NUTA(ResourceLocation("nightx/cape/nuta.png")),
+        MOON(ResourceLocation("nightx/cape/moon.png")),
+        RISE(ResourceLocation("nightx/cape/rise.png")),
+        TENACITY(ResourceLocation("nightx/cape/tenacity.png")),
+        FDP(ResourceLocation("nightx/cape/fdp.png")),
+        LUNAR(ResourceLocation("nightx/cape/lunar.png")),
+        MIGRATION(ResourceLocation("nightx/cape/migration.png")),
+        VANILLA(ResourceLocation("nightx/cape/vanilla.png"))
     }
 
     override val tag: String

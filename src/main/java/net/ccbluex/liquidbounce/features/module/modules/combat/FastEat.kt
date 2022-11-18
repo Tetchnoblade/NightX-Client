@@ -115,7 +115,4 @@ class FastEat : Module() {
             usedTimer = false
         }
     }
-
-    override val tag: String
-        get() = modeValue.get()
 }

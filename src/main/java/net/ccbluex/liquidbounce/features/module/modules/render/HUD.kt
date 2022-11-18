@@ -28,7 +28,7 @@ class HUD : Module() {
     private val toggleVolumeValue =
         IntegerValue("ToggleVolume", 94, 0, 100, { toggleSoundValue.get().equals("custom", true) })
     val guiButtonStyle =
-        ListValue("Button-Style", arrayOf("Minecraft", "LiquidBounce", "Rounded", "LiquidBounce+"), "Minecraft")
+        ListValue("Button-Style", arrayOf("Minecraft", "LiquidBounce", "Rounded", "LiquidBounce+", "Test"), "Minecraft")
 
     val containerBackground = BoolValue("Container-Background", true)
     val containerButton = ListValue("Container-Button", arrayOf("TopLeft", "TopRight", "Off"), "Off")

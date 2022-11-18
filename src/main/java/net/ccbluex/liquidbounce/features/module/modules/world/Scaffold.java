@@ -36,6 +36,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.network.play.client.C0APacketAnimation;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
+import net.minecraft.potion.Potion;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
@@ -51,7 +52,7 @@ public class Scaffold extends Module {
     // Global settings
     private final BoolValue towerEnabled = new BoolValue("EnableTower", true);
     private final ListValue towerModeValue = new ListValue("TowerMode", new String[]{
-            "Jump", "Motion", "StableMotion", "ConstantMotion", "MotionTP", "Packet", "Teleport", "AAC3.3.9", "AAC3.6.4", "Verus"
+            "Jump", "Motion", "StableMotion", "ConstantMotion", "MotionTP", "Packet", "Teleport", "AAC3.3.9", "AAC3.6.4", "Matrix", "Verus"
     }, "ConstantMotion", () -> towerEnabled.get());
     private final ListValue towerPlaceModeValue = new ListValue("Tower-PlaceTiming", new String[]{"Pre", "Post"}, "Post");
     private final BoolValue stopWhenBlockAbove = new BoolValue("StopWhenBlockAbove", true, () -> towerEnabled.get());
@@ -196,7 +197,7 @@ public class Scaffold extends Module {
     private final BoolValue safeWalkValue = new BoolValue("SafeWalk", false);
     private final BoolValue airSafeValue = new BoolValue("AirSafe", false, () -> safeWalkValue.get());
     private final BoolValue autoDisableSpeedValue = new BoolValue("AutoDisable-Speed", false);
-
+    private final BoolValue noSpeedPotValue = new BoolValue("NoSpeedPot", false);
     // Visuals
     public final ListValue counterDisplayValue = new ListValue("Counter", new String[]{"Off", "NightX", "Exhibition", "Advanced", "Sigma", "Novoline"}, "NightX");
 
@@ -204,7 +205,7 @@ public class Scaffold extends Module {
     private final IntegerValue redValue = new IntegerValue("Red", 255, 0, 255, () -> markValue.get());
     private final IntegerValue greenValue = new IntegerValue("Green", 255, 0, 255, () -> markValue.get());
     private final IntegerValue blueValue = new IntegerValue("Blue", 255, 0, 255, () -> markValue.get());
-    private final IntegerValue alphaValue = new IntegerValue("Alpha", 40, 0, 255, () -> markValue.get());
+    private final IntegerValue alphaValue = new IntegerValue("Alpha", 120, 0, 255, () -> markValue.get());
 
     private final BoolValue blurValue = new BoolValue("Blur-Advanced", false, () -> counterDisplayValue.get().equalsIgnoreCase("advanced"));
     private final FloatValue blurStrength = new FloatValue("Blur-Strength", 1F, 0F, 30F, "x", () -> counterDisplayValue.get().equalsIgnoreCase("advanced"));
@@ -376,7 +377,17 @@ public class Scaffold extends Module {
                     mc.thePlayer.setPosition(mc.thePlayer.posX + 0.035, mc.thePlayer.posY, mc.thePlayer.posZ);
                 }
                 break;
-            case "verus": // thanks ratted client
+            case "matrix":
+                if (mc.thePlayer.onGround) {
+                    fakeJump();
+                    mc.thePlayer.motionY = 0.42;
+                } else if (mc.thePlayer.motionY < 0.19145141919180) {
+                    mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ);
+                    mc.thePlayer.onGround = true;
+                    mc.thePlayer.motionY = 0.481145141919180;
+                }
+                break;
+            case "verus":
                 if (!mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0, -0.01, 0)).isEmpty() && mc.thePlayer.onGround && mc.thePlayer.isCollidedVertically) {
                     verusState = 0;
                     verusJumped = true;
@@ -672,6 +683,16 @@ public class Scaffold extends Module {
 
     @EventTarget
     public void onMotion(final MotionEvent event) {
+        // No SpeedPot
+        if (noSpeedPotValue.get()) {
+            if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                mc.thePlayer.motionX = mc.thePlayer.motionX * 0.8F;
+                mc.thePlayer.motionZ = mc.thePlayer.motionZ * 0.8F;
+                mc.thePlayer.motionX = mc.thePlayer.motionX * 0.85F;
+                mc.thePlayer.motionZ = mc.thePlayer.motionZ * 0.85F;
+            }
+        }
+
         // XZReducer
         mc.thePlayer.motionX *= xzMultiplier.get();
         mc.thePlayer.motionZ *= xzMultiplier.get();

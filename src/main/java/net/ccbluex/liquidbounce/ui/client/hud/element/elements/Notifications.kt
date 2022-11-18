@@ -104,7 +104,7 @@ class Notifications(
 }
 
 class Notification(message: String, type: Type, displayLength: Long) {
-    private val notifyDir = "liquidbounce+/notification/"
+    private val notifyDir = "nightx/notification/"
 
     private val imgSuccess = ResourceLocation("${notifyDir}checkmark.png")
     private val imgError = ResourceLocation("${notifyDir}error.png")

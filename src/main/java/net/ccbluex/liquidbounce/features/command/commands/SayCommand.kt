@@ -3,7 +3,7 @@ package net.ccbluex.liquidbounce.features.command.commands
 import net.ccbluex.liquidbounce.features.command.Command
 import net.ccbluex.liquidbounce.utils.misc.StringUtils
 
-class SayCommand : Command(".", emptyArray()) {
+class SayCommand : Command("say", emptyArray()) {
     /**
      * Execute commands with provided [args]
      */
@@ -12,6 +12,6 @@ class SayCommand : Command(".", emptyArray()) {
             mc.thePlayer.sendChatMessage(StringUtils.toCompleteString(args, 1))
             return
         }
-        chatSyntax(". <message...>")
+        chatSyntax("say <message...>")
     }
 }

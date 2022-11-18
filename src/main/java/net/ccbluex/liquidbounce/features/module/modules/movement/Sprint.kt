@@ -20,7 +20,6 @@ import net.minecraft.potion.Potion
 class Sprint : Module() {
 
     val allDirectionsValue = BoolValue("AllDirections", true)
-    val noPacketPatchValue = BoolValue("AllDirections-NoPacketsPatch", false, { allDirectionsValue.get() })
     val moveDirPatchValue = BoolValue("AllDirections-MoveDirPatch", true, { allDirectionsValue.get() })
     val jumpDirPatchValue =
         BoolValue("MoveDirPatch-JumpOnly", true, { allDirectionsValue.get() && moveDirPatchValue.get() })
@@ -29,13 +28,14 @@ class Sprint : Module() {
 
     val checkServerSide = BoolValue("CheckServerSide", false)
     val checkServerSideGround = BoolValue("CheckServerSideOnlyGround", false)
+    val noPacketPatchValue = BoolValue("Silent", false)
 
     private var modified = false
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
-        if (allDirectionsValue.get() && noPacketPatchValue.get()) {
+        if (noPacketPatchValue.get()) {
             if (packet is C0BPacketEntityAction && (packet.action == C0BPacketEntityAction.Action.STOP_SPRINTING || packet.action == C0BPacketEntityAction.Action.START_SPRINTING)) {
                 event.cancelEvent()
             }

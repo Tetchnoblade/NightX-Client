@@ -22,7 +22,7 @@ abstract class TargetStyle(val name: String, val targetInstance: Target, val sha
     MinecraftInstance() {
 
     var easingHealth = 0F
-    val shieldIcon = ResourceLocation("liquidbounce+/shield.png")
+    val shieldIcon = ResourceLocation("nightx/shield.png")
 
     val decimalFormat = DecimalFormat("##0.00", DecimalFormatSymbols(Locale.ENGLISH))
     val decimalFormat2 = DecimalFormat("##0.0", DecimalFormatSymbols(Locale.ENGLISH))

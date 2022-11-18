@@ -189,7 +189,7 @@ public class FileManager extends MinecraftInstance {
                 if (bufferedImage == null)
                     return;
 
-                LiquidBounce.INSTANCE.setBackground(new ResourceLocation("liquidbounce+/background.png"));
+                LiquidBounce.INSTANCE.setBackground(new ResourceLocation("nightx/background.png"));
                 mc.getTextureManager().loadTexture(LiquidBounce.INSTANCE.getBackground(), new DynamicTexture(bufferedImage));
                 ClientUtils.getLogger().info("[FileManager] Loaded background.");
             } catch (final Exception e) {
