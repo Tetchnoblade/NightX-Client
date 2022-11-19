@@ -19,7 +19,6 @@ import net.ccbluex.liquidbounce.value.ListValue;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockSlime;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
@@ -424,7 +423,7 @@ public class Flight extends Module {
 
     @Override
     public void onDisable() {
-        MovementUtils.strafe(0.3f);
+        MovementUtils.strafe(0.2f);
         wasDead = false;
 
         if (mc.thePlayer == null)

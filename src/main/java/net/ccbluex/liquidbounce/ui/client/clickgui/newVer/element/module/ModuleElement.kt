@@ -91,7 +91,7 @@ class ModuleElement(val module: Module) : MinecraftInstance() {
         RenderUtils.newDrawRect(x + 10F, y + height - 5F, x + width - 10F, y + height - 4.5F, 4281348144L.toInt())
         Fonts.fontSFUI40.drawString(module.name, x + 20F, y + height / 2F - Fonts.fontSFUI40.FONT_HEIGHT + 3F, -1)
 
-        val keyName = if (listeningToKey) "Listening" else Keyboard.getKeyName(module.keyBind)
+        val keyName = if (listeningToKey) "Press key (esc to none)" else Keyboard.getKeyName(module.keyBind)
 
         if (MouseUtils.mouseWithinBounds(
                 mouseX, mouseY,
@@ -175,7 +175,7 @@ class ModuleElement(val module: Module) : MinecraftInstance() {
             resetState()
             return
         }
-        val keyName = if (listeningToKey) "Press key" else Keyboard.getKeyName(module.keyBind)
+        val keyName = if (listeningToKey) "Press key (esc to none)" else Keyboard.getKeyName(module.keyBind)
         if (MouseUtils.mouseWithinBounds(
                 mouseX, mouseY,
                 x + 25F + Fonts.fontSFUI40.getStringWidth(module.name),

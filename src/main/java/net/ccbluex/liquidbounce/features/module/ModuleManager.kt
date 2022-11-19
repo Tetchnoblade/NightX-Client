@@ -4,7 +4,9 @@ import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.event.EventTarget
 import net.ccbluex.liquidbounce.event.KeyEvent
 import net.ccbluex.liquidbounce.event.Listenable
-import net.ccbluex.liquidbounce.features.module.modules.client.*
+import net.ccbluex.liquidbounce.features.module.modules.client.Gui
+import net.ccbluex.liquidbounce.features.module.modules.client.HudEditor
+import net.ccbluex.liquidbounce.features.module.modules.client.PluginsChecker
 import net.ccbluex.liquidbounce.features.module.modules.combat.*
 import net.ccbluex.liquidbounce.features.module.modules.cool.*
 import net.ccbluex.liquidbounce.features.module.modules.exploit.*
@@ -12,6 +14,10 @@ import net.ccbluex.liquidbounce.features.module.modules.misc.*
 import net.ccbluex.liquidbounce.features.module.modules.movement.*
 import net.ccbluex.liquidbounce.features.module.modules.player.*
 import net.ccbluex.liquidbounce.features.module.modules.render.*
+import net.ccbluex.liquidbounce.features.module.modules.targets.TargetAnimals
+import net.ccbluex.liquidbounce.features.module.modules.targets.TargetInvisible
+import net.ccbluex.liquidbounce.features.module.modules.targets.TargetMobs
+import net.ccbluex.liquidbounce.features.module.modules.targets.TargetPlayers
 import net.ccbluex.liquidbounce.features.module.modules.world.*
 import net.ccbluex.liquidbounce.features.module.modules.world.Timer
 import net.ccbluex.liquidbounce.utils.ClientUtils
@@ -194,7 +200,13 @@ class ModuleManager : Listenable {
             PlayerEdit::class.java,
             NoClickDelay::class.java,
             PacketFlight::class.java,
-            LagBack::class.java
+            LagBack::class.java,
+            TickTimer::class.java,
+            TargetAnimals::class.java,
+            TargetInvisible::class.java,
+            TargetMobs::class.java,
+            TargetPlayers::class.java,
+            ItemPhysics::class.java
         )
 
         registerModule(Fucker)

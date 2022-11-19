@@ -14,10 +14,10 @@ import net.ccbluex.liquidbounce.value.ListValue
 class SilentView : Module() {
 
     var mode = ListValue("Mode", arrayOf("Normal", "CSGO"),"Normal")
-    var R = FloatValue("R", 154f, 0f, 255f)
-    var G = FloatValue("G", 114f, 0f, 255f)
-    var B = FloatValue("B", 175f, 0f, 255f)
-    var Alpha = FloatValue("Alpha", 50f, 0f, 255f)
+    var R = FloatValue("R", 255f, 0f, 255f, { mode.get().equals("csgo", true) })
+    var G = FloatValue("G", 255f, 0f, 255f, { mode.get().equals("csgo", true) })
+    var B = FloatValue("B", 0f, 0f, 255f, { mode.get().equals("csgo", true) })
+    var Alpha = FloatValue("Alpha", 60f, 0f, 255f, { mode.get().equals("csgo", true) })
 
     override val tag: String
         get() = mode.get()

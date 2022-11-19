@@ -3,7 +3,6 @@ package net.ccbluex.liquidbounce.ui.client.clickgui.newVer;
 import net.ccbluex.liquidbounce.features.module.ModuleCategory;
 import net.ccbluex.liquidbounce.features.module.modules.client.Gui;
 import net.ccbluex.liquidbounce.ui.client.clickgui.newVer.element.CategoryElement;
-import net.ccbluex.liquidbounce.ui.client.clickgui.newVer.element.SearchElement;
 import net.ccbluex.liquidbounce.ui.client.clickgui.newVer.element.module.ModuleElement;
 import net.ccbluex.liquidbounce.utils.AnimationUtils;
 import net.ccbluex.liquidbounce.utils.MouseUtils;
@@ -29,7 +28,6 @@ public class NewUi extends GuiScreen {
     public final List<CategoryElement> categoryElements = new ArrayList<>();
     private float startYAnim = height / 2F;
     private float endYAnim = height / 2F;
-    private SearchElement searchElement;
     private float fading = 0F;
     public int scroll = 0;
 
@@ -55,7 +53,6 @@ public class NewUi extends GuiScreen {
                     me.resetState();
             }
         }
-        searchElement = new SearchElement(40F, 115F, 180F, 20F);
         super.initGui();
     }
 
@@ -68,18 +65,16 @@ public class NewUi extends GuiScreen {
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        // will draw reduced ver once it gets under 1140x780.
         drawFullSized(mouseX, mouseY, partialTicks, Gui.getAccentColor());
     }
 
     private void drawFullSized(int mouseX, int mouseY, float partialTicks, Color accentColor) {
         RenderUtils.originalRoundedRect(30F, 30F, this.width - 30F, this.height - 30F, 8F, 0xFF101010);
-        // something to make it look more like windoze
         if (MouseUtils.mouseWithinBounds(mouseX, mouseY, this.width - 54F, 30F, this.width - 30F, 50F))
             fading += 0.2F * RenderUtils.deltaTime * 0.045F;
         else
             fading -= 0.2F * RenderUtils.deltaTime * 0.045F;
-        fading = MathHelper.clamp_float(fading, 0F, 1F);
+        fading = MathHelper.clamp_float(fading, 0F, 2F);
         GlStateManager.disableAlpha();
         RenderUtils.drawImage(IconManager.removeIcon, this.width - 47, 35, 10, 10);
         GlStateManager.enableAlpha();
@@ -100,13 +95,8 @@ public class NewUi extends GuiScreen {
         }
         Stencil.dispose();
 
-        if (searchElement.drawBox(mouseX, mouseY, accentColor)) {
-            searchElement.drawPanel(mouseX, mouseY, 230, 50, width - 260, height - 80, Mouse.getDWheel(), categoryElements, accentColor);
-            return;
-        }
-
         final float elementHeight = 24;
-        float startY = 140F;
+        float startY = 60F;
         scroll = Mouse.getDWheel();
         for (CategoryElement ce : categoryElements) {
             ce.drawLabel(mouseX, mouseY, 30F, startY, 200F, elementHeight);
@@ -114,8 +104,8 @@ public class NewUi extends GuiScreen {
                 startYAnim = Gui.fastRenderValue.get() ? startY + 6F : AnimationUtils.animate(startY + 6F, startYAnim, (startYAnim - (startY + 5F) > 0 ? 0.65F : 0.55F) * RenderUtils.deltaTime * 0.025F);
                 endYAnim = Gui.fastRenderValue.get() ? startY + elementHeight - 6F : AnimationUtils.animate(startY + elementHeight - 6F, endYAnim, (endYAnim - (startY + elementHeight - 5F) < 0 ? 0.65F : 0.55F) * RenderUtils.deltaTime * 0.025F);
 
-                ce.drawPanel(mouseX, mouseY, 230, 50, width - 260, height - 80, Mouse.getDWheel(), accentColor);
-                ce.drawPanel(mouseX, mouseY, 230, 50, width - 260, height - 80, scroll, accentColor);
+                ce.drawPanel(mouseX, mouseY, 230, 0, width - 260, height - 40, Mouse.getDWheel(), accentColor);
+                ce.drawPanel(mouseX, mouseY, 230, 0, width - 260, height - 40, scroll, accentColor);
             }
             startY += elementHeight;
         }
@@ -129,12 +119,11 @@ public class NewUi extends GuiScreen {
             return;
         }
         final float elementHeight = 24;
-        float startY = 140F;
-        searchElement.handleMouseClick(mouseX, mouseY, mouseButton, 230, 50, width - 260, height - 80, categoryElements);
-        if (!searchElement.isTyping()) for (CategoryElement ce : categoryElements) {
+        float startY = 60F;
+        for (CategoryElement ce : categoryElements) {
             if (ce.getFocused())
-                ce.handleMouseClick(mouseX, mouseY, mouseButton, 230, 50, width - 260, height - 80);
-            if (MouseUtils.mouseWithinBounds(mouseX, mouseY, 30F, startY, 230F, startY + elementHeight) && !searchElement.isTyping()) {
+                ce.handleMouseClick(mouseX, mouseY, mouseButton, 230, 0, width - 260, height - 40);
+            if (MouseUtils.mouseWithinBounds(mouseX, mouseY, 30F, startY, 230F, startY + elementHeight)) {
                 categoryElements.forEach(e -> e.setFocused(false));
                 ce.setFocused(true);
                 return;
@@ -156,14 +145,10 @@ public class NewUi extends GuiScreen {
                     return;
             }
         }
-        if (searchElement.handleTyping(typedChar, keyCode, 230, 50, width - 260, height - 80, categoryElements))
-            return;
         super.keyTyped(typedChar, keyCode);
     }
 
     protected void mouseReleased(int mouseX, int mouseY, int state) {
-        searchElement.handleMouseRelease(mouseX, mouseY, state, 230, 50, width - 260, height - 80, categoryElements);
-        if (!searchElement.isTyping())
             for (CategoryElement ce : categoryElements) {
                 if (ce.getFocused())
                     ce.handleMouseRelease(mouseX, mouseY, state, 230, 50, width - 260, height - 80);
@@ -175,5 +160,4 @@ public class NewUi extends GuiScreen {
     public boolean doesGuiPauseGame() {
         return false;
     }
-
 }

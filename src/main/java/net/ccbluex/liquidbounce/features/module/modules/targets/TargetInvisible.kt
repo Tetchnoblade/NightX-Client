@@ -1,20 +1,20 @@
-package net.ccbluex.liquidbounce.features.module.modules.client
+package net.ccbluex.liquidbounce.features.module.modules.targets
 
 import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.utils.EntityUtils
 
-@ModuleInfo(name = "TargetAnimals", category = ModuleCategory.CLIENT, array = false)
-class TargetAnimals : Module() {
+@ModuleInfo(name = "TargetInvisible", category = ModuleCategory.TARGETS, array = false)
+class TargetInvisible : Module() {
     override fun onEnable() {
         super.onEnable()
-        EntityUtils.targetAnimals = true
+        EntityUtils.targetInvisible = true
     }
 
     override fun onDisable() {
         super.onDisable()
-        EntityUtils.targetAnimals = false
+        EntityUtils.targetInvisible = false
     }
 
     init {
