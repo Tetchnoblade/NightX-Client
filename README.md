@@ -9,3 +9,5 @@ and please subscribe to my youtube channel
 
 If you need configs try access this site!
 https://sites.google.com/view/nightx-client
+
+[Made in Japan]

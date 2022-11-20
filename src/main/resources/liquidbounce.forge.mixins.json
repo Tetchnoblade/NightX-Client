@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "net.ccbluex.liquidbounce.injection.forge.mixins",
+  "package": "net.aspw.nightx.injection.forge.mixins",
   "refmap": "liquidbounce.mixins.refmap.json",
   "compatibilityLevel": "JAVA_8",
   "minVersion": "0.7.11",
