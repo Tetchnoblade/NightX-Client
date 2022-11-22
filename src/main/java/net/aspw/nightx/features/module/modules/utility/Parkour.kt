@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement
+package net.aspw.nightx.features.module.modules.utility
 
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.UpdateEvent
@@ -7,7 +7,7 @@ import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.utils.MovementUtils
 
-@ModuleInfo(name = "Parkour", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Parkour", category = ModuleCategory.UTILITY)
 class Parkour : Module() {
 
     @EventTarget

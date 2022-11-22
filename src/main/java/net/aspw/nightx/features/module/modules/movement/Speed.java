@@ -252,10 +252,6 @@ public class Speed extends Module {
         if (mc.thePlayer == null)
             return;
 
-        if (bypassWarning.get() && typeValue.get().equalsIgnoreCase("watchdog") && !NightX.moduleManager.getModule(Disabler.class).getState()) {
-            NightX.hud.addNotification(new Notification("Turn on Disabler module to not getting banned!", Notification.Type.WARNING, 3000L));
-        }
-
         mc.timer.timerSpeed = 1F;
 
         final SpeedMode speedMode = getMode();
@@ -266,9 +262,6 @@ public class Speed extends Module {
 
     @Override
     public void onDisable() {
-        if (!mc.thePlayer.isSneaking())
-            MovementUtils.strafe(0.2f);
-
         if (mc.thePlayer == null)
             return;
 
@@ -449,8 +442,6 @@ public class Speed extends Module {
     public final FloatValue baseStrengthValue = new FloatValue("BaseMultiplier", 1F, 0.5F, 1F, () -> (typeValue.get().equalsIgnoreCase("watchdog") && !getModeName().equalsIgnoreCase("watchdogcustom")));
     public final FloatValue baseTimerValue = new FloatValue("BaseTimer", 1.5F, 1F, 3F, () -> getModeName().equalsIgnoreCase("watchdogboost"));
     public final FloatValue baseMTimerValue = new FloatValue("BaseMultiplierTimer", 1F, 0F, 3F, () -> getModeName().equalsIgnoreCase("watchdogboost"));
-    public final BoolValue bypassWarning = new BoolValue("BypassWarning", false, () -> (typeValue.get().equalsIgnoreCase("watchdog") && !getModeName().equalsIgnoreCase("watchdogcustom")));
-
     public final FloatValue portMax = new FloatValue("AAC-PortLength", 1, 1, 20, () -> typeValue.get().equalsIgnoreCase("aac"));
     public final FloatValue aacGroundTimerValue = new FloatValue("AACGround-Timer", 3F, 1.1F, 10F, () -> typeValue.get().equalsIgnoreCase("aac"));
 

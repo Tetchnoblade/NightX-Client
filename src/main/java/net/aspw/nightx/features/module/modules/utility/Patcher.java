@@ -1,11 +1,11 @@
-package net.aspw.nightx.features.module.modules.misc;
+package net.aspw.nightx.features.module.modules.utility;
 
 import net.aspw.nightx.features.module.Module;
 import net.aspw.nightx.features.module.ModuleCategory;
 import net.aspw.nightx.features.module.ModuleInfo;
 import net.aspw.nightx.value.BoolValue;
 
-@ModuleInfo(name = "Patcher", category = ModuleCategory.MISC, canEnable = false)
+@ModuleInfo(name = "Patcher", category = ModuleCategory.UTILITY, canEnable = false)
 public class Patcher extends Module {
 
     public static final BoolValue noHitDelay = new BoolValue("NoHitDelay", true);

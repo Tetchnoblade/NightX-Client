@@ -8,7 +8,7 @@ import net.aspw.nightx.features.module.modules.combat.AutoClicker;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
 import net.aspw.nightx.features.module.modules.exploit.KeepBreaking;
 import net.aspw.nightx.features.module.modules.misc.Annoy;
-import net.aspw.nightx.features.module.modules.misc.Patcher;
+import net.aspw.nightx.features.module.modules.utility.Patcher;
 import net.aspw.nightx.features.module.modules.render.SilentView;
 import net.aspw.nightx.features.module.modules.world.FastPlace;
 import net.aspw.nightx.features.module.modules.world.Scaffold;

@@ -4,7 +4,7 @@ import io.netty.buffer.Unpooled;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.EntityDamageEvent;
 import net.aspw.nightx.event.EntityMovementEvent;
-import net.aspw.nightx.features.module.modules.misc.Patcher;
+import net.aspw.nightx.features.module.modules.utility.Patcher;
 import net.aspw.nightx.features.special.AntiForge;
 import net.aspw.nightx.ui.client.hud.designer.GuiHudDesigner;
 import net.minecraft.client.ClientBrandRetriever;

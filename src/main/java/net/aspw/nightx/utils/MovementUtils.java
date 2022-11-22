@@ -2,7 +2,7 @@ package net.aspw.nightx.utils;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.MoveEvent;
-import net.aspw.nightx.features.module.modules.movement.TargetStrafe;
+import net.aspw.nightx.features.module.modules.player.TargetStrafe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockIce;
 import net.minecraft.block.BlockPackedIce;

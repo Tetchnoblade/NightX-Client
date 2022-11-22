@@ -2,6 +2,7 @@ package net.aspw.nightx.injection.forge.mixins.render;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
+import net.aspw.nightx.features.module.modules.render.Animations;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -15,6 +16,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -47,10 +49,11 @@ public class MixinLayerHeldItem {
                 GlStateManager.scale(f, f, f);
             }
 
+            Item item = itemstack.getItem();
             final UUID uuid = entitylivingbaseIn.getUniqueID();
             final EntityPlayer entityplayer = Minecraft.getMinecraft().theWorld.getPlayerEntityByUUID(uuid);
 
-            if (entityplayer != null && entityplayer.isBlocking() || killAura.getTarget() != null) {
+            if (entityplayer != null && entityplayer.isBlocking() || killAura.getTarget() != null && Animations.fakeBlock.get() && item instanceof ItemSword) {
                 if (entitylivingbaseIn.isSneaking()) {
                     ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0325F);
                     GlStateManager.translate(-0.58F, 0.3F, -0.2F);
@@ -70,7 +73,6 @@ public class MixinLayerHeldItem {
                 itemstack = new ItemStack(Items.fishing_rod, 0);
             }
 
-            Item item = itemstack.getItem();
             Minecraft minecraft = Minecraft.getMinecraft();
 
             if (item instanceof ItemBlock && Block.getBlockFromItem(item).getRenderType() == 2) {

@@ -17,12 +17,10 @@ public class TeleportCubeCraft extends SpeedMode {
 
     @Override
     public void onMotion() {
-
     }
 
     @Override
     public void onUpdate() {
-
     }
 
     @Override

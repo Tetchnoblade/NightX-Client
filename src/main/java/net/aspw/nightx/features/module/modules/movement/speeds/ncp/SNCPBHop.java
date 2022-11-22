@@ -33,6 +33,9 @@ public class SNCPBHop extends SpeedMode {
         mc.timer.timerSpeed = 1F;
         moveSpeed = getBaseMoveSpeed();
         level = 0;
+
+        if (!mc.thePlayer.isSneaking())
+            MovementUtils.strafe(0.3f);
     }
 
     @Override

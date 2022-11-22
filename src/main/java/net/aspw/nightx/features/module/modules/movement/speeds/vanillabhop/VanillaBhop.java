@@ -16,7 +16,11 @@ public class VanillaBhop extends SpeedMode {
 
     @Override
     public void onMotion(MotionEvent eventMotion) {
-        MovementUtils.strafe(1);
+        MovementUtils.strafe(0.3f);
+
+        if (MovementUtils.isMoving()) {
+            MovementUtils.strafe(1);
+        }
         final Speed speed = NightX.moduleManager.getModule(Speed.class);
 
         if (speed == null || eventMotion.getEventState() != EventState.PRE)
@@ -33,6 +37,12 @@ public class VanillaBhop extends SpeedMode {
             if (mc.thePlayer.onGround)
                 mc.thePlayer.jump();
         }
+    }
+
+    @Override
+    public void onDisable() {
+        if (!mc.thePlayer.isSneaking())
+            MovementUtils.strafe(0.3f);
     }
 
     @Override

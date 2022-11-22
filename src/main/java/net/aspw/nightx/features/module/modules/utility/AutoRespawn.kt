@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.player
+package net.aspw.nightx.features.module.modules.utility
 
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.UpdateEvent
@@ -8,8 +8,8 @@ import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.value.BoolValue
 import net.minecraft.client.gui.GuiGameOver
 
-@ModuleInfo(name = "Respawn", category = ModuleCategory.PLAYER)
-class Respawn : Module() {
+@ModuleInfo(name = "AutoRespawn", category = ModuleCategory.UTILITY)
+class AutoRespawn : Module() {
 
     private val instantValue = BoolValue("Instant", true)
 

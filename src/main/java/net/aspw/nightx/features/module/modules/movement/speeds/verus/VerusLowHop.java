@@ -19,6 +19,12 @@ public class VerusLowHop extends SpeedMode {
     }
 
     @Override
+    public void onDisable() {
+        if (!mc.thePlayer.isSneaking())
+            MovementUtils.strafe(0.3f);
+    }
+
+    @Override
     public void onMove(MoveEvent event) {
         if (!mc.thePlayer.isInWeb && !mc.thePlayer.isInLava() && !mc.thePlayer.isInWater() && !mc.thePlayer.isOnLadder() && mc.thePlayer.ridingEntity == null) {
             if (MovementUtils.isMoving()) {

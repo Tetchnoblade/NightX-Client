@@ -18,6 +18,7 @@ import net.aspw.nightx.features.module.modules.targets.TargetAnimals
 import net.aspw.nightx.features.module.modules.targets.TargetInvisible
 import net.aspw.nightx.features.module.modules.targets.TargetMobs
 import net.aspw.nightx.features.module.modules.targets.TargetPlayers
+import net.aspw.nightx.features.module.modules.utility.*
 import net.aspw.nightx.features.module.modules.world.*
 import net.aspw.nightx.features.module.modules.world.Timer
 import net.aspw.nightx.utils.ClientUtils
@@ -79,7 +80,7 @@ class ModuleManager : Listenable {
             ChestESP::class.java,
             Bypass::class.java,
             Step::class.java,
-            Respawn::class.java,
+            AutoRespawn::class.java,
             AutoTool::class.java,
             NoWeb::class.java,
             NoBob::class.java,
@@ -169,7 +170,7 @@ class ModuleManager : Listenable {
             IceSpeed::class.java,
             HorseJump::class.java,
             LiquidInteract::class.java,
-            AutoBreak::class.java,
+            AutoMine::class.java,
             CivBreak::class.java,
             Nuker::class.java,
             SuperheroFX::class.java,
@@ -207,7 +208,8 @@ class ModuleManager : Listenable {
             TargetMobs::class.java,
             TargetPlayers::class.java,
             ItemPhysics::class.java,
-            FlagNotifier::class.java
+            FlagNotifier::class.java,
+            AutoJump::class.java
         )
 
         registerModule(Fucker)

@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.player
+package net.aspw.nightx.features.module.modules.utility
 
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.UpdateEvent
@@ -15,7 +15,7 @@ import net.minecraft.client.settings.GameSettings
 import net.minecraft.client.settings.KeyBinding
 import java.util.*
 
-@ModuleInfo(name = "AntiAFK", spacedName = "Anti AFK", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "AntiAFK", spacedName = "Anti AFK", category = ModuleCategory.UTILITY)
 class AntiAFK : Module() {
 
     private val swingDelayTimer = MSTimer()

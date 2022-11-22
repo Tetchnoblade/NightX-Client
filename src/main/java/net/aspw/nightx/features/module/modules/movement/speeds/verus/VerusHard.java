@@ -16,6 +16,9 @@ public class VerusHard extends SpeedMode {
     public void onDisable() {
         mc.timer.timerSpeed = 1F;
         super.onDisable();
+
+        if (!mc.thePlayer.isSneaking())
+            MovementUtils.strafe(0.3f);
     }
 
     @Override

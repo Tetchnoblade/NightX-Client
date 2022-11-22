@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.misc;
+package net.aspw.nightx.features.module.modules.utility;
 
 import net.aspw.nightx.event.EventTarget;
 import net.aspw.nightx.event.UpdateEvent;
@@ -14,7 +14,7 @@ import net.aspw.nightx.value.TextValue;
 
 import java.util.Random;
 
-@ModuleInfo(name = "Spammer", category = ModuleCategory.MISC)
+@ModuleInfo(name = "Spammer", category = ModuleCategory.UTILITY)
 public class Spammer extends Module {
 
     private final TextValue messageValue = new TextValue("Message", "D.o.w.n.l.o.a.d. .N.i.g.h.t.X. .C.l.i.e.n.t.");

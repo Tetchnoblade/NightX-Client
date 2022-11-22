@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement
+package net.aspw.nightx.features.module.modules.player
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.EventState
@@ -9,6 +9,8 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.combat.KillAura
+import net.aspw.nightx.features.module.modules.movement.Flight
+import net.aspw.nightx.features.module.modules.movement.Speed
 import net.aspw.nightx.utils.MovementUtils
 import net.aspw.nightx.utils.RotationUtils
 import net.aspw.nightx.value.BoolValue
@@ -18,7 +20,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.AxisAlignedBB
 
-@ModuleInfo(name = "TargetStrafe", spacedName = "Target Strafe", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "TargetStrafe", spacedName = "Target Strafe", category = ModuleCategory.PLAYER)
 class TargetStrafe : Module() {
     val radius = FloatValue("Radius", 1.5f, 0.1f, 4.0f, "m")
     private val modeValue = ListValue("KeyMode", arrayOf("Jump", "None"), "Jump")
@@ -26,6 +28,8 @@ class TargetStrafe : Module() {
     val thirdPerson = BoolValue("ThirdPerson", false)
     private val expMode = BoolValue("LimitSpeed", false)
     private lateinit var killAura: KillAura
+    private lateinit var speed: Speed
+    private lateinit var flight: Flight
 
     var direction = 1
     var lastView = 0
@@ -35,6 +39,8 @@ class TargetStrafe : Module() {
 
     override fun onInitialize() {
         killAura = NightX.moduleManager.getModule(KillAura::class.java) as KillAura
+        speed = NightX.moduleManager.getModule(Speed::class.java) as Speed
+        flight = NightX.moduleManager.getModule(Flight::class.java) as Flight
     }
 
     override fun onEnable() {
@@ -127,7 +133,7 @@ class TargetStrafe : Module() {
         }
 
     val canStrafe: Boolean
-        get() = (state && killAura.state && killAura.target != null && !mc.thePlayer.isSneaking && keyMode)
+        get() = (state && (speed.state || flight.state) && killAura.state && killAura.target != null && !mc.thePlayer.isSneaking && keyMode)
 
     private fun checkVoid(): Boolean {
         for (x in -1..0) {

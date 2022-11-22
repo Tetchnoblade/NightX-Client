@@ -426,7 +426,7 @@ public class Flight extends Module {
 
     @Override
     public void onDisable() {
-        MovementUtils.strafe(0.2f);
+        MovementUtils.strafe(0.3f);
         wasDead = false;
 
         if (mc.thePlayer == null)

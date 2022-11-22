@@ -56,6 +56,11 @@ class BlocksMC : SpeedMode("BlocksMC") {
         }
     }
 
+    override fun onDisable() {
+        if (!mc.thePlayer.isSneaking)
+            strafe(0.3f)
+    }
+
     override fun onMove(event: MoveEvent) {
         val thePlayer = mc.thePlayer ?: return
         val speedModule = NightX.moduleManager.getModule(Speed::class.java)!!

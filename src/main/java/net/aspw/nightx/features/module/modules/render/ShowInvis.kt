@@ -7,6 +7,6 @@ import net.aspw.nightx.value.BoolValue
 
 @ModuleInfo(name = "ShowInvis", spacedName = "Show Invis", category = ModuleCategory.RENDER)
 class ShowInvis : Module() {
-    val barriersValue = BoolValue("Barriers", false)
-    val entitiesValue = BoolValue("Entities", true)
+    val barriersValue = BoolValue("Barrier", false)
+    val entitiesValue = BoolValue("Entity", true)
 }

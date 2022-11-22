@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement
+package net.aspw.nightx.features.module.modules.utility
 
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.UpdateEvent
@@ -7,7 +7,7 @@ import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.minecraft.client.settings.GameSettings
 
-@ModuleInfo(name = "AutoWalk", spacedName = "Auto Walk", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "AutoWalk", spacedName = "Auto Walk", category = ModuleCategory.UTILITY)
 class AutoWalk : Module() {
 
     @EventTarget

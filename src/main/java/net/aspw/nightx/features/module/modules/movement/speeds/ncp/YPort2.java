@@ -25,7 +25,12 @@ public class YPort2 extends SpeedMode {
 
     @Override
     public void onUpdate() {
+    }
 
+    @Override
+    public void onDisable() {
+        if (!mc.thePlayer.isSneaking())
+            MovementUtils.strafe(0.3f);
     }
 
     @Override

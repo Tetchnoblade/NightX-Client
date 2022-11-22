@@ -39,6 +39,12 @@ public class MiJump extends SpeedMode {
     }
 
     @Override
+    public void onDisable() {
+        if (!mc.thePlayer.isSneaking())
+            MovementUtils.strafe(0.3f);
+    }
+
+    @Override
     public void onMove(MoveEvent event) {
     }
 }

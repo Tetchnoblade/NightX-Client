@@ -21,6 +21,9 @@ public class NCPHop extends SpeedMode {
         mc.thePlayer.speedInAir = 0.02F;
         mc.timer.timerSpeed = 1F;
         super.onDisable();
+
+        if (!mc.thePlayer.isSneaking())
+            MovementUtils.strafe(0.3f);
     }
 
     @Override
