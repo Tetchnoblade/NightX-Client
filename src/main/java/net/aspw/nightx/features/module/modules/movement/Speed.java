@@ -5,7 +5,6 @@ import net.aspw.nightx.event.*;
 import net.aspw.nightx.features.module.Module;
 import net.aspw.nightx.features.module.ModuleCategory;
 import net.aspw.nightx.features.module.ModuleInfo;
-import net.aspw.nightx.features.module.modules.exploit.Disabler;
 import net.aspw.nightx.features.module.modules.movement.speeds.SpeedMode;
 import net.aspw.nightx.features.module.modules.movement.speeds.aac.*;
 import net.aspw.nightx.features.module.modules.movement.speeds.blocksmc.BlocksMC;
@@ -23,8 +22,6 @@ import net.aspw.nightx.features.module.modules.movement.speeds.watchdog.Watchdog
 import net.aspw.nightx.features.module.modules.movement.speeds.watchdog.WatchdogCustom;
 import net.aspw.nightx.features.module.modules.movement.speeds.watchdog.WatchdogStable;
 import net.aspw.nightx.features.module.modules.player.Inventory;
-import net.aspw.nightx.ui.client.hud.element.elements.Notification;
-import net.aspw.nightx.utils.MovementUtils;
 import net.aspw.nightx.value.BoolValue;
 import net.aspw.nightx.value.FloatValue;
 import net.aspw.nightx.value.IntegerValue;

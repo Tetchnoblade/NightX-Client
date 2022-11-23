@@ -262,7 +262,7 @@ class GuiLoginIntoAccount(private val prevGui: GuiAltManager, val directLogin: B
                     minecraftAccount.session.username,
                     minecraftAccount.session.uuid, minecraftAccount.session.token, "mojang"
                 )
-                status = "§aLogged into ${mc.session.username}."
+                status = "§aLogged successfully to ${mc.session.username}."
             } else {
                 NightX.fileManager.accountsConfig.addAccount(minecraftAccount)
                 NightX.fileManager.saveConfig(NightX.fileManager.accountsConfig)

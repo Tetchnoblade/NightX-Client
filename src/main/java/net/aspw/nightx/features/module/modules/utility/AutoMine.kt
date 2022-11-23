@@ -5,7 +5,6 @@ import net.aspw.nightx.event.UpdateEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.minecraft.client.settings.GameSettings
 import net.minecraft.init.Blocks
 
 @ModuleInfo(name = "AutoMine", spacedName = "Auto Mine", category = ModuleCategory.UTILITY)

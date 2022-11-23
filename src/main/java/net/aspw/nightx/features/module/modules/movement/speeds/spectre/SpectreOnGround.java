@@ -1,7 +1,9 @@
 package net.aspw.nightx.features.module.modules.movement.speeds.spectre;
 
+import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.MoveEvent;
 import net.aspw.nightx.features.module.modules.movement.speeds.SpeedMode;
+import net.aspw.nightx.features.module.modules.world.Scaffold;
 import net.aspw.nightx.utils.MovementUtils;
 import net.minecraft.util.MathHelper;
 
@@ -23,7 +25,9 @@ public class SpectreOnGround extends SpeedMode {
 
     @Override
     public void onDisable() {
-        if (!mc.thePlayer.isSneaking())
+        final Scaffold scaffold = NightX.moduleManager.getModule(Scaffold.class);
+
+        if (!mc.thePlayer.isSneaking() && !scaffold.getState())
             MovementUtils.strafe(0.3f);
     }
 

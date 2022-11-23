@@ -96,6 +96,16 @@ public abstract class MixinItemRenderer {
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
+    private void Random() {
+        ++this.delay;
+        GlStateManager.translate(0.7D, -0.4000000059604645D, -0.800000011920929D);
+        GlStateManager.rotate(50.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(50.0F, 0.0F, 0.0F, -1.0F);
+        GlStateManager.rotate((float) this.delay * 0.2F * (Animations.SpinSpeed.get()).floatValue(), 0.0F, 0.0F, 1.0F);
+        GlStateManager.rotate(-25.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
+    }
+
     private void test(float i, float i2) {
         GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
         GlStateManager.translate(0.0F, i * -0.6F, 0.0F);
@@ -440,6 +450,26 @@ public abstract class MixinItemRenderer {
                                     this.func_178103_d();
                                     if (Animations.RotateItems.get())
                                         rotateItemAnim();
+                                    break;
+                                }
+                                case "Jigsaw": {
+                                    transformFirstPersonItem(0.1F, f1);
+                                    doBlockTransformations();
+                                    GlStateManager.translate(-0.5D, 0.0D, 0.0D);
+                                    break;
+                                }
+                                case "Spin": {
+                                    Random();
+                                    this.doBlockTransformations();
+                                    break;
+                                }
+                                case "MoonPush": {
+                                    transformFirstPersonItem(f, 0.0F);
+                                    doBlockTransformations();
+                                    float sin = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                    GlStateManager.scale(1.0F, 1.0F, 1.0F);
+                                    GlStateManager.translate(-0.2F, 0.45F, 0.25F);
+                                    GlStateManager.rotate(-sin * 20.0F, -5.0F, -5.0F, 9.0F);
                                     break;
                                 }
                                 case "Funny": {

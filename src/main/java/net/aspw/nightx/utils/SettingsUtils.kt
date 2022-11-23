@@ -2,8 +2,8 @@ package net.aspw.nightx.utils
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.module.ModuleCategory
-import net.aspw.nightx.features.module.modules.utility.Spammer
 import net.aspw.nightx.features.module.modules.render.Nick
+import net.aspw.nightx.features.module.modules.utility.Spammer
 import net.aspw.nightx.features.special.MacroManager
 import net.aspw.nightx.utils.misc.HttpUtils.get
 import net.aspw.nightx.utils.misc.StringUtils

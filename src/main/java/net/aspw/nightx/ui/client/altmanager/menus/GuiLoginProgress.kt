@@ -23,7 +23,7 @@ class GuiLoginProgress(
 
         drawDefaultBackground()
         //RenderUtils.drawLoadingCircle((scaledResolution.scaledWidth / 2).toFloat(), (scaledResolution.scaledHeight / 4 + 70).toFloat())
-        drawCenteredString(fontRendererObj, "Logging in to account...", width / 2, height / 2 - 60, 16777215)
+        drawCenteredString(fontRendererObj, "Logging in...", width / 2, height / 2 - 60, 16777215)
         super.drawScreen(mouseX, mouseY, partialTicks)
     }
 

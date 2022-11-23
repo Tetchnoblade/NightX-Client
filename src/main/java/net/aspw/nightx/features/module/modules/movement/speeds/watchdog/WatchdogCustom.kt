@@ -62,7 +62,9 @@ class WatchdogCustom : SpeedMode("WatchdogCustom") {
     }
 
     override fun onDisable() {
-        if (!mc.thePlayer.isSneaking)
+        val scaffoldModule = NightX.moduleManager.getModule(Scaffold::class.java)
+
+        if (!mc.thePlayer.isSneaking && !scaffoldModule!!.state)
             strafe(0.3f)
     }
 

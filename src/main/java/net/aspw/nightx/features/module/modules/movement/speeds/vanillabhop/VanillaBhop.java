@@ -6,6 +6,7 @@ import net.aspw.nightx.event.MotionEvent;
 import net.aspw.nightx.event.MoveEvent;
 import net.aspw.nightx.features.module.modules.movement.Speed;
 import net.aspw.nightx.features.module.modules.movement.speeds.SpeedMode;
+import net.aspw.nightx.features.module.modules.world.Scaffold;
 import net.aspw.nightx.utils.MovementUtils;
 
 public class VanillaBhop extends SpeedMode {
@@ -16,8 +17,6 @@ public class VanillaBhop extends SpeedMode {
 
     @Override
     public void onMotion(MotionEvent eventMotion) {
-        MovementUtils.strafe(0.3f);
-
         if (MovementUtils.isMoving()) {
             MovementUtils.strafe(1);
         }
@@ -41,7 +40,9 @@ public class VanillaBhop extends SpeedMode {
 
     @Override
     public void onDisable() {
-        if (!mc.thePlayer.isSneaking())
+        final Scaffold scaffold = NightX.moduleManager.getModule(Scaffold.class);
+
+        if (!mc.thePlayer.isSneaking() && !scaffold.getState())
             MovementUtils.strafe(0.3f);
     }
 

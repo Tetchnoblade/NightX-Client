@@ -152,9 +152,9 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     randomCracked.enabled = false
 
                     login(it, {
-                        status = "§aLogged in to ${mc.session.username}."
+                        status = "§aLogged successfully to ${mc.session.username}."
                     }, { exception ->
-                        status = "§cLogin failed due to '${exception.message}'."
+                        status = "§cLogin failed to '${exception.message}'."
                     }, {
                         loginButton.enabled = true
                         randomButton.enabled = true
@@ -175,9 +175,9 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     randomCracked.enabled = false
 
                     login(it, {
-                        status = "§aLogged in to ${mc.session.username}."
+                        status = "§aLogged successfully to ${mc.session.username}."
                     }, { exception ->
-                        status = "§cLogin failed due to '${exception.message}'."
+                        status = "§cLogin failed to '${exception.message}'."
                     }, {
                         loginButton.enabled = true
                         randomButton.enabled = true
@@ -202,9 +202,9 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 status = "§aGenerating..."
 
                 login(rand, {
-                    status = "§aLogged in as ${mc.session.username}."
+                    status = "§aLogged successfully to ${mc.session.username}."
                 }, { exception ->
-                    status = "§cLogin failed due to '${exception.message}'."
+                    status = "§cLogin failed to '${exception.message}'."
                 }, {
                     loginButton.enabled = true
                     randomButton.enabled = true
@@ -441,9 +441,9 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     randomCracked.enabled = false
 
                     login(it, {
-                        status = "§aLogged in to ${mc.session.username}."
+                        status = "§aLogged successfully to ${mc.session.username}."
                     }, { exception ->
-                        status = "§cLogin failed due to '${exception.message}'."
+                        status = "§cLogin failed to '${exception.message}'."
                     }, {
                         loginButton.enabled = true
                         randomButton.enabled = true

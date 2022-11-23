@@ -9,8 +9,8 @@ import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.exploit.Disabler
 import net.aspw.nightx.features.module.modules.misc.AntiBot
 import net.aspw.nightx.features.module.modules.misc.Teams
-import net.aspw.nightx.features.module.modules.player.TargetStrafe
 import net.aspw.nightx.features.module.modules.player.Blink
+import net.aspw.nightx.features.module.modules.player.TargetStrafe
 import net.aspw.nightx.features.module.modules.render.Freecam
 import net.aspw.nightx.features.module.modules.world.Scaffold
 import net.aspw.nightx.utils.*

@@ -2,8 +2,8 @@ package net.aspw.nightx.injection.forge.mixins.gui;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.utility.Patcher;
 import net.aspw.nightx.features.module.modules.render.HUD;
+import net.aspw.nightx.features.module.modules.utility.Patcher;
 import net.aspw.nightx.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;

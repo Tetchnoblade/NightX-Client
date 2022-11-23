@@ -1,7 +1,9 @@
 package net.aspw.nightx.features.module.modules.movement.speeds.ncp;
 
+import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.MoveEvent;
 import net.aspw.nightx.features.module.modules.movement.speeds.SpeedMode;
+import net.aspw.nightx.features.module.modules.world.Scaffold;
 import net.aspw.nightx.utils.MovementUtils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.potion.Potion;
@@ -33,7 +35,9 @@ public class NCPBHop extends SpeedMode {
         moveSpeed = getBaseMoveSpeed();
         level = 0;
 
-        if (!mc.thePlayer.isSneaking())
+        final Scaffold scaffold = NightX.moduleManager.getModule(Scaffold.class);
+
+        if (!mc.thePlayer.isSneaking() && !scaffold.getState())
             MovementUtils.strafe(0.3f);
     }
 
