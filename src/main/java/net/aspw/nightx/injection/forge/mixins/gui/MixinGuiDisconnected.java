@@ -7,6 +7,8 @@ import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
 import com.thealtening.AltService;
 import com.thealtening.api.TheAltening;
 import com.thealtening.api.data.AccountData;
+import de.enzaxd.viaforge.ViaForge;
+import de.enzaxd.viaforge.protocol.ProtocolCollection;
 import me.liuli.elixir.account.CrackedAccount;
 import me.liuli.elixir.account.MinecraftAccount;
 import net.aspw.nightx.NightX;
@@ -25,6 +27,7 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.Session;
+import net.minecraftforge.fml.client.config.GuiSlider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,6 +47,7 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
     private int field_175353_i;
 
     private GuiButton reconnectButton;
+    private GuiSlider viaSlider;
 
     @Inject(method = "initGui", at = @At("RETURN"))
     private void initGui(CallbackInfo callbackInfo) {
@@ -53,6 +57,26 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
 
         buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 100, 20, GuiTheAltening.Companion.getApiKey().isEmpty() ? "Reconnect with Alt" : "New The Altening Alt"));
         buttonList.add(new GuiButton(4, this.width / 2 + 2, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 98, 20, "Random Cracked"));
+        buttonList.add(viaSlider = new GuiSlider(1337, width - 104, 7, 98, 20, "Protocol: ", "", 0, ProtocolCollection.values().length - 1, ProtocolCollection.values().length - 1 - getProtocolIndex(ViaForge.getInstance().getVersion()), false, true,
+                guiSlider -> {
+                    ViaForge.getInstance().setVersion(ProtocolCollection.values()[ProtocolCollection.values().length - 1 - guiSlider.getValueInt()].getVersion().getVersion());
+                    this.updatePortalText();
+                }));
+        this.updatePortalText();
+    }
+
+    private void updatePortalText() {
+        if (this.viaSlider == null)
+            return;
+
+        this.viaSlider.displayString = "Protocol: " + ProtocolCollection.getProtocolById(ViaForge.getInstance().getVersion()).getName();
+    }
+
+    private int getProtocolIndex(int id) {
+        for (int i = 0; i < ProtocolCollection.values().length; i++)
+            if (ProtocolCollection.values()[i].getVersion().getVersion() == id)
+                return i;
+        return -1;
     }
 
     @Inject(method = "actionPerformed", at = @At("HEAD"))

@@ -4,7 +4,7 @@ import net.minecraft.util.ResourceLocation
 
 object IconManager {
     @JvmField
-    val removeIcon = ResourceLocation("nightx/notification/new/error.png")
+    val removeIcon = ResourceLocation("nightx/notification/error.png")
     val add = ResourceLocation("nightx/clickgui/import.png")
     val back = ResourceLocation("nightx/clickgui/back.png")
     val docs = ResourceLocation("nightx/clickgui/docs.png")

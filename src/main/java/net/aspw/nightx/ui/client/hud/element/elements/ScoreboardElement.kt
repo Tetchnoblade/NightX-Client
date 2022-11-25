@@ -91,7 +91,7 @@ class ScoreboardElement(
 
     private val shadowValue = BoolValue("TextShadow", false)
     private val antiSnipeMatch = BoolValue("AntiSnipeMatch", false)
-    private val showRedNumbersValue = BoolValue("ShowRedNumbers", false)
+    private val showRedNumbersValue = BoolValue("ShowRedNumbers", true)
     private val fontValue = FontValue("Font", Fonts.minecraftFont)
     private val domainFontValue = FontValue("DomainFont", Fonts.minecraftFont)
     private val domainFontYValue = FloatValue("Domain-TextY", 0F, 0F, 3F)

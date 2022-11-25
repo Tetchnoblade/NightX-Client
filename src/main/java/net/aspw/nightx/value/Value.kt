@@ -9,7 +9,7 @@ import net.aspw.nightx.utils.ClientUtils
 import net.minecraft.client.gui.FontRenderer
 import java.util.*
 
-abstract class Value<T>(val name: String, protected var value: T, var canDisplay: () -> Boolean) {
+abstract class Value<T>(val name: String, var value: T, var canDisplay: () -> Boolean) {
 
     fun set(newValue: T) {
         if (newValue == value) return

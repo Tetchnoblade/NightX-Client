@@ -13,7 +13,7 @@ public class Animations extends Module {
 
     // some ListValue
     public static final ListValue Sword = new ListValue("Style", new String[]{
-            "1.8", "SlideFull", "Slide", "Spin", "Push", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Sweet", "Moon", "MoonPush", "Lennox", "Leaked", "Jigsaw", "Sigma3", "Sigma4", "Okura", "Leet",
+            "1.8", "SlideLow", "SlideMedium", "SlideFull", "Spin", "Push", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Sweet", "Moon", "MoonPush", "Lennox", "Leaked", "Jigsaw", "Sigma3", "Sigma4", "Okura", "Leet",
             "Old", "OldFull", "Flux1", "Flux2", "Flux3", "DortwareNew", "Dortware1", "Dortware2", "Smart", "Cool", "Funny", "Pumpkin", "ETB", "Zoom", "Avatar", "Tap1", "Tap2", "Poke", "Push1", "Push2", "Up", "Shield", "Akrien", "VisionFX",
             "Lucky", "Rotate360", "SmoothFloat", "Strange", "Move", "Stab", "OldSwang", "Jello"
     }, "Swing");
@@ -25,6 +25,9 @@ public class Animations extends Module {
     public static final FloatValue itemPosX = new FloatValue("ItemX", 0f, -1f, 1f);
     public static final FloatValue itemPosY = new FloatValue("ItemY", 0f, -1f, 1f);
     public static final FloatValue itemPosZ = new FloatValue("ItemZ", 0f, -1f, 1f);
+    public static final FloatValue itemFovX = new FloatValue("ItemFovX", 1f, -10f, 10f);
+    public static final FloatValue itemFovY = new FloatValue("ItemFovY", 1f, -10f, 10f);
+    public static final FloatValue itemFovZ = new FloatValue("ItemFovZ", 1f, -10f, 10f);
 
     // change Position Blocking Sword
     public static final FloatValue blockPosX = new FloatValue("BlockingX", 0f, -1f, 1f);
@@ -32,7 +35,7 @@ public class Animations extends Module {
     public static final FloatValue blockPosZ = new FloatValue("BlockingZ", 0f, -1f, 1f);
 
     // modify item swing and rotate
-    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 6, -3, 10);
+    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 0, -9, 4);
     public static final BoolValue RotateItems = new BoolValue("Rotate-Items", false);
     public static final FloatValue SpeedRotate = new FloatValue("Rotate-Speed", 1f, 0f, 10f, () -> RotateItems.get() || Sword.get().equalsIgnoreCase("smoothfloat") || Sword.get().equalsIgnoreCase("rotate360"));
     public static final FloatValue SpinSpeed = new FloatValue("Spin-Speed", 5f, 0f, 50f, () -> Sword.get().equalsIgnoreCase("spin"));

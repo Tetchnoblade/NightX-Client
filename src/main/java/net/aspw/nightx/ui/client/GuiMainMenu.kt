@@ -293,7 +293,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
     enum class ExtendedBackgroundButton(val buttonName: String, val texture: ResourceLocation) {
         Back("Done", ResourceLocation("nightx/clickgui/back.png")),
-        Enabled("Enabled", ResourceLocation("nightx/notification/new/checkmark.png")),
+        Enabled("Enabled", ResourceLocation("nightx/notification/checkmark.png")),
         Particles("Gui Particles", ResourceLocation("nightx/clickgui/brush.png")),
         Change("Change wallpaper", ResourceLocation("nightx/clickgui/import.png")),
         Reset("Reset wallpaper", ResourceLocation("nightx/clickgui/reload.png")),

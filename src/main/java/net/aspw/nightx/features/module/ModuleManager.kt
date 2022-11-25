@@ -209,7 +209,8 @@ class ModuleManager : Listenable {
             TargetPlayers::class.java,
             ItemPhysics::class.java,
             FlagNotifier::class.java,
-            AutoJump::class.java
+            AutoJump::class.java,
+            Tweaks::class.java
         )
 
         registerModule(Fucker)

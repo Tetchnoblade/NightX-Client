@@ -863,8 +863,6 @@ class KillAura : Module() {
         }
 
         // Attack target
-        mc.thePlayer.onCriticalHit(entity)
-
         if (swingValue.get() && (!swingOrderValue.get() || ViaForge.getInstance().version <= 47)) // version fix
             mc.thePlayer.swingItem()
 
