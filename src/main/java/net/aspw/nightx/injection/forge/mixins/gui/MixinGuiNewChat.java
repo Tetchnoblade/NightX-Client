@@ -2,8 +2,7 @@ package net.aspw.nightx.injection.forge.mixins.gui;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.render.HUD;
-import net.aspw.nightx.features.module.modules.utility.Patcher;
+import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
@@ -52,7 +51,7 @@ public abstract class MixinGuiNewChat {
     private String lastMessage;
     private int sameMessageAmount;
     private int line;
-    private HUD hud;
+    private Hud hud;
 
     @Shadow
     public abstract int getLineCount();
@@ -77,7 +76,7 @@ public abstract class MixinGuiNewChat {
 
     private void checkHud() {
         if (hud == null)
-            hud = NightX.moduleManager.getModule(HUD.class);
+            hud = NightX.moduleManager.getModule(Hud.class);
     }
 
     @Redirect(method = "deleteChatLine", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/ChatLine;getChatLineID()I"))
@@ -120,11 +119,8 @@ public abstract class MixinGuiNewChat {
     public void drawChat(int updateCounter) {
         checkHud();
         boolean canFont = hud.getState() && hud.getFontChatValue().get();
-
-        if (Patcher.chatPosition.get()) {
             GlStateManager.pushMatrix();
             GlStateManager.translate(0, -12, 0);
-        }
 
         if (this.mc.gameSettings.chatVisibility != EntityPlayer.EnumChatVisibility.HIDDEN) {
             int i = this.getLineCount();
@@ -224,7 +220,6 @@ public abstract class MixinGuiNewChat {
             }
         }
 
-        if (Patcher.chatPosition.get())
             GlStateManager.popMatrix();
     }
 
@@ -265,7 +260,7 @@ public abstract class MixinGuiNewChat {
             int scaleFactor = sc.getScaleFactor();
             float chatScale = this.getChatScale();
             int mX = p_146236_1_ / scaleFactor - 3;
-            int mY = p_146236_2_ / scaleFactor - 27 - (Patcher.chatPosition.get() ? 12 : 0);
+            int mY = p_146236_2_ / scaleFactor - 27 - (12);
             mX = MathHelper.floor_float((float) mX / chatScale);
             mY = MathHelper.floor_float((float) mY / chatScale);
             if (mX >= 0 && mY >= 0) {

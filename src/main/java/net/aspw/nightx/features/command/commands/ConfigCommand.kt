@@ -65,7 +65,6 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                             }
                             val settingsScript = SettingsUtils.generateScript(values, binds, states)
                             scriptFile.writeText(settingsScript)
-                            chat("§aSuccessfully saved new config!")
                         } catch (throwable: Throwable) {
                         }
                         return

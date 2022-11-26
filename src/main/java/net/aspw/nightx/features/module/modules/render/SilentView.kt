@@ -19,9 +19,6 @@ class SilentView : Module() {
     var B = FloatValue("B", 0f, 0f, 255f, { mode.get().equals("csgo", true) })
     var Alpha = FloatValue("Alpha", 60f, 0f, 255f, { mode.get().equals("csgo", true) })
 
-    override val tag: String
-        get() = mode.get()
-
     private fun getState(module: Class<out Module>) = NightX.moduleManager[module]!!.state
 
     fun shouldRotate(): Boolean {

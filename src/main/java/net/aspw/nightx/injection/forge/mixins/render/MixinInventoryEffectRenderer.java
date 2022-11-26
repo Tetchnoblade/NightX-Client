@@ -1,7 +1,7 @@
 package net.aspw.nightx.injection.forge.mixins.render;
 
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.render.HUD;
+import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.injection.forge.mixins.gui.MixinGuiContainer;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +16,7 @@ public abstract class MixinInventoryEffectRenderer extends MixinGuiContainer {
 
     @Overwrite
     public void updateActivePotionEffects() {
-        final HUD hud = NightX.moduleManager.getModule(HUD.class);
+        final Hud hud = NightX.moduleManager.getModule(Hud.class);
         if (!hud.getInvEffectOffset().get()) {
             this.guiLeft = (this.width - this.xSize) / 2;
             this.hasActivePotionEffects = !this.mc.thePlayer.getActivePotionEffects().isEmpty();

@@ -150,8 +150,8 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             staticY,
             staticX + 240F,
             staticY + 20F,
-            10F,
-            (Color(70, 70, 70, 255)).rgb
+            0F,
+            (Color(0, 0, 0, 120)).rgb
         )
 
         var index: Int = 0
@@ -245,8 +245,8 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                 staticY,
                 slideX + 40F,
                 staticY + 20F,
-                10F,
-                (Color(70, 70, 70, 255)).rgb
+                0F,
+                (Color(50, 50, 50, 120)).rgb
             )
 
         index = 0

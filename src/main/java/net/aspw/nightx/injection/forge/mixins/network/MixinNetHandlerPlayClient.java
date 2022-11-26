@@ -4,7 +4,6 @@ import io.netty.buffer.Unpooled;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.EntityDamageEvent;
 import net.aspw.nightx.event.EntityMovementEvent;
-import net.aspw.nightx.features.module.modules.utility.Patcher;
 import net.aspw.nightx.features.special.AntiForge;
 import net.aspw.nightx.ui.client.hud.designer.GuiHudDesigner;
 import net.minecraft.client.ClientBrandRetriever;
@@ -61,38 +60,36 @@ public abstract class MixinNetHandlerPlayClient {
 
     @Inject(method = "handleSpawnPlayer", at = @At("HEAD"), cancellable = true)
     private void handleSpawnPlayer(S0CPacketSpawnPlayer packetIn, CallbackInfo callbackInfo) {
-        if (Patcher.silentNPESP.get()) {
-            try {
-                PacketThreadUtil.checkThreadAndEnqueue(packetIn, (NetHandlerPlayClient) (Object) this, gameController);
-                double d0 = (double) packetIn.getX() / 32.0D;
-                double d1 = (double) packetIn.getY() / 32.0D;
-                double d2 = (double) packetIn.getZ() / 32.0D;
-                float f = (float) (packetIn.getYaw() * 360) / 256.0F;
-                float f1 = (float) (packetIn.getPitch() * 360) / 256.0F;
-                EntityOtherPlayerMP entityotherplayermp = new EntityOtherPlayerMP(gameController.theWorld, getPlayerInfo(packetIn.getPlayer()).getGameProfile());
-                entityotherplayermp.prevPosX = entityotherplayermp.lastTickPosX = entityotherplayermp.serverPosX = packetIn.getX();
-                entityotherplayermp.prevPosY = entityotherplayermp.lastTickPosY = entityotherplayermp.serverPosY = packetIn.getY();
-                entityotherplayermp.prevPosZ = entityotherplayermp.lastTickPosZ = entityotherplayermp.serverPosZ = packetIn.getZ();
-                int i = packetIn.getCurrentItemID();
+        try {
+            PacketThreadUtil.checkThreadAndEnqueue(packetIn, (NetHandlerPlayClient) (Object) this, gameController);
+            double d0 = (double) packetIn.getX() / 32.0D;
+            double d1 = (double) packetIn.getY() / 32.0D;
+            double d2 = (double) packetIn.getZ() / 32.0D;
+            float f = (float) (packetIn.getYaw() * 360) / 256.0F;
+            float f1 = (float) (packetIn.getPitch() * 360) / 256.0F;
+            EntityOtherPlayerMP entityotherplayermp = new EntityOtherPlayerMP(gameController.theWorld, getPlayerInfo(packetIn.getPlayer()).getGameProfile());
+            entityotherplayermp.prevPosX = entityotherplayermp.lastTickPosX = entityotherplayermp.serverPosX = packetIn.getX();
+            entityotherplayermp.prevPosY = entityotherplayermp.lastTickPosY = entityotherplayermp.serverPosY = packetIn.getY();
+            entityotherplayermp.prevPosZ = entityotherplayermp.lastTickPosZ = entityotherplayermp.serverPosZ = packetIn.getZ();
+            int i = packetIn.getCurrentItemID();
 
-                if (i == 0) {
-                    entityotherplayermp.inventory.mainInventory[entityotherplayermp.inventory.currentItem] = null;
-                } else {
-                    entityotherplayermp.inventory.mainInventory[entityotherplayermp.inventory.currentItem] = new ItemStack(Item.getItemById(i), 1, 0);
-                }
-
-                entityotherplayermp.setPositionAndRotation(d0, d1, d2, f, f1);
-                clientWorldController.addEntityToWorld(packetIn.getEntityID(), entityotherplayermp);
-                List<DataWatcher.WatchableObject> list = packetIn.func_148944_c();
-
-                if (list != null) {
-                    entityotherplayermp.getDataWatcher().updateWatchedObjectsFromList(list);
-                }
-            } catch (Exception e) {
-                // ignore
+            if (i == 0) {
+                entityotherplayermp.inventory.mainInventory[entityotherplayermp.inventory.currentItem] = null;
+            } else {
+                entityotherplayermp.inventory.mainInventory[entityotherplayermp.inventory.currentItem] = new ItemStack(Item.getItemById(i), 1, 0);
             }
-            callbackInfo.cancel();
+
+            entityotherplayermp.setPositionAndRotation(d0, d1, d2, f, f1);
+            clientWorldController.addEntityToWorld(packetIn.getEntityID(), entityotherplayermp);
+            List<DataWatcher.WatchableObject> list = packetIn.func_148944_c();
+
+            if (list != null) {
+                entityotherplayermp.getDataWatcher().updateWatchedObjectsFromList(list);
+            }
+        } catch (Exception e) {
+            // ignore
         }
+        callbackInfo.cancel();
     }
 
     @Inject(method = "handleCloseWindow", at = @At("HEAD"), cancellable = true)

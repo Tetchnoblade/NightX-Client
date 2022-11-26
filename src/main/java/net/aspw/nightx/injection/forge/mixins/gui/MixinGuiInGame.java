@@ -5,7 +5,7 @@ import net.aspw.nightx.event.Render2DEvent;
 import net.aspw.nightx.features.module.modules.cool.AntiBlind;
 import net.aspw.nightx.features.module.modules.misc.AutoHypixel;
 import net.aspw.nightx.features.module.modules.render.Crosshair;
-import net.aspw.nightx.features.module.modules.render.HUD;
+import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.ui.font.AWTFontRenderer;
 import net.aspw.nightx.utils.render.ColorUtils;
 import net.aspw.nightx.utils.render.RenderUtils;
@@ -52,7 +52,7 @@ public abstract class MixinGuiInGame extends MixinGui {
         if (scoreObjective != null) AutoHypixel.gameMode = ColorUtils.stripColor(scoreObjective.getDisplayName());
 
         final AntiBlind antiBlind = NightX.moduleManager.getModule(AntiBlind.class);
-        if ((antiBlind.getState() && antiBlind.getScoreBoard().get()) || NightX.moduleManager.getModule(HUD.class).getState())
+        if ((antiBlind.getState() && antiBlind.getScoreBoard().get()) || NightX.moduleManager.getModule(Hud.class).getState())
             callbackInfo.cancel();
     }
 
@@ -70,7 +70,7 @@ public abstract class MixinGuiInGame extends MixinGui {
 
     @Inject(method = "renderTooltip", at = @At("HEAD"), cancellable = true)
     private void renderTooltip(ScaledResolution sr, float partialTicks, CallbackInfo callbackInfo) {
-        final HUD hud = NightX.moduleManager.getModule(HUD.class);
+        final Hud hud = NightX.moduleManager.getModule(Hud.class);
 
         if (Minecraft.getMinecraft().getRenderViewEntity() instanceof EntityPlayer && hud.getState() && (hud.getBlackHotbarValue().get() || hud.getAnimHotbarValue().get())) {
             final Minecraft mc = Minecraft.getMinecraft();

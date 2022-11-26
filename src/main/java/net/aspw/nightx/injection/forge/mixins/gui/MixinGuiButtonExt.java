@@ -1,7 +1,7 @@
 package net.aspw.nightx.injection.forge.mixins.gui;
 
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.render.HUD;
+import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.ui.font.Fonts;
 import net.aspw.nightx.utils.AnimationUtils;
 import net.aspw.nightx.utils.render.RenderUtils;
@@ -47,7 +47,7 @@ public abstract class MixinGuiButtonExt extends GuiButton {
             final int delta = RenderUtils.deltaTime;
             final float speedDelta = 0.01F * delta;
 
-            final HUD hud = NightX.moduleManager.getModule(HUD.class);
+            final Hud hud = NightX.moduleManager.getModule(Hud.class);
 
             if (hud == null) return;
 

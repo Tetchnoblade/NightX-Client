@@ -107,7 +107,6 @@ public class Flight extends Module {
     private final FloatValue vanillaVSpeedValue = new FloatValue("V-Speed", 0.6F, 0F, 5F, () -> modeValue.get().equalsIgnoreCase("motion"));
     private final FloatValue vanillaMotionYValue = new FloatValue("Y-Motion", 0F, -1F, 1F, () -> modeValue.get().equalsIgnoreCase("motion"));
     private final BoolValue vanillaKickBypassValue = new BoolValue("AntiKick", false, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("creative"));
-
     private final BoolValue groundSpoofValue = new BoolValue("SpoofGround", false, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("creative"));
 
     private final FloatValue ncpMotionValue = new FloatValue("NCPMotion", 0.04F, 0F, 1F, () -> modeValue.get().equalsIgnoreCase("ncp"));

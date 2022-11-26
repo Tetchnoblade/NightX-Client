@@ -76,7 +76,7 @@ class Text(
     private val bgblueValue = IntegerValue("Background-Blue", 0, 0, 255)
     private val bgalphaValue = IntegerValue("Background-Alpha", 100, 0, 255)
     private val rainbowList =
-        ListValue("Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Fade")
+        ListValue("Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Off")
     private val saturationValue = FloatValue("Saturation", 0.5f, 0f, 1f)
     private val brightnessValue = FloatValue("Brightness", 1f, 0f, 1f)
     private val cRainbowSecValue = IntegerValue("Seconds", 2, 1, 10)

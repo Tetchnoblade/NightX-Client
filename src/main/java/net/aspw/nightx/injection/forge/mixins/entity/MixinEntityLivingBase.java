@@ -3,6 +3,7 @@ package net.aspw.nightx.injection.forge.mixins.entity;
 import de.enzaxd.viaforge.ViaForge;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.JumpEvent;
+import net.aspw.nightx.features.module.modules.client.ColorMixer;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
 import net.aspw.nightx.features.module.modules.cool.AntiBlind;
 import net.aspw.nightx.features.module.modules.movement.AirJump;
@@ -10,7 +11,6 @@ import net.aspw.nightx.features.module.modules.movement.Jesus;
 import net.aspw.nightx.features.module.modules.movement.Sprint;
 import net.aspw.nightx.features.module.modules.player.TargetStrafe;
 import net.aspw.nightx.features.module.modules.render.Animations;
-import net.aspw.nightx.features.module.modules.utility.Patcher;
 import net.aspw.nightx.utils.MovementUtils;
 import net.aspw.nightx.utils.RotationUtils;
 import net.minecraft.block.Block;
@@ -104,7 +104,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
             float yaw = this.rotationYaw;
             if (tsMod.getCanStrafe())
                 yaw = tsMod.getMovingYaw();
-            else if (Patcher.jumpPatch.get())
+            if (ColorMixer.jumpPatch.get())
                 if (auraMod.getState() && auraMod.getRotationStrafeValue().get().equalsIgnoreCase("strict") && auraMod.getTarget() != null)
                     yaw = RotationUtils.targetRotation != null ? RotationUtils.targetRotation.getYaw() : (RotationUtils.serverRotation != null ? RotationUtils.serverRotation.getYaw() : yaw);
                 else if (sprintMod.getState() && sprintMod.getAllDirectionsValue().get() && sprintMod.getMoveDirPatchValue().get())

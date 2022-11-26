@@ -4,7 +4,7 @@ import net.aspw.nightx.NightX;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
 import net.aspw.nightx.features.module.modules.player.InventoryManager;
 import net.aspw.nightx.features.module.modules.render.Animations;
-import net.aspw.nightx.features.module.modules.render.HUD;
+import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.features.module.modules.world.Stealer;
 import net.aspw.nightx.utils.render.EaseUtils;
 import net.aspw.nightx.utils.render.RenderUtils;
@@ -44,7 +44,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
     @Inject(method = "initGui", at = @At("HEAD"), cancellable = true)
     public void injectInitGui(CallbackInfo callbackInfo) {
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
-        final HUD hud = NightX.moduleManager.getModule(HUD.class);
+        final Hud hud = NightX.moduleManager.getModule(Hud.class);
 
         int firstY = 0;
 
@@ -108,7 +108,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
     private void drawScreenHead(CallbackInfo callbackInfo) {
         final Animations animMod = NightX.moduleManager.getModule(Animations.class);
         Stealer chestStealer = NightX.moduleManager.getModule(Stealer.class);
-        final HUD hud = NightX.moduleManager.getModule(HUD.class);
+        final Hud hud = NightX.moduleManager.getModule(Hud.class);
         final Minecraft mc = Minecraft.getMinecraft();
 
         if (progress >= 1F) progress = 1F;

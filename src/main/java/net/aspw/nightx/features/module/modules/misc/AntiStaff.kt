@@ -14,8 +14,8 @@ import net.aspw.nightx.utils.timer.MSTimer
 import net.minecraft.network.play.server.*
 import kotlin.concurrent.thread
 
-@ModuleInfo(name = "AntiBan", spacedName = "Anti Ban", category = ModuleCategory.MISC)
-class AntiBan : Module() {
+@ModuleInfo(name = "AntiStaff", spacedName = "Anti Staff", category = ModuleCategory.MISC)
+class AntiStaff : Module() {
 
     private var obStaffs = "_"
     private var detected = false

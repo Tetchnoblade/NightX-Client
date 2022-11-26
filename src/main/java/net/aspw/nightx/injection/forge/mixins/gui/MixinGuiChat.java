@@ -1,7 +1,7 @@
 package net.aspw.nightx.injection.forge.mixins.gui;
 
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.render.HUD;
+import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.utils.AnimationUtils;
 import net.aspw.nightx.utils.render.RenderUtils;
 import net.aspw.nightx.utils.render.Stencil;
@@ -56,11 +56,11 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
     private void updateScreen(CallbackInfo callbackInfo) {
         final int delta = RenderUtils.deltaTime;
 
-        if (fade < 14) fade = AnimationUtils.animate(14F, fade, 0.025F * delta);
+        if (fade < 14) fade = AnimationUtils.animate(14F, fade, 10F * delta);
         if (fade > 14) fade = 14;
 
         if (yPosOfInputField > height - 12)
-            yPosOfInputField = AnimationUtils.animate(height - 12, yPosOfInputField, 0.025F * (12F / 14F) * delta);
+            yPosOfInputField = AnimationUtils.animate(height - 12, yPosOfInputField, 10F * (12F / 14F) * delta);
         if (yPosOfInputField < height - 12) yPosOfInputField = height - 12;
 
         inputField.yPosition = (int) yPosOfInputField;
@@ -94,12 +94,6 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
         }
     }
 
-    /**
-     * Add this callback, to check if the User complete a Playername or a Liquidbounce command.
-     * To fix this bug: https://github.com/CCBlueX/LiquidBounce1.8-Issues/issues/3795
-     *
-     * @author derech1e
-     */
     @Inject(method = "onAutocompleteResponse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiChat;autocompletePlayerNames(F)V", shift = At.Shift.BEFORE), cancellable = true)
     private void onAutocompleteResponse(String[] autoCompleteResponse, CallbackInfo callbackInfo) {
         if (NightX.commandManager.getLatestAutoComplete().length != 0) callbackInfo.cancel();
@@ -110,12 +104,12 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
      */
     @Overwrite
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        final HUD hud = NightX.moduleManager.getModule(HUD.class);
-        if (hud.getCmdBorderValue().get() && !inputField.getText().isEmpty() && inputField.getText().startsWith(String.valueOf(NightX.commandManager.getPrefix()))) {
+        final Hud hud = NightX.moduleManager.getModule(Hud.class);
+        if (!inputField.getText().isEmpty() && inputField.getText().startsWith(String.valueOf(NightX.commandManager.getPrefix()))) {
             Stencil.write(true);
             RenderUtils.drawRect(2F, this.height - fade, this.width - 2, this.height - fade + 12, Integer.MIN_VALUE);
             Stencil.erase(false);
-            RenderUtils.drawRect(1F, this.height - fade - 1, this.width - 1, this.height - fade + 13, new Color(20, 110, 255).getRGB());
+            RenderUtils.drawRect(1F, this.height - fade - 1, this.width - 1, this.height - fade + 13, new Color(154, 114, 175).getRGB());
             Stencil.dispose();
         } else
             RenderUtils.drawRect(2F, this.height - fade, this.width - 2, this.height - fade + 12, Integer.MIN_VALUE);

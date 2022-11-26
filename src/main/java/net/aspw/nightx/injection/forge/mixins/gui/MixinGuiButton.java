@@ -1,7 +1,7 @@
 package net.aspw.nightx.injection.forge.mixins.gui;
 
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.render.HUD;
+import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.ui.font.AWTFontRenderer;
 import net.aspw.nightx.ui.font.Fonts;
 import net.aspw.nightx.utils.AnimationUtils;
@@ -67,7 +67,7 @@ public abstract class MixinGuiButton extends Gui {
             final int delta = RenderUtils.deltaTime;
             final float speedDelta = 0.01F * delta;
 
-            final HUD hud = NightX.moduleManager.getModule(HUD.class);
+            final Hud hud = NightX.moduleManager.getModule(Hud.class);
 
             if (hud == null) return;
 
@@ -126,27 +126,6 @@ public abstract class MixinGuiButton extends Gui {
                             this.xPosition + this.width, this.yPosition + this.height, 2F,
                             this.enabled ? new Color(0F, 0F, 0F, this.alpha / 255F).getRGB() :
                                     new Color(0.5F, 0.5F, 0.5F, 0.5F).getRGB());
-                    break;
-                case "test":
-                    mc.getTextureManager().bindTexture(buttonTextures);
-                    GlStateManager.color(0.0F, 0.0F, 0.0F, 1.0F);
-                    this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
-                    int shit = this.getHoverState(this.hovered);
-                    GlStateManager.enableBlend();
-                    GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-                    GlStateManager.blendFunc(770, 771);
-                    this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46 + shit * 20, this.width / 2, this.height);
-                    this.drawTexturedModalRect(this.xPosition + this.width / 2, this.yPosition, 200 - this.width / 2, 46 + shit * 20, this.width / 2, this.height);
-                    this.mouseDragged(mc, mouseX, mouseY);
-                    int owo = 14737632;
-
-                    if (!this.enabled) {
-                        owo = 10526880;
-                    } else if (this.hovered) {
-                        owo = 16777120;
-                    }
-
-                    this.drawCenteredString(mc.fontRendererObj, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, owo);
                     break;
                 case "liquidbounce+":
                     RenderUtils.drawRoundedRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, 2.4F, new Color(0, 0, 0, 150).getRGB());

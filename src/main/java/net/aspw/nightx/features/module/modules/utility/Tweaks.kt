@@ -6,7 +6,6 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.utils.timer.TickTimer
-import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.IntegerValue
 
 @ModuleInfo(name = "Tweaks", category = ModuleCategory.UTILITY)

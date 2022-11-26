@@ -4,12 +4,10 @@ import de.enzaxd.viaforge.ViaForge;
 import de.enzaxd.viaforge.util.AttackOrder;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.*;
-import net.aspw.nightx.features.module.modules.combat.AutoClicker;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
 import net.aspw.nightx.features.module.modules.exploit.KeepBreaking;
 import net.aspw.nightx.features.module.modules.misc.Annoy;
 import net.aspw.nightx.features.module.modules.render.SilentView;
-import net.aspw.nightx.features.module.modules.utility.Patcher;
 import net.aspw.nightx.features.module.modules.world.FastPlace;
 import net.aspw.nightx.features.module.modules.world.Scaffold;
 import net.aspw.nightx.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
@@ -200,9 +198,7 @@ public abstract class MixinMinecraft {
     @Inject(method = "clickMouse", at = @At("HEAD"))
     private void clickMouse(CallbackInfo callbackInfo) {
         CPSCounter.registerClick(CPSCounter.MouseButton.LEFT);
-
-        if (Patcher.noHitDelay.get() || NightX.moduleManager.getModule(AutoClicker.class).getState())
-            leftClickCounter = 0;
+        leftClickCounter = 0;
     }
 
     @Redirect(

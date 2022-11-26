@@ -21,11 +21,11 @@ class AntiAFK : Module() {
     private val swingDelayTimer = MSTimer()
     private val delayTimer = MSTimer()
 
-    private val modeValue = ListValue("Mode", arrayOf("Old", "Random", "Custom"), "Custom")
+    private val modeValue = ListValue("Mode", arrayOf("Old", "Random", "Custom"), "Random")
 
     private val swingDelayValue = IntegerValue("SwingDelay", 100, 0, 1000)
     private val rotationDelayValue = IntegerValue("RotationDelay", 100, 0, 1000)
-    private val rotationAngleValue = FloatValue("RotationAngle", 20f, -180F, 180F)
+    private val rotationAngleValue = FloatValue("RotationAngle", 1f, -180F, 180F)
 
     private val jumpValue = BoolValue("Jump", true)
     private val moveValue = BoolValue("Move", true)

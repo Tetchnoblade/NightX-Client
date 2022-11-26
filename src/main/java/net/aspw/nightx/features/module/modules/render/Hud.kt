@@ -11,24 +11,23 @@ import net.aspw.nightx.utils.AnimationUtils
 import net.aspw.nightx.utils.render.RenderUtils
 import net.aspw.nightx.value.*
 
-@ModuleInfo(name = "HUD", category = ModuleCategory.RENDER, array = false)
-class HUD : Module() {
+@ModuleInfo(name = "Hud", category = ModuleCategory.RENDER, array = false)
+class Hud : Module() {
     val tabHead = BoolValue("Tab-HeadOverlay", true)
     val animHotbarValue = BoolValue("AnimatedHotbar", false)
     val blackHotbarValue = BoolValue("BlackHotbar", false)
     val inventoryParticle = BoolValue("InventoryParticle", false)
     val fontChatValue = BoolValue("FontChat", false)
-    val cmdBorderValue = BoolValue("CommandChatBorder", false)
     val fontType = FontValue("Font", Fonts.fontSFUI40, { fontChatValue.get() })
     val chatRectValue = BoolValue("ChatRect", true)
     val chatCombineValue = BoolValue("ChatCombine", false)
     val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 10.0F, 0.01F, 10.0F)
     private val toggleMessageValue = BoolValue("DisplayToggleMessage", false)
-    private val toggleSoundValue = ListValue("ToggleSound", arrayOf("None", "Default", "Custom"), "None")
+    private val toggleSoundValue = ListValue("ToggleSound", arrayOf("None", "Default", "Custom"), "Custom")
     private val toggleVolumeValue =
-        IntegerValue("ToggleVolume", 94, 0, 100, { toggleSoundValue.get().equals("custom", true) })
+        IntegerValue("ToggleVolume", 90, 0, 100, { toggleSoundValue.get().equals("custom", true) })
     val guiButtonStyle =
-        ListValue("Button-Style", arrayOf("Minecraft", "LiquidBounce", "Rounded", "LiquidBounce+", "Test"), "Minecraft")
+        ListValue("Button-Style", arrayOf("Minecraft", "LiquidBounce", "Rounded", "LiquidBounce+"), "Minecraft")
 
     val containerBackground = BoolValue("Container-Background", true)
     val containerButton = ListValue("Container-Button", arrayOf("TopLeft", "TopRight", "Off"), "Off")

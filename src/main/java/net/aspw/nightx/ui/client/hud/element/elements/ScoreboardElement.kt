@@ -5,7 +5,7 @@ import com.google.common.collect.Lists
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.module.modules.client.ColorMixer
 import net.aspw.nightx.features.module.modules.cool.AntiBlind
-import net.aspw.nightx.features.module.modules.render.HUD
+import net.aspw.nightx.features.module.modules.render.Hud
 import net.aspw.nightx.ui.client.hud.element.Border
 import net.aspw.nightx.ui.client.hud.element.Element
 import net.aspw.nightx.ui.client.hud.element.ElementInfo
@@ -154,7 +154,7 @@ class ScoreboardElement(
 
         var maxWidth = fontRenderer.getStringWidth(objective.displayName)
 
-        val hud = NightX.moduleManager.getModule(HUD::class.java) as HUD
+        val hud = NightX.moduleManager.getModule(Hud::class.java) as Hud
 
         for (score in scoreCollection) {
             val scorePlayerTeam = scoreboard.getPlayersTeam(score.playerName)

@@ -5,6 +5,7 @@ import net.aspw.nightx.features.module.Module;
 import net.aspw.nightx.features.module.ModuleCategory;
 import net.aspw.nightx.features.module.ModuleInfo;
 import net.aspw.nightx.utils.render.BlendUtils;
+import net.aspw.nightx.value.BoolValue;
 import net.aspw.nightx.value.IntegerValue;
 
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.lang.reflect.Field;
 
 @ModuleInfo(name = "ColorMixer", category = ModuleCategory.CLIENT, canEnable = false)
 public class ColorMixer extends Module {
+    public static final BoolValue jumpPatch = new BoolValue("JumpFix", false);
 
     public static Color[] lastColors = new Color[]{};
     private static float[] lastFraction = new float[]{};

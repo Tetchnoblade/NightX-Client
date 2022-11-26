@@ -1,7 +1,7 @@
 package net.aspw.nightx.injection.forge.mixins.gui;
 
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.render.HUD;
+import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.ui.client.GuiBackground;
 import net.aspw.nightx.utils.render.ParticleUtils;
 import net.aspw.nightx.utils.render.shader.shaders.BackgroundShader;
@@ -62,7 +62,7 @@ public abstract class MixinGuiScreen {
             return;
         }
 
-        final HUD hud = NightX.moduleManager.getModule(HUD.class);
+        final Hud hud = NightX.moduleManager.getModule(Hud.class);
 
         if (hud.getInventoryParticle().get() && mc.thePlayer != null) {
             final ScaledResolution scaledResolution = new ScaledResolution(mc);

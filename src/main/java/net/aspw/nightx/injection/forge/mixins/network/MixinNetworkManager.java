@@ -3,7 +3,7 @@ package net.aspw.nightx.injection.forge.mixins.network;
 import io.netty.channel.ChannelHandlerContext;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.PacketEvent;
-import net.aspw.nightx.features.module.modules.render.HUD;
+import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.utils.PacketUtils;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -42,7 +42,7 @@ public class MixinNetworkManager {
      */
     @Inject(method = "getIsencrypted", at = @At("HEAD"), cancellable = true)
     private void injectEncryption(CallbackInfoReturnable<Boolean> cir) {
-        final HUD hud = NightX.moduleManager.getModule(HUD.class);
+        final Hud hud = NightX.moduleManager.getModule(Hud.class);
         if (hud != null && hud.getTabHead().get()) {
             cir.setReturnValue(true);
         }
