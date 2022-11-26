@@ -92,6 +92,7 @@
     "render.MixinRenderItem",
     "render.MixinRenderPlayer",
     "render.MixinRenderEntityItem",
+    "render.MixinRegionRenderCache",
     "render.MixinRendererLivingEntity",
     "render.MixinTileEntityBannerRenderer",
     "render.MixinTileEntityChestRenderer",
