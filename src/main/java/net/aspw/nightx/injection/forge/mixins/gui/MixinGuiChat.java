@@ -99,13 +99,9 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
         if (NightX.commandManager.getLatestAutoComplete().length != 0) callbackInfo.cancel();
     }
 
-    /**
-     * @author CCBlueX
-     */
     @Overwrite
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        final Hud hud = NightX.moduleManager.getModule(Hud.class);
-        if (!inputField.getText().isEmpty() && inputField.getText().startsWith(String.valueOf(NightX.commandManager.getPrefix()))) {
+        if (!inputField.getText().isEmpty() && inputField.getText().startsWith(String.valueOf(NightX.commandManager.getPrefix())) || !inputField.getText().isEmpty() && inputField.getText().startsWith("/")) {
             Stencil.write(true);
             RenderUtils.drawRect(2F, this.height - fade, this.width - 2, this.height - fade + 12, Integer.MIN_VALUE);
             Stencil.erase(false);

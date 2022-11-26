@@ -207,7 +207,8 @@ class ModuleManager : Listenable {
             ItemPhysics::class.java,
             FlagNotifier::class.java,
             AutoJump::class.java,
-            Tweaks::class.java
+            Tweaks::class.java,
+            HackerDetector::class.java
         )
 
         registerModule(Fucker)
