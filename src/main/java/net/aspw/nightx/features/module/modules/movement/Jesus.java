@@ -19,7 +19,7 @@ import net.minecraft.util.BlockPos;
 @ModuleInfo(name = "Jesus", spacedName = "Jesus", category = ModuleCategory.MOVEMENT)
 public class Jesus extends Module {
 
-    public final ListValue modeValue = new ListValue("Mode", new String[]{"Vanilla", "NCP", "AAC", "AAC3.3.11", "AAC4.2.1", "Horizon1.4.6", "Twillight", "MatrixFast", "Dolphin", "Swim"}, "NCP");
+    public final ListValue modeValue = new ListValue("Mode", new String[]{"Vanilla", "NCP", "AAC", "AAC3.3.11", "AAC4.2.1", "Horizon1.4.6", "ShotBow", "Twillight", "MatrixFast", "MatrixDolphin", "Dolphin", "Swim"}, "NCP");
     private final BoolValue noJumpValue = new BoolValue("NoJump", false);
 
     private boolean nextTick;
@@ -69,6 +69,17 @@ public class Jesus extends Module {
                 if (mc.thePlayer.isInWater()) {
                     mc.thePlayer.motionY = 0;
                     MovementUtils.strafe(0.6f);
+                }
+                break;
+            case "shotbow":
+                if (mc.thePlayer.isInWater()) {
+                    mc.thePlayer.motionY = 0;
+                    MovementUtils.strafe(0.4f);
+                }
+                break;
+            case "matrixdolphin":
+                if (mc.thePlayer.isInWater()) {
+                    mc.thePlayer.motionY = 0.6;
                 }
                 break;
             case "aac3.3.11":
