@@ -106,30 +106,6 @@ public abstract class MixinItemRenderer {
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
-    private void test(float i, float i2) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.translate(0.0F, i * -0.6F, 0.0F);
-        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
-        float var3 = MathHelper.sin(i2 * i2 * (float) Math.PI);
-        float var4 = MathHelper.sin(MathHelper.sqrt_float(i2) * (float) Math.PI);
-        float var5 = MathHelper.ceiling_float_int(MathHelper.floor_double(i2) * (float) Math.PI);
-        GlStateManager.rotate(var3 * -20.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var4 * -20.0F, 0.0F, 0.0F, 1.0F);
-        GlStateManager.rotate(var5 * -80.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void tap2(final float var2, final float swing) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        final float var3 = MathHelper.sin(swing * swing * 3.1415927f);
-        final float var4 = MathHelper.sin(MathHelper.sqrt_float(swing) * 3.1415927f);
-        GlStateManager.translate(0.56f, -0.42f, -0.71999997f);
-        GlStateManager.translate(0.1f * var4, -0.0f, -0.21999997f * var4);
-        GlStateManager.translate(0.0f, var2 * -0.15f, 0.0f);
-        GlStateManager.rotate(var3 * 45.0f, 0.0f, 1.0f, 0.0f);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
     private void avatar(final float equipProgress, final float swingProgress) {
         GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
         GlStateManager.translate(0.0f, 0.0f, 0.0f);
@@ -139,30 +115,6 @@ public abstract class MixinItemRenderer {
         GlStateManager.rotate(f * -20.0f, 0.0f, 1.0f, 0.0f);
         GlStateManager.rotate(f2 * -20.0f, 0.0f, 0.0f, 1.0f);
         GlStateManager.rotate(f2 * -40.0f, 1.0f, 0.0f, 0.0f);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void tap1(float tap1, float tap2) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.translate(0.0F, tap1 * -0.6F, 0.0F);
-        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
-        float var3 = MathHelper.sin(tap2 * tap2 * (float) Math.PI);
-        float var4 = MathHelper.sin(MathHelper.sqrt_float(tap2) * (float) Math.PI);
-        GlStateManager.rotate(var3 * -40.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var4 * 0.0F, 0.0F, 0.0F, 1.0F);
-        GlStateManager.rotate(var4 * 0.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void stab(float var10, float var9) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.translate(0.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
-        float var11 = MathHelper.sin(var9 * var9 * (float) Math.PI);
-        float var12 = MathHelper.sin(MathHelper.sqrt_float(var9) * (float) Math.PI);
-        GlStateManager.rotate(var11 * 20.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(var12 * 0.0F, 0.0F, 0.0f, 0.0F);
-        GlStateManager.rotate(var12 * -10.0F, 1.0F, 0.0F, -4.0F);
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
@@ -226,42 +178,6 @@ public abstract class MixinItemRenderer {
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
-    private void jello(float var11, float var12) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.rotate(48.57f, 0f, 0.24f, 0.14f);
-        float var13 = MathHelper.sin(var12 * var12 * (float) Math.PI);
-        float var14 = MathHelper.sin(MathHelper.sqrt_float(var12) * (float) Math.PI);
-        GlStateManager.rotate(var13 * -35.0F, 0.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(var14 * 0.0F, 0.0F, 0.0f, 0.0F);
-        GlStateManager.rotate(var14 * 20.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void continuity(float var11, float var10) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.translate(0.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
-        float var12 = -MathHelper.sin(var10 * var10 * (float) Math.PI);
-        float var13 = MathHelper.cos(MathHelper.sqrt_float(var10) * (float) Math.PI);
-        float var14 = MathHelper.abs(MathHelper.sqrt_float(var11) * (float) Math.PI);
-        GlStateManager.rotate(var12 * var14 * 30.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var13 * 0.0F, 0.0F, 0.0f, 1.0F);
-        GlStateManager.rotate(var13 * 20.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void poke(final float var5, final float var6) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
-        final float var7 = MathHelper.sin(var6 * var6 * 3.1415927f);
-        final float var8 = MathHelper.sin(MathHelper.sqrt_float(var6) * 3.1415927f);
-        GlStateManager.translate(0.56f, -0.42f, -0.71999997f);
-        GlStateManager.translate(0.1f * var8, -0.0f, -0.21999997f * var8);
-        GlStateManager.translate(0.0f, var5 * -0.15f, 0.0f);
-        GlStateManager.rotate(var7 * 0.0f, 0.0f, 1.0f, 0.0f);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
     private void Zoom(float p_178096_1_, float p_178096_2_) {
         GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
         GlStateManager.translate(0.0F, p_178096_1_ * -0.6F, 0.0F);
@@ -271,30 +187,6 @@ public abstract class MixinItemRenderer {
         GlStateManager.rotate(var3 * -20.0F, 0.0F, 0.0F, 0.0F);
         GlStateManager.rotate(var4 * -20.0F, 0.0F, 0.0F, 0.0F);
         GlStateManager.rotate(var4 * -20.0F, 0.0F, 0.0F, 0.0F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void strange(float lul, float lol) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
-        float var26 = MathHelper.sin(lol * lul * 3.1415927f);
-        float var27 = MathHelper.cos(MathHelper.sqrt_double(lul) * (float) Math.PI);
-        float var28 = MathHelper.abs(MathHelper.sqrt_float(lul) * (float) Math.PI);
-        GlStateManager.rotate(var26 * var27, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var28 * 15.0F, 0.0F, 0.0F, 1.0F);
-        GlStateManager.rotate(var27 * 10.0f, 1.0f, 0.0f, 0.0f);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void move(final float test1, final float test2) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
-        float var30 = MathHelper.sin(test2 * MathHelper.sqrt_float(test1) * 3.1415927f);
-        float var31 = MathHelper.cos(MathHelper.sqrt_float(test2) * (float) Math.PI);
-        float var29 = -MathHelper.abs(MathHelper.sqrt_float(test1) * test2 * (float) Math.PI);
-        GlStateManager.rotate(var30 * var29 * -90.0f, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var29 * var31 * 5.0F, 0.0F, 0.0F, 1.0F);
-        GlStateManager.rotate(var31 * 5.0f, 1.0f, 0.0f, 0.0f);
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
@@ -319,43 +211,6 @@ public abstract class MixinItemRenderer {
         GlStateManager.rotate(var3 * -15F, 0.0F, 1.0F, 0.2F);
         GlStateManager.rotate(var4 * -10F, 0.2F, 0.1F, 1.0F);
         GlStateManager.rotate(var4 * -30F, 1.3F, 0.1F, 0.2F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void push1(float idk, float idc) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.translate(0.0F, idk * -0.6F, 0.0F);
-        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
-        float var3 = MathHelper.sin(idc * idc * (float) Math.PI);
-        float var4 = MathHelper.sin(MathHelper.sqrt_float(idc) * (float) Math.PI);
-        GlStateManager.rotate(var3 * -10.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.rotate(var4 * -10.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.rotate(var4 * -10.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void push2(float idk, float idc) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.translate(0.0F, idk * -0.6F, 0.0F);
-        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
-        float var3 = MathHelper.sin(idc * idc * (float) Math.PI);
-        float var4 = MathHelper.sin(MathHelper.sqrt_float(idc) * (float) Math.PI);
-        GlStateManager.rotate(var3 * -10.0F, 2.0F, 2.0F, 2.0F);
-        GlStateManager.rotate(var4 * -10.0F, 2.0F, 2.0F, 0.0F);
-        GlStateManager.rotate(var4 * -10.0F, 2.0F, 2.0F, 0.0F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void up(float idk, float idc) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.translate(0.0F, idk * -0.6F, 0.0F);
-        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
-        float var3 = MathHelper.sin(idc * idc * (float) Math.PI);
-        float var4 = MathHelper.sin(MathHelper.sqrt_float(idc) * (float) Math.PI);
-        GlStateManager.rotate(var3 * -20.0F, 0.0F, 1.0F, 1.0F);
-        GlStateManager.rotate(var4 * -10.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(var3 * -20.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var4 * -10.0F, 1.0F, 0.0F, 1.0F);
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
@@ -524,12 +379,6 @@ public abstract class MixinItemRenderer {
                                     GlStateManager.rotate(40, 0, 1, 0);
                                     break;
                                 }
-                                case "Cool": {
-                                    this.transformFirstPersonItem(f, f1);
-                                    GlStateManager.translate(0, 0.2, 0);
-                                    this.doBlockTransformations();
-                                    break;
-                                }
                                 case "Sigma3": {
                                     transformFirstPersonItem(f / 2.0F, f1);
                                     GL11.glTranslated(0.14D, -0.03D, -0.3D);
@@ -539,7 +388,7 @@ public abstract class MixinItemRenderer {
                                     doBlockTransformations();
                                     break;
                                 }
-                                case "Okura": {
+                                case "Reverse": {
                                     this.func_178096_b(f, f1);
                                     if (Animations.RotateItems.get())
                                         rotateItemAnim();
@@ -599,17 +448,8 @@ public abstract class MixinItemRenderer {
                                     float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
                                     GL11.glTranslated(-0.04D, 0.02D, -0.08D);
                                     this.transformFirstPersonItem(f / 1000.0F, 0.0f);
-                                    GlStateManager.rotate(-var9 * -35.0F, var9 / 2.0F, 1.0F, 4.0F);
-                                    GlStateManager.rotate(-var9 * -16.0F, 1.0F, var9 / 3.0F, -0.0F);
-                                    this.func_178103_d(0.2F);
-                                    break;
-                                }
-                                case "Leet": {
-                                    float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
-                                    GL11.glTranslated(-0.04D, 0.0D, 0.0D);
-                                    this.transformFirstPersonItem(f / 1000.0F, 0.0f);
-                                    GlStateManager.rotate(-var9 * 120.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
-                                    GlStateManager.rotate(-var9 * 0.0F, 1.0F, var9 / 3.0F, -0.0F);
+                                    GlStateManager.rotate(-var9 * -32.0F, var9 / 2.0F, 1.0F, 4.0F);
+                                    GlStateManager.rotate(-var9 * -10.0F, 1.0F, var9 / 3.0F, -0.0F);
                                     this.func_178103_d(0.2F);
                                     break;
                                 }
@@ -641,29 +481,6 @@ public abstract class MixinItemRenderer {
                                         rotateItemAnim();
                                     break;
                                 }
-                                case "Tap2": {
-                                    this.tap2(0.0f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    GlStateManager.scale(2f, 2f, 2f);
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "Poke": {
-                                    this.poke(0.1f, f1);
-                                    GlStateManager.scale(2.5f, 2.5f, 2.5f);
-                                    GL11.glTranslated(1.2, -0.5, 0.5);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
                                 case "SlideLow": {
                                     this.slide(f, f1);
                                     if (Animations.RotateItems.get())
@@ -674,90 +491,8 @@ public abstract class MixinItemRenderer {
                                         rotateItemAnim();
                                     break;
                                 }
-                                case "Push1": {
-                                    this.push1(0.1f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "Up": {
-                                    this.up(f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "Shield": {
-                                    this.jello(0.0f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "Akrien": {
-                                    this.func_178096_b(f1, 0.0F);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "VisionFX": {
-                                    this.continuity(0.1f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "Strange": {
-                                    this.strange(f1 + 0.2f, 0.1f);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "Lucky": {
-                                    this.move(-0.3f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
                                 case "ETB": {
                                     this.ETB(f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "OldSwang": {
-                                    this.transformFirstPersonItem(f / 2.0F, 0.0F);
-                                    GlStateManager.rotate(-MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F) * 40.0F / 2.0F, MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) / 2.0F, -0.0F, 9.0F);
-                                    GlStateManager.rotate(-MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 30.0F, 1.0F, MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) / 2.0F, -0.0F);
                                     if (Animations.RotateItems.get())
                                         rotateItemAnim();
 
@@ -787,7 +522,7 @@ public abstract class MixinItemRenderer {
                                         rotateItemAnim();
                                     break;
                                 }
-                                case "SmoothFloat": {
+                                case "Spinny": {
                                     this.func_178096_b(0.0f, 0.95f);
                                     GlStateManager.rotate(this.delay, 1.0F, 0.0F, 2.0F);
                                     if (this.rotateTimer.hasTimePassed(1)) {
@@ -807,7 +542,7 @@ public abstract class MixinItemRenderer {
                                         rotateItemAnim();
                                     break;
                                 }
-                                case "Rotate360": {
+                                case "Rotate": {
                                     this.func_178096_b(0.0f, 0.95f);
                                     if (Animations.RotateItems.get())
                                         rotateItemAnim();
@@ -841,7 +576,6 @@ public abstract class MixinItemRenderer {
                                     GlStateManager.rotate(-MathHelper.sin(f1 * f1 * 3.1415927F) * 40.0F / 2.0F, MathHelper.sin(f1 * f1 * 3.1415927F) / 2.0F, -0.0F, 9.0F);
                                     GlStateManager.rotate(-MathHelper.sin(f1 * f1 * 3.1415927F) * 30.0F, 1.0F, MathHelper.sin(f1 * f1 * 3.1415927F) / 2.0F, -0.0F);
                                     this.doBlockTransformations();
-                                    GL11.glTranslatef(-0.05F, this.mc.thePlayer.isSneaking() ? -0.2F : 0.0F, 0.1F);
                                     break;
                                 }
                                 case "Flux2": {
@@ -889,24 +623,6 @@ public abstract class MixinItemRenderer {
                                     this.func_178103_d(0.2F);
                                     break;
                                 }
-                                case "Sweet": {
-                                    float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
-                                    GL11.glTranslated(-0.04D, 0.06D, 0.0D);
-                                    this.transformFirstPersonItem(f / 2.5F, 0.0f);
-                                    GlStateManager.rotate(-var9 * 70.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
-                                    GlStateManager.rotate(-var9 * 17.5F, 1.0F, var9 / 3.0F, -0.0F);
-                                    this.func_178103_d(0.2F);
-                                    break;
-                                }
-                                case "Pumpkin": {
-                                    float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
-                                    GL11.glTranslated(-0.04D, 0.06D, 0.0D);
-                                    this.transformFirstPersonItem(f / 2.5F, 0.0f);
-                                    GlStateManager.rotate(-var9 * -70.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
-                                    GlStateManager.rotate(-var9 * -17.5F, 1.0F, var9 / 3.0F, -0.0F);
-                                    this.func_178103_d(0.2F);
-                                    break;
-                                }
                                 case "Zoom": {
                                     this.Zoom(0.0f, f1);
                                     if (Animations.RotateItems.get())
@@ -917,70 +633,6 @@ public abstract class MixinItemRenderer {
                                         rotateItemAnim();
                                     break;
                                 }
-                                case "Move": {
-                                    this.test(f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "Tap1": {
-                                    this.tap1(f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "Stab": {
-                                    this.stab(0.1f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "Push2": {
-                                    this.push2(0.1F, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "Jello": {
-                                    this.func_178096_b(0, 0.0F);
-                                    this.func_178103_d();
-                                    int alpha = (int) Math.min(255, ((System.currentTimeMillis() % 255) > 255 / 2 ? (Math.abs(Math.abs(System.currentTimeMillis()) % 255 - 255)) : System.currentTimeMillis() % 255) * 2);
-                                    float f5 = (f1 > 0.5 ? 1 - f1 : f1);
-                                    GlStateManager.translate(0.3f, -0.0f, 0.40f);
-                                    GlStateManager.rotate(0.0f, 0.0f, 0.0f, 1.0f);
-                                    GlStateManager.translate(0, 0.5f, 0);
-
-                                    GlStateManager.rotate(90, 1.0f, 0.0f, -1.0f);
-                                    GlStateManager.translate(0.6f, 0.5f, 0);
-                                    GlStateManager.rotate(-90, 1.0f, 0.0f, -1.0f);
-
-
-                                    GlStateManager.rotate(-10, 1.0f, 0.0f, -1.0f);
-                                    GlStateManager.rotate((-f5) * 10.0f, 10.0f, 10.0f, -9.0f);
-                                    GlStateManager.rotate(10.0f, -1.0f, 0.0f, 0.0f);
-
-                                    GlStateManager.translate(0, 0, -0.5);
-                                    GlStateManager.rotate(mc.thePlayer.isSwingInProgress ? -alpha / 5f : 1, 1.0f, -0.0f, 1.0f);
-                                    GlStateManager.translate(0, 0, 0.5);
-                                    break;
-                                }
-
                             }
                         } else {
                             this.transformFirstPersonItem(f + 0.1F, f1);

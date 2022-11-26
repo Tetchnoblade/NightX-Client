@@ -4,7 +4,6 @@ import com.google.gson.*;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.features.module.Module;
 import net.aspw.nightx.features.special.AntiForge;
-import net.aspw.nightx.features.special.BungeeCordSpoof;
 import net.aspw.nightx.features.special.MacroManager;
 import net.aspw.nightx.file.FileConfig;
 import net.aspw.nightx.file.FileManager;
@@ -79,12 +78,8 @@ public class ValuesConfig extends FileConfig {
                     AntiForge.enabled = jsonValue.get("VanillaSpoof").getAsBoolean();
                 if (jsonValue.has("FMLSpoof"))
                     AntiForge.blockFML = jsonValue.get("FMLSpoof").getAsBoolean();
-                if (jsonValue.has("ProxySpoof"))
-                    AntiForge.blockProxyPacket = jsonValue.get("ProxySpoof").getAsBoolean();
                 if (jsonValue.has("PayloadsSpoof"))
-                    AntiForge.blockPayloadPackets = jsonValue.get("PayloadsSpoof").getAsBoolean();
-                if (jsonValue.has("BungeeExploit"))
-                    BungeeCordSpoof.enabled = jsonValue.get("BungeeExploit").getAsBoolean();
+                    AntiForge.blockFML = jsonValue.get("PayloadsSpoof").getAsBoolean();
             } else if (entry.getKey().equalsIgnoreCase("thealtening")) {
                 JsonObject jsonValue = (JsonObject) entry.getValue();
 
@@ -146,9 +141,6 @@ public class ValuesConfig extends FileConfig {
         final JsonObject jsonFeatures = new JsonObject();
         jsonFeatures.addProperty("VanillaSpoof", AntiForge.enabled);
         jsonFeatures.addProperty("FMLSpoof", AntiForge.blockFML);
-        jsonFeatures.addProperty("ProxySpoof", AntiForge.blockProxyPacket);
-        jsonFeatures.addProperty("PayloadsSpoof", AntiForge.blockPayloadPackets);
-        jsonFeatures.addProperty("BungeeExploit", BungeeCordSpoof.enabled);
         jsonObject.add("features", jsonFeatures);
 
         final JsonObject theAlteningObject = new JsonObject();

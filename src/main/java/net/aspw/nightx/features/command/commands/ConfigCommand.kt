@@ -49,7 +49,6 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                             if (scriptFile.exists())
                                 if (scriptFile.delete()) {
                                     scriptFile.createNewFile()
-                                    chat("§aSuccessfully saved new config!")
                                 } else {
                                     return
                                 }
@@ -65,6 +64,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                             }
                             val settingsScript = SettingsUtils.generateScript(values, binds, states)
                             scriptFile.writeText(settingsScript)
+                            chat("§aSuccessfully saved new config!")
                         } catch (throwable: Throwable) {
                         }
                         return

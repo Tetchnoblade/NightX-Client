@@ -33,7 +33,7 @@ class Aimbot : Module() {
         if (mc.gameSettings.keyBindAttack.isKeyDown)
             clickTimer.reset()
 
-        if (onClickValue.get() && clickTimer.hasTimePassed(500L))
+        if (onClickValue.get() && clickTimer.hasTimePassed(1L))
             return
 
         val player = mc.thePlayer ?: return

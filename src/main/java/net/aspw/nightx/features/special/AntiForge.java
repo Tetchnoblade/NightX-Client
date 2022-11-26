@@ -13,7 +13,6 @@ public class AntiForge extends MinecraftInstance implements Listenable {
 
     public static boolean enabled = true;
     public static boolean blockFML = true;
-    public static boolean blockProxyPacket = true;
     public static boolean blockPayloadPackets = true;
 
     @EventTarget
@@ -22,9 +21,6 @@ public class AntiForge extends MinecraftInstance implements Listenable {
 
         if (enabled && !mc.isIntegratedServerRunning()) {
             try {
-                if (blockProxyPacket && packet.getClass().getName().equals("net.minecraftforge.fml.common.network.internal.FMLProxyPacket"))
-                    event.cancelEvent();
-
                 if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
                     final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
 

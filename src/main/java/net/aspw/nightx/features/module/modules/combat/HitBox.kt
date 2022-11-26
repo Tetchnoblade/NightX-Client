@@ -7,7 +7,5 @@ import net.aspw.nightx.value.FloatValue
 
 @ModuleInfo(name = "HitBox", spacedName = "Hit Box", category = ModuleCategory.COMBAT)
 class HitBox : Module() {
-
     val sizeValue = FloatValue("Size", 1F, 0F, 1F)
-
 }

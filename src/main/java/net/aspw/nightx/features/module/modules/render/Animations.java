@@ -10,13 +10,11 @@ import net.aspw.nightx.value.ListValue;
 
 @ModuleInfo(name = "Animations", category = ModuleCategory.RENDER, array = false)
 public class Animations extends Module {
-
     // some ListValue
     public static final ListValue Sword = new ListValue("Style", new String[]{
-            "1.8", "LiquidBounce", "SlideLow", "SlideMedium", "SlideFull", "Spin", "Push", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Sweet", "Moon", "MoonPush", "Lennox", "Leaked", "Jigsaw", "Sigma3", "Sigma4", "Okura", "Leet",
-            "Old", "OldFull", "Flux1", "Flux2", "Flux3", "DortwareNew", "Dortware1", "Dortware2", "Smart", "Cool", "Funny", "Pumpkin", "ETB", "Zoom", "Avatar", "Tap1", "Tap2", "Poke", "Push1", "Push2", "Up", "Shield", "Akrien", "VisionFX",
-            "Lucky", "Rotate360", "SmoothFloat", "Strange", "Move", "Stab", "OldSwang", "Jello"
-    }, "Swank");
+            "1.8", "LiquidBounce", "SlideLow", "SlideMedium", "SlideFull", "Push", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Smart", "ETB", "Moon", "MoonPush", "Lennox", "Leaked",
+            "Jigsaw", "Avatar", "Sigma3", "Sigma4", "Reverse", "Old", "OldFull", "Flux1", "Flux2", "Flux3", "DortwareNew", "Dortware1", "Dortware2", "Funny", "Zoom", "Rotate", "Spin", "Spinny"
+    }, "Swing");
 
     // item general scale
     public static final FloatValue Scale = new FloatValue("Scale", 0.4f, 0f, 4f);
@@ -37,7 +35,7 @@ public class Animations extends Module {
     // modify item swing and rotate
     public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 0, -9, 4);
     public static final BoolValue RotateItems = new BoolValue("Rotate-Items", false);
-    public static final FloatValue SpeedRotate = new FloatValue("Rotate-Speed", 1f, 0f, 10f, () -> RotateItems.get() || Sword.get().equalsIgnoreCase("smoothfloat") || Sword.get().equalsIgnoreCase("rotate360"));
+    public static final FloatValue SpeedRotate = new FloatValue("Rotate-Speed", 1f, 0f, 10f, () -> RotateItems.get() || Sword.get().equalsIgnoreCase("spinny") || Sword.get().equalsIgnoreCase("rotate"));
     public static final FloatValue SpinSpeed = new FloatValue("Spin-Speed", 5f, 0f, 50f, () -> Sword.get().equalsIgnoreCase("spin"));
 
     // transform rotation

@@ -48,7 +48,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
     override fun initGui() {
         val textFieldWidth = (width / 8).coerceAtLeast(70)
-        searchField = GuiTextField(2, Fonts.font40, width - textFieldWidth - 10, 10, textFieldWidth, 20)
+        searchField = GuiTextField(2, Fonts.fontSFUI40, width - textFieldWidth - 10, 10, textFieldWidth, 20)
         searchField.maxStringLength = Int.MAX_VALUE
 
         altsList = GuiList(this)
@@ -92,21 +92,21 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         revertOriginalAccount.enabled = (lastSessionToken != null)
         drawBackground(0)
         altsList.drawScreen(mouseX, mouseY, partialTicks)
-        Fonts.font40.drawCenteredString("Alt Manager", width / 2.0f, 6f, 0xffffff)
-        Fonts.font35.drawCenteredString(
+        Fonts.fontSFUI40.drawCenteredString("Alt Manager", width / 2.0f, 6f, 0xffffff)
+        Fonts.fontSFUI35.drawCenteredString(
             if (searchField.text.isEmpty()) "${fileManager.accountsConfig.accounts.size} Alts" else altsList.accounts.size.toString() + " Search Results",
             width / 2.0f,
             18f,
             0xffffff
         )
-        Fonts.font35.drawCenteredString(status, width / 2.0f, 32f, 0xffffff)
-        Fonts.font35.drawStringWithShadow(
-            "§7User: §a${mc.getSession().username}",
+        Fonts.fontSFUI35.drawCenteredString(status, width / 2.0f, 32f, 0xffffff)
+        Fonts.fontSFUI35.drawStringWithShadow(
+            "§7Ign: §a${mc.getSession().username}",
             6f,
             6f,
             0xffffff
         )
-        Fonts.font35.drawStringWithShadow(
+        Fonts.fontSFUI35.drawStringWithShadow(
             "§7Type: §a${
                 if (altService.currentService == AltService.EnumAltService.THEALTENING) "The Altening" else if (isValidTokenOffline(
                         mc.getSession().token
@@ -115,7 +115,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
             }", 6f, 15f, 0xffffff
         )
         searchField.drawTextBox()
-        if (searchField.text.isEmpty() && !searchField.isFocused) Fonts.font40.drawStringWithShadow(
+        if (searchField.text.isEmpty() && !searchField.isFocused) Fonts.fontSFUI40.drawStringWithShadow(
             "§7Search...",
             (searchField.xPosition + 4).toFloat(),
             17f,
