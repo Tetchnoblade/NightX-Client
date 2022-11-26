@@ -100,7 +100,6 @@
     "render.MixinTileEntityRendererDispatcher",
     "render.MixinTileEntitySkullRenderer",
     "render.MixinVisGraph",
-    "render.MixinRegionRenderCache",
     "resources.MixinDefaultResourcePack",
     "resources.MixinSkinManager",
     "world.MixinWorld",
