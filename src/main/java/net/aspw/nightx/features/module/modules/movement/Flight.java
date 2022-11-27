@@ -463,10 +463,13 @@ public class Flight extends Module {
                 mc.thePlayer.motionY = vanillaMotionYValue.get();
                 mc.thePlayer.motionX = 0;
                 mc.thePlayer.motionZ = 0;
-                if (mc.gameSettings.keyBindJump.isKeyDown())
+                if (mc.gameSettings.keyBindJump.isKeyDown()) {
                     mc.thePlayer.motionY += vanillaVSpeed;
-                if (mc.gameSettings.keyBindSneak.isKeyDown())
+                }
+                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                     mc.thePlayer.motionY -= vanillaVSpeed;
+                    mc.gameSettings.keyBindSneak.pressed = false;
+                }
                 MovementUtils.strafe(vanillaSpeed);
                 handleVanillaKickBypass();
                 break;
@@ -478,19 +481,24 @@ public class Flight extends Module {
             case "ncp":
                 mc.thePlayer.motionY = -ncpMotionValue.get();
 
-                if (mc.gameSettings.keyBindSneak.isKeyDown())
+                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                     mc.thePlayer.motionY = -0.5D;
+                    mc.gameSettings.keyBindSneak.pressed = false;
+                }
                 MovementUtils.strafe();
                 break;
             case "oldncp":
                 if (startY > mc.thePlayer.posY)
                     mc.thePlayer.motionY = -0.000000000000000000000000000000001D;
 
-                if (mc.gameSettings.keyBindSneak.isKeyDown())
+                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                     mc.thePlayer.motionY = -0.2D;
+                    mc.gameSettings.keyBindSneak.pressed = false;
+                }
 
-                if (mc.gameSettings.keyBindJump.isKeyDown() && mc.thePlayer.posY < (startY - 0.1D))
+                if (mc.gameSettings.keyBindJump.isKeyDown() && mc.thePlayer.posY < (startY - 0.1D)) {
                     mc.thePlayer.motionY = 0.2D;
+                }
                 MovementUtils.strafe();
                 break;
             case "clip":
@@ -512,10 +520,13 @@ public class Flight extends Module {
                 mc.thePlayer.motionY = 0;
                 mc.thePlayer.motionX = 0;
                 mc.thePlayer.motionZ = 0;
-                if (mc.gameSettings.keyBindJump.isKeyDown())
+                if (mc.gameSettings.keyBindJump.isKeyDown()) {
                     mc.thePlayer.motionY += vanillaSpeed;
-                if (mc.gameSettings.keyBindSneak.isKeyDown())
+                }
+                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                     mc.thePlayer.motionY -= vanillaSpeed;
+                    mc.gameSettings.keyBindSneak.pressed = false;
+                }
                 MovementUtils.strafe(vanillaSpeed);
                 break;
             case "verus":
@@ -585,11 +596,14 @@ public class Flight extends Module {
                 handleVanillaKickBypass();
                 break;
             case "aac1.9.10":
-                if (mc.gameSettings.keyBindJump.isKeyDown())
+                if (mc.gameSettings.keyBindJump.isKeyDown()) {
                     aacJump += 0.2D;
+                }
 
-                if (mc.gameSettings.keyBindSneak.isKeyDown())
+                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                     aacJump -= 0.2D;
+                    mc.gameSettings.keyBindSneak.pressed = false;
+                }
 
                 if ((startY + aacJump) > mc.thePlayer.posY) {
                     mc.getNetHandler().addToSendQueue(new C03PacketPlayer(true));
@@ -644,17 +658,20 @@ public class Flight extends Module {
                 mc.thePlayer.motionY = 0;
                 mc.thePlayer.motionX = 0;
                 mc.thePlayer.motionZ = 0;
-                if (mc.gameSettings.keyBindJump.isKeyDown())
+                if (mc.gameSettings.keyBindJump.isKeyDown()) {
                     mc.thePlayer.motionY += vanillaSpeed;
-                if (mc.gameSettings.keyBindSneak.isKeyDown())
+                }
+                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                     mc.thePlayer.motionY -= vanillaSpeed;
+                }
                 MovementUtils.strafe(vanillaSpeed);
                 break;
             case "minesecure":
                 mc.thePlayer.capabilities.isFlying = false;
 
-                if (!mc.gameSettings.keyBindSneak.isKeyDown())
+                if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                     mc.thePlayer.motionY = -0.01F;
+                }
 
                 mc.thePlayer.motionX = 0;
                 mc.thePlayer.motionZ = 0;
@@ -736,7 +753,8 @@ public class Flight extends Module {
                         mineplexTimer.reset();
                     }
 
-                    if (mc.thePlayer.isSneaking() && mineplexTimer.hasTimePassed(100)) {
+                    if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && mineplexTimer.hasTimePassed(100)) {
+                        mc.gameSettings.keyBindSneak.pressed = false;
                         mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY - 0.6, mc.thePlayer.posZ);
                         mineplexTimer.reset();
                     }
@@ -853,10 +871,13 @@ public class Flight extends Module {
                     pearlState = 2;
 
                 if (pearlState == 2) {
-                    if (mc.gameSettings.keyBindJump.isKeyDown())
+                    if (mc.gameSettings.keyBindJump.isKeyDown()) {
                         mc.thePlayer.motionY += vanillaSpeed;
-                    if (mc.gameSettings.keyBindSneak.isKeyDown())
+                    }
+                    if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                         mc.thePlayer.motionY -= vanillaSpeed;
+                        mc.gameSettings.keyBindSneak.pressed = false;
+                    }
                     MovementUtils.strafe(vanillaSpeed);
                 }
                 break;

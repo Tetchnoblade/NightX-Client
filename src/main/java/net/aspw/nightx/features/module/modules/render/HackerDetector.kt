@@ -1,7 +1,9 @@
 package net.aspw.nightx.features.module.modules.render
 
 import net.aspw.nightx.NightX
-import net.aspw.nightx.event.*
+import net.aspw.nightx.event.EventState
+import net.aspw.nightx.event.EventTarget
+import net.aspw.nightx.event.MotionEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
@@ -39,7 +41,7 @@ class HackerDetector : Module() {
                 if ((player.isUsingItem || player.isBlocking) && player.onGround && playerSpeed >= 6.5) {
                     NightX.hud.addNotification(
                         Notification(
-                            "${player.name}、食べ歩きすんなー",
+                            "${player.name} is using noslow",
                             Notification.Type.INFO
                         )
                     )
@@ -50,7 +52,7 @@ class HackerDetector : Module() {
                 ) {
                     NightX.hud.addNotification(
                         Notification(
-                            "${player.name}はリレー選手だぞー",
+                            "${player.name} is using speed",
                             Notification.Type.INFO
                         )
                     )
@@ -65,7 +67,7 @@ class HackerDetector : Module() {
                 ) {
                     NightX.hud.addNotification(
                         Notification(
-                            "${player.name}、薬物で飛ぶのは良くないよー交番に通報した",
+                            "${player.name} is using flight",
                             Notification.Type.INFO
                         )
                     )
@@ -77,7 +79,7 @@ class HackerDetector : Module() {
                 if (yDiff > 0.0 && mc.thePlayer.onGround && player.motionY == -0.0784000015258789) {
                     NightX.hud.addNotification(
                         Notification(
-                            "${player.name}、段差ぬるっと登んなアナル犯すぞ",
+                            "${player.name} is using step",
                             Notification.Type.INFO
                         )
                     )
@@ -86,7 +88,7 @@ class HackerDetector : Module() {
                 if (player.hurtTime in 5..8 && mc.thePlayer.onGround && player.motionY == -0.0784000015258789 && player.motionX == 0.0 && player.motionZ == 0.0) {
                     NightX.hud.addNotification(
                         Notification(
-                            "${player.name}はノックバックしないデブです",
+                            "${player.name} is using velocity",
                             Notification.Type.INFO
                         )
                     )
@@ -97,7 +99,7 @@ class HackerDetector : Module() {
                 }
                 NightX.hud.addNotification(
                     Notification(
-                        "${player.name}はガリガリなので落下ダメージくらいません卍",
+                        "${player.name} is using nofall",
                         Notification.Type.INFO
                     )
                 )

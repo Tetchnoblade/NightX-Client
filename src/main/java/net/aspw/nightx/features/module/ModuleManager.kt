@@ -14,10 +14,7 @@ import net.aspw.nightx.features.module.modules.misc.*
 import net.aspw.nightx.features.module.modules.movement.*
 import net.aspw.nightx.features.module.modules.player.*
 import net.aspw.nightx.features.module.modules.render.*
-import net.aspw.nightx.features.module.modules.targets.TargetAnimals
-import net.aspw.nightx.features.module.modules.targets.TargetInvisible
-import net.aspw.nightx.features.module.modules.targets.TargetMobs
-import net.aspw.nightx.features.module.modules.targets.TargetPlayers
+import net.aspw.nightx.features.module.modules.targets.*
 import net.aspw.nightx.features.module.modules.utility.*
 import net.aspw.nightx.features.module.modules.world.*
 import net.aspw.nightx.features.module.modules.world.Timer
@@ -208,7 +205,8 @@ class ModuleManager : Listenable {
             FlagNotifier::class.java,
             AutoJump::class.java,
             Tweaks::class.java,
-            HackerDetector::class.java
+            HackerDetector::class.java,
+            TargetDead::class.java
         )
 
         registerModule(Fucker)

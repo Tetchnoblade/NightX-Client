@@ -14,6 +14,7 @@ import net.aspw.nightx.value.ListValue
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.stats.StatList
 import net.minecraft.util.MathHelper
+import kotlin.math.ceil
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -32,6 +33,8 @@ class Step : Module() {
             "NCP",
             "MotionNCP",
             "OldNCP",
+            "Verus",
+            "Vulcan",
             "AAC",
             "LAAC",
             "AAC3.3.4",
@@ -377,6 +380,57 @@ class Step : Module() {
                     spartanSwitch = !spartanSwitch
 
                     // Reset timer
+                    timer.reset()
+                }
+
+                mode.equals("Vulcan", true) -> {
+                    val superHeight = mc.thePlayer.entityBoundingBox.minY - stepY
+                    fakeJump()
+                    when {
+                        superHeight > 2.0 -> {
+                            val stpPacket = arrayOf(0.5, 1.0, 1.5, 2.0)
+                            stpPacket.forEach {
+                                mc.thePlayer.sendQueue.addToSendQueue(C03PacketPlayer.C04PacketPlayerPosition(stepX,
+                                    stepY + it, stepZ, true))
+                            }
+                        }
+
+                        superHeight <= 2.0 && superHeight > 1.5 -> {
+                            val stpPacket = arrayOf(0.5, 1.0, 1.5)
+                            stpPacket.forEach {
+                                mc.thePlayer.sendQueue.addToSendQueue(C03PacketPlayer.C04PacketPlayerPosition(stepX,
+                                    stepY + it, stepZ, true))
+                            }
+                        }
+
+                        superHeight <= 1.5 && superHeight > 1.0 -> {
+                            val stpPacket = arrayOf(0.5, 1.0)
+                            stpPacket.forEach {
+                                mc.thePlayer.sendQueue.addToSendQueue(C03PacketPlayer.C04PacketPlayerPosition(stepX,
+                                    stepY + it, stepZ, true))
+                            }
+                        }
+
+                        superHeight <= 1.0 && superHeight > 0.6 -> {
+                            val stpPacket = arrayOf(0.5)
+                            stpPacket.forEach {
+                                mc.thePlayer.sendQueue.addToSendQueue(C03PacketPlayer.C04PacketPlayerPosition(stepX,
+                                    stepY + it, stepZ, true))
+                            }
+                        }
+                    }
+                    timer.reset()
+                }
+
+                mode.equals("Verus", true) -> {
+                    val superHeight = mc.thePlayer.entityBoundingBox.minY - stepY
+                    mc.timer.timerSpeed = 1f / ceil(superHeight * 2.0).toFloat()
+                    var superHighest = 0.0
+                    fakeJump()
+                    repeat ((ceil(superHeight * 2.0) - 1.0).toInt()) {
+                        superHighest += 0.5
+                        mc.thePlayer.sendQueue.addToSendQueue(C03PacketPlayer.C04PacketPlayerPosition(stepX, stepY + superHighest, stepZ, true))
+                    }
                     timer.reset()
                 }
 

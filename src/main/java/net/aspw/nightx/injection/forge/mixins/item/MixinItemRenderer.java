@@ -268,7 +268,7 @@ public abstract class MixinItemRenderer {
                     case EAT:
                     case DRINK:
                         this.performDrinking(abstractclientplayer, partialTicks);
-                        this.transformFirstPersonItem(f, 0.0F);
+                        this.transformFirstPersonItem(f, f1);
 
                         if (NightX.moduleManager.getModule(Animations.class).getState() && Animations.RotateItems.get())
                             rotateItemAnim();
@@ -635,13 +635,12 @@ public abstract class MixinItemRenderer {
                                 }
                             }
                         } else {
-                            this.transformFirstPersonItem(f + 0.1F, f1);
-                            this.doBlockTransformations();
-                            GlStateManager.translate(-0.5F, 0.2F, 0.0F);
+                            transformFirstPersonItem(0F,0F);
+                            doBlockTransformations();
                         }
                         break;
                     case BOW:
-                        this.transformFirstPersonItem(f, 0.0F);
+                        this.transformFirstPersonItem(f, f1);
                         if (NightX.moduleManager.getModule(Animations.class).getState() && Animations.RotateItems.get())
                             rotateItemAnim();
                         this.doBowTransformations(partialTicks, abstractclientplayer);

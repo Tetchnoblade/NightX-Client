@@ -1,7 +1,6 @@
 package net.aspw.nightx.injection.forge.mixins.gui;
 
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.utils.AnimationUtils;
 import net.aspw.nightx.utils.render.RenderUtils;
 import net.aspw.nightx.utils.render.Stencil;
