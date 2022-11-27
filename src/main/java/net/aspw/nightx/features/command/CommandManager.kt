@@ -73,7 +73,7 @@ class CommandManager {
             }
         }
 
-        ClientUtils.displayChatMessage("§c>> §cUnknown command. Try ${prefix}help for a list of commands.")
+        ClientUtils.displayChatMessage("§cUnknown command. Try ${prefix}help for a list of commands.")
     }
 
     /**

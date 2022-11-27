@@ -44,7 +44,7 @@ class Sprint : Module() {
 
     @EventTarget
     fun onJump(event: JumpEvent) {
-        if (allDirectionsValue.get() && moveDirPatchValue.get() && jumpDirPatchValue.get() && !modified) {
+        if (allDirectionsValue.get() && moveDirPatchValue.get() && jumpDirPatchValue.get() && !modified && !mc.isIntegratedServerRunning()) {
             event.cancelEvent()
             var prevYaw = mc.thePlayer.rotationYaw
             mc.thePlayer.rotationYaw = MovementUtils.getRawDirection()

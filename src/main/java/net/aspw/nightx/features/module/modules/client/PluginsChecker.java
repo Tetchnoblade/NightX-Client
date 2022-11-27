@@ -35,7 +35,7 @@ public class PluginsChecker extends Module {
         tickTimer.update();
 
         if (tickTimer.hasTimePassed(20)) {
-            ClientUtils.displayChatMessage("§c>> §cFailed!");
+            ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §cFailed!");
             tickTimer.reset();
             setState(false);
         }
@@ -63,9 +63,9 @@ public class PluginsChecker extends Module {
             Collections.sort(plugins);
 
             if (!plugins.isEmpty())
-                ClientUtils.displayChatMessage("§c>> §aPlugins §7(§8" + plugins.size() + "§7): §c" + Strings.join(plugins.toArray(new String[0]), "§7, §c"));
+                ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §aPlugins §7(§8" + plugins.size() + "§7): §c" + Strings.join(plugins.toArray(new String[0]), "§7, §c"));
             else
-                ClientUtils.displayChatMessage("§c>> §cNo plugins found!");
+                ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §cNo plugins found!");
             setState(false);
             tickTimer.reset();
         }

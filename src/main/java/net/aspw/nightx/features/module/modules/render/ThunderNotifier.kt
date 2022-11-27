@@ -27,7 +27,7 @@ class ThunderNotifier : Module() {
             val dist = mc.thePlayer.getDistance(x, mc.thePlayer.entityBoundingBox.minY, z).roundToInt()
 
             if (chatValue.get())
-                ClientUtils.displayChatMessage("§c>> §fDetected thunder at [§7X: $x, Y: $y, Z: $z§f]")
+                ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §fDetected thunder at [§7X: $x, Y: $y, Z: $z§f]")
 
             if (notifValue.get())
                 NightX.hud.addNotification(

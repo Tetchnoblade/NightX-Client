@@ -54,7 +54,7 @@ public class Nick extends Module {
 
     @EventTarget
     public void onText(final TextEvent event) {
-        if (mc.thePlayer == null || event.getText().contains("§c>> §3") || event.getText().startsWith("/") || event.getText().startsWith(NightX.commandManager.getPrefix() + ""))
+        if (mc.thePlayer == null || event.getText().contains("§f§l[§d§lN§7§lightX§f§l] §3") || event.getText().startsWith("/") || event.getText().startsWith(NightX.commandManager.getPrefix() + ""))
             return;
 
         for (final FriendsConfig.Friend friend : NightX.fileManager.friendsConfig.getFriends())

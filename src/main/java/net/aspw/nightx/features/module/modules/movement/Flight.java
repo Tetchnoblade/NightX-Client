@@ -750,7 +750,7 @@ public class Flight extends Module {
                 } else {
                     mc.timer.timerSpeed = 1;
                     setState(false);
-                    ClientUtils.displayChatMessage("§c>> §aSelect an empty slot to fly.");
+                    ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §aSelect an empty slot to fly.");
                 }
                 break;
             case "aac3.3.12":
