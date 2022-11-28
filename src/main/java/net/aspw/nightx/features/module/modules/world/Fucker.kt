@@ -6,7 +6,7 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.combat.KillAura
-import net.aspw.nightx.features.module.modules.player.AutoTool
+import net.aspw.nightx.features.module.modules.utility.AutoTool
 import net.aspw.nightx.ui.client.hud.element.elements.Notification
 import net.aspw.nightx.ui.font.Fonts
 import net.aspw.nightx.utils.RotationUtils

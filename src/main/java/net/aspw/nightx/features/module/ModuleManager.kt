@@ -10,6 +10,9 @@ import net.aspw.nightx.features.module.modules.client.PluginsChecker
 import net.aspw.nightx.features.module.modules.combat.*
 import net.aspw.nightx.features.module.modules.cool.*
 import net.aspw.nightx.features.module.modules.exploit.*
+import net.aspw.nightx.features.module.modules.ghost.Aimbot
+import net.aspw.nightx.features.module.modules.ghost.AutoClicker
+import net.aspw.nightx.features.module.modules.ghost.HitBox
 import net.aspw.nightx.features.module.modules.misc.*
 import net.aspw.nightx.features.module.modules.movement.*
 import net.aspw.nightx.features.module.modules.player.*
@@ -97,7 +100,7 @@ class ModuleManager : Listenable {
             Chams::class.java,
             Clip::class.java,
             Phase::class.java,
-            Crasher::class.java,
+            ServerCrasher::class.java,
             Fov::class.java,
             Animations::class.java,
             InventoryManager::class.java,
@@ -159,7 +162,7 @@ class ModuleManager : Listenable {
             AntiAFK::class.java,
             AutoFish::class.java,
             Damage::class.java,
-            Ghost::class.java,
+            GodMode::class.java,
             KeepContainer::class.java,
             AutoWalk::class.java,
             BlockWalk::class.java,

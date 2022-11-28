@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement
+package net.aspw.nightx.features.module.modules.player
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.*
@@ -8,6 +8,7 @@ import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.exploit.Phase
 import net.aspw.nightx.utils.MovementUtils
 import net.aspw.nightx.utils.timer.MSTimer
+import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.value.ListValue
@@ -18,7 +19,7 @@ import kotlin.math.ceil
 import kotlin.math.cos
 import kotlin.math.sin
 
-@ModuleInfo(name = "Step", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Step", category = ModuleCategory.PLAYER)
 class Step : Module() {
 
     /**
@@ -48,6 +49,12 @@ class Step : Module() {
 
     private val jumpHeightValue = FloatValue("JumpHeight", 0.42F, 0.37F, 0.42F)
     private val delayValue = IntegerValue("Delay", 150, 0, 500, "ms")
+    private val useTimer = BoolValue("UseTimer", true)
+
+
+            /**
+     * VALUES
+     */
 
 
     /**
@@ -222,6 +229,10 @@ class Step : Module() {
 
     @EventTarget(ignoreCondition = true)
     fun onStepConfirm(event: StepConfirmEvent) {
+        if (NightX.moduleManager[Step::class.java]!!.state && useTimer.get()) {
+            mc.timer.timerSpeed = 0.55f
+        }
+
         if (mc.thePlayer == null || !isStep) // Check if step
             return
 

@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.combat
+package net.aspw.nightx.features.module.modules.ghost
 
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.Render3DEvent
@@ -13,7 +13,7 @@ import net.aspw.nightx.value.IntegerValue
 import net.minecraft.client.settings.KeyBinding
 import kotlin.random.Random
 
-@ModuleInfo(name = "AutoClicker", spacedName = "Auto Clicker", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AutoClicker", spacedName = "Auto Clicker", category = ModuleCategory.GHOST)
 class AutoClicker : Module() {
     private val maxCPSValue: IntegerValue = object : IntegerValue("MaxCPS", 12, 1, 20) {
 

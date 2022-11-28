@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.player
+package net.aspw.nightx.features.module.modules.utility
 
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.UpdateEvent
@@ -8,7 +8,7 @@ import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.utils.timer.MSTimer
 import net.minecraft.item.ItemFishingRod
 
-@ModuleInfo(name = "AutoFish", spacedName = "Auto Fish", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "AutoFish", spacedName = "Auto Fish", category = ModuleCategory.UTILITY)
 class AutoFish : Module() {
 
     private val rodOutTimer = MSTimer()

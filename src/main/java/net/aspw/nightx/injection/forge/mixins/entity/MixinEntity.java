@@ -2,7 +2,7 @@ package net.aspw.nightx.injection.forge.mixins.entity;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.StrafeEvent;
-import net.aspw.nightx.features.module.modules.combat.HitBox;
+import net.aspw.nightx.features.module.modules.ghost.HitBox;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;

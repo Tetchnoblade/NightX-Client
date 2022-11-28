@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.combat
+package net.aspw.nightx.features.module.modules.ghost
 
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.StrafeEvent
@@ -15,7 +15,7 @@ import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import kotlin.random.Random
 
-@ModuleInfo(name = "Aimbot", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "Aimbot", category = ModuleCategory.GHOST)
 class Aimbot : Module() {
 
     private val rangeValue = FloatValue("Range", 1000F, 1F, 1000F, "m")

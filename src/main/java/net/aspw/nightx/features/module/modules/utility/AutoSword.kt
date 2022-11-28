@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.combat
+package net.aspw.nightx.features.module.modules.utility
 
 import net.aspw.nightx.event.AttackEvent
 import net.aspw.nightx.event.EventTarget
@@ -15,7 +15,7 @@ import net.minecraft.item.ItemSword
 import net.minecraft.network.play.client.C02PacketUseEntity
 import net.minecraft.network.play.client.C09PacketHeldItemChange
 
-@ModuleInfo(name = "AutoSword", spacedName = "Auto Sword", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AutoSword", spacedName = "Auto Sword", category = ModuleCategory.UTILITY)
 class AutoSword : Module() {
 
     private val silentValue = BoolValue("SpoofItem", false)

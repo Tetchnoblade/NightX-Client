@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.player
+package net.aspw.nightx.features.module.modules.utility
 
 import net.aspw.nightx.event.ClickBlockEvent
 import net.aspw.nightx.event.EventTarget
@@ -7,7 +7,7 @@ import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.minecraft.util.BlockPos
 
-@ModuleInfo(name = "AutoTool", spacedName = "Auto Tool", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "AutoTool", spacedName = "Auto Tool", category = ModuleCategory.UTILITY)
 class AutoTool : Module() {
 
     @EventTarget

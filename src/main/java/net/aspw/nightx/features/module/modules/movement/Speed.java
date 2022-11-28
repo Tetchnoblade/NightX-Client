@@ -18,6 +18,9 @@ import net.aspw.nightx.features.module.modules.movement.speeds.vanillabhop.Vanil
 import net.aspw.nightx.features.module.modules.movement.speeds.verus.VerusHard;
 import net.aspw.nightx.features.module.modules.movement.speeds.verus.VerusHop;
 import net.aspw.nightx.features.module.modules.movement.speeds.verus.VerusLowHop;
+import net.aspw.nightx.features.module.modules.movement.speeds.vulcan.VulcanHop1;
+import net.aspw.nightx.features.module.modules.movement.speeds.vulcan.VulcanHop2;
+import net.aspw.nightx.features.module.modules.movement.speeds.vulcan.VulcanYPort;
 import net.aspw.nightx.features.module.modules.movement.speeds.watchdog.WatchdogBoost;
 import net.aspw.nightx.features.module.modules.movement.speeds.watchdog.WatchdogCustom;
 import net.aspw.nightx.features.module.modules.movement.speeds.watchdog.WatchdogStable;
@@ -103,6 +106,11 @@ public class Speed extends Module {
             new VerusLowHop(),
             new VerusHard(),
 
+            // Vulcan
+            new VulcanHop1(),
+            new VulcanHop2(),
+            new VulcanYPort(),
+
             // BlocksMC
             new BlocksMC()
     };
@@ -120,7 +128,6 @@ public class Speed extends Module {
                 onEnable();
         }
     };
-    public final ListValue tagDisplay = new ListValue("Tag", new String[]{"Type", "FullName", "All"}, "Type");
 
     @EventTarget
     public void onUpdate(final UpdateEvent event) {
@@ -134,7 +141,6 @@ public class Speed extends Module {
     }
 
     public final ListValue ncpModeValue = new ListValue("NCP-Mode", new String[]{"BHop", "FHop", "SBHop", "Hop", "YPort"}, "BHop", () -> typeValue.get().equalsIgnoreCase("ncp")) {
-
         @Override
         protected void onChange(final String oldValue, final String newValue) {
             if (getState())
@@ -286,13 +292,7 @@ public class Speed extends Module {
 
     @Override
     public String getTag() {
-        if (tagDisplay.get().equalsIgnoreCase("type"))
             return typeValue.get();
-
-        if (tagDisplay.get().equalsIgnoreCase("fullname"))
-            return getModeName();
-
-        return typeValue.get() == "Other" ? otherModeValue.get() : typeValue.get() == "Custom" ? "Custom" : typeValue.get() + ", " + getOnlySingleName();
     }
 
     private String getOnlySingleName() {
@@ -318,7 +318,7 @@ public class Speed extends Module {
                 break;
         }
         return mode;
-    }    public final ListValue otherModeValue = new ListValue("Other-Mode", new String[]{"YPort", "YPort2", "Boost", "Frame", "MiJump", "OnGround", "SlowHop", "Jump", "Legit", "AEMine", "GWEN", "HiveHop", "MineplexGround", "TeleportCubeCraft"}, "Boost", () -> typeValue.get().equalsIgnoreCase("other")) {
+    }    public final ListValue otherModeValue = new ListValue("Other-Mode", new String[]{"YPort", "YPort2", "Boost", "Frame", "MiJump", "OnGround", "SlowHop", "Jump", "Legit", "AEMine", "GWEN", "HiveHop", "VulcanHop1", "VulcanHop2", "VulcanYPort", "MineplexGround", "TeleportCubeCraft"}, "Boost", () -> typeValue.get().equalsIgnoreCase("other")) {
         @Override
         protected void onChange(final String oldValue, final String newValue) {
             if (getState())

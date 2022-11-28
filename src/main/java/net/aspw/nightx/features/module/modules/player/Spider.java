@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement;
+package net.aspw.nightx.features.module.modules.player;
 
 import net.aspw.nightx.event.*;
 import net.aspw.nightx.features.module.Module;
@@ -14,16 +14,17 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 
-@ModuleInfo(name = "Spider", spacedName = "Spider", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Spider", spacedName = "Spider", category = ModuleCategory.PLAYER)
 public class Spider extends Module {
 
-    private final ListValue modeValue = new ListValue("Mode", new String[]{"Simple", "CheckerClimb", "Clip", "AAC3.3.12", "AACGlide", "Verus"}, "Simple");
+    private final ListValue modeValue = new ListValue("Mode", new String[]{"Simple", "Jump", "CheckerClimb", "Clip", "AAC3.3.12", "AACGlide", "Verus"}, "Simple");
     private final ListValue clipMode = new ListValue("ClipMode", new String[]{"Jump", "Fast"}, "Jump", () -> modeValue.get().equalsIgnoreCase("clip"));
     private final FloatValue checkerClimbMotionValue = new FloatValue("CheckerClimbMotion", 0F, 0F, 1F, () -> modeValue.get().equalsIgnoreCase("checkerclimb"));
     private final FloatValue verusClimbSpeed = new FloatValue("VerusClimbSpeed", 0.2F, 0F, 1F, () -> modeValue.get().equalsIgnoreCase("verus"));
 
     private boolean glitch, canClimb;
     private int waited;
+    private final net.aspw.nightx.utils.timer.TickTimer tickTimer = new net.aspw.nightx.utils.timer.TickTimer();
 
     @Override
     public void onEnable() {
@@ -55,6 +56,15 @@ public class Spider extends Module {
             return;
 
         switch (modeValue.get().toLowerCase()) {
+            case "jump": {
+                tickTimer.update();
+
+                if (tickTimer.hasTimePassed(8) && mc.thePlayer.isCollidedHorizontally) {
+                    mc.thePlayer.motionY = 0.42;
+                    tickTimer.reset();
+                }
+                break;
+            }
             case "clip":
                 if (mc.thePlayer.motionY < 0)
                     glitch = true;
