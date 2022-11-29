@@ -5,7 +5,6 @@ import net.aspw.nightx.event.MotionEvent
 import net.aspw.nightx.event.MoveEvent
 import net.aspw.nightx.features.module.modules.movement.speeds.SpeedMode
 import net.aspw.nightx.features.module.modules.world.Scaffold
-import net.aspw.nightx.utils.MovementUtils
 import net.aspw.nightx.utils.MovementUtils.*
 import net.minecraft.client.settings.GameSettings
 

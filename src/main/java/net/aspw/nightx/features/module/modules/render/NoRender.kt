@@ -7,15 +7,12 @@ import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.utils.EntityUtils
 import net.aspw.nightx.utils.extensions.getDistanceToEntityBox
-import net.aspw.nightx.utils.item.ArmorPart
-import net.aspw.nightx.utils.item.ArmorPiece
 import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import net.minecraft.entity.Entity
 import net.minecraft.entity.item.EntityArmorStand
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
-import org.checkerframework.common.value.qual.BoolVal
 
 @ModuleInfo(
     name = "NoRender",

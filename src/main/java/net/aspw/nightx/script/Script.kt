@@ -140,7 +140,7 @@ class Script(val scriptFile: File) {
         if (getMagicComment("api_version") != "2") {
             ClientUtils.getLogger().info("[ScriptAPI] Running script '${scriptFile.name}' with legacy support.")
             val legacyScript =
-                NightX::class.java.getResource("/assets/minecraft/nightx/scriptapi/legacy.js").readText()
+                NightX::class.java.getResource("/assets/minecraft/nightx/scriptloader.js").readText()
             scriptEngine.eval(legacyScript)
         }
     }

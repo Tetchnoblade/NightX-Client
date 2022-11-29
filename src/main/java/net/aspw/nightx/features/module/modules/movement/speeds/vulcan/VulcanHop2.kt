@@ -1,16 +1,11 @@
 package net.aspw.nightx.features.module.modules.movement.speeds.vulcan;
 
 import net.aspw.nightx.NightX
-import net.aspw.nightx.event.JumpEvent
 import net.aspw.nightx.event.MotionEvent
 import net.aspw.nightx.event.MoveEvent
-import net.aspw.nightx.features.module.modules.movement.Speed
 import net.aspw.nightx.features.module.modules.movement.speeds.SpeedMode
 import net.aspw.nightx.features.module.modules.world.Scaffold
-import net.aspw.nightx.utils.MovementUtils
 import net.aspw.nightx.utils.MovementUtils.*
-import net.minecraft.client.settings.GameSettings
-import kotlin.math.max
 
 class VulcanHop2 : SpeedMode("VulcanHop2") {
 

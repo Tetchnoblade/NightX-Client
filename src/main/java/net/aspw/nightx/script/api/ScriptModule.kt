@@ -9,7 +9,7 @@ import net.aspw.nightx.utils.ClientUtils
 import net.aspw.nightx.value.Value
 
 @Suppress("unused")
-@ModuleInfo(name = "ScriptModule", category = ModuleCategory.MISC)
+@ModuleInfo(name = "ScriptModule", category = ModuleCategory.SCRIPTS)
 class ScriptModule(private val moduleObject: JSObject) : Module() {
 
     private val events = HashMap<String, JSObject>()

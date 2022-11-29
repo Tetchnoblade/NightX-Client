@@ -1,7 +1,7 @@
 var script = registerScript({
-    name: "Sucks",
+    name: "LegacyScript",
     version: "1.0.0",
-    authors: ["As_Kc"]
+    authors: ["As_pw"]
 });
 
 script.on("enable", function () {
@@ -87,7 +87,7 @@ var _AdaptedModule = function (module) {
 
     this.module = module;
 
-    this.moduleManager = Java.type("net.ccbluex.liquidbounce.LiquidBounce").moduleManager;
+    this.moduleManager = Java.type("net.aspw.nightx.NightX").moduleManager;
 
     this.getName = function () {
         return this.module.getName();
@@ -154,15 +154,15 @@ Object.defineProperty(_AdaptedModule.prototype, "bind", {
 
 var _ModuleManager = function () {
 
-    this.moduleManager = Java.type("net.ccbluex.liquidbounce.LiquidBounce").moduleManager;
-    this.Module = Java.type("net.ccbluex.liquidbounce.features.module.Module");
+    this.moduleManager = Java.type("net.aspw.nightx.NightX").moduleManager;
+    this.Module = Java.type("net.aspw.nightx.features.module.Module");
     this.ArrayList = Java.type("java.util.ArrayList");
 
     this.registerModule = function (scriptModule) {
         var moduleConfig = {
             name: scriptModule.getName(),
             description: scriptModule.getDescription(),
-            category: scriptModule.getCategory()
+            category: Scripts
         };
 
         if (scriptModule.addValues) {
@@ -238,8 +238,8 @@ var _ModuleManager = function () {
 
 var _CommandManager = function () {
 
-    this.Command = Java.type("net.ccbluex.liquidbounce.features.command.Command");
-    this.commandManager = Java.type("net.ccbluex.liquidbounce.LiquidBounce").commandManager;
+    this.Command = Java.type("net.aspw.nightx.features.command.Command");
+    this.commandManager = Java.type("net.aspw.nightx.NightX").commandManager;
 
     this.registerCommand = function (scriptCommand) {
         script.registerCommand({

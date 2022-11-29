@@ -14,8 +14,8 @@ import kotlin.math.roundToInt
 
 @ModuleInfo(name = "ThunderNotifier", spacedName = "Thunder Notifier", category = ModuleCategory.RENDER)
 class ThunderNotifier : Module() {
-    val chatValue = BoolValue("Chat", true)
-    val notifValue = BoolValue("Notification", false)
+    val chatValue = BoolValue("Chat", false)
+    val notifValue = BoolValue("Notification", true)
 
     @EventTarget
     fun onPacket(event: PacketEvent) {

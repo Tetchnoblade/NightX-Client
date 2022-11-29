@@ -209,7 +209,9 @@ class ModuleManager : Listenable {
             AutoJump::class.java,
             Tweaks::class.java,
             HackerDetector::class.java,
-            TargetDead::class.java
+            TargetDead::class.java,
+            Invisible::class.java,
+            PotionSpoof::class.java
         )
 
         registerModule(Fucker)

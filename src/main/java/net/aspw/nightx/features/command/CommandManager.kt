@@ -50,6 +50,7 @@ class CommandManager {
         registerCommand(LoginCommand())
         registerCommand(PacketTeleportCommand())
         registerCommand(PacketVClipCommand())
+        registerCommand(CloudScriptCommand())
     }
 
     /**
