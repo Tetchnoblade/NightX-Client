@@ -13,6 +13,5 @@ enum class ModuleCategory(val displayName: String) {
     UTILITY("Utility"),
     GHOST("Ghost"),
     EXPLOIT("Exploit"),
-    MISC("Misc"),
-    SCRIPTS("Scripts")
+    MISC("Misc")
 }

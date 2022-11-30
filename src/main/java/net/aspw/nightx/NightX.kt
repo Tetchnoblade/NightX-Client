@@ -9,7 +9,6 @@ import net.aspw.nightx.features.special.AntiForge
 import net.aspw.nightx.features.special.MacroManager
 import net.aspw.nightx.file.FileManager
 import net.aspw.nightx.script.ScriptManager
-import net.aspw.nightx.script.remapper.Remapper.loadSrg
 import net.aspw.nightx.tabs.BlocksTab
 import net.aspw.nightx.tabs.ExploitsTab
 import net.aspw.nightx.ui.client.hud.HUD
@@ -92,11 +91,7 @@ object NightX {
         moduleManager = ModuleManager()
         moduleManager.registerModules()
 
-        // Remapper
         try {
-            loadSrg()
-
-            // ScriptManager
             scriptManager = ScriptManager()
             scriptManager.loadScripts()
             scriptManager.enableScripts()

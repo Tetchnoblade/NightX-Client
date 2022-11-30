@@ -35,14 +35,13 @@ import kotlin.concurrent.thread
 
 class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
-    var status = "§7Idle..."
+    var status = "§7Waiting..."
 
     private lateinit var loginButton: GuiButton
     private lateinit var randomButton: GuiButton
     private lateinit var randomCracked: GuiButton
     private lateinit var altsList: GuiList
     private lateinit var searchField: GuiTextField
-    private lateinit var revertOriginalAccount: GuiButton
 
     var lastSessionToken: String? = null
 
@@ -66,16 +65,6 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         buttonList.add(GuiButton(2, width - 80, startPositionY + 24 * 2, 70, 20, "Delete"))
         buttonList.add(GuiButton(7, width - 80, startPositionY + 24 * 3, 70, 20, "Import"))
         buttonList.add(GuiButton(12, width - 80, startPositionY + 24 * 4, 70, 20, "Export"))
-        buttonList.add(GuiButton(8, width - 80, startPositionY + 24 * 5, 70, 20, "Copy"))
-        buttonList.add(
-            GuiButton(
-                727,
-                width - 80,
-                startPositionY + 24 * 6,
-                70,
-                20,
-                "Revert"
-            ).also { revertOriginalAccount = it })
         buttonList.add(GuiButton(0, width - 80, height - 65, 70, 20, "Done"))
         buttonList.add(GuiButton(3, 5, startPositionY + 24, 90, 20, "Login").also { loginButton = it })
         buttonList.add(GuiButton(4, 5, startPositionY + 24 * 2, 90, 20, "Random Alt").also { randomButton = it })
@@ -89,7 +78,6 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
     }
 
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
-        revertOriginalAccount.enabled = (lastSessionToken != null)
         drawBackground(0)
         altsList.drawScreen(mouseX, mouseY, partialTicks)
         Fonts.fontSFUI40.drawCenteredString("Alt Manager", width / 2.0f, 6f, 0xffffff)
@@ -463,8 +451,8 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 minecraftAccount.name
             }
 
-            Fonts.font40.drawCenteredString(accountName, width / 2f, y + 2f, Color.WHITE.rgb, true)
-            Fonts.font40.drawCenteredString(
+            Fonts.fontSFUI40.drawCenteredString(accountName, width / 2f, y + 2f, Color.WHITE.rgb, true)
+            Fonts.fontSFUI40.drawCenteredString(
                 if (minecraftAccount is CrackedAccount) "Cracked" else if (minecraftAccount is MicrosoftAccount) "Microsoft" else if (minecraftAccount is MojangAccount) "Mojang" else "Something else",
                 width / 2f,
                 y + 15f,

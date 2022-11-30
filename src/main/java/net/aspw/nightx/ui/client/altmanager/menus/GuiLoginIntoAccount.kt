@@ -32,7 +32,7 @@ class GuiLoginIntoAccount(private val prevGui: GuiAltManager, val directLogin: B
     private lateinit var username: GuiTextField
     private lateinit var password: GuiTextField
 
-    private var status = "§7Idle..."
+    private var status = "§7Waiting..."
 
     override fun initGui() {
         Keyboard.enableRepeatEvents(true)
@@ -55,10 +55,10 @@ class GuiLoginIntoAccount(private val prevGui: GuiAltManager, val directLogin: B
             ).also { addButton = it })
         buttonList.add(GuiButton(0, width / 2 + 2, height - 54, 98, 20, "Back"))
 
-        username = GuiTextField(2, Fonts.font40, width / 2 - 100, 60, 200, 20)
+        username = GuiTextField(2, Fonts.fontSFUI40, width / 2 - 100, 60, 200, 20)
         username.isFocused = true
         username.maxStringLength = Int.MAX_VALUE
-        password = GuiPasswordField(3, Fonts.font40, width / 2 - 100, 85, 200, 20)
+        password = GuiPasswordField(3, Fonts.fontSFUI40, width / 2 - 100, 85, 200, 20)
         password.maxStringLength = Int.MAX_VALUE
     }
 
@@ -66,15 +66,15 @@ class GuiLoginIntoAccount(private val prevGui: GuiAltManager, val directLogin: B
         drawBackground(0)
 
         RenderUtils.drawRect(30F, 30F, width - 30F, height - 30F, Int.MIN_VALUE)
-        Fonts.font40.drawCenteredString(if (directLogin) "Direct Login" else "Add Account", width / 2.0f, 34f, 0xffffff)
-        Fonts.font40.drawCenteredString("§7Login with Mojang", width / 2.0f, 49f, 0xffffff)
-        Fonts.font35.drawCenteredString(status, width / 2.0f, height - 64f, 0xffffff)
+        Fonts.fontSFUI40.drawCenteredString(if (directLogin) "Direct Login" else "Add Account", width / 2.0f, 34f, 0xffffff)
+        Fonts.fontSFUI40.drawCenteredString("§7Login with Mojang", width / 2.0f, 49f, 0xffffff)
+        Fonts.fontSFUI35.drawCenteredString(status, width / 2.0f, height - 64f, 0xffffff)
 
         username.drawTextBox()
         password.drawTextBox()
 
         if (username.text.isEmpty() && !username.isFocused) {
-            Fonts.font40.drawCenteredString(
+            Fonts.fontSFUI40.drawCenteredString(
                 "§7Username / E-Mail",
                 (width / 2 - 55).toFloat(),
                 66f,
@@ -83,7 +83,7 @@ class GuiLoginIntoAccount(private val prevGui: GuiAltManager, val directLogin: B
         }
 
         if (password.text.isEmpty() && !password.isFocused) {
-            Fonts.font40.drawCenteredString(
+            Fonts.fontSFUI40.drawCenteredString(
                 "§7Password",
                 (width / 2 - 74).toFloat(),
                 91f,

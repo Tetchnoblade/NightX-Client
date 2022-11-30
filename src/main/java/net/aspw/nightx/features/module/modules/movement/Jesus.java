@@ -7,6 +7,7 @@ import net.aspw.nightx.features.module.ModuleInfo;
 import net.aspw.nightx.utils.MovementUtils;
 import net.aspw.nightx.utils.block.BlockUtils;
 import net.aspw.nightx.value.BoolValue;
+import net.aspw.nightx.value.FloatValue;
 import net.aspw.nightx.value.ListValue;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -19,7 +20,8 @@ import net.minecraft.util.BlockPos;
 @ModuleInfo(name = "Jesus", spacedName = "Jesus", category = ModuleCategory.MOVEMENT)
 public class Jesus extends Module {
 
-    public final ListValue modeValue = new ListValue("Mode", new String[]{"Vanilla", "NCP", "AAC", "AAC3.3.11", "AAC4.2.1", "Horizon1.4.6", "ShotBow", "Twillight", "MatrixFast", "MatrixDolphin", "Dolphin", "Swim"}, "NCP");
+    public final ListValue modeValue = new ListValue("Mode", new String[]{"Vanilla", "NCP", "AAC", "AACFly", "AAC3.3.11", "AAC4.2.1", "Horizon1.4.6", "ShotBow", "Twillight", "MatrixFast", "MatrixDolphin", "Dolphin", "Swim"}, "NCP");
+    private final FloatValue aacFlyValue = new FloatValue("AACFlyMotion", 0.5F, 0.1F, 1F);
     private final BoolValue noJumpValue = new BoolValue("NoJump", false);
 
     private boolean nextTick;
@@ -137,6 +139,10 @@ public class Jesus extends Module {
 
     @EventTarget
     public void onMove(final MoveEvent event) {
+        if ("aacfly".equals(modeValue.get().toLowerCase()) && mc.thePlayer.isInWater()) {
+            event.setY(aacFlyValue.get());
+            mc.thePlayer.motionY = aacFlyValue.get();
+        }
         if ("twillight".equalsIgnoreCase(modeValue.get()) && mc.thePlayer.isInWater()) {
             event.setY(0.01);
             mc.thePlayer.motionY = 0.01;

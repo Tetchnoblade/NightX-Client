@@ -82,13 +82,6 @@ class BlockOverlay : Module() {
             val info = "${block.localizedName} §7ID: ${Block.getIdFromBlock(block)}"
             val scaledResolution = ScaledResolution(mc)
 
-            /*RenderUtils.drawBorderedRect(
-                    scaledResolution.scaledWidth / 2 - 2F,
-                    scaledResolution.scaledHeight / 2 + 5F,
-                    scaledResolution.scaledWidth / 2 + Fonts.font40.getStringWidth(info) + 2F,
-                    scaledResolution.scaledHeight / 2 + 16F,
-                    3F, Color.BLACK.rgb, Color.BLACK.rgb
-            )*/
             GlStateManager.resetColor()
             Fonts.fontSFUI40.drawCenteredString(
                 info,

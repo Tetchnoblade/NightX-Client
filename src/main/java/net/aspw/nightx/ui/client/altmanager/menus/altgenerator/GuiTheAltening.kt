@@ -58,16 +58,16 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
         buttonList.add(generateButton)
 
         // Buy & Back buttons
-        buttonList.add(GuiButton(3, width / 2 - 100, height - 54, 98, 20, "Buy"))
+        buttonList.add(GuiButton(3, width / 2 - 100, height - 54, 98, 20, "Access"))
         buttonList.add(GuiButton(0, width / 2 + 2, height - 54, 98, 20, "Back"))
 
         // Token text field
-        tokenField = GuiTextField(666, Fonts.font40, width / 2 - 100, 50, 200, 20)
+        tokenField = GuiTextField(666, Fonts.fontSFUI40, width / 2 - 100, 50, 200, 20)
         tokenField.isFocused = true
         tokenField.maxStringLength = Integer.MAX_VALUE
 
         // Api key password field
-        apiKeyField = GuiPasswordField(1337, Fonts.font40, width / 2 - 100, 115, 200, 20)
+        apiKeyField = GuiPasswordField(1337, Fonts.fontSFUI40, width / 2 - 100, 115, 200, 20)
         apiKeyField.maxStringLength = 18
         apiKeyField.text = apiKey
         super.initGui()
@@ -82,22 +82,16 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
         RenderUtils.drawRect(30.0f, 30.0f, width - 30.0f, height - 30.0f, Integer.MIN_VALUE)
 
         // Draw title and status
-        Fonts.font35.drawCenteredString("The Altening", width / 2.0f, 6.0f, 0xffffff)
-        Fonts.font35.drawCenteredString(status, width / 2.0f, 18.0f, 0xffffff)
+        Fonts.fontSFUI35.drawCenteredString("The Altening", width / 2.0f, 6.0f, 0xffffff)
+        Fonts.fontSFUI35.drawCenteredString(status, width / 2.0f, 18.0f, 0xffffff)
 
         // Draw fields
         apiKeyField.drawTextBox()
         tokenField.drawTextBox()
 
         // Draw text
-        Fonts.font40.drawCenteredString("§7Token:", width / 2.0f - 84, 40.0f, 0xffffff)
-        Fonts.font40.drawCenteredString("§7API-Key:", width / 2.0f - 78, 105.0f, 0xffffff)
-        Fonts.font40.drawCenteredString(
-            "§7Use coupon code 'liquidbounce' for 20% off!",
-            width / 2.0f,
-            height - 65.0f,
-            0xffffff
-        )
+        Fonts.fontSFUI40.drawCenteredString("§7Token:", width / 2.0f - 84, 40.0f, 0xffffff)
+        Fonts.fontSFUI40.drawCenteredString("§7API-Key:", width / 2.0f - 78, 105.0f, 0xffffff)
         super.drawScreen(mouseX, mouseY, partialTicks)
     }
 
@@ -219,7 +213,7 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                 }).start()
             }
 
-            3 -> MiscUtils.showURL("https://thealtening.com/?ref=liquidbounce")
+            3 -> MiscUtils.showURL("https://thealtening.com/")
         }
     }
 

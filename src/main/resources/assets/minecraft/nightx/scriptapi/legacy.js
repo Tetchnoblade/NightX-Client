@@ -1,5 +1,5 @@
 var script = registerScript({
-    name: "LegacyScript",
+    name: "Sucks",
     version: "1.0.0",
     authors: ["As_pw"]
 });
@@ -61,8 +61,8 @@ var _ItemAdaptar = function () {
 
 var _AdaptedValue = function (value) {
 
-    this.FloatValue = Java.type("net.ccbluex.liquidbounce.value.FloatValue");
-    this.IntegerValue = Java.type("net.ccbluex.liquidbounce.value.IntegerValue");
+    this.FloatValue = Java.type("net.aspw.nightx.value.FloatValue");
+    this.IntegerValue = Java.type("net.aspw.nightx.value.IntegerValue");
     this.Float = Java.type("java.lang.Float");
     this.Integer = Java.type("java.lang.Integer");
 
@@ -162,7 +162,7 @@ var _ModuleManager = function () {
         var moduleConfig = {
             name: scriptModule.getName(),
             description: scriptModule.getDescription(),
-            category: Scripts
+            category: scriptModule.getCategory()
         };
 
         if (scriptModule.addValues) {

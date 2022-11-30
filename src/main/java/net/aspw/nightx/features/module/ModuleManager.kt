@@ -199,7 +199,6 @@ class ModuleManager : Listenable {
             PlayerEdit::class.java,
             PacketFlight::class.java,
             LagBack::class.java,
-            TickTimer::class.java,
             TargetAnimals::class.java,
             TargetInvisible::class.java,
             TargetMobs::class.java,
@@ -211,7 +210,8 @@ class ModuleManager : Listenable {
             HackerDetector::class.java,
             TargetDead::class.java,
             Invisible::class.java,
-            PotionSpoof::class.java
+            PotionSpoof::class.java,
+            TickTimer::class.java
         )
 
         registerModule(Fucker)

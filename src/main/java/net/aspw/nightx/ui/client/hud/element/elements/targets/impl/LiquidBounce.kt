@@ -111,7 +111,7 @@ class LiquidBounce(inst: Target) : TargetStyle("LiquidBounce", inst, true) {
         updateAnim(entity.health)
 
         Fonts.fontSFUI40.drawString(entity.name, 36, 3, getColor(-1).rgb)
-        Fonts.font35.drawString(
+        Fonts.fontSFUI35.drawString(
             "Distance: ${decimalFormat.format(mc.thePlayer.getDistanceToEntityBox(entity))}",
             36,
             15,
@@ -121,7 +121,7 @@ class LiquidBounce(inst: Target) : TargetStyle("LiquidBounce", inst, true) {
         // Draw info
         val playerInfo = mc.netHandler.getPlayerInfo(entity.uniqueID)
         if (playerInfo != null) {
-            Fonts.font35.drawString(
+            Fonts.fontSFUI35.drawString(
                 "Ping: ${playerInfo.responseTime.coerceAtLeast(0)}",
                 36, 24, getColor(-1).rgb
             )

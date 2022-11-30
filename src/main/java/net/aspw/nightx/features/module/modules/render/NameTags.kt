@@ -35,7 +35,7 @@ class NameTags : Module() {
     private val enchantValue = BoolValue("Enchant", false, { armorValue.get() })
     private val potionValue = BoolValue("Potions", false)
     private val clearNamesValue = BoolValue("ClearNames", false)
-    private val fontValue = FontValue("Font", Fonts.font40)
+    private val fontValue = FontValue("Font", Fonts.fontSFUI40)
     private val fontShadowValue = BoolValue("Shadow", false)
     private val borderValue = BoolValue("Border", false)
     val localValue = BoolValue("LocalPlayer", false)

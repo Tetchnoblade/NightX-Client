@@ -138,7 +138,7 @@ public abstract class MixinItemRenderer {
         float var12 = MathHelper.sin(MathHelper.sqrt_float(var9) * (float) Math.PI);
         GlStateManager.rotate(var11 * 0.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(var12 * 0.0F, 0.0F, 0.0f, 1.0F);
-        GlStateManager.rotate(var12 * -60.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(var12 * -55.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
@@ -345,6 +345,15 @@ public abstract class MixinItemRenderer {
                                     transformFirstPersonItem(0.1F, f1);
                                     doBlockTransformations();
                                     GlStateManager.translate(-0.5D, 0.0D, 0.0D);
+                                    break;
+                                }
+                                case "Ninja": {
+                                    float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
+                                    GL11.glTranslated(-0.04D, 0.0D, 0.0D);
+                                    this.transformFirstPersonItem(f / 1000.0F, 0.0f);
+                                    GlStateManager.rotate(-var9 * 120.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
+                                    GlStateManager.rotate(-var9 * 0.0F, 1.0F, var9 / 3.0F, -0.0F);
+                                    this.func_178103_d(0.2F);
                                     break;
                                 }
                                 case "Spin": {
