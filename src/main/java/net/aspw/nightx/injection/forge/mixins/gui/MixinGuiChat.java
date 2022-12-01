@@ -100,17 +100,8 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
 
     @Overwrite
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        if (!inputField.getText().isEmpty() && inputField.getText().startsWith(String.valueOf(NightX.commandManager.getPrefix())) || !inputField.getText().isEmpty() && inputField.getText().startsWith("/")) {
-            Stencil.write(true);
-            RenderUtils.drawRect(2F, this.height - fade, this.width - 2, this.height - fade + 12, Integer.MIN_VALUE);
-            Stencil.erase(false);
-            RenderUtils.drawRect(1F, this.height - fade - 1, this.width - 1, this.height - fade + 13, new Color(154, 114, 175).getRGB());
-            Stencil.dispose();
-        } else
-            RenderUtils.drawRect(2F, this.height - fade, this.width - 2, this.height - fade + 12, Integer.MIN_VALUE);
-
+        RenderUtils.drawRect(2F, this.height - fade, this.width - 2, this.height - fade + 12, Integer.MIN_VALUE);
         this.inputField.drawTextBox();
-
         if (NightX.commandManager.getLatestAutoComplete().length > 0 && !inputField.getText().isEmpty() && inputField.getText().startsWith(String.valueOf(NightX.commandManager.getPrefix()))) {
             String[] latestAutoComplete = NightX.commandManager.getLatestAutoComplete();
             String[] textArray = inputField.getText().split(" ");

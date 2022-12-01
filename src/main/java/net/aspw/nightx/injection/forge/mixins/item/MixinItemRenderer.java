@@ -275,7 +275,7 @@ public abstract class MixinItemRenderer {
                         break;
                     case BLOCK:
                         if (NightX.moduleManager.getModule(Animations.class).getState()) {
-                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.12, Animations.blockPosZ.get().doubleValue() + 0.08);
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.04, Animations.blockPosZ.get().doubleValue());
                             final String z = Animations.Sword.get();
                             switch (z) {
                                 case "LiquidBounce": {
@@ -339,6 +339,15 @@ public abstract class MixinItemRenderer {
                                     this.func_178103_d();
                                     if (Animations.RotateItems.get())
                                         rotateItemAnim();
+                                    break;
+                                }
+                                case "Sweak": {
+                                    this.transformFirstPersonItem(f / 2.0F, 0.0F);
+                                    GL11.glTranslated(-0.07D, 0.23D, 0.0D);
+                                    float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                    GL11.glRotated(-var9 * 60.0F / 2.0F, -var9 / 2.0F, -0.0F, 9.0F);
+                                    GL11.glRotated(-var9 * 53.0F, 1.0F, var9 / 2.0F, -0.0F);
+                                    this.func_178103_d(0.2F);
                                     break;
                                 }
                                 case "Jigsaw": {

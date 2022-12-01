@@ -126,7 +126,7 @@ class ModuleManager : Listenable {
             AuthBypass::class.java,
             Gapple::class.java,
             Disabler::class.java,
-            CustomDisabler::class.java,
+            CSDisabler::class.java,
             Crosshair::class.java,
             Rotate::class.java,
             AntiFall::class.java,

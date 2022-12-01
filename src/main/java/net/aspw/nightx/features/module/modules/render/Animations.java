@@ -12,7 +12,7 @@ import net.aspw.nightx.value.ListValue;
 public class Animations extends Module {
     // some ListValue
     public static final ListValue Sword = new ListValue("Style", new String[]{
-            "1.8", "LiquidBounce", "SlideLow", "SlideMedium", "SlideFull", "Push", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Smart", "ETB", "Moon", "MoonPush", "Lennox", "Leaked", "Ninja",
+            "1.8", "LiquidBounce", "SlideLow", "SlideMedium", "SlideFull", "Push", "Swing", "Swank", "Swong", "Swang", "Swaing", "Sweak", "Stella", "Smart", "ETB", "Moon", "MoonPush", "Lennox", "Leaked", "Ninja",
             "Jigsaw", "Avatar", "Sigma3", "Sigma4", "Reverse", "Old", "OldFull", "Flux1", "Flux2", "Flux3", "DortwareNew", "Dortware1", "Dortware2", "Funny", "Zoom", "Rotate", "Spin", "Spinny"
     }, "Swing");
 

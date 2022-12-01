@@ -6,6 +6,7 @@ import net.aspw.nightx.features.module.Module;
 import net.aspw.nightx.features.module.ModuleCategory;
 import net.aspw.nightx.features.module.ModuleInfo;
 import net.aspw.nightx.features.module.modules.exploit.Damage;
+import net.aspw.nightx.features.module.modules.misc.AntiBot;
 import net.aspw.nightx.ui.client.hud.element.elements.Notification;
 import net.aspw.nightx.utils.*;
 import net.aspw.nightx.utils.misc.RandomUtils;
@@ -425,7 +426,12 @@ public class Flight extends Module {
 
     @Override
     public void onDisable() {
-        MovementUtils.strafe(0.3f);
+        final Speed speed = NightX.moduleManager.getModule(Speed.class);
+
+        if (!speed.getState()) {
+            MovementUtils.strafe(0.3f);
+        }
+
         wasDead = false;
 
         if (mc.thePlayer == null)
@@ -437,7 +443,6 @@ public class Flight extends Module {
 
         if ((!mode.toUpperCase().startsWith("AAC") && !mode.equalsIgnoreCase("Hypixel") &&
                 !mode.equalsIgnoreCase("CubeCraft") && !mode.equalsIgnoreCase("Collide") && !mode.equalsIgnoreCase("Verus") && !mode.equalsIgnoreCase("Jump") && !mode.equalsIgnoreCase("creative")) || (mode.equalsIgnoreCase("pearl") && pearlState != -1)) {
-            mc.thePlayer.motionY = 0;
         }
 
         if (mode.equalsIgnoreCase("AAC5-Vanilla") && !mc.isIntegratedServerRunning()) {
