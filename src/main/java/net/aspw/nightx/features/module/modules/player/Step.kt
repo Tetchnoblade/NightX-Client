@@ -229,7 +229,9 @@ class Step : Module() {
 
     @EventTarget(ignoreCondition = true)
     fun onStepConfirm(event: StepConfirmEvent) {
-        if (NightX.moduleManager[Step::class.java]!!.state && useTimer.get()) {
+        mc.timer.timerSpeed = 1f
+
+        if (NightX.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround) {
             mc.timer.timerSpeed = 0.55f
         }
 

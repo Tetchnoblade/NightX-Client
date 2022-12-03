@@ -1,9 +1,7 @@
 package net.aspw.nightx.injection.forge.mixins.gui;
 
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.ui.client.GuiBackground;
-import net.aspw.nightx.utils.render.ParticleUtils;
 import net.aspw.nightx.utils.render.shader.shaders.BackgroundShader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -16,7 +14,6 @@ import net.minecraft.event.HoverEvent;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.IChatComponent;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -61,16 +58,8 @@ public abstract class MixinGuiScreen {
             callbackInfo.cancel();
             return;
         }
-
-        final Hud hud = NightX.moduleManager.getModule(Hud.class);
-
-        if (hud.getInventoryParticle().get() && mc.thePlayer != null) {
-            final ScaledResolution scaledResolution = new ScaledResolution(mc);
-            final int width = scaledResolution.getScaledWidth();
-            final int height = scaledResolution.getScaledHeight();
-            ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
-        }
     }
+
 
     /**
      * @author CCBlueX
@@ -103,17 +92,8 @@ public abstract class MixinGuiScreen {
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, width, height, width, height, width, height);
             }
-
-            if (GuiBackground.Companion.getParticles())
-                ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
             callbackInfo.cancel();
         }
-    }
-
-    @Inject(method = "drawBackground", at = @At("RETURN"))
-    private void drawParticles(final CallbackInfo callbackInfo) {
-        if (GuiBackground.Companion.getParticles())
-            ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
     }
 
     @Inject(method = "sendChatMessage(Ljava/lang/String;Z)V", at = @At("HEAD"), cancellable = true)

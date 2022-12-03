@@ -97,7 +97,10 @@ public class LongJump extends Module {
     public void onMotion(final MotionEvent event) {
         if (bobbingValue.get()) {
             mc.thePlayer.cameraYaw = bobbingAmountValue.get();
-            mc.thePlayer.prevCameraYaw = bobbingAmountValue.get();
+        }
+
+        if (!bobbingValue.get()) {
+            mc.thePlayer.cameraYaw = 0.0f;
         }
     }
 

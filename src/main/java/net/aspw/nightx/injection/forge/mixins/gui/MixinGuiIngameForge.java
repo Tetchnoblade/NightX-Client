@@ -84,5 +84,4 @@ public abstract class MixinGuiIngameForge extends MixinGuiInGame {
             this.overlayPlayerList.updatePlayerList(false);
         }
     }
-
 }

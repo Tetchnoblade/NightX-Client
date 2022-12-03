@@ -7,9 +7,9 @@ import net.aspw.nightx.features.module.modules.exploit.AntiHunger;
 import net.aspw.nightx.features.module.modules.exploit.PortalMenu;
 import net.aspw.nightx.features.module.modules.movement.Flight;
 import net.aspw.nightx.features.module.modules.movement.NoSlow;
-import net.aspw.nightx.features.module.modules.movement.Sneak;
 import net.aspw.nightx.features.module.modules.movement.Sprint;
 import net.aspw.nightx.features.module.modules.player.Inventory;
+import net.aspw.nightx.features.module.modules.player.Sneak;
 import net.aspw.nightx.features.module.modules.world.Scaffold;
 import net.aspw.nightx.utils.MovementUtils;
 import net.aspw.nightx.utils.Rotation;
@@ -296,7 +296,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
         final Sprint sprint = NightX.moduleManager.getModule(Sprint.class);
 
-        boolean flag3 = !sprint.getFoodValue().get() || (float) this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
+        boolean flag3 = (float) this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
 
         if (this.onGround && !flag1 && !flag2 && this.movementInput.moveForward >= f && !this.isSprinting() && flag3 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness)) {
             if (this.sprintToggleTimer <= 0 && !this.mc.gameSettings.keyBindSprint.isKeyDown()) {
@@ -313,7 +313,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         final Scaffold scaffold = NightX.moduleManager.getModule(Scaffold.class);
         NoSlow noslow = NightX.moduleManager.getModule(NoSlow.class);
 
-        if ((scaffold.getState() && scaffold.towerActivation() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || (scaffold.getState() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || (sprint.getState() && sprint.getCheckServerSide().get() && (onGround || !sprint.getCheckServerSideGround().get()) && !sprint.getAllDirectionsValue().get() && RotationUtils.targetRotation != null && RotationUtils.getRotationDifference(new Rotation(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch)) > 30))
+        if ((scaffold.getState() && scaffold.towerActivation() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || (scaffold.getState() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || !sprint.getAllDirectionsValue().get() && RotationUtils.targetRotation != null && RotationUtils.getRotationDifference(new Rotation(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch)) > 30)
             this.setSprinting(false);
 
         if (this.isSprinting() && ((!(sprint.getState() && sprint.getAllDirectionsValue().get()) && this.movementInput.moveForward < f) || this.isCollidedHorizontally || !flag3)) {

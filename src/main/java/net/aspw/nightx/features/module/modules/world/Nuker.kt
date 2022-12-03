@@ -157,7 +157,6 @@ class Nuker : Module() {
                     // End block break if able to break instant
                     if (block.getPlayerRelativeBlockHardness(thePlayer, mc.theWorld!!, blockPos) >= 1F) {
                         currentDamage = 0F
-                        thePlayer.swingItem()
                         mc.playerController.onPlayerDestroyBlock(blockPos, EnumFacing.DOWN)
                         blockHitDelay = hitDelayValue.get()
                         validBlocks -= blockPos
@@ -167,7 +166,6 @@ class Nuker : Module() {
                 }
 
                 // Break block
-                thePlayer.swingItem()
                 currentDamage += block.getPlayerRelativeBlockHardness(thePlayer, mc.theWorld!!, blockPos)
                 mc.theWorld!!.sendBlockBreakProgress(thePlayer.entityId, blockPos, (currentDamage * 10F).toInt() - 1)
 
@@ -226,7 +224,6 @@ class Nuker : Module() {
                             pos, EnumFacing.DOWN
                         )
                     )
-                    thePlayer.swingItem()
                     mc.netHandler.addToSendQueue(
                         C07PacketPlayerDigging(
                             C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,

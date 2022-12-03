@@ -1,6 +1,5 @@
 package net.aspw.nightx.injection.forge.mixins.gui;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.utils.render.RenderUtils;
@@ -85,31 +84,6 @@ public abstract class MixinGuiNewChat {
         return instance.getChatLineID();
     }
 
-    @Overwrite
-    public void printChatMessage(IChatComponent chatComponent) {
-        checkHud();
-        if (!hud.getChatCombineValue().get()) {
-            printChatMessageWithOptionalDeletion(chatComponent, this.line);
-            return;
-        }
-
-        String text = fixString(chatComponent.getFormattedText());
-        if (text.equals(this.lastMessage)) {
-            (Minecraft.getMinecraft()).ingameGUI.getChatGUI().deleteChatLine(this.line);
-            this.sameMessageAmount++;
-            this.lastMessage = text;
-            chatComponent.appendText(ChatFormatting.WHITE + " (" + "x" + this.sameMessageAmount + ")");
-        } else {
-            this.sameMessageAmount = 1;
-            this.lastMessage = text;
-        }
-        this.line++;
-        if (this.line > 256)
-            this.line = 0;
-
-        printChatMessageWithOptionalDeletion(chatComponent, this.line);
-    }
-
     @Inject(method = "printChatMessageWithOptionalDeletion", at = @At("HEAD"))
     private void resetPercentage(CallbackInfo ci) {
         displayPercent = 0F;
@@ -135,8 +109,12 @@ public abstract class MixinGuiNewChat {
 
                 if (this.isScrolled || !hud.getState()) {
                     displayPercent = 1F;
-                } else if (displayPercent < 1F) {
+                } else if (displayPercent < 1F && hud.getChatAnimationValue().get()) {
                     displayPercent += hud.getChatAnimationSpeedValue().get() / 10F * RenderUtils.deltaTime;
+                    displayPercent = MathHelper.clamp_float(displayPercent, 0F, 1F);
+                }
+                if (displayPercent < 1F && !hud.getChatAnimationValue().get()) {
+                    displayPercent += 10F * RenderUtils.deltaTime;
                     displayPercent = MathHelper.clamp_float(displayPercent, 0F, 1F);
                 }
 

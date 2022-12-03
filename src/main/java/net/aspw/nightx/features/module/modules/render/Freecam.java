@@ -74,8 +74,10 @@ public class Freecam extends Module {
             mc.thePlayer.motionZ = 0;
             if (mc.gameSettings.keyBindJump.isKeyDown())
                 mc.thePlayer.motionY += value;
-            if (mc.gameSettings.keyBindSneak.isKeyDown())
+            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 mc.thePlayer.motionY -= value;
+                mc.gameSettings.keyBindSneak.pressed = false;
+            }
             MovementUtils.strafe(value);
         }
     }

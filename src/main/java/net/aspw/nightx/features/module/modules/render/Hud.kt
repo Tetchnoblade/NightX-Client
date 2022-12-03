@@ -14,16 +14,16 @@ import net.aspw.nightx.value.*
 @ModuleInfo(name = "Hud", category = ModuleCategory.RENDER, array = false)
 class Hud : Module() {
     val tabHead = BoolValue("Tab-HeadOverlay", true)
-    val animHotbarValue = BoolValue("AnimatedHotbar", false)
+    val animHotbarValue = BoolValue("HotbarAnimation", true)
+    val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.5F, { animHotbarValue.get() })
     val blackHotbarValue = BoolValue("BlackHotbar", false)
-    val inventoryParticle = BoolValue("InventoryParticle", false)
     val fontChatValue = BoolValue("FontChat", false)
     val fontType = FontValue("Font", Fonts.fontSFUI40, { fontChatValue.get() })
     val chatRectValue = BoolValue("ChatRect", true)
-    val chatCombineValue = BoolValue("ChatCombine", false)
-    val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 10.0F, 0.01F, 10.0F)
+    val chatAnimationValue = BoolValue("ChatAnimation", true)
+    val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.04F, 0.01F, 0.5F, { chatAnimationValue.get() })
     private val toggleMessageValue = BoolValue("DisplayToggleMessage", false)
-    private val toggleSoundValue = ListValue("ToggleSound", arrayOf("None", "Default", "Custom"), "Custom")
+    private val toggleSoundValue = ListValue("ToggleSound", arrayOf("None", "Default", "Custom"), "None")
     private val toggleVolumeValue =
         IntegerValue("ToggleVolume", 90, 0, 100, { toggleSoundValue.get().equals("custom", true) })
     val guiButtonStyle =
@@ -65,7 +65,7 @@ class Hud : Module() {
 
     fun getAnimPos(pos: Float): Float {
         if (state && animHotbarValue.get()) hotBarX =
-            AnimationUtils.animate(pos, hotBarX, 0.02F * RenderUtils.deltaTime.toFloat())
+            AnimationUtils.animate(pos, hotBarX, animHotbarSpeedValue.get() * RenderUtils.deltaTime.toFloat())
         else hotBarX = pos
 
         return hotBarX

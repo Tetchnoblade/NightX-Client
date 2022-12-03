@@ -90,9 +90,6 @@ public class ValuesConfig extends FileConfig {
 
                 if (jsonValue.has("Enabled"))
                     GuiBackground.Companion.setEnabled(jsonValue.get("Enabled").getAsBoolean());
-
-                if (jsonValue.has("Particles"))
-                    GuiBackground.Companion.setParticles(jsonValue.get("Particles").getAsBoolean());
             } else {
                 final Module module = NightX.moduleManager.getModule(entry.getKey());
 
@@ -149,7 +146,6 @@ public class ValuesConfig extends FileConfig {
 
         final JsonObject backgroundObject = new JsonObject();
         backgroundObject.addProperty("Enabled", GuiBackground.Companion.getEnabled());
-        backgroundObject.addProperty("Particles", GuiBackground.Companion.getParticles());
         jsonObject.add("Background", backgroundObject);
 
         NightX.moduleManager.getModules().stream().filter(module -> !module.getValues().isEmpty()).forEach(module -> {

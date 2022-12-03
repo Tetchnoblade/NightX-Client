@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement;
+package net.aspw.nightx.features.module.modules.player;
 
 import net.aspw.nightx.event.EventState;
 import net.aspw.nightx.event.EventTarget;
@@ -12,7 +12,7 @@ import net.aspw.nightx.value.ListValue;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 
-@ModuleInfo(name = "Sneak", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Sneak", category = ModuleCategory.PLAYER)
 public class Sneak extends Module {
 
     public final ListValue modeValue = new ListValue("Mode", new String[]{"Normal", "Legit", "Vanilla", "Switch", "AAC3.6.4"}, "Normal");

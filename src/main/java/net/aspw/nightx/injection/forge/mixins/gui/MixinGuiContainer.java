@@ -56,7 +56,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
                         firstY += 20;
                     }
                     if (NightX.moduleManager.getModule(InventoryManager.class).getState()) {
-                        buttonList.add(invManagerButton = new GuiButton(321123, 5, 5 + firstY, 140, 20, "Disable InvManager"));
+                        buttonList.add(invManagerButton = new GuiButton(321123, 5, 5 + firstY, 140, 20, "Disable InventoryManager"));
                         firstY += 20;
                     }
                     if (NightX.moduleManager.getModule(Stealer.class).getState()) {
@@ -71,7 +71,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
                         firstY += 20;
                     }
                     if (NightX.moduleManager.getModule(InventoryManager.class).getState()) {
-                        buttonList.add(invManagerButton = new GuiButton(321123, width - 145, 5 + firstY, 140, 20, "Disable InvManager"));
+                        buttonList.add(invManagerButton = new GuiButton(321123, width - 145, 5 + firstY, 140, 20, "Disable InventoryManager"));
                         firstY += 20;
                     }
                     if (NightX.moduleManager.getModule(Stealer.class).getState()) {

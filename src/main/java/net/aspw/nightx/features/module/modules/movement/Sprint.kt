@@ -14,20 +14,11 @@ import net.aspw.nightx.utils.Rotation
 import net.aspw.nightx.utils.RotationUtils
 import net.aspw.nightx.value.BoolValue
 import net.minecraft.network.play.client.C0BPacketEntityAction
-import net.minecraft.potion.Potion
 
 @ModuleInfo(name = "Sprint", category = ModuleCategory.MOVEMENT)
 class Sprint : Module() {
 
-    val allDirectionsValue = BoolValue("AllDirections", true)
-    val moveDirPatchValue = BoolValue("AllDirections-MoveDirPatch", true, { allDirectionsValue.get() })
-    val jumpDirPatchValue =
-        BoolValue("MoveDirPatch-JumpOnly", true, { allDirectionsValue.get() && moveDirPatchValue.get() })
-    val blindnessValue = BoolValue("Blindness", false)
-    val foodValue = BoolValue("Food", false)
-
-    val checkServerSide = BoolValue("CheckServerSide", false)
-    val checkServerSideGround = BoolValue("CheckServerSideOnlyGround", false)
+    val allDirectionsValue = BoolValue("Multi", true)
     val noPacketPatchValue = BoolValue("Silent", false)
 
     private var modified = false
@@ -44,7 +35,7 @@ class Sprint : Module() {
 
     @EventTarget
     fun onJump(event: JumpEvent) {
-        if (allDirectionsValue.get() && moveDirPatchValue.get() && jumpDirPatchValue.get() && !modified && !mc.isIntegratedServerRunning()) {
+        if (allDirectionsValue.get() && !modified && !mc.isIntegratedServerRunning) {
             event.cancelEvent()
             var prevYaw = mc.thePlayer.rotationYaw
             mc.thePlayer.rotationYaw = MovementUtils.getRawDirection()
@@ -59,18 +50,13 @@ class Sprint : Module() {
     fun onUpdate(event: UpdateEvent) {
         val killAura = NightX.moduleManager.getModule(KillAura::class.java)!!
 
-        if (!MovementUtils.isMoving() || mc.thePlayer.isSneaking ||
-            (blindnessValue.get() && mc.thePlayer.isPotionActive(Potion.blindness)) ||
-            (foodValue.get() && !(mc.thePlayer.foodStats
-                .foodLevel > 6.0F || mc.thePlayer.capabilities.allowFlying))
-            || (checkServerSide.get() && (mc.thePlayer.onGround || !checkServerSideGround.get())
-                    && !allDirectionsValue.get() && RotationUtils.targetRotation != null &&
-                    RotationUtils.getRotationDifference(
-                        Rotation(
-                            mc.thePlayer.rotationYaw,
-                            mc.thePlayer.rotationPitch
-                        )
-                    ) > 30F)
+        if (!MovementUtils.isMoving() || mc.thePlayer.isSneaking || !allDirectionsValue.get() && RotationUtils.targetRotation != null &&
+            RotationUtils.getRotationDifference(
+                Rotation(
+                    mc.thePlayer.rotationYaw,
+                    mc.thePlayer.rotationPitch
+                )
+            ) > 30F
         ) {
             mc.thePlayer.isSprinting = false
             return
@@ -79,7 +65,7 @@ class Sprint : Module() {
         if (allDirectionsValue.get() || mc.thePlayer.movementInput.moveForward >= 0.8F)
             mc.thePlayer.isSprinting = true
 
-        if (allDirectionsValue.get() && moveDirPatchValue.get() && !jumpDirPatchValue.get() && killAura.target == null)
+        if (allDirectionsValue.get() && killAura.target == null)
             RotationUtils.setTargetRotation(Rotation(MovementUtils.getRawDirection(), mc.thePlayer.rotationPitch))
     }
 

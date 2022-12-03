@@ -363,7 +363,7 @@ public abstract class MixinItemRenderer {
                                         rotateItemAnim();
                                     break;
                                 }
-                                case "Sweak": {
+                                case "Dash": {
                                     this.transformFirstPersonItem(f / Animations.Equip.getValue(), 0.0F);
                                     GL11.glTranslated(-0.07D, 0.16D, 0.0D);
                                     float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);

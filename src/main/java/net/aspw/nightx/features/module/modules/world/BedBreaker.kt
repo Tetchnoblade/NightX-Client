@@ -29,8 +29,8 @@ import net.minecraft.util.Vec3
 import java.awt.Color
 import java.util.*
 
-@ModuleInfo(name = "Fucker", category = ModuleCategory.WORLD)
-object Fucker : Module() {
+@ModuleInfo(name = "BedBreaker", spacedName = "Bed Breaker", category = ModuleCategory.WORLD)
+object BedBreaker : Module() {
 
     /**
      * SETTINGS
@@ -313,19 +313,6 @@ object Fucker : Module() {
         }
     }
 
-    /**
-     * Find new target block by [targetID]
-     */
-    /*private fun find(targetID: Int) =
-        searchBlocks(rangeValue.get().toInt() + 1).filter {
-                    Block.getIdFromBlock(it.value) == targetID && getCenterDistance(it.key) <= rangeValue.get()
-                            && (isHitable(it.key) || surroundingsValue.get())
-                }.minByOrNull { getCenterDistance(it.key) }?.key*/
-
-    //Removed triple iteration of blocks to improve speed
-    /**
-     * Find new target block by [targetID]
-     */
     private fun find(targetID: Int): BlockPos? {
         val radius = rangeValue.get().toInt() + 1
 
@@ -415,7 +402,4 @@ object Fucker : Module() {
             else -> true
         }
     }
-
-    override val tag: String
-        get() = getBlockName(blockValue.get())
 }

@@ -50,7 +50,12 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         val creditInfo = "Welcome, §a${mc.session.username}"
         drawBackground(0)
         GL11.glPushMatrix()
-        Fonts.fontSFUI40.drawStringWithShadow("NightX Client (#" + NightX.CLIENT_VERSION + ")", 2F, height - 12F, -1)
+        Fonts.fontSFUI40.drawStringWithShadow(
+            NightX.CLIENT_BEST + " Client",
+            2F,
+            height - 12F,
+            -1
+        )
         Fonts.fontSFUI40.drawStringWithShadow(
             creditInfo,
             width - 3F - Fonts.fontSFUI40.getStringWidth(creditInfo),
@@ -92,8 +97,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                         GuiMultiplayer(this)
                     )
 
-                    2 -> if (extendedBackgroundMode) GuiBackground.particles =
-                        !GuiBackground.particles else if (extendedModMode) mc.displayGuiScreen(GuiScripts(this)) else mc.displayGuiScreen(
+                    2 -> if (extendedModMode) mc.displayGuiScreen(GuiScripts(this)) else mc.displayGuiScreen(
                         GuiAltManager(this)
                     )
 
@@ -170,8 +174,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                         shouldAnimate = true
                         displayString = if (icon == ExtendedBackgroundButton.Enabled)
                             "Custom Background: ${if (GuiBackground.enabled) "§aON" else "§cOFF"}"
-                        else if (icon == ExtendedBackgroundButton.Particles)
-                            "${icon.buttonName}: ${if (GuiBackground.particles) "§aON" else "§cOFF"}"
                         else
                             icon.buttonName
                         moveX = staticX + 40F * index
@@ -217,13 +219,13 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         if (displayString != null)
             Fonts.fontSFUI40.drawCenteredString(displayString, width / 2F, staticY + 30F, -1)
         else
-            Fonts.fontSFUI40.drawCenteredString("github.com/Aspw-w/NightX-Client", width / 2F, staticY + 30F, -1)
+            Fonts.fontSFUI40.drawCenteredString("Build: §a" + NightX.CLIENT_VERSION, width / 2F, staticY + 30F, -1)
 
         if (shouldAnimate) {
             if (fade == 0F)
                 slideX = moveX
             else
-                slideX = AnimationUtils.animate(moveX, slideX, 0.5F * (1F - partialTicks))
+                slideX = AnimationUtils.animate(moveX, slideX, 10F * (1F - partialTicks))
 
             lastXPos = moveX
 
@@ -233,7 +235,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             fade -= 10F
             if (fade <= 0F) fade = 0F
 
-            slideX = AnimationUtils.animate(lastXPos, slideX, 0.5F * (1F - partialTicks))
+            slideX = AnimationUtils.animate(lastXPos, slideX, 10F * (1F - partialTicks))
         }
 
         if (fade != 0F)
@@ -291,7 +293,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     enum class ExtendedBackgroundButton(val buttonName: String, val texture: ResourceLocation) {
         Back("Done", ResourceLocation("nightx/clickgui/back.png")),
         Enabled("Enabled", ResourceLocation("nightx/notification/checkmark.png")),
-        Particles("Gui Particles", ResourceLocation("nightx/clickgui/brush.png")),
+        Scripts("Scripts", ResourceLocation("nightx/clickgui/docs.png")),
         Change("Change wallpaper", ResourceLocation("nightx/clickgui/import.png")),
         Reset("Reset wallpaper", ResourceLocation("nightx/clickgui/reload.png")),
         Exit("Quit", ResourceLocation("nightx/menu/exit.png"))

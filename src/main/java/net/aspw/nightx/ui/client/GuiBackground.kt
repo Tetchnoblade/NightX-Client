@@ -4,7 +4,5 @@ class GuiBackground {
 
     companion object {
         var enabled = true
-        var particles = false
     }
-
 }

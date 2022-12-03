@@ -211,10 +211,11 @@ class ModuleManager : Listenable {
             TargetDead::class.java,
             Invisible::class.java,
             PotionSpoof::class.java,
-            TickTimer::class.java
+            TickTimer::class.java,
+            HitParticles::class.java
         )
 
-        registerModule(Fucker)
+        registerModule(BedBreaker)
         registerModule(StealAura)
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")

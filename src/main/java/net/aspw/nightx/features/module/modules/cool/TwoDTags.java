@@ -54,7 +54,7 @@ public final class TwoDTags extends Module {
     public final BoolValue outline = new BoolValue("Outline", true);
     public final ListValue boxMode = new ListValue("Mode", new String[]{"Box", "Corners"}, "Box");
     public final BoolValue healthBar = new BoolValue("Health-bar", true);
-    public final ListValue hpBarMode = new ListValue("HBar-Mode", new String[]{"Dot", "Line"}, "Line", () -> healthBar.get());
+    public final ListValue hpBarMode = new ListValue("HBar-Mode", new String[]{"Dot", "Line"}, "Dot", () -> healthBar.get());
     public final BoolValue absorption = new BoolValue("Render-Absorption", false, () -> healthBar.get() && hpBarMode.get().equalsIgnoreCase("line"));
     public final BoolValue armorBar = new BoolValue("Armor-bar", false);
     public final ListValue armorBarMode = new ListValue("ABar-Mode", new String[]{"Total", "Items"}, "Total", () -> armorBar.get());

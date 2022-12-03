@@ -956,7 +956,10 @@ public class Flight extends Module {
 
         if (bobbingValue.get()) {
             mc.thePlayer.cameraYaw = bobbingAmountValue.get();
-            mc.thePlayer.prevCameraYaw = bobbingAmountValue.get();
+        }
+
+        if (!bobbingValue.get()) {
+            mc.thePlayer.cameraYaw = 0.0f;
         }
 
         if (modeValue.get().equalsIgnoreCase("boosthypixel")) {
