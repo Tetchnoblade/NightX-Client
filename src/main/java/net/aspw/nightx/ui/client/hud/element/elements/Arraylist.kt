@@ -72,7 +72,7 @@ class Arraylist(
     private val hAnimation = ListValue("HorizontalAnimation", arrayOf("Default", "None", "Slide", "Astolfo"), "Astolfo")
     private val vAnimation =
         ListValue("VerticalAnimation", arrayOf("None", "LiquidSense", "Slide", "Rise", "Astolfo"), "Slide")
-    private val animationSpeed = FloatValue("Animation-Speed", 0.4F, 0.01F, 1F)
+    private val animationSpeed = FloatValue("Animation-Speed", 0.42F, 0.01F, 1F)
     private val nameBreak = BoolValue("NameBreak", true)
     private val abcOrder = BoolValue("Alphabetical-Order", false)
     private val tags = BoolValue("Tags", true)

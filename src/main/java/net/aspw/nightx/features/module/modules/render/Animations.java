@@ -12,8 +12,8 @@ import net.aspw.nightx.value.ListValue;
 public class Animations extends Module {
     // some ListValue
     public static final ListValue Sword = new ListValue("Style", new String[]{
-            "1.8", "LiquidBounce", "SlideLow", "SlideMedium", "SlideFull", "Push", "Swing", "Swank", "Swong", "Swang", "Swaing", "Sweak", "Stella", "Smart", "ETB", "Moon", "MoonPush", "Lennox", "Leaked", "Ninja",
-            "Jigsaw", "Avatar", "Sigma3", "Sigma4", "Reverse", "Old", "OldFull", "Flux1", "Flux2", "Flux3", "DortwareNew", "Dortware1", "Dortware2", "Funny", "Zoom", "Rotate", "Spin", "Spinny"
+            "1.8", "LiquidBounce", "SlideLow", "SlideMedium", "SlideFull", "SlideCut", "Push", "Swing", "Swank", "Swong", "Swang", "Swaing", "Sweak", "Stella", "Smart", "ETB", "Moon", "MoonPush", "Lennox",
+            "Leaked", "Ninja", "Jigsaw", "Avatar", "Sigma3", "Sigma4", "Reverse", "Old", "OldFull", "Flux1", "Flux2", "Flux3", "DortwareNew", "Dortware1", "Dortware2", "Funny", "Zoom", "Rotate", "Spin", "Spinny"
     }, "Swing");
 
     // item general scale
@@ -33,7 +33,9 @@ public class Animations extends Module {
     public static final FloatValue blockPosZ = new FloatValue("BlockingZ", 0f, -1f, 1f);
 
     // modify item swing and rotate
-    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 0, -9, 4);
+    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 0, -9, 5);
+    public static final IntegerValue Equip = new IntegerValue("Equip-Down", 3, -5, 5, () -> Sword.get().equalsIgnoreCase("push") || Sword.get().equalsIgnoreCase("swank") || Sword.get().equalsIgnoreCase("swong") || Sword.get().equalsIgnoreCase("swang") ||
+            Sword.get().equalsIgnoreCase("swaing") || Sword.get().equalsIgnoreCase("sweak") || Sword.get().equalsIgnoreCase("smart") || Sword.get().equalsIgnoreCase("moon") || Sword.get().equalsIgnoreCase("dortware1") || Sword.get().equalsIgnoreCase("dortware2"));
     public static final BoolValue RotateItems = new BoolValue("Rotate-Items", false);
     public static final FloatValue SpeedRotate = new FloatValue("Rotate-Speed", 1f, 0f, 10f, () -> RotateItems.get() || Sword.get().equalsIgnoreCase("spinny") || Sword.get().equalsIgnoreCase("rotate"));
     public static final FloatValue SpinSpeed = new FloatValue("Spin-Speed", 5f, 0f, 50f, () -> Sword.get().equalsIgnoreCase("spin"));

@@ -6,7 +6,6 @@ import net.aspw.nightx.features.module.Module;
 import net.aspw.nightx.features.module.ModuleCategory;
 import net.aspw.nightx.features.module.ModuleInfo;
 import net.aspw.nightx.features.module.modules.exploit.Damage;
-import net.aspw.nightx.features.module.modules.misc.AntiBot;
 import net.aspw.nightx.ui.client.hud.element.elements.Notification;
 import net.aspw.nightx.utils.*;
 import net.aspw.nightx.utils.misc.RandomUtils;

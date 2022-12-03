@@ -7,6 +7,7 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.utils.misc.RandomUtils
+import net.aspw.nightx.utils.timer.TickTimer
 import net.aspw.nightx.utils.timer.TimeUtils
 import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.IntegerValue
@@ -34,15 +35,16 @@ class AutoClicker : Module() {
         }
 
     }
-
     private val rightValue = BoolValue("Right", false)
     private val leftValue = BoolValue("Left", true)
     private val jitterValue = BoolValue("Jitter", false)
+    private val blockValue = BoolValue("AutoBlock", false)
 
     private var rightDelay = TimeUtils.randomClickDelay(minCPSValue.get(), maxCPSValue.get())
     private var rightLastSwing = 0L
     private var leftDelay = TimeUtils.randomClickDelay(minCPSValue.get(), maxCPSValue.get())
     private var leftLastSwing = 0L
+    private val tickTimer = TickTimer()
 
     @EventTarget
     fun onRender(event: Render3DEvent) {
@@ -67,6 +69,14 @@ class AutoClicker : Module() {
         }
     }
 
+    override fun onEnable() {
+        tickTimer.update()
+    }
+
+    override fun onDisable() {
+        tickTimer.reset()
+    }
+
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         if (jitterValue.get() && (leftValue.get() && mc.gameSettings.keyBindAttack.isKeyDown && mc.playerController.curBlockDamageMP == 0F
@@ -89,6 +99,9 @@ class AutoClicker : Module() {
                 else if (mc.thePlayer.rotationPitch < -90)
                     mc.thePlayer.rotationPitch = -90F
             }
+        }
+        if (blockValue.get() && tickTimer.hasTimePassed(1) && mc.gameSettings.keyBindAttack.isKeyDown && leftValue.get()) {
+            KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
         }
     }
 }

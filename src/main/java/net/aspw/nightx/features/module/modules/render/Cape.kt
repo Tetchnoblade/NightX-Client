@@ -31,6 +31,11 @@ class Cape : Module() {
             "Tenacity",
             "FDP",
             "Lunar",
+            "Minecon2011",
+            "Minecon2012",
+            "Minecon2013",
+            "Minecon2015",
+            "Minecon2016",
             "Migration",
             "Vanilla"
         ),
@@ -68,6 +73,11 @@ class Cape : Module() {
         TENACITY(ResourceLocation("nightx/cape/tenacity.png")),
         FDP(ResourceLocation("nightx/cape/fdp.png")),
         LUNAR(ResourceLocation("nightx/cape/lunar.png")),
+        MINECON2011(ResourceLocation("nightx/cape/2011.png")),
+        MINECON2012(ResourceLocation("nightx/cape/2012.png")),
+        MINECON2013(ResourceLocation("nightx/cape/2013.png")),
+        MINECON2015(ResourceLocation("nightx/cape/2015.png")),
+        MINECON2016(ResourceLocation("nightx/cape/2016.png")),
         MIGRATION(ResourceLocation("nightx/cape/migration.png")),
         VANILLA(ResourceLocation("nightx/cape/vanilla.png"))
     }

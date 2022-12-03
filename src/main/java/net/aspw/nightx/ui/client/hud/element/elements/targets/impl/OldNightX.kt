@@ -8,7 +8,7 @@ import net.aspw.nightx.utils.render.RenderUtils
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.player.EntityPlayer
 
-class NightX(inst: Target) : TargetStyle("NightX", inst, true) {
+class OldNightX(inst: Target) : TargetStyle("OldNightX", inst, true) {
 
     override fun drawTarget(entity: EntityPlayer) {
         val font = Fonts.minecraftFont

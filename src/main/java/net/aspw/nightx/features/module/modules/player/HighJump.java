@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement;
+package net.aspw.nightx.features.module.modules.player;
 
 import net.aspw.nightx.event.EventTarget;
 import net.aspw.nightx.event.JumpEvent;
@@ -16,7 +16,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockPane;
 import net.minecraft.util.BlockPos;
 
-@ModuleInfo(name = "HighJump", spacedName = "High Jump", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "HighJump", spacedName = "High Jump", category = ModuleCategory.PLAYER)
 public class HighJump extends Module {
 
     private final FloatValue heightValue = new FloatValue("Height", 5F, 1.0F, 10F, "m");
