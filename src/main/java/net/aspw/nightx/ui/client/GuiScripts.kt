@@ -41,7 +41,7 @@ class GuiScripts(private val prevGui: GuiScreen) : GuiScreen() {
 
         list.drawScreen(mouseX, mouseY, partialTicks)
 
-        drawCenteredString(Fonts.fontSFUI40, "§9§lScripts", width / 2, 28, 0xffffff)
+        Fonts.fontSFUI40.drawCenteredString("§9§lScripts", width / 2.0f, 6f, 0xffffff)
         super.drawScreen(mouseX, mouseY, partialTicks)
     }
 

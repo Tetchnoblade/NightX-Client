@@ -64,7 +64,7 @@ class ScriptManager {
         file.copyTo(scriptFile)
 
         loadScript(scriptFile)
-        ClientUtils.getLogger().info("[ScriptAPI]  Successfully imported script '${scriptFile.name}'.")
+        ClientUtils.getLogger().info("[ScriptAPI] Successfully imported script '${scriptFile.name}'.")
     }
 
     /**
@@ -76,7 +76,7 @@ class ScriptManager {
         scripts.remove(script)
         script.scriptFile.delete()
 
-        ClientUtils.getLogger().info("[ScriptAPI]  Successfully deleted script '${script.scriptFile.name}'.")
+        ClientUtils.getLogger().info("[ScriptAPI] Successfully deleted script '${script.scriptFile.name}'.")
     }
 
     /**
@@ -88,6 +88,6 @@ class ScriptManager {
         loadScripts()
         enableScripts()
 
-        ClientUtils.getLogger().info("[ScriptAPI]  Successfully reloaded scripts.")
+        ClientUtils.getLogger().info("[ScriptAPI] Successfully reloaded scripts.")
     }
 }

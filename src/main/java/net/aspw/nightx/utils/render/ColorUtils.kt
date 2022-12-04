@@ -70,8 +70,6 @@ object ColorUtils {
         )
     }
 
-    // TODO: Use kotlin optional argument feature
-
     @JvmStatic
     fun rainbow(offset: Long): Color {
         val currentColor = Color(Color.HSBtoRGB((System.nanoTime() + offset) / 10000000000F % 1, 1F, 1F))

@@ -1394,13 +1394,6 @@ public final class RenderUtils extends MinecraftInstance {
         final int factor = scaledResolution.getScaleFactor();
         glScissor((int) (x * factor), (int) ((scaledResolution.getScaledHeight() - y2) * factor), (int) ((x2 - x) * factor), (int) ((y2 - y) * factor));
     }
-
-    /**
-     * GL CAP MANAGER
-     * <p>
-     * TODO: Remove gl cap manager and replace by something better
-     */
-
     public static void resetCaps() {
         glCapMap.forEach(RenderUtils::setGlState);
     }

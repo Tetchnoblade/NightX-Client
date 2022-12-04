@@ -173,7 +173,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                     ) {
                         shouldAnimate = true
                         displayString = if (icon == ExtendedBackgroundButton.Enabled)
-                            "Custom Background: ${if (GuiBackground.enabled) "§aON" else "§cOFF"}"
+                            "Background: ${if (GuiBackground.enabled) "§aEnabled" else "§cDisabled"}"
                         else
                             icon.buttonName
                         moveX = staticX + 40F * index
@@ -193,7 +193,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                     ) {
                         shouldAnimate = true
                         displayString =
-                            if (icon == ExtendedImageButton.DiscordRPC) "${icon.buttonName}: ${if (NightX.clientRichPresence.showRichPresenceValue) "§aON" else "§cOFF"}" else icon.buttonName
+                            if (icon == ExtendedImageButton.DiscordRPC) "${icon.buttonName}: ${if (NightX.clientRichPresence.showRichPresenceValue) "§aEnabled" else "§cDisabled"}" else icon.buttonName
                         moveX = staticX + 40F * index
                     }
                     index++
@@ -286,16 +286,16 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         Mods("Mods", ResourceLocation("nightx/menu/mods.png")),
         Scripts("Scripts", ResourceLocation("nightx/clickgui/docs.png")),
         DiscordRPC("Discord RPC", ResourceLocation("nightx/menu/discord.png")),
-        Background("Background", ResourceLocation("nightx/menu/wallpaper.png")),
+        Background("Gui", ResourceLocation("nightx/menu/wallpaper.png")),
         Exit("Quit", ResourceLocation("nightx/menu/exit.png"))
     }
 
     enum class ExtendedBackgroundButton(val buttonName: String, val texture: ResourceLocation) {
         Back("Done", ResourceLocation("nightx/clickgui/back.png")),
-        Enabled("Enabled", ResourceLocation("nightx/notification/checkmark.png")),
+        Enabled("Background", ResourceLocation("nightx/notification/checkmark.png")),
         Scripts("Scripts", ResourceLocation("nightx/clickgui/docs.png")),
-        Change("Change wallpaper", ResourceLocation("nightx/clickgui/import.png")),
-        Reset("Reset wallpaper", ResourceLocation("nightx/clickgui/reload.png")),
+        Upload("Upload", ResourceLocation("nightx/clickgui/import.png")),
+        Reload("Reload", ResourceLocation("nightx/clickgui/reload.png")),
         Exit("Quit", ResourceLocation("nightx/menu/exit.png"))
     }
 

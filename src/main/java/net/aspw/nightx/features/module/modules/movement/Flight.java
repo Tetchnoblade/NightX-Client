@@ -1406,7 +1406,6 @@ public class Flight extends Module {
         groundTimer.reset();
     }
 
-    // TODO: Make better and faster calculation lol
     private double calculateGround() {
         final AxisAlignedBB playerBoundingBox = mc.thePlayer.getEntityBoundingBox();
         double blockHeight = 1D;

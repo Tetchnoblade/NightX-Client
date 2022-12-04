@@ -6,13 +6,8 @@ import net.aspw.nightx.NightX;
 import net.aspw.nightx.file.configs.*;
 import net.aspw.nightx.utils.ClientUtils;
 import net.aspw.nightx.utils.MinecraftInstance;
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.util.ResourceLocation;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.lang.reflect.Field;
 
 public class FileManager extends MinecraftInstance {
@@ -24,14 +19,13 @@ public class FileManager extends MinecraftInstance {
     public final File settingsDir = new File(dir, "configs");
     public final File soundsDir = new File(dir, "sounds");
     public final File themesDir = new File(dir, "themes");
-    public final FileConfig modulesConfig = new ModulesConfig(new File(dir, "modules.json"));
-    public final FileConfig valuesConfig = new ValuesConfig(new File(dir, "values.json"));
-    public final AccountsConfig accountsConfig = new AccountsConfig(new File(dir, "accounts.json"));
-    public final FriendsConfig friendsConfig = new FriendsConfig(new File(dir, "friends.json"));
-    public final FileConfig xrayConfig = new XRayConfig(new File(dir, "xray-blocks.json"));
+    public final FileConfig modulesConfig = new ModulesConfig(new File(dir, "toggled.json"));
+    public final FileConfig valuesConfig = new ValuesConfig(new File(dir, "value.json"));
+    public final AccountsConfig accountsConfig = new AccountsConfig(new File(dir, "alts.json"));
+    public final FriendsConfig friendsConfig = new FriendsConfig(new File(dir, "relations.json"));
+    public final FileConfig xrayConfig = new XRayConfig(new File(dir, "xray.json"));
     public final FileConfig hudConfig = new HudConfig(new File(dir, "hud.json"));
     public final FileConfig shortcutsConfig = new ShortcutsConfig(new File(dir, "shortcuts.json"));
-    public final File backgroundFile = new File(dir, "background.png");
 
     /**
      * Constructor of file manager
@@ -39,7 +33,6 @@ public class FileManager extends MinecraftInstance {
      */
     public FileManager() {
         setupFolder();
-        loadBackground();
     }
 
     /**
@@ -175,26 +168,6 @@ public class FileManager extends MinecraftInstance {
         } catch (final Throwable t) {
             ClientUtils.getLogger().error("[FileManager] Failed to save config file: " +
                     config.getFile().getName() + ".", t);
-        }
-    }
-
-    /**
-     * Load background for background
-     */
-    public void loadBackground() {
-        if (backgroundFile.exists()) {
-            try {
-                final BufferedImage bufferedImage = ImageIO.read(new FileInputStream(backgroundFile));
-
-                if (bufferedImage == null)
-                    return;
-
-                NightX.INSTANCE.setBackground(new ResourceLocation("nightx/background.png"));
-                mc.getTextureManager().loadTexture(NightX.INSTANCE.getBackground(), new DynamicTexture(bufferedImage));
-                ClientUtils.getLogger().info("[FileManager] Loaded background.");
-            } catch (final Exception e) {
-                ClientUtils.getLogger().error("[FileManager] Failed to load background.", e);
-            }
         }
     }
 }

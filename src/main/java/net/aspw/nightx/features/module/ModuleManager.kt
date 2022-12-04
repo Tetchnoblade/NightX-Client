@@ -276,15 +276,6 @@ class ModuleManager : Listenable {
         NightX.commandManager.registerCommand(ModuleCommand(module, values))
     }
 
-    /**
-     * Legacy stuff
-     *
-     * TODO: Remove later when everything is translated to Kotlin
-     */
-
-    /**
-     * Get module by [moduleClass]
-     */
     fun <T : Module> getModule(moduleClass: Class<T>): T? = moduleClassMap[moduleClass] as T?
 
     operator fun <T : Module> get(clazz: Class<T>) = getModule(clazz)

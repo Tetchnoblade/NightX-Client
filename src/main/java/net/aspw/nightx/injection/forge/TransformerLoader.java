@@ -44,13 +44,6 @@ public class TransformerLoader implements IFMLLoadingPlugin {
         return null;
     }
 
-    /**
-     * Return the class name of an implementor of "IFMLCallHook", that will be run, in the
-     * main thread, to perform any additional setup this coremod may require. It will be
-     * run <strong>prior</strong> to Minecraft starting, so it CANNOT operate on minecraft
-     * itself. The game will deliberately crash if this code is detected to trigger a
-     * minecraft class loading (TODO: implement crash ;) )
-     */
     @Override
     public String getSetupClass() {
         return null;
