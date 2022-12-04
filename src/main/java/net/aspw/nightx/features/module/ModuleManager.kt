@@ -212,7 +212,9 @@ class ModuleManager : Listenable {
             Invisible::class.java,
             PotionSpoof::class.java,
             TickTimer::class.java,
-            HitParticles::class.java
+            HitParticles::class.java,
+            InstantMine::class.java,
+            CivBreakNew::class.java
         )
 
         registerModule(BedBreaker)

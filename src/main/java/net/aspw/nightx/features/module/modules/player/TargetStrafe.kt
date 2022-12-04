@@ -30,6 +30,7 @@ class TargetStrafe : Module() {
     private lateinit var killAura: KillAura
     private lateinit var speed: Speed
     private lateinit var flight: Flight
+    private lateinit var longJump: LongJump
 
     var direction = 1
     var lastView = 0
@@ -41,6 +42,7 @@ class TargetStrafe : Module() {
         killAura = NightX.moduleManager.getModule(KillAura::class.java) as KillAura
         speed = NightX.moduleManager.getModule(Speed::class.java) as Speed
         flight = NightX.moduleManager.getModule(Flight::class.java) as Flight
+        longJump = NightX.moduleManager.getModule(LongJump::class.java) as LongJump
     }
 
     override fun onEnable() {
@@ -133,7 +135,7 @@ class TargetStrafe : Module() {
         }
 
     val canStrafe: Boolean
-        get() = (state && (speed.state || flight.state) && killAura.state && killAura.target != null && !mc.thePlayer.isSneaking && keyMode)
+        get() = (state && (speed.state || flight.state || longJump.state) && killAura.state && killAura.target != null && !mc.thePlayer.isSneaking && keyMode)
 
     private fun checkVoid(): Boolean {
         for (x in -1..0) {

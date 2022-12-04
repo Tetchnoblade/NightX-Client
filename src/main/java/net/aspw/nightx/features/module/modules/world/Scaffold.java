@@ -52,7 +52,7 @@ public class Scaffold extends Module {
     // Global settings
     private final BoolValue towerEnabled = new BoolValue("EnableTower", true);
     private final ListValue towerModeValue = new ListValue("TowerMode", new String[]{
-            "Jump", "Motion", "StableMotion", "ConstantMotion", "MotionTP", "Packet", "Teleport", "AAC3.3.9", "AAC3.6.4", "Matrix", "Verus"
+            "Jump", "Motion", "StableMotion", "ConstantMotion", "MotionTP", "Packet", "Teleport", "AAC3.3.9", "AAC3.6.4", "Verus"
     }, "ConstantMotion", () -> towerEnabled.get());
     private final ListValue towerPlaceModeValue = new ListValue("Tower-PlaceTiming", new String[]{"Pre", "Post"}, "Post");
     private final BoolValue stopWhenBlockAbove = new BoolValue("StopWhenBlockAbove", true, () -> towerEnabled.get());
@@ -375,16 +375,6 @@ public class Scaffold extends Module {
                 } else if (mc.thePlayer.ticksExisted % 4 == 0) {
                     mc.thePlayer.motionY = -0.5;
                     mc.thePlayer.setPosition(mc.thePlayer.posX + 0.035, mc.thePlayer.posY, mc.thePlayer.posZ);
-                }
-                break;
-            case "matrix":
-                if (mc.thePlayer.onGround) {
-                    fakeJump();
-                    mc.thePlayer.motionY = 0.42;
-                } else if (mc.thePlayer.motionY < 0.19145141919180) {
-                    mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ);
-                    mc.thePlayer.onGround = true;
-                    mc.thePlayer.motionY = 0.481145141919180;
                 }
                 break;
             case "verus":

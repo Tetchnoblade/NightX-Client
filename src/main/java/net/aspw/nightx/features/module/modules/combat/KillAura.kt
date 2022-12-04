@@ -471,8 +471,8 @@ class KillAura : Module() {
             return
         }
 
-        if (target !== null && equip.get()) {
-            mc.thePlayer.renderArmPitch = -80f
+        if (target !== null && mc.thePlayer.isSwingInProgress && equip.get()) {
+            mc.thePlayer.renderArmPitch = -90f
         }
 
         // Target

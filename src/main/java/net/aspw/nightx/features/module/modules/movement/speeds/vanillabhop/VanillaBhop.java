@@ -18,7 +18,7 @@ public class VanillaBhop extends SpeedMode {
     @Override
     public void onMotion(MotionEvent eventMotion) {
         if (MovementUtils.isMoving()) {
-            MovementUtils.strafe(1);
+            MovementUtils.strafe(0.9f);
         }
         final Speed speed = NightX.moduleManager.getModule(Speed.class);
 
