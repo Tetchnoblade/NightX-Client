@@ -64,9 +64,6 @@ class Sprint : Module() {
 
         if (allDirectionsValue.get() || mc.thePlayer.movementInput.moveForward >= 0.8F)
             mc.thePlayer.isSprinting = true
-
-        if (allDirectionsValue.get() && killAura.target == null)
-            RotationUtils.setTargetRotation(Rotation(MovementUtils.getRawDirection(), mc.thePlayer.rotationPitch))
     }
 
 }
