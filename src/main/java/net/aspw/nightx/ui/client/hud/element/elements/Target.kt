@@ -24,8 +24,8 @@ import java.awt.Color
  */
 @ElementInfo(name = "Target", disableScale = true, retrieveDamage = true)
 class Target(
-    x: Double = 7.0, y: Double = -11.0, scale: Float = 1F,
-    side: Side = Side(Side.Horizontal.MIDDLE, Side.Vertical.MIDDLE)
+    x: Double = 215.0, y: Double = 160.0, scale: Float = 1F,
+    side: Side = Side(Side.Horizontal.LEFT, Side.Vertical.UP)
 ) : Element(x, y, scale, side) {
 
     val styleList = mutableListOf<TargetStyle>()

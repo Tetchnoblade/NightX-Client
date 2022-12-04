@@ -129,8 +129,8 @@ class KillAura : Module() {
 
     private val noSendRot = BoolValue("NoSendRotation", true, { rotations.get().equals("spin", true) })
     private val noHitCheck = BoolValue("NoHitCheck", false, { !rotations.get().equals("none", true) })
-
     private val blinkCheck = BoolValue("BlinkCheck", false)
+    private val equip = BoolValue("Equip", true)
 
     private val priorityValue = ListValue(
         "Priority",
@@ -469,6 +469,10 @@ class KillAura : Module() {
         if (target == null) {
             stopBlocking()
             return
+        }
+
+        if (target !== null && equip.get()) {
+            mc.thePlayer.renderArmPitch = -80f
         }
 
         // Target

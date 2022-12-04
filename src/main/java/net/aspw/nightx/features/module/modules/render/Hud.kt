@@ -15,7 +15,7 @@ import net.aspw.nightx.value.*
 class Hud : Module() {
     val tabHead = BoolValue("Tab-HeadOverlay", true)
     val animHotbarValue = BoolValue("HotbarAnimation", true)
-    val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.5F, { animHotbarValue.get() })
+    val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F, { animHotbarValue.get() })
     val blackHotbarValue = BoolValue("BlackHotbar", false)
     val fontChatValue = BoolValue("FontChat", false)
     val fontType = FontValue("Font", Fonts.fontSFUI40, { fontChatValue.get() })

@@ -287,7 +287,7 @@ public abstract class MixinItemRenderer {
                         break;
                     case BLOCK:
                         if (NightX.moduleManager.getModule(Animations.class).getState()) {
-                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.04, Animations.blockPosZ.get().doubleValue());
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
                             final String z = Animations.Sword.get();
                             switch (z) {
                                 case "LiquidBounce": {
