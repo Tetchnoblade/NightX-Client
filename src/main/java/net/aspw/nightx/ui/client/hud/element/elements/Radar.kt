@@ -23,7 +23,7 @@ import kotlin.math.ceil
 import kotlin.math.sqrt
 
 @ElementInfo(name = "Radar", disableScale = true, priority = 1)
-class Radar(x: Double = 5.0, y: Double = 130.0) : Element(x, y) {
+class Radar(x: Double = 7.0, y: Double = 72.0) : Element(x, y) {
 
     companion object {
         private val SQRT_OF_TWO = sqrt(2f)
@@ -32,17 +32,18 @@ class Radar(x: Double = 5.0, y: Double = 130.0) : Element(x, y) {
     private val blurValue = BoolValue("Blur", false)
     private val blurStrength = FloatValue("Blur-Strength", 0F, 0F, 30F)
 
-    private val sizeValue = FloatValue("Size", 90f, 30f, 500f)
-    private val viewDistanceValue = FloatValue("View Distance", 4F, 0.5F, 32F)
+    private val sizeValue = FloatValue("Size", 100f, 30f, 500f)
+    private val viewDistanceValue = FloatValue("View Distance", 14F, 0.5F, 32F)
 
-    private val playerShapeValue = ListValue("Player Shape", arrayOf("Rectangle", "Circle"), "Triangle")
+    private val playerShapeValue = ListValue("Player Shape", arrayOf("Rectangle", "Circle"), "Rectangle")
     private val playerSizeValue = FloatValue("Player Size", 2.0F, 0.5f, 20F)
     private val fovSizeValue = FloatValue("FOV Size", 10F, 0F, 50F)
 
     private val exhiValue = BoolValue("Use Exhi Rect", true)
 
     private val lineValue = BoolValue("Line", false)
-    private val rainbowList = ListValue("Line-Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Off")
+    private val rainbowList =
+        ListValue("Line-Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Off")
 
     private val redValue = IntegerValue("Line-Red", 255, 0, 255)
     private val greenValue = IntegerValue("Line-Green", 255, 0, 255)

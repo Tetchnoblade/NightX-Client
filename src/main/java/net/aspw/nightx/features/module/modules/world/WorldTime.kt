@@ -11,8 +11,8 @@ import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.value.ListValue
 import net.minecraft.network.play.server.S03PacketTimeUpdate
 
-@ModuleInfo(name = "TimeChanger", spacedName = "Time Changer", category = ModuleCategory.WORLD)
-class TimeChanger : Module() {
+@ModuleInfo(name = "WorldTime", spacedName = "World Time", category = ModuleCategory.WORLD)
+class WorldTime : Module() {
     val timeModeValue = ListValue("Time", arrayOf("Static", "Cycle"), "Static")
     val cycleSpeedValue = IntegerValue("CycleSpeed", 30, -30, 100, { timeModeValue.get().equals("cycle", true) })
     val staticTimeValue = IntegerValue("StaticTime", 18000, 0, 24000, { timeModeValue.get().equals("static", true) })

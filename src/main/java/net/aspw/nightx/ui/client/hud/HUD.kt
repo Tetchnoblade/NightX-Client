@@ -28,7 +28,8 @@ open class HUD : MinecraftInstance() {
             ScoreboardElement::class.java,
             Target::class.java,
             Radar::class.java,
-            Image::class.java
+            Image::class.java,
+            SessionInformation::class.java
         )
 
         /**
@@ -43,6 +44,8 @@ open class HUD : MinecraftInstance() {
             .addElement(Effects())
             .addElement(Notifications())
             .addElement(Target())
+            .addElement(SessionInformation())
+            .addElement(Radar())
     }
 
     /**

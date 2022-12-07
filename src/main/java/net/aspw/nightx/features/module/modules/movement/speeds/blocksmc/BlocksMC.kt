@@ -14,6 +14,7 @@ class BlocksMC : SpeedMode("BlocksMC") {
 
     override fun onJump(event: JumpEvent) {
         if (mc.thePlayer != null && isMoving())
+            mc.timer.timerSpeed = 1.08f
             event.cancelEvent()
     }
 

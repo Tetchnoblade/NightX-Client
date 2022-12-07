@@ -24,7 +24,7 @@ object NightX {
 
     // Client information
     const val CLIENT_BEST = "NightX"
-    const val CLIENT_FOLDER = ".nightx"
+    const val CLIENT_FOLDER = "NightX"
     const val CLIENT_VERSION = "Development"
     const val CLIENT_CREATOR = "CCBlueX, exit-scammed, As_pw, Zywl"
     const val CLIENT_CONFIGS = "https://sites.google.com/view/nightx-client"
@@ -50,6 +50,8 @@ object NightX {
     lateinit var clientRichPresence: ClientRichPresence
 
     var lastTick: Long = 0L
+
+    var playTimeStart: Long = 0
 
     /**
      * Execute if client will be started

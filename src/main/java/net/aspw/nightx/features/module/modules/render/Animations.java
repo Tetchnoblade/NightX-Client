@@ -34,7 +34,7 @@ public class Animations extends Module {
 
     // modify item swing and rotate
     public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 0, -9, 5);
-    public static final IntegerValue Equip = new IntegerValue("Equip-Down", 2, -5, 5, () -> Sword.get().equalsIgnoreCase("push") || Sword.get().equalsIgnoreCase("swank") || Sword.get().equalsIgnoreCase("swong") || Sword.get().equalsIgnoreCase("swang") ||
+    public static final IntegerValue Equip = new IntegerValue("Equip-Motion", 2, -5, 5, () -> Sword.get().equalsIgnoreCase("push") || Sword.get().equalsIgnoreCase("swank") || Sword.get().equalsIgnoreCase("swong") || Sword.get().equalsIgnoreCase("swang") ||
             Sword.get().equalsIgnoreCase("swaing") || Sword.get().equalsIgnoreCase("dash") || Sword.get().equalsIgnoreCase("smart") || Sword.get().equalsIgnoreCase("moon") || Sword.get().equalsIgnoreCase("dortware1") || Sword.get().equalsIgnoreCase("dortware2"));
     public static final BoolValue RotateItems = new BoolValue("Rotate-Items", false);
     public static final FloatValue SpeedRotate = new FloatValue("Rotate-Speed", 1f, 0f, 10f, () -> RotateItems.get() || Sword.get().equalsIgnoreCase("spinny") || Sword.get().equalsIgnoreCase("rotate"));

@@ -115,7 +115,7 @@ class ModuleManager : Listenable {
             PackSpoofer::class.java,
             NoSlowBreak::class.java,
             PortalMenu::class.java,
-            TimeChanger::class.java,
+            WorldTime::class.java,
             EnchantColor::class.java,
             Cape::class.java,
             NoRender::class.java,

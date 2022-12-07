@@ -131,6 +131,7 @@ class KillAura : Module() {
     private val noHitCheck = BoolValue("NoHitCheck", false, { !rotations.get().equals("none", true) })
     private val blinkCheck = BoolValue("BlinkCheck", false)
     private val equip = BoolValue("Equip", true)
+    val equipMotion = FloatValue("Equip-Motion", -90f, -300f, 300f, { equip.get() })
 
     private val priorityValue = ListValue(
         "Priority",
@@ -472,7 +473,7 @@ class KillAura : Module() {
         }
 
         if (target !== null && mc.thePlayer.isSwingInProgress && equip.get()) {
-            mc.thePlayer.renderArmPitch = -90f
+            mc.thePlayer.renderArmPitch = equipMotion.get()
         }
 
         // Target
