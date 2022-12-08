@@ -33,7 +33,7 @@ public class Animations extends Module {
     public static final FloatValue blockPosZ = new FloatValue("BlockingZ", 0f, -1f, 1f);
 
     // modify item swing and rotate
-    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 0, -9, 5);
+    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 0, -12, 5);
     public static final IntegerValue Equip = new IntegerValue("Equip-Motion", 2, -5, 5, () -> Sword.get().equalsIgnoreCase("push") || Sword.get().equalsIgnoreCase("swank") || Sword.get().equalsIgnoreCase("swong") || Sword.get().equalsIgnoreCase("swang") ||
             Sword.get().equalsIgnoreCase("swaing") || Sword.get().equalsIgnoreCase("dash") || Sword.get().equalsIgnoreCase("smart") || Sword.get().equalsIgnoreCase("moon") || Sword.get().equalsIgnoreCase("dortware1") || Sword.get().equalsIgnoreCase("dortware2"));
     public static final BoolValue RotateItems = new BoolValue("Rotate-Items", false);

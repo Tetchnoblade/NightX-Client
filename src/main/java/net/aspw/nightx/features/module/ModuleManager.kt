@@ -12,6 +12,7 @@ import net.aspw.nightx.features.module.modules.cool.*
 import net.aspw.nightx.features.module.modules.exploit.*
 import net.aspw.nightx.features.module.modules.ghost.Aimbot
 import net.aspw.nightx.features.module.modules.ghost.AutoClicker
+import net.aspw.nightx.features.module.modules.ghost.FastBridge
 import net.aspw.nightx.features.module.modules.ghost.HitBox
 import net.aspw.nightx.features.module.modules.misc.*
 import net.aspw.nightx.features.module.modules.movement.*

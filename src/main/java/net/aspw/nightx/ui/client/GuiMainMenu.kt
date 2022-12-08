@@ -17,6 +17,8 @@ import kotlin.concurrent.thread
 
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
+    val kawaiiLogo = ResourceLocation("nightx/kawaii.png")
+
     var slideX: Float = 0F
     var fade: Float = 0F
 
@@ -62,6 +64,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             height - 12F,
             -1
         )
+        RenderUtils.drawImage2(kawaiiLogo, width / 2F - 50F, height / 2F - 90F, 100, 100)
         GlStateManager.enableAlpha()
         renderBar(mouseX, mouseY, partialTicks)
         GL11.glPopMatrix()

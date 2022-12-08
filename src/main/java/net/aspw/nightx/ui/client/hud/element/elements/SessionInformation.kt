@@ -20,9 +20,9 @@ class SessionInformation(
 ) : Element(x, y, scale, side) {
     private val radiusValue = FloatValue("Radius", 4.25f, 0f, 10f)
     private val bgredValue = IntegerValue("Background Red", 255, 0, 255)
-    private val bggreenValue = IntegerValue("Background Green", 100, 0, 255)
+    private val bggreenValue = IntegerValue("Background Green", 180, 0, 255)
     private val bgblueValue = IntegerValue("Background Blue", 255, 0, 255)
-    private val bgalphaValue = IntegerValue("Background Alpha", 140, 0, 255)
+    private val bgalphaValue = IntegerValue("Background Alpha", 120, 0, 255)
 
     private val lineValue = BoolValue("Line", true)
     private val redValue = IntegerValue("Line-Red-1", 255, 0, 255)
@@ -32,7 +32,7 @@ class SessionInformation(
     private val colorGreenValue2 = IntegerValue("Line-Green-2", 111, 0, 255)
     private val colorBlueValue2 = IntegerValue("Line-Blue-2", 255, 0, 255)
 
-    private val fontValue = FontValue("Font", Fonts.fontSFUI40)
+    private val fontValue = FontValue("Font", Fonts.fontSFUI37)
 
     override fun drawElement(): Border {
         val fontRenderer = fontValue.get()
