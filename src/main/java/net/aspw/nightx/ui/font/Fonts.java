@@ -42,6 +42,8 @@ public class Fonts {
     public static GameFontRenderer jelloRegular40;
     @FontDetails(fontName = "Roboto Bold", fontSize = 180)
     public static GameFontRenderer fontBold180;
+    @FontDetails(fontName = "Tahoma Bold", fontSize = 38)
+    public static GameFontRenderer fontTahoma38;
     @FontDetails(fontName = "Tahoma Bold", fontSize = 35)
     public static GameFontRenderer fontTahoma;
     @FontDetails(fontName = "Tahoma Bold", fontSize = 30)
@@ -70,6 +72,7 @@ public class Fonts {
         fontBold180 = new GameFontRenderer(getFont("Roboto-Bold.ttf", 180));
         fontTahoma = new GameFontRenderer(getFont("TahomaBold.ttf", 35));
         fontTahoma30 = new GameFontRenderer(getFont("TahomaBold.ttf", 30));
+        fontTahoma38 = new GameFontRenderer(getFont("TahomaBold.ttf", 38));
         fontTahomaSmall = new TTFFontRenderer(getFont("Tahoma.ttf", 11));
         fontBangers = new GameFontRenderer(getFont("Bangers-Regular.ttf", 45));
 

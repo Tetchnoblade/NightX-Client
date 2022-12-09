@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.misc
+package net.aspw.nightx.features.module.modules.combat
 
 //import net.minecraft.network.play.server.S02PacketChat
 
@@ -14,7 +14,7 @@ import net.aspw.nightx.utils.timer.MSTimer
 import net.minecraft.network.play.server.*
 import kotlin.concurrent.thread
 
-@ModuleInfo(name = "AntiStaff", spacedName = "Anti Staff", category = ModuleCategory.MISC)
+@ModuleInfo(name = "AntiStaff", spacedName = "Anti Staff", category = ModuleCategory.COMBAT)
 class AntiStaff : Module() {
 
     private var obStaffs = "_"

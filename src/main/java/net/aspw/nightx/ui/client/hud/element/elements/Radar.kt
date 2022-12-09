@@ -1,8 +1,6 @@
 package net.aspw.nightx.ui.client.hud.element.elements
 
-import net.aspw.nightx.NightX
 import net.aspw.nightx.features.module.modules.client.ColorMixer
-import net.aspw.nightx.features.module.modules.render.ESP
 import net.aspw.nightx.ui.client.hud.element.Border
 import net.aspw.nightx.ui.client.hud.element.Element
 import net.aspw.nightx.ui.client.hud.element.ElementInfo
@@ -193,12 +191,10 @@ class Radar(x: Double = 7.0, y: Double = 72.0) : Element(x, y) {
                     glRotatef(entity.rotationYaw, 0f, 0f, 1f)
                 }
 
-                val color = (NightX.moduleManager[ESP::class.java] as ESP).getColor(entity)
-
                 worldRenderer.pos(((positionRelativeToPlayer.x / viewDistance) * size).toDouble(),
                     ((positionRelativeToPlayer.y / viewDistance) * size).toDouble(), 0.0)
-                    .color(color.red / 255.0f, color.green / 255.0f,
-                        color.blue / 255.0f, 1.0f).endVertex()
+                    .color(255.0f, 0.0f,
+                        255.0f, 1.0f).endVertex()
 
 
                 if (transform)

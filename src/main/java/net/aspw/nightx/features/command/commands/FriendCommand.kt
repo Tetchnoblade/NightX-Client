@@ -2,7 +2,7 @@ package net.aspw.nightx.features.command.commands
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
-import net.aspw.nightx.features.module.modules.misc.AntiBot
+import net.aspw.nightx.features.module.modules.combat.AntiBot
 import net.aspw.nightx.utils.misc.StringUtils
 import net.aspw.nightx.utils.render.ColorUtils
 import java.util.*

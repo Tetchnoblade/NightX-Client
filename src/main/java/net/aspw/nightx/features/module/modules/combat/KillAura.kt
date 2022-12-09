@@ -7,7 +7,6 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.exploit.Disabler
-import net.aspw.nightx.features.module.modules.misc.AntiBot
 import net.aspw.nightx.features.module.modules.misc.Teams
 import net.aspw.nightx.features.module.modules.player.Blink
 import net.aspw.nightx.features.module.modules.player.TargetStrafe

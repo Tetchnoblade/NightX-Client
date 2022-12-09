@@ -13,7 +13,7 @@ import net.aspw.nightx.value.ListValue
 @ModuleInfo(name = "SilentView", category = ModuleCategory.RENDER)
 class SilentView : Module() {
 
-    var mode = ListValue("Mode", arrayOf("Normal", "CSGO"), "Normal")
+    var mode = ListValue("Mode", arrayOf("Normal", "CSGO"), "CSGO")
     var R = FloatValue("R", 200f, 0f, 255f, { mode.get().equals("csgo", true) })
     var G = FloatValue("G", 0f, 0f, 255f, { mode.get().equals("csgo", true) })
     var B = FloatValue("B", 255f, 0f, 255f, { mode.get().equals("csgo", true) })

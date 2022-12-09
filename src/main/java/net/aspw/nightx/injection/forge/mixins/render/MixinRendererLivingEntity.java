@@ -82,6 +82,10 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
     @Shadow
     protected abstract <T extends EntityLivingBase> void renderLayers(T entitylivingbaseIn, float p_177093_2_, float p_177093_3_, float partialTicks, float p_177093_5_, float p_177093_6_, float p_177093_7_, float p_177093_8_);
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     protected <T extends EntityLivingBase> void rotateCorpse(T p_rotateCorpse_1_, float p_rotateCorpse_2_, float p_rotateCorpse_3_, float p_rotateCorpse_4_) {
         final PlayerEdit playerEdit = NightX.moduleManager.getModule(PlayerEdit.class);
@@ -135,8 +139,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
     private <T extends EntityLivingBase> void canRenderName(T entity, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         final NoRender noRender = NightX.moduleManager.getModule(NoRender.class);
 
-        if (!ESP.renderNameTags
-                || (NightX.moduleManager.getModule(NameTags.class).getState() && ((NightX.moduleManager.getModule(NameTags.class).getLocalValue().get() && entity == Minecraft.getMinecraft().thePlayer && (!NightX.moduleManager.getModule(NameTags.class).getNfpValue().get() || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0)) || EntityUtils.isSelected(entity, false)))
+        if (NightX.moduleManager.getModule(NameTags.class).getState() && ((NightX.moduleManager.getModule(NameTags.class).getLocalValue().get() && entity == Minecraft.getMinecraft().thePlayer && (!NightX.moduleManager.getModule(NameTags.class).getNfpValue().get() || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0)) || EntityUtils.isSelected(entity, false))
                 || (noRender.getState() && noRender.getNameTagsValue().get()))
             callbackInfoReturnable.setReturnValue(false);
     }
@@ -290,71 +293,21 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
         boolean visible = !p_renderModel_1_.isInvisible();
         final ShowInvis trueSight = NightX.moduleManager.getModule(ShowInvis.class);
         final Chams chams = NightX.moduleManager.getModule(Chams.class);
+        final SilentView silentView = NightX.moduleManager.getModule(SilentView.class);
         boolean chamsFlag = (chams.getState() && chams.getTargetsValue().get() && !chams.getLegacyMode().get() && ((chams.getLocalPlayerValue().get() && p_renderModel_1_ == Minecraft.getMinecraft().thePlayer) || EntityUtils.isSelected(p_renderModel_1_, false)));
         boolean semiVisible = !visible && (!p_renderModel_1_.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) || (trueSight.getState() && trueSight.getEntitiesValue().get()));
 
-        if (visible || semiVisible) {
-            if (!this.bindEntityTexture(p_renderModel_1_))
+        if (visible || semiVisible || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO")) {
+            if (!this.bindEntityTexture(p_renderModel_1_) || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO"))
                 return;
 
-            if (semiVisible) {
+            if (semiVisible || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO")) {
                 GlStateManager.pushMatrix();
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 0.15F);
                 GlStateManager.depthMask(false);
                 GlStateManager.enableBlend();
                 GlStateManager.blendFunc(770, 771);
                 GlStateManager.alphaFunc(516, 0.003921569F);
-            }
-
-            final ESP esp = NightX.moduleManager.getModule(ESP.class);
-            if (esp.getState() && EntityUtils.isSelected(p_renderModel_1_, false)) {
-                Minecraft mc = Minecraft.getMinecraft();
-                boolean fancyGraphics = mc.gameSettings.fancyGraphics;
-                mc.gameSettings.fancyGraphics = false;
-
-                float gamma = mc.gameSettings.gammaSetting;
-                mc.gameSettings.gammaSetting = 100000F;
-
-                switch (esp.modeValue.get().toLowerCase()) {
-                    case "wireframe":
-                        GL11.glPushMatrix();
-                        GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
-                        GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
-                        GL11.glDisable(GL11.GL_TEXTURE_2D);
-                        GL11.glDisable(GL11.GL_LIGHTING);
-                        GL11.glDisable(GL11.GL_DEPTH_TEST);
-                        GL11.glEnable(GL11.GL_LINE_SMOOTH);
-                        GL11.glEnable(GL11.GL_BLEND);
-                        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                        RenderUtils.glColor(esp.getColor(p_renderModel_1_));
-                        GL11.glLineWidth(esp.wireframeWidth.get());
-                        this.mainModel.render(p_renderModel_1_, p_renderModel_2_, p_renderModel_3_, p_renderModel_4_, p_renderModel_5_, p_renderModel_6_, p_renderModel_7_);
-                        GL11.glPopAttrib();
-                        GL11.glPopMatrix();
-                        break;
-                    case "outline":
-                        ClientUtils.disableFastRender();
-                        GlStateManager.resetColor();
-
-                        final Color color = esp.getColor(p_renderModel_1_);
-                        OutlineUtils.setColor(color);
-                        OutlineUtils.renderOne(esp.outlineWidth.get());
-                        this.mainModel.render(p_renderModel_1_, p_renderModel_2_, p_renderModel_3_, p_renderModel_4_, p_renderModel_5_, p_renderModel_6_, p_renderModel_7_);
-                        OutlineUtils.setColor(color);
-                        OutlineUtils.renderTwo();
-                        this.mainModel.render(p_renderModel_1_, p_renderModel_2_, p_renderModel_3_, p_renderModel_4_, p_renderModel_5_, p_renderModel_6_, p_renderModel_7_);
-                        OutlineUtils.setColor(color);
-                        OutlineUtils.renderThree();
-                        this.mainModel.render(p_renderModel_1_, p_renderModel_2_, p_renderModel_3_, p_renderModel_4_, p_renderModel_5_, p_renderModel_6_, p_renderModel_7_);
-                        OutlineUtils.setColor(color);
-                        OutlineUtils.renderFour(color);
-                        this.mainModel.render(p_renderModel_1_, p_renderModel_2_, p_renderModel_3_, p_renderModel_4_, p_renderModel_5_, p_renderModel_6_, p_renderModel_7_);
-                        OutlineUtils.setColor(color);
-                        OutlineUtils.renderFive();
-                        OutlineUtils.setColor(Color.WHITE);
-                }
-                mc.gameSettings.fancyGraphics = fancyGraphics;
-                mc.gameSettings.gammaSetting = gamma;
             }
 
             final int blend = 3042;
@@ -448,7 +401,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
                 GL11.glPopMatrix();
             }
 
-            if (semiVisible) {
+            if (semiVisible || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO")) {
                 GlStateManager.disableBlend();
                 GlStateManager.alphaFunc(516, 0.1F);
                 GlStateManager.popMatrix();
@@ -462,71 +415,21 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
         boolean visible = !p_renderModel_1_.isInvisible();
         final ShowInvis trueSight = NightX.moduleManager.getModule(ShowInvis.class);
         final Chams chams = NightX.moduleManager.getModule(Chams.class);
+        final SilentView silentView = NightX.moduleManager.getModule(SilentView.class);
         boolean chamsFlag = (chams.getState() && chams.getTargetsValue().get() && !chams.getLegacyMode().get() && ((chams.getLocalPlayerValue().get() && p_renderModel_1_ == Minecraft.getMinecraft().thePlayer) || EntityUtils.isSelected(p_renderModel_1_, false)));
         boolean semiVisible = !visible && (!p_renderModel_1_.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) || (trueSight.getState() && trueSight.getEntitiesValue().get()));
 
-        if(visible || semiVisible) {
+        if(visible || semiVisible || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO")) {
             if(!this.bindEntityTexture(p_renderModel_1_))
                 return;
 
-            if(semiVisible) {
+            if(semiVisible || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO")) {
                 GlStateManager.pushMatrix();
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 0.15F);
                 GlStateManager.depthMask(false);
                 GlStateManager.enableBlend();
                 GlStateManager.blendFunc(770, 771);
                 GlStateManager.alphaFunc(516, 0.003921569F);
-            }
-
-            final ESP esp = NightX.moduleManager.getModule(ESP.class);
-            if(esp.getState() && EntityUtils.isSelected(p_renderModel_1_, false)) {
-                Minecraft mc = Minecraft.getMinecraft();
-                boolean fancyGraphics = mc.gameSettings.fancyGraphics;
-                mc.gameSettings.fancyGraphics = false;
-
-                float gamma = mc.gameSettings.gammaSetting;
-                mc.gameSettings.gammaSetting = 100000F;
-
-                switch(esp.modeValue.get().toLowerCase()) {
-                    case "wireframe":
-                        glPushMatrix();
-                        GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
-                        GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
-                        GL11.glDisable(GL11.GL_TEXTURE_2D);
-                        GL11.glDisable(GL_LIGHTING);
-                        GL11.glDisable(GL_DEPTH_TEST);
-                        GL11.glEnable(GL11.GL_LINE_SMOOTH);
-                        GL11.glEnable(GL11.GL_BLEND);
-                        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                        RenderUtils.glColor(esp.getColor(p_renderModel_1_));
-                        GL11.glLineWidth(esp.wireframeWidth.get());
-                        this.mainModel.render(p_renderModel_1_, p_renderModel_2_, p_renderModel_3_, p_renderModel_4_, p_renderModel_5_, p_renderModel_6_, p_renderModel_7_);
-                        GL11.glPopAttrib();
-                        GL11.glPopMatrix();
-                        break;
-                    case "outline":
-                        ClientUtils.disableFastRender();
-                        GlStateManager.resetColor();
-
-                        final Color color = esp.getColor(p_renderModel_1_);
-                        OutlineUtils.setColor(color);
-                        OutlineUtils.renderOne(esp.outlineWidth.get());
-                        this.mainModel.render(p_renderModel_1_, p_renderModel_2_, p_renderModel_3_, p_renderModel_4_, p_renderModel_5_, p_renderModel_6_, p_renderModel_7_);
-                        OutlineUtils.setColor(color);
-                        OutlineUtils.renderTwo();
-                        this.mainModel.render(p_renderModel_1_, p_renderModel_2_, p_renderModel_3_, p_renderModel_4_, p_renderModel_5_, p_renderModel_6_, p_renderModel_7_);
-                        OutlineUtils.setColor(color);
-                        OutlineUtils.renderThree();
-                        this.mainModel.render(p_renderModel_1_, p_renderModel_2_, p_renderModel_3_, p_renderModel_4_, p_renderModel_5_, p_renderModel_6_, p_renderModel_7_);
-                        OutlineUtils.setColor(color);
-                        OutlineUtils.renderFour(color);
-                        this.mainModel.render(p_renderModel_1_, p_renderModel_2_, p_renderModel_3_, p_renderModel_4_, p_renderModel_5_, p_renderModel_6_, p_renderModel_7_);
-                        OutlineUtils.setColor(color);
-                        OutlineUtils.renderFive();
-                        OutlineUtils.setColor(Color.WHITE);
-                }
-                mc.gameSettings.fancyGraphics = fancyGraphics;
-                mc.gameSettings.gammaSetting = gamma;
             }
 
             final int blend = 3042;
@@ -620,7 +523,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
                 GL11.glPopMatrix();
             }
 
-            if (semiVisible) {
+            if (semiVisible || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO")) {
                 GlStateManager.disableBlend();
                 GlStateManager.alphaFunc(516, 0.1F);
                 GlStateManager.popMatrix();

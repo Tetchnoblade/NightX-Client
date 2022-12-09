@@ -5,7 +5,7 @@ import net.aspw.nightx.event.Render3DEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.features.module.modules.misc.AntiBot
+import net.aspw.nightx.features.module.modules.combat.AntiBot
 import net.aspw.nightx.ui.font.Fonts
 import net.aspw.nightx.utils.EntityUtils
 import net.aspw.nightx.utils.render.ColorUtils

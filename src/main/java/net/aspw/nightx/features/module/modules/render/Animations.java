@@ -14,7 +14,7 @@ public class Animations extends Module {
     public static final ListValue Sword = new ListValue("Style", new String[]{
             "1.8", "LiquidBounce", "SlideLow", "SlideMedium", "SlideFull", "SlideCut", "Push", "Dash", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Smart", "ETB", "Moon", "MoonPush", "Lennox",
             "Leaked", "Ninja", "Jigsaw", "Avatar", "Sigma3", "Sigma4", "Reverse", "Old", "OldFull", "Flux1", "Flux2", "Flux3", "DortwareNew", "Dortware1", "Dortware2", "Funny", "Zoom", "Rotate", "Spin", "Spinny"
-    }, "Swing");
+    }, "Swank");
 
     // item general scale
     public static final FloatValue Scale = new FloatValue("Scale", 0.4f, 0f, 4f);

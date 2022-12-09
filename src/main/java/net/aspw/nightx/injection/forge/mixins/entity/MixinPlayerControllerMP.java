@@ -3,7 +3,6 @@ package net.aspw.nightx.injection.forge.mixins.entity;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.AttackEvent;
 import net.aspw.nightx.event.ClickWindowEvent;
-import net.aspw.nightx.features.module.modules.exploit.KeepBreaking;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,8 +23,6 @@ public class MixinPlayerControllerMP {
 
     @Inject(method = "getIsHittingBlock", at = @At("HEAD"), cancellable = true)
     private void getIsHittingBlock(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        if (NightX.moduleManager.getModule(KeepBreaking.class).getState())
-            callbackInfoReturnable.setReturnValue(false);
     }
 
     @Inject(method = "windowClick", at = @At("HEAD"), cancellable = true)

@@ -5,7 +5,6 @@ import de.enzaxd.viaforge.util.AttackOrder;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.*;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
-import net.aspw.nightx.features.module.modules.exploit.KeepBreaking;
 import net.aspw.nightx.features.module.modules.misc.Annoy;
 import net.aspw.nightx.features.module.modules.render.SilentView;
 import net.aspw.nightx.features.module.modules.world.FastPlace;
@@ -300,7 +299,7 @@ public abstract class MixinMinecraft {
                     this.effectRenderer.addBlockHitEffects(blockPos, this.objectMouseOver.sideHit);
                     this.thePlayer.swingItem();
                 }
-            } else if (!NightX.moduleManager.getModule(KeepBreaking.class).getState()) {
+            } else {
                 this.playerController.resetBlockRemoving();
             }
         }

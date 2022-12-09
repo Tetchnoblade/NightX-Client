@@ -44,7 +44,6 @@ open class HUD : MinecraftInstance() {
             .addElement(Effects())
             .addElement(Notifications())
             .addElement(Target())
-            .addElement(SessionInformation())
     }
 
     /**

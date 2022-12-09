@@ -1,7 +1,7 @@
 package net.aspw.nightx.utils;
 
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.misc.AntiBot;
+import net.aspw.nightx.features.module.modules.combat.AntiBot;
 import net.aspw.nightx.features.module.modules.misc.Teams;
 import net.aspw.nightx.utils.render.ColorUtils;
 import net.minecraft.client.network.NetworkPlayerInfo;

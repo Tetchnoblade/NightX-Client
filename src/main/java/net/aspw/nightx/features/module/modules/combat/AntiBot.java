@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.misc;
+package net.aspw.nightx.features.module.modules.combat;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.*;
@@ -26,7 +26,7 @@ import net.minecraft.world.WorldSettings;
 import java.util.*;
 import java.util.stream.Stream;
 
-@ModuleInfo(name = "AntiBot", spacedName = "Anti Bot", category = ModuleCategory.MISC)
+@ModuleInfo(name = "AntiBot", spacedName = "Anti Bot", category = ModuleCategory.COMBAT)
 public class AntiBot extends Module {
     private final BoolValue czechHekValue = new BoolValue("CzechMatrix", false);
     private final BoolValue czechHekPingCheckValue = new BoolValue("PingCheck", true, () -> czechHekValue.get());

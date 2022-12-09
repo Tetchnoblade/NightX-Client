@@ -638,7 +638,7 @@ public abstract class MixinItemRenderer {
                                 }
                                 case "Swank": {
                                     transformFirstPersonItem(f / Animations.Equip.getValue(), f1);
-                                    GL11.glTranslated(0.0D, 0.16D, 0.1D);
+                                    GL11.glTranslated(0.0D, 0.08D, 0.1D);
                                     float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                     GlStateManager.rotate(Swang * 35.0F / 2.0F, -Swang, -0.0F, 9.0F);
                                     GlStateManager.rotate(Swang * 45.0F, 1.0F, -Swang / 2.0F, -0.0F);

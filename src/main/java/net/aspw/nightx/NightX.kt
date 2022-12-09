@@ -28,6 +28,7 @@ object NightX {
     const val CLIENT_VERSION = "Development"
     const val CLIENT_CREATOR = "CCBlueX, exit-scammed, As_pw, Zywl"
     const val CLIENT_CONFIGS = "https://sites.google.com/view/nightx-client"
+    const val CLIENT_SCRIPTS = "https://forums.ccbluex.net/category/9/scripts"
 
     var isStarting = false
 
