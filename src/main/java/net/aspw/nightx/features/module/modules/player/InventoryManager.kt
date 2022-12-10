@@ -31,8 +31,6 @@ import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import java.util.*
-import java.util.stream.Collectors
-import java.util.stream.IntStream
 
 @ModuleInfo(
     name = "InventoryManager",
@@ -211,6 +209,7 @@ class InventoryManager : Module() {
 
         if (cleanGarbageValue.get()) while (InventoryUtils.CLICK_TIMER.hasTimePassed(delay)) {
             val garbageItems = garbageQueue.keys.toMutableList()
+            mc.thePlayer.swingItem()
 
             // Shuffle items
             if (randomSlotValue.get())
@@ -269,33 +268,6 @@ class InventoryManager : Module() {
     private fun findQueueItems() {
         garbageQueue.clear()
         garbageQueue = items(9, 45).filter { !isUseful(it.value, it.key) }.toMutableMap()
-    }
-
-    private fun findBestArmor(): Array<ArmorPart?> {
-        val ArmorParts = IntStream.range(0, 36)
-            .filter { i: Int ->
-                val itemStack = mc.thePlayer.inventory.getStackInSlot(i)
-                (itemStack != null && itemStack.item is ItemArmor &&
-                        (i < 9 || System.currentTimeMillis() - (itemStack as IItemStack).itemDelay >= itemDelayValue.get()))
-            }
-            .mapToObj { i: Int -> ArmorPart(mc.thePlayer.inventory.getStackInSlot(i), i) }
-            .collect(Collectors.groupingBy { obj: ArmorPart -> obj.armorType })
-
-        val bestArmor = arrayOfNulls<ArmorPart>(4)
-        for ((key, value) in ArmorParts) {
-            bestArmor[key!!] = value.also {
-                it.sortWith { ArmorPart, ArmorPart2 ->
-                    ItemHelper.compareArmor(
-                        ArmorPart,
-                        ArmorPart2,
-                        nbtArmorPriority.get(),
-                        goal
-                    )
-                }
-            }.lastOrNull()
-        }
-
-        return bestArmor
     }
 
     /**

@@ -34,7 +34,7 @@ class Notifications(
 
     val blurValue = BoolValue("Blur", false, { !styleValue.get().equals("material", true) })
     val blurStrength =
-        FloatValue("Strength", 0F, 0F, 30F, { !styleValue.get().equals("material", true) && blurValue.get() })
+        FloatValue("Strength", 5F, 0F, 30F, { !styleValue.get().equals("material", true) && blurValue.get() })
 
     val hAnimModeValue = ListValue("H-Animation", arrayOf("LiquidBounce", "Smooth"), "Smooth")
     val vAnimModeValue = ListValue("V-Animation", arrayOf("None", "Smooth"), "Smooth")
@@ -42,7 +42,7 @@ class Notifications(
         "Speed",
         0.5F,
         0.01F,
-        1F,
+        10F,
         { hAnimModeValue.get().equals("smooth", true) || vAnimModeValue.get().equals("smooth", true) })
 
     /**

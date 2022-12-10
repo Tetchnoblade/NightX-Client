@@ -14,9 +14,9 @@ import net.aspw.nightx.value.ListValue
 class SilentView : Module() {
 
     var mode = ListValue("Mode", arrayOf("Normal", "CSGO"), "CSGO")
-    var R = FloatValue("R", 200f, 0f, 255f, { mode.get().equals("csgo", true) })
-    var G = FloatValue("G", 0f, 0f, 255f, { mode.get().equals("csgo", true) })
-    var B = FloatValue("B", 255f, 0f, 255f, { mode.get().equals("csgo", true) })
+    var R = FloatValue("R", 100f, 0f, 255f, { mode.get().equals("csgo", true) })
+    var G = FloatValue("G", 255f, 0f, 255f, { mode.get().equals("csgo", true) })
+    var B = FloatValue("B", 100f, 0f, 255f, { mode.get().equals("csgo", true) })
     var Alpha = FloatValue("Alpha", 80f, 0f, 255f, { mode.get().equals("csgo", true) })
 
     private fun getState(module: Class<out Module>) = NightX.moduleManager[module]!!.state

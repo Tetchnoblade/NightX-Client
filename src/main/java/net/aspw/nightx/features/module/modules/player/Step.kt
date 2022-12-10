@@ -5,7 +5,6 @@ import net.aspw.nightx.event.*
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.features.module.modules.exploit.Phase
 import net.aspw.nightx.utils.MovementUtils
 import net.aspw.nightx.utils.timer.MSTimer
 import net.aspw.nightx.value.BoolValue
@@ -192,12 +191,6 @@ class Step : Module() {
     @EventTarget
     fun onStep(event: StepEvent) {
         mc.thePlayer ?: return
-        val phaseMod = NightX.moduleManager.getModule(Phase::class.java)!!
-
-        // Phase should disable step (except hypixel one)
-        if (phaseMod.state && !phaseMod.modeValue.get().equals("hypixel", true)) {
-            return
-        }
 
         val mode = modeValue.get()
 

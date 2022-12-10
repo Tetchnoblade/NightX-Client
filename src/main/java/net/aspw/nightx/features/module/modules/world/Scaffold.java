@@ -113,13 +113,13 @@ public class Scaffold extends Module {
     private final BoolValue smartDelay = new BoolValue("SmartDelay", false);
 
     // AutoBlock
-    private final ListValue autoBlockMode = new ListValue("AutoBlock", new String[]{"Spoof", "Switch", "Off"}, "Spoof");
-    private final BoolValue stayAutoBlock = new BoolValue("LiteSpoof", true, () -> !autoBlockMode.get().equalsIgnoreCase("false"));
+    private final ListValue autoBlockMode = new ListValue("AutoBlock", new String[]{"Spoof", "Switch", "Off"}, "Switch");
+    private final BoolValue stayAutoBlock = new BoolValue("LiteSpoof", false);
 
     //make sprint compatible with tower.add sprint tricks
     public final ListValue sprintModeValue = new ListValue("SprintMode", new String[]{"Same", "Silent", "Ground", "Air", "Off"}, "Same");
     // Basic stuff
-    private final BoolValue swingValue = new BoolValue("Swing", false);
+    private final BoolValue swingValue = new BoolValue("Swing", true);
     private final BoolValue downValue = new BoolValue("Down", true);
     private final BoolValue searchValue = new BoolValue("Search", true);
     private final ListValue placeModeValue = new ListValue("PlaceTiming", new String[]{"Pre", "Post"}, "Post");
@@ -419,6 +419,27 @@ public class Scaffold extends Module {
      */
     @EventTarget
     public void onUpdate(final UpdateEvent event) {
+        int blockSlot = -1;
+        ItemStack itemStack = mc.thePlayer.getHeldItem();
+
+        if (mc.thePlayer.getHeldItem() == null || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemBlock)) {
+            if (autoBlockMode.get().equalsIgnoreCase("Off"))
+                return;
+
+            blockSlot = InventoryUtils.findAutoBlockBlock();
+
+            if (blockSlot == -1)
+                return;
+
+            if (autoBlockMode.get().equalsIgnoreCase("Spoof")) {
+                mc.getNetHandler().addToSendQueue(new C09PacketHeldItemChange(blockSlot - 36));
+                itemStack = mc.thePlayer.inventoryContainer.getSlot(blockSlot).getStack();
+            } else {
+                mc.thePlayer.inventory.currentItem = blockSlot - 36;
+                mc.playerController.updateController();
+            }
+        }
+
         if (autoDisableSpeedValue.get() && NightX.moduleManager.getModule(Speed.class).getState()) {
             NightX.moduleManager.getModule(Speed.class).setState(false);
             NightX.hud.addNotification(new Notification("Speed is disabled.", Notification.Type.WARNING));

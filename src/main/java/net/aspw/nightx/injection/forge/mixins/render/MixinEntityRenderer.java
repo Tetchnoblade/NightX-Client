@@ -7,6 +7,7 @@ import net.aspw.nightx.features.module.modules.cool.Brightness;
 import net.aspw.nightx.features.module.modules.cool.NoHurt;
 import net.aspw.nightx.features.module.modules.cool.ViewClip;
 import net.aspw.nightx.features.module.modules.player.Reach;
+import net.aspw.nightx.features.module.modules.render.XRay;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -278,9 +279,14 @@ public abstract class MixinEntityRenderer {
         ci.cancel();
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     private void updateLightmap(float f2) {
         Brightness brightness = NightX.moduleManager.getModule(Brightness.class);
+        XRay xray = NightX.moduleManager.getModule(XRay.class);
         if (this.lightmapUpdateNeeded) {
             this.mc.mcProfiler.startSection("lightTex");
             World world = this.mc.theWorld;
@@ -372,7 +378,7 @@ public abstract class MixinEntityRenderer {
                     int n2 = (int) (f13 * 255.0f);
                     int n3 = (int) (f14 * 255.0f);
                     int n4 = (int) (f15 * 255.0f);
-                    this.lightmapColors[i2] = brightness.getState() ? new Color(255, 255, 255).getRGB() : 0xFF000000 | n2 << 16 | n3 << 8 | n4;
+                    this.lightmapColors[i2] = brightness.getState() || xray.getState() ? new Color(255, 255, 255).getRGB() : 0xFF000000 | n2 << 16 | n3 << 8 | n4;
                 }
                 this.lightmapTexture.updateDynamicTexture();
                 this.lightmapUpdateNeeded = false;

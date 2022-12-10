@@ -178,6 +178,30 @@ public abstract class MixinItemRenderer {
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
+    private void astolfo(float var10, float var9) {
+        GlStateManager.translate(0.56F, -0.5F, -0.71999997F);
+        GlStateManager.translate(0.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
+        float var11 = MathHelper.sin(var9 * var9 * (float) Math.PI);
+        float var12 = MathHelper.sin(MathHelper.sqrt_float(var9) * (float) Math.PI);
+        GlStateManager.rotate(var11 * -40.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(var12 * 0.0F, 0.0F, 0.0f, 1.0F);
+        GlStateManager.rotate(var12 * -60.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
+    }
+
+    private void nightx(float var10, float var9) {
+        GlStateManager.translate(0.56F, -0.5F, -0.71999997F);
+        GlStateManager.translate(0.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
+        float var11 = MathHelper.sin(var9 * var9 * (float) Math.PI);
+        float var12 = MathHelper.sin(MathHelper.sqrt_float(var9) * (float) Math.PI);
+        GlStateManager.rotate(var11 * 0.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(var12 * -40.0F, 0.0F, 0.0f, 1.0F);
+        GlStateManager.rotate(var12 * -90.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
+    }
+
     private void funny(float var10, float var9) {
         GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
         GlStateManager.translate(0.0F, 0.0F, 0.0F);
@@ -355,6 +379,26 @@ public abstract class MixinItemRenderer {
                                 }
                                 case "DortwareNew": {
                                     this.dortwarenew(f, f1);
+                                    if (Animations.RotateItems.get())
+                                        rotateItemAnim();
+
+                                    this.func_178103_d();
+                                    if (Animations.RotateItems.get())
+                                        rotateItemAnim();
+                                    break;
+                                }
+                                case "NightX": {
+                                    this.nightx(f, f1);
+                                    if (Animations.RotateItems.get())
+                                        rotateItemAnim();
+
+                                    this.func_178103_d();
+                                    if (Animations.RotateItems.get())
+                                        rotateItemAnim();
+                                    break;
+                                }
+                                case "Astolfo": {
+                                    this.astolfo(f, f1);
                                     if (Animations.RotateItems.get())
                                         rotateItemAnim();
 

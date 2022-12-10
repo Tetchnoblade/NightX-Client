@@ -33,7 +33,7 @@ class ThunderNotifier : Module() {
                 NightX.hud.addNotification(
                     Notification(
                         "Detected thunder at [X: $x, Y: $y, Z: $z]",
-                        Notification.Type.WARNING,
+                        Notification.Type.INFO,
                         3000L
                     )
                 )

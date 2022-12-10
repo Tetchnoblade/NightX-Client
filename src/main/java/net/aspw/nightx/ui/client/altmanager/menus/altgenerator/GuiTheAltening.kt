@@ -20,11 +20,14 @@ import net.aspw.nightx.utils.render.RenderUtils
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.GuiTextField
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.Session
 import org.lwjgl.input.Keyboard
 import java.net.Proxy.NO_PROXY
 
 class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
+
+    val alteningLogo = ResourceLocation("nightx/altening.png")
 
     // Data Storage
     companion object {
@@ -81,17 +84,18 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
         drawBackground(0)
         RenderUtils.drawRect(30.0f, 30.0f, width - 30.0f, height - 30.0f, Integer.MIN_VALUE)
 
-        // Draw title and status
-        Fonts.fontSFUI35.drawCenteredString("The Altening", width / 2.0f, 6.0f, 0xffffff)
-        Fonts.fontSFUI35.drawCenteredString(status, width / 2.0f, 18.0f, 0xffffff)
+        // Draw title and status and logo
+        RenderUtils.drawImage2(alteningLogo, width / 2F - 50F, height / 2F - 90F, 100, 100)
+        Fonts.fontSFUI40.drawCenteredString("The Altening", width / 2.0f, 6.0f, 0xffffff)
+        Fonts.fontSFUI40.drawCenteredString(status, width / 2.0f, 18.0f, 0xffffff)
 
         // Draw fields
         apiKeyField.drawTextBox()
         tokenField.drawTextBox()
 
         // Draw text
-        Fonts.fontSFUI40.drawCenteredString("§7Token:", width / 2.0f - 84, 40.0f, 0xffffff)
-        Fonts.fontSFUI40.drawCenteredString("§7API-Key:", width / 2.0f - 78, 105.0f, 0xffffff)
+        Fonts.fontSFUI35.drawCenteredString("§7Token:", width / 2.0f - 84, 40.0f, 0xffffff)
+        Fonts.fontSFUI35.drawCenteredString("§7API-Key:", width / 2.0f - 78, 105.0f, 0xffffff)
         super.drawScreen(mouseX, mouseY, partialTicks)
     }
 

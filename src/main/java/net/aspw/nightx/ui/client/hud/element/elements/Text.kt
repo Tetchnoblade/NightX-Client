@@ -54,7 +54,7 @@ class Text(
             text.displayString.set("%clientName% [%fps% FPS] [%ping%ms] [%portalVersion%]")
             text.shadow.set(true)
             text.fontValue.set(Fonts.fontSFUI40)
-            text.setColor(Color(240, 180, 255))
+            text.setColor(Color(255, 255, 255))
 
             return text
         }
@@ -67,8 +67,8 @@ class Text(
     private val lineValue = BoolValue("Line", false)
     private val blurValue = BoolValue("Blur", false)
     private val blurStrength = FloatValue("BlurStrength", 6F, 0F, 30F)
-    private val redValue = IntegerValue("Red", 240, 0, 255)
-    private val greenValue = IntegerValue("Green", 180, 0, 255)
+    private val redValue = IntegerValue("Red", 255, 0, 255)
+    private val greenValue = IntegerValue("Green", 255, 0, 255)
     private val blueValue = IntegerValue("Blue", 255, 0, 255)
     private val alphaValue = IntegerValue("Alpha", 255, 0, 255)
     private val bgredValue = IntegerValue("Background-Red", 0, 0, 255)
@@ -76,8 +76,8 @@ class Text(
     private val bgblueValue = IntegerValue("Background-Blue", 0, 0, 255)
     private val bgalphaValue = IntegerValue("Background-Alpha", 100, 0, 255)
     private val rainbowList =
-        ListValue("Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Off")
-    private val saturationValue = FloatValue("Saturation", 0.5f, 0f, 1f)
+        ListValue("Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Sky")
+    private val saturationValue = FloatValue("Saturation", 0.2f, 0f, 1f)
     private val brightnessValue = FloatValue("Brightness", 1f, 0f, 1f)
     private val cRainbowSecValue = IntegerValue("Seconds", 2, 1, 10)
     private val distanceValue = IntegerValue("Line-Distance", 0, 0, 400)

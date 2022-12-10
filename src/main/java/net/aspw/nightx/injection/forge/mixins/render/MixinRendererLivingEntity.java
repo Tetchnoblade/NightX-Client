@@ -1,11 +1,9 @@
 package net.aspw.nightx.injection.forge.mixins.render;
 
-import co.uk.hexeption.utils.OutlineUtils;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.features.module.modules.client.ColorMixer;
 import net.aspw.nightx.features.module.modules.cool.Chams;
 import net.aspw.nightx.features.module.modules.render.*;
-import net.aspw.nightx.utils.ClientUtils;
 import net.aspw.nightx.utils.EntityUtils;
 import net.aspw.nightx.utils.RotationUtils;
 import net.aspw.nightx.utils.render.ColorUtils;
@@ -257,7 +255,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
                 GL11.glPolygonMode(1032, 6914);
                 GL11.glColor4f(rotations.getR().get() / 255, rotations.getG().get() / 255, rotations.getB().get(), rotations.getAlpha().get() / 255);
                 GL11.glRotatef(renderyaw - f, 0, 0.001f, 0);
-                this.mainModel.render(Minecraft.getMinecraft().thePlayer, f6, f5, renderpitch, f2, renderpitch, 0.0625F);
+                this.mainModel.render(entity, f6, f5, renderpitch, f2, renderpitch, f4);
                 GL11.glEnable(2896);
                 GL11.glDisable(3042);
                 GL11.glEnable(3553);
@@ -293,15 +291,14 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
         boolean visible = !p_renderModel_1_.isInvisible();
         final ShowInvis trueSight = NightX.moduleManager.getModule(ShowInvis.class);
         final Chams chams = NightX.moduleManager.getModule(Chams.class);
-        final SilentView silentView = NightX.moduleManager.getModule(SilentView.class);
         boolean chamsFlag = (chams.getState() && chams.getTargetsValue().get() && !chams.getLegacyMode().get() && ((chams.getLocalPlayerValue().get() && p_renderModel_1_ == Minecraft.getMinecraft().thePlayer) || EntityUtils.isSelected(p_renderModel_1_, false)));
         boolean semiVisible = !visible && (!p_renderModel_1_.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) || (trueSight.getState() && trueSight.getEntitiesValue().get()));
 
-        if (visible || semiVisible || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO")) {
-            if (!this.bindEntityTexture(p_renderModel_1_) || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO"))
+        if (visible || semiVisible) {
+            if (!this.bindEntityTexture(p_renderModel_1_))
                 return;
 
-            if (semiVisible || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO")) {
+            if (semiVisible) {
                 GlStateManager.pushMatrix();
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 0.15F);
                 GlStateManager.depthMask(false);
@@ -401,7 +398,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
                 GL11.glPopMatrix();
             }
 
-            if (semiVisible || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO")) {
+            if (semiVisible) {
                 GlStateManager.disableBlend();
                 GlStateManager.alphaFunc(516, 0.1F);
                 GlStateManager.popMatrix();
@@ -415,15 +412,14 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
         boolean visible = !p_renderModel_1_.isInvisible();
         final ShowInvis trueSight = NightX.moduleManager.getModule(ShowInvis.class);
         final Chams chams = NightX.moduleManager.getModule(Chams.class);
-        final SilentView silentView = NightX.moduleManager.getModule(SilentView.class);
         boolean chamsFlag = (chams.getState() && chams.getTargetsValue().get() && !chams.getLegacyMode().get() && ((chams.getLocalPlayerValue().get() && p_renderModel_1_ == Minecraft.getMinecraft().thePlayer) || EntityUtils.isSelected(p_renderModel_1_, false)));
         boolean semiVisible = !visible && (!p_renderModel_1_.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) || (trueSight.getState() && trueSight.getEntitiesValue().get()));
 
-        if(visible || semiVisible || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO")) {
-            if(!this.bindEntityTexture(p_renderModel_1_))
+        if (visible || semiVisible) {
+            if (!this.bindEntityTexture(p_renderModel_1_))
                 return;
 
-            if(semiVisible || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO")) {
+            if (semiVisible) {
                 GlStateManager.pushMatrix();
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 0.15F);
                 GlStateManager.depthMask(false);
@@ -523,7 +519,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
                 GL11.glPopMatrix();
             }
 
-            if (semiVisible || silentView.getState() && silentView.shouldRotate() && silentView.getMode().get().equals("CSGO")) {
+            if (semiVisible) {
                 GlStateManager.disableBlend();
                 GlStateManager.alphaFunc(516, 0.1F);
                 GlStateManager.popMatrix();

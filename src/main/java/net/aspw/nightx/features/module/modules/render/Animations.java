@@ -12,9 +12,9 @@ import net.aspw.nightx.value.ListValue;
 public class Animations extends Module {
     // some ListValue
     public static final ListValue Sword = new ListValue("Style", new String[]{
-            "1.8", "LiquidBounce", "SlideLow", "SlideMedium", "SlideFull", "SlideCut", "Push", "Dash", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Smart", "ETB", "Moon", "MoonPush", "Lennox",
+            "1.8", "NightX", "LiquidBounce", "SlideLow", "SlideMedium", "SlideFull", "SlideCut", "Push", "Dash", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Smart", "Astolfo", "ETB", "Moon", "MoonPush", "Lennox",
             "Leaked", "Ninja", "Jigsaw", "Avatar", "Sigma3", "Sigma4", "Reverse", "Old", "OldFull", "Flux1", "Flux2", "Flux3", "DortwareNew", "Dortware1", "Dortware2", "Funny", "Zoom", "Rotate", "Spin", "Spinny"
-    }, "Swank");
+    }, "NightX");
 
     // item general scale
     public static final FloatValue Scale = new FloatValue("Scale", 0.4f, 0f, 4f);
@@ -63,7 +63,6 @@ public class Animations extends Module {
     // block break
     public static final BoolValue noBlockParticles = new BoolValue("NoBlockParticles", false);
     public static final BoolValue swingAnimValue = new BoolValue("SwingAnimation", false);
-
     public void onInitialize() {
         setState(true);
     }
