@@ -46,7 +46,7 @@ object BedBreaker : Module() {
     private val instantValue = BoolValue("Instant", false)
     private val switchValue = IntegerValue("SwitchDelay", 5, 0, 1000, "ms")
     private val coolDownValue = IntegerValue("Cooldown-Seconds", 0, 0, 60)
-    private val swingValue = BoolValue("Swing", true)
+    private val swingValue = BoolValue("Swing", false)
     private val rotationsValue = BoolValue("Rotations", true)
     private val surroundingsValue = BoolValue("Surroundings", false)
     private val noHitValue = BoolValue("NoAura", false)

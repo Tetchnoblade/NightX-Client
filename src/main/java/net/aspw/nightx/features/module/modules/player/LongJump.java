@@ -506,10 +506,13 @@ public class LongJump extends Module {
         return -1;
     }
 
-    public void onDisable(){
+    public void onDisable() {
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), false);
         mc.timer.timerSpeed = 1.0F;
         mc.thePlayer.speedInAir = 0.02F;
+        if (!mc.thePlayer.isSneaking()) {
+            MovementUtils.strafe(0.3f);
+        }
     }
 
     @Override

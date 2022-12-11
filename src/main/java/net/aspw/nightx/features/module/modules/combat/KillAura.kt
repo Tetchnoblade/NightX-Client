@@ -16,6 +16,7 @@ import net.aspw.nightx.utils.*
 import net.aspw.nightx.utils.extensions.getDistanceToEntityBox
 import net.aspw.nightx.utils.misc.RandomUtils
 import net.aspw.nightx.utils.timer.MSTimer
+import net.aspw.nightx.utils.timer.TickTimer
 import net.aspw.nightx.utils.timer.TimeUtils
 import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
@@ -129,7 +130,7 @@ class KillAura : Module() {
     private val noSendRot = BoolValue("NoSendRotation", true, { rotations.get().equals("spin", true) })
     private val noHitCheck = BoolValue("NoHitCheck", false, { !rotations.get().equals("none", true) })
     private val blinkCheck = BoolValue("BlinkCheck", false)
-    private val equip = BoolValue("Equip", true)
+    private val equip = BoolValue("Equip", false)
     val equipMotion = FloatValue("Equip-Motion", -90f, -300f, 300f, { equip.get() })
 
     private val priorityValue = ListValue(
@@ -291,7 +292,6 @@ class KillAura : Module() {
 
     // Bypass
     private val failRateValue = FloatValue("FailRate", 0f, 0f, 100f)
-    private val fakeSwingValue = BoolValue("FullSwing", false)
     private val noInventoryAttackValue = BoolValue("NoInvAttack", false)
     private val noInventoryDelayValue = IntegerValue("NoInvDelay", 200, 0, 500, "ms", { noInventoryAttackValue.get() })
     private val limitedMultiTargetsValue =
@@ -325,6 +325,7 @@ class KillAura : Module() {
 
     // Attack delay
     private val attackTimer = MSTimer()
+    private val tickTimer = TickTimer()
     private var attackDelay = 0L
     private var clicks = 0
 
@@ -360,6 +361,7 @@ class KillAura : Module() {
      * Disable kill aura module
      */
     override fun onDisable() {
+        tickTimer.reset()
         target = null
         currentTarget = null
         hitable = false
@@ -475,6 +477,11 @@ class KillAura : Module() {
             mc.thePlayer.renderArmPitch = equipMotion.get()
         }
 
+        if (target != null && tickTimer.hasTimePassed(3) && swingValue.get()) {
+            mc.thePlayer.swingItem()
+            tickTimer.reset()
+        }
+
         // Target
         currentTarget = target
 
@@ -502,6 +509,7 @@ class KillAura : Module() {
      */
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
+        tickTimer.update()
         updateKA()
 
         smartBlocking = false
@@ -688,7 +696,7 @@ class KillAura : Module() {
 
         // Check is not hitable or check failrate
         if (!hitable || failHit) {
-            if (swing && (fakeSwingValue.get() || failHit))
+            if (swing || failHit)
                 mc.thePlayer.swingItem()
         } else {
             // Attack
@@ -872,12 +880,8 @@ class KillAura : Module() {
             mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
 
         if (swingValue.get() && (!swingOrderValue.get() || ViaForge.getInstance().version <= 47)) // version fix
-            mc.thePlayer.swingItem()
-
+        mc.netHandler.addToSendQueue(C0APacketAnimation())
         mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
-
-        if (swingValue.get() && swingOrderValue.get() && ViaForge.getInstance().version > 47)
-            mc.thePlayer.swingItem()
 
         if (keepSprintValue.get()) {
             if (mc.playerController.currentGameType != WorldSettings.GameType.SPECTATOR)

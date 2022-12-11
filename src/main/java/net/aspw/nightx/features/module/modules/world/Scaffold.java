@@ -113,13 +113,13 @@ public class Scaffold extends Module {
     private final BoolValue smartDelay = new BoolValue("SmartDelay", false);
 
     // AutoBlock
-    private final ListValue autoBlockMode = new ListValue("AutoBlock", new String[]{"Spoof", "Switch", "Off"}, "Switch");
-    private final BoolValue stayAutoBlock = new BoolValue("LiteSpoof", false);
+    private final ListValue autoBlockMode = new ListValue("AutoBlock", new String[]{"Spoof", "Switch", "Off"}, "Spoof");
+    private final BoolValue stayAutoBlock = new BoolValue("LiteSpoof", true);
 
     //make sprint compatible with tower.add sprint tricks
     public final ListValue sprintModeValue = new ListValue("SprintMode", new String[]{"Same", "Silent", "Ground", "Air", "Off"}, "Same");
     // Basic stuff
-    private final BoolValue swingValue = new BoolValue("Swing", true);
+    private final BoolValue swingValue = new BoolValue("Swing", false);
     private final BoolValue downValue = new BoolValue("Down", true);
     private final BoolValue searchValue = new BoolValue("Search", true);
     private final ListValue placeModeValue = new ListValue("PlaceTiming", new String[]{"Pre", "Post"}, "Post");

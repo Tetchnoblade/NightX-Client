@@ -255,7 +255,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
                 GL11.glPolygonMode(1032, 6914);
                 GL11.glColor4f(rotations.getR().get() / 255, rotations.getG().get() / 255, rotations.getB().get(), rotations.getAlpha().get() / 255);
                 GL11.glRotatef(renderyaw - f, 0, 0.001f, 0);
-                this.mainModel.render(entity, f6, f5, renderpitch, f2, renderpitch, f4);
+                this.mainModel.render(Minecraft.getMinecraft().thePlayer, f6, f5, renderpitch, f2, renderpitch, 0.0625F);
                 GL11.glEnable(2896);
                 GL11.glDisable(3042);
                 GL11.glEnable(3553);

@@ -209,7 +209,6 @@ class InventoryManager : Module() {
 
         if (cleanGarbageValue.get()) while (InventoryUtils.CLICK_TIMER.hasTimePassed(delay)) {
             val garbageItems = garbageQueue.keys.toMutableList()
-            mc.thePlayer.swingItem()
 
             // Shuffle items
             if (randomSlotValue.get())

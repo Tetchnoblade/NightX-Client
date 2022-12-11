@@ -92,7 +92,7 @@ public abstract class MixinItemRenderer {
         float var4 = MathHelper.sin(MathHelper.sqrt_float(p_178096_2_) * (float) Math.PI);
         GlStateManager.rotate(var3 * -20.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(var4 * -20.0F, 0.0F, 0.0F, 1.0F);
-        GlStateManager.rotate(var4 * -80.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(var4 * -70.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
@@ -142,18 +142,6 @@ public abstract class MixinItemRenderer {
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
-    private void slideKnife(float var10, float var9) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.translate(0.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
-        float var11 = MathHelper.sin(var9 * var9 * (float) Math.PI);
-        float var12 = MathHelper.sin(MathHelper.sqrt_float(var9) * (float) Math.PI);
-        GlStateManager.rotate(var11 * 0.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var12 * 0.0F, 0.0F, 0.0f, 1.0F);
-        GlStateManager.rotate(var12 * 60.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
     private void slide2(float var10, float var9) {
         GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
         GlStateManager.translate(0.0F, 0.0F, 0.0F);
@@ -184,21 +172,21 @@ public abstract class MixinItemRenderer {
         GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
         float var11 = MathHelper.sin(var9 * var9 * (float) Math.PI);
         float var12 = MathHelper.sin(MathHelper.sqrt_float(var9) * (float) Math.PI);
-        GlStateManager.rotate(var11 * -40.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(var11 * -35.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(var12 * 0.0F, 0.0F, 0.0f, 1.0F);
-        GlStateManager.rotate(var12 * -60.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(var12 * -40.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
-    private void nightx(float var10, float var9) {
+    private void slidePut(float var10, float var9) {
         GlStateManager.translate(0.56F, -0.5F, -0.71999997F);
         GlStateManager.translate(0.0F, 0.0F, 0.0F);
         GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
         float var11 = MathHelper.sin(var9 * var9 * (float) Math.PI);
         float var12 = MathHelper.sin(MathHelper.sqrt_float(var9) * (float) Math.PI);
-        GlStateManager.rotate(var11 * 0.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var12 * -40.0F, 0.0F, 0.0f, 1.0F);
-        GlStateManager.rotate(var12 * -90.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(var11 * -20.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(var12 * 0.0F, 0.0F, 0.0f, 1.0F);
+        GlStateManager.rotate(var12 * -80.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
@@ -311,7 +299,7 @@ public abstract class MixinItemRenderer {
                         break;
                     case BLOCK:
                         if (NightX.moduleManager.getModule(Animations.class).getState()) {
-                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.1, Animations.blockPosZ.get().doubleValue());
                             final String z = Animations.Sword.get();
                             switch (z) {
                                 case "LiquidBounce": {
@@ -367,16 +355,6 @@ public abstract class MixinItemRenderer {
                                         rotateItemAnim();
                                     break;
                                 }
-                                case "SlideCut": {
-                                    this.slideKnife(f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
                                 case "DortwareNew": {
                                     this.dortwarenew(f, f1);
                                     if (Animations.RotateItems.get())
@@ -387,8 +365,8 @@ public abstract class MixinItemRenderer {
                                         rotateItemAnim();
                                     break;
                                 }
-                                case "NightX": {
-                                    this.nightx(f, f1);
+                                case "SlidePut": {
+                                    this.slidePut(f, f1);
                                     if (Animations.RotateItems.get())
                                         rotateItemAnim();
 
@@ -532,7 +510,7 @@ public abstract class MixinItemRenderer {
                                     float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
                                     GL11.glTranslated(-0.04D, 0.02D, -0.08D);
                                     this.transformFirstPersonItem(f / 1000.0F, 0.0f);
-                                    GlStateManager.rotate(-var9 * -32.0F, var9 / 2.0F, 1.0F, 4.0F);
+                                    GlStateManager.rotate(-var9 * -30.0F, var9 / 2.0F, 1.0F, 4.0F);
                                     GlStateManager.rotate(-var9 * -10.0F, 1.0F, var9 / 3.0F, -0.0F);
                                     this.func_178103_d(0.2F);
                                     break;
