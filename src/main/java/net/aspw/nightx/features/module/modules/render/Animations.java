@@ -68,7 +68,7 @@ public class Animations extends Module {
     // block break
     public static final BoolValue noBlockParticles = new BoolValue("NoBlockParticles", false);
     public static final BoolValue swingAnimValue = new BoolValue("FluxSwingAnimation", false);
-    public static final BoolValue smoothAnimValue = new BoolValue("SmoothSwingAnimation", true);
+    public static final BoolValue smoothAnimValue = new BoolValue("SmoothSwingAnimation", false);
 
     public void onInitialize() {
         setState(true);

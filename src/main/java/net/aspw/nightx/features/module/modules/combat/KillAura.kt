@@ -1,6 +1,5 @@
 package net.aspw.nightx.features.module.modules.combat
 
-import de.enzaxd.viaforge.ViaForge
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.*
 import net.aspw.nightx.features.module.Module
@@ -156,7 +155,6 @@ class KillAura : Module() {
 
     // Bypass
     private val swingValue = BoolValue("Swing", true)
-    private val swingOrderValue = BoolValue("1.9OrderCheck", true, { swingValue.get() })
     private val keepSprintValue = BoolValue("NoKeepSprint", false)
 
     // AutoBlock
@@ -879,8 +877,8 @@ class KillAura : Module() {
         if (EnchantmentHelper.getModifierForCreature(mc.thePlayer.heldItem, entity.creatureAttribute) > 0F)
             mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
 
-        if (swingValue.get() && (!swingOrderValue.get() || ViaForge.getInstance().version <= 47)) // version fix
-        mc.netHandler.addToSendQueue(C0APacketAnimation())
+        if (swingValue.get()) // version fix
+            mc.netHandler.addToSendQueue(C0APacketAnimation())
         mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         if (keepSprintValue.get()) {

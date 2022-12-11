@@ -33,8 +33,27 @@ class Velocity : Module() {
     private val verticalExplosionValue = FloatValue("VerticalExplosion", 0F, 0F, 1F, "x")
     private val modeValue = ListValue(
         "Mode", arrayOf(
-            "Cancel", "Simple", "AACv4", "AAC4Reduce", "AAC5Reduce", "AAC5.2.0", "AAC", "AACPush", "AACZero",
-            "Reverse", "SmoothReverse", "Jump", "Phase", "Matrix", "Legit", "AEMine"
+            "Cancel",
+            "Simple",
+            "AACv4",
+            "AAC4Reduce",
+            "AAC5Reduce",
+            "AAC5.2.0",
+            "AAC",
+            "AACPush",
+            "AACZero",
+            "Reverse",
+            "SmoothReverse",
+            "Jump",
+            "Phase",
+            "Matrix",
+            "MatrixReduce",
+            "MatrixSimple",
+            "MatrixReverse",
+            "MatrixSpoof",
+            "MatrixGround",
+            "Legit",
+            "AEMine"
         ), "Cancel"
     ) // later
 
@@ -240,6 +259,29 @@ class Velocity : Module() {
                 }
             }
 
+            "matrixreduce" -> {
+                if (mc.thePlayer.hurtTime > 0) {
+                    if (mc.thePlayer.onGround) {
+                        if (mc.thePlayer.hurtTime <= 6) {
+                            mc.thePlayer.motionX *= 0.70
+                            mc.thePlayer.motionZ *= 0.70
+                        }
+                        if (mc.thePlayer.hurtTime <= 5) {
+                            mc.thePlayer.motionX *= 0.80
+                            mc.thePlayer.motionZ *= 0.80
+                        }
+                    } else if (mc.thePlayer.hurtTime <= 10) {
+                        mc.thePlayer.motionX *= 0.60
+                        mc.thePlayer.motionZ *= 0.60
+                    }
+                }
+            }
+
+            "matrixground" -> {
+                if (mc.thePlayer.onGround && !mc.gameSettings.keyBindJump.isKeyDown)
+                    mc.thePlayer.onGround = false
+            }
+
             "aemine" -> {
                 if (mc.thePlayer.hurtTime <= 0) {
                     return
@@ -298,6 +340,42 @@ class Velocity : Module() {
                             1.7976931348623157E+308,
                             mc.thePlayer.posZ,
                             true
+                        )
+                    )
+                }
+
+                "matrixsimple" -> {
+                    packet.motionX = (packet.getMotionX() * 0.36).toInt()
+                    packet.motionZ = (packet.getMotionZ() * 0.36).toInt()
+                    if (mc.thePlayer.onGround) {
+                        packet.motionX = (packet.getMotionX() * 0.9).toInt()
+                        packet.motionZ = (packet.getMotionZ() * 0.9).toInt()
+                    }
+                }
+
+                "matrixground" -> {
+                    packet.motionX = (packet.getMotionX() * 0.36).toInt()
+                    packet.motionZ = (packet.getMotionZ() * 0.36).toInt()
+                    if (mc.thePlayer.onGround && !mc.gameSettings.keyBindJump.isKeyDown) {
+                        packet.motionY = (-628.7).toInt()
+                        packet.motionX = (packet.getMotionX() * 0.6).toInt()
+                        packet.motionZ = (packet.getMotionZ() * 0.6).toInt()
+                    }
+                }
+
+                "matrixreverse" -> {
+                    packet.motionX = (packet.getMotionX() * -0.3).toInt()
+                    packet.motionZ = (packet.getMotionZ() * -0.3).toInt()
+                }
+
+                "matrixspoof" -> {
+                    event.cancelEvent()
+                    mc.netHandler.addToSendQueue(
+                        C03PacketPlayer.C04PacketPlayerPosition(
+                            mc.thePlayer.posX + packet.motionX / -24000.0,
+                            mc.thePlayer.posY + packet.motionY / -24000.0,
+                            mc.thePlayer.posZ + packet.motionZ / 8000.0,
+                            false
                         )
                     )
                 }

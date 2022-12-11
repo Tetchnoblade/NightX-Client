@@ -1,14 +1,16 @@
 package net.aspw.nightx.features.module.modules.world
 
 import net.aspw.nightx.NightX
-import net.aspw.nightx.event.*
+import net.aspw.nightx.event.EventTarget
+import net.aspw.nightx.event.Render3DEvent
+import net.aspw.nightx.event.UpdateEvent
+import net.aspw.nightx.event.WorldEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.combat.KillAura
 import net.aspw.nightx.features.module.modules.utility.AutoTool
 import net.aspw.nightx.ui.client.hud.element.elements.Notification
-import net.aspw.nightx.ui.font.Fonts
 import net.aspw.nightx.utils.RotationUtils
 import net.aspw.nightx.utils.block.BlockUtils.getBlock
 import net.aspw.nightx.utils.block.BlockUtils.getBlockName
@@ -20,7 +22,6 @@ import net.aspw.nightx.utils.timer.MSTimer
 import net.aspw.nightx.value.*
 import net.minecraft.block.Block
 import net.minecraft.block.BlockAir
-import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.multiplayer.WorldClient
 import net.minecraft.network.play.client.C07PacketPlayerDigging
 import net.minecraft.util.BlockPos
@@ -268,47 +269,6 @@ object BedBreaker : Module() {
                     )
                 ) Color.DARK_GRAY.rgb else Color.RED.rgb,
                 Color.BLACK.rgb
-            )
-        }
-    }
-
-    @EventTarget
-    fun onRender2D(event: Render2DEvent) {
-        val sc = ScaledResolution(mc)
-        if (coolDownValue.get() > 0 && !coolDownTimer.hasTimePassed(coolDownValue.get().toLong() * 1000L)) {
-            val timeLeft =
-                "Cooldown: ${(coolDownTimer.hasTimeLeft(coolDownValue.get().toLong() * 1000L) / 1000L).toInt()}s"
-            val strWidth = Fonts.minecraftFont.getStringWidth(timeLeft)
-
-            Fonts.minecraftFont.drawString(
-                timeLeft,
-                sc.scaledWidth / 2 - strWidth / 2 - 1,
-                sc.scaledHeight / 2 - 70,
-                0x000000
-            )
-            Fonts.minecraftFont.drawString(
-                timeLeft,
-                sc.scaledWidth / 2 - strWidth / 2 + 1,
-                sc.scaledHeight / 2 - 70,
-                0x000000
-            )
-            Fonts.minecraftFont.drawString(
-                timeLeft,
-                sc.scaledWidth / 2 - strWidth / 2,
-                sc.scaledHeight / 2 - 69,
-                0x000000
-            )
-            Fonts.minecraftFont.drawString(
-                timeLeft,
-                sc.scaledWidth / 2 - strWidth / 2,
-                sc.scaledHeight / 2 - 71,
-                0x000000
-            )
-            Fonts.minecraftFont.drawString(
-                timeLeft,
-                sc.scaledWidth / 2 - strWidth / 2,
-                sc.scaledHeight / 2 - 70,
-                -1
             )
         }
     }
