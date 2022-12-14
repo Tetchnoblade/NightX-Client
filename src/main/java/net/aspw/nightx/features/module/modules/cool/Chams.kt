@@ -8,7 +8,7 @@ import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.value.ListValue
 
-@ModuleInfo(name = "Chams", category = ModuleCategory.COOL)
+@ModuleInfo(name = "Chams", category = ModuleCategory.COOL, array = false)
 class Chams : Module() {
     val targetsValue = BoolValue("Targets", true)
     val chestsValue = BoolValue("Chests", false)

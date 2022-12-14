@@ -387,7 +387,8 @@ class InventoryManager : Module() {
                         item is ItemEnderPearl || item is ItemBucket || ignoreVehiclesValue.get() && (item is ItemBoat || item is ItemMinecart)
             }
         } catch (ex: Exception) {
-            ClientUtils.getLogger().error("§f§l[§d§lN§7§lightX§f§l]§f Failed to check item: ${itemStack.unlocalizedName}.", ex)
+            ClientUtils.getLogger()
+                .error(NightX.CLIENT_CHAT + "§fFailed to check item: ${itemStack.unlocalizedName}.", ex)
             true
         }
     }

@@ -21,8 +21,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 
-@ModuleInfo(name = "Nick", spacedName = "Nick", category = ModuleCategory.RENDER, array = false)
-public class Nick extends Module {
+@ModuleInfo(name = "StreamerMode", spacedName = "Streamer Mode", category = ModuleCategory.RENDER, array = false)
+public class StreamerMode extends Module {
 
     public final BoolValue selfValue = new BoolValue("Yourself", true);
     public final BoolValue tagValue = new BoolValue("Tag", true);
@@ -33,7 +33,7 @@ public class Nick extends Module {
     private final TextValue allFakeNameValue = new TextValue("AllPlayersFakeName", "Censored");
     public ResourceLocation skinImage;
 
-    public Nick() {
+    public StreamerMode() {
         File skinFile = new File(NightX.fileManager.dir, "cskin.png");
         if (skinFile.isFile()) {
             try {
@@ -54,7 +54,7 @@ public class Nick extends Module {
 
     @EventTarget
     public void onText(final TextEvent event) {
-        if (mc.thePlayer == null || event.getText().contains("§f§l[§d§lN§7§lightX§f§l] §3") || event.getText().startsWith("/") || event.getText().startsWith(NightX.commandManager.getPrefix() + ""))
+        if (mc.thePlayer == null || event.getText().contains(NightX.CLIENT_CHAT + "§3") || event.getText().startsWith("/") || event.getText().startsWith(NightX.commandManager.getPrefix() + ""))
             return;
 
         for (final FriendsConfig.Friend friend : NightX.fileManager.friendsConfig.getFriends())

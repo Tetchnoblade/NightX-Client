@@ -20,7 +20,7 @@ import java.util.*
 @ModuleInfo(name = "FastEat", spacedName = "Fast Eat", category = ModuleCategory.COMBAT)
 class FastEat : Module() {
 
-    private val modeValue = ListValue("Mode", arrayOf("Instant", "NCP", "AAC", "CustomDelay", "AACv4_2"), "Instant")
+    private val modeValue = ListValue("Mode", arrayOf("NCP", "AAC", "CustomDelay", "AACv4_2"), "NCP")
 
     private val noMoveValue = BoolValue("NoMove", false)
 
@@ -49,14 +49,6 @@ class FastEat : Module() {
 
         if (usingItem is ItemFood || usingItem is ItemBucketMilk || usingItem is ItemPotion) {
             when (modeValue.get().lowercase(Locale.getDefault())) {
-                "instant" -> {
-                    repeat(32) {
-                        mc.netHandler.addToSendQueue(C03PacketPlayer(mc.thePlayer.onGround))
-                    }
-
-                    mc.playerController.onStoppedUsingItem(mc.thePlayer)
-                }
-
                 "ncp" -> if (mc.thePlayer.itemInUseDuration > 14) {
                     repeat(20) {
                         mc.netHandler.addToSendQueue(C03PacketPlayer(mc.thePlayer.onGround))

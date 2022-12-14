@@ -20,22 +20,21 @@ public class Animations extends Module {
             "1.8", "LiquidBounce", "SlideLow", "SlideMedium", "SlideFull", "SlidePut", "Push", "Dash", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Smart", "Astolfo", "ETB", "Moon", "MoonPush", "Lennox",
             "Leaked", "Ninja", "Jigsaw", "Avatar", "Sigma3", "Sigma4", "Reverse", "Old", "OldFull", "Flux1", "Flux2", "Flux3", "DortwareNew", "Dortware1", "Dortware2", "Funny", "Zoom", "Rotate", "Spin", "Spinny"
     }, "Swing");
-
     // item general scale
     public static final FloatValue Scale = new FloatValue("Scale", 0.4f, 0f, 4f);
 
     // normal item position
-    public static final FloatValue itemPosX = new FloatValue("ItemX", 0f, -1f, 1f);
-    public static final FloatValue itemPosY = new FloatValue("ItemY", 0f, -1f, 1f);
-    public static final FloatValue itemPosZ = new FloatValue("ItemZ", 0f, -1f, 1f);
+    public static final FloatValue itemPosX = new FloatValue("ItemPosX", 0f, -1f, 1f);
+    public static final FloatValue itemPosY = new FloatValue("ItemPosY", 0f, -1f, 1f);
+    public static final FloatValue itemPosZ = new FloatValue("ItemPosZ", 0f, -1f, 1f);
     public static final FloatValue itemFovX = new FloatValue("ItemFovX", 1f, -10f, 10f);
     public static final FloatValue itemFovY = new FloatValue("ItemFovY", 1f, -10f, 10f);
     public static final FloatValue itemFovZ = new FloatValue("ItemFovZ", 1f, -10f, 10f);
 
     // change Position Blocking Sword
-    public static final FloatValue blockPosX = new FloatValue("BlockingX", 0f, -1f, 1f);
-    public static final FloatValue blockPosY = new FloatValue("BlockingY", 0f, -1f, 1f);
-    public static final FloatValue blockPosZ = new FloatValue("BlockingZ", 0f, -1f, 1f);
+    public static final FloatValue blockPosX = new FloatValue("BlockPosX", 0f, -1f, 1f);
+    public static final FloatValue blockPosY = new FloatValue("BlockPosY", 0f, -1f, 1f);
+    public static final FloatValue blockPosZ = new FloatValue("BlockPosZ", 0f, -1f, 1f);
 
     // modify item swing and rotate
     public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 0, -12, 5);
@@ -55,9 +54,6 @@ public class Animations extends Module {
 
     // fake blocking
     public static final BoolValue fakeBlock = new BoolValue("Always-Block", true);
-
-    // block not everything
-    public static final BoolValue blockEverything = new BoolValue("Block-Everything", false);
 
     // gui animations
     public static final ListValue guiAnimations = new ListValue("Container-Animation", new String[]{"None", "Zoom", "Slide", "Smooth"}, "None");

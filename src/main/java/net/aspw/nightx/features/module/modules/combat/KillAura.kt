@@ -1,5 +1,6 @@
 package net.aspw.nightx.features.module.modules.combat
 
+import de.enzaxd.viaforge.ViaForge
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.*
 import net.aspw.nightx.features.module.Module
@@ -359,7 +360,6 @@ class KillAura : Module() {
      * Disable kill aura module
      */
     override fun onDisable() {
-        tickTimer.reset()
         target = null
         currentTarget = null
         hitable = false
@@ -475,11 +475,6 @@ class KillAura : Module() {
             mc.thePlayer.renderArmPitch = equipMotion.get()
         }
 
-        if (target != null && tickTimer.hasTimePassed(3) && swingValue.get()) {
-            mc.thePlayer.swingItem()
-            tickTimer.reset()
-        }
-
         // Target
         currentTarget = target
 
@@ -507,7 +502,6 @@ class KillAura : Module() {
      */
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        tickTimer.update()
         updateKA()
 
         smartBlocking = false
@@ -877,9 +871,13 @@ class KillAura : Module() {
         if (EnchantmentHelper.getModifierForCreature(mc.thePlayer.heldItem, entity.creatureAttribute) > 0F)
             mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
 
-        if (swingValue.get()) // version fix
-            mc.netHandler.addToSendQueue(C0APacketAnimation())
+        if (swingValue.get() || ViaForge.getInstance().version <= 47) // version fix
+            mc.thePlayer.swingItem()
+
         mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
+
+        if (swingValue.get() && ViaForge.getInstance().version > 47)
+            mc.thePlayer.swingItem()
 
         if (keepSprintValue.get()) {
             if (mc.playerController.currentGameType != WorldSettings.GameType.SPECTATOR)

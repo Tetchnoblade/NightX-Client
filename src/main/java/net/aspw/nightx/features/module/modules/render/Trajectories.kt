@@ -15,8 +15,8 @@ import net.minecraft.item.*
 import net.minecraft.util.*
 import org.lwjgl.opengl.GL11
 
-@ModuleInfo(name = "Projectiles", category = ModuleCategory.RENDER, array = false)
-class Projectiles : Module() {
+@ModuleInfo(name = "Trajectories", category = ModuleCategory.RENDER, array = false)
+class Trajectories : Module() {
 
     private val dynamicBowPower = BoolValue("BowPower", false)
 
@@ -186,17 +186,31 @@ class Projectiles : Module() {
             motionY -= gravity.toDouble()
 
             // Draw path
-            pos.add(Vec3(posX - renderManager.renderPosX, posY - renderManager.renderPosY,
-                posZ - renderManager.renderPosZ))
+            pos.add(
+                Vec3(
+                    posX - renderManager.renderPosX, posY - renderManager.renderPosY,
+                    posZ - renderManager.renderPosZ
+                )
+            )
         }
 
         // Start drawing of path
         GL11.glDepthMask(false)
         net.aspw.nightx.utils.render.RenderUtils.enableGlCap(GL11.GL_BLEND, GL11.GL_LINE_SMOOTH)
-        net.aspw.nightx.utils.render.RenderUtils.disableGlCap(GL11.GL_DEPTH_TEST, GL11.GL_ALPHA_TEST, GL11.GL_TEXTURE_2D)
+        net.aspw.nightx.utils.render.RenderUtils.disableGlCap(
+            GL11.GL_DEPTH_TEST,
+            GL11.GL_ALPHA_TEST,
+            GL11.GL_TEXTURE_2D
+        )
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
         GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST)
-        net.aspw.nightx.utils.render.RenderUtils.glColor(if (hitEntity) { java.awt.Color(255, 255, 255, 80) } else { java.awt.Color(255, 255, 255, 80) })
+        net.aspw.nightx.utils.render.RenderUtils.glColor(
+            if (hitEntity) {
+                java.awt.Color(255, 100, 255, 80)
+            } else {
+                java.awt.Color(255, 100, 255, 80)
+            }
+        )
         GL11.glLineWidth(2f)
 
         worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION)
@@ -217,7 +231,14 @@ class Projectiles : Module() {
                 2 -> GL11.glRotatef(90F, 1F, 0F, 0F)
             }
 
-            net.aspw.nightx.utils.render.RenderUtils.drawAxisAlignedBB(AxisAlignedBB(-0.5, 0.0, -0.5, 0.5, 0.1, 0.5), if (hitEntity) { java.awt.Color(255, 255, 255, 80) } else { java.awt.Color(255, 255, 255, 80) })
+            net.aspw.nightx.utils.render.RenderUtils.drawAxisAlignedBB(
+                AxisAlignedBB(-0.5, 0.0, -0.5, 0.5, 0.1, 0.5),
+                if (hitEntity) {
+                    java.awt.Color(255, 100, 255, 80)
+                } else {
+                    java.awt.Color(255, 100, 255, 80)
+                }
+            )
         }
         GL11.glPopMatrix()
         GL11.glDepthMask(true)

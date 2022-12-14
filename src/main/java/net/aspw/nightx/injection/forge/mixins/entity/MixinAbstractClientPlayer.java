@@ -3,7 +3,7 @@ package net.aspw.nightx.injection.forge.mixins.entity;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.features.module.modules.render.Cape;
 import net.aspw.nightx.features.module.modules.render.Fov;
-import net.aspw.nightx.features.module.modules.render.Nick;
+import net.aspw.nightx.features.module.modules.render.StreamerMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.resources.DefaultPlayerSkin;
@@ -56,7 +56,7 @@ public abstract class MixinAbstractClientPlayer extends MixinEntityPlayer {
 
     @Inject(method = "getLocationSkin()Lnet/minecraft/util/ResourceLocation;", at = @At("HEAD"), cancellable = true)
     private void getSkin(CallbackInfoReturnable<ResourceLocation> callbackInfoReturnable) {
-        final Nick nameProtect = NightX.moduleManager.getModule(Nick.class);
+        final StreamerMode nameProtect = NightX.moduleManager.getModule(StreamerMode.class);
 
         if (nameProtect.getState() && nameProtect.skinProtectValue.get()) {
             if (!nameProtect.allPlayersValue.get() && !Objects.equals(getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName()))

@@ -56,7 +56,7 @@ class Nuker : Module() {
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         // Block hit delay
-        if (blockHitDelay > 0 && !NightX.moduleManager[FastBreak::class.java]!!.state) {
+        if (blockHitDelay > 0) {
             blockHitDelay--
             return
         }

@@ -2,7 +2,7 @@ package net.aspw.nightx.injection.forge.mixins.network;
 
 import com.mojang.authlib.GameProfile;
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.render.Nick;
+import net.aspw.nightx.features.module.modules.render.StreamerMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.resources.DefaultPlayerSkin;
@@ -24,7 +24,7 @@ public class MixinNetworkPlayerInfo {
 
     @Inject(method = "getLocationSkin", cancellable = true, at = @At("HEAD"))
     private void injectSkinProtect(CallbackInfoReturnable<ResourceLocation> cir) {
-        Nick nameProtect = NightX.moduleManager.getModule(Nick.class);
+        StreamerMode nameProtect = NightX.moduleManager.getModule(StreamerMode.class);
 
         if (nameProtect.getState() && nameProtect.skinProtectValue.get()) {
             if (nameProtect.allPlayersValue.get() || Objects.equals(gameProfile.getId(), Minecraft.getMinecraft().getSession().getProfile().getId())) {

@@ -156,7 +156,8 @@ public class Speed extends Module {
 
     @EventTarget
     public void onMotion(final MotionEvent event) {
-        mc.thePlayer.cameraYaw = 0.0F;
+        mc.thePlayer.cameraPitch = 0f;
+        mc.thePlayer.cameraYaw = 0f;
 
         if (mc.thePlayer.isSneaking() || event.getEventState() != EventState.PRE)
             return;

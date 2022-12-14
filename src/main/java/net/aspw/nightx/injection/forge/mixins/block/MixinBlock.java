@@ -3,15 +3,12 @@ package net.aspw.nightx.injection.forge.mixins.block;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.BlockBBEvent;
 import net.aspw.nightx.features.module.modules.combat.Criticals;
-import net.aspw.nightx.features.module.modules.exploit.NoMouseInteract;
+import net.aspw.nightx.features.module.modules.exploit.NoMouseIntersect;
 import net.aspw.nightx.features.module.modules.player.NoFall;
 import net.aspw.nightx.features.module.modules.render.XRay;
-import net.aspw.nightx.features.module.modules.world.NoSlowBreak;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -71,7 +68,7 @@ public abstract class MixinBlock {
 
     @Inject(method = "isCollidable", at = @At("HEAD"), cancellable = true)
     private void isCollidable(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        final NoMouseInteract ghostHand = NightX.moduleManager.getModule(NoMouseInteract.class);
+        final NoMouseIntersect ghostHand = NightX.moduleManager.getModule(NoMouseIntersect.class);
 
         if (ghostHand.getState() && !(ghostHand.getBlockValue().get() == Block.getIdFromBlock((Block) (Object) this)))
             callbackInfoReturnable.setReturnValue(false);
@@ -86,19 +83,7 @@ public abstract class MixinBlock {
     @Inject(method = "getPlayerRelativeBlockHardness", at = @At("RETURN"), cancellable = true)
     public void modifyBreakSpeed(EntityPlayer playerIn, World worldIn, BlockPos pos, final CallbackInfoReturnable<Float> callbackInfo) {
         float f = callbackInfo.getReturnValue();
-
-        // NoSlowBreak
-        final NoSlowBreak noSlowBreak = NightX.moduleManager.getModule(NoSlowBreak.class);
-        if (noSlowBreak.getState()) {
-            if (noSlowBreak.getWaterValue().get() && playerIn.isInsideOfMaterial(Material.water) &&
-                    !EnchantmentHelper.getAquaAffinityModifier(playerIn)) {
-                f *= 5.0F;
-            }
-
-            if (noSlowBreak.getAirValue().get() && !playerIn.onGround) {
-                f *= 5.0F;
-            }
-        } else if (playerIn.onGround) { // NoGround
+        if (playerIn.onGround) { // NoGround
             final NoFall noFall = NightX.moduleManager.getModule(NoFall.class);
             final Criticals criticals = NightX.moduleManager.getModule(Criticals.class);
 

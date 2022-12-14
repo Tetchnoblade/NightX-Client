@@ -83,7 +83,7 @@ class AutoHeal : Module() {
 
     private fun debug(s: String) {
         if (debugValue.get())
-            ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §3$s")
+            ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§3$s")
     }
 
     @EventTarget(priority = 2)

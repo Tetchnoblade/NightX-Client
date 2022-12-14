@@ -30,8 +30,6 @@ import net.minecraft.util.*;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 
 @ModuleInfo(name = "Flight", category = ModuleCategory.MOVEMENT)
@@ -75,14 +73,13 @@ public class Flight extends Module {
             "VerusLowHop",
 
             // Old Spartan fly modes.
-            "Spartan",
+            "Spartan1",
             "Spartan2",
             "BugSpartan",
 
             // Old Hypixel modes.
             "Hypixel",
             "BoostHypixel",
-            "FreeHypixel",
 
             // Other anticheats' fly modes.
             "MineSecure",
@@ -92,7 +89,9 @@ public class Flight extends Module {
             "Slime",
 
             // Other exploit-based stuffs.
-            "Jetpack",
+            "Float",
+            "Jetpack1",
+            "Jetpack2",
             "KeepAlive",
             "Flag",
             "Clip",
@@ -104,7 +103,7 @@ public class Flight extends Module {
     private final FloatValue vanillaSpeedValue = new FloatValue("Speed", 1F, 0F, 5F, () -> {
         return (modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("damage") || modeValue.get().equalsIgnoreCase("pearl") || modeValue.get().equalsIgnoreCase("aac5-vanilla") || modeValue.get().equalsIgnoreCase("bugspartan") || modeValue.get().equalsIgnoreCase("keepalive") || modeValue.get().equalsIgnoreCase("derp"));
     });
-    private final FloatValue vanillaVSpeedValue = new FloatValue("V-Speed", 0.6F, 0F, 5F, () -> modeValue.get().equalsIgnoreCase("motion"));
+    private final FloatValue vanillaVSpeedValue = new FloatValue("V-Speed", 0.6F, 0F, 5F, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("bugspartan"));
     private final FloatValue vanillaMotionYValue = new FloatValue("Y-Motion", 0F, -1F, 1F, () -> modeValue.get().equalsIgnoreCase("motion"));
     private final BoolValue vanillaKickBypassValue = new BoolValue("AntiKick", false, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("creative"));
     private final BoolValue groundSpoofValue = new BoolValue("SpoofGround", false, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("creative"));
@@ -408,13 +407,6 @@ public class Flight extends Module {
         noPacketModify = false;
         aacJump = -3.8D;
 
-        if (mode.equalsIgnoreCase("freehypixel")) {
-            freeHypixelTimer.reset();
-            mc.thePlayer.setPositionAndUpdate(mc.thePlayer.posX, mc.thePlayer.posY + 0.42D, mc.thePlayer.posZ);
-            freeHypixelYaw = mc.thePlayer.rotationYaw;
-            freeHypixelPitch = mc.thePlayer.rotationPitch;
-        }
-
         if (!mode.equalsIgnoreCase("slime") && !mode.equalsIgnoreCase("exploit")
                 && !mode.equalsIgnoreCase("bugspartan") && !mode.equalsIgnoreCase("verus") && !mode.equalsIgnoreCase("damage") && !mode.toLowerCase().contains("hypixel")
                 && fakeDmgValue.get()) {
@@ -427,10 +419,6 @@ public class Flight extends Module {
     public void onDisable() {
         final Speed speed = NightX.moduleManager.getModule(Speed.class);
 
-        if (!speed.getState()) {
-            MovementUtils.strafe(0.3f);
-        }
-
         wasDead = false;
 
         if (mc.thePlayer == null)
@@ -440,8 +428,8 @@ public class Flight extends Module {
 
         final String mode = modeValue.get();
 
-        if ((!mode.toUpperCase().startsWith("AAC") && !mode.equalsIgnoreCase("Hypixel") &&
-                !mode.equalsIgnoreCase("CubeCraft") && !mode.equalsIgnoreCase("Collide") && !mode.equalsIgnoreCase("Verus") && !mode.equalsIgnoreCase("Jump") && !mode.equalsIgnoreCase("creative")) || (mode.equalsIgnoreCase("pearl") && pearlState != -1)) {
+        if ((!speed.getState() && !mode.toUpperCase().startsWith("NCP") && !mode.equalsIgnoreCase("float") && !mode.equalsIgnoreCase("veruslowhop") && !mode.equalsIgnoreCase("aac1.9.10") && !mode.equalsIgnoreCase("damage") && !mode.equalsIgnoreCase("aac3.3.12") && !mode.equalsIgnoreCase("aac3.3.12-glide") && !mode.equalsIgnoreCase("oldncp") && !mode.equalsIgnoreCase("rewinside") && !mode.equalsIgnoreCase("teleportrewinside") && !mode.equalsIgnoreCase("pearl") && !mode.equalsIgnoreCase("neruxvace") && !mode.equalsIgnoreCase("minesucht") && !mode.equalsIgnoreCase("spartan1") && !mode.equalsIgnoreCase("spartan2") && !mode.equalsIgnoreCase("hypixel") && !mode.equalsIgnoreCase("hawkeye") && !mode.equalsIgnoreCase("hac") && !mode.equalsIgnoreCase("watchcat") && !mode.equalsIgnoreCase("slime") && !mode.equalsIgnoreCase("jetpack1") && !mode.equalsIgnoreCase("jetpack2") && !mode.equalsIgnoreCase("clip") && !mode.equalsIgnoreCase("jump") && !mode.equalsIgnoreCase("derp") && !mode.equalsIgnoreCase("collide"))) {
+            MovementUtils.strafe(0.3f);
         }
 
         if (mode.equalsIgnoreCase("AAC5-Vanilla") && !mc.isIntegratedServerRunning()) {
@@ -525,10 +513,10 @@ public class Flight extends Module {
                 mc.thePlayer.motionX = 0;
                 mc.thePlayer.motionZ = 0;
                 if (mc.gameSettings.keyBindJump.isKeyDown()) {
-                    mc.thePlayer.motionY += vanillaSpeed;
+                    mc.thePlayer.motionY += vanillaVSpeed;
                 }
                 if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-                    mc.thePlayer.motionY -= vanillaSpeed;
+                    mc.thePlayer.motionY -= vanillaVSpeed;
                     mc.gameSettings.keyBindSneak.pressed = false;
                 }
                 MovementUtils.strafe(vanillaSpeed);
@@ -742,12 +730,18 @@ public class Flight extends Module {
                     mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(posX, posY, posZ, true));
                 }
                 break;
-            case "jetpack":
+            case "jetpack1":
                 if (mc.gameSettings.keyBindJump.isKeyDown()) {
-                    mc.effectRenderer.spawnEffectParticle(EnumParticleTypes.FLAME.getParticleID(), mc.thePlayer.posX, mc.thePlayer.posY + 0.2D, mc.thePlayer.posZ, -mc.thePlayer.motionX, -0.5D, -mc.thePlayer.motionZ);
                     mc.thePlayer.motionY += 0.15D;
                     mc.thePlayer.motionX *= 1.1D;
                     mc.thePlayer.motionZ *= 1.1D;
+                }
+                if (!mc.thePlayer.onGround)
+                    mc.effectRenderer.spawnEffectParticle(EnumParticleTypes.FLAME.getParticleID(), mc.thePlayer.posX, mc.thePlayer.posY + 0.2D, mc.thePlayer.posZ, -mc.thePlayer.motionX, -0.5D, -mc.thePlayer.motionZ);
+                break;
+            case "jetpack2":
+                if (!mc.thePlayer.onGround) {
+                    mc.effectRenderer.spawnEffectParticle(EnumParticleTypes.FLAME.getParticleID(), mc.thePlayer.posX, mc.thePlayer.posY + 0.2D, mc.thePlayer.posZ, -mc.thePlayer.motionX, -0.5D, -mc.thePlayer.motionZ);
                 }
                 break;
             case "mineplex":
@@ -772,7 +766,7 @@ public class Flight extends Module {
                 } else {
                     mc.timer.timerSpeed = 1;
                     setState(false);
-                    ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §aSelect an empty slot to fly.");
+                    ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§aSelect an empty slot to fly.");
                 }
                 break;
             case "aac3.3.12":
@@ -831,7 +825,7 @@ public class Flight extends Module {
                 if (startY > mc.thePlayer.posY)
                     MovementUtils.strafe(0F);
                 break;
-            case "spartan":
+            case "spartan1":
                 mc.thePlayer.motionY = 0;
                 spartanTimer.update();
                 if (spartanTimer.hasTimePassed(12)) {
@@ -934,19 +928,6 @@ public class Flight extends Module {
                     hypixelTimer.reset();
                 }
                 break;
-            case "freehypixel":
-                if (freeHypixelTimer.hasTimePassed(10)) {
-                    mc.thePlayer.capabilities.isFlying = true;
-                    break;
-                } else {
-                    mc.thePlayer.rotationYaw = freeHypixelYaw;
-                    mc.thePlayer.rotationPitch = freeHypixelPitch;
-                    mc.thePlayer.motionX = mc.thePlayer.motionZ = mc.thePlayer.motionY = 0;
-                }
-
-                if (startY == new BigDecimal(mc.thePlayer.posY).setScale(3, RoundingMode.HALF_DOWN).doubleValue())
-                    freeHypixelTimer.update();
-                break;
         }
     }
 
@@ -956,10 +937,6 @@ public class Flight extends Module {
 
         if (bobbingValue.get()) {
             mc.thePlayer.cameraYaw = bobbingAmountValue.get();
-        }
-
-        if (!bobbingValue.get()) {
-            mc.thePlayer.cameraYaw = 0.0f;
         }
 
         if (modeValue.get().equalsIgnoreCase("boosthypixel")) {
@@ -999,6 +976,12 @@ public class Flight extends Module {
 
                     MovementUtils.strafe((float) moveSpeed);
                     mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY - 8e-6, mc.thePlayer.posZ);
+                }
+                break;
+            case "float":
+                if (event.getEventState() == EventState.PRE) {
+                    mc.thePlayer.capabilities.isFlying = false;
+                    mc.thePlayer.motionY = 0;
                 }
                 break;
             case "zoom":
@@ -1335,10 +1318,6 @@ public class Flight extends Module {
                 event.setZ(Math.cos(yaw) * moveSpeed);
                 mc.thePlayer.motionX = event.getX();
                 mc.thePlayer.motionZ = event.getZ();
-                break;
-            case "freehypixel":
-                if (!freeHypixelTimer.hasTimePassed(10))
-                    event.zero();
                 break;
         }
     }

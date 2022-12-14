@@ -15,8 +15,8 @@ import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.Vec3;
 
-@ModuleInfo(name = "TPHit", spacedName = "TP Hit", category = ModuleCategory.COMBAT)
-public class TPHit extends Module {
+@ModuleInfo(name = "InfiniteReach", spacedName = "Infinite Reach", category = ModuleCategory.COMBAT)
+public class InfiniteReach extends Module {
     private EntityLivingBase targetEntity;
     private boolean shouldHit;
 

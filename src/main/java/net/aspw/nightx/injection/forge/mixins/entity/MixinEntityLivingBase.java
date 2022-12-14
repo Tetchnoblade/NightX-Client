@@ -5,8 +5,9 @@ import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.JumpEvent;
 import net.aspw.nightx.features.module.modules.client.ColorMixer;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
-import net.aspw.nightx.features.module.modules.cool.AntiBlind;
-import net.aspw.nightx.features.module.modules.movement.AirJump;
+import net.aspw.nightx.features.module.modules.cool.NoEffect;
+import net.aspw.nightx.features.module.modules.movement.DoubleJump;
+import net.aspw.nightx.features.module.modules.movement.Flight;
 import net.aspw.nightx.features.module.modules.movement.Jesus;
 import net.aspw.nightx.features.module.modules.movement.Sprint;
 import net.aspw.nightx.features.module.modules.player.TargetStrafe;
@@ -14,6 +15,7 @@ import net.aspw.nightx.features.module.modules.render.Animations;
 import net.aspw.nightx.utils.MovementUtils;
 import net.aspw.nightx.utils.RotationUtils;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -126,9 +128,14 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @Inject(method = "onLivingUpdate", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/EntityLivingBase;isJumping:Z", ordinal = 1))
     private void onJumpSection(CallbackInfo callbackInfo) {
-        if (NightX.moduleManager.getModule(AirJump.class).getState() && isJumping && this.jumpTicks == 0) {
+        if (NightX.moduleManager.getModule(DoubleJump.class).getState() && isJumping && this.jumpTicks == 0) {
             this.jump();
             this.jumpTicks = 10;
+        }
+
+        if (NightX.moduleManager.getModule(Flight.class).getState() && NightX.moduleManager.getModule(Flight.class).modeValue.get().equals("Jetpack2") && Minecraft.getMinecraft().gameSettings.keyBindJump.isKeyDown()) {
+            this.jump();
+            this.jumpTicks = 0;
         }
 
         final Jesus liquidWalk = NightX.moduleManager.getModule(Jesus.class);
@@ -147,13 +154,18 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @Inject(method = "isPotionActive(Lnet/minecraft/potion/Potion;)Z", at = @At("HEAD"), cancellable = true)
     private void isPotionActive(Potion p_isPotionActive_1_, final CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        final AntiBlind antiBlind = NightX.moduleManager.getModule(AntiBlind.class);
+        final NoEffect antiBlind = NightX.moduleManager.getModule(NoEffect.class);
 
         if ((p_isPotionActive_1_ == Potion.confusion || p_isPotionActive_1_ == Potion.blindness) && antiBlind.getState() && antiBlind.getConfusionEffect().get())
             callbackInfoReturnable.setReturnValue(false);
     }
 
     //visionfx sucks
+
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     private int getArmSwingAnimationEnd() {
         int speed = NightX.moduleManager.getModule(Animations.class).getState() ? 2 + (20 - Animations.SpeedSwing.get() - 16) : 6;

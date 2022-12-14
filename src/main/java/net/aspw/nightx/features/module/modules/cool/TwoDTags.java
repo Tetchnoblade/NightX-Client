@@ -48,13 +48,13 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-@ModuleInfo(name = "2DTags", spacedName = "2D Tags", category = ModuleCategory.COOL)
+@ModuleInfo(name = "2DTags", spacedName = "2D Tags", category = ModuleCategory.COOL, array = false)
 public final class TwoDTags extends Module {
     public static List collectedEntities = new ArrayList();
-    public final BoolValue outline = new BoolValue("Outline", true);
+    public final BoolValue outline = new BoolValue("Outline", false);
     public final ListValue boxMode = new ListValue("Mode", new String[]{"Box", "Corners"}, "Box");
     public final BoolValue healthBar = new BoolValue("Health-bar", true);
-    public final ListValue hpBarMode = new ListValue("HBar-Mode", new String[]{"Dot", "Line"}, "Dot", () -> healthBar.get());
+    public final ListValue hpBarMode = new ListValue("HBar-Mode", new String[]{"Dot", "Line"}, "Line", () -> healthBar.get());
     public final BoolValue absorption = new BoolValue("Render-Absorption", false, () -> healthBar.get() && hpBarMode.get().equalsIgnoreCase("line"));
     public final BoolValue armorBar = new BoolValue("Armor-bar", false);
     public final ListValue armorBarMode = new ListValue("ABar-Mode", new String[]{"Total", "Items"}, "Total", () -> armorBar.get());
@@ -64,7 +64,7 @@ public final class TwoDTags extends Module {
     public final BoolValue armorItems = new BoolValue("ArmorItems", false);
     public final BoolValue armorDur = new BoolValue("ArmorDurability", false, () -> armorItems.get());
     public final BoolValue hoverValue = new BoolValue("Details-HoverOnly", false);
-    public final BoolValue tagsValue = new BoolValue("Tags", false);
+    public final BoolValue tagsValue = new BoolValue("Tags", true);
     public final BoolValue tagsBGValue = new BoolValue("Tags-Background", false, () -> tagsValue.get());
     public final BoolValue itemTagsValue = new BoolValue("Item-Tags", false);
     public final BoolValue clearNameValue = new BoolValue("Use-Clear-Name", false);
@@ -77,7 +77,7 @@ public final class TwoDTags extends Module {
     private final FloatValue saturationValue = new FloatValue("Saturation", 1F, 0F, 1F);
     private final FloatValue brightnessValue = new FloatValue("Brightness", 1F, 0F, 1F);
     private final IntegerValue mixerSecondsValue = new IntegerValue("Seconds", 2, 1, 10);
-    private final FloatValue fontScaleValue = new FloatValue("Font-Scale", 0.5F, 0F, 1F, "x");
+    private final FloatValue fontScaleValue = new FloatValue("Font-Scale", 1F, 0F, 1F, "x");
     private final BoolValue colorTeam = new BoolValue("Team", false);
     private final IntBuffer viewport;
     private final FloatBuffer modelview;

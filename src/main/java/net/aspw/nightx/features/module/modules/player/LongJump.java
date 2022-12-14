@@ -62,8 +62,8 @@ public class LongJump extends Module {
     private final BoolValue damageNoMoveValue = new BoolValue("Damage-NoMove", false, () -> modeValue.get().equalsIgnoreCase("damage"));
     private final BoolValue damageARValue = new BoolValue("Damage-AutoReset", false, () -> modeValue.get().equalsIgnoreCase("damage"));
     private final BoolValue autoDisableValue = new BoolValue("AutoDisable", true);
-    private final BoolValue fakeDmgValue = new BoolValue("FakeDamage", true);
-    private final BoolValue bobbingValue = new BoolValue("Bobbing", true);
+    private final BoolValue fakeDmgValue = new BoolValue("FakeDamage", false);
+    private final BoolValue bobbingValue = new BoolValue("Bobbing", false);
     private final FloatValue bobbingAmountValue = new FloatValue("BobbingAmount", 0.1F, 0F, 1F, () -> bobbingValue.get());
     private final MSTimer dmgTimer = new MSTimer();
     private final PosLookInstance posLookInstance = new PosLookInstance();
@@ -97,10 +97,6 @@ public class LongJump extends Module {
     public void onMotion(final MotionEvent event) {
         if (bobbingValue.get()) {
             mc.thePlayer.cameraYaw = bobbingAmountValue.get();
-        }
-
-        if (!bobbingValue.get()) {
-            mc.thePlayer.cameraYaw = 0.0f;
         }
     }
 

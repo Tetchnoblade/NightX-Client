@@ -3,7 +3,7 @@ package net.aspw.nightx.injection.forge.mixins.resources;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.render.Nick;
+import net.aspw.nightx.features.module.modules.render.StreamerMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.SkinManager;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,7 +23,7 @@ public class MixinSkinManager {
         if (gameProfile == null)
             return;
 
-        Nick nameProtect = NightX.moduleManager.getModule(Nick.class);
+        StreamerMode nameProtect = NightX.moduleManager.getModule(StreamerMode.class);
 
         if (nameProtect.getState() && nameProtect.skinProtectValue.get()) {
             if (nameProtect.allPlayersValue.get() || Objects.equals(gameProfile.getId(), Minecraft.getMinecraft().getSession().getProfile().getId())) {

@@ -9,8 +9,8 @@ import net.aspw.nightx.value.BoolValue
 import net.minecraft.init.Blocks
 import net.minecraft.util.AxisAlignedBB
 
-@ModuleInfo(name = "BlockWalk", spacedName = "Block Walk", category = ModuleCategory.MOVEMENT)
-class BlockWalk : Module() {
+@ModuleInfo(name = "AutoBackstab", spacedName = "Auto Backstab", category = ModuleCategory.MOVEMENT)
+class AutoBackstab : Module() {
     private val cobwebValue = BoolValue("Cobweb", true)
     private val snowValue = BoolValue("Snow", true)
 

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-@ModuleInfo(name = "Skeletal", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "Skeletal", category = ModuleCategory.RENDER, array = false)
 public class Skeletal extends Module {
 
     private final Map playerRotationMap = new WeakHashMap();

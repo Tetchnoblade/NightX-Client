@@ -13,7 +13,7 @@ import net.aspw.nightx.features.module.modules.exploit.*
 import net.aspw.nightx.features.module.modules.ghost.Aimbot
 import net.aspw.nightx.features.module.modules.ghost.AutoClicker
 import net.aspw.nightx.features.module.modules.ghost.FastBridge
-import net.aspw.nightx.features.module.modules.ghost.HitBox
+import net.aspw.nightx.features.module.modules.ghost.Hitboxes
 import net.aspw.nightx.features.module.modules.misc.*
 import net.aspw.nightx.features.module.modules.movement.*
 import net.aspw.nightx.features.module.modules.player.*
@@ -67,7 +67,6 @@ class ModuleManager : Listenable {
             AntiBot::class.java,
             Stealer::class.java,
             Scaffold::class.java,
-            FastBreak::class.java,
             FastPlace::class.java,
             Sneak::class.java,
             Speed::class.java,
@@ -87,30 +86,29 @@ class ModuleManager : Listenable {
             Regen::class.java,
             NoFall::class.java,
             Blink::class.java,
-            Nick::class.java,
+            StreamerMode::class.java,
             NoHurt::class.java,
             XRay::class.java,
             Timer::class.java,
             Freecam::class.java,
-            HitBox::class.java,
+            Hitboxes::class.java,
             PluginsChecker::class.java,
             LongJump::class.java,
             AutoClicker::class.java,
             BlockOverlay::class.java,
             Chams::class.java,
             Phase::class.java,
-            ServerCrasher::class.java,
+            Crasher::class.java,
             Fov::class.java,
             Animations::class.java,
             InventoryManager::class.java,
             ShowInvis::class.java,
-            AntiBlind::class.java,
+            NoEffect::class.java,
             Trails::class.java,
             ViewClip::class.java,
             Reach::class.java,
             Hud::class.java,
             PackSpoofer::class.java,
-            NoSlowBreak::class.java,
             PortalMenu::class.java,
             WorldTime::class.java,
             EnchantColor::class.java,
@@ -140,12 +138,12 @@ class ModuleManager : Listenable {
             ConsoleSpammer::class.java,
             PointerESP::class.java,
             SafeWalk::class.java,
-            NoMouseInteract::class.java,
+            NoMouseIntersect::class.java,
             AntiHunger::class.java,
-            AirJump::class.java,
+            DoubleJump::class.java,
             AntiCactus::class.java,
             FastBridge::class.java,
-            FastLadder::class.java,
+            Terrain::class.java,
             Parkour::class.java,
             Spider::class.java,
             FakeLag::class.java,
@@ -160,19 +158,18 @@ class ModuleManager : Listenable {
             Damage::class.java,
             GodMode::class.java,
             AutoWalk::class.java,
-            BlockWalk::class.java,
+            AutoBackstab::class.java,
             IceSpeed::class.java,
             HorseJump::class.java,
             LiquidInteract::class.java,
             AutoMine::class.java,
-            CivBreak::class.java,
             Nuker::class.java,
             SuperheroFX::class.java,
             Gui::class.java,
             ResetVL::class.java,
-            SpeedMine::class.java,
+            FastMine::class.java,
             Annoy::class.java,
-            TPHit::class.java,
+            InfiniteReach::class.java,
             Ridergod::class.java,
             HudEditor::class.java,
             ThunderNotifier::class.java,
@@ -183,7 +180,7 @@ class ModuleManager : Listenable {
             TargetAnimals::class.java,
             TargetInvisible::class.java,
             AutoArmor::class.java,
-            Projectiles::class.java,
+            Trajectories::class.java,
             RealBobbing::class.java,
             TargetStrafe::class.java,
             Bhop::class.java,
@@ -207,11 +204,10 @@ class ModuleManager : Listenable {
             PotionSpoof::class.java,
             TickTimer::class.java,
             HitParticles::class.java,
-            InstantMine::class.java,
-            CivBreakNew::class.java
+            CivBreak::class.java
         )
 
-        registerModule(BedBreaker)
+        registerModule(Fucker)
         registerModule(StealAura)
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")

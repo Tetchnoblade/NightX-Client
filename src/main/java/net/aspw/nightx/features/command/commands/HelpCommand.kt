@@ -38,7 +38,7 @@ class HelpCommand : Command("help", emptyArray()) {
         }
 
         chat("§c§lHelp")
-        ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l]§7 Page: §8$page / $maxPage")
+        ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§7Page: §8$page / $maxPage")
 
         val commands = NightX.commandManager.commands.sortedBy { it.command }
 
@@ -47,7 +47,7 @@ class HelpCommand : Command("help", emptyArray()) {
             val command = commands[i]
 
             ClientUtils.displayChatMessage(
-                "§f§l[§d§lN§7§lightX§f§l] §7${NightX.commandManager.prefix}${command.command}${
+                NightX.CLIENT_CHAT + "§7${NightX.commandManager.prefix}${command.command}${
                     if (command.alias.isEmpty()) "" else " §7(§8" + Strings.join(
                         command.alias,
                         "§7, §8"

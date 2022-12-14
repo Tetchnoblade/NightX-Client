@@ -50,12 +50,6 @@ class Step : Module() {
     private val delayValue = IntegerValue("Delay", 150, 0, 500, "ms")
     private val useTimer = BoolValue("UseTimer", true)
 
-
-            /**
-     * VALUES
-     */
-
-
     /**
      * VALUES
      */
@@ -225,7 +219,7 @@ class Step : Module() {
         mc.timer.timerSpeed = 1f
 
         if (NightX.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround) {
-            mc.timer.timerSpeed = 0.55f
+            mc.timer.timerSpeed = 0.65f
         }
 
         if (mc.thePlayer == null || !isStep) // Check if step

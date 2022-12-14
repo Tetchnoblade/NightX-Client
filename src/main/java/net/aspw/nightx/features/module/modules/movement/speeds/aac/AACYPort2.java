@@ -12,17 +12,13 @@ public class AACYPort2 extends SpeedMode {
 
     @Override
     public void onMotion() {
-        if (MovementUtils.isMoving()) {
-            mc.thePlayer.cameraPitch = 0F;
-
-            if (mc.thePlayer.onGround) {
-                mc.thePlayer.jump();
-                mc.thePlayer.motionY = 0.3851F;
-                mc.thePlayer.motionX *= 1.01;
-                mc.thePlayer.motionZ *= 1.01;
-            } else
-                mc.thePlayer.motionY = -0.21D;
-        }
+        if (MovementUtils.isMoving() && mc.thePlayer.onGround) {
+            mc.thePlayer.jump();
+            mc.thePlayer.motionY = 0.3851F;
+            mc.thePlayer.motionX *= 1.01;
+            mc.thePlayer.motionZ *= 1.01;
+        } else
+            mc.thePlayer.motionY = -0.21D;
     }
 
     @Override

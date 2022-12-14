@@ -2,7 +2,7 @@ package net.aspw.nightx.injection.forge.mixins.entity;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.StrafeEvent;
-import net.aspw.nightx.features.module.modules.ghost.HitBox;
+import net.aspw.nightx.features.module.modules.ghost.Hitboxes;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -159,7 +159,7 @@ public abstract class MixinEntity {
 
     @Inject(method = "getCollisionBorderSize", at = @At("HEAD"), cancellable = true)
     private void getCollisionBorderSize(final CallbackInfoReturnable<Float> callbackInfoReturnable) {
-        final HitBox hitBox = NightX.moduleManager.getModule(HitBox.class);
+        final Hitboxes hitBox = NightX.moduleManager.getModule(Hitboxes.class);
 
         if (hitBox.getState())
             callbackInfoReturnable.setReturnValue(0.1F + hitBox.getSizeValue().get());

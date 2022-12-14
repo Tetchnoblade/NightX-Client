@@ -550,7 +550,7 @@ public class Scaffold extends Module {
             mc.thePlayer.setSprinting(false);
         }
 
-        //Auto Jump thingy
+        // Auto Jump thingy
         if (shouldGoDown) {
             launchY = (int) mc.thePlayer.posY - 1;
         } else if (!sameYValue.get()) {

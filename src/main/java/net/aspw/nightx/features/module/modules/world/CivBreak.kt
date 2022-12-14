@@ -25,7 +25,7 @@ class CivBreak : Module() {
 
     private val range = FloatValue("Range", 5F, 1F, 6F)
     private val rotationsValue = BoolValue("Rotations", true)
-    private val visualSwingValue = BoolValue("VisualSwing", false)
+    private val visualSwingValue = BoolValue("VisualSwing", true)
 
     private val airResetValue = BoolValue("Air-Reset", false)
     private val rangeResetValue = BoolValue("Range-Reset", false)
@@ -40,18 +40,19 @@ class CivBreak : Module() {
         enumFacing = event.enumFacing
 
         // Break
+        mc.netHandler.addToSendQueue(C0APacketAnimation())
         mc.netHandler.addToSendQueue(
             C07PacketPlayerDigging(
-                C07PacketPlayerDigging.Action.START_DESTROY_BLOCK,
+                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
                 blockPos,
                 enumFacing
             )
         )
         mc.netHandler.addToSendQueue(
             C07PacketPlayerDigging(
-                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+                C07PacketPlayerDigging.Action.ABORT_DESTROY_BLOCK,
                 blockPos,
-                enumFacing
+                EnumFacing.UP
             )
         )
     }
@@ -86,16 +87,19 @@ class CivBreak : Module() {
                     mc.netHandler.addToSendQueue(C0APacketAnimation())
 
                 // Break
+                mc.netHandler.addToSendQueue(C0APacketAnimation())
                 mc.netHandler.addToSendQueue(
                     C07PacketPlayerDigging(
-                        C07PacketPlayerDigging.Action.START_DESTROY_BLOCK,
-                        blockPos, enumFacing
+                        C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+                        blockPos,
+                        enumFacing
                     )
                 )
                 mc.netHandler.addToSendQueue(
                     C07PacketPlayerDigging(
-                        C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                        blockPos, enumFacing
+                        C07PacketPlayerDigging.Action.ABORT_DESTROY_BLOCK,
+                        blockPos,
+                        EnumFacing.UP
                     )
                 )
                 mc.playerController.clickBlock(blockPos, enumFacing)

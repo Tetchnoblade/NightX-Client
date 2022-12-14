@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.util.*
 
-@ModuleInfo(name = "Tracers", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "Tracers", category = ModuleCategory.RENDER, array = false)
 class Tracers : Module() {
 
     private val colorMode = ListValue("Color", arrayOf("Custom", "DistanceColor", "Rainbow"), "Custom")

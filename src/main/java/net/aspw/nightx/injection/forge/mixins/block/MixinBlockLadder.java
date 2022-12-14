@@ -1,7 +1,7 @@
 package net.aspw.nightx.injection.forge.mixins.block;
 
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.movement.FastLadder;
+import net.aspw.nightx.features.module.modules.movement.Terrain;
 import net.minecraft.block.BlockLadder;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
@@ -27,7 +27,7 @@ public abstract class MixinBlockLadder extends MixinBlock {
         final IBlockState iblockstate = worldIn.getBlockState(pos);
 
         if (iblockstate.getBlock() instanceof BlockLadder) {
-            final FastLadder fastClimb = NightX.moduleManager.getModule(FastLadder.class);
+            final Terrain fastClimb = NightX.moduleManager.getModule(Terrain.class);
             final float f = fastClimb.getState() && fastClimb.getModeValue().get().equalsIgnoreCase("AAC3.0.0") ? 0.99f : 0.125f;
 
             switch (iblockstate.getValue(FACING)) {

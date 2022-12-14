@@ -4,7 +4,7 @@ import com.google.common.collect.Iterables
 import com.google.common.collect.Lists
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.module.modules.client.ColorMixer
-import net.aspw.nightx.features.module.modules.cool.AntiBlind
+import net.aspw.nightx.features.module.modules.cool.NoEffect
 import net.aspw.nightx.features.module.modules.render.Hud
 import net.aspw.nightx.ui.client.hud.element.Border
 import net.aspw.nightx.ui.client.hud.element.Element
@@ -47,10 +47,10 @@ class ScoreboardElement(
     private val rectHeight = IntegerValue("Rect-Height", 1, 1, 10, { rectValue.get() })
 
     private val blurValue = BoolValue("Blur", false)
-    private val blurStrength = FloatValue("Blur-Strength", 0F, 0F, 30F, { blurValue.get() })
+    private val blurStrength = FloatValue("Blur-Strength", 5F, 0F, 30F, { blurValue.get() })
 
     private val shadowShaderValue = BoolValue("Shadow", false)
-    private val shadowStrength = FloatValue("Shadow-Strength", 0F, 0F, 30F, { shadowShaderValue.get() })
+    private val shadowStrength = FloatValue("Shadow-Strength", 10F, 0F, 30F, { shadowShaderValue.get() })
     private val shadowColorMode =
         ListValue("Shadow-Color", arrayOf("Background", "Custom"), "Background", { shadowShaderValue.get() })
 
@@ -115,7 +115,7 @@ class ScoreboardElement(
      * Draw element
      */
     override fun drawElement(): Border? {
-        val antiBlind = NightX.moduleManager.getModule(AntiBlind::class.java) as AntiBlind
+        val antiBlind = NightX.moduleManager.getModule(NoEffect::class.java) as NoEffect
         if (antiBlind.state && antiBlind.scoreBoard.get())
             return null
 

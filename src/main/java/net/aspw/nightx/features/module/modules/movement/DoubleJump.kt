@@ -4,5 +4,5 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 
-@ModuleInfo(name = "AirJump", spacedName = "Air Jump", category = ModuleCategory.MOVEMENT)
-class AirJump : Module()
+@ModuleInfo(name = "DoubleJump", spacedName = "Double Jump", category = ModuleCategory.MOVEMENT)
+class DoubleJump : Module()

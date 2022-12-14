@@ -124,7 +124,7 @@ open class Module : MinecraftInstance(), Listenable {
     /**
      * Print [msg] to chat
      */
-    protected fun chat(msg: String) = ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §3$msg")
+    protected fun chat(msg: String) = ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§3$msg")
 
     /**
      * Called when module toggled

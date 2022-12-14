@@ -14,8 +14,8 @@ import kotlin.math.roundToInt
 
 @ModuleInfo(name = "ThunderNotifier", spacedName = "Thunder Notifier", category = ModuleCategory.RENDER)
 class ThunderNotifier : Module() {
-    val chatValue = BoolValue("Chat", false)
-    val notifValue = BoolValue("Notification", true)
+    val chatValue = BoolValue("Chat", true)
+    val notifValue = BoolValue("Notification", false)
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
@@ -27,7 +27,7 @@ class ThunderNotifier : Module() {
             val dist = mc.thePlayer.getDistance(x, mc.thePlayer.entityBoundingBox.minY, z).roundToInt()
 
             if (chatValue.get())
-                ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §fDetected thunder at [§7X: $x, Y: $y, Z: $z§f]")
+                ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§fDetected thunder at [§7X: $x, Y: $y, Z: $z§f]")
 
             if (notifValue.get())
                 NightX.hud.addNotification(

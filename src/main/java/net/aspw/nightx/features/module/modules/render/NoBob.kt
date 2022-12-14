@@ -6,7 +6,7 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 
-@ModuleInfo(name = "NoBob", spacedName = "No Bob", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "NoBob", spacedName = "No Bob", category = ModuleCategory.RENDER, array = false)
 class NoBob : Module() {
 
     @EventTarget

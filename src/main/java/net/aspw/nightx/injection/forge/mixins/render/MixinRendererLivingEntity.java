@@ -3,6 +3,7 @@ package net.aspw.nightx.injection.forge.mixins.render;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.features.module.modules.client.ColorMixer;
 import net.aspw.nightx.features.module.modules.cool.Chams;
+import net.aspw.nightx.features.module.modules.cool.TwoDTags;
 import net.aspw.nightx.features.module.modules.render.*;
 import net.aspw.nightx.utils.EntityUtils;
 import net.aspw.nightx.utils.RotationUtils;
@@ -136,9 +137,10 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
     @Inject(method = "canRenderName(Lnet/minecraft/entity/EntityLivingBase;)Z", at = @At("HEAD"), cancellable = true)
     private <T extends EntityLivingBase> void canRenderName(T entity, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         final NoRender noRender = NightX.moduleManager.getModule(NoRender.class);
+        final TwoDTags twoDTags = NightX.moduleManager.getModule(TwoDTags.class);
 
         if (NightX.moduleManager.getModule(NameTags.class).getState() && ((NightX.moduleManager.getModule(NameTags.class).getLocalValue().get() && entity == Minecraft.getMinecraft().thePlayer && (!NightX.moduleManager.getModule(NameTags.class).getNfpValue().get() || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0)) || EntityUtils.isSelected(entity, false))
-                || (noRender.getState() && noRender.getNameTagsValue().get()))
+                || (noRender.getState() && noRender.getNameTagsValue().get()) || twoDTags.getState() && twoDTags.tagsValue.get())
             callbackInfoReturnable.setReturnValue(false);
     }
 

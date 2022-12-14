@@ -26,19 +26,19 @@ abstract class Command(val command: String, val alias: Array<String>) : Minecraf
     /**
      * Print [msg] to chat
      */
-    protected fun chat(msg: String) = ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §3$msg")
+    protected fun chat(msg: String) = ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§3$msg")
 
     /**
      * Print [syntax] of command to chat
      */
     protected fun chatSyntax(syntax: String) =
-        ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §3Syntax: §7${NightX.commandManager.prefix}$syntax")
+        ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§3Syntax: §7${NightX.commandManager.prefix}$syntax")
 
     /**
      * Print [syntaxes] of command to chat
      */
     protected fun chatSyntax(syntaxes: Array<String>) {
-        ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §3Syntax:")
+        ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§3Syntax:")
 
         for (syntax in syntaxes)
             ClientUtils.displayChatMessage(
@@ -53,7 +53,7 @@ abstract class Command(val command: String, val alias: Array<String>) : Minecraf
     /**
      * Print a syntax error to chat
      */
-    protected fun chatSyntaxError() = ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §3Syntax error")
+    protected fun chatSyntaxError() = ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§3Syntax error")
 
     /**
      * Play edit sound

@@ -39,7 +39,7 @@ class TacoCommand : Command("taco", emptyArray()), Listenable {
      */
     override fun execute(args: Array<String>) {
         toggle = !toggle
-        ClientUtils.displayChatMessage(if (toggle) "§f§l[§d§lN§7§lightX§f§l] §aTaco Enabled! :)" else "§f§l[§d§lN§7§lightX§f§l] §cTaco Disabled! :(")
+        ClientUtils.displayChatMessage(if (toggle) NightX.CLIENT_CHAT + "§aTaco Enabled! :)" else NightX.CLIENT_CHAT + "§cTaco Disabled! :(")
     }
 
     @EventTarget

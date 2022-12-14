@@ -1,6 +1,7 @@
 package net.aspw.nightx.features.module.modules.client;
 
 import joptsimple.internal.Strings;
+import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.EventTarget;
 import net.aspw.nightx.event.PacketEvent;
 import net.aspw.nightx.event.UpdateEvent;
@@ -35,7 +36,7 @@ public class PluginsChecker extends Module {
         tickTimer.update();
 
         if (tickTimer.hasTimePassed(20)) {
-            ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §cFailed!");
+            ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§cFailed!");
             tickTimer.reset();
             setState(false);
         }
@@ -63,9 +64,9 @@ public class PluginsChecker extends Module {
             Collections.sort(plugins);
 
             if (!plugins.isEmpty())
-                ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §aPlugins §7(§8" + plugins.size() + "§7): §c" + Strings.join(plugins.toArray(new String[0]), "§7, §c"));
+                ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§aPlugins §7(§8" + plugins.size() + "§7): §c" + Strings.join(plugins.toArray(new String[0]), "§7, §c"));
             else
-                ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §cNo plugins found!");
+                ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§cNo plugins found!");
             setState(false);
             tickTimer.reset();
         }

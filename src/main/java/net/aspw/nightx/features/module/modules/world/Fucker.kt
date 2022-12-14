@@ -30,8 +30,8 @@ import net.minecraft.util.Vec3
 import java.awt.Color
 import java.util.*
 
-@ModuleInfo(name = "BedBreaker", spacedName = "Bed Breaker", category = ModuleCategory.WORLD)
-object BedBreaker : Module() {
+@ModuleInfo(name = "Fucker", category = ModuleCategory.WORLD)
+object Fucker : Module() {
 
     /**
      * SETTINGS

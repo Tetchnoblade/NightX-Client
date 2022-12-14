@@ -10,7 +10,7 @@ import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.value.ListValue
 import java.util.*
 
-@ModuleInfo(name = "Rotate", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "Rotate", category = ModuleCategory.RENDER, array = false)
 class Rotate : Module() {
     private val yawMode = ListValue("Yaw", arrayOf("Static", "Offset", "Random", "Jitter", "Spin", "None"), "None")
     val pitchMode = ListValue("Pitch", arrayOf("Static", "Offset", "Random", "Jitter", "None"), "Static")

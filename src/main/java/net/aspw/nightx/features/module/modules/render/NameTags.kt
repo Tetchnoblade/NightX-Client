@@ -25,7 +25,7 @@ import org.lwjgl.opengl.GL11.*
 import java.awt.Color
 import kotlin.math.roundToInt
 
-@ModuleInfo(name = "NameTags", spacedName = "Name Tags", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "NameTags", spacedName = "Name Tags", category = ModuleCategory.RENDER, array = false)
 class NameTags : Module() {
     private val healthValue = BoolValue("Health", false)
     private val healthBarValue = BoolValue("Bar", true)

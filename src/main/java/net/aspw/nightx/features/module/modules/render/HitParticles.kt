@@ -19,7 +19,7 @@ import net.minecraft.network.play.server.S2CPacketSpawnGlobalEntity
 import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.ResourceLocation
 
-@ModuleInfo(name = "HitParticles", spacedName = "Hit Particles", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "HitParticles", spacedName = "Hit Particles", category = ModuleCategory.RENDER, array = false)
 class HitParticles : Module() {
     private val modeValue = ListValue("Mode", arrayOf("Thunder", "Blood", "Fire", "Criticals", "Sharpness"), "Thunder")
     private val timesValue = IntegerValue("Times", 1, 1, 10)

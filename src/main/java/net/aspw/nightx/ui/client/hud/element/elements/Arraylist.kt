@@ -57,7 +57,7 @@ class Arraylist(
         255,
         { shadowShaderValue.get() && shadowColorMode.get().equals("custom", true) })
     val colorRedValue = IntegerValue("Red", 255, 0, 255)
-    val colorGreenValue = IntegerValue("Green", 255, 0, 255)
+    val colorGreenValue = IntegerValue("Green", 0, 0, 255)
     val colorBlueValue = IntegerValue("Blue", 255, 0, 255)
     val colorAlphaValue = IntegerValue("Alpha", 255, 0, 255)
     private val saturationValue = FloatValue("Saturation", 0.45f, 0f, 1f)
@@ -83,9 +83,9 @@ class Arraylist(
     private val backgroundColorBlueValue = IntegerValue("Background-B", 0, 0, 255)
     private val backgroundColorAlphaValue = IntegerValue("Background-Alpha", 80, 0, 255)
     private val rectRightValue =
-        ListValue("Rect-Right", arrayOf("None", "Left", "Right", "Outline", "Special", "Top"), "Right")
+        ListValue("Rect-Right", arrayOf("None", "Left", "Right", "Outline", "Special", "Top"), "Outline")
     private val rectLeftValue = ListValue("Rect-Left", arrayOf("None", "Left", "Right"), "None")
-    private val caseValue = ListValue("Case", arrayOf("None", "Lower", "Upper"), "Lower")
+    private val caseValue = ListValue("Case", arrayOf("None", "Lower", "Upper"), "None")
     private val spaceValue = FloatValue("Space", 0F, 0F, 5F)
     private val textHeightValue = FloatValue("TextHeight", 11F, 1F, 20F)
     private val textYValue = FloatValue("TextY", 1.8F, 0F, 20F)
@@ -791,7 +791,7 @@ class Arraylist(
     private fun getModTag(m: Module): String {
         if (!tags.get() || m.tag == null) return ""
 
-        var returnTag = " ${if (tagsArrayColor.get()) "" else "§7"}"
+        var returnTag = " ${if (tagsArrayColor.get()) "" else "§f"}"
 
         // tag prefix, ignore default value
         if (!tagsStyleValue.get().equals("default", true))

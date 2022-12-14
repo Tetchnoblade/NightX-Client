@@ -10,7 +10,7 @@ import net.aspw.nightx.features.module.modules.world.Scaffold
 import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.ListValue
 
-@ModuleInfo(name = "SilentView", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "SilentView", category = ModuleCategory.RENDER, array = false)
 class SilentView : Module() {
 
     var mode = ListValue("Mode", arrayOf("Normal", "CSGO"), "Normal")

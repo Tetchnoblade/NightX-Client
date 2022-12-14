@@ -7,7 +7,7 @@ import net.aspw.nightx.value.FloatValue;
 import net.aspw.nightx.value.IntegerValue;
 import net.aspw.nightx.value.ListValue;
 
-@ModuleInfo(name = "EnchantColor", spacedName = "Enchant Color", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "EnchantColor", spacedName = "Enchant Color", category = ModuleCategory.RENDER, array = false)
 public class EnchantColor extends Module {
     public IntegerValue redValue = new IntegerValue("Red", 180, 0, 255);
     public IntegerValue greenValue = new IntegerValue("Green", 0, 0, 255);

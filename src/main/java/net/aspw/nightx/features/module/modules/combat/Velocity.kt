@@ -27,10 +27,10 @@ class Velocity : Module() {
     /**
      * OPTIONS
      */
-    private val horizontalValue = FloatValue("Horizontal", 0F, -1F, 1F, "x")
-    private val verticalValue = FloatValue("Vertical", 0F, -1F, 1F, "x")
-    private val horizontalExplosionValue = FloatValue("HorizontalExplosion", 0F, 0F, 1F, "x")
-    private val verticalExplosionValue = FloatValue("VerticalExplosion", 0F, 0F, 1F, "x")
+    private val horizontalValue = FloatValue("Horizontal", 0F, -1F, 1F, "%")
+    private val verticalValue = FloatValue("Vertical", 0F, -1F, 1F, "%")
+    private val horizontalExplosionValue = FloatValue("HorizontalExplosion", 0F, 0F, 1F, "%")
+    private val verticalExplosionValue = FloatValue("VerticalExplosion", 0F, 0F, 1F, "%")
     private val modeValue = ListValue(
         "Mode", arrayOf(
             "Cancel",

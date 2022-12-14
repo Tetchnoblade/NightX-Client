@@ -18,10 +18,10 @@ import java.awt.*;
 public class Gui extends Module {
     public static final BoolValue fastRenderValue = new BoolValue("FastRender", false);
 
-    private static final ListValue colorModeValue = new ListValue("Color", new String[]{"Custom", "Sky", "Rainbow", "LiquidSlowly", "Fade", "Mixer"}, "Fade");
-    private static final IntegerValue colorRedValue = new IntegerValue("Red", 154, 0, 255);
-    private static final IntegerValue colorGreenValue = new IntegerValue("Green", 114, 0, 255);
-    private static final IntegerValue colorBlueValue = new IntegerValue("Blue", 175, 0, 255);
+    private static final ListValue colorModeValue = new ListValue("Color", new String[]{"Custom", "Sky", "Rainbow", "LiquidSlowly", "Fade", "Mixer"}, "Custom");
+    private static final IntegerValue colorRedValue = new IntegerValue("Red", 255, 0, 255);
+    private static final IntegerValue colorGreenValue = new IntegerValue("Green", 100, 0, 255);
+    private static final IntegerValue colorBlueValue = new IntegerValue("Blue", 255, 0, 255);
     private static final FloatValue saturationValue = new FloatValue("Saturation", 0.5F, 0F, 1F);
     private static final FloatValue brightnessValue = new FloatValue("Brightness", 1F, 0F, 1F);
     private static final IntegerValue mixerSecondsValue = new IntegerValue("Seconds", 2, 1, 10);

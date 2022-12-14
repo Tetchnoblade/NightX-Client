@@ -2,7 +2,7 @@ package net.aspw.nightx.utils
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.module.ModuleCategory
-import net.aspw.nightx.features.module.modules.render.Nick
+import net.aspw.nightx.features.module.modules.render.StreamerMode
 import net.aspw.nightx.features.module.modules.utility.Spammer
 import net.aspw.nightx.features.special.MacroManager
 import net.aspw.nightx.utils.misc.HttpUtils.get
@@ -26,7 +26,7 @@ object SettingsUtils {
 
             when (args[0]) {
                 "chat" -> ClientUtils.displayChatMessage(
-                    "§f§l[§d§lN§7§lightX§f§l] §e${
+                    NightX.CLIENT_CHAT + "§e${
                         translateAlternateColorCodes(
                             StringUtils.toCompleteString(args, 1)
                         )
@@ -47,11 +47,11 @@ object SettingsUtils {
                     val url = urlRaw
 
                     try {
-                        ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §7Loading settings from §a§l$url§7...")
+                        ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§7Loading settings from §a§l$url§7...")
                         executeScript(get(url))
-                        ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §7Loaded settings from §a§l$url§7.")
+                        ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§7Loaded settings from §a§l$url§7.")
                     } catch (e: Exception) {
-                        ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §7Failed to load settings from §a§l$url§7.")
+                        ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§7Failed to load settings from §a§l$url§7.")
                     }
                 }
 
@@ -61,36 +61,36 @@ object SettingsUtils {
                         val macroCommand = StringUtils.toCompleteString(args, 2)
                         try {
                             MacroManager.addMacro(macroBind.toInt(), macroCommand)
-                            ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] Macro §c§l$macroCommand§7 has been bound to §a§l$macroBind§7.")
+                            ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "Macro §c§l$macroCommand§7 has been bound to §a§l$macroBind§7.")
                         } catch (e: Exception) {
-                            ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §a§l${e.javaClass.name}§7(${e.message}) §cAn Exception occurred while importing macro with keybind §a§l$macroBind§c to §a§l$macroCommand§c.")
+                            ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§a§l${e.javaClass.name}§7(${e.message}) §cAn Exception occurred while importing macro with keybind §a§l$macroBind§c to §a§l$macroCommand§c.")
                         }
                     }
                 }
 
                 "targetPlayer", "targetPlayers" -> {
                     EntityUtils.targetPlayer = args[1].equals("true", ignoreCase = true)
-                    ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §a§l${args[0]}§7 set to §c§l${EntityUtils.targetPlayer}§7.")
+                    ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§a§l${args[0]}§7 set to §c§l${EntityUtils.targetPlayer}§7.")
                 }
 
                 "targetMobs" -> {
                     EntityUtils.targetMobs = args[1].equals("true", ignoreCase = true)
-                    ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §a§l${args[0]}§7 set to §c§l${EntityUtils.targetMobs}§7.")
+                    ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§a§l${args[0]}§7 set to §c§l${EntityUtils.targetMobs}§7.")
                 }
 
                 "targetAnimals" -> {
                     EntityUtils.targetAnimals = args[1].equals("true", ignoreCase = true)
-                    ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §a§l${args[0]}§7 set to §c§l${EntityUtils.targetAnimals}§7.")
+                    ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§a§l${args[0]}§7 set to §c§l${EntityUtils.targetAnimals}§7.")
                 }
 
                 "targetInvisible" -> {
                     EntityUtils.targetInvisible = args[1].equals("true", ignoreCase = true)
-                    ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §a§l${args[0]}§7 set to §c§l${EntityUtils.targetInvisible}§7.")
+                    ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§a§l${args[0]}§7 set to §c§l${EntityUtils.targetInvisible}§7.")
                 }
 
                 "targetDead" -> {
                     EntityUtils.targetDead = args[1].equals("false", ignoreCase = true)
-                    ClientUtils.displayChatMessage("§f§l[§d§lN§7§lightX§f§l] §a§l${args[0]}§7 set to §c§l${EntityUtils.targetDead}§7.")
+                    ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§a§l${args[0]}§7 set to §c§l${EntityUtils.targetDead}§7.")
                 }
 
                 else -> {
@@ -149,7 +149,7 @@ object SettingsUtils {
             .forEach { stringBuilder.append("macro ${it.key} ${it.value}").append("\n") }
 
         NightX.moduleManager.modules.filter {
-            it.category !== ModuleCategory.RENDER && it !is Nick && it !is Spammer
+            it.category !== ModuleCategory.RENDER && it !is StreamerMode && it !is Spammer
         }.forEach {
             if (values)
                 it.values.forEach { value ->
