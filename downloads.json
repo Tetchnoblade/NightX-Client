@@ -63,7 +63,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 20593464,
-        "download_count": 40,
+        "download_count": 104,
         "created_at": "2022-12-10T13:24:26Z",
         "updated_at": "2022-12-10T13:24:32Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B26/nightx-release-b26.jar"
@@ -71,7 +71,19 @@
     ],
     "tarball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/tarball/B26",
     "zipball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/zipball/B26",
-    "body": "- Added New Fonts\r\n- Added XRay lightup\r\n- Added Animations (NightX, Astolfo)\r\n- Added InventoryManager Swing\r\n- Removed FlagNotifier\r\n- Removed NoAchivements (performance)\r\n- Removed Clip\r\n- Removed Water\r\n- Removed KeepBreaking\r\n- Removed KeepContainer\r\n- Fixed BlocksMC Disabler automatically banning\r\n- Fixed InventoryManager sometimes not working\r\n- Fixed Step UseTimer not disabling timer (when toggled phase)\r\n- Fixed Scaffold AutoBlock switching (antidetect on verus)\r\n- Improved Notification logo\r\n- Improved SilentView CSGO Mode\r\n- Improved TheAltening Gui (logo)\r\n- Improved Exhibition TargetHud\r\n- Improved Mainmenu (added back logo)\r\n- Improved FastBridge (didn't need fastplace)\r\n- Improved Animations (Swing-Speed slide can slide -12)\r\n- OPTIMIZED!\r\n- NEW DISCORD RPC!\r\nUpdated Configs!\r\nhttps://sites.google.com/view/nightx-client"
+    "body": "- Added New Fonts\r\n- Added XRay lightup\r\n- Added Animations (NightX, Astolfo)\r\n- Added InventoryManager Swing\r\n- Removed FlagNotifier\r\n- Removed NoAchivements (performance)\r\n- Removed Clip\r\n- Removed Water\r\n- Removed KeepBreaking\r\n- Removed KeepContainer\r\n- Fixed BlocksMC Disabler automatically banning\r\n- Fixed InventoryManager sometimes not working\r\n- Fixed Step UseTimer not disabling timer (when toggled phase)\r\n- Fixed Scaffold AutoBlock switching (antidetect on verus)\r\n- Improved Notification logo\r\n- Improved SilentView CSGO Mode\r\n- Improved TheAltening Gui (logo)\r\n- Improved Exhibition TargetHud\r\n- Improved Mainmenu (added back logo)\r\n- Improved FastBridge (didn't need fastplace)\r\n- Improved Animations (Swing-Speed slide can slide -12)\r\n- OPTIMIZED!\r\n- NEW DISCORD RPC!\r\nUpdated Configs!\r\nhttps://sites.google.com/view/nightx-client",
+    "reactions": {
+      "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/85627816/reactions",
+      "total_count": 1,
+      "+1": 0,
+      "-1": 0,
+      "laugh": 0,
+      "hooray": 0,
+      "confused": 0,
+      "heart": 0,
+      "rocket": 0,
+      "eyes": 1
+    }
   },
   {
     "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/85311134",
@@ -627,7 +639,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 4245949,
-        "download_count": 17,
+        "download_count": 18,
         "created_at": "2022-11-15T14:36:46Z",
         "updated_at": "2022-11-15T14:36:47Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B19/Forge.1.8.9.Installer.jar"
@@ -661,7 +673,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 19732988,
-        "download_count": 102,
+        "download_count": 103,
         "created_at": "2022-11-15T14:36:36Z",
         "updated_at": "2022-11-15T14:36:41Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B19/nightx-release-b19.jar"
@@ -809,7 +821,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 19710153,
-        "download_count": 81,
+        "download_count": 82,
         "created_at": "2022-11-08T14:23:35Z",
         "updated_at": "2022-11-08T14:23:41Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B17/nightx-release-b17.jar"
@@ -895,7 +907,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 19718271,
-        "download_count": 82,
+        "download_count": 83,
         "created_at": "2022-11-05T10:37:37Z",
         "updated_at": "2022-11-05T10:37:42Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B16/nightx-release-b16.jar"
@@ -969,7 +981,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 19735423,
-        "download_count": 107,
+        "download_count": 108,
         "created_at": "2022-11-01T08:59:45Z",
         "updated_at": "2022-11-01T08:59:50Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B15/nightx-release-b15.jar"
@@ -1043,7 +1055,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 19517105,
-        "download_count": 90,
+        "download_count": 91,
         "created_at": "2022-10-30T03:14:43Z",
         "updated_at": "2022-10-30T03:14:49Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B14/nightx-release-b14.jar"
@@ -1413,7 +1425,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 19188308,
-        "download_count": 96,
+        "download_count": 97,
         "created_at": "2022-10-19T12:30:03Z",
         "updated_at": "2022-10-19T12:30:07Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B10/nightx-b10.jar"
@@ -1795,7 +1807,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 19196370,
-        "download_count": 103,
+        "download_count": 104,
         "created_at": "2022-10-03T10:00:25Z",
         "updated_at": "2022-10-03T10:00:31Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B5/nightx-b5.jar"
