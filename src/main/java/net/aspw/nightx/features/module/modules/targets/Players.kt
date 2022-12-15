@@ -5,16 +5,16 @@ import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.utils.EntityUtils
 
-@ModuleInfo(name = "TargetMobs", category = ModuleCategory.TARGETS, array = false)
-class TargetMobs : Module() {
+@ModuleInfo(name = "Players", category = ModuleCategory.TARGETS, array = false)
+class Players : Module() {
     override fun onEnable() {
         super.onEnable()
-        EntityUtils.targetMobs = true
+        EntityUtils.targetPlayer = true
     }
 
     override fun onDisable() {
         super.onDisable()
-        EntityUtils.targetMobs = false
+        EntityUtils.targetPlayer = false
     }
 
     init {

@@ -7,49 +7,23 @@ import net.aspw.nightx.features.module.Module;
 import net.aspw.nightx.features.module.ModuleCategory;
 import net.aspw.nightx.features.module.ModuleInfo;
 import net.aspw.nightx.file.configs.FriendsConfig;
-import net.aspw.nightx.utils.ClientUtils;
 import net.aspw.nightx.utils.misc.StringUtils;
 import net.aspw.nightx.utils.render.ColorUtils;
 import net.aspw.nightx.value.BoolValue;
 import net.aspw.nightx.value.TextValue;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.util.ResourceLocation;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-
-@ModuleInfo(name = "StreamerMode", spacedName = "Streamer Mode", category = ModuleCategory.RENDER, array = false)
+@ModuleInfo(name = "StreamerMode", spacedName = "Streamer Mode", category = ModuleCategory.RENDER)
 public class StreamerMode extends Module {
 
     public final BoolValue selfValue = new BoolValue("Yourself", true);
     public final BoolValue tagValue = new BoolValue("Tag", true);
     public final BoolValue allPlayersValue = new BoolValue("AllPlayers", false);
-    public final BoolValue skinProtectValue = new BoolValue("SkinProtect", false);
-    public final BoolValue customSkinValue = new BoolValue("CustomSkin", false, () -> skinProtectValue.get());
     private final TextValue fakeNameValue = new TextValue("FakeName", "NightX");
     private final TextValue allFakeNameValue = new TextValue("AllPlayersFakeName", "Censored");
-    public ResourceLocation skinImage;
 
-    public StreamerMode() {
-        File skinFile = new File(NightX.fileManager.dir, "cskin.png");
-        if (skinFile.isFile()) {
-            try {
-                final BufferedImage bufferedImage = ImageIO.read(new FileInputStream(skinFile));
-
-                if (bufferedImage == null)
-                    return;
-
-                skinImage = new ResourceLocation(NightX.CLIENT_FOLDER.toLowerCase() + "/cskin.png");
-
-                mc.getTextureManager().loadTexture(skinImage, new DynamicTexture(bufferedImage));
-                ClientUtils.getLogger().info("Loaded custom skin for nick.");
-            } catch (final Exception e) {
-                ClientUtils.getLogger().error("Failed to load custom skin.", e);
-            }
-        }
+    public void onInitialize() {
+        setState(true);
     }
 
     @EventTarget

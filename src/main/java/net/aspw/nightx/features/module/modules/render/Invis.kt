@@ -6,8 +6,8 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 
-@ModuleInfo(name = "Invisible", category = ModuleCategory.RENDER)
-class Invisible : Module() {
+@ModuleInfo(name = "Invis", category = ModuleCategory.RENDER)
+class Invis : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {

@@ -9,7 +9,7 @@ import net.aspw.nightx.features.module.modules.cool.NoEffect;
 import net.aspw.nightx.features.module.modules.movement.DoubleJump;
 import net.aspw.nightx.features.module.modules.movement.Flight;
 import net.aspw.nightx.features.module.modules.movement.Jesus;
-import net.aspw.nightx.features.module.modules.movement.Sprint;
+import net.aspw.nightx.features.module.modules.player.Sprint;
 import net.aspw.nightx.features.module.modules.player.TargetStrafe;
 import net.aspw.nightx.features.module.modules.render.Animations;
 import net.aspw.nightx.utils.MovementUtils;

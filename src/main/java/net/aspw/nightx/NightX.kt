@@ -7,10 +7,9 @@ import net.aspw.nightx.features.command.CommandManager
 import net.aspw.nightx.features.module.ModuleManager
 import net.aspw.nightx.features.special.AntiForge
 import net.aspw.nightx.features.special.MacroManager
+import net.aspw.nightx.features.special.ModItems
 import net.aspw.nightx.file.FileManager
 import net.aspw.nightx.script.ScriptManager
-import net.aspw.nightx.tabs.BlocksTab
-import net.aspw.nightx.tabs.ExploitsTab
 import net.aspw.nightx.ui.client.hud.HUD
 import net.aspw.nightx.ui.client.hud.HUD.Companion.createDefault
 import net.aspw.nightx.ui.font.Fonts
@@ -112,10 +111,9 @@ object NightX {
             fileManager.friendsConfig, fileManager.xrayConfig
         )
 
-        // Tabs (Only for Forge!)
+        // Tabs
         if (hasForge()) {
-            BlocksTab()
-            ExploitsTab()
+            ModItems()
         }
 
         // Set HUD

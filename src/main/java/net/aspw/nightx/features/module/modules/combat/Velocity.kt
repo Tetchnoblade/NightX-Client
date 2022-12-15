@@ -46,7 +46,6 @@ class Velocity : Module() {
             "SmoothReverse",
             "Jump",
             "Phase",
-            "Matrix",
             "MatrixReduce",
             "MatrixSimple",
             "MatrixReverse",
@@ -239,25 +238,6 @@ class Velocity : Module() {
                 mc.thePlayer.onGround = true
             } else
                 velocityInput = false
-
-            "matrix" -> {
-                if (mc.thePlayer.hurtTime <= 0) {
-                    return
-                }
-                if (mc.thePlayer.onGround) {
-                    if (mc.thePlayer.hurtTime <= 6) {
-                        mc.thePlayer.motionX *= 0.700054132
-                        mc.thePlayer.motionZ *= 0.700054132
-                    }
-                    if (mc.thePlayer.hurtTime <= 5) {
-                        mc.thePlayer.motionX *= 0.803150645
-                        mc.thePlayer.motionZ *= 0.803150645
-                    }
-                } else if (mc.thePlayer.hurtTime <= 10) {
-                    mc.thePlayer.motionX *= 0.605001
-                    mc.thePlayer.motionZ *= 0.605001
-                }
-            }
 
             "matrixreduce" -> {
                 if (mc.thePlayer.hurtTime > 0) {

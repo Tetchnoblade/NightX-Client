@@ -36,7 +36,6 @@ open class Module : MinecraftInstance(), Listenable {
     private val forceNoSound: Boolean
 
     var slideStep = 0F
-    var animation = 0F
 
     init {
         val moduleInfo = javaClass.getAnnotation(ModuleInfo::class.java)!!
@@ -107,13 +106,7 @@ open class Module : MinecraftInstance(), Listenable {
     // Tag
     open val tag: String?
         get() = null
-    /*
-        val tagName: String
-            get() = "$name${if (tag == null) "" else "§7 - $tag"}"
 
-        val colorlessTagName: String
-            get() = "$name${if (tag == null) "" else " - " + stripColor(tag)}"
-    */
     /**
      * Toggle module
      */

@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement
+package net.aspw.nightx.features.module.modules.player
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.EventTarget
@@ -15,7 +15,7 @@ import net.aspw.nightx.utils.RotationUtils
 import net.aspw.nightx.value.BoolValue
 import net.minecraft.network.play.client.C0BPacketEntityAction
 
-@ModuleInfo(name = "Sprint", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Sprint", category = ModuleCategory.PLAYER)
 class Sprint : Module() {
 
     val allDirectionsValue = BoolValue("Multi", true)
