@@ -14,7 +14,6 @@ import net.aspw.nightx.features.module.modules.movement.Speed
 import net.aspw.nightx.utils.MovementUtils
 import net.aspw.nightx.utils.RotationUtils
 import net.aspw.nightx.value.BoolValue
-import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.ListValue
 import net.minecraft.entity.Entity
 import net.minecraft.util.AxisAlignedBB
@@ -23,25 +22,17 @@ import org.lwjgl.input.Keyboard
 
 @ModuleInfo(name = "TargetStrafe", spacedName = "Target Strafe", category = ModuleCategory.PLAYER)
 class TargetStrafe : Module() {
-    val radius = FloatValue("Radius", 1.5f, 0.1f, 4.0f, "m")
     private val modeValue = ListValue("KeyMode", arrayOf("Jump", "None"), "Jump")
     private val safewalk = BoolValue("SafeWalk", true)
     val thirdPerson = BoolValue("ThirdPerson", false)
-    private lateinit var killAura: KillAura
-    private lateinit var speed: Speed
-    private lateinit var flight: Flight
-    private lateinit var longJump: LongJump
+    val killAura = NightX.moduleManager.getModule(KillAura::class.java)
+    val speed = NightX.moduleManager.getModule(Speed::class.java)
+    val longJump = NightX.moduleManager.getModule(LongJump::class.java)
+    val flight = NightX.moduleManager.getModule(Flight::class.java)
 
     var direction = 1
     var lastView = 0
     var hasChangedThirdPerson = true
-
-    override fun onInitialize() {
-        killAura = NightX.moduleManager.getModule(KillAura::class.java) as KillAura
-        speed = NightX.moduleManager.getModule(Speed::class.java) as Speed
-        flight = NightX.moduleManager.getModule(Flight::class.java) as Flight
-        longJump = NightX.moduleManager.getModule(LongJump::class.java) as LongJump
-    }
 
     override fun onEnable() {
         hasChangedThirdPerson = true
@@ -50,6 +41,7 @@ class TargetStrafe : Module() {
 
     @EventTarget
     fun onMotion(event: MotionEvent) {
+
         if (thirdPerson.get()) { // smart change back lol
             if (canStrafe) {
                 if (hasChangedThirdPerson) lastView = mc.gameSettings.thirdPersonView
@@ -62,7 +54,7 @@ class TargetStrafe : Module() {
         }
 
         if (event.eventState == EventState.PRE) {
-            if (mc.thePlayer.isCollidedHorizontally || safewalk.get() && checkVoid() && !flight.state)
+            if (mc.thePlayer.isCollidedHorizontally || safewalk.get() && checkVoid() && !flight!!.state)
                 this.direction = -this.direction
         }
     }
@@ -72,18 +64,18 @@ class TargetStrafe : Module() {
         if (canStrafe) {
             strafe(event, MovementUtils.getSpeed(event.x, event.z))
 
-            if (safewalk.get() && checkVoid())
+            if (safewalk.get() && checkVoid() && !flight!!.state)
                 event.isSafeWalk = true
         }
     }
 
     fun strafe(event: MoveEvent, moveSpeed: Double) {
-        if (killAura.target == null) return
+        if (killAura!!.target == null) return
 
         val target = killAura.target
         val rotYaw = RotationUtils.getRotationsEntity(killAura.target).yaw
 
-        if (mc.thePlayer.getDistanceToEntity(target) <= radius.get())
+        if (mc.thePlayer.getDistanceToEntity(target) <= 1.5)
             MovementUtils.setSpeed(event, moveSpeed, rotYaw, direction.toDouble(), 0.0)
         else
             MovementUtils.setSpeed(event, moveSpeed, rotYaw, direction.toDouble(), 1.0)
@@ -109,7 +101,7 @@ class TargetStrafe : Module() {
         }
 
     val canStrafe: Boolean
-        get() = (state && (speed.state || flight.state || longJump.state) && killAura.state && killAura.target != null && !mc.thePlayer.isSneaking && keyMode && mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown)
+        get() = (state && (speed!!.state || flight!!.state || longJump!!.state) && killAura!!.state && killAura.target != null && !mc.thePlayer.isSneaking && keyMode && mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown)
 
     private fun checkVoid(): Boolean {
         for (x in -1..0) {
