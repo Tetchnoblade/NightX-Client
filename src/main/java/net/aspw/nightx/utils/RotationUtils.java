@@ -388,13 +388,6 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
         return RotationUtils.getRotations(entity.posX, entity.posY + entity.getEyeHeight() - 0.4, entity.posZ);
     }
 
-    public static Rotation getRotations(Entity ent) {
-        double x = ent.posX;
-        double z = ent.posZ;
-        double y = ent.posY + (double) (ent.getEyeHeight() / 2.0f);
-        return RotationUtils.getRotationFromPosition(x, z, y);
-    }
-
     public static Rotation getRotations(double posX, double posY, double posZ) {
         EntityPlayerSP player = RotationUtils.mc.thePlayer;
         double x = posX - player.posX;
@@ -404,6 +397,24 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
         float yaw = (float) (Math.atan2(z, x) * 180.0 / 3.141592653589793) - 90.0f;
         float pitch = (float) (-(Math.atan2(y, dist) * 180.0 / 3.141592653589793));
         return new Rotation(yaw, pitch);
+    }
+
+    public static Rotation getRotations(Entity ent) {
+        double x = ent.posX;
+        double z = ent.posZ;
+        double y = ent.posY + (double) (ent.getEyeHeight() / 2.0f);
+        return RotationUtils.getRotationFromPosition(x, z, y);
+    }
+
+    public static float[] getRotations1(double posX, double posY, double posZ) {
+        EntityPlayerSP player = RotationUtils.mc.thePlayer;
+        double x = posX - player.posX;
+        double y = posY - (player.posY + (double) player.getEyeHeight());
+        double z = posZ - player.posZ;
+        double dist = MathHelper.sqrt_double(x * x + z * z);
+        float yaw = (float) (Math.atan2(z, x) * 180.0D / Math.PI) - 90.0F;
+        float pitch = (float) -(Math.atan2(y, dist) * 180.0D / Math.PI);
+        return new float[]{yaw, pitch};
     }
 
     public static Rotation getRotationFromPosition(double x, double z, double y) {

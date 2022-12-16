@@ -10,7 +10,6 @@ import net.aspw.nightx.features.module.modules.movement.DoubleJump;
 import net.aspw.nightx.features.module.modules.movement.Flight;
 import net.aspw.nightx.features.module.modules.movement.Jesus;
 import net.aspw.nightx.features.module.modules.player.Sprint;
-import net.aspw.nightx.features.module.modules.player.TargetStrafe;
 import net.aspw.nightx.features.module.modules.render.Animations;
 import net.aspw.nightx.utils.MovementUtils;
 import net.aspw.nightx.utils.RotationUtils;
@@ -102,10 +101,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
         if (this.isSprinting()) {
             final KillAura auraMod = NightX.moduleManager.getModule(KillAura.class);
             final Sprint sprintMod = NightX.moduleManager.getModule(Sprint.class);
-            final TargetStrafe tsMod = NightX.moduleManager.getModule(TargetStrafe.class);
             float yaw = this.rotationYaw;
-            if (tsMod.getCanStrafe())
-                yaw = tsMod.getMovingYaw();
             if (ColorMixer.jumpPatch.get())
                 if (auraMod.getState() && auraMod.getRotationStrafeValue().get().equalsIgnoreCase("strict") && auraMod.getTarget() != null)
                     yaw = RotationUtils.targetRotation != null ? RotationUtils.targetRotation.getYaw() : (RotationUtils.serverRotation != null ? RotationUtils.serverRotation.getYaw() : yaw);

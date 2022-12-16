@@ -17,8 +17,8 @@ import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.ListValue
 import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.AxisAlignedBB
+import net.minecraft.util.MathHelper
 import org.lwjgl.input.Keyboard
 
 @ModuleInfo(name = "TargetStrafe", spacedName = "Target Strafe", category = ModuleCategory.PLAYER)
@@ -27,23 +27,22 @@ class TargetStrafe : Module() {
     private val modeValue = ListValue("KeyMode", arrayOf("Jump", "None"), "Jump")
     private val safewalk = BoolValue("SafeWalk", true)
     val thirdPerson = BoolValue("ThirdPerson", false)
-    private val expMode = BoolValue("LimitSpeed", false)
     private lateinit var killAura: KillAura
     private lateinit var speed: Speed
     private lateinit var flight: Flight
     private lateinit var longJump: LongJump
+    private lateinit var noClip: NoClip
 
     var direction = 1
     var lastView = 0
     var hasChangedThirdPerson = true
-
-    var hasModifiedMovement = false
 
     override fun onInitialize() {
         killAura = NightX.moduleManager.getModule(KillAura::class.java) as KillAura
         speed = NightX.moduleManager.getModule(Speed::class.java) as Speed
         flight = NightX.moduleManager.getModule(Flight::class.java) as Flight
         longJump = NightX.moduleManager.getModule(LongJump::class.java) as LongJump
+        noClip = NightX.moduleManager.getModule(NoClip::class.java) as NoClip
     }
 
     override fun onEnable() {
@@ -65,68 +64,44 @@ class TargetStrafe : Module() {
         }
 
         if (event.eventState == EventState.PRE) {
-            if (mc.thePlayer.isCollidedHorizontally)
+            if (mc.thePlayer.isCollidedHorizontally || safewalk.get() && checkVoid())
                 this.direction = -this.direction
-
-            if (mc.gameSettings.keyBindLeft.pressed)
-                this.direction = 1
-
-            if (mc.gameSettings.keyBindRight.pressed)
-                this.direction = -1
         }
     }
 
-    @EventTarget(priority = 2)
+    @EventTarget
     fun onMove(event: MoveEvent) {
         if (canStrafe) {
-            if (!hasModifiedMovement) strafe(event, MovementUtils.getSpeed(event.x, event.z))
+            strafe(event, MovementUtils.getSpeed(event.x, event.z))
 
             if (safewalk.get() && checkVoid())
                 event.isSafeWalk = true
         }
-        hasModifiedMovement = false
     }
 
     fun strafe(event: MoveEvent, moveSpeed: Double) {
         if (killAura.target == null) return
 
-        val target = killAura.target!!
-        val rotYaw = RotationUtils.getRotationsEntity(target).yaw
+        val target = killAura.target
+        val rotYaw = RotationUtils.getRotationsEntity(killAura.target).yaw
 
-        val forward = if (mc.thePlayer.getDistanceToEntity(target) <= radius.get()) 0.0 else 1.0
-        val strafe = direction.toDouble()
-        var modifySpeed = if (expMode.get()) maximizeSpeed(target, moveSpeed, killAura.rangeValue.get()) else moveSpeed
+        if (mc.thePlayer.getDistanceToEntity(target) <= radius.get())
+            MovementUtils.setSpeed(event, moveSpeed, rotYaw, direction.toDouble(), 0.0)
+        else
+            MovementUtils.setSpeed(event, moveSpeed, rotYaw, direction.toDouble(), 1.0)
 
-        MovementUtils.setSpeed(event, modifySpeed, rotYaw, strafe, forward)
-        hasModifiedMovement = true
+        val xPos: Double = target!!.posX + -Math.sin(Math.toRadians(target.rotationYaw.toDouble())) * -2
+        val zPos: Double = target.posZ + Math.cos(Math.toRadians(target.rotationYaw.toDouble())) * -2
+        event.x = (moveSpeed * -MathHelper.sin(
+            Math.toRadians(RotationUtils.getRotations1(xPos, target.posY, zPos)[0].toDouble())
+                .toFloat()
+        ))
+        event.z = (moveSpeed * MathHelper.cos(
+            Math.toRadians(RotationUtils.getRotations1(xPos, target.posY, zPos)[0].toDouble())
+                .toFloat()
+        ))
     }
 
-    fun getData(): Array<Float> {
-        if (killAura.target == null) return arrayOf(0F, 0F, 0F)
-
-        val target = killAura.target!!
-        val rotYaw = RotationUtils.getRotationsEntity(target).yaw
-
-        val forward = if (mc.thePlayer.getDistanceToEntity(target) <= radius.get()) 0F else 1F
-        val strafe = direction.toFloat()
-
-        return arrayOf(rotYaw, strafe, forward)
-    }
-
-    fun getMovingYaw(): Float {
-        val dt = getData()
-        return MovementUtils.getRawDirectionRotation(dt[0], dt[1], dt[2])
-    }
-
-    fun getMovingDir(): Double {
-        val dt = getData()
-        return MovementUtils.getDirectionRotation(dt[0], dt[1], dt[2])
-    }
-
-    private fun maximizeSpeed(ent: EntityLivingBase, speed: Double, range: Float): Double {
-        mc.thePlayer ?: return 0.0
-        return if (mc.thePlayer.getDistanceToEntity(ent) <= radius.get()) speed.coerceIn(0.0, range.toDouble() / 20.0) else speed
-    }
 
     val keyMode: Boolean
         get() = when (modeValue.get().toLowerCase()) {
@@ -136,7 +111,7 @@ class TargetStrafe : Module() {
         }
 
     val canStrafe: Boolean
-        get() = (state && (speed.state || flight.state || longJump.state) && killAura.state && killAura.target != null && !mc.thePlayer.isSneaking && keyMode)
+        get() = (state && (speed.state || flight.state || longJump.state || noClip.state) && killAura.state && killAura.target != null && !mc.thePlayer.isSneaking && keyMode && mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown)
 
     private fun checkVoid(): Boolean {
         for (x in -1..0) {
@@ -161,6 +136,7 @@ class TargetStrafe : Module() {
                 continue
             }
             return false
+            off += 2
         }
         return true
     }

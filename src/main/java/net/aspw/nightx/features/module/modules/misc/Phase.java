@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.exploit;
+package net.aspw.nightx.features.module.modules.misc;
 
 import net.aspw.nightx.event.*;
 import net.aspw.nightx.features.module.Module;
@@ -18,7 +18,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 
-@ModuleInfo(name = "Phase", category = ModuleCategory.EXPLOIT)
+@ModuleInfo(name = "Phase", category = ModuleCategory.MISC)
 public class Phase extends Module {
 
     public final ListValue modeValue = new ListValue("Mode", new String[]{

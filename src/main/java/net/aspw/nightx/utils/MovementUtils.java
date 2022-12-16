@@ -1,8 +1,6 @@
 package net.aspw.nightx.utils;
 
-import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.MoveEvent;
-import net.aspw.nightx.features.module.modules.player.TargetStrafe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockIce;
 import net.minecraft.block.BlockPackedIce;
@@ -94,8 +92,24 @@ public final class MovementUtils extends MinecraftInstance {
     }
 
     public static double getDirection() {
-        final TargetStrafe ts = NightX.moduleManager.getModule(TargetStrafe.class);
-        return ts.getCanStrafe() ? ts.getMovingDir() : getDirectionRotation(mc.thePlayer.rotationYaw, mc.thePlayer.moveStrafing, mc.thePlayer.moveForward);
+        float rotationYaw = mc.thePlayer.rotationYaw;
+
+        if (mc.thePlayer.moveForward < 0F)
+            rotationYaw += 180F;
+
+        float forward = 1F;
+        if (mc.thePlayer.moveForward < 0F)
+            forward = -0.5F;
+        else if (mc.thePlayer.moveForward > 0F)
+            forward = 0.5F;
+
+        if (mc.thePlayer.moveStrafing > 0F)
+            rotationYaw -= 90F * forward;
+
+        if (mc.thePlayer.moveStrafing < 0F)
+            rotationYaw += 90F * forward;
+
+        return Math.toRadians(rotationYaw);
     }
 
     public static float getRawDirection() {

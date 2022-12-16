@@ -556,9 +556,8 @@ public class Scaffold extends Module {
         } else if (!sameYValue.get()) {
             if ((!autoJumpValue.get() && !(smartSpeedValue.get() && NightX.moduleManager.getModule(Speed.class).getState())) || GameSettings.isKeyDown(mc.gameSettings.keyBindJump) || mc.thePlayer.posY < launchY)
                 launchY = (int) mc.thePlayer.posY;
-            if (autoJumpValue.get() && !NightX.moduleManager.getModule(Speed.class).getState() && MovementUtils.isMoving() && mc.thePlayer.onGround && mc.thePlayer.jumpTicks == 0) {
+            if (autoJumpValue.get() && !NightX.moduleManager.getModule(Speed.class).getState() && MovementUtils.isMoving() && mc.thePlayer.onGround) {
                 mc.thePlayer.jump();
-                mc.thePlayer.jumpTicks = 10;
             }
         }
     }

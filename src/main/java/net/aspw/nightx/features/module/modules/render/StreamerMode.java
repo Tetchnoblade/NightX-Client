@@ -17,14 +17,10 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 public class StreamerMode extends Module {
 
     public final BoolValue selfValue = new BoolValue("Yourself", true);
-    public final BoolValue tagValue = new BoolValue("Tag", true);
+    public final BoolValue tagValue = new BoolValue("Tag", false);
     public final BoolValue allPlayersValue = new BoolValue("AllPlayers", false);
-    private final TextValue fakeNameValue = new TextValue("FakeName", "NightX");
+    private final TextValue fakeNameValue = new TextValue("FakeName", "User");
     private final TextValue allFakeNameValue = new TextValue("AllPlayersFakeName", "Censored");
-
-    public void onInitialize() {
-        setState(true);
-    }
 
     @EventTarget
     public void onText(final TextEvent event) {
