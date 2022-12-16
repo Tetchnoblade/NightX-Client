@@ -31,7 +31,6 @@ class TargetStrafe : Module() {
     private lateinit var speed: Speed
     private lateinit var flight: Flight
     private lateinit var longJump: LongJump
-    private lateinit var noClip: NoClip
 
     var direction = 1
     var lastView = 0
@@ -42,7 +41,6 @@ class TargetStrafe : Module() {
         speed = NightX.moduleManager.getModule(Speed::class.java) as Speed
         flight = NightX.moduleManager.getModule(Flight::class.java) as Flight
         longJump = NightX.moduleManager.getModule(LongJump::class.java) as LongJump
-        noClip = NightX.moduleManager.getModule(NoClip::class.java) as NoClip
     }
 
     override fun onEnable() {
@@ -64,7 +62,7 @@ class TargetStrafe : Module() {
         }
 
         if (event.eventState == EventState.PRE) {
-            if (mc.thePlayer.isCollidedHorizontally || safewalk.get() && checkVoid())
+            if (mc.thePlayer.isCollidedHorizontally || safewalk.get() && checkVoid() && !flight.state)
                 this.direction = -this.direction
         }
     }
@@ -111,7 +109,7 @@ class TargetStrafe : Module() {
         }
 
     val canStrafe: Boolean
-        get() = (state && (speed.state || flight.state || longJump.state || noClip.state) && killAura.state && killAura.target != null && !mc.thePlayer.isSneaking && keyMode && mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown)
+        get() = (state && (speed.state || flight.state || longJump.state) && killAura.state && killAura.target != null && !mc.thePlayer.isSneaking && keyMode && mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown)
 
     private fun checkVoid(): Boolean {
         for (x in -1..0) {
