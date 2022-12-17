@@ -53,7 +53,7 @@ class Text(
 
             text.displayString.set("%clientName%")
             text.shadow.set(true)
-            text.fontValue.set(Fonts.minecraftFont)
+            text.fontValue.set(Fonts.fontSFUI40)
             text.setColor(Color(255, 255, 255))
 
             return text
@@ -77,13 +77,13 @@ class Text(
     private val bgalphaValue = IntegerValue("Background-Alpha", 80, 0, 255)
     private val rainbowList =
         ListValue("Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Sky")
-    private val saturationValue = FloatValue("Saturation", 0.4f, 0f, 1f)
+    private val saturationValue = FloatValue("Saturation", 0.6f, 0f, 1f)
     private val brightnessValue = FloatValue("Brightness", 1f, 0f, 1f)
     private val cRainbowSecValue = IntegerValue("Seconds", 2, 1, 10)
     private val distanceValue = IntegerValue("Line-Distance", 0, 0, 400)
     private val gradientAmountValue = IntegerValue("Gradient-Amount", 25, 1, 50)
     private val shadow = BoolValue("Shadow", true)
-    private var fontValue = FontValue("Font", Fonts.minecraftFont)
+    private var fontValue = FontValue("Font", Fonts.fontSFUI40)
 
     private var editMode = false
     private var editTicks = 0

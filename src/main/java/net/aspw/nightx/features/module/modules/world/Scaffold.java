@@ -119,7 +119,7 @@ public class Scaffold extends Module {
     //make sprint compatible with tower.add sprint tricks
     public final ListValue sprintModeValue = new ListValue("SprintMode", new String[]{"Same", "Silent", "Ground", "Air", "Off"}, "Same");
     // Basic stuff
-    private final BoolValue swingValue = new BoolValue("Swing", true);
+    private final BoolValue swingValue = new BoolValue("Swing", false);
     private final BoolValue downValue = new BoolValue("Down", true);
     private final BoolValue searchValue = new BoolValue("Search", true);
     private final ListValue placeModeValue = new ListValue("PlaceTiming", new String[]{"Pre", "Post"}, "Post");

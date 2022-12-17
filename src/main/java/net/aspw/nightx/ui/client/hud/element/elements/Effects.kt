@@ -23,7 +23,7 @@ class Effects(
 ) : Element(x, y, scale, side) {
 
     private val anotherStyle = BoolValue("New", true)
-    private val fontValue = FontValue("Font", Fonts.minecraftFont)
+    private val fontValue = FontValue("Font", Fonts.fontSFUI35)
     private val shadow = BoolValue("Shadow", true)
 
     /**

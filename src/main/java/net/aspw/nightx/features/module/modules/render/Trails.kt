@@ -16,12 +16,12 @@ import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.util.*
 
-@ModuleInfo(name = "Trails", category = ModuleCategory.RENDER, array = false)
+@ModuleInfo(name = "Trails", category = ModuleCategory.RENDER)
 class Trails : Module() {
     val unlimitedValue = BoolValue("Unlimited", false)
     val lineWidth = FloatValue("LineWidth", 5f, 1f, 10f)
     val colorRedValue = IntegerValue("R", 255, 0, 255)
-    val colorGreenValue = IntegerValue("G", 80, 0, 255)
+    val colorGreenValue = IntegerValue("G", 150, 0, 255)
     val colorBlueValue = IntegerValue("B", 255, 0, 255)
     val fadeSpeedValue = IntegerValue("Fade-Speed", 1, 0, 255)
     val colorRainbow = BoolValue("Rainbow", false)

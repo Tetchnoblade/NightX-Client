@@ -32,7 +32,7 @@ class SessionInformation(
     private val colorGreenValue2 = IntegerValue("Line-Green-2", 111, 0, 255)
     private val colorBlueValue2 = IntegerValue("Line-Blue-2", 255, 0, 255)
 
-    private val fontValue = FontValue("Font", Fonts.minecraftFont)
+    private val fontValue = FontValue("Font", Fonts.fontSFUI40)
 
     override fun drawElement(): Border {
         val fontRenderer = fontValue.get()

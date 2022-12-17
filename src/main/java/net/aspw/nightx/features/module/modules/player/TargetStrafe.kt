@@ -24,6 +24,7 @@ import org.lwjgl.input.Keyboard
 class TargetStrafe : Module() {
     private val modeValue = ListValue("KeyMode", arrayOf("Jump", "None"), "Jump")
     private val safewalk = BoolValue("SafeWalk", true)
+    val behind = BoolValue("Behind", false)
     val thirdPerson = BoolValue("ThirdPerson", false)
     val killAura = NightX.moduleManager.getModule(KillAura::class.java)
     val speed = NightX.moduleManager.getModule(Speed::class.java)
@@ -70,9 +71,9 @@ class TargetStrafe : Module() {
     }
 
     fun strafe(event: MoveEvent, moveSpeed: Double) {
-        if (killAura!!.target == null) return
-
+        if (killAura?.target == null) return
         val target = killAura.target
+
         val rotYaw = RotationUtils.getRotationsEntity(killAura.target).yaw
 
         if (mc.thePlayer.getDistanceToEntity(target) <= 1.5)
@@ -80,16 +81,23 @@ class TargetStrafe : Module() {
         else
             MovementUtils.setSpeed(event, moveSpeed, rotYaw, direction.toDouble(), 1.0)
 
-        val xPos: Double = target!!.posX + -Math.sin(Math.toRadians(target.rotationYaw.toDouble())) * -2
-        val zPos: Double = target.posZ + Math.cos(Math.toRadians(target.rotationYaw.toDouble())) * -2
-        event.x = (moveSpeed * -MathHelper.sin(
-            Math.toRadians(RotationUtils.getRotations1(xPos, target.posY, zPos)[0].toDouble())
-                .toFloat()
-        ))
-        event.z = (moveSpeed * MathHelper.cos(
-            Math.toRadians(RotationUtils.getRotations1(xPos, target.posY, zPos)[0].toDouble())
-                .toFloat()
-        ))
+        if (behind.get()) {
+            val xPos: Double = target!!.posX + -Math.sin(Math.toRadians(target.rotationYaw.toDouble())) * -2
+            val zPos: Double = target.posZ + Math.cos(Math.toRadians(target.rotationYaw.toDouble())) * -2
+            event.x = (moveSpeed * -MathHelper.sin(
+                Math.toRadians(RotationUtils.getRotations1(xPos, target.posY, zPos)[0].toDouble())
+                    .toFloat()
+            ))
+            event.z = (moveSpeed * MathHelper.cos(
+                Math.toRadians(RotationUtils.getRotations1(xPos, target.posY, zPos)[0].toDouble())
+                    .toFloat()
+            ))
+        } else {
+            if (mc.thePlayer.getDistanceToEntity(target) <= 1.5)
+                MovementUtils.setSpeed(event, moveSpeed, rotYaw, direction.toDouble(), 0.0)
+            else
+                MovementUtils.setSpeed(event, moveSpeed, rotYaw, direction.toDouble(), 1.0)
+        }
     }
 
 
