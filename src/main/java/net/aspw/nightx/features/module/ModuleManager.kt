@@ -170,7 +170,7 @@ class ModuleManager : Listenable {
             FastMine::class.java,
             Annoy::class.java,
             InfiniteReach::class.java,
-            Ridergod::class.java,
+            RiderGod::class.java,
             HudEditor::class.java,
             ThunderNotifier::class.java,
             NoClip::class.java,
@@ -188,7 +188,6 @@ class ModuleManager : Listenable {
             Wings::class.java,
             NoC0Fs::class.java,
             SilentView::class.java,
-            PlayerEdit::class.java,
             PacketFlight::class.java,
             LagBack::class.java,
             Animals::class.java,
@@ -204,7 +203,8 @@ class ModuleManager : Listenable {
             PotionSpoof::class.java,
             TickTimer::class.java,
             HitParticles::class.java,
-            CivBreak::class.java
+            CivBreak::class.java,
+            PlayerEdit::class.java
         )
 
         registerModule(Fucker)
