@@ -38,7 +38,7 @@ public class Crosshair extends Module {
     public IntegerValue colorAlphaValue = new IntegerValue("Alpha", 255, 0, 255);
     //Size, width, hitmarker
     public FloatValue widthVal = new FloatValue("Width", 0.3F, 0.25F, 10);
-    public FloatValue sizeVal = new FloatValue("Size/Length", 4, 0.25F, 15);
+    public FloatValue sizeVal = new FloatValue("Size/Length", 5, 0.25F, 15);
     public FloatValue gapVal = new FloatValue("Gap", 2.5F, 0.25F, 15);
     public BoolValue dynamicVal = new BoolValue("Dynamic", false);
     public BoolValue hitMarkerVal = new BoolValue("HitMarker", false);

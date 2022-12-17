@@ -17,9 +17,9 @@ import net.aspw.nightx.value.ListValue;
 public class Animations extends Module {
     // some ListValue
     public static final ListValue Sword = new ListValue("Style", new String[]{
-            "1.8", "LiquidBounce", "SlideLow", "SlideMedium", "SlideFull", "SlidePut", "Push", "Dash", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Smart", "Astolfo", "ETB", "Moon", "MoonPush", "Lennox",
+            "1.8", "LiquidBounce", "SlideLow", "SlideMedium", "SlideFull", "SlidePut", "Push", "Dash", "Swing", "Swank", "Swong", "Swang", "Swaing", "Stella", "Smart", "Sloth", "Astolfo", "ETB", "Moon", "MoonPush", "Smooth",
             "Leaked", "Ninja", "Jigsaw", "Avatar", "Sigma3", "Sigma4", "Reverse", "Old", "OldFull", "Flux1", "Flux2", "Flux3", "DortwareNew", "Dortware1", "Dortware2", "Funny", "Zoom", "Rotate", "Spin", "Spinny"
-    }, "Swing");
+    }, "Sloth");
     // item general scale
     public static final FloatValue Scale = new FloatValue("Scale", 0.4f, 0f, 4f);
 
@@ -37,7 +37,7 @@ public class Animations extends Module {
     public static final FloatValue blockPosZ = new FloatValue("BlockPosZ", 0f, -1f, 1f);
 
     // modify item swing and rotate
-    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", 0, -12, 5);
+    public static final IntegerValue SpeedSwing = new IntegerValue("Swing-Speed", -6, -12, 5);
     public static final IntegerValue Equip = new IntegerValue("Equip-Motion", 2, -5, 5, () -> Sword.get().equalsIgnoreCase("push") || Sword.get().equalsIgnoreCase("swank") || Sword.get().equalsIgnoreCase("swong") || Sword.get().equalsIgnoreCase("swang") ||
             Sword.get().equalsIgnoreCase("swaing") || Sword.get().equalsIgnoreCase("dash") || Sword.get().equalsIgnoreCase("smart") || Sword.get().equalsIgnoreCase("moon") || Sword.get().equalsIgnoreCase("dortware1") || Sword.get().equalsIgnoreCase("dortware2"));
     public static final BoolValue RotateItems = new BoolValue("Rotate-Items", false);
