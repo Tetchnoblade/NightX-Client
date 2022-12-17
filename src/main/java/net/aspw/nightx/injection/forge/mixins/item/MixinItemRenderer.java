@@ -2,7 +2,7 @@ package net.aspw.nightx.injection.forge.mixins.item;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
-import net.aspw.nightx.features.module.modules.cool.NoEffect;
+import net.aspw.nightx.features.module.modules.cool.AntiNausea;
 import net.aspw.nightx.features.module.modules.render.Animations;
 import net.aspw.nightx.utils.timer.MSTimer;
 import net.minecraft.client.Minecraft;
@@ -765,7 +765,7 @@ public abstract class MixinItemRenderer {
 
     @Inject(method = "renderFireInFirstPerson", at = @At("HEAD"), cancellable = true)
     private void renderFireInFirstPerson(final CallbackInfo callbackInfo) {
-        final NoEffect antiBlind = NightX.moduleManager.getModule(NoEffect.class);
+        final AntiNausea antiBlind = NightX.moduleManager.getModule(AntiNausea.class);
 
         if (antiBlind.getState() && antiBlind.getFireEffect().get()) {
             //vanilla's method

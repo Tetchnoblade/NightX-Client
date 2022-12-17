@@ -5,7 +5,7 @@ import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.JumpEvent;
 import net.aspw.nightx.features.module.modules.client.ColorMixer;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
-import net.aspw.nightx.features.module.modules.cool.NoEffect;
+import net.aspw.nightx.features.module.modules.cool.AntiNausea;
 import net.aspw.nightx.features.module.modules.movement.DoubleJump;
 import net.aspw.nightx.features.module.modules.movement.Flight;
 import net.aspw.nightx.features.module.modules.movement.Jesus;
@@ -150,7 +150,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @Inject(method = "isPotionActive(Lnet/minecraft/potion/Potion;)Z", at = @At("HEAD"), cancellable = true)
     private void isPotionActive(Potion p_isPotionActive_1_, final CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        final NoEffect antiBlind = NightX.moduleManager.getModule(NoEffect.class);
+        final AntiNausea antiBlind = NightX.moduleManager.getModule(AntiNausea.class);
 
         if ((p_isPotionActive_1_ == Potion.confusion || p_isPotionActive_1_ == Potion.blindness) && antiBlind.getState() && antiBlind.getConfusionEffect().get())
             callbackInfoReturnable.setReturnValue(false);

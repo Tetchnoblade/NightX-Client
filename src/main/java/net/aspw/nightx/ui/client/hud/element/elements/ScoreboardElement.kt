@@ -4,7 +4,7 @@ import com.google.common.collect.Iterables
 import com.google.common.collect.Lists
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.module.modules.client.ColorMixer
-import net.aspw.nightx.features.module.modules.cool.NoEffect
+import net.aspw.nightx.features.module.modules.cool.AntiNausea
 import net.aspw.nightx.features.module.modules.render.Hud
 import net.aspw.nightx.ui.client.hud.element.Border
 import net.aspw.nightx.ui.client.hud.element.Element
@@ -115,7 +115,7 @@ class ScoreboardElement(
      * Draw element
      */
     override fun drawElement(): Border? {
-        val antiBlind = NightX.moduleManager.getModule(NoEffect::class.java) as NoEffect
+        val antiBlind = NightX.moduleManager.getModule(AntiNausea::class.java) as AntiNausea
         if (antiBlind.state && antiBlind.scoreBoard.get())
             return null
 

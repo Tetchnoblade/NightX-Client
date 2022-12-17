@@ -11,8 +11,8 @@ import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.ListValue
 import java.util.*
 
-@ModuleInfo(name = "NoWeb", spacedName = "No Web", category = ModuleCategory.MOVEMENT)
-class NoWeb : Module() {
+@ModuleInfo(name = "AntiWeb", spacedName = "Anti Web", category = ModuleCategory.MOVEMENT)
+class AntiWeb : Module() {
 
     private val modeValue = ListValue(
         "Mode",

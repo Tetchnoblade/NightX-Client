@@ -5,8 +5,8 @@ import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.value.BoolValue
 
-@ModuleInfo(name = "NoEffect", spacedName = "No Effect", category = ModuleCategory.COOL, array = false)
-class NoEffect : Module() {
+@ModuleInfo(name = "AntiNausea", spacedName = "Anti Nausea", category = ModuleCategory.COOL, array = false)
+class AntiNausea : Module() {
     val confusionEffect = BoolValue("Confusion", true)
     val pumpkinEffect = BoolValue("Pumpkin", true)
     val fireEffect = BoolValue("Fire", true)

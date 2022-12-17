@@ -2,7 +2,7 @@ package net.aspw.nightx.injection.forge.mixins.gui;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.Render2DEvent;
-import net.aspw.nightx.features.module.modules.cool.NoEffect;
+import net.aspw.nightx.features.module.modules.cool.AntiNausea;
 import net.aspw.nightx.features.module.modules.misc.AutoHypixel;
 import net.aspw.nightx.features.module.modules.render.Crosshair;
 import net.aspw.nightx.features.module.modules.render.Hud;
@@ -51,7 +51,7 @@ public abstract class MixinGuiInGame extends MixinGui {
     private void renderScoreboard(ScoreObjective scoreObjective, ScaledResolution scaledResolution, CallbackInfo callbackInfo) {
         if (scoreObjective != null) AutoHypixel.gameMode = ColorUtils.stripColor(scoreObjective.getDisplayName());
 
-        final NoEffect antiBlind = NightX.moduleManager.getModule(NoEffect.class);
+        final AntiNausea antiBlind = NightX.moduleManager.getModule(AntiNausea.class);
         if ((antiBlind.getState() && antiBlind.getScoreBoard().get()) || NightX.moduleManager.getModule(Hud.class).getState())
             callbackInfo.cancel();
     }
@@ -63,7 +63,7 @@ public abstract class MixinGuiInGame extends MixinGui {
 
     @Inject(method = "renderBossHealth", at = @At("HEAD"), cancellable = true)
     private void renderBossHealth(CallbackInfo callbackInfo) {
-        final NoEffect antiBlind = NightX.moduleManager.getModule(NoEffect.class);
+        final AntiNausea antiBlind = NightX.moduleManager.getModule(AntiNausea.class);
         if (antiBlind.getState() && antiBlind.getBossHealth().get())
             callbackInfo.cancel();
     }
@@ -127,7 +127,7 @@ public abstract class MixinGuiInGame extends MixinGui {
 
     @Inject(method = "renderPumpkinOverlay", at = @At("HEAD"), cancellable = true)
     private void renderPumpkinOverlay(final CallbackInfo callbackInfo) {
-        final NoEffect antiBlind = NightX.moduleManager.getModule(NoEffect.class);
+        final AntiNausea antiBlind = NightX.moduleManager.getModule(AntiNausea.class);
 
         if (antiBlind.getState() && antiBlind.getPumpkinEffect().get())
             callbackInfo.cancel();

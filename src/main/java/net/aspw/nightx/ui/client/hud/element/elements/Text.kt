@@ -53,8 +53,8 @@ class Text(
 
             text.displayString.set("%clientName%")
             text.shadow.set(true)
-            text.fontValue.set(Fonts.fontSFUI40)
-            text.setColor(Color(0, 255, 255))
+            text.fontValue.set(Fonts.minecraftFont)
+            text.setColor(Color(255, 255, 255))
 
             return text
         }
@@ -67,7 +67,7 @@ class Text(
     private val lineValue = BoolValue("Line", false)
     private val blurValue = BoolValue("Blur", false)
     private val blurStrength = FloatValue("BlurStrength", 6F, 0F, 30F)
-    private val redValue = IntegerValue("Red", 0, 0, 255)
+    private val redValue = IntegerValue("Red", 255, 0, 255)
     private val greenValue = IntegerValue("Green", 255, 0, 255)
     private val blueValue = IntegerValue("Blue", 255, 0, 255)
     private val alphaValue = IntegerValue("Alpha", 255, 0, 255)
@@ -76,14 +76,14 @@ class Text(
     private val bgblueValue = IntegerValue("Background-Blue", 0, 0, 255)
     private val bgalphaValue = IntegerValue("Background-Alpha", 80, 0, 255)
     private val rainbowList =
-        ListValue("Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Off")
-    private val saturationValue = FloatValue("Saturation", 0.2f, 0f, 1f)
+        ListValue("Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Sky")
+    private val saturationValue = FloatValue("Saturation", 0.4f, 0f, 1f)
     private val brightnessValue = FloatValue("Brightness", 1f, 0f, 1f)
     private val cRainbowSecValue = IntegerValue("Seconds", 2, 1, 10)
     private val distanceValue = IntegerValue("Line-Distance", 0, 0, 400)
     private val gradientAmountValue = IntegerValue("Gradient-Amount", 25, 1, 50)
     private val shadow = BoolValue("Shadow", true)
-    private var fontValue = FontValue("Font", Fonts.fontSFUI40)
+    private var fontValue = FontValue("Font", Fonts.minecraftFont)
 
     private var editMode = false
     private var editTicks = 0
@@ -142,8 +142,8 @@ class Text(
 
         return when (str) {
             "userName" -> mc.session.username
-            "clientName" -> NightX.CLIENT_BEST
-            "clientVersion" -> NightX.CLIENT_VERSION.toString()
+            "clientName" -> "§lN§fightX"
+            "clientVersion" -> NightX.CLIENT_VERSION
             "clientCreator" -> NightX.CLIENT_CREATOR
             "fps" -> Minecraft.getDebugFPS().toString()
             "date" -> DATE_FORMAT.format(System.currentTimeMillis())

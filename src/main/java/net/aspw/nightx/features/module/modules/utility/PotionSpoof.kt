@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.misc
+package net.aspw.nightx.features.module.modules.utility
 
 import net.aspw.nightx.event.ClientShutdownEvent
 import net.aspw.nightx.event.EventTarget
@@ -10,7 +10,7 @@ import net.aspw.nightx.value.BoolValue
 import net.minecraft.potion.Potion
 import net.minecraft.potion.PotionEffect
 
-@ModuleInfo(name = "PotionSpoof", spacedName = "Potion Spoof", category = ModuleCategory.MISC)
+@ModuleInfo(name = "PotionSpoof", spacedName = "Potion Spoof", category = ModuleCategory.UTILITY)
 class PotionSpoof : Module() {
     private val speedValue = BoolValue("Speed", false)
     private val moveSlowDownValue = BoolValue("Slowness", false)
