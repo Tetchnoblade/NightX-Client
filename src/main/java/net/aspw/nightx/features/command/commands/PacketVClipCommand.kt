@@ -2,7 +2,7 @@ package net.aspw.nightx.features.command.commands
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
+import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.network.play.client.C03PacketPlayer
 
 class PacketVClipCommand : Command("pvclip", emptyArray()) {

@@ -2,7 +2,7 @@ package net.aspw.nightx.injection.forge.mixins.gui;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.Render2DEvent;
-import net.aspw.nightx.ui.font.AWTFontRenderer;
+import net.aspw.nightx.visual.font.AWTFontRenderer;
 import net.minecraft.client.gui.GuiSpectator;
 import net.minecraft.client.gui.ScaledResolution;
 import org.spongepowered.asm.mixin.Mixin;

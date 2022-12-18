@@ -6,7 +6,6 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.combat.AntiBot
-import net.aspw.nightx.ui.font.Fonts
 import net.aspw.nightx.utils.EntityUtils
 import net.aspw.nightx.utils.render.ColorUtils
 import net.aspw.nightx.utils.render.RenderUtils
@@ -15,6 +14,7 @@ import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.FontValue
 import net.aspw.nightx.value.IntegerValue
+import net.aspw.nightx.visual.font.Fonts
 import net.minecraft.client.renderer.GlStateManager.*
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer

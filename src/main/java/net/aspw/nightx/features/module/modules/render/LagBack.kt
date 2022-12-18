@@ -23,9 +23,9 @@ class LagBack : Module() {
                 if(module!!.state) {
                     module.state = false
                     NightX.hud.addNotification(
-                        net.aspw.nightx.ui.client.hud.element.elements.Notification(
+                        net.aspw.nightx.visual.hud.element.elements.Notification(
                             "LagBack ${module.name}.",
-                            net.aspw.nightx.ui.client.hud.element.elements.Notification.Type.WARNING
+                            net.aspw.nightx.visual.hud.element.elements.Notification.Type.WARNING
                         )
                     )
                 }

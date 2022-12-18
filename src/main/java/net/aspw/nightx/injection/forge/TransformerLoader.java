@@ -1,8 +1,8 @@
 package net.aspw.nightx.injection.forge;
 
+import net.aspw.nightx.features.special.script.remapper.injection.transformers.AbstractJavaLinkerTransformer;
 import net.aspw.nightx.injection.transformers.ForgeNetworkTransformer;
 import net.aspw.nightx.injection.transformers.OptimizeTransformer;
-import net.aspw.nightx.script.remapper.injection.transformers.AbstractJavaLinkerTransformer;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.MixinEnvironment;
@@ -65,7 +65,6 @@ public class TransformerLoader implements IFMLLoadingPlugin {
 
     /**
      * Return an optional access transformer class for this coremod. It will be injected post-deobf
-     * so ensure your ATs conform to the new srgnames scheme.
      *
      * @return the name of an access transformer class or null if none is provided
      */

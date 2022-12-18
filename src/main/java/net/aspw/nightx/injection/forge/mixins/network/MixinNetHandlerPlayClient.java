@@ -5,7 +5,7 @@ import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.EntityDamageEvent;
 import net.aspw.nightx.event.EntityMovementEvent;
 import net.aspw.nightx.features.special.AntiForge;
-import net.aspw.nightx.ui.client.hud.designer.GuiHudDesigner;
+import net.aspw.nightx.visual.hud.designer.GuiHudDesigner;
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;

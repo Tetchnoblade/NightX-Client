@@ -1,8 +1,8 @@
 package net.aspw.nightx.injection.forge.mixins.gui;
 
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.ui.client.GuiBackground;
 import net.aspw.nightx.utils.render.shader.shaders.BackgroundShader;
+import net.aspw.nightx.visual.client.GuiBackground;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;

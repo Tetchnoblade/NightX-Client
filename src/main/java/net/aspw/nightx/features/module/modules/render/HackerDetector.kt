@@ -8,7 +8,7 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.combat.AntiBot
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
+import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.block.BlockAir
 import net.minecraft.block.BlockHopper
 import net.minecraft.entity.EntityLivingBase

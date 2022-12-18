@@ -5,7 +5,6 @@ import net.aspw.nightx.event.*
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
 import net.aspw.nightx.utils.ClientUtils
 import net.aspw.nightx.utils.MovementUtils
 import net.aspw.nightx.utils.PacketUtils
@@ -15,6 +14,7 @@ import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.value.ListValue
+import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.item.ItemEnderPearl
 import net.minecraft.network.play.client.C03PacketPlayer
@@ -37,7 +37,7 @@ class LongJump : Module() {
             "AACv2",
             "AACv3",
             "AACv4",
-            "Mineplex",
+            "Mineplex1",
             "Mineplex2",
             "Mineplex3",
             "RedeskyMaki",
@@ -424,7 +424,7 @@ class LongJump : Module() {
                     }
                 }
 
-                "mineplex" -> {
+                "mineplex1" -> {
                     mc.thePlayer.motionY += 0.0132099999999999999999999999999
                     mc.thePlayer.jumpMovementFactor = 0.08f
                     MovementUtils.strafe()
@@ -558,7 +558,7 @@ class LongJump : Module() {
         teleported = false
         if (state) {
             when (modeValue.get().lowercase(Locale.getDefault())) {
-                "mineplex" -> event.motion = event.motion * 4.08f
+                "mineplex1" -> event.motion = event.motion * 4.08f
                 "mineplex2" -> if (mc.thePlayer.isCollidedHorizontally) {
                     event.motion = 2.31f
                     canMineplexBoost = true

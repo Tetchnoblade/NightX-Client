@@ -4,8 +4,8 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import net.aspw.nightx.NightX
-import net.aspw.nightx.ui.font.Fonts
 import net.aspw.nightx.utils.ClientUtils
+import net.aspw.nightx.visual.font.Fonts
 import net.minecraft.client.gui.FontRenderer
 import java.util.*
 

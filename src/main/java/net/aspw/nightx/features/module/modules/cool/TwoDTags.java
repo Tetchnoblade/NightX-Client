@@ -1,13 +1,11 @@
 package net.aspw.nightx.features.module.modules.cool;
 
-import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.EventTarget;
 import net.aspw.nightx.event.Render2DEvent;
 import net.aspw.nightx.features.module.Module;
 import net.aspw.nightx.features.module.ModuleCategory;
 import net.aspw.nightx.features.module.ModuleInfo;
 import net.aspw.nightx.features.module.modules.client.ColorMixer;
-import net.aspw.nightx.ui.font.GameFontRenderer;
 import net.aspw.nightx.utils.EntityUtils;
 import net.aspw.nightx.utils.item.ItemUtils;
 import net.aspw.nightx.utils.render.BlendUtils;
@@ -17,6 +15,7 @@ import net.aspw.nightx.value.BoolValue;
 import net.aspw.nightx.value.FloatValue;
 import net.aspw.nightx.value.IntegerValue;
 import net.aspw.nightx.value.ListValue;
+import net.aspw.nightx.visual.font.GameFontRenderer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
@@ -95,10 +94,6 @@ public final class TwoDTags extends Module {
         this.vector = GLAllocation.createDirectFloatBuffer(4);
         this.backgroundColor = new Color(0, 0, 0, 120).getRGB();
         this.black = Color.BLACK.getRGB();
-    }
-
-    public static boolean shouldCancelNameTag(EntityLivingBase entity) {
-        return NightX.moduleManager.getModule(TwoDTags.class) != null && NightX.moduleManager.getModule(TwoDTags.class).getState() && NightX.moduleManager.getModule(TwoDTags.class).tagsValue.get() && collectedEntities.contains(entity);
     }
 
     public Color getColor(final Entity entity) {

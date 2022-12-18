@@ -1,12 +1,12 @@
 package net.aspw.nightx.features.module.modules.render;
 
 import net.aspw.nightx.NightX;
+import net.aspw.nightx.config.configs.FriendsConfig;
 import net.aspw.nightx.event.EventTarget;
 import net.aspw.nightx.event.TextEvent;
 import net.aspw.nightx.features.module.Module;
 import net.aspw.nightx.features.module.ModuleCategory;
 import net.aspw.nightx.features.module.ModuleInfo;
-import net.aspw.nightx.file.configs.FriendsConfig;
 import net.aspw.nightx.utils.misc.StringUtils;
 import net.aspw.nightx.utils.render.ColorUtils;
 import net.aspw.nightx.value.BoolValue;

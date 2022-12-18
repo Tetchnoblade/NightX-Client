@@ -3,7 +3,7 @@ package net.aspw.nightx.features.command.commands
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
 import net.aspw.nightx.features.module.modules.combat.AntiBot
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
+import net.aspw.nightx.visual.hud.element.elements.Notification
 
 class TeleportCommand : Command("tp", emptyArray()) {
 

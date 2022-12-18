@@ -5,14 +5,14 @@ import net.aspw.nightx.event.*
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
-import net.aspw.nightx.ui.font.Fonts
 import net.aspw.nightx.utils.MovementUtils
 import net.aspw.nightx.utils.PacketUtils
 import net.aspw.nightx.utils.render.RenderUtils
 import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.IntegerValue
+import net.aspw.nightx.visual.font.Fonts
+import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.init.Items
 import net.minecraft.item.ItemBow

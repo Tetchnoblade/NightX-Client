@@ -6,8 +6,8 @@ import net.aspw.nightx.event.PacketEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
 import net.aspw.nightx.value.IntegerValue
+import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.network.play.server.S14PacketEntity
 import net.minecraft.network.play.server.S1DPacketEntityEffect
 

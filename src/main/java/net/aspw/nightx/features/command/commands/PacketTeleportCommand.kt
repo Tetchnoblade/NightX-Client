@@ -3,7 +3,7 @@ package net.aspw.nightx.features.command.commands
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
 import net.aspw.nightx.features.module.modules.combat.AntiBot
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
+import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.network.play.client.C03PacketPlayer
 
 class PacketTeleportCommand : Command("ptp", emptyArray()) {
@@ -27,7 +27,7 @@ class PacketTeleportCommand : Command("ptp", emptyArray()) {
                         targetPlayer.posX,
                         targetPlayer.posY,
                         targetPlayer.posZ,
-                        false
+                        true
                     )
                 )
                 NightX.hud.addNotification(
@@ -57,7 +57,7 @@ class PacketTeleportCommand : Command("ptp", emptyArray()) {
                         posX,
                         posY,
                         posZ,
-                        false
+                        true
                     )
                 )
                 NightX.hud.addNotification(

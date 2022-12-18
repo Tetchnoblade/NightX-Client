@@ -1,7 +1,7 @@
 package net.aspw.nightx.injection.forge.mixins.gui;
 
-import net.aspw.nightx.ui.font.Fonts;
 import net.aspw.nightx.utils.ServerUtils;
+import net.aspw.nightx.visual.font.Fonts;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;

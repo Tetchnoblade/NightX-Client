@@ -10,10 +10,10 @@ import net.aspw.nightx.features.module.modules.render.SilentView;
 import net.aspw.nightx.features.module.modules.world.FastPlace;
 import net.aspw.nightx.features.module.modules.world.Scaffold;
 import net.aspw.nightx.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
-import net.aspw.nightx.ui.client.GuiMainMenu;
 import net.aspw.nightx.utils.CPSCounter;
 import net.aspw.nightx.utils.RotationUtils;
 import net.aspw.nightx.utils.render.RenderUtils;
+import net.aspw.nightx.visual.client.GuiMainMenu;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -107,7 +107,7 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER))
     private void createDisplay(CallbackInfo callbackInfo) {
-        Display.setTitle(NightX.CLIENT_BEST);
+        Display.setTitle("Minecraft 1.8.8");
     }
 
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))

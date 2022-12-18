@@ -3,7 +3,7 @@ package net.aspw.nightx.features.module.modules.client
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.ui.client.hud.designer.GuiHudDesigner
+import net.aspw.nightx.visual.hud.designer.GuiHudDesigner
 
 @ModuleInfo(
     name = "HudEditor",

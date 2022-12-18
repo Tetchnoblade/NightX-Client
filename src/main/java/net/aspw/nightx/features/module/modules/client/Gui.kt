@@ -4,7 +4,6 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.client.ColorMixer.Companion.getMixedColor
-import net.aspw.nightx.ui.client.clickgui.newVer.NewUi
 import net.aspw.nightx.utils.render.ColorUtils.LiquidSlowly
 import net.aspw.nightx.utils.render.ColorUtils.fade
 import net.aspw.nightx.utils.render.RenderUtils
@@ -12,6 +11,7 @@ import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.value.ListValue
+import net.aspw.nightx.visual.client.clickgui.NewUi
 import org.lwjgl.input.Keyboard
 import java.awt.Color
 import java.util.*

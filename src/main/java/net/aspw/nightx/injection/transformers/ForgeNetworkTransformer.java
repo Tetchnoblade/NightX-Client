@@ -1,8 +1,8 @@
 package net.aspw.nightx.injection.transformers;
 
 import net.aspw.nightx.features.special.AntiForge;
-import net.aspw.nightx.script.remapper.injection.utils.ClassUtils;
-import net.aspw.nightx.script.remapper.injection.utils.NodeUtils;
+import net.aspw.nightx.features.special.script.remapper.injection.utils.ClassUtils;
+import net.aspw.nightx.features.special.script.remapper.injection.utils.NodeUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.tree.*;

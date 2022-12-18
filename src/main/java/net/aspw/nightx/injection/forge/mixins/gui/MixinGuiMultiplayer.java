@@ -2,7 +2,7 @@ package net.aspw.nightx.injection.forge.mixins.gui;
 
 import de.enzaxd.viaforge.ViaForge;
 import de.enzaxd.viaforge.protocol.ProtocolCollection;
-import net.aspw.nightx.ui.font.Fonts;
+import net.aspw.nightx.visual.font.Fonts;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraftforge.fml.client.config.GuiSlider;
 import org.spongepowered.asm.mixin.Mixin;

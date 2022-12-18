@@ -6,12 +6,12 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.player.InventoryManager
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
 import net.aspw.nightx.utils.timer.MSTimer
 import net.aspw.nightx.utils.timer.TimeUtils
 import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.value.ListValue
+import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraft.inventory.Slot

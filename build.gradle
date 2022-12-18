@@ -33,7 +33,7 @@ minecraft {
     runDir = "run"
     mappings = "stable_22"
     makeObfSourceJar = false
-    clientJvmArgs += ["-Dfml.coreMods.load=net.ccbluex.liquidbounce.injection.forge.TransformerLoader", "-Ddev-mode"]
+    clientJvmArgs += ["-Dfml.coreMods.load=net.aspw.nightx.injection.forge.TransformerLoader", "-Ddev-mode"]
 }
 
 configurations {
@@ -115,14 +115,14 @@ classes.dependsOn(moveResources)
 
 jar {
     manifest.attributes(
-            "FMLCorePlugin": "net.ccbluex.liquidbounce.injection.forge.TransformerLoader",
+            "FMLCorePlugin": "net.aspw.nightx.injection.forge.TransformerLoader",
             "FMLCorePluginContainsFMLMod": true,
             "ForceLoadAsMod": true,
-            "MixinConfigs": "liquidbounce.forge.mixins.json",
+            "MixinConfigs": "nightx.forge.mixins.json",
             "ModSide": "CLIENT",
             "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
             "TweakOrder": "0",
-            "FMLAT": "liquidbounce_at.cfg",
+            "FMLAT": "nightx_at.cfg",
     )
 
     enabled = false
@@ -131,7 +131,7 @@ jar {
 mixin {
     disableRefMapWarning = true
     defaultObfuscationEnv searge
-    add sourceSets.main, "liquidbounce.mixins.refmap.json"
+    add sourceSets.main, "nightx.mixins.refmap.json"
 }
 
 reobf {

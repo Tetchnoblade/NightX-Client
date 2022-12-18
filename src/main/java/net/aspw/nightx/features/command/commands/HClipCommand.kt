@@ -2,8 +2,8 @@ package net.aspw.nightx.features.command.commands
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
 import net.aspw.nightx.utils.MovementUtils
+import net.aspw.nightx.visual.hud.element.elements.Notification
 
 class HClipCommand : Command("hclip", emptyArray()) {
     /**

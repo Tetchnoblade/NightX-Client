@@ -5,11 +5,11 @@ import net.aspw.nightx.event.*
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.ui.client.hud.designer.GuiHudDesigner
-import net.aspw.nightx.ui.font.Fonts
 import net.aspw.nightx.utils.AnimationUtils
 import net.aspw.nightx.utils.render.RenderUtils
 import net.aspw.nightx.value.*
+import net.aspw.nightx.visual.font.Fonts
+import net.aspw.nightx.visual.hud.designer.GuiHudDesigner
 
 @ModuleInfo(name = "Hud", category = ModuleCategory.RENDER, array = false)
 class Hud : Module() {

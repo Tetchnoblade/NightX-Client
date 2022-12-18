@@ -5,11 +5,11 @@ import net.aspw.nightx.NightX
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
 import net.aspw.nightx.utils.misc.HttpUtils.get
 import net.aspw.nightx.utils.timer.MSTimer
 import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.IntegerValue
+import net.aspw.nightx.visual.hud.element.elements.Notification
 
 @ModuleInfo(name = "BanStats", spacedName = "Ban Stats", category = ModuleCategory.MISC)
 class BanStats : Module() {

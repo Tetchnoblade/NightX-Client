@@ -7,11 +7,11 @@ import net.aspw.nightx.event.WorldEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.ui.font.Fonts
 import net.aspw.nightx.utils.MinecraftInstance
 import net.aspw.nightx.utils.misc.RandomUtils
 import net.aspw.nightx.utils.render.ColorUtils
 import net.aspw.nightx.utils.timer.MSTimer
+import net.aspw.nightx.visual.font.Fonts
 import net.minecraft.client.renderer.GlStateManager
 import org.lwjgl.opengl.GL11
 import java.awt.Color

@@ -6,13 +6,13 @@ import net.aspw.nightx.event.Render3DEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.ui.font.Fonts
 import net.aspw.nightx.utils.block.BlockUtils.canBeClicked
 import net.aspw.nightx.utils.block.BlockUtils.getBlock
 import net.aspw.nightx.utils.render.ColorUtils.rainbow
 import net.aspw.nightx.utils.render.RenderUtils
 import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.IntegerValue
+import net.aspw.nightx.visual.font.Fonts
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager

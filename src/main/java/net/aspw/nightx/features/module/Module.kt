@@ -2,10 +2,10 @@ package net.aspw.nightx.features.module
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.Listenable
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
 import net.aspw.nightx.utils.ClientUtils
 import net.aspw.nightx.utils.MinecraftInstance
 import net.aspw.nightx.value.Value
+import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.client.audio.PositionedSoundRecord
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.input.Keyboard
@@ -13,7 +13,6 @@ import org.lwjgl.input.Keyboard
 open class Module : MinecraftInstance(), Listenable {
 
     // Module information
-    // TODO: Remove ModuleInfo and change to constructor (#Kotlin)
     var name: String
     var spacedName: String
     var category: ModuleCategory

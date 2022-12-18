@@ -1,6 +1,7 @@
 package net.aspw.nightx
 
-import net.aspw.nightx.discord.ClientRichPresence
+import net.aspw.nightx.config.FileManager
+import net.aspw.nightx.discordrpc.ClientRichPresence
 import net.aspw.nightx.event.ClientShutdownEvent
 import net.aspw.nightx.event.EventManager
 import net.aspw.nightx.features.command.CommandManager
@@ -8,14 +9,13 @@ import net.aspw.nightx.features.module.ModuleManager
 import net.aspw.nightx.features.special.AntiForge
 import net.aspw.nightx.features.special.MacroManager
 import net.aspw.nightx.features.special.ModItems
-import net.aspw.nightx.file.FileManager
-import net.aspw.nightx.script.ScriptManager
-import net.aspw.nightx.ui.client.hud.HUD
-import net.aspw.nightx.ui.client.hud.HUD.Companion.createDefault
-import net.aspw.nightx.ui.font.Fonts
+import net.aspw.nightx.features.special.script.ScriptManager
 import net.aspw.nightx.utils.*
 import net.aspw.nightx.utils.ClassUtils.hasForge
 import net.aspw.nightx.utils.misc.sound.TipSoundManager
+import net.aspw.nightx.visual.font.Fonts
+import net.aspw.nightx.visual.hud.HUD
+import net.aspw.nightx.visual.hud.HUD.Companion.createDefault
 import net.minecraft.util.ResourceLocation
 import kotlin.concurrent.thread
 
@@ -28,6 +28,7 @@ object NightX {
     const val CLIENT_CREATOR = "CCBlueX, exit-scammed, As_pw, Zywl"
     const val CLIENT_CONFIGS = "https://sites.google.com/view/nightx-client"
     const val CLIENT_SCRIPTS = "https://forums.ccbluex.net/category/9/scripts"
+    const val CLIENT_DISCORD = "https://discord.gg/SGBccUXFKZ"
     const val CLIENT_CHAT = "§9NIGHTX §8§l>> "
 
     var isStarting = false
@@ -111,7 +112,7 @@ object NightX {
             fileManager.friendsConfig, fileManager.xrayConfig
         )
 
-        // Tabs
+        // Creative items
         if (hasForge()) {
             ModItems()
         }

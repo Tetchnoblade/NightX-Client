@@ -3,9 +3,9 @@ package net.aspw.nightx.features.command.commands
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
 import net.aspw.nightx.features.command.CommandManager
-import net.aspw.nightx.ui.client.clickgui.newVer.NewUi
-import net.aspw.nightx.ui.font.Fonts
 import net.aspw.nightx.utils.misc.sound.TipSoundManager
+import net.aspw.nightx.visual.client.clickgui.NewUi
+import net.aspw.nightx.visual.font.Fonts
 
 class ReloadCommand : Command("reload", arrayOf("configreload")) {
     /**

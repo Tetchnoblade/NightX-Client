@@ -10,7 +10,6 @@ import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.combat.KillAura
 import net.aspw.nightx.features.module.modules.utility.AutoTool
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
 import net.aspw.nightx.utils.RotationUtils
 import net.aspw.nightx.utils.block.BlockUtils.getBlock
 import net.aspw.nightx.utils.block.BlockUtils.getBlockName
@@ -20,6 +19,7 @@ import net.aspw.nightx.utils.extensions.getBlock
 import net.aspw.nightx.utils.render.RenderUtils
 import net.aspw.nightx.utils.timer.MSTimer
 import net.aspw.nightx.value.*
+import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.block.Block
 import net.minecraft.block.BlockAir
 import net.minecraft.client.multiplayer.WorldClient

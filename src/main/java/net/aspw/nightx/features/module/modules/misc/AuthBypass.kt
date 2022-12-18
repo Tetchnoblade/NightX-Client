@@ -8,10 +8,10 @@ import net.aspw.nightx.event.UpdateEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
 import net.aspw.nightx.utils.misc.RandomUtils
 import net.aspw.nightx.utils.timer.MSTimer
 import net.aspw.nightx.value.IntegerValue
+import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.item.ItemFood
 import net.minecraft.item.ItemSkull
 import net.minecraft.item.ItemStack

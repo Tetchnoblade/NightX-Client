@@ -38,6 +38,7 @@ class Animations : Module() {
                 "SlideMedium",
                 "SlideFull",
                 "SlidePut",
+                "SlideNew",
                 "Push",
                 "Dash",
                 "Swing",
@@ -111,7 +112,7 @@ class Animations : Module() {
 
         // modify item swing and rotate
         @JvmField
-        val SpeedSwing = IntegerValue("Swing-Speed", 0, -12, 5)
+        val SpeedSwing = IntegerValue("Swing-Speed", 0, -9, 5)
 
         @JvmField
         val Equip = IntegerValue("Equip-Motion", 2, -5, 5) {

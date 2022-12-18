@@ -1,8 +1,8 @@
 package net.aspw.nightx.utils.render;
 
-import net.aspw.nightx.ui.font.Fonts;
 import net.aspw.nightx.utils.MinecraftInstance;
 import net.aspw.nightx.utils.block.BlockUtils;
+import net.aspw.nightx.visual.font.Fonts;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;

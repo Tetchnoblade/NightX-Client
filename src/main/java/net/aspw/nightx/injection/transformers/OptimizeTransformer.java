@@ -35,7 +35,7 @@ public class OptimizeTransformer implements IClassTransformer {
 
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
-        if (!(name.startsWith("net.ccbluex") || name.startsWith("kotlin")) && basicClass != null && !transformMap.containsKey(transformedName)) {
+        if (!(name.startsWith("net.aspw") || name.startsWith("kotlin")) && basicClass != null && !transformMap.containsKey(transformedName)) {
             try {
                 final ClassNode classNode = ASMUtils.INSTANCE.toClassNode(basicClass);
                 AtomicBoolean changed = new AtomicBoolean(false);

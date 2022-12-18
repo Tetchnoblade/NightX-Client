@@ -1,6 +1,6 @@
 package net.aspw.nightx.utils;
 
-import net.aspw.nightx.ui.client.GuiMainMenu;
+import net.aspw.nightx.visual.client.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;

@@ -6,13 +6,13 @@ import net.aspw.nightx.event.UpdateEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
 import net.aspw.nightx.utils.InventoryUtils
 import net.aspw.nightx.utils.timer.MSTimer
 import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.value.ListValue
+import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.init.Items
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement

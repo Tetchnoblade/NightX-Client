@@ -7,7 +7,6 @@ import net.aspw.nightx.event.Render2DEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.ui.font.Fonts
 import net.aspw.nightx.utils.AnimationUtils
 import net.aspw.nightx.utils.render.RenderUtils
 import net.aspw.nightx.utils.render.Stencil
@@ -16,6 +15,7 @@ import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.value.ListValue
 import net.aspw.nightx.value.TextValue
+import net.aspw.nightx.visual.font.Fonts
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.network.play.server.S02PacketChat

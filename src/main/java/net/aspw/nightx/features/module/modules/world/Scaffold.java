@@ -7,8 +7,6 @@ import net.aspw.nightx.features.module.ModuleCategory;
 import net.aspw.nightx.features.module.ModuleInfo;
 import net.aspw.nightx.features.module.modules.movement.Speed;
 import net.aspw.nightx.injection.access.StaticStorage;
-import net.aspw.nightx.ui.client.hud.element.elements.Notification;
-import net.aspw.nightx.ui.font.Fonts;
 import net.aspw.nightx.utils.*;
 import net.aspw.nightx.utils.block.BlockUtils;
 import net.aspw.nightx.utils.block.PlaceInfo;
@@ -22,6 +20,8 @@ import net.aspw.nightx.value.BoolValue;
 import net.aspw.nightx.value.FloatValue;
 import net.aspw.nightx.value.IntegerValue;
 import net.aspw.nightx.value.ListValue;
+import net.aspw.nightx.visual.font.Fonts;
+import net.aspw.nightx.visual.hud.element.elements.Notification;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.client.gui.ScaledResolution;
@@ -952,7 +952,7 @@ public class Scaffold extends Module {
 
         String counterMode = counterDisplayValue.get();
         final ScaledResolution scaledResolution = new ScaledResolution(mc);
-        final String info = getBlocksAmount() + " blocks";
+        final String info = getBlocksAmount() + " Blocks";
         int infoWidth = Fonts.fontSFUI40.getStringWidth(info);
         int infoWidth2 = Fonts.minecraftFont.getStringWidth(getBlocksAmount() + "");
         if (counterMode.equalsIgnoreCase("exhibition")) {
@@ -984,24 +984,18 @@ public class Scaffold extends Module {
 
         if (counterMode.equalsIgnoreCase("sigma")) {
             GlStateManager.translate(0, -14F - (progress * 4F), 0);
-            //GL11.glPushMatrix();
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glDisable(GL11.GL_TEXTURE_2D);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GL11.glEnable(GL11.GL_LINE_SMOOTH);
             GL11.glColor4f(0.15F, 0.15F, 0.15F, progress);
             GL11.glBegin(GL11.GL_TRIANGLE_FAN);
-            GL11.glVertex2d(scaledResolution.getScaledWidth() / 2 - 3, scaledResolution.getScaledHeight() - 60);
-            GL11.glVertex2d(scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() - 57);
-            GL11.glVertex2d(scaledResolution.getScaledWidth() / 2 + 3, scaledResolution.getScaledHeight() - 60);
             GL11.glEnd();
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glDisable(GL11.GL_BLEND);
             GL11.glDisable(GL11.GL_LINE_SMOOTH);
-            //GL11.glPopMatrix();
-            RenderUtils.drawRoundedRect(scaledResolution.getScaledWidth() / 2 - (infoWidth / 2) - 4, scaledResolution.getScaledHeight() - 60, scaledResolution.getScaledWidth() / 2 + (infoWidth / 2) + 4, scaledResolution.getScaledHeight() - 74, 2F, new Color(0.15F, 0.15F, 0.15F, progress).getRGB());
             GlStateManager.resetColor();
-            Fonts.fontSFUI35.drawCenteredString(info, scaledResolution.getScaledWidth() / 2 + 0.1F, scaledResolution.getScaledHeight() - 70, new Color(1F, 1F, 1F, 0.8F * progress).getRGB(), false);
+            Fonts.fontSFUI37.drawCenteredString(info, scaledResolution.getScaledWidth() / 2 + 0.1F, scaledResolution.getScaledHeight() - 70, new Color(1F, 1F, 1F, progress).getRGB(), false);
             GlStateManager.translate(0, 14F + (progress * 4F), 0);
         }
 
@@ -1014,7 +1008,7 @@ public class Scaffold extends Module {
             }
             GlStateManager.resetColor();
 
-            Fonts.minecraftFont.drawString(getBlocksAmount() + " blocks", scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 2 + 20, -1, true);
+            Fonts.minecraftFont.drawString(getBlocksAmount() + " Blocks", scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 2 + 20, -1, true);
         }
 
         if (counterMode.equalsIgnoreCase("nightx")) {
@@ -1024,7 +1018,7 @@ public class Scaffold extends Module {
             }
             GlStateManager.resetColor();
 
-            Fonts.minecraftFont.drawString(getBlocksAmount() + " Blocks", scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 2 + 20, -1, true);
+            Fonts.minecraftFont.drawString(getBlocksAmount() + " Blocks", scaledResolution.getScaledWidth() / 1.95f, scaledResolution.getScaledHeight() / 2 + 20, -1, true);
         }
     }
 

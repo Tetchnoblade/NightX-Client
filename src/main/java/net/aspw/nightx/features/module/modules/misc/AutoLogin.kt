@@ -8,11 +8,11 @@ import net.aspw.nightx.event.WorldEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
 import net.aspw.nightx.utils.PacketUtils
 import net.aspw.nightx.utils.timer.MSTimer
 import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.value.TextValue
+import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.network.play.client.C01PacketChatMessage
 import net.minecraft.network.play.server.S02PacketChat
 import net.minecraft.network.play.server.S45PacketTitle

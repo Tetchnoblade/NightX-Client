@@ -2,9 +2,9 @@ package net.aspw.nightx.features.command.commands
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
-import net.aspw.nightx.ui.client.hud.element.elements.Notification
 import net.aspw.nightx.utils.SettingsUtils
 import net.aspw.nightx.utils.misc.StringUtils
+import net.aspw.nightx.visual.hud.element.elements.Notification
 import java.io.File
 import java.io.IOException
 import java.util.*
