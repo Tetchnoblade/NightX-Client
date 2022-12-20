@@ -14,6 +14,7 @@ import net.aspw.nightx.visual.hud.designer.GuiHudDesigner
 @ModuleInfo(name = "Hud", category = ModuleCategory.RENDER, array = false)
 class Hud : Module() {
     val tabHead = BoolValue("Tab-HeadOverlay", true)
+    val nof5Crosshair = BoolValue("NoF5Crosshair", true)
     val animHotbarValue = BoolValue("HotbarAnimation", false)
     val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F, { animHotbarValue.get() })
     val blackHotbarValue = BoolValue("BlackHotbar", false)

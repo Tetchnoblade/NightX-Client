@@ -8,4 +8,8 @@ import net.aspw.nightx.value.FloatValue
 @ModuleInfo(name = "ItemPhysics", spacedName = "Item Physics", category = ModuleCategory.RENDER)
 class ItemPhysics : Module() {
     val xzValue = FloatValue("X-Z", 2F, 0F, 2F, "x")
+
+    init {
+        state = true
+    }
 }

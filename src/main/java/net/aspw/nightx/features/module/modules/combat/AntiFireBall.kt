@@ -13,7 +13,7 @@ import net.minecraft.entity.projectile.EntityFireball
 import net.minecraft.network.play.client.C02PacketUseEntity
 import net.minecraft.network.play.client.C0APacketAnimation
 
-@ModuleInfo(name = "AntiFireBall", spacedName = "AntiFire Ball", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AntiFireBall", spacedName = "Anti Fire Ball", category = ModuleCategory.COMBAT)
 class AntiFireBall : Module() {
     private val timer = MSTimer()
 

@@ -49,7 +49,7 @@ class Text(
          * Create default element
          */
         fun defaultClient(): Text {
-            val text = Text(x = 5.0, y = 5.0, scale = 1F)
+            val text = Text(x = 2.0, y = 5.0, scale = 1F)
 
             text.displayString.set("%clientName% [%fps% FPS]")
             text.shadow.set(true)

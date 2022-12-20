@@ -320,7 +320,7 @@ public abstract class MixinItemRenderer {
                         }
 
                         if (NightX.moduleManager.getModule(Animations.class).getState() && NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("slidenew")) {
-                            GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.1, Animations.blockPosY.get().doubleValue() - 0.08, Animations.blockPosZ.get().doubleValue() - 0.1);
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.1, Animations.blockPosY.get().doubleValue() - 0.03, Animations.blockPosZ.get().doubleValue() - 0.1);
                             this.transformFirstPersonItem(f, 0.0f);
                             float var91 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                             this.func_178103_d(0.2F);
