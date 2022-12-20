@@ -5,170 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d01c55b-d37f-497b-a569-910a52b4446d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/BruhCommand.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/remapper/Remapper.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/access/IBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/access/IChunk.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/access/IMixinWorldAccess.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/access/IWorld.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/optimize/MixinBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/optimize/MixinChunk.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/optimize/MixinRenderGlobal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/optimize/MixinWorld.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/optimize/MixinWorldManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NightX.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.ipr" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/AntiTabComplete.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/TabGui.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/downloads.json" beforeDir="false" afterPath="$PROJECT_DIR$/downloads.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/liquidinstruction/LiquidInstruction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/instruction/Instruction.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/NightX.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/NightX.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/discord/ClientRichPresence.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/discordrpc/ClientRichPresence.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/CommandManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/CommandManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/BindCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/BindCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/ConfigCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/ConfigCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/ConnectCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/ConnectCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/HClipCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/HClipCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/PacketTeleportCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/PacketTeleportCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/PacketVClipCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/PacketVClipCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/ReloadCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/ReloadCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/TeleportCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/TeleportCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/ThemeCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/ThemeCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/VClipCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/VClipCommand.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/Module.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/Module.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/Gui.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/Gui.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/HudEditor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/HudEditor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/combat/AntiStaff.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/combat/AntiStaff.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/cool/TwoDTags.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/cool/TwoDTags.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/ModuleManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/ModuleManager.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/Disabler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/Disabler.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/GodMode.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/GodMode.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/LookTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/LookTP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/AntiVanish.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/AntiVanish.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/AuthBypass.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/AuthBypass.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/AutoHypixel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/AutoHypixel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/AutoLogin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/AutoLogin.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/AutoPlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/AutoPlay.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/BanStats.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/BanStats.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/BowLongJump.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/BowLongJump.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/Flight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/Flight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/player/Gapple.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/player/Gapple.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/player/LongJump.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/player/LongJump.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Animations.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Animations.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/BlockOverlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/BlockOverlay.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/HackerDetector.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/HackerDetector.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Hud.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Hud.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/ItemPhysics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/ItemPhysics.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/LagBack.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/LagBack.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/NameTags.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/NameTags.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/StreamerMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/StreamerMode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/SuperheroFX.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/SuperheroFX.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/ThunderNotifier.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/ThunderNotifier.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/world/Fucker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/world/Fucker.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/world/Scaffold.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/world/Scaffold.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/world/Stealer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/world/Stealer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/file/FileConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/config/FileConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/file/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/config/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/file/configs/AccountsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/config/configs/AccountsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/file/configs/FriendsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/config/configs/FriendsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/file/configs/HudConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/config/configs/HudConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/file/configs/ModulesConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/config/configs/ModulesConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/file/configs/ShortcutsConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/config/configs/ShortcutsConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/file/configs/ValuesConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/config/configs/ValuesConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/file/configs/XRayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/config/configs/XRayConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/access/IItemStack.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/access/StaticStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/access/StaticStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/TransformerLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/TransformerLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/client/MixinMinecraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/client/MixinMinecraft.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiButtonExt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiButtonExt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiConnecting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiConnecting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiDisconnected.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiDisconnected.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiInGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiInGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiMultiplayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiMultiplayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiSpectator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiSpectator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/item/MixinItemRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/item/MixinItemRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/network/MixinNetHandlerPlayClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/network/MixinNetHandlerPlayClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/render/MixinRenderEntityItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/render/MixinRenderEntityItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/transformers/ForgeNetworkTransformer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/transformers/ForgeNetworkTransformer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/transformers/NetworkManagerTransformer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/transformers/OptimizeTransformer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/transformers/OptimizeTransformer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/script/Script.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/Script.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/script/ScriptManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/ScriptManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/script/api/ScriptCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/api/ScriptCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/script/api/ScriptModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/api/ScriptModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/script/api/ScriptTab.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/api/ScriptTab.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/script/api/global/Chat.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/api/global/Chat.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/script/api/global/Item.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/api/global/Item.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/script/api/global/Setting.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/api/global/Setting.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/script/remapper/Remapper.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/script/remapper/injection/transformers/AbstractJavaLinkerTransformer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/remapper/injection/transformers/AbstractJavaLinkerTransformer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/script/remapper/injection/transformers/handlers/AbstractJavaLinkerHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/remapper/injection/transformers/handlers/AbstractJavaLinkerHandler.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/script/remapper/injection/utils/ClassUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/remapper/injection/utils/ClassUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/script/remapper/injection/utils/NodeUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/remapper/injection/utils/NodeUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/GuiBackground.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/GuiBackground.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/GuiMainMenu.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/GuiMainMenu.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/GuiScripts.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/altmanager/GuiAltManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/GuiAltManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/altmanager/menus/GuiChangeName.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/menus/GuiChangeName.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/altmanager/menus/GuiLoginIntoAccount.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/menus/GuiLoginIntoAccount.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/altmanager/menus/GuiLoginProgress.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/menus/GuiLoginProgress.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/altmanager/menus/GuiSessionLogin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/menus/GuiSessionLogin.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/altmanager/menus/altgenerator/GuiTheAltening.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/menus/GuiTheAltening.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/ColorManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/ColorManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/IconManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/IconManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/NewUi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/NewUi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/element/CategoryElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/element/CategoryElement.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/element/components/Checkbox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/element/components/Checkbox.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/element/components/Slider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/element/components/Slider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/element/components/ToggleSwitch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/element/components/ToggleSwitch.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/element/module/ModuleElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/element/module/ModuleElement.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/element/module/value/ValueElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/element/module/value/ValueElement.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/element/module/value/impl/BooleanElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/element/module/value/impl/BooleanElement.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/element/module/value/impl/FloatElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/element/module/value/impl/FloatElement.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/element/module/value/impl/IntElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/element/module/value/impl/IntElement.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/element/module/value/impl/ListElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/element/module/value/impl/ListElement.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/clickgui/newVer/extensions/AnimHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/clickgui/extensions/AnimHelper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/Config.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/Config.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/HUD.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/HUD.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/designer/EditorPanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/designer/EditorPanel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/designer/GuiHudDesigner.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/designer/GuiHudDesigner.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/Element.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/Element.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/Armor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Armor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/Arraylist.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Arraylist.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/Effects.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Effects.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/Image.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Image.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/Notifications.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Notifications.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/Radar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Radar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/ScoreboardElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/ScoreboardElement.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/SessionInformation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/SessionInformation.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/Target.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Target.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/Text.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Text.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/targets/TargetStyle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/targets/TargetStyle.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/targets/impl/Chill.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/targets/impl/Chill.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/targets/impl/Exhibition.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/targets/impl/Exhibition.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/targets/impl/LiquidBounce.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/targets/impl/LiquidBounce.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/targets/impl/NewNightX.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/targets/impl/NewNightX.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/targets/impl/OldNightX.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/targets/impl/OldNightX.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/targets/impl/Remix.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/targets/impl/Remix.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/targets/impl/Rice.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/targets/impl/Rice.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/targets/impl/Slowly.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/targets/impl/Slowly.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/targets/utils/CharRenderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/targets/utils/CharRenderer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/client/hud/element/elements/targets/utils/Particle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/targets/utils/Particle.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/elements/GuiPasswordField.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/elements/GuiPasswordField.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/font/AWTFontRenderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/font/AWTFontRenderer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/font/CachedFont.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/font/CachedFont.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/font/FontDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/font/FontDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/font/Fonts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/font/Fonts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/font/GameFontRenderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/font/GameFontRenderer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/ui/font/TTFFontRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/font/TTFFontRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/ServerUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/ServerUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/render/RenderUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/render/RenderUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/value/Value.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/value/Value.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/nightx/background.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/instructions.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/instructions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/liquidbounce.forge.mixins.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/liquidbounce_at.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Skeletal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/RenderWings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/RenderWings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/Rotation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/Rotation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/timer/MovementUtilsFix.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/MovementUtilsFix.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/GuiAltManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/GuiAltManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/font/Fonts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/font/Fonts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/HUD.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/HUD.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Arraylist.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Arraylist.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Text.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Text.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -302,25 +158,28 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="net.aspw.nightx.utils" />
       <recent name="net.aspw.nightx.visual.client.altmanager.menus" />
       <recent name="net.aspw.nightx.features.module.modules.utility" />
       <recent name="net.aspw.nightx.features.module.modules.client" />
       <recent name="net.aspw.nightx.features.special" />
-      <recent name="net.aspw.nightx.features.module.modules.player" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="net.aspw.nightx.visual.client.clickgui.next.style" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="net.aspw.nightx.visual.hud.element.elements" />
+      <recent name="net.aspw.nightx.features.module.modules.movement" />
+      <recent name="net.aspw.nightx.utils" />
       <recent name="net.aspw.nightx.features.command.commands" />
       <recent name="net.aspw.nightx.features.module.modules.exploit" />
-      <recent name="net.aspw.nightx.features.module.modules.targets" />
-      <recent name="net.aspw.nightx.features.module.modules.render" />
-      <recent name="net.aspw.nightx.ui.client.hud.element.elements.targets.impl" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="net.aspw.nightx.config.configs" />
+      <recent name="net.aspw.nightx.features.module.modules.render" />
+      <recent name="net.aspw.nightx.features.module.modules.movement" />
+      <recent name="net.aspw.nightx.utils" />
       <recent name="net.aspw.nightx.injection.forge.mixins.optimize" />
-      <recent name="net.aspw.nightx.injection.access" />
-      <recent name="net.aspw.nightx.features.module.modules.client" />
-      <recent name="net.aspw.nightx.features.module.modules.exploit" />
-      <recent name="net.aspw.nightx.features.module.modules.movement.speeds.buzz" />
     </key>
   </component>
   <component name="RunManager" selected="アプリケーション.Minecraft Client">

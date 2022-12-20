@@ -29,7 +29,8 @@ open class HUD : MinecraftInstance() {
             Target::class.java,
             Radar::class.java,
             Image::class.java,
-            SessionInformation::class.java
+            SessionInformation::class.java,
+            TabGui::class.java
         )
 
         /**
@@ -39,6 +40,7 @@ open class HUD : MinecraftInstance() {
         fun createDefault() = HUD()
             .addElement(Text.defaultClient())
             .addElement(Arraylist())
+            .addElement(TabGui())
             .addElement(ScoreboardElement())
             .addElement(Effects())
             .addElement(Armor())

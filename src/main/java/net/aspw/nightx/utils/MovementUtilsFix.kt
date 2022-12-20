@@ -1,6 +1,5 @@
-package net.aspw.nightx.utils.timer
+package net.aspw.nightx.utils
 
-import net.aspw.nightx.utils.MinecraftInstance
 import net.minecraft.client.Minecraft
 
 object MovementUtilsFix : MinecraftInstance() {

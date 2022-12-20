@@ -33,7 +33,7 @@ import kotlin.math.sqrt
  */
 @ElementInfo(name = "Text")
 class Text(
-    x: Double = 5.0, y: Double = 5.0, scale: Float = 1F,
+    x: Double = 2.0, y: Double = 5.0, scale: Float = 1F,
     side: Side = Side.default()
 ) : Element(x, y, scale, side) {
 
@@ -51,7 +51,7 @@ class Text(
         fun defaultClient(): Text {
             val text = Text(x = 5.0, y = 5.0, scale = 1F)
 
-            text.displayString.set("%clientName%")
+            text.displayString.set("%clientName% [%fps% FPS]")
             text.shadow.set(true)
             text.fontValue.set(Fonts.fontSFUI40)
             text.setColor(Color(255, 255, 255))
@@ -77,7 +77,7 @@ class Text(
     private val bgalphaValue = IntegerValue("Background-Alpha", 80, 0, 255)
     private val rainbowList =
         ListValue("Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Sky")
-    private val saturationValue = FloatValue("Saturation", 0.6f, 0f, 1f)
+    private val saturationValue = FloatValue("Saturation", 0.4f, 0f, 1f)
     private val brightnessValue = FloatValue("Brightness", 1f, 0f, 1f)
     private val cRainbowSecValue = IntegerValue("Seconds", 2, 1, 10)
     private val distanceValue = IntegerValue("Line-Distance", 0, 0, 400)

@@ -43,7 +43,7 @@ public class RenderWings extends ModelBase {
         if (Minecraft.getMinecraft().thePlayer.isSneaking()) {
             GL11.glTranslated((double) 0.0, (double) (0.125 / scale), (double) 0.0);
         }
-        GL11.glColor3f(1F, 1F, 1F);
+        GL11.glColor3f(0.9F, 0.9F, 0.9F);
 
 
         Minecraft.getMinecraft().getTextureManager().bindTexture(this.location);
@@ -51,10 +51,10 @@ public class RenderWings extends ModelBase {
         for (int j = 0; j < 2; ++j) {
             GL11.glEnable(2884);
             float f11 = (float) (System.currentTimeMillis() % 1000L) / 1000.0F * 3.1415927F * 2.0F;
-            this.wing.rotateAngleX = (float) Math.toRadians(-80.0D) - (float) Math.cos((double) f11) * 0.2F;
-            this.wing.rotateAngleY = (float) Math.toRadians(20.0D) + (float) Math.sin((double) f11) * 0.4F;
-            this.wing.rotateAngleZ = (float) Math.toRadians(20.0D);
-            this.wingTip.rotateAngleZ = -((float) (Math.sin((double) (f11 + 2.0F)) + 0.5D)) * 0.75F;
+            this.wing.rotateAngleX = (float) Math.toRadians(-40.0D) - (float) Math.cos(f11) * -0.6F;
+            this.wing.rotateAngleY = (float) Math.toRadians(30.0D) + (float) Math.sin(f11) * 0.4F;
+            this.wing.rotateAngleZ = (float) Math.toRadians(30.0D);
+            this.wingTip.rotateAngleZ = -((float) (Math.sin(f11 + 1.2F) + 1.1D)) * 0.75F;
             this.wing.render(0.0625F);
             GL11.glScalef(-1.0F, 1.0F, 1.0F);
             if (j == 0) {

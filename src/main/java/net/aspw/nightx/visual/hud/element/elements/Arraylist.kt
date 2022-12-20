@@ -26,7 +26,7 @@ import java.util.*
  */
 @ElementInfo(name = "Arraylist", single = true)
 class Arraylist(
-    x: Double = -0.1, y: Double = -0.1, scale: Float = 1F,
+    x: Double = 0.0, y: Double = 0.0, scale: Float = 1F,
     side: Side = Side(Horizontal.RIGHT, Vertical.UP)
 ) : Element(x, y, scale, side) {
     private val colorModeValue =
@@ -62,7 +62,7 @@ class Arraylist(
     val colorAlphaValue = IntegerValue("Alpha", 255, 0, 255)
     private val saturationValue = FloatValue("Saturation", 0.45f, 0f, 1f)
     private val brightnessValue = FloatValue("Brightness", 1f, 0f, 1f)
-    private val skyDistanceValue = IntegerValue("Sky-Distance", 1, 0, 4)
+    private val skyDistanceValue = IntegerValue("Sky-Distance", 2, 0, 4)
     private val cRainbowSecValue = IntegerValue("CRainbow-Seconds", 2, 1, 10)
     private val cRainbowDistValue = IntegerValue("CRainbow-Distance", 2, 1, 6)
     private val mixerSecValue = IntegerValue("Mixer-Seconds", 2, 1, 10)
@@ -87,10 +87,10 @@ class Arraylist(
     private val rectLeftValue = ListValue("Rect-Left", arrayOf("None", "Left", "Right"), "None")
     private val caseValue = ListValue("Case", arrayOf("None", "Lower", "Upper"), "None")
     private val spaceValue = FloatValue("Space", 0F, 0F, 5F)
-    private val textHeightValue = FloatValue("TextHeight", 11F, 1F, 20F)
-    private val textYValue = FloatValue("TextY", 1.8F, 0F, 20F)
+    private val textHeightValue = FloatValue("TextHeight", 10F, 1F, 20F)
+    private val textYValue = FloatValue("TextY", 2F, 0F, 20F)
     private val tagsArrayColor = BoolValue("TagsArrayColor", false)
-    private val fontValue = FontValue("Font", Fonts.fontSFUI40)
+    private val fontValue = FontValue("Font", Fonts.fontSFUI37)
 
     private var x2 = 0
     private var y2 = 0F
@@ -791,7 +791,7 @@ class Arraylist(
     private fun getModTag(m: Module): String {
         if (!tags.get() || m.tag == null) return ""
 
-        var returnTag = " ${if (tagsArrayColor.get()) "" else "§f"}"
+        var returnTag = " ${if (tagsArrayColor.get()) "" else "§7"}"
 
         // tag prefix, ignore default value
         if (!tagsStyleValue.get().equals("default", true))

@@ -96,7 +96,6 @@ open class Module : MinecraftInstance(), Listenable {
             NightX.fileManager.saveConfig(NightX.fileManager.modulesConfig)
         }
 
-
     // HUD
     val hue = Math.random().toFloat()
     var slide = 0F

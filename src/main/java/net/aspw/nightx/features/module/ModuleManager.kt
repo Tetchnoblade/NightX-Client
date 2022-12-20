@@ -116,7 +116,6 @@ class ModuleManager : Listenable {
             NoRender::class.java,
             DamageParticle::class.java,
             AntiVanish::class.java,
-            Skeletal::class.java,
             AutoLogin::class.java,
             AuthBypass::class.java,
             Gapple::class.java,
@@ -204,7 +203,8 @@ class ModuleManager : Listenable {
             TickTimer::class.java,
             HitParticles::class.java,
             CivBreak::class.java,
-            PlayerEdit::class.java
+            PlayerEdit::class.java,
+            AntiTabComplete::class.java
         )
 
         registerModule(Fucker)

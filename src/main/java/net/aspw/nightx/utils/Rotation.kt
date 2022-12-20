@@ -30,7 +30,7 @@ data class Rotation(var yaw: Float, var pitch: Float) {
      * @see net.minecraft.client.renderer.EntityRenderer.updateCameraAndRender
      */
     fun fixedSensitivity(sensitivity: Float) {
-        val f = sensitivity * 0.6F + 0.2F
+        val f = sensitivity * 0.8F
         val gcd = f * f * f * 1.2F
 
         // get previous rotation
@@ -49,9 +49,8 @@ data class Rotation(var yaw: Float, var pitch: Float) {
 
     /**
      * Apply strafe to player
-     *
-     * @author bestnub
      */
+
     fun applyStrafeToPlayer(event: StrafeEvent) {
         val player = MinecraftInstance.mc.thePlayer
         val dif = ((MathHelper.wrapAngleTo180_float(player.rotationYaw - this.yaw

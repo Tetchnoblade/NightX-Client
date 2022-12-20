@@ -124,7 +124,7 @@ public class Fonts {
 
             if (!outputFile.exists() || !sfuiFile.exists() || !jelloFile.exists() || !prodSansFile.exists() || !prodBoldFile.exists() || !tahomaFile.exists() || !tahomaReFile.exists() || !bangersFile.exists()) {
                 ClientUtils.getLogger().info("Downloading fonts...");
-                HttpUtils.download("https://cdn.discordapp.com/attachments/1005475449469685771/1029737029707235438/fonts.zip", outputFile);
+                HttpUtils.download(NightX.CLIENT_FONTS, outputFile);
                 ClientUtils.getLogger().info("Extract fonts...");
                 extractZip(outputFile.getPath(), NightX.fileManager.fontsDir.getPath());
             }

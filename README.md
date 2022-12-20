@@ -1,12 +1,12 @@
 # NightX Client (LiquidBounce Custom Build)
 
 If you have request and issue -> Join discord server to support! ↓
->https://discord.gg/SGBccUXFKZ
-
-and please subscribe to my youtube channel!
->https://www.youtube.com/channel/UCVK9Dci455TBSmDXzDfsoUA
+>https://nightx.api-minecraft.net/s/rgul30dkqw
 
 If you need configs try access this site!
->https://sites.google.com/view/nightx-client
+>https://nightx.api-minecraft.net/s/zf45j6uzog
+
+and please subscribe to my youtube channel!
+>https://www.youtube.com/@as_pw5147
 
 `(Made in Japan :r)`
