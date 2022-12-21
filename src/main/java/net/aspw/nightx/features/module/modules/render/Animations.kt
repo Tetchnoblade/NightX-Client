@@ -23,7 +23,11 @@ class Animations : Module() {
     fun onMotion(event: MotionEvent) {
         val killAura = NightX.moduleManager.getModule(KillAura::class.java)
         if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && smoothAnimValue.get() && !mc.thePlayer.isBlocking && killAura!!.target == null) {
-            mc.thePlayer.renderArmPitch = 140f
+            mc.thePlayer.renderArmPitch = 100f + mc.thePlayer.rotationPitch
+        }
+
+        if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && blockingEquipValue.get() && mc.thePlayer.isBlocking || event.eventState === EventState.POST && blockingEquipValue.get() && mc.thePlayer.isSwingInProgress && killAura?.target != null) {
+            mc.thePlayer.renderArmPitch = -90 + mc.thePlayer.rotationPitch
         }
     }
 
@@ -186,6 +190,9 @@ class Animations : Module() {
         // block break
         @JvmField
         val noBlockParticles = BoolValue("NoBlockParticles", false)
+
+        @JvmField
+        val blockingEquipValue = BoolValue("BlockingEquip", true)
 
         @JvmField
         val swingAnimValue = BoolValue("FluxSwingAnimation", false)

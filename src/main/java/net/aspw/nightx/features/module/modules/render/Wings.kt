@@ -18,8 +18,4 @@ class Wings : Module() {
         val renderWings = RenderWings()
         renderWings.renderWings(event.partialTicks)
     }
-
-    init {
-        state = true
-    }
 }

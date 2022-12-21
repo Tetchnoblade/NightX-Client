@@ -17,13 +17,11 @@ import java.util.Objects;
 @Mixin(AbstractClientPlayer.class)
 public abstract class MixinAbstractClientPlayer extends MixinEntityPlayer {
 
-    //private CapeInfo capeInfo;
-
     @Inject(method = "getLocationCape", at = @At("HEAD"), cancellable = true)
     private void getCape(CallbackInfoReturnable<ResourceLocation> callbackInfoReturnable) {
-        final Cape capeMod = NightX.moduleManager.getModule(Cape.class);
-        if (capeMod.getState() && Objects.equals(getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
-            callbackInfoReturnable.setReturnValue(capeMod.getCapeLocation(capeMod.getStyleValue().get()));
+        final Cape cape = NightX.moduleManager.getModule(Cape.class);
+        if (cape.getState() && Objects.equals(getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
+            callbackInfoReturnable.setReturnValue(cape.getCapeLocation(cape.getStyleValue().get()));
         }
     }
 

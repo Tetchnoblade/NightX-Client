@@ -6,13 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="9d01c55b-d37f-497b-a569-910a52b4446d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/combat/AntiFireBall.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/combat/AntiFireBall.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Hud.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Hud.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/ItemPhysics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/ItemPhysics.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/downloads.json" beforeDir="false" afterPath="$PROJECT_DIR$/downloads.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/combat/KillAura.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/combat/KillAura.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/RiderGod.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/RiderGod.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/Flight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/Flight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Animations.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Animations.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Wings.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Wings.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiInGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiInGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/item/MixinItemRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/item/MixinItemRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Text.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Text.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/client/MixinMinecraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/client/MixinMinecraft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/entity/MixinAbstractClientPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/entity/MixinAbstractClientPlayer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,8 +157,8 @@
       <recent name="net.aspw.nightx.visual.client.clickgui.next.style" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
-      <recent name="net.aspw.nightx.visual.hud.element.elements" />
       <recent name="net.aspw.nightx.features.module.modules.movement" />
+      <recent name="net.aspw.nightx.visual.hud.element.elements" />
       <recent name="net.aspw.nightx.utils" />
       <recent name="net.aspw.nightx.features.command.commands" />
       <recent name="net.aspw.nightx.features.module.modules.exploit" />

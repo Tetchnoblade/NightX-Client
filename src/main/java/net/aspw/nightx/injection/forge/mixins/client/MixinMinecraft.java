@@ -247,19 +247,16 @@ public abstract class MixinMinecraft {
             final float yaw = RotationUtils.serverRotation.getYaw();
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && killAura.getTarget() != null) {
                 entityLivingBase.rotationYawHead = yaw;
-                entityLivingBase.prevRotationYawHead = yaw;
                 entityLivingBase.renderYawOffset = yaw;
                 entityLivingBase.prevRenderYawOffset = yaw;
             }
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && scaffold.getState()) {
                 entityLivingBase.rotationYawHead = yaw;
-                entityLivingBase.prevRotationYawHead = yaw;
                 entityLivingBase.renderYawOffset = yaw;
                 entityLivingBase.prevRenderYawOffset = yaw;
             }
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && annoy.getState()) {
                 entityLivingBase.rotationYawHead = yaw;
-                entityLivingBase.prevRotationYawHead = yaw;
                 entityLivingBase.renderYawOffset = yaw;
                 entityLivingBase.prevRenderYawOffset = yaw;
             }

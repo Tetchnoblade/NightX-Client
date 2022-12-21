@@ -179,6 +179,7 @@ public class Flight extends Module {
     private final TickTimer spartanTimer = new TickTimer();
     private final TickTimer verusTimer = new TickTimer();
     private final TickTimer hypixelTimer = new TickTimer();
+    private final TickTimer tickTimer = new TickTimer();
     private final TickTimer cubecraftTeleportTickTimer = new TickTimer();
     private final TickTimer freeHypixelTimer = new TickTimer();
     private final ArrayList<C03PacketPlayer> aac5C03List = new ArrayList<>();
@@ -348,7 +349,7 @@ public class Flight extends Module {
             case "funcraft":
                 if (mc.thePlayer.onGround)
                     mc.thePlayer.jump();
-                moveSpeed = 1.6;
+                moveSpeed = 1.2;
                 break;
             case "zoom":
                 NightX.moduleManager.getModule(Damage.class).setState(true);
@@ -961,14 +962,14 @@ public class Flight extends Module {
 
         switch (modeValue.get().toLowerCase()) {
             case "funcraft":
-                mc.timer.timerSpeed = 1.4f;
+                mc.timer.timerSpeed = 1.8f;
                 event.setOnGround(true);
                 if (!MovementUtils.isMoving())
                     moveSpeed = 0.25;
                 if (moveSpeed > 0.25) {
                     moveSpeed -= moveSpeed / 159.0;
                 }
-                if (event.getEventState() == EventState.PRE) {
+                if (event.getEventState() == EventState.POST) {
                     mc.thePlayer.capabilities.isFlying = false;
                     mc.thePlayer.motionY = 0;
                     mc.thePlayer.motionX = 0;
@@ -978,33 +979,37 @@ public class Flight extends Module {
                     mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY - 8e-6, mc.thePlayer.posZ);
                 }
                 break;
+
             case "float":
                 if (event.getEventState() == EventState.PRE) {
                     mc.thePlayer.capabilities.isFlying = false;
                     mc.thePlayer.motionY = 0;
                 }
                 break;
+
             case "zoom":
                 event.setOnGround(true);
                 if (!MovementUtils.isMoving())
                     moveSpeed = 0.25;
                 if (moveSpeed > 0.25) {
-                    moveSpeed -= moveSpeed / 159.0;
+                    moveSpeed -= moveSpeed / 260.0;
                 }
-                if (event.getEventState() == EventState.PRE) {
+                if (event.getEventState() == EventState.POST) {
                     mc.thePlayer.capabilities.isFlying = false;
                     mc.thePlayer.motionY = 0;
                     mc.thePlayer.motionX = 0;
                     mc.thePlayer.motionZ = 0;
 
                     MovementUtils.strafe((float) moveSpeed);
-                    mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY - 8e-6, mc.thePlayer.posZ);
+                    mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + 1.0E-5, mc.thePlayer.posZ);
                 }
                 break;
+
             case "exploit":
                 if (event.getEventState() == EventState.PRE)
                     wdTick++;
                 break;
+
             case "slime":
                 int current = mc.thePlayer.inventory.currentItem;
                 if (event.getEventState() == EventState.PRE) {
