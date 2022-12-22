@@ -59,7 +59,9 @@ public class Flight extends Module {
             "Exploit",
             "Zoom",
 
-            // For other servers, mostly outdated.
+            // For other servers.
+            "BlockDrop",
+            "Zonecraft",
             "Cubecraft",
             "Rewinside",
             "TeleportRewinside",
@@ -198,11 +200,14 @@ public class Flight extends Module {
     private boolean verusDmged, shouldActiveDmg = false;
     private float lastYaw, lastPitch;
     private double moveSpeed = 0.0;
+    private boolean lastValue;
+    private boolean teleport;
     private int expectItemStack = -1;
     private double aacJump;
     private int aac3delay;
     private int aac3glideDelay;
     private long minesuchtTP;
+
     private int boostHypixelState = 1;
     private double lastDistance;
     private boolean failedStart = false;
@@ -980,6 +985,46 @@ public class Flight extends Module {
                 }
                 break;
 
+            case "zonecraft":
+                if (event.getEventState() == EventState.PRE) {
+                    if (event.getOnGround()) {
+                        mc.thePlayer.motionY = 0.42f;
+                    } else {
+                        mc.thePlayer.motionY = 0;
+                    }
+                    MovementUtils.strafe(0.259f);
+
+                    final double magicValue = 0.92160f / 8f;
+                    final double rounded = mc.thePlayer.posY - (mc.thePlayer.posY % magicValue);
+
+                    mc.thePlayer.setPosition(mc.thePlayer.posX, rounded, mc.thePlayer.posZ);
+                }
+                break;
+
+            case "blockdrop":
+                mc.thePlayer.motionY = 0;
+                mc.thePlayer.onGround = true;
+
+                double radiansYaw = Math.toRadians(MovementUtils.getDirection());
+                double xMove = -Math.sin(radiansYaw) * 20;
+                double zMove = Math.cos(radiansYaw) * 20;
+
+                double yMove = (mc.gameSettings.keyBindJump.isKeyDown() ? 1.7 : mc.gameSettings.keyBindSneak.isKeyDown() ? -2.5 : 0);
+
+                if (mc.thePlayer.ticksExisted % 45 == 0) {
+                    mc.thePlayer.sendQueue.getNetworkManager().sendPacket(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX / 2, mc.thePlayer.posY / 2, mc.thePlayer.posZ / 2, false));
+
+                    mc.thePlayer.sendQueue.getNetworkManager().sendPacket(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, true));
+                    return;
+                }
+
+                mc.thePlayer.sendQueue.getNetworkManager().sendPacket(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX + xMove, mc.thePlayer.posY + (!this.teleport ? 5 : (this.lastValue ? .04f : 0)) + yMove + RandomUtils.nextFloat(0.03f, .05f), mc.thePlayer.posZ + zMove, false));
+
+                if (!this.teleport) {
+                    this.teleport = true;
+                }
+                break;
+
             case "float":
                 if (event.getEventState() == EventState.PRE) {
                     mc.thePlayer.capabilities.isFlying = false;
@@ -1108,6 +1153,16 @@ public class Flight extends Module {
 
         if (noPacketModify)
             return;
+
+        if (packet instanceof S08PacketPlayerPosLook && mode.equalsIgnoreCase("blockdrop")) {
+            S08PacketPlayerPosLook awa = (S08PacketPlayerPosLook) event.getPacket();
+            event.cancelEvent();
+
+            mc.thePlayer.sendQueue.getNetworkManager().sendPacket(new C03PacketPlayer.C06PacketPlayerPosLook(awa.getX(), awa.getY(), awa.getZ(), awa.getYaw(), awa.getPitch(), false));
+
+            mc.thePlayer.setPosition(awa.getX(), awa.getY(), awa.getZ());
+            mc.timer.timerSpeed = 5f;
+        }
 
         if (packet instanceof S08PacketPlayerPosLook && mode.equalsIgnoreCase("exploit") && wdState == 3) {
             wdState = 4;
