@@ -25,7 +25,7 @@ object NightX {
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = ".nightx"
     const val CLIENT_VERSION = "Developer"
-    const val CLIENT_CREATOR = "CCBlueX, exit-scammed, As_pw, Zywl"
+    const val CLIENT_CREATOR = "CCBlueX, Exit-scammed, As_pw, Zywl"
     const val CLIENT_CONFIGS = "https://nightx.api-minecraft.net/s/zf45j6uzog"
     const val CLIENT_SCRIPTS = "https://nightx.api-minecraft.net/s/pqbhqshhqz"
     const val CLIENT_DISCORD = "https://nightx.api-minecraft.net/s/rgul30dkqw"
@@ -51,7 +51,7 @@ object NightX {
     // Discord RPC
     lateinit var clientRichPresence: ClientRichPresence
 
-    var lastTick: Long = 0L
+    private var lastTick: Long = 0L
 
     var playTimeStart: Long = 0
 

@@ -130,7 +130,6 @@ class AutoHypixel : Module() {
                     return
                 }
                 for (s in strings) if (chat.chatComponent.unformattedText.contains(s)) {
-                    //LiquidBounce.hud.addNotification(new Notification("Attempting to send you to the next game in "+dFormat.format((double)delayValue.get()/1000D)+"s.",1000L));
                     if (autoGGValue.get() && chat.chatComponent.unformattedText.contains(strings[3])) mc.thePlayer.sendChatMessage(
                         ggMessageValue.get()
                     )

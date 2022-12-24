@@ -63,7 +63,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 20710992,
-        "download_count": 172,
+        "download_count": 249,
         "created_at": "2022-12-17T23:39:25Z",
         "updated_at": "2022-12-17T23:39:31Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B27/nightx-release-b27.jar"
@@ -71,7 +71,19 @@
     ],
     "tarball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/tarball/B27",
     "zipball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/zipball/B27",
-    "body": "- Added StreamerMode\r\n- Added InfiniteReach\r\n- Added TargetStrafe behind (SKID XDD)\r\n- Added BowLongJump Bobbing settings\r\n- Added Velocities (MatrixReduce, MatrixSimple, MatrixReverse, MatrixSpoof, MatrixGround)\r\n- Animations SmoothSwingAnimation option\r\n- Added Animations (SlidePut, Sloth, Smooth) (Improved Leaked, Swing, Astolfo, Sigma3)\r\n- Added Flight modes (Float, Jetpack2)\r\n- Added LongJump ResetMotion\r\n- Removed BlocksMC Disabler (autobanning)\r\n- Removed InventoryManager Swing\r\n- Removed Flight FreeHypixel mode\r\n- Fixed BowLongJump not spoofing bow\r\n- Fixed TargetStrafe (slowdown bug, safewalk voidcheck)\r\n- Fixed SilentView head and damaged color\r\n- Fixed Scaffold AutoJump not working\r\n- Fixed 2DTags (vanilla nametag not removing)\r\n- Improved Projectiles and renamed Trajectories\r\n- Improved KillAura (more accurate cps settings)\r\n- Improved Ridergod\r\n- Improved TickTimer (supports 0.0x)\r\n- Improved PlayerEdit\r\n- Improved Phase\r\n- Improved NoClip\r\n- Improved Arraylist\r\n- Improved ItemPhysics (more smooth animation!)\r\n- Improved Creative Inventory Tabs\r\n- Improved BlocksMC Speed\r\n- Improved Trails (more smooth)\r\n- Improved InfiniteReach\r\n- Improved Speed (cameraY full stop)\r\n- Improved Command integration\r\n- Improved Flight (somemodes not use disablemotion) (BugSpartan mode YMotion)\r\n- Optimized TargetESP\r\n- Some modules converted to Kotlin\r\n- Performance Improvements\r\nNEW CONFIGS (Syuu and more)\r\nhttps://sites.google.com/view/nightx-client"
+    "body": "- Added StreamerMode\r\n- Added InfiniteReach\r\n- Added TargetStrafe behind (SKID XDD)\r\n- Added BowLongJump Bobbing settings\r\n- Added Velocities (MatrixReduce, MatrixSimple, MatrixReverse, MatrixSpoof, MatrixGround)\r\n- Animations SmoothSwingAnimation option\r\n- Added Animations (SlidePut, Sloth, Smooth) (Improved Leaked, Swing, Astolfo, Sigma3)\r\n- Added Flight modes (Float, Jetpack2)\r\n- Added LongJump ResetMotion\r\n- Removed BlocksMC Disabler (autobanning)\r\n- Removed InventoryManager Swing\r\n- Removed Flight FreeHypixel mode\r\n- Fixed BowLongJump not spoofing bow\r\n- Fixed TargetStrafe (slowdown bug, safewalk voidcheck)\r\n- Fixed SilentView head and damaged color\r\n- Fixed Scaffold AutoJump not working\r\n- Fixed 2DTags (vanilla nametag not removing)\r\n- Improved Projectiles and renamed Trajectories\r\n- Improved KillAura (more accurate cps settings)\r\n- Improved Ridergod\r\n- Improved TickTimer (supports 0.0x)\r\n- Improved PlayerEdit\r\n- Improved Phase\r\n- Improved NoClip\r\n- Improved Arraylist\r\n- Improved ItemPhysics (more smooth animation!)\r\n- Improved Creative Inventory Tabs\r\n- Improved BlocksMC Speed\r\n- Improved Trails (more smooth)\r\n- Improved InfiniteReach\r\n- Improved Speed (cameraY full stop)\r\n- Improved Command integration\r\n- Improved Flight (somemodes not use disablemotion) (BugSpartan mode YMotion)\r\n- Optimized TargetESP\r\n- Some modules converted to Kotlin\r\n- Performance Improvements\r\nNEW CONFIGS (Syuu and more)\r\nhttps://sites.google.com/view/nightx-client",
+    "reactions": {
+      "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/86419279/reactions",
+      "total_count": 1,
+      "+1": 1,
+      "-1": 0,
+      "laugh": 0,
+      "hooray": 0,
+      "confused": 0,
+      "heart": 0,
+      "rocket": 0,
+      "eyes": 0
+    }
   },
   {
     "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/85627816",
@@ -137,7 +149,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 20593464,
-        "download_count": 184,
+        "download_count": 186,
         "created_at": "2022-12-10T13:24:26Z",
         "updated_at": "2022-12-10T13:24:32Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B26/nightx-release-b26.jar"
@@ -223,7 +235,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 19794678,
-        "download_count": 108,
+        "download_count": 109,
         "created_at": "2022-12-07T14:13:48Z",
         "updated_at": "2022-12-07T14:13:52Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B25/nightx-release-b25.jar"
@@ -297,7 +309,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 19789189,
-        "download_count": 146,
+        "download_count": 148,
         "created_at": "2022-12-03T03:09:46Z",
         "updated_at": "2022-12-03T03:09:51Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B24/nightx-release-b24.jar"
@@ -605,7 +617,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 4245949,
-        "download_count": 33,
+        "download_count": 34,
         "created_at": "2022-11-19T14:24:04Z",
         "updated_at": "2022-11-19T14:24:05Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B20/Forge.1.8.9.Installer.jar"
@@ -639,7 +651,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 20615819,
-        "download_count": 87,
+        "download_count": 88,
         "created_at": "2022-11-19T14:23:52Z",
         "updated_at": "2022-11-19T14:23:56Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B20/nightx-release-b20.jar"

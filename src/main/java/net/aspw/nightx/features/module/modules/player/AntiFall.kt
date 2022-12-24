@@ -240,9 +240,6 @@ class AntiFall : Module() {
                     if (scaffoldValue.get() && !NightX.moduleManager.getModule(Scaffold::class.java)!!.state) NightX.moduleManager.getModule(
                         Scaffold::class.java
                     )!!.state = true
-
-                    /*if (towerValue.get() && !LiquidBounce.moduleManager.getModule(Tower.class).getState())
-                        LiquidBounce.moduleManager.getModule(Tower.class).setState(true);*/
                 }
             }
         }

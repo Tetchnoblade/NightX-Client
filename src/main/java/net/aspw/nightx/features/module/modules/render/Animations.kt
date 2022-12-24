@@ -27,7 +27,7 @@ class Animations : Module() {
         }
 
         if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && blockingEquipValue.get() && mc.thePlayer.isBlocking || event.eventState === EventState.POST && blockingEquipValue.get() && mc.thePlayer.isSwingInProgress && killAura?.target != null) {
-            mc.thePlayer.renderArmPitch = -90 + mc.thePlayer.rotationPitch
+            mc.thePlayer.renderArmPitch = -120 + mc.thePlayer.rotationPitch
         }
     }
 
@@ -42,7 +42,6 @@ class Animations : Module() {
                 "SlideMedium",
                 "SlideFull",
                 "SlidePut",
-                "SlideNew",
                 "Push",
                 "Dash",
                 "Swing",
@@ -53,6 +52,7 @@ class Animations : Module() {
                 "Stella",
                 "Smart",
                 "Sloth",
+                "Autumn",
                 "Astolfo",
                 "ETB",
                 "Moon",
@@ -78,7 +78,7 @@ class Animations : Module() {
                 "Rotate",
                 "Spin",
                 "Spinny"
-            ), "Swing"
+            ), "Autumn"
         )
 
         // item general scale
