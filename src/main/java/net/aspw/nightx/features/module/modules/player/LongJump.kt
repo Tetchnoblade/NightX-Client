@@ -109,7 +109,7 @@ class LongJump : Module() {
     private val autoDisableValue = BoolValue("AutoDisable", true)
     private val fakeDmgValue = BoolValue("FakeDamage", true)
     private val bobbingValue = BoolValue("Bobbing", true)
-    private val bobbingAmountValue = FloatValue("BobbingAmount", 0.1f, 0f, 1f) { bobbingValue.get() }
+    private val bobbingAmountValue = FloatValue("BobbingAmount", 0.07f, 0f, 1f) { bobbingValue.get() }
     private val dmgTimer = MSTimer()
     private val posLookInstance = PosLookInstance()
     private var hasJumped = false

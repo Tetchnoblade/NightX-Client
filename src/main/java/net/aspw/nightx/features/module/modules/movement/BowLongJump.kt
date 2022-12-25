@@ -33,8 +33,8 @@ class BowLongJump : Module() {
     private val delayBeforeLaunch = IntegerValue("DelayBeforeArrowLaunch", 1, 1, 20, " tick")
     private val autoDisable = BoolValue("AutoDisable", true)
     private val bobbingValue = BoolValue("Bobbing", true)
-    private val bobbingAmountValue = FloatValue("BobbingAmount", 0.1f, 0f, 1f) { bobbingValue.get() }
-    private val renderValue = BoolValue("RenderStatus", true)
+    private val bobbingAmountValue = FloatValue("BobbingAmount", 0.07f, 0f, 1f) { bobbingValue.get() }
+    private val renderValue = BoolValue("RenderStatus", false)
     private var bowState = 0
     private var lastPlayerTick: Long = 0
     private var lastSlot = -1

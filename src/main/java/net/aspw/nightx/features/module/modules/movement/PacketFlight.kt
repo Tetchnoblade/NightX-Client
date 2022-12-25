@@ -12,7 +12,6 @@ import org.lwjgl.input.Keyboard
 
 @ModuleInfo(name = "PacketFlight", spacedName = "Packet Flight", category = ModuleCategory.MOVEMENT)
 class PacketFlight : Module() {
-
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         MovementUtils.strafe(0f)
@@ -23,7 +22,10 @@ class PacketFlight : Module() {
         var x = -Math.sin(playerYaw) * 0.2873;
         var z = Math.cos(playerYaw) * 0.2873;
 
-        if (MovementUtils.isMoving() || !GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
+        if (MovementUtils.isMoving() && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !GameSettings.isKeyDown(
+                mc.gameSettings.keyBindSneak
+            )
+        ) {
             mc.netHandler.addToSendQueue(
                 C04PacketPlayerPosition(
                     mc.thePlayer.posX + x,

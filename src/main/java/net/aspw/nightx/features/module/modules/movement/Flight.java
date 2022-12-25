@@ -60,7 +60,6 @@ public class Flight extends Module {
             "Zoom",
 
             // For other servers.
-            "BlockDrop",
             "Zonecraft",
             "Cubecraft",
             "Rewinside",
@@ -75,6 +74,7 @@ public class Flight extends Module {
             "VerusLowHop",
 
             // Old Spartan fly modes.
+            "LatestSpartan",
             "Spartan1",
             "Spartan2",
             "BugSpartan",
@@ -99,16 +99,17 @@ public class Flight extends Module {
             "Clip",
             "Jump",
             "Derp",
-            "Collide"
+            "Collide",
+            "Test"
     }, "Motion");
 
     private final FloatValue vanillaSpeedValue = new FloatValue("Speed", 1F, 0F, 5F, () -> {
-        return (modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("damage") || modeValue.get().equalsIgnoreCase("pearl") || modeValue.get().equalsIgnoreCase("aac5-vanilla") || modeValue.get().equalsIgnoreCase("bugspartan") || modeValue.get().equalsIgnoreCase("keepalive") || modeValue.get().equalsIgnoreCase("derp"));
+        return (modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("damage") || modeValue.get().equalsIgnoreCase("latestspartan") || modeValue.get().equalsIgnoreCase("pearl") || modeValue.get().equalsIgnoreCase("aac5-vanilla") || modeValue.get().equalsIgnoreCase("bugspartan") || modeValue.get().equalsIgnoreCase("keepalive") || modeValue.get().equalsIgnoreCase("derp"));
     });
-    private final FloatValue vanillaVSpeedValue = new FloatValue("V-Speed", 0.6F, 0F, 5F, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("bugspartan"));
-    private final FloatValue vanillaMotionYValue = new FloatValue("Y-Motion", 0F, -1F, 1F, () -> modeValue.get().equalsIgnoreCase("motion"));
-    private final BoolValue vanillaKickBypassValue = new BoolValue("AntiKick", false, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("creative"));
-    private final BoolValue groundSpoofValue = new BoolValue("SpoofGround", false, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("creative"));
+    private final FloatValue vanillaVSpeedValue = new FloatValue("V-Speed", 0.6F, 0F, 5F, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("latestspartan") || modeValue.get().equalsIgnoreCase("bugspartan"));
+    private final FloatValue vanillaMotionYValue = new FloatValue("Y-Motion", 0F, -1F, 1F, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("latestspartan"));
+    private final BoolValue vanillaKickBypassValue = new BoolValue("AntiKick", false, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("latestspartan") || modeValue.get().equalsIgnoreCase("creative"));
+    private final BoolValue groundSpoofValue = new BoolValue("SpoofGround", false, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("latestspartan") || modeValue.get().equalsIgnoreCase("creative"));
 
     private final FloatValue ncpMotionValue = new FloatValue("NCPMotion", 0.04F, 0F, 1F, () -> modeValue.get().equalsIgnoreCase("ncp"));
 
@@ -170,8 +171,8 @@ public class Flight extends Module {
 
     // Visuals
     private final BoolValue fakeDmgValue = new BoolValue("FakeDamage", false);
-    private final BoolValue bobbingValue = new BoolValue("Bobbing", false);
-    private final FloatValue bobbingAmountValue = new FloatValue("BobbingAmount", 0.1F, 0F, 1F, () -> bobbingValue.get());
+    private final BoolValue bobbingValue = new BoolValue("Bobbing", true);
+    private final FloatValue bobbingAmountValue = new FloatValue("BobbingAmount", 0.07F, 0F, 1F, () -> bobbingValue.get());
     private final BoolValue markValue = new BoolValue("Mark", false);
     private final MSTimer flyTimer = new MSTimer();
     private final MSTimer groundTimer = new MSTimer();
@@ -310,6 +311,11 @@ public class Flight extends Module {
                 if (mc.gameSettings.keyBindJump.isKeyDown() && mc.thePlayer.posY < (startY - 0.1D))
                     mc.thePlayer.motionY = 0.2D;
                 MovementUtils.strafe();
+                break;
+            case "latestspartan":
+                mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, true));
+                mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 1, mc.thePlayer.posZ, true));
+                mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + 1.0, mc.thePlayer.posZ);
                 break;
             case "verus":
                 if (verusDmgModeValue.get().equalsIgnoreCase("Instant")) {
@@ -457,6 +463,7 @@ public class Flight extends Module {
 
         switch (modeValue.get().toLowerCase()) {
             case "motion":
+            case "latestspartan":
                 mc.thePlayer.capabilities.isFlying = false;
                 mc.thePlayer.motionY = vanillaMotionYValue.get();
                 mc.thePlayer.motionX = 0;
@@ -1001,7 +1008,7 @@ public class Flight extends Module {
                 }
                 break;
 
-            case "blockdrop":
+            case "test":
                 mc.thePlayer.motionY = 0;
                 mc.thePlayer.onGround = true;
 
@@ -1113,7 +1120,7 @@ public class Flight extends Module {
     public void onRender3D(final Render3DEvent event) {
         final String mode = modeValue.get();
 
-        if (!markValue.get() || mode.equalsIgnoreCase("Motion") || mode.equalsIgnoreCase("Creative") || mode.equalsIgnoreCase("Damage") || mode.equalsIgnoreCase("AAC5-Vanilla") || mode.equalsIgnoreCase("Derp") || mode.equalsIgnoreCase("KeepAlive"))
+        if (!markValue.get() || mode.equalsIgnoreCase("Motion") || modeValue.get().equalsIgnoreCase("latestspartan") || mode.equalsIgnoreCase("Creative") || mode.equalsIgnoreCase("Damage") || mode.equalsIgnoreCase("AAC5-Vanilla") || mode.equalsIgnoreCase("Derp") || mode.equalsIgnoreCase("KeepAlive"))
             return;
 
         double y = startY + 2D;
@@ -1154,7 +1161,7 @@ public class Flight extends Module {
         if (noPacketModify)
             return;
 
-        if (mode.equalsIgnoreCase("blockdrop")) {
+        if (mode.equalsIgnoreCase("test")) {
             S08PacketPlayerPosLook awa = (S08PacketPlayerPosLook) event.getPacket();
             event.cancelEvent();
 
@@ -1162,6 +1169,12 @@ public class Flight extends Module {
 
             mc.thePlayer.setPosition(awa.getX(), awa.getY(), awa.getZ());
             mc.timer.timerSpeed = 5.0f;
+        }
+
+        if (mode.equalsIgnoreCase("latestspartan")) {
+            if (packet instanceof C03PacketPlayer) {
+                ((C03PacketPlayer) packet).onGround = true;
+            }
         }
 
         if (packet instanceof S08PacketPlayerPosLook && mode.equalsIgnoreCase("exploit") && wdState == 3) {
