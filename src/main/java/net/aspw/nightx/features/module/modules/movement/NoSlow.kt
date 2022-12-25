@@ -28,15 +28,14 @@ import java.util.*
 class NoSlow : Module() {
     private val msTimer = MSTimer()
     private val modeValue = ListValue(
-        "PacketMode",
+        "Mode",
         arrayOf(
             "Vanilla",
             "Watchdog",
-            "OldWatchdog",
             "OldHypixel",
             "Blink",
             "Experimental",
-            "NCP",
+            "NewNCP",
             "AAC",
             "AAC5",
             "Custom"
@@ -296,7 +295,7 @@ class NoSlow : Module() {
                     }
 
                     "ncp" -> sendPacket(event, true, true, false, 0, false)
-                    "oldwatchdog" -> {
+                    "newncp" -> {
                         if (mc.thePlayer.ticksExisted % 2 == 0)
                             sendPacket(event, true, false, false, 50, true)
                         else

@@ -118,7 +118,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
             return
 
         when (button.id) {
-            0 -> MiscUtils.showURL("https://iplogger.com/NightX")
+            0 -> mc.displayGuiScreen(prevGui)
             1 -> mc.displayGuiScreen(GuiLoginIntoAccount(this))
             2 -> {
                 status = if (altsList.selectedSlot != -1 && altsList.selectedSlot < altsList.size) {
