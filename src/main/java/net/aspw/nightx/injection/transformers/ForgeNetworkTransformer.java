@@ -1,6 +1,6 @@
 package net.aspw.nightx.injection.transformers;
 
-import net.aspw.nightx.features.special.AntiForge;
+import net.aspw.nightx.features.special.ClientSpoof;
 import net.aspw.nightx.features.special.script.remapper.injection.utils.ClassUtils;
 import net.aspw.nightx.features.special.script.remapper.injection.utils.NodeUtils;
 import net.minecraft.client.Minecraft;
@@ -15,7 +15,7 @@ import static org.objectweb.asm.Opcodes.*;
 public class ForgeNetworkTransformer implements IClassTransformer {
 
     public static boolean returnMethod() {
-        return AntiForge.enabled && AntiForge.blockFML && !Minecraft.getMinecraft().isIntegratedServerRunning();
+        return ClientSpoof.enabled && ClientSpoof.blockFML && !Minecraft.getMinecraft().isIntegratedServerRunning();
     }
 
     /**

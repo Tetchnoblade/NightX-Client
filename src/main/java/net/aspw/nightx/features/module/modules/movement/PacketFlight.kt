@@ -8,6 +8,7 @@ import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.utils.MovementUtils
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
+import org.lwjgl.input.Keyboard
 
 @ModuleInfo(name = "PacketFlight", spacedName = "Packet Flight", category = ModuleCategory.MOVEMENT)
 class PacketFlight : Module() {
@@ -60,7 +61,8 @@ class PacketFlight : Module() {
             )
         }
 
-        if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+            mc.gameSettings.keyBindSneak.pressed = false
             mc.netHandler.addToSendQueue(
                 C04PacketPlayerPosition(
                     mc.thePlayer.posX,

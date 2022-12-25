@@ -6,7 +6,7 @@ import net.aspw.nightx.event.ClientShutdownEvent
 import net.aspw.nightx.event.EventManager
 import net.aspw.nightx.features.command.CommandManager
 import net.aspw.nightx.features.module.ModuleManager
-import net.aspw.nightx.features.special.AntiForge
+import net.aspw.nightx.features.special.ClientSpoof
 import net.aspw.nightx.features.special.MacroManager
 import net.aspw.nightx.features.special.ModItems
 import net.aspw.nightx.features.special.script.ScriptManager
@@ -72,7 +72,7 @@ object NightX {
 
         // Register listeners
         eventManager.registerListener(RotationUtils())
-        eventManager.registerListener(AntiForge())
+        eventManager.registerListener(ClientSpoof())
         eventManager.registerListener(InventoryUtils())
         eventManager.registerListener(InventoryHelper)
         eventManager.registerListener(PacketUtils())

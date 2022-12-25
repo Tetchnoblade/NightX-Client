@@ -5,7 +5,7 @@ import net.aspw.nightx.NightX;
 import net.aspw.nightx.config.FileConfig;
 import net.aspw.nightx.config.FileManager;
 import net.aspw.nightx.features.module.Module;
-import net.aspw.nightx.features.special.AntiForge;
+import net.aspw.nightx.features.special.ClientSpoof;
 import net.aspw.nightx.features.special.MacroManager;
 import net.aspw.nightx.utils.EntityUtils;
 import net.aspw.nightx.value.Value;
@@ -74,12 +74,12 @@ public class ValuesConfig extends FileConfig {
             } else if (entry.getKey().equalsIgnoreCase("features")) {
                 JsonObject jsonValue = (JsonObject) entry.getValue();
 
-                if (jsonValue.has("VanillaSpoof"))
-                    AntiForge.enabled = jsonValue.get("VanillaSpoof").getAsBoolean();
+                if (jsonValue.has("ClientSpoof"))
+                    ClientSpoof.enabled = jsonValue.get("ClientSpoof").getAsBoolean();
                 if (jsonValue.has("FMLSpoof"))
-                    AntiForge.blockFML = jsonValue.get("FMLSpoof").getAsBoolean();
+                    ClientSpoof.blockFML = jsonValue.get("FMLSpoof").getAsBoolean();
                 if (jsonValue.has("PayloadsSpoof"))
-                    AntiForge.blockFML = jsonValue.get("PayloadsSpoof").getAsBoolean();
+                    ClientSpoof.blockPayloadPackets = jsonValue.get("PayloadsSpoof").getAsBoolean();
             } else if (entry.getKey().equalsIgnoreCase("thealtening")) {
                 JsonObject jsonValue = (JsonObject) entry.getValue();
 
@@ -136,10 +136,11 @@ public class ValuesConfig extends FileConfig {
         jsonObject.add("macros", jsonMacros);
 
         final JsonObject jsonFeatures = new JsonObject();
-        jsonFeatures.addProperty("VanillaSpoof", AntiForge.enabled);
-        jsonFeatures.addProperty("FMLSpoof", AntiForge.blockFML);
-        jsonObject.add("features", jsonFeatures);
 
+        jsonObject.add("features", jsonFeatures);
+        jsonFeatures.addProperty("ClientSpoof", ClientSpoof.enabled);
+        jsonFeatures.addProperty("FMLSpoof", ClientSpoof.blockFML);
+        jsonFeatures.addProperty("PayloadsSpoof", ClientSpoof.blockPayloadPackets);
         final JsonObject theAlteningObject = new JsonObject();
         theAlteningObject.addProperty("API-Key", GuiTheAltening.Companion.getApiKey());
         jsonObject.add("thealtening", theAlteningObject);

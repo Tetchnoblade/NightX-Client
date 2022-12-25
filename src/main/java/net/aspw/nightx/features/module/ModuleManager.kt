@@ -4,6 +4,7 @@ import net.aspw.nightx.NightX
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.KeyEvent
 import net.aspw.nightx.event.Listenable
+import net.aspw.nightx.features.module.modules.client.ClientSpoof
 import net.aspw.nightx.features.module.modules.client.Gui
 import net.aspw.nightx.features.module.modules.client.HudEditor
 import net.aspw.nightx.features.module.modules.client.PluginsChecker
@@ -204,7 +205,8 @@ class ModuleManager : Listenable {
             HitParticles::class.java,
             CivBreak::class.java,
             PlayerEdit::class.java,
-            AntiTabComplete::class.java
+            AntiTabComplete::class.java,
+            ClientSpoof::class.java
         )
 
         registerModule(Fucker)

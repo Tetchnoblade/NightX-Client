@@ -1154,14 +1154,14 @@ public class Flight extends Module {
         if (noPacketModify)
             return;
 
-        if (packet instanceof S08PacketPlayerPosLook && mode.equalsIgnoreCase("blockdrop")) {
+        if (mode.equalsIgnoreCase("blockdrop")) {
             S08PacketPlayerPosLook awa = (S08PacketPlayerPosLook) event.getPacket();
             event.cancelEvent();
 
             mc.thePlayer.sendQueue.getNetworkManager().sendPacket(new C03PacketPlayer.C06PacketPlayerPosLook(awa.getX(), awa.getY(), awa.getZ(), awa.getYaw(), awa.getPitch(), false));
 
             mc.thePlayer.setPosition(awa.getX(), awa.getY(), awa.getZ());
-            mc.timer.timerSpeed = 5f;
+            mc.timer.timerSpeed = 5.0f;
         }
 
         if (packet instanceof S08PacketPlayerPosLook && mode.equalsIgnoreCase("exploit") && wdState == 3) {
@@ -1197,8 +1197,6 @@ public class Flight extends Module {
 
         if (packet instanceof C03PacketPlayer) {
             final C03PacketPlayer packetPlayer = (C03PacketPlayer) packet;
-
-            boolean lastOnGround = packetPlayer.onGround;
 
             if (mode.equalsIgnoreCase("NCP") || mode.equalsIgnoreCase("Rewinside") ||
                     (mode.equalsIgnoreCase("Mineplex") && mc.thePlayer.inventory.getCurrentItem() == null) || (mode.equalsIgnoreCase("Verus") && verusSpoofGround.get() && verusDmged))

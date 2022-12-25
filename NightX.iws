@@ -5,9 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d01c55b-d37f-497b-a569-910a52b4446d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/ClientSpoof.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/ClientSpoof.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/NoSlow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/NoSlow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/GuiAltManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/GuiAltManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/downloads.json" beforeDir="false" afterPath="$PROJECT_DIR$/downloads.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/NightX.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/NightX.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/config/configs/ValuesConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/config/configs/ValuesConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/ModuleManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/ModuleManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/combat/KillAura.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/combat/KillAura.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/Flight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/Flight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/PacketFlight.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/PacketFlight.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Animations.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Animations.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/AntiForge.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/network/MixinNetHandlerPlayClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/network/MixinNetHandlerPlayClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/packets/MixinC00Handshake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/packets/MixinC00Handshake.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/transformers/ForgeNetworkTransformer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/transformers/ForgeNetworkTransformer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,6 +105,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -141,28 +160,28 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="net.aspw.nightx.features.module.modules.client" />
       <recent name="net.aspw.nightx.utils" />
       <recent name="net.aspw.nightx.visual.client.altmanager.menus" />
       <recent name="net.aspw.nightx.features.module.modules.utility" />
-      <recent name="net.aspw.nightx.features.module.modules.client" />
       <recent name="net.aspw.nightx.features.special" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="net.aspw.nightx.visual.client.clickgui.next.style" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="net.aspw.nightx.features.module.modules.render" />
       <recent name="net.aspw.nightx.features.module.modules.movement" />
       <recent name="net.aspw.nightx.visual.hud.element.elements" />
       <recent name="net.aspw.nightx.utils" />
       <recent name="net.aspw.nightx.features.command.commands" />
-      <recent name="net.aspw.nightx.features.module.modules.exploit" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="net.aspw.nightx.features.module.modules.client" />
       <recent name="net.aspw.nightx.config.configs" />
       <recent name="net.aspw.nightx.features.module.modules.render" />
       <recent name="net.aspw.nightx.features.module.modules.movement" />
       <recent name="net.aspw.nightx.utils" />
-      <recent name="net.aspw.nightx.injection.forge.mixins.optimize" />
     </key>
   </component>
   <component name="RunManager" selected="アプリケーション.Minecraft Client">

@@ -78,7 +78,7 @@ class Animations : Module() {
                 "Rotate",
                 "Spin",
                 "Spinny"
-            ), "Autumn"
+            ), "Swing"
         )
 
         // item general scale

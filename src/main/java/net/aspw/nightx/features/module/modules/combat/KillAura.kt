@@ -326,8 +326,6 @@ class KillAura : Module() {
     private var attackDelay = 0L
     private var clicks = 0
 
-    private var lastHitTick = 0
-
     // Container Delay
     private var containerOpen = -1L
 
@@ -857,8 +855,16 @@ class KillAura : Module() {
         }
 
         // Attack target
-        if (EnchantmentHelper.getModifierForCreature(mc.thePlayer.heldItem, entity.creatureAttribute) > 0F)
+        tickTimer.update()
+
+        if (EnchantmentHelper.getModifierForCreature(
+                mc.thePlayer.heldItem,
+                entity.creatureAttribute
+            ) > 0F && tickTimer.hasTimePassed(2)
+        ) {
             mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
+            tickTimer.reset()
+        }
 
         if (swingValue.get() || ViaForge.getInstance().version <= 47) // version fix
             mc.thePlayer.swingItem()
