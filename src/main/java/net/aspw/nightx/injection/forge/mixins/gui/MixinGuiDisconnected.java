@@ -17,14 +17,12 @@ import net.aspw.nightx.utils.ClientUtils;
 import net.aspw.nightx.utils.ServerUtils;
 import net.aspw.nightx.utils.SessionUtils;
 import net.aspw.nightx.utils.misc.RandomUtils;
+import net.aspw.nightx.visual.client.GuiProxy;
 import net.aspw.nightx.visual.client.altmanager.GuiAltManager;
 import net.aspw.nightx.visual.client.altmanager.menus.GuiLoginProgress;
 import net.aspw.nightx.visual.client.altmanager.menus.GuiTheAltening;
 import net.aspw.nightx.visual.font.Fonts;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiDisconnected;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiMultiplayer;
+import net.minecraft.client.gui.*;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.Session;
 import net.minecraftforge.fml.client.config.GuiSlider;
@@ -57,6 +55,7 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
 
         buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 100, 20, GuiTheAltening.Companion.getApiKey().isEmpty() ? "Reconnect with Alt" : "New The Altening Alt"));
         buttonList.add(new GuiButton(4, this.width / 2 + 2, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 98, 20, "Random Cracked"));
+        buttonList.add(new GuiButton(999, width - 228, 7, 98, 20, "Proxy"));
         buttonList.add(viaSlider = new GuiSlider(1337, width - 116, 7, 110, 20, "Protocol: ", "", 0, ProtocolCollection.values().length - 1, ProtocolCollection.values().length - 1 - getProtocolIndex(ViaForge.getInstance().getVersion()), false, true,
                 guiSlider -> {
                     ViaForge.getInstance().setVersion(ProtocolCollection.values()[ProtocolCollection.values().length - 1 - guiSlider.getValueInt()].getVersion().getVersion());
@@ -139,6 +138,9 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
                         crackedAccount.getSession().getToken(), crackedAccount.getSession().getType());
                 NightX.eventManager.callEvent(new SessionEvent());
                 ServerUtils.connectToLastServer();
+                break;
+            case 999:
+                mc.displayGuiScreen(new GuiProxy((GuiScreen) (Object) this));
                 break;
         }
     }

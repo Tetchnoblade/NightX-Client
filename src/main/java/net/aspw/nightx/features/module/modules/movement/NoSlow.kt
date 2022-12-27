@@ -35,6 +35,7 @@ class NoSlow : Module() {
             "OldHypixel",
             "Blink",
             "Experimental",
+            "NCP",
             "NewNCP",
             "AAC",
             "AAC5",

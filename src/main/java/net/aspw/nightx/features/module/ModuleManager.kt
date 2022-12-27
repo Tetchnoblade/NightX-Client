@@ -206,7 +206,8 @@ class ModuleManager : Listenable {
             CivBreak::class.java,
             PlayerEdit::class.java,
             AntiTabComplete::class.java,
-            ClientSpoof::class.java
+            ClientSpoof::class.java,
+            Knockback::class.java
         )
 
         registerModule(Fucker)

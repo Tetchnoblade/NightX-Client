@@ -269,9 +269,9 @@ class TabGui(x: Double = -1.0, y: Double = 17.0) : Element(x = x, y = y) {
         val xPos = tabHeight.get() * selectedCategory
         if (tabY.toInt() != xPos.toInt()) {
             if (xPos > tabY)
-                tabY += 0.1F * delta
+                tabY += 0.5F * delta
             else
-                tabY -= 0.1F * delta
+                tabY -= 0.5F * delta
         } else
             tabY = xPos
         val xPos2 = tabHeight.get() * selectedModule

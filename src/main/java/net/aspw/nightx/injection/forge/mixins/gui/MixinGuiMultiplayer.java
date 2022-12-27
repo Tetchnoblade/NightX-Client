@@ -2,8 +2,11 @@ package net.aspw.nightx.injection.forge.mixins.gui;
 
 import de.enzaxd.viaforge.ViaForge;
 import de.enzaxd.viaforge.protocol.ProtocolCollection;
+import net.aspw.nightx.visual.client.GuiProxy;
 import net.aspw.nightx.visual.font.Fonts;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMultiplayer;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.config.GuiSlider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,6 +19,7 @@ public abstract class MixinGuiMultiplayer extends MixinGuiScreen {
 
     @Inject(method = "initGui", at = @At("RETURN"))
     private void initGui(CallbackInfo callbackInfo) {
+        buttonList.add(new GuiButton(999, width - 228, 7, 98, 20, "Proxy"));
         buttonList.add(viaSlider = new GuiSlider(1337, width - 116, 7, 110, 20, "Protocol: ", "", 0, ProtocolCollection.values().length - 1, ProtocolCollection.values().length - 1 - getProtocolIndex(ViaForge.getInstance().getVersion()), false, true,
                 guiSlider -> {
                     ViaForge.getInstance().setVersion(ProtocolCollection.values()[ProtocolCollection.values().length - 1 - guiSlider.getValueInt()].getVersion().getVersion());
@@ -45,5 +49,11 @@ public abstract class MixinGuiMultiplayer extends MixinGuiScreen {
             if (ProtocolCollection.values()[i].getVersion().getVersion() == id)
                 return i;
         return -1;
+    }
+
+    @Inject(method = "actionPerformed", at = @At("HEAD"))
+    private void actionPerformed(GuiButton button, CallbackInfo callbackInfo) {
+        if (button.id == 999)
+            mc.displayGuiScreen(new GuiProxy((GuiScreen) (Object) this));
     }
 }

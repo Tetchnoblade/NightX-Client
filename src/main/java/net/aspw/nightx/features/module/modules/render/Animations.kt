@@ -27,7 +27,7 @@ class Animations : Module() {
         }
 
         if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && blockingEquipValue.get() && mc.thePlayer.isBlocking || event.eventState === EventState.POST && blockingEquipValue.get() && mc.thePlayer.isSwingInProgress && killAura?.target != null) {
-            mc.thePlayer.renderArmPitch = -120 + mc.thePlayer.rotationPitch
+            mc.thePlayer.renderArmPitch = -100 + mc.thePlayer.rotationPitch
         }
     }
 
@@ -45,6 +45,7 @@ class Animations : Module() {
                 "Push",
                 "Dash",
                 "Swing",
+                "SwingFull",
                 "Swank",
                 "Swong",
                 "Swang",

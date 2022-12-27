@@ -147,5 +147,3 @@ configurations {
 tasks.reobfShadowJar.mustRunAfter shadowJar
 
 tasks.reobfJar.dependsOn(shadowJar)
-
-tasks.runClient.dependsOn(shadowJar)
