@@ -23,6 +23,7 @@ object NightX {
 
     // Client information
     const val CLIENT_BEST = "NightX"
+    const val CLIENT_COLORED = "§lN§fightX"
     const val CLIENT_FOLDER = ".nightx"
     const val CLIENT_VERSION = "Developer"
     const val CLIENT_CREATOR = "CCBlueX, Exit-scammed, As_pw, Zywl"

@@ -104,17 +104,17 @@ class Notifications(
 }
 
 class Notification(message: String, type: Type, displayLength: Long) {
-    private val notifyDir = "nightx/notification/"
+    private val notifyDir = "client/notification/"
 
     private val imgSuccess = ResourceLocation("${notifyDir}checkmark.png")
     private val imgError = ResourceLocation("${notifyDir}error.png")
     private val imgWarning = ResourceLocation("${notifyDir}warning.png")
     private val imgInfo = ResourceLocation("${notifyDir}info.png")
 
-    private val newSuccess = ResourceLocation("${notifyDir}new/checkmark.png")
-    private val newError = ResourceLocation("${notifyDir}new/error.png")
-    private val newWarning = ResourceLocation("${notifyDir}new/warning.png")
-    private val newInfo = ResourceLocation("${notifyDir}new/info.png")
+    private val newSuccess = ResourceLocation("${notifyDir}checkmark.png")
+    private val newError = ResourceLocation("${notifyDir}error.png")
+    private val newWarning = ResourceLocation("${notifyDir}warning.png")
+    private val newInfo = ResourceLocation("${notifyDir}info.png")
 
     var x = 0F
     var textLength = 0

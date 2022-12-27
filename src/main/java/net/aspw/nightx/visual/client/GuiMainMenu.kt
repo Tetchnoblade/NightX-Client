@@ -14,7 +14,7 @@ import java.awt.Color
 
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
-    val kawaiiLogo = ResourceLocation("nightx/kawaii.png")
+    val kawaiiLogo = ResourceLocation("client/kawaii.png")
 
     var slideX: Float = 0F
     var fade: Float = 0F
@@ -173,12 +173,12 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         mouseX >= x && mouseX < x2 && mouseY >= y && mouseY < y2
 
     enum class ImageButton(val buttonName: String, val texture: ResourceLocation) {
-        Single("Single Player", ResourceLocation("nightx/menu/singleplayer.png")),
-        Multi("Multi Player", ResourceLocation("nightx/menu/multiplayer.png")),
-        Alts("Alt Manager", ResourceLocation("nightx/menu/alt.png")),
-        Settings("Options", ResourceLocation("nightx/menu/settings.png")),
-        Discord("Discord", ResourceLocation("nightx/menu/discord.png")),
-        Exit("Exit", ResourceLocation("nightx/menu/exit.png"))
+        Single("Single Player", ResourceLocation("client/menu/singleplayer.png")),
+        Multi("Multi Player", ResourceLocation("client/menu/multiplayer.png")),
+        Alts("Alt Manager", ResourceLocation("client/menu/alt.png")),
+        Settings("Options", ResourceLocation("client/menu/settings.png")),
+        Discord("Discord", ResourceLocation("client/menu/discord.png")),
+        Exit("Exit", ResourceLocation("client/menu/exit.png"))
     }
 
     override fun keyTyped(typedChar: Char, keyCode: Int) {}

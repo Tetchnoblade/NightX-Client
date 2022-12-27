@@ -107,7 +107,7 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER))
     private void createDisplay(CallbackInfo callbackInfo) {
-        Display.setTitle("Minecraft 1.8.8");
+        Display.setTitle(NightX.CLIENT_BEST + " - " + NightX.CLIENT_VERSION);
     }
 
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))

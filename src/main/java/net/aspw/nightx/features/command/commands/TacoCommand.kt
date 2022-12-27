@@ -16,18 +16,18 @@ class TacoCommand : Command("taco", emptyArray()), Listenable {
     private var image = 0
     private var running = 0f
     private val tacoTextures = arrayOf(
-        ResourceLocation("nightx/taco/1.png"),
-        ResourceLocation("nightx/taco/2.png"),
-        ResourceLocation("nightx/taco/3.png"),
-        ResourceLocation("nightx/taco/4.png"),
-        ResourceLocation("nightx/taco/5.png"),
-        ResourceLocation("nightx/taco/6.png"),
-        ResourceLocation("nightx/taco/7.png"),
-        ResourceLocation("nightx/taco/8.png"),
-        ResourceLocation("nightx/taco/9.png"),
-        ResourceLocation("nightx/taco/10.png"),
-        ResourceLocation("nightx/taco/11.png"),
-        ResourceLocation("nightx/taco/12.png")
+        ResourceLocation("client/taco/1.png"),
+        ResourceLocation("client/taco/2.png"),
+        ResourceLocation("client/taco/3.png"),
+        ResourceLocation("client/taco/4.png"),
+        ResourceLocation("client/taco/5.png"),
+        ResourceLocation("client/taco/6.png"),
+        ResourceLocation("client/taco/7.png"),
+        ResourceLocation("client/taco/8.png"),
+        ResourceLocation("client/taco/9.png"),
+        ResourceLocation("client/taco/10.png"),
+        ResourceLocation("client/taco/11.png"),
+        ResourceLocation("client/taco/12.png")
     )
 
     init {

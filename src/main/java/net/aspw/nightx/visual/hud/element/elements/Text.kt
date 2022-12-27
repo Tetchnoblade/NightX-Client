@@ -142,7 +142,7 @@ class Text(
 
         return when (str) {
             "userName" -> mc.session.username
-            "clientName" -> "§lN§fightX"
+            "clientName" -> NightX.CLIENT_COLORED
             "clientVersion" -> NightX.CLIENT_VERSION
             "clientCreator" -> NightX.CLIENT_CREATOR
             "fps" -> Minecraft.getDebugFPS().toString()

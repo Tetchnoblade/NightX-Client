@@ -8,7 +8,7 @@ import net.aspw.nightx.features.module.ModuleInfo
 import net.minecraft.network.play.client.C0BPacketEntityAction
 
 @ModuleInfo(
-    name = "Knockback", spacedName = "Knock back",
+    name = "Knockback",
     category = ModuleCategory.COMBAT
 )
 class Knockback : Module() {

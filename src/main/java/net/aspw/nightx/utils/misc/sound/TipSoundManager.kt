@@ -13,9 +13,9 @@ class TipSoundManager {
         val disableSoundFile = File(NightX.fileManager.soundsDir, "disable.wav")
 
         if (!enableSoundFile.exists())
-            FileUtils.unpackFile(enableSoundFile, "assets/minecraft/nightx/sound/enable.wav")
+            FileUtils.unpackFile(enableSoundFile, "assets/minecraft/client/sound/enable.wav")
         if (!disableSoundFile.exists())
-            FileUtils.unpackFile(disableSoundFile, "assets/minecraft/nightx/sound/disable.wav")
+            FileUtils.unpackFile(disableSoundFile, "assets/minecraft/client/sound/disable.wav")
 
         enableSound = TipSoundPlayer(enableSoundFile)
         disableSound = TipSoundPlayer(disableSoundFile)

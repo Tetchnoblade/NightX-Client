@@ -55,7 +55,7 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
 
         buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 100, 20, GuiTheAltening.Companion.getApiKey().isEmpty() ? "Reconnect with Alt" : "New The Altening Alt"));
         buttonList.add(new GuiButton(4, this.width / 2 + 2, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 98, 20, "Random Cracked"));
-        buttonList.add(new GuiButton(999, width - 228, 7, 98, 20, "Proxy"));
+        buttonList.add(new GuiButton(999, width - 218, 7, 98, 20, "Proxy"));
         buttonList.add(viaSlider = new GuiSlider(1337, width - 116, 7, 110, 20, "Protocol: ", "", 0, ProtocolCollection.values().length - 1, ProtocolCollection.values().length - 1 - getProtocolIndex(ViaForge.getInstance().getVersion()), false, true,
                 guiSlider -> {
                     ViaForge.getInstance().setVersion(ProtocolCollection.values()[ProtocolCollection.values().length - 1 - guiSlider.getValueInt()].getVersion().getVersion());

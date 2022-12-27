@@ -25,7 +25,7 @@ import java.net.Proxy.NO_PROXY
 
 class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
 
-    val alteningLogo = ResourceLocation("nightx/altening.png")
+    val alteningLogo = ResourceLocation("client/altening.png")
 
     // Data Storage
     companion object {

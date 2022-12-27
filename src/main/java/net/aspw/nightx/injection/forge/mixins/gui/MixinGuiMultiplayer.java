@@ -19,7 +19,7 @@ public abstract class MixinGuiMultiplayer extends MixinGuiScreen {
 
     @Inject(method = "initGui", at = @At("RETURN"))
     private void initGui(CallbackInfo callbackInfo) {
-        buttonList.add(new GuiButton(999, width - 228, 7, 98, 20, "Proxy"));
+        buttonList.add(new GuiButton(999, width - 218, 7, 98, 20, "Proxy"));
         buttonList.add(viaSlider = new GuiSlider(1337, width - 116, 7, 110, 20, "Protocol: ", "", 0, ProtocolCollection.values().length - 1, ProtocolCollection.values().length - 1 - getProtocolIndex(ViaForge.getInstance().getVersion()), false, true,
                 guiSlider -> {
                     ViaForge.getInstance().setVersion(ProtocolCollection.values()[ProtocolCollection.values().length - 1 - guiSlider.getValueInt()].getVersion().getVersion());

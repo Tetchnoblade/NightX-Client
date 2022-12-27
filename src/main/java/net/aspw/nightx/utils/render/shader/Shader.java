@@ -18,11 +18,11 @@ public abstract class Shader extends MinecraftInstance {
         int vertexShaderID, fragmentShaderID;
 
         try {
-            final InputStream vertexStream = getClass().getResourceAsStream("/assets/minecraft/nightx/shader/vertex.vert");
+            final InputStream vertexStream = getClass().getResourceAsStream("/assets/minecraft/client/shader/vertex.vert");
             vertexShaderID = createShader(IOUtils.toString(vertexStream), ARBVertexShader.GL_VERTEX_SHADER_ARB);
             IOUtils.closeQuietly(vertexStream);
 
-            final InputStream fragmentStream = getClass().getResourceAsStream("/assets/minecraft/nightx/shader/fragment/" + fragmentShader);
+            final InputStream fragmentStream = getClass().getResourceAsStream("/assets/minecraft/client/shader/fragment/" + fragmentShader);
             fragmentShaderID = createShader(IOUtils.toString(fragmentStream), ARBFragmentShader.GL_FRAGMENT_SHADER_ARB);
             IOUtils.closeQuietly(fragmentStream);
         } catch (final Exception e) {

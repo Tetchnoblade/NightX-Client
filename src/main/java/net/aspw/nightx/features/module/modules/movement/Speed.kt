@@ -8,6 +8,7 @@ import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.movement.speeds.SpeedMode
 import net.aspw.nightx.features.module.modules.movement.speeds.aac.*
 import net.aspw.nightx.features.module.modules.movement.speeds.blocksmc.BlocksMC
+import net.aspw.nightx.features.module.modules.movement.speeds.matrix.MatrixHop
 import net.aspw.nightx.features.module.modules.movement.speeds.ncp.*
 import net.aspw.nightx.features.module.modules.movement.speeds.other.*
 import net.aspw.nightx.features.module.modules.movement.speeds.spartan.SpartanYPort
@@ -35,12 +36,12 @@ import net.minecraft.client.settings.GameSettings
 
 @ModuleInfo(name = "Speed", category = ModuleCategory.MOVEMENT)
 class Speed : Module() {
-    val speedModes = arrayOf( // NCP
+    val speedModes = arrayOf(
         NCPBHop(),
         NCPFHop(),
         SNCPBHop(),
         NCPHop(),
-        NCPYPort(),  // AAC
+        NCPYPort(),
         AAC4Hop(),
         AAC4SlowHop(),
         AACv4BHop(),
@@ -62,15 +63,15 @@ class Speed : Module() {
         AACHop3313(),
         AACHop438(),
         AACYPort(),
-        AACYPort2(),  // Watchdog
+        AACYPort2(),
         WatchdogBoost(),
         WatchdogStable(),
-        WatchdogCustom(),  // Vanilla
-        VanillaBhop(),  // Spartan
-        SpartanYPort(),  // Spectre
+        WatchdogCustom(),
+        VanillaBhop(),
+        SpartanYPort(),
         SpectreBHop(),
         SpectreLowHop(),
-        SpectreOnGround(),  // Other
+        SpectreOnGround(),
         SlowHop(),
         Custom(),
         Jump(),
@@ -85,18 +86,31 @@ class Speed : Module() {
         YPort2(),
         HiveHop(),
         MineplexGround(),
-        TeleportCubeCraft(),  // Verus
+        TeleportCubeCraft(),
         VerusHop(),
         VerusLowHop(),
-        VerusHard(),  // Vulcan
+        VerusHard(),
         VulcanHop1(),
         VulcanHop2(),
-        VulcanYPort(),  // BlocksMC
-        BlocksMC()
+        VulcanYPort(),
+        BlocksMC(),
+        MatrixHop()
     )
     val typeValue: ListValue = object : ListValue(
         "Type",
-        arrayOf("NCP", "AAC", "Spartan", "Spectre", "Watchdog", "Verus", "BlocksMC", "Custom", "VanillaBhop", "Other"),
+        arrayOf(
+            "NCP",
+            "AAC",
+            "Spartan",
+            "Spectre",
+            "Watchdog",
+            "Verus",
+            "MatrixHop",
+            "BlocksMC",
+            "Custom",
+            "VanillaBhop",
+            "Other"
+        ),
         "VanillaBhop"
     ) {
         override fun onChange(oldValue: String, newValue: String) {
@@ -199,7 +213,6 @@ class Speed : Module() {
         arrayOf("Boost", "Stable", "Custom"),
         "Custom",
         { typeValue.get().equals("watchdog", ignoreCase = true) }) {
-        // the worst hypixel bypass ever existed
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
         }
@@ -242,8 +255,10 @@ class Speed : Module() {
             if (state) onEnable()
         }
     }
+
     override val tag: String
-        get() = typeValue.get()
+        get() = modeName
+
     private val onlySingleName: String
         private get() {
             var mode = ""
@@ -304,6 +319,7 @@ class Speed : Module() {
                 "Spectre" -> mode = "Spectre" + spectreModeValue.get()
                 "Watchdog" -> mode = "Watchdog" + hypixelModeValue.get()
                 "Verus" -> mode = "Verus" + verusModeValue.get()
+                "MatrixHop" -> mode = "MatrixHop"
                 "BlocksMC" -> mode = "BlocksMC"
                 "VanillaBhop" -> mode = "VanillaBhop"
                 "Custom" -> mode = "Custom"
