@@ -51,7 +51,6 @@ class CommandManager {
         registerCommand(PacketTeleportCommand())
         registerCommand(PacketVClipCommand())
         registerCommand(CloudScriptCommand())
-        registerCommand(BruhCommand())
     }
 
     /**

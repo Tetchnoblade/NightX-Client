@@ -14,16 +14,16 @@ import net.aspw.nightx.visual.hud.designer.GuiHudDesigner
 @ModuleInfo(name = "Hud", category = ModuleCategory.RENDER, array = false)
 class Hud : Module() {
     val nof5Crosshair = BoolValue("No-F5Crosshair", true)
-    val animHotbarValue = BoolValue("Hotbar-Animation", false)
+    val animHotbarValue = BoolValue("Hotbar-Animation", true)
     val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F, { animHotbarValue.get() })
     val blackHotbarValue = BoolValue("Black-Hotbar", false)
     val fontChatValue = BoolValue("FontChat", false)
     val fontType = FontValue("Font", Fonts.fontSFUI40, { fontChatValue.get() })
     val chatRectValue = BoolValue("ChatRect", true)
-    val chatAnimationValue = BoolValue("Chat-Animation", false)
+    val chatAnimationValue = BoolValue("Chat-Animation", true)
     val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.06F, 0.01F, 0.5F, { chatAnimationValue.get() })
     private val toggleMessageValue = BoolValue("DisplayToggleMessage", false)
-    private val toggleSoundValue = ListValue("ToggleSound", arrayOf("None", "Default", "Custom"), "None")
+    private val toggleSoundValue = ListValue("ToggleSound", arrayOf("None", "Default", "Custom"), "Custom")
     private val toggleVolumeValue =
         IntegerValue("ToggleVolume", 90, 0, 100, { toggleSoundValue.get().equals("custom", true) })
     val guiButtonStyle =

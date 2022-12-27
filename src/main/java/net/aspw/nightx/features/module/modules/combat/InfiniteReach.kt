@@ -31,13 +31,14 @@ class InfiniteReach : Module() {
         if (targetEntity != null) {
             if (!shouldHit) {
                 shouldHit = true
+                mc.thePlayer.swingItem()
                 return
             }
             val rotationVector = RotationUtils.getVectorForRotation(Rotation(mc.thePlayer.rotationYaw, 0f))
             val x = mc.thePlayer.posX + rotationVector.xCoord * (mc.thePlayer.getDistanceToEntity(targetEntity) - 1.0f)
             val z = mc.thePlayer.posZ + rotationVector.zCoord * (mc.thePlayer.getDistanceToEntity(targetEntity) - 1.0f)
             val y = targetEntity!!.position.y + 0.25
-            PathUtils.findPath(x, y + 1.0, z, 4.0).forEach(Consumer { pos: Vector3d ->
+            PathUtils.findPath(x, y + 1, z, 4.0).forEach(Consumer { pos: Vector3d ->
                 mc.netHandler.addToSendQueue(
                     C04PacketPlayerPosition(
                         pos.getX(),
@@ -48,7 +49,6 @@ class InfiniteReach : Module() {
                 )
             })
             mc.thePlayer.sendQueue.addToSendQueue(C02PacketUseEntity(targetEntity, C02PacketUseEntity.Action.ATTACK))
-            mc.thePlayer.swingItem()
             shouldHit = false
             targetEntity = null
         } else shouldHit = false

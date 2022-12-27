@@ -48,7 +48,7 @@ class Target(
     val shadowColorBlueValue =
         IntegerValue("Shadow-Blue", 255, 0, 255, { shadowValue.get() && shadowColorMode.get().equals("custom", true) })
 
-    val fadeValue = BoolValue("FadeAnim", false)
+    val fadeValue = BoolValue("FadeAnim", true)
     val fadeSpeed = FloatValue("Fade-Speed", 0.9F, 0F, 5F, { fadeValue.get() })
 
     val noAnimValue = BoolValue("No-Animation", false)

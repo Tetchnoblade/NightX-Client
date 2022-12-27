@@ -17,12 +17,12 @@ import net.minecraft.client.renderer.RenderHelper
  */
 @ElementInfo(name = "Armor")
 class Armor(
-    x: Double = -8.0, y: Double = 54.0, scale: Float = 1F,
-    side: Side = Side(Side.Horizontal.MIDDLE, Side.Vertical.DOWN)
+    x: Double = 2.0, y: Double = 161.0, scale: Float = 1F,
+    side: Side = Side(Side.Horizontal.LEFT, Side.Vertical.UP)
 ) : Element(x, y, scale, side) {
 
     private val modeValue = ListValue("Mode", arrayOf("LiquidBounce", "Exhibition"), "Exhibition")
-    private val alignment = ListValue("Alignment", arrayOf("Horizontal", "Vertical"), "Horizontal")
+    private val alignment = ListValue("Alignment", arrayOf("Horizontal", "Vertical"), "Vertical")
 
     /**
      * Draw element
