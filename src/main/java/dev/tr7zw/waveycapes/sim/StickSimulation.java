@@ -1,16 +1,15 @@
 package dev.tr7zw.waveycapes.sim;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import dev.tr7zw.waveycapes.WaveyCapesBase;
 import dev.tr7zw.waveycapes.util.Mth;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Java port of https://www.youtube.com/watch?v=PGk0rnyTa1U by Sebastian Lague
  * Has some changes like maximizing bends, only designed to simulate a single
  * "rope"(cape). Point 0 is the part fixed to the player
- *
  */
 public class StickSimulation {
 

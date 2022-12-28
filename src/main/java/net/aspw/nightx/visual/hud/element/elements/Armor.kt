@@ -17,17 +17,18 @@ import net.minecraft.client.renderer.RenderHelper
  */
 @ElementInfo(name = "Armor")
 class Armor(
-    x: Double = 2.0, y: Double = 160.0, scale: Float = 1F,
-    side: Side = Side(Side.Horizontal.LEFT, Side.Vertical.UP)
+    x: Double = -9.0, y: Double = 53.0, scale: Float = 1F,
+    side: Side = Side(Side.Horizontal.MIDDLE, Side.Vertical.DOWN)
 ) : Element(x, y, scale, side) {
 
     private val modeValue = ListValue("Mode", arrayOf("LiquidBounce", "Exhibition"), "Exhibition")
-    private val alignment = ListValue("Alignment", arrayOf("Horizontal", "Vertical"), "Vertical")
+    private val alignment = ListValue("Alignment", arrayOf("Horizontal", "Vertical"), "Horizontal")
 
     /**
      * Draw element
      */
     override fun drawElement(): Border {
+        if (mc.playerController.isNotCreative) {
             val renderItem = mc.renderItem
             val isInsideWater = mc.thePlayer.isInsideOfMaterial(Material.water)
             val mode = modeValue.get()
@@ -70,6 +71,7 @@ class Armor(
             GlStateManager.disableBlend()
             GlStateManager.disableLighting()
             GlStateManager.disableCull()
+        }
 
         return if (modeValue.get().equals("Exhibition", true)) {
             if (alignment.get().equals("Horizontal", true))

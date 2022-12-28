@@ -1,10 +1,6 @@
 package dev.tr7zw.waveycapes.renderlayers;
 
-import dev.tr7zw.waveycapes.CapeHolder;
-import dev.tr7zw.waveycapes.CapeMovement;
-import dev.tr7zw.waveycapes.CapeStyle;
-import dev.tr7zw.waveycapes.WaveyCapesBase;
-import dev.tr7zw.waveycapes.WindMode;
+import dev.tr7zw.waveycapes.*;
 import dev.tr7zw.waveycapes.sim.StickSimulation;
 import dev.tr7zw.waveycapes.util.Mth;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -69,7 +65,7 @@ public class CustomCapeRenderLayer implements LayerRenderer<AbstractClientPlayer
     }
     
     private void modifyPoseStack(AbstractClientPlayer abstractClientPlayer, float h, int part) {
-        if(WaveyCapesBase.config.capeMovement == CapeMovement.BASIC_SIMULATION) {
+        if (WaveyCapesBase.config.capeMovement == CapeMovement.BASIC_SIMULATION) {
             modifyPoseStackSimulation(abstractClientPlayer, h, part);
             return;
         }

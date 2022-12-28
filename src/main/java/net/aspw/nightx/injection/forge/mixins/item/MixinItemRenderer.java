@@ -297,7 +297,7 @@ public abstract class MixinItemRenderer {
                         break;
                     case BLOCK:
                         if (NightX.moduleManager.getModule(Animations.class).getState() && NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("sloth")) {
-                            GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.11, Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue() - 0.24);
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.11, Animations.blockPosY.get().doubleValue() + 0.06, Animations.blockPosZ.get().doubleValue() - 0.24);
                             this.func_178096_b(f, f1);
                             if (Animations.RotateItems.get())
                                 rotateItemAnim();
@@ -308,8 +308,21 @@ public abstract class MixinItemRenderer {
                             break;
                         }
 
+                        if (NightX.moduleManager.getModule(Animations.class).getState() && NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("reverse")) {
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.22, Animations.blockPosZ.get().doubleValue() - 0.06);
+                            this.func_178096_b(f, f1);
+                            if (Animations.RotateItems.get())
+                                rotateItemAnim();
+
+                            this.func_178103_d();
+                            GL11.glTranslated(0.08D, -0.1D, -0.3D);
+                            if (Animations.RotateItems.get())
+                                rotateItemAnim();
+                            break;
+                        }
+
                         if (NightX.moduleManager.getModule(Animations.class).getState() && NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("smooth")) {
-                            GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.08, Animations.blockPosY.get().doubleValue() - 0.02, Animations.blockPosZ.get().doubleValue() - 0.24);
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.08, Animations.blockPosY.get().doubleValue() + 0.04, Animations.blockPosZ.get().doubleValue() - 0.24);
                             this.transformFirstPersonItem(f, 0.0f);
                             float var91 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                             this.func_178103_d(0.2F);
@@ -320,7 +333,7 @@ public abstract class MixinItemRenderer {
                         }
 
                         if (NightX.moduleManager.getModule(Animations.class).getState() && NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("swingfull")) {
-                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.16, Animations.blockPosZ.get().doubleValue() + 0.06);
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.22, Animations.blockPosZ.get().doubleValue() + 0.06);
                             this.func_178096_b(0.2f, f1);
                             if (Animations.RotateItems.get())
                                 rotateItemAnim();
@@ -332,7 +345,7 @@ public abstract class MixinItemRenderer {
                         }
 
                         if (NightX.moduleManager.getModule(Animations.class).getState() && NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("autumn")) {
-                            GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.1, Animations.blockPosY.get().doubleValue() - 0.03, Animations.blockPosZ.get().doubleValue() - 0.04);
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.1, Animations.blockPosY.get().doubleValue() + 0.03, Animations.blockPosZ.get().doubleValue() - 0.04);
                             this.transformFirstPersonItem(f, 0.0f);
                             float var91 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                             this.func_178103_d(0.2F);
@@ -342,8 +355,8 @@ public abstract class MixinItemRenderer {
                             break;
                         }
 
-                        if (NightX.moduleManager.getModule(Animations.class).getState() && !NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("sloth") && !NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("smooth") && !NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("swingfull") && !NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("autumn")) {
-                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.06, Animations.blockPosZ.get().doubleValue() + 0.06);
+                        if (NightX.moduleManager.getModule(Animations.class).getState() && !NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("reverse") && !NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("sloth") && !NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("smooth") && !NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("swingfull") && !NightX.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("autumn")) {
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.12, Animations.blockPosZ.get().doubleValue() + 0.06);
                             final String z = Animations.Sword.get();
                             switch (z) {
                                 case "LiquidBounce": {
@@ -492,17 +505,6 @@ public abstract class MixinItemRenderer {
                                     GlStateManager.rotate(Swang * 25.0F / 2.0F, -Swang, -0.0F, 9.0F);
                                     GlStateManager.rotate(Swang * 15.0F, 1.0F, -Swang / 2.0F, -0.0F);
                                     doBlockTransformations();
-                                    break;
-                                }
-                                case "Reverse": {
-                                    this.func_178096_b(f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    GL11.glTranslated(0.08D, -0.1D, -0.3D);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                                 case "Push": {

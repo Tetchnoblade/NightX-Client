@@ -88,9 +88,9 @@ class Arraylist(
     private val caseValue = ListValue("Case", arrayOf("None", "Lower", "Upper"), "None")
     private val spaceValue = FloatValue("Space", 0F, 0F, 5F)
     private val textHeightValue = FloatValue("TextHeight", 10F, 1F, 20F)
-    private val textYValue = FloatValue("TextY", 2F, 0F, 20F)
+    private val textYValue = FloatValue("TextY", 1.5F, 0F, 20F)
     private val tagsArrayColor = BoolValue("TagsArrayColor", false)
-    private val fontValue = FontValue("Font", Fonts.fontSFUI37)
+    private val fontValue = FontValue("Font", Fonts.minecraftFont)
 
     private var x2 = 0
     private var y2 = 0F

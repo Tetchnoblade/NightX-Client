@@ -24,13 +24,13 @@ import java.util.*
 
 @ElementInfo(name = "Notifications", single = true)
 class Notifications(
-    x: Double = 7.0, y: Double = 42.0, scale: Float = 1F,
+    x: Double = 3.0, y: Double = -26.0, scale: Float = 1F,
     side: Side = Side(Side.Horizontal.RIGHT, Side.Vertical.DOWN)
 ) : Element(x, y, scale, side) {
 
     val styleValue = ListValue("Style", arrayOf("Full", "Compact", "Material"), "Full")
     val barValue = BoolValue("Bar", true, { styleValue.get().equals("material", true) })
-    val bgAlphaValue = IntegerValue("Background-Alpha", 120, 0, 255, { !styleValue.get().equals("material", true) })
+    val bgAlphaValue = IntegerValue("Background-Alpha", 160, 0, 255, { !styleValue.get().equals("material", true) })
 
     val blurValue = BoolValue("Blur", false, { !styleValue.get().equals("material", true) })
     val blurStrength =
@@ -131,13 +131,13 @@ class Notification(message: String, type: Type, displayLength: Long) {
 
     init {
         this.message = message
-        this.messageList = Fonts.fontSFUI40.listFormattedStringToWidth(message, 105)
-        this.notifHeight = messageList.size.toFloat() * (Fonts.fontSFUI40.FONT_HEIGHT.toFloat() + 2F) + 8F
+        this.messageList = Fonts.minecraftFont.listFormattedStringToWidth(message, 105)
+        this.notifHeight = messageList.size.toFloat() * (Fonts.minecraftFont.FONT_HEIGHT.toFloat() + 2F) + 8F
         this.type = type
         this.displayTime = displayLength
         this.firstY = 19190F
         this.stayTimer.reset()
-        this.textLength = Fonts.fontSFUI40.getStringWidth(message)
+        this.textLength = Fonts.minecraftFont.getStringWidth(message)
     }
 
     constructor(message: String, type: Type) : this(message, type, 2000L)
@@ -283,7 +283,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
                     RenderUtils.drawRect(kek, -y, kek + dist, -1F - y, enumColor)
 
                 GlStateManager.resetColor()
-                Fonts.fontSFUI40.drawString(message, -x + 2, -18F - y, -1)
+                Fonts.minecraftFont.drawString(message, (-x + 2).toInt(), (-18F - y).toInt(), -1)
             }
 
             "material" -> {
@@ -352,8 +352,8 @@ class Notification(message: String, type: Type, displayLength: Long) {
 
                 var yHeight = 7F
                 for (s in messageList) {
-                    Fonts.fontSFUI40.drawString(s, 30F, yHeight, if (type == Type.ERROR) -1 else 0)
-                    yHeight += Fonts.fontSFUI40.FONT_HEIGHT.toFloat() + 2F
+                    Fonts.minecraftFont.drawString(s, 30, yHeight.toInt(), if (type == Type.ERROR) -1 else 0)
+                    yHeight += Fonts.minecraftFont.FONT_HEIGHT.toFloat() + 2F
                 }
 
                 GL11.glPushMatrix()

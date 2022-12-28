@@ -193,7 +193,7 @@ class Animations : Module() {
         val noBlockParticles = BoolValue("NoBlockParticles", false)
 
         @JvmField
-        val blockingEquipValue = BoolValue("BlockingEquip", true)
+        val blockingEquipValue = BoolValue("BlockingEquip", false)
 
         @JvmField
         val swingAnimValue = BoolValue("FluxSwingAnimation", false)
