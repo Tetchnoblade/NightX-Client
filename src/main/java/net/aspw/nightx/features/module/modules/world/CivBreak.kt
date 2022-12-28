@@ -25,7 +25,7 @@ class CivBreak : Module() {
 
     private val range = FloatValue("Range", 5F, 1F, 6F)
     private val rotationsValue = BoolValue("Rotations", true)
-    private val visualSwingValue = BoolValue("VisualSwing", true)
+    private val visualSwingValue = BoolValue("VisualSwing", false)
 
     private val airResetValue = BoolValue("Air-Reset", false)
     private val rangeResetValue = BoolValue("Range-Reset", false)

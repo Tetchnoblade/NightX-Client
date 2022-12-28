@@ -866,7 +866,7 @@ class KillAura : Module() {
             tickTimer.reset()
         }
 
-        if (swingValue.get() || ViaForge.getInstance().version <= 47) // version fix
+        if (swingValue.get() && ViaForge.getInstance().version <= 47) // version fix
             mc.thePlayer.swingItem()
 
         mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))

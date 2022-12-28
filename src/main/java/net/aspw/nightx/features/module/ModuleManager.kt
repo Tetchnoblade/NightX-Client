@@ -11,10 +11,7 @@ import net.aspw.nightx.features.module.modules.client.PluginsChecker
 import net.aspw.nightx.features.module.modules.combat.*
 import net.aspw.nightx.features.module.modules.cool.*
 import net.aspw.nightx.features.module.modules.exploit.*
-import net.aspw.nightx.features.module.modules.ghost.Aimbot
-import net.aspw.nightx.features.module.modules.ghost.AutoClicker
-import net.aspw.nightx.features.module.modules.ghost.FastBridge
-import net.aspw.nightx.features.module.modules.ghost.Hitboxes
+import net.aspw.nightx.features.module.modules.ghost.*
 import net.aspw.nightx.features.module.modules.misc.*
 import net.aspw.nightx.features.module.modules.movement.*
 import net.aspw.nightx.features.module.modules.player.*
@@ -207,7 +204,8 @@ class ModuleManager : Listenable {
             PlayerEdit::class.java,
             AntiTabComplete::class.java,
             ClientSpoof::class.java,
-            Knockback::class.java
+            Knockback::class.java,
+            TriggerBot::class.java
         )
 
         registerModule(Fucker)
