@@ -307,6 +307,6 @@ public abstract class MixinMinecraft {
      */
     @ModifyConstant(method = "getLimitFramerate", constant = @Constant(intValue = 30))
     public int getLimitFramerate(int constant) {
-        return 60;
+        return 30;
     }
 }

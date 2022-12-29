@@ -14,9 +14,7 @@ import net.aspw.nightx.utils.login.LoginUtils
 import net.aspw.nightx.utils.login.UserUtils.isValidTokenOffline
 import net.aspw.nightx.utils.misc.MiscUtils
 import net.aspw.nightx.utils.misc.RandomUtils
-import net.aspw.nightx.visual.client.altmanager.menus.GuiChangeName
 import net.aspw.nightx.visual.client.altmanager.menus.GuiLoginIntoAccount
-import net.aspw.nightx.visual.client.altmanager.menus.GuiSessionLogin
 import net.aspw.nightx.visual.client.altmanager.menus.GuiTheAltening
 import net.aspw.nightx.visual.font.Fonts
 import net.minecraft.client.Minecraft
@@ -70,11 +68,9 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         buttonList.add(GuiButton(4, 5, startPositionY + 24 * 2, 90, 20, "Random Alt").also { randomButton = it })
         buttonList.add(GuiButton(99, 5, startPositionY + 24 * 3, 90, 20, "Random Cracked").also { randomCracked = it })
         buttonList.add(GuiButton(6, 5, startPositionY + 24 * 4, 90, 20, "Direct Login"))
-        buttonList.add(GuiButton(10, 5, startPositionY + 24 * 5, 90, 20, "Session Login"))
-        buttonList.add(GuiButton(88, 5, startPositionY + 24 * 6, 90, 20, "Change Name"))
 
         if (activeGenerators.getOrDefault("thealtening", true))
-            buttonList.add(GuiButton(9, 5, startPositionY + 24 * 7, 90, 20, "The Altening"))
+            buttonList.add(GuiButton(9, 5, startPositionY + 24 * 5, 90, 20, "The Altening"))
     }
 
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
@@ -273,16 +269,8 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 status = "§aCopied account into your clipboard."
             }
 
-            88 -> { // Gui Change Name Button
-                mc.displayGuiScreen(GuiChangeName(this))
-            }
-
             9 -> { // Altening Button
                 mc.displayGuiScreen(GuiTheAltening(this))
-            }
-
-            10 -> { // Session Login Button
-                mc.displayGuiScreen(GuiSessionLogin(this))
             }
 
             727 -> {

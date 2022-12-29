@@ -174,7 +174,7 @@ public abstract class MixinGuiSlot implements IMixinGuiSlot {
     }
 
     /**
-     * @author CCBlueX (superblaubeere27)
+     * @author CCBlueX
      */
     @Overwrite
     public int getListWidth() {

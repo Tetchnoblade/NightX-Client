@@ -205,7 +205,8 @@ class ModuleManager : Listenable {
             AntiTabComplete::class.java,
             ClientSpoof::class.java,
             Knockback::class.java,
-            TriggerBot::class.java
+            TriggerBot::class.java,
+            DesyncFlight::class.java
         )
 
         registerModule(Fucker)

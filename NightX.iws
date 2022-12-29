@@ -5,9 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d01c55b-d37f-497b-a569-910a52b4446d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/DesyncFlight.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Animations.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Animations.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/item/MixinItemRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/item/MixinItemRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/ModuleManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/ModuleManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/PacketFlight.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/PacketFlight.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/remapper/Remapper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/script/remapper/injection/transformers/handlers/AbstractJavaLinkerHandler.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/client/MixinMinecraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/client/MixinMinecraft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiSlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiSlot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/GuiMainMenu.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/GuiMainMenu.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/GuiAltManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/GuiAltManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/menus/GuiChangeName.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/client/altmanager/menus/GuiSessionLogin.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,21 +158,21 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="net.aspw.nightx.features.module.modules.exploit" />
       <recent name="net.aspw.nightx.features.module.modules.client" />
       <recent name="net.aspw.nightx.utils" />
       <recent name="net.aspw.nightx.visual.client.altmanager.menus" />
       <recent name="net.aspw.nightx.features.module.modules.utility" />
-      <recent name="net.aspw.nightx.features.special" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="net.aspw.nightx.visual.client.clickgui.next.style" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="net.aspw.nightx.features.module.modules.exploit" />
       <recent name="net.aspw.nightx.features.module.modules.ghost" />
       <recent name="net.aspw.nightx.features.module.modules.movement.speeds.matrix" />
       <recent name="net.aspw.nightx.features.command.commands" />
       <recent name="net.aspw.nightx.visual.client" />
-      <recent name="net.aspw.nightx.features.special" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="net.aspw.nightx.features.module.modules.client" />
@@ -375,7 +385,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NightX-master [fixMcSources]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="NightX-master [fixMcSources]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -438,7 +448,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="NightX-master [runClient]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="NightX-master [runClient]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -505,20 +515,18 @@
     </configuration>
     <list>
       <item itemvalue="Gradle.NightX-master [fixMcSources]" />
+      <item itemvalue="Gradle.NightX-master [runClient]" />
       <item itemvalue="Gradle.NightX-master [init]" />
       <item itemvalue="Gradle.NightX-master [knows]" />
-      <item itemvalue="Gradle.NightX-master [runClient]" />
       <item itemvalue="Gradle.NightX-master [shadowJar]" />
       <item itemvalue="アプリケーション.Minecraft Client" />
       <item itemvalue="アプリケーション.Minecraft Server" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.NightX-master [runClient]" />
         <item itemvalue="Gradle.NightX-master [shadowJar]" />
         <item itemvalue="Gradle.NightX-master [knows]" />
         <item itemvalue="Gradle.NightX-master [init]" />
-        <item itemvalue="Gradle.NightX-master [fixMcSources]" />
       </list>
     </recent_temporary>
   </component>
