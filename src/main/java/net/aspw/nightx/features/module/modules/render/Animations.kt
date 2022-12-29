@@ -22,7 +22,7 @@ class Animations : Module() {
     @EventTarget
     fun onMotion(event: MotionEvent) {
         val killAura = NightX.moduleManager.getModule(KillAura::class.java)
-        if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && smoothAnimValue.get() && !mc.thePlayer.isBlocking && killAura!!.target == null) {
+        if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && smoothAnimValue.get()) {
             mc.thePlayer.renderArmPitch = 100f + mc.thePlayer.rotationPitch
         }
 
@@ -37,7 +37,6 @@ class Animations : Module() {
         val Sword = ListValue(
             "Style", arrayOf(
                 "1.8",
-                "LiquidBounce",
                 "SlideLow",
                 "SlideMedium",
                 "SlideFull",
