@@ -4,13 +4,13 @@ import net.aspw.nightx.event.*
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
+import net.aspw.nightx.utils.PacketUtils
 import net.aspw.nightx.utils.RotationUtils
 import net.aspw.nightx.utils.block.BlockUtils
 import net.aspw.nightx.utils.render.RenderUtils
 import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import net.minecraft.block.BlockAir
-import net.minecraft.init.Blocks
 import net.minecraft.network.play.client.C07PacketPlayerDigging
 import net.minecraft.network.play.client.C0APacketAnimation
 import net.minecraft.util.BlockPos
@@ -33,32 +33,12 @@ class CivBreak : Module() {
 
     @EventTarget
     fun onBlockClick(event: ClickBlockEvent) {
-        if (BlockUtils.getBlock(event.clickedBlock) == Blocks.bedrock)
-            return
-
         blockPos = event.clickedBlock
         enumFacing = event.enumFacing
-
-        // Break
-        mc.netHandler.addToSendQueue(C0APacketAnimation())
-        mc.netHandler.addToSendQueue(
-            C07PacketPlayerDigging(
-                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                blockPos,
-                enumFacing
-            )
-        )
-        mc.netHandler.addToSendQueue(
-            C07PacketPlayerDigging(
-                C07PacketPlayerDigging.Action.ABORT_DESTROY_BLOCK,
-                blockPos,
-                EnumFacing.UP
-            )
-        )
     }
 
     override fun onDisable() {
-        val pos = blockPos ?: return
+        blockPos ?: return
         blockPos = null
     }
 
@@ -73,36 +53,41 @@ class CivBreak : Module() {
             return
         }
 
-        if (BlockUtils.getBlock(pos) is BlockAir || BlockUtils.getCenterDistance(pos) > range.get())
+        if (BlockUtils.getBlock(pos) is BlockAir || BlockUtils.getCenterDistance(pos) > range.get()) {
             return
+        }
+
+        if (blockPos !== null) {
+            event.onGround = true
+        }
 
         when (event.eventState) {
-            EventState.PRE -> if (rotationsValue.get())
+            EventState.PRE -> if (rotationsValue.get()) {
                 RotationUtils.setTargetRotation((RotationUtils.faceBlock(pos) ?: return).rotation)
+            }
 
             EventState.POST -> {
-                if (visualSwingValue.get())
+                if (visualSwingValue.get()) {
                     mc.thePlayer.swingItem()
-                else
+                } else {
                     mc.netHandler.addToSendQueue(C0APacketAnimation())
+                }
 
                 // Break
-                mc.netHandler.addToSendQueue(C0APacketAnimation())
-                mc.netHandler.addToSendQueue(
+                PacketUtils.sendPacketNoEvent(
                     C07PacketPlayerDigging(
                         C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
                         blockPos,
                         enumFacing
                     )
                 )
-                mc.netHandler.addToSendQueue(
+                PacketUtils.sendPacketNoEvent(
                     C07PacketPlayerDigging(
-                        C07PacketPlayerDigging.Action.ABORT_DESTROY_BLOCK,
+                        C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
                         blockPos,
-                        EnumFacing.UP
+                        enumFacing
                     )
                 )
-                mc.playerController.clickBlock(blockPos, enumFacing)
             }
         }
     }

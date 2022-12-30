@@ -54,7 +54,7 @@ class TargetStrafe : Module() {
             }
         }
 
-        if (event.eventState == EventState.PRE) {
+        if (event.eventState == EventState.POST) {
             if (mc.thePlayer.isCollidedHorizontally || safewalk.get() && checkVoid() && !flight!!.state)
                 this.direction = -this.direction
         }
