@@ -54,7 +54,7 @@ class TabGui(x: Double = -1.0, y: Double = 17.0) : Element(x = x, y = y) {
     private val oldRainbowSaturationValue = FloatValue("OldRainbow-Saturation", 0.9f, 0f, 1f)
     private val oldRainbowBrightnessValue = FloatValue("OldRainbow-Brightness", 1f, 0f, 1f)
     private val arrowsValue = BoolValue("Arrows", false)
-    private val fontValue = FontValue("Font", Fonts.minecraftFont)
+    private val fontValue = FontValue("Font", Fonts.fontSFUI37)
     private val textShadow = BoolValue("TextShadow", true)
     private val textFade = BoolValue("TextFade", true)
     private val textPositionY = FloatValue("TextPosition-Y", 2F, 0F, 5F)

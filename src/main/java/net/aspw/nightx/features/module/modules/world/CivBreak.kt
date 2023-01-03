@@ -8,8 +8,10 @@ import net.aspw.nightx.utils.PacketUtils
 import net.aspw.nightx.utils.RotationUtils
 import net.aspw.nightx.utils.block.BlockUtils
 import net.aspw.nightx.utils.render.RenderUtils
+import net.aspw.nightx.utils.timer.TickTimer
 import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
+import net.aspw.nightx.value.IntegerValue
 import net.minecraft.block.BlockAir
 import net.minecraft.network.play.client.C07PacketPlayerDigging
 import net.minecraft.network.play.client.C0APacketAnimation
@@ -22,8 +24,10 @@ class CivBreak : Module() {
 
     private var blockPos: BlockPos? = null
     private var enumFacing: EnumFacing? = null
+    private val tickTimer = TickTimer()
 
     private val range = FloatValue("Range", 5F, 1F, 6F)
+    private val speedValue = IntegerValue("Break-Speed", 0, 0, 20)
     private val rotationsValue = BoolValue("Rotations", true)
     private val visualSwingValue = BoolValue("VisualSwing", false)
 
@@ -74,13 +78,14 @@ class CivBreak : Module() {
                 }
 
                 // Break
-                PacketUtils.sendPacketNoEvent(
-                    C07PacketPlayerDigging(
-                        C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                        blockPos,
-                        enumFacing
+                if (tickTimer.hasTimePassed(speedValue.get()))
+                    PacketUtils.sendPacketNoEvent(
+                        C07PacketPlayerDigging(
+                            C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+                            blockPos,
+                            enumFacing
+                        )
                     )
-                )
                 PacketUtils.sendPacketNoEvent(
                     C07PacketPlayerDigging(
                         C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,

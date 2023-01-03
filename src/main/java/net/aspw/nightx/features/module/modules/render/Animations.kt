@@ -23,11 +23,11 @@ class Animations : Module() {
     fun onMotion(event: MotionEvent) {
         val killAura = NightX.moduleManager.getModule(KillAura::class.java)
         if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && smoothAnimValue.get()) {
-            mc.thePlayer.renderArmPitch = 100f + mc.thePlayer.rotationPitch
+            mc.thePlayer.renderArmPitch = 120f + mc.thePlayer.rotationPitch
         }
 
         if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && blockingEquipValue.get() && mc.thePlayer.isBlocking || event.eventState === EventState.POST && blockingEquipValue.get() && mc.thePlayer.isSwingInProgress && killAura?.target != null) {
-            mc.thePlayer.renderArmPitch = -100 + mc.thePlayer.rotationPitch
+            mc.thePlayer.renderArmPitch = -120 + mc.thePlayer.rotationPitch
         }
     }
 
@@ -119,7 +119,7 @@ class Animations : Module() {
         val SpeedSwing = IntegerValue("Swing-Speed", 0, -9, 5)
 
         @JvmField
-        val Equip = IntegerValue("Equip-Motion", 2, -5, 5) {
+        val Equip = FloatValue("Equip-Motion", 2f, -5f, 5f) {
             Sword.get().equals("push", ignoreCase = true) || Sword.get()
                 .equals("swank", ignoreCase = true) || Sword.get().equals("swong", ignoreCase = true) || Sword.get()
                 .equals("swang", ignoreCase = true) ||
@@ -162,10 +162,6 @@ class Animations : Module() {
             RotateItems.get() && transformFirstPersonRotate.get().equals("custom", ignoreCase = true)
         }
 
-        // fake blocking
-        @JvmField
-        val fakeBlock = BoolValue("Always-Block", true)
-
         // gui animations
         @JvmField
         val guiAnimations = ListValue("Container-Animation", arrayOf("None", "Zoom", "Slide", "Smooth"), "None")
@@ -187,15 +183,19 @@ class Animations : Module() {
         @JvmField
         val tabAnimations = ListValue("Tab-Animation", arrayOf("None", "Zoom", "Slide"), "None")
 
+        // fake blocking
+        @JvmField
+        val fakeBlock = BoolValue("Visual-Blocking", true)
+
         // block break
         @JvmField
         val noBlockParticles = BoolValue("NoBlockParticles", false)
 
         @JvmField
-        val blockingEquipValue = BoolValue("BlockingEquip", false)
+        val blockingEquipValue = BoolValue("Blocking-Equip", false)
 
         @JvmField
-        val swingAnimValue = BoolValue("FluxSwingAnimation", false)
-        val smoothAnimValue = BoolValue("SmoothSwingAnimation", false)
+        val swingAnimValue = BoolValue("FluxSwing-Animation", false)
+        val smoothAnimValue = BoolValue("SmoothSwing-Animation", false)
     }
 }

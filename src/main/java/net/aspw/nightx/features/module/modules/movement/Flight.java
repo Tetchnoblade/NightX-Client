@@ -1168,7 +1168,7 @@ public class Flight extends Module {
         }
 
         if (mode.equalsIgnoreCase("blockdrop")) {
-            if (event.getPacket() instanceof S08PacketPlayerPosLook) {
+            if (packet instanceof S08PacketPlayerPosLook) {
                 if (mc.thePlayer.ticksExisted <= 20) return;
                 final S08PacketPlayerPosLook i2 = (S08PacketPlayerPosLook) event.getPacket();
                 event.cancelEvent();
@@ -1180,7 +1180,7 @@ public class Flight extends Module {
                 event.cancelEvent();
                 return;
             }
-            if (!(event.getPacket() instanceof C02PacketUseEntity)) return;
+            if (!(packet instanceof C02PacketUseEntity)) return;
             PacketUtils.sendPacketNoEvent(new C03PacketPlayer.C06PacketPlayerPosLook(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch, false));
         }
 
@@ -1325,10 +1325,10 @@ public class Flight extends Module {
                 if (clipNoMove.get()) event.zeroXZ();
                 break;
             case "veruslowhop":
-                if (!mc.thePlayer.isInWeb && !mc.thePlayer.isInLava() && !mc.thePlayer.isInWater() && !mc.thePlayer.isOnLadder() && !mc.gameSettings.keyBindJump.isKeyDown() && mc.thePlayer.ridingEntity == null) {
-                    if (MovementUtils.isMoving()) {
+                if (!mc.thePlayer.isSneaking() && !mc.thePlayer.isInWeb && !mc.thePlayer.isInLava() && !mc.thePlayer.isInWater() && !mc.thePlayer.isOnLadder() && !mc.gameSettings.keyBindJump.isKeyDown() && mc.thePlayer.ridingEntity == null) {
+                    if (!mc.thePlayer.isSneaking() && MovementUtils.isMoving()) {
                         mc.gameSettings.keyBindJump.pressed = false;
-                        if (mc.thePlayer.onGround) {
+                        if (!mc.thePlayer.isSneaking() && mc.thePlayer.onGround) {
                             mc.thePlayer.jump();
                             mc.thePlayer.motionY = 0;
                             MovementUtils.strafe(0.61F);

@@ -81,7 +81,7 @@ class Arraylist(
     private val backgroundColorRedValue = IntegerValue("Background-R", 0, 0, 255)
     private val backgroundColorGreenValue = IntegerValue("Background-G", 0, 0, 255)
     private val backgroundColorBlueValue = IntegerValue("Background-B", 0, 0, 255)
-    private val backgroundColorAlphaValue = IntegerValue("Background-Alpha", 120, 0, 255)
+    private val backgroundColorAlphaValue = IntegerValue("Background-Alpha", 80, 0, 255)
     private val rectRightValue =
         ListValue("Rect-Right", arrayOf("None", "Left", "Right", "Outline", "Special", "Top"), "Outline")
     private val rectLeftValue = ListValue("Rect-Left", arrayOf("None", "Left", "Right"), "None")
@@ -90,7 +90,7 @@ class Arraylist(
     private val textHeightValue = FloatValue("TextHeight", 10F, 1F, 20F)
     private val textYValue = FloatValue("TextY", 1.5F, 0F, 20F)
     private val tagsArrayColor = BoolValue("TagsArrayColor", false)
-    private val fontValue = FontValue("Font", Fonts.minecraftFont)
+    private val fontValue = FontValue("Font", Fonts.fontSFUI37)
 
     private var x2 = 0
     private var y2 = 0F

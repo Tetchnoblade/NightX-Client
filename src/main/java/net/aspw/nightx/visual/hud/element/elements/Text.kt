@@ -53,7 +53,7 @@ class Text(
 
             text.displayString.set("%clientName% §7[§f%fps% FPS§7] [§f%ping%ms§7]")
             text.shadow.set(true)
-            text.fontValue.set(Fonts.minecraftFont)
+            text.fontValue.set(Fonts.fontSFUI37)
             text.setColor(Color(255, 255, 255))
 
             return text
@@ -83,7 +83,7 @@ class Text(
     private val distanceValue = IntegerValue("Line-Distance", 0, 0, 400)
     private val gradientAmountValue = IntegerValue("Gradient-Amount", 25, 1, 50)
     private val shadow = BoolValue("Shadow", true)
-    private var fontValue = FontValue("Font", Fonts.minecraftFont)
+    private var fontValue = FontValue("Font", Fonts.fontSFUI37)
 
     private var editMode = false
     private var editTicks = 0

@@ -10,18 +10,18 @@ import net.aspw.nightx.value.IntegerValue
 
 @ModuleInfo(name = "Tweaks", category = ModuleCategory.UTILITY)
 class Tweaks : Module() {
-    private val speedValue = IntegerValue("Speed", 0, 0, 20)
+    private val speedValue = IntegerValue("Sneak-Speed", 0, 0, 20)
 
     private val tickTimer = TickTimer()
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         tickTimer.update()
 
-        if (tickTimer.hasTimePassed(1 + speedValue.get())) {
+        if (tickTimer.hasTimePassed(0 + speedValue.get())) {
             mc.gameSettings.keyBindSneak.pressed = true
         }
 
-        if (tickTimer.hasTimePassed(2 + speedValue.get())) {
+        if (tickTimer.hasTimePassed(1 + speedValue.get())) {
             mc.gameSettings.keyBindSneak.pressed = false
             tickTimer.reset()
         }
