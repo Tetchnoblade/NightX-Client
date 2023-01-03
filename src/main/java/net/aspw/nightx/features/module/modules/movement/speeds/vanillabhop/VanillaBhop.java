@@ -43,7 +43,7 @@ public class VanillaBhop extends SpeedMode {
         final Scaffold scaffold = NightX.moduleManager.getModule(Scaffold.class);
 
         if (!mc.thePlayer.isSneaking() && !scaffold.getState())
-            MovementUtils.strafe(0.3f);
+            MovementUtils.strafe(0.2f);
     }
 
     @Override

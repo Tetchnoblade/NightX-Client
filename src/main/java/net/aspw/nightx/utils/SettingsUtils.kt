@@ -2,7 +2,8 @@ package net.aspw.nightx.utils
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.module.ModuleCategory
-import net.aspw.nightx.features.module.modules.render.StreamerMode
+import net.aspw.nightx.features.module.modules.client.Gui
+import net.aspw.nightx.features.module.modules.client.HudEditor
 import net.aspw.nightx.features.module.modules.utility.Spammer
 import net.aspw.nightx.features.special.MacroManager
 import net.aspw.nightx.utils.misc.HttpUtils.get
@@ -148,19 +149,18 @@ object SettingsUtils {
         MacroManager.macroMapping.filter { it.key != 0 }
             .forEach { stringBuilder.append("macro ${it.key} ${it.value}").append("\n") }
 
-        NightX.moduleManager.modules.filter {
-            it.category !== ModuleCategory.RENDER && it !is StreamerMode && it !is Spammer
-        }.forEach {
-            if (values)
-                it.values.forEach { value ->
-                    stringBuilder.append("${it.name} ${value.name} ${value.get()}").append("\n")
-                }
+        NightX.moduleManager.modules.filter { it.category !== ModuleCategory.RENDER && it !is Spammer && it !is HudEditor && it !is Gui }
+            .forEach {
+                if (values)
+                    it.values.forEach { value ->
+                        stringBuilder.append("${it.name} ${value.name} ${value.get()}").append("\n")
+                    }
 
-            if (states)
-                stringBuilder.append("${it.name} toggle ${it.state}").append("\n")
+                if (states)
+                    stringBuilder.append("${it.name} toggle ${it.state}").append("\n")
 
-            if (binds)
-                stringBuilder.append("${it.name} bind ${Keyboard.getKeyName(it.keyBind)}").append("\n")
+                if (binds)
+                    stringBuilder.append("${it.name} bind ${Keyboard.getKeyName(it.keyBind)}").append("\n")
         }
 
         return stringBuilder.toString()

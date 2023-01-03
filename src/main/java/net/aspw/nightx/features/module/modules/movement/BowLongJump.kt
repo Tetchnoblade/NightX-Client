@@ -153,6 +153,9 @@ class BowLongJump : Module() {
     override fun onDisable() {
         mc.timer.timerSpeed = 1.0f
         mc.thePlayer.speedInAir = 0.02f
+        if (!mc.thePlayer.isSneaking) {
+            MovementUtils.strafe(0.2f)
+        }
     }
 
     private val bowSlot: Int

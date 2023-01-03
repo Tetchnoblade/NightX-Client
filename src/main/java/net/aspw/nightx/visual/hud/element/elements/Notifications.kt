@@ -27,7 +27,7 @@ class Notifications(
 
     val styleValue = ListValue("Style", arrayOf("Full", "Compact", "Material"), "Full")
     val barValue = BoolValue("Bar", true, { styleValue.get().equals("material", true) })
-    val bgAlphaValue = IntegerValue("Background-Alpha", 100, 0, 255, { !styleValue.get().equals("material", true) })
+    val bgAlphaValue = IntegerValue("Background-Alpha", 120, 0, 255, { !styleValue.get().equals("material", true) })
 
     val blurValue = BoolValue("Blur", false, { !styleValue.get().equals("material", true) })
     val blurStrength =

@@ -448,7 +448,7 @@ public class Flight extends Module {
         final String mode = modeValue.get();
 
         if ((!speed.getState() && !mode.toUpperCase().startsWith("NCP") && !mode.equalsIgnoreCase("float") && !mode.equalsIgnoreCase("veruslowhop") && !mode.equalsIgnoreCase("aac1.9.10") && !mode.equalsIgnoreCase("damage") && !mode.equalsIgnoreCase("aac3.3.12") && !mode.equalsIgnoreCase("aac3.3.12-glide") && !mode.equalsIgnoreCase("oldncp") && !mode.equalsIgnoreCase("rewinside") && !mode.equalsIgnoreCase("teleportrewinside") && !mode.equalsIgnoreCase("pearl") && !mode.equalsIgnoreCase("neruxvace") && !mode.equalsIgnoreCase("minesucht") && !mode.equalsIgnoreCase("spartan1") && !mode.equalsIgnoreCase("spartan2") && !mode.equalsIgnoreCase("hypixel") && !mode.equalsIgnoreCase("hawkeye") && !mode.equalsIgnoreCase("hac") && !mode.equalsIgnoreCase("watchcat") && !mode.equalsIgnoreCase("slime") && !mode.equalsIgnoreCase("jetpack1") && !mode.equalsIgnoreCase("jetpack2") && !mode.equalsIgnoreCase("clip") && !mode.equalsIgnoreCase("jump") && !mode.equalsIgnoreCase("derp") && !mode.equalsIgnoreCase("collide"))) {
-            MovementUtils.strafe(0.3f);
+            MovementUtils.strafe(0.2f);
         }
 
         if (mode.equalsIgnoreCase("AAC5-Vanilla") && !mc.isIntegratedServerRunning()) {
@@ -1325,11 +1325,10 @@ public class Flight extends Module {
                 if (clipNoMove.get()) event.zeroXZ();
                 break;
             case "veruslowhop":
-                mc.gameSettings.keyBindSneak.pressed = false;
-                if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && !mc.thePlayer.isInWeb && !mc.thePlayer.isInLava() && !mc.thePlayer.isInWater() && !mc.thePlayer.isOnLadder() && !mc.gameSettings.keyBindJump.isKeyDown() && mc.thePlayer.ridingEntity == null) {
-                    if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && MovementUtils.isMoving()) {
+                if (!mc.gameSettings.keyBindSneak.isKeyDown() && !mc.thePlayer.isInWeb && !mc.thePlayer.isInLava() && !mc.thePlayer.isInWater() && !mc.thePlayer.isOnLadder() && !mc.gameSettings.keyBindJump.isKeyDown() && mc.thePlayer.ridingEntity == null) {
+                    if (!mc.gameSettings.keyBindSneak.isKeyDown() && MovementUtils.isMoving()) {
                         mc.gameSettings.keyBindJump.pressed = false;
-                        if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && mc.thePlayer.onGround) {
+                        if (!mc.gameSettings.keyBindSneak.isKeyDown() && mc.thePlayer.onGround) {
                             mc.thePlayer.jump();
                             mc.thePlayer.motionY = 0;
                             MovementUtils.strafe(0.61F);
@@ -1410,7 +1409,7 @@ public class Flight extends Module {
         if (event.getBlock() instanceof BlockAir && mode.equalsIgnoreCase("Jump") && event.getY() < startY)
             event.setBoundingBox(AxisAlignedBB.fromBounds(event.getX(), event.getY(), event.getZ(), event.getX() + 1, startY, event.getZ() + 1));
 
-        if (event.getBlock() instanceof BlockAir && ((mode.equalsIgnoreCase("collide") && !mc.thePlayer.isSneaking()) || mode.equalsIgnoreCase("veruslowhop") && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)))
+        if (event.getBlock() instanceof BlockAir && ((mode.equalsIgnoreCase("collide") && !mc.thePlayer.isSneaking()) || mode.equalsIgnoreCase("veruslowhop") && mc.gameSettings.keyBindSneak.isKeyDown()))
             event.setBoundingBox(new AxisAlignedBB(-2, -1, -2, 2, 1, 2).offset(event.getX(), event.getY(), event.getZ()));
 
         if (event.getBlock() instanceof BlockAir && (mode.equalsIgnoreCase("Hypixel") ||

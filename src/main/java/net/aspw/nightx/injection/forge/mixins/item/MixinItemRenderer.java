@@ -731,7 +731,8 @@ public abstract class MixinItemRenderer {
                                 }
                             }
                         } else {
-                            transformFirstPersonItem(0F,0F);
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.12, Animations.blockPosZ.get().doubleValue() + 0.06);
+                            transformFirstPersonItem(0F, 0F);
                             doBlockTransformations();
                         }
                         break;

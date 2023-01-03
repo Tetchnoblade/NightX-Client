@@ -33,6 +33,10 @@ class CivBreak : Module() {
 
     private val airResetValue = BoolValue("Air-Reset", false)
     private val rangeResetValue = BoolValue("Range-Reset", false)
+    private val R = IntegerValue("R", 255, 0, 255)
+    private val G = IntegerValue("G", 255, 0, 255)
+    private val B = IntegerValue("B", 255, 0, 255)
+    private val outLine = BoolValue("Outline", true)
 
 
     @EventTarget
@@ -99,6 +103,6 @@ class CivBreak : Module() {
 
     @EventTarget
     fun onRender3D(event: Render3DEvent) {
-        RenderUtils.drawBlockBox(blockPos ?: return, Color.WHITE, true)
+        RenderUtils.drawBlockBox(blockPos ?: return, Color(R.get(), G.get(), B.get()), outLine.get())
     }
 }

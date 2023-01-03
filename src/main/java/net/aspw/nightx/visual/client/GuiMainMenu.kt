@@ -131,7 +131,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         if (displayString != null)
             Fonts.fontSFUI40.drawCenteredString(displayString, width / 2F, staticY + 30F, -1)
         else
-            Fonts.fontSFUI40.drawCenteredString("Nugget", width / 2F, staticY + 30F, -1)
+            Fonts.fontSFUI40.drawCenteredString("Aspw-w/NightX-Client", width / 2F, staticY + 30F, -1)
 
         if (shouldAnimate) {
             slideX = if (fade == 0F)

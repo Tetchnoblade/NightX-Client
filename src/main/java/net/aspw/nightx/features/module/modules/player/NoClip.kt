@@ -18,7 +18,7 @@ class NoClip : Module() {
 
         if (speed != null) {
             if (!speed.state) {
-                MovementUtils.strafe(0.3f)
+                MovementUtils.strafe(0.2f)
             }
         }
 

@@ -119,7 +119,7 @@ class Animations : Module() {
         val SpeedSwing = IntegerValue("Swing-Speed", 0, -9, 5)
 
         @JvmField
-        val Equip = FloatValue("Equip-Motion", 2f, -5f, 5f) {
+        val Equip = FloatValue("Equip-Motion", 1.8f, -5f, 5f) {
             Sword.get().equals("push", ignoreCase = true) || Sword.get()
                 .equals("swank", ignoreCase = true) || Sword.get().equals("swong", ignoreCase = true) || Sword.get()
                 .equals("swang", ignoreCase = true) ||

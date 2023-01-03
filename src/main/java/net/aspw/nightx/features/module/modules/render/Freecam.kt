@@ -1,6 +1,7 @@
 package net.aspw.nightx.features.module.modules.render
 
 import net.aspw.nightx.event.EventTarget
+import net.aspw.nightx.event.MotionEvent
 import net.aspw.nightx.event.PacketEvent
 import net.aspw.nightx.event.UpdateEvent
 import net.aspw.nightx.features.module.Module
@@ -62,6 +63,12 @@ class Freecam : Module() {
             }
             MovementUtils.strafe(value)
         }
+    }
+
+    @EventTarget
+    fun onMotion(event: MotionEvent) {
+        mc.thePlayer.cameraPitch = 0f
+        mc.thePlayer.cameraYaw = 0f
     }
 
     @EventTarget
