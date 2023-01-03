@@ -33,16 +33,17 @@ public class Crosshair extends Module {
     //Color
     public ListValue colorModeValue = new ListValue("Color", new String[]{"Custom", "Rainbow", "LiquidSlowly", "Sky", "Fade", "Mixer"}, "Custom");
     public IntegerValue colorRedValue = new IntegerValue("Red", 255, 0, 255);
-    public IntegerValue colorGreenValue = new IntegerValue("Green", 255, 0, 255);
+    public IntegerValue colorGreenValue = new IntegerValue("Green", 200, 0, 255);
     public IntegerValue colorBlueValue = new IntegerValue("Blue", 255, 0, 255);
     public IntegerValue colorAlphaValue = new IntegerValue("Alpha", 255, 0, 255);
     //Size, width, hitmarker
-    public FloatValue widthVal = new FloatValue("Width", 0.3F, 0.25F, 10);
-    public FloatValue sizeVal = new FloatValue("Size/Length", 5, 0.25F, 15);
-    public FloatValue gapVal = new FloatValue("Gap", 2.5F, 0.25F, 15);
-    public BoolValue dynamicVal = new BoolValue("Dynamic", false);
+    public FloatValue widthVal = new FloatValue("Width", 0.4F, 0.25F, 10);
+    public FloatValue sizeVal = new FloatValue("Size/Length", 6, 0.25F, 15);
+    public FloatValue gapVal = new FloatValue("Gap", 3F, 0.25F, 15);
+    public BoolValue dynamicVal = new BoolValue("Dynamic", true);
     public BoolValue hitMarkerVal = new BoolValue("HitMarker", false);
     public BoolValue noVanillaCH = new BoolValue("NoVanillaCrossHair", true);
+
     @EventTarget
     public void onRender2D(Render2DEvent event) {
         final ScaledResolution scaledRes = new ScaledResolution(mc);

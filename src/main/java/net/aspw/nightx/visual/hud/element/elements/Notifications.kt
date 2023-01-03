@@ -41,7 +41,7 @@ class Notifications(
         0.01F,
         10F,
         { hAnimModeValue.get().equals("smooth", true) || vAnimModeValue.get().equals("smooth", true) })
-    private val fontValue = FontValue("Font", Fonts.fontSFUI37)
+    private val fontValue = FontValue("Font", Fonts.fontSFUI40)
 
     /**
      * Example notification for CustomHUD designer
@@ -129,13 +129,13 @@ class Notification(message: String, type: Type, displayLength: Long) {
 
     init {
         this.message = message
-        this.messageList = Fonts.fontSFUI37.listFormattedStringToWidth(message, 105)
-        this.notifHeight = messageList.size.toFloat() * (Fonts.fontSFUI37.FONT_HEIGHT.toFloat() + 2F) + 8F
+        this.messageList = Fonts.fontSFUI40.listFormattedStringToWidth(message, 105)
+        this.notifHeight = messageList.size.toFloat() * (Fonts.fontSFUI40.FONT_HEIGHT.toFloat() + 2F) + 8F
         this.type = type
         this.displayTime = displayLength
         this.firstY = 19190F
         this.stayTimer.reset()
-        this.textLength = Fonts.fontSFUI37.getStringWidth(message)
+        this.textLength = Fonts.fontSFUI40.getStringWidth(message)
     }
 
     constructor(message: String, type: Type) : this(message, type, 2000L)
@@ -230,7 +230,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
                 )
 
                 GlStateManager.resetColor()
-                Fonts.fontSFUI37.drawString(message, -x + 3, -13F - y, -1)
+                Fonts.fontSFUI40.drawString(message, -x + 3, -13F - y, -1)
             }
 
             "full" -> {
@@ -281,7 +281,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
                     RenderUtils.drawRect(kek, -y, kek + dist, -1F - y, enumColor)
 
                 GlStateManager.resetColor()
-                Fonts.fontSFUI37.drawString(message, (-x + 2).toInt(), (-18F - y).toInt(), -1)
+                Fonts.fontSFUI40.drawString(message, (-x + 2).toInt(), (-18F - y).toInt(), -1)
             }
 
             "material" -> {
@@ -350,8 +350,8 @@ class Notification(message: String, type: Type, displayLength: Long) {
 
                 var yHeight = 7F
                 for (s in messageList) {
-                    Fonts.fontSFUI37.drawString(s, 30, yHeight.toInt(), if (type == Type.ERROR) -1 else 0)
-                    yHeight += Fonts.fontSFUI37.FONT_HEIGHT.toFloat() + 2F
+                    Fonts.fontSFUI40.drawString(s, 30, yHeight.toInt(), if (type == Type.ERROR) -1 else 0)
+                    yHeight += Fonts.fontSFUI40.FONT_HEIGHT.toFloat() + 2F
                 }
 
                 GL11.glPushMatrix()

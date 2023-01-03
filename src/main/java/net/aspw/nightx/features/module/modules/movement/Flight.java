@@ -1325,10 +1325,11 @@ public class Flight extends Module {
                 if (clipNoMove.get()) event.zeroXZ();
                 break;
             case "veruslowhop":
-                if (!mc.thePlayer.isSneaking() && !mc.thePlayer.isInWeb && !mc.thePlayer.isInLava() && !mc.thePlayer.isInWater() && !mc.thePlayer.isOnLadder() && !mc.gameSettings.keyBindJump.isKeyDown() && mc.thePlayer.ridingEntity == null) {
-                    if (!mc.thePlayer.isSneaking() && MovementUtils.isMoving()) {
+                mc.gameSettings.keyBindSneak.pressed = false;
+                if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && !mc.thePlayer.isInWeb && !mc.thePlayer.isInLava() && !mc.thePlayer.isInWater() && !mc.thePlayer.isOnLadder() && !mc.gameSettings.keyBindJump.isKeyDown() && mc.thePlayer.ridingEntity == null) {
+                    if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && MovementUtils.isMoving()) {
                         mc.gameSettings.keyBindJump.pressed = false;
-                        if (!mc.thePlayer.isSneaking() && mc.thePlayer.onGround) {
+                        if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && mc.thePlayer.onGround) {
                             mc.thePlayer.jump();
                             mc.thePlayer.motionY = 0;
                             MovementUtils.strafe(0.61F);
@@ -1409,7 +1410,7 @@ public class Flight extends Module {
         if (event.getBlock() instanceof BlockAir && mode.equalsIgnoreCase("Jump") && event.getY() < startY)
             event.setBoundingBox(AxisAlignedBB.fromBounds(event.getX(), event.getY(), event.getZ(), event.getX() + 1, startY, event.getZ() + 1));
 
-        if (event.getBlock() instanceof BlockAir && ((mode.equalsIgnoreCase("collide") && !mc.thePlayer.isSneaking()) || mode.equalsIgnoreCase("veruslowhop")))
+        if (event.getBlock() instanceof BlockAir && ((mode.equalsIgnoreCase("collide") && !mc.thePlayer.isSneaking()) || mode.equalsIgnoreCase("veruslowhop") && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)))
             event.setBoundingBox(new AxisAlignedBB(-2, -1, -2, 2, 1, 2).offset(event.getX(), event.getY(), event.getZ()));
 
         if (event.getBlock() instanceof BlockAir && (mode.equalsIgnoreCase("Hypixel") ||

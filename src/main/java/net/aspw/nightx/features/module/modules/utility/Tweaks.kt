@@ -17,11 +17,11 @@ class Tweaks : Module() {
     fun onUpdate(event: UpdateEvent) {
         tickTimer.update()
 
-        if (tickTimer.hasTimePassed(0 + speedValue.get())) {
+        if (tickTimer.hasTimePassed(1 + speedValue.get())) {
             mc.gameSettings.keyBindSneak.pressed = true
         }
 
-        if (tickTimer.hasTimePassed(1 + speedValue.get())) {
+        if (tickTimer.hasTimePassed(2 + speedValue.get())) {
             mc.gameSettings.keyBindSneak.pressed = false
             tickTimer.reset()
         }
