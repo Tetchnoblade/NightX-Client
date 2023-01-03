@@ -281,7 +281,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
                     RenderUtils.drawRect(kek, -y, kek + dist, -1F - y, enumColor)
 
                 GlStateManager.resetColor()
-                Fonts.minecraftFont.drawString(message, (-x + 2).toInt(), (-18F - y).toInt(), -1)
+                Fonts.fontSFUI37.drawString(message, (-x + 2).toInt(), (-18F - y).toInt(), -1)
             }
 
             "material" -> {
