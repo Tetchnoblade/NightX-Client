@@ -35,6 +35,7 @@ class BowLongJump : Module() {
     private val bobbingValue = BoolValue("Bobbing", true)
     private val bobbingAmountValue = FloatValue("BobbingAmount", 0.07f, 0f, 1f) { bobbingValue.get() }
     private val renderValue = BoolValue("RenderStatus", false)
+    private val stopMotion = BoolValue("Stop Motion", false)
     private var bowState = 0
     private var lastPlayerTick: Long = 0
     private var lastSlot = -1
@@ -153,6 +154,11 @@ class BowLongJump : Module() {
     override fun onDisable() {
         mc.timer.timerSpeed = 1.0f
         mc.thePlayer.speedInAir = 0.02f
+        if (stopMotion.get()) {
+            mc.thePlayer.motionX = 0.0
+            mc.thePlayer.motionY = 0.0
+            mc.thePlayer.motionZ = 0.0
+        }
     }
 
     private val bowSlot: Int
