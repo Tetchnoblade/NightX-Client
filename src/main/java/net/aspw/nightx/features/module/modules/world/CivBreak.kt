@@ -33,10 +33,16 @@ class CivBreak : Module() {
 
     private val airResetValue = BoolValue("Air-Reset", false)
     private val rangeResetValue = BoolValue("Range-Reset", false)
+<<<<<<< HEAD
     private val R = IntegerValue("R", 255, 0, 255)
     private val G = IntegerValue("G", 255, 0, 255)
     private val B = IntegerValue("B", 255, 0, 255)
     private val outLine = BoolValue("Outline", true)
+=======
+    private val redValue = IntegerValue("Red", 255, 0, 255)
+    private val greenValue = IntegerValue("Green", 120, 0, 255)
+    private val blueValue = IntegerValue("Blue", 255, 0, 255)
+>>>>>>> d5d3ab31f72772307cdd232f3be25f5c01644861
 
 
     @EventTarget
@@ -103,6 +109,10 @@ class CivBreak : Module() {
 
     @EventTarget
     fun onRender3D(event: Render3DEvent) {
+<<<<<<< HEAD
         RenderUtils.drawBlockBox(blockPos ?: return, Color(R.get(), G.get(), B.get()), outLine.get())
+=======
+        RenderUtils.drawBlockBox(blockPos ?: return, Color(redValue.get(), greenValue.get(), blueValue.get()), true)
+>>>>>>> d5d3ab31f72772307cdd232f3be25f5c01644861
     }
 }
