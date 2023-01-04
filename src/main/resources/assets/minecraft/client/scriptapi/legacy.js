@@ -1,7 +1,7 @@
 var script = registerScript({
-    name: "Sucks",
+    name: "Legacy Script",
     version: "1.0.0",
-    authors: ["As_pw"]
+    authors: ["Please Update Script"]
 });
 
 script.on("enable", function () {
@@ -19,6 +19,13 @@ script.on("disable", function () {
 });
 
 script.on("load", function () {
+    try {
+        script.setScriptName(scriptName);
+        script.setScriptVersion(scriptVersion.toString() + " §7[§4Legacy Script§7]");
+        script.setScriptAuthors([scriptAuthor]);
+    } catch (err) {
+    }
+
     try {
         onLoad();
     } catch (err) {
@@ -61,11 +68,6 @@ var _ItemAdaptar = function () {
 
 var _AdaptedValue = function (value) {
 
-    this.FloatValue = Java.type("net.aspw.nightx.value.FloatValue");
-    this.IntegerValue = Java.type("net.aspw.nightx.value.IntegerValue");
-    this.Float = Java.type("java.lang.Float");
-    this.Integer = Java.type("java.lang.Integer");
-
     this.get = function () {
         return value.get();
     }
@@ -91,10 +93,6 @@ var _AdaptedModule = function (module) {
 
     this.getName = function () {
         return this.module.getName();
-    }
-
-    this.getDescription = function () {
-        return this.module.getDescription();
     }
 
     this.getCategory = function () {
@@ -161,7 +159,6 @@ var _ModuleManager = function () {
     this.registerModule = function (scriptModule) {
         var moduleConfig = {
             name: scriptModule.getName(),
-            description: scriptModule.getDescription(),
             category: scriptModule.getCategory()
         };
 
@@ -182,6 +179,15 @@ var _ModuleManager = function () {
                         scriptModule[legacyName](event);
                     });
                 }
+            }
+
+            if (scriptModule.getTag) {
+                var Timer = Java.type("java.util.Timer");
+
+                var updateTagTimer = new Timer("updateTagTimer", true);
+                updateTagTimer.schedule(function () {
+                    module.tag = scriptModule.getTag();
+                }, 500, 500);
             }
 
             registerEvent("update", "onUpdate");

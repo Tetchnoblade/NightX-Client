@@ -108,9 +108,9 @@ public class Flight extends Module {
         return (modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("blockdrop") || modeValue.get().equalsIgnoreCase("damage") || modeValue.get().equalsIgnoreCase("latestspartan") || modeValue.get().equalsIgnoreCase("pearl") || modeValue.get().equalsIgnoreCase("aac5-vanilla") || modeValue.get().equalsIgnoreCase("bugspartan") || modeValue.get().equalsIgnoreCase("keepalive") || modeValue.get().equalsIgnoreCase("derp"));
     });
     private final FloatValue vanillaVSpeedValue = new FloatValue("V-Speed", 0.6F, 0F, 5F, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("blockdrop") || modeValue.get().equalsIgnoreCase("latestspartan") || modeValue.get().equalsIgnoreCase("bugspartan"));
-    private final FloatValue vanillaMotionYValue = new FloatValue("Y-Motion", 0F, -1F, 1F, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("blockdrop") || modeValue.get().equalsIgnoreCase("latestspartan"));
-    private final BoolValue vanillaKickBypassValue = new BoolValue("AntiKick", false, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("blockdrop") || modeValue.get().equalsIgnoreCase("latestspartan") || modeValue.get().equalsIgnoreCase("creative"));
-    private final BoolValue groundSpoofValue = new BoolValue("SpoofGround", false, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("blockdrop") || modeValue.get().equalsIgnoreCase("latestspartan") || modeValue.get().equalsIgnoreCase("creative"));
+    private final FloatValue vanillaMotionYValue = new FloatValue("Y-Motion", 0F, -1F, 1F, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("latestspartan"));
+    private final BoolValue vanillaKickBypassValue = new BoolValue("AntiKick", false, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("latestspartan") || modeValue.get().equalsIgnoreCase("creative"));
+    private final BoolValue groundSpoofValue = new BoolValue("SpoofGround", false, () -> modeValue.get().equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("latestspartan") || modeValue.get().equalsIgnoreCase("creative"));
 
     private final FloatValue ncpMotionValue = new FloatValue("NCPMotion", 0.04F, 0F, 1F, () -> modeValue.get().equalsIgnoreCase("ncp"));
 
@@ -305,13 +305,6 @@ public class Flight extends Module {
                 MovementUtils.strafe();
                 break;
             case "blockdrop":
-                NightX.hud.addNotification(
-                        new Notification(
-                                "Wait 3 seconds to put NCP into sleep.",
-                                Notification.Type.INFO,
-                                3000L
-                        )
-                );
                 startVec = new Vec3(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ);
                 rotationVec = new Vector2f(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch);
                 break;
@@ -477,7 +470,6 @@ public class Flight extends Module {
 
         switch (modeValue.get().toLowerCase()) {
             case "motion":
-            case "blockdrop":
             case "latestspartan":
                 mc.thePlayer.capabilities.isFlying = false;
                 mc.thePlayer.motionY = vanillaMotionYValue.get();
@@ -492,6 +484,20 @@ public class Flight extends Module {
                 }
                 MovementUtils.strafe(vanillaSpeed);
                 handleVanillaKickBypass();
+                break;
+            case "blockdrop":
+                mc.thePlayer.capabilities.isFlying = false;
+                mc.thePlayer.motionY = 0.07;
+                mc.thePlayer.motionX = 0;
+                mc.thePlayer.motionZ = 0;
+                if (mc.gameSettings.keyBindJump.isKeyDown()) {
+                    mc.thePlayer.motionY += vanillaVSpeed;
+                }
+                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                    mc.thePlayer.motionY -= vanillaVSpeed;
+                    mc.gameSettings.keyBindSneak.pressed = false;
+                }
+                MovementUtils.strafe(vanillaSpeed);
                 break;
             case "cubecraft":
                 mc.timer.timerSpeed = 0.6F;
@@ -1248,7 +1254,7 @@ public class Flight extends Module {
             if (mode.equalsIgnoreCase("clip") && clipGroundSpoof.get())
                 packetPlayer.onGround = true;
 
-            if ((mode.equalsIgnoreCase("motion") || modeValue.get().equalsIgnoreCase("blockdrop") || mode.equalsIgnoreCase("creative")) && groundSpoofValue.get())
+            if ((mode.equalsIgnoreCase("motion") || mode.equalsIgnoreCase("creative")) && groundSpoofValue.get())
                 packetPlayer.onGround = true;
 
             if (verusDmgModeValue.get().equalsIgnoreCase("Jump") && verusJumpTimes < 5 && mode.equalsIgnoreCase("Verus")) {

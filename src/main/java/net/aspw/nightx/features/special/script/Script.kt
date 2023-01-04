@@ -7,7 +7,9 @@ import jdk.nashorn.api.scripting.ScriptUtils
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
 import net.aspw.nightx.features.module.Module
-import net.aspw.nightx.features.special.script.api.*
+import net.aspw.nightx.features.special.script.api.ScriptCommand
+import net.aspw.nightx.features.special.script.api.ScriptModule
+import net.aspw.nightx.features.special.script.api.ScriptTab
 import net.aspw.nightx.features.special.script.api.global.Chat
 import net.aspw.nightx.features.special.script.api.global.Item
 import net.aspw.nightx.features.special.script.api.global.Setting
@@ -139,8 +141,7 @@ class Script(val scriptFile: File) {
     private fun supportLegacyScripts() {
         if (getMagicComment("api_version") != "2") {
             ClientUtils.getLogger().info("[ScriptAPI] Running script '${scriptFile.name}' with legacy support.")
-            val legacyScript =
-                NightX::class.java.getResource("/assets/minecraft/client/scriptapi/legacy.js").readText()
+            val legacyScript = NightX::class.java.getResource("/assets/minecraft/client/scriptapi/legacy.js").readText()
             scriptEngine.eval(legacyScript)
         }
     }
