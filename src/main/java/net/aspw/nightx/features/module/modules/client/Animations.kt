@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.render
+package net.aspw.nightx.features.module.modules.client
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.EventState
@@ -13,7 +13,7 @@ import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.value.ListValue
 
-@ModuleInfo(name = "Animations", category = ModuleCategory.RENDER, array = false)
+@ModuleInfo(name = "Animations", category = ModuleCategory.CLIENT, array = false)
 class Animations : Module() {
     override fun onInitialize() {
         state = true
@@ -54,14 +54,18 @@ class Animations : Module() {
                 "Sloth",
                 "Autumn",
                 "Astolfo",
+                "VisionFX",
                 "ETB",
                 "Moon",
                 "MoonPush",
+                "Lennox",
                 "Smooth",
                 "Leaked",
+                "Jello",
                 "Ninja",
                 "Jigsaw",
                 "Avatar",
+                "Stab",
                 "Sigma3",
                 "Sigma4",
                 "Reverse",

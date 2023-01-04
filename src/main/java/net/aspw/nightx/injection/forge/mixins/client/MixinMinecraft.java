@@ -245,20 +245,29 @@ public abstract class MixinMinecraft {
             final Annoy annoy = NightX.moduleManager.getModule(Annoy.class);
             final EntityLivingBase entityLivingBase = (EntityLivingBase) renderViewEntity;
             final float yaw = RotationUtils.serverRotation.getYaw();
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && killAura.getTarget() != null) {
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadNormalRotate().get() && killAura.getTarget() != null || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadNormalRotate().get() && scaffold.getState() || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadNormalRotate().get() && annoy.getState()) {
                 entityLivingBase.rotationYawHead = yaw;
-                entityLivingBase.renderYawOffset = yaw;
-                entityLivingBase.prevRenderYawOffset = yaw;
             }
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && scaffold.getState()) {
-                entityLivingBase.rotationYawHead = yaw;
-                entityLivingBase.renderYawOffset = yaw;
-                entityLivingBase.prevRenderYawOffset = yaw;
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadPrevRotate().get() && killAura.getTarget() != null || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadPrevRotate().get() && scaffold.getState() || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadPrevRotate().get() && annoy.getState()) {
+                entityLivingBase.prevRotationYawHead = yaw;
             }
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && annoy.getState()) {
-                entityLivingBase.rotationYawHead = yaw;
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && killAura.getTarget() != null || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && scaffold.getState() || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && annoy.getState()) {
                 entityLivingBase.renderYawOffset = yaw;
+                if (Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown()) {
+                    entityLivingBase.renderYawOffset = yaw + 45;
+                }
+                if (Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown()) {
+                    entityLivingBase.renderYawOffset = yaw - 45;
+                }
+            }
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyPrevRotate().get() && killAura.getTarget() != null || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyPrevRotate().get() && scaffold.getState() || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyPrevRotate().get() && annoy.getState()) {
                 entityLivingBase.prevRenderYawOffset = yaw;
+                if (Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown()) {
+                    entityLivingBase.prevRenderYawOffset = yaw + 45;
+                }
+                if (Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown()) {
+                    entityLivingBase.prevRenderYawOffset = yaw - 45;
+                }
             }
         }
     }

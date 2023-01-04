@@ -1,6 +1,6 @@
 package net.aspw.nightx.injection.forge.mixins.render;
 
-import net.aspw.nightx.features.module.modules.render.Animations;
+import net.aspw.nightx.features.module.modules.client.Animations;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityParticleEmitter;
 import org.spongepowered.asm.mixin.Mixin;

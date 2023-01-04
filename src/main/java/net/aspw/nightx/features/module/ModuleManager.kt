@@ -4,10 +4,7 @@ import net.aspw.nightx.NightX
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.KeyEvent
 import net.aspw.nightx.event.Listenable
-import net.aspw.nightx.features.module.modules.client.ClientSpoof
-import net.aspw.nightx.features.module.modules.client.Gui
-import net.aspw.nightx.features.module.modules.client.HudEditor
-import net.aspw.nightx.features.module.modules.client.PluginsChecker
+import net.aspw.nightx.features.module.modules.client.*
 import net.aspw.nightx.features.module.modules.combat.*
 import net.aspw.nightx.features.module.modules.cool.*
 import net.aspw.nightx.features.module.modules.exploit.*

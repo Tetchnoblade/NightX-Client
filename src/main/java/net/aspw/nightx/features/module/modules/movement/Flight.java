@@ -305,6 +305,13 @@ public class Flight extends Module {
                 MovementUtils.strafe();
                 break;
             case "blockdrop":
+                NightX.hud.addNotification(
+                        new Notification(
+                                "Wait 3 seconds to put NCP into sleep.",
+                                Notification.Type.INFO,
+                                3000L
+                        )
+                );
                 startVec = new Vec3(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ);
                 rotationVec = new Vector2f(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch);
                 break;

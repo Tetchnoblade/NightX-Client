@@ -7,6 +7,7 @@ import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.combat.KillAura
 import net.aspw.nightx.features.module.modules.misc.Annoy
 import net.aspw.nightx.features.module.modules.world.Scaffold
+import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.ListValue
 
@@ -14,10 +15,14 @@ import net.aspw.nightx.value.ListValue
 class SilentView : Module() {
 
     var mode = ListValue("Mode", arrayOf("Normal", "CSGO"), "Normal")
-    var R = FloatValue("R", 100f, 0f, 255f, { mode.get().equals("csgo", true) })
-    var G = FloatValue("G", 255f, 0f, 255f, { mode.get().equals("csgo", true) })
-    var B = FloatValue("B", 100f, 0f, 255f, { mode.get().equals("csgo", true) })
-    var Alpha = FloatValue("Alpha", 100f, 0f, 255f, { mode.get().equals("csgo", true) })
+    var headNormalRotate = BoolValue("Head-Rotation", true, { mode.get().equals("normal", true) })
+    var headPrevRotate = BoolValue("Head-PrevRotation", false, { mode.get().equals("normal", true) })
+    var bodyNormalRotate = BoolValue("Body-Rotation", true, { mode.get().equals("normal", true) })
+    var bodyPrevRotate = BoolValue("Body-PrevRotation", true, { mode.get().equals("normal", true) })
+    var R = FloatValue("R", 255f, 0f, 255f, { mode.get().equals("csgo", true) })
+    var G = FloatValue("G", 80f, 0f, 255f, { mode.get().equals("csgo", true) })
+    var B = FloatValue("B", 255f, 0f, 255f, { mode.get().equals("csgo", true) })
+    var Alpha = FloatValue("Alpha", 85f, 0f, 255f, { mode.get().equals("csgo", true) })
 
     private fun getState(module: Class<out Module>) = NightX.moduleManager[module]!!.state
 
