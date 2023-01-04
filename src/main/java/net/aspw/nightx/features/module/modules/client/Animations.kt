@@ -62,6 +62,7 @@ class Animations : Module() {
                 "Smooth",
                 "Leaked",
                 "Jello",
+                "Shield",
                 "Ninja",
                 "Jigsaw",
                 "Avatar",
