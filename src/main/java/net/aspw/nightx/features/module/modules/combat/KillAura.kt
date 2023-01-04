@@ -860,7 +860,7 @@ class KillAura : Module() {
         if (EnchantmentHelper.getModifierForCreature(
                 mc.thePlayer.heldItem,
                 entity.creatureAttribute
-            ) > 0F && tickTimer.hasTimePassed(1)
+            ) > 0F && tickTimer.hasTimePassed(2)
         ) {
             mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
             tickTimer.reset()
