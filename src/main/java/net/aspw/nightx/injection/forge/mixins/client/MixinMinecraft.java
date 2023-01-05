@@ -13,6 +13,7 @@ import net.aspw.nightx.injection.forge.mixins.accessors.MinecraftForgeClientAcce
 import net.aspw.nightx.utils.CPSCounter;
 import net.aspw.nightx.utils.RotationUtils;
 import net.aspw.nightx.utils.render.RenderUtils;
+import net.aspw.nightx.utils.timer.TickTimer;
 import net.aspw.nightx.visual.client.GuiMainMenu;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -78,6 +79,7 @@ public abstract class MixinMinecraft {
     @Shadow
     private int leftClickCounter;
     private long lastFrame = getTime();
+    private final TickTimer tickTimer = new TickTimer();
 
     @Shadow
     public abstract IResourceManager getResourceManager();
@@ -253,21 +255,9 @@ public abstract class MixinMinecraft {
             }
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && killAura.getTarget() != null || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && scaffold.getState() || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && annoy.getState()) {
                 entityLivingBase.renderYawOffset = yaw;
-                if (Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.renderYawOffset = yaw + 45;
-                }
-                if (Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown()) {
-                    entityLivingBase.renderYawOffset = yaw - 45;
-                }
             }
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyPrevRotate().get() && killAura.getTarget() != null || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyPrevRotate().get() && scaffold.getState() || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyPrevRotate().get() && annoy.getState()) {
                 entityLivingBase.prevRenderYawOffset = yaw;
-                if (Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.prevRenderYawOffset = yaw + 45;
-                }
-                if (Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown()) {
-                    entityLivingBase.prevRenderYawOffset = yaw - 45;
-                }
             }
         }
     }
