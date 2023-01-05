@@ -10,6 +10,9 @@ public final class ClientSpoof extends Module {
     public final ListValue modeValue = new ListValue("Mode", new String[]{
             "Vanilla",
             "Forge",
+            "Lunar",
+            "LabyMod",
+            "CheatBreaker",
             "PvPLounge"
     }, "Vanilla");
 }

@@ -965,7 +965,7 @@ public class Flight extends Module {
         }
     }
 
-    @EventTarget // drew
+    @EventTarget
     public void onMotion(final MotionEvent event) {
         if (mc.thePlayer == null) return;
 

@@ -37,6 +37,51 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
             }
         }
 
+        if (enabled && !Minecraft.getMinecraft().isIntegratedServerRunning() && clientSpoof.modeValue.get().equals("LabyMod")) {
+            try {
+                if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
+                    final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
+
+                    if (!customPayload.getChannelName().startsWith("MC|"))
+                        event.cancelEvent();
+                    else if (customPayload.getChannelName().equalsIgnoreCase("MC|Brand"))
+                        customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("LMC"));
+                }
+            } catch (final Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (enabled && !Minecraft.getMinecraft().isIntegratedServerRunning() && clientSpoof.modeValue.get().equals("CheatBreaker")) {
+            try {
+                if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
+                    final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
+
+                    if (!customPayload.getChannelName().startsWith("MC|"))
+                        event.cancelEvent();
+                    else if (customPayload.getChannelName().equalsIgnoreCase("MC|Brand"))
+                        customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("CB"));
+                }
+            } catch (final Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (enabled && !Minecraft.getMinecraft().isIntegratedServerRunning() && clientSpoof.modeValue.get().equals("Lunar")) {
+            try {
+                if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
+                    final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
+
+                    if (!customPayload.getChannelName().startsWith("MC|"))
+                        event.cancelEvent();
+                    else if (customPayload.getChannelName().equalsIgnoreCase("REGISTER"))
+                        customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("Lunar-Client"));
+                }
+            } catch (final Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         if (enabled && !Minecraft.getMinecraft().isIntegratedServerRunning() && clientSpoof.modeValue.get().equals("PvPLounge")) {
             try {
                 if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
