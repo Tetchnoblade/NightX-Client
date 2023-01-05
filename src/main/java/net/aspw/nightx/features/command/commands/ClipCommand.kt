@@ -3,9 +3,8 @@ package net.aspw.nightx.features.command.commands
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
 import net.aspw.nightx.visual.hud.element.elements.Notification
-import net.minecraft.network.play.client.C03PacketPlayer
 
-class PacketVClipCommand : Command("pvclip", emptyArray()) {
+class ClipCommand : Command("clip", emptyArray()) {
     /**
      * Execute commands with provided [args]
      */
@@ -15,14 +14,7 @@ class PacketVClipCommand : Command("pvclip", emptyArray()) {
                 val y = args[1].toDouble()
                 val entity = if (mc.thePlayer.isRiding) mc.thePlayer.ridingEntity else mc.thePlayer
 
-                mc.netHandler.addToSendQueue(
-                    C03PacketPlayer.C04PacketPlayerPosition(
-                        entity.posX,
-                        entity.posY + y,
-                        entity.posZ,
-                        false
-                    )
-                )
+                entity.setPosition(entity.posX, entity.posY + y, entity.posZ)
                 NightX.hud.addNotification(
                     Notification(
                         "Successfully Teleported!",
@@ -36,6 +28,6 @@ class PacketVClipCommand : Command("pvclip", emptyArray()) {
             return
         }
 
-        chatSyntax("pvclip <value>")
+        chatSyntax("clip <value>")
     }
 }
