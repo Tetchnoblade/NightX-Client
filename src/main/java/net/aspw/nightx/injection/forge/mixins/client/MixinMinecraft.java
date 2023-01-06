@@ -13,7 +13,6 @@ import net.aspw.nightx.injection.forge.mixins.accessors.MinecraftForgeClientAcce
 import net.aspw.nightx.utils.CPSCounter;
 import net.aspw.nightx.utils.RotationUtils;
 import net.aspw.nightx.utils.render.RenderUtils;
-import net.aspw.nightx.utils.timer.TickTimer;
 import net.aspw.nightx.visual.client.GuiMainMenu;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -79,7 +78,6 @@ public abstract class MixinMinecraft {
     @Shadow
     private int leftClickCounter;
     private long lastFrame = getTime();
-    private final TickTimer tickTimer = new TickTimer();
 
     @Shadow
     public abstract IResourceManager getResourceManager();

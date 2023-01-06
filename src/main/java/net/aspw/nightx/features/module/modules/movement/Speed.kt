@@ -145,8 +145,10 @@ class Speed : Module() {
 
     @EventTarget
     fun onMotion(event: MotionEvent) {
-        mc.thePlayer.cameraPitch = 0f
-        mc.thePlayer.cameraYaw = 0f
+        if (noBob.get()) {
+            mc.thePlayer.cameraPitch = 0f
+            mc.thePlayer.cameraYaw = 0f
+        }
         if (mc.thePlayer.isSneaking || event.eventState !== EventState.PRE) return
         val speedMode = mode
         if (speedMode != null) {
@@ -457,4 +459,7 @@ class Speed : Module() {
     @JvmField
     val mineplexGroundSpeedValue =
         FloatValue("MineplexGround-Speed", 0.6f, 0.1f, 1f) { modeName.equals("mineplexground", ignoreCase = true) }
+
+    @JvmField
+    val noBob = BoolValue("NoBob", false)
 }

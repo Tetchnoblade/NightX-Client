@@ -163,7 +163,7 @@ class ModuleManager : Listenable {
             ResetVL::class.java,
             FastMine::class.java,
             Annoy::class.java,
-            InfiniteReach::class.java,
+            HitTP::class.java,
             RiderGod::class.java,
             HudEditor::class.java,
             ThunderNotifier::class.java,
@@ -203,7 +203,8 @@ class ModuleManager : Listenable {
             ClientSpoof::class.java,
             Knockback::class.java,
             TriggerBot::class.java,
-            DesyncFlight::class.java
+            DesyncFlight::class.java,
+            FakePlayer::class.java
         )
 
         registerModule(Fucker)

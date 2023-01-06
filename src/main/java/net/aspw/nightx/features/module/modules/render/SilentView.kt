@@ -16,7 +16,7 @@ class SilentView : Module() {
 
     var mode = ListValue("Mode", arrayOf("Normal", "CSGO"), "Normal")
     var headNormalRotate = BoolValue("Head-Rotation", true, { mode.get().equals("normal", true) })
-    var headPrevRotate = BoolValue("Head-PrevRotation", true, { mode.get().equals("normal", true) })
+    var headPrevRotate = BoolValue("Head-PrevRotation", false, { mode.get().equals("normal", true) })
     var bodyNormalRotate = BoolValue("Body-Rotation", true, { mode.get().equals("normal", true) })
     var bodyPrevRotate = BoolValue("Body-PrevRotation", true, { mode.get().equals("normal", true) })
     var R = FloatValue("R", 255f, 0f, 255f, { mode.get().equals("csgo", true) })

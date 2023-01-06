@@ -74,7 +74,7 @@ open class Module : MinecraftInstance(), Listenable {
                 if (NightX.moduleManager.shouldNotify)
                     NightX.hud.addNotification(
                         Notification(
-                            "${if (value) "Enabled" else "Disabled"} §r$name",
+                            "${if (value) "Enabled" else "Disabled"} §r$name.",
                             if (value) Notification.Type.SUCCESS else Notification.Type.ERROR,
                             1000L
                         )

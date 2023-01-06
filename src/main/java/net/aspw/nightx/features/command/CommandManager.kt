@@ -19,7 +19,6 @@ class CommandManager {
     fun registerCommands() {
         registerCommand(BindCommand())
         registerCommand(VClipCommand())
-        registerCommand(HClipCommand())
         registerCommand(HelpCommand())
         registerCommand(SayCommand())
         registerCommand(MacroCommand())

@@ -3,6 +3,7 @@ package net.aspw.nightx.features.command.commands
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
 import net.aspw.nightx.features.command.CommandManager
+import net.aspw.nightx.features.module.modules.render.Hud
 import net.aspw.nightx.utils.misc.sound.TipSoundManager
 import net.aspw.nightx.visual.client.clickgui.NewUi
 import net.aspw.nightx.visual.font.Fonts
@@ -33,6 +34,9 @@ class ReloadCommand : Command("reload", arrayOf("configreload")) {
         NightX.fileManager.loadConfig(NightX.fileManager.hudConfig)
         NewUi.resetInstance()
         NightX.isStarting = false
+        if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+            NightX.tipSoundManager.popSound.asyncPlay(90f)
+        }
         chat("Reloaded!")
     }
 }

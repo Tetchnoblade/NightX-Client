@@ -2,6 +2,7 @@ package net.aspw.nightx.features.command.commands
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
+import net.aspw.nightx.features.module.modules.render.Hud
 import net.aspw.nightx.visual.hud.Config
 import net.aspw.nightx.visual.hud.element.elements.Notification
 import java.io.File
@@ -26,6 +27,9 @@ class ThemeCommand : Command("theme", emptyArray()) {
                                 NightX.hud.clearElements()
                                 NightX.hud = Config(theme).toHUD()
                                 NightX.isStarting = false
+                                if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                                    NightX.tipSoundManager.popSound.asyncPlay(90f)
+                                }
                                 chat("§6Theme updated successfully!")
                                 NightX.hud.addNotification(
                                     Notification(
@@ -57,6 +61,9 @@ class ThemeCommand : Command("theme", emptyArray()) {
 
                             val settingsTheme = Config(NightX.hud).toJson()
                             themeFile.writeText(settingsTheme)
+                            if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                                NightX.tipSoundManager.popSound.asyncPlay(90f)
+                            }
                             chat("§6Successfully saved new theme!")
                         } catch (throwable: Throwable) {
                         }
@@ -73,6 +80,9 @@ class ThemeCommand : Command("theme", emptyArray()) {
 
                         if (themeFile.exists()) {
                             themeFile.delete()
+                            if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                                NightX.tipSoundManager.popSound.asyncPlay(90f)
+                            }
                             chat("§6Theme deleted successfully!")
                             return
                         }
