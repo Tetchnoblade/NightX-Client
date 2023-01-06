@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.render
+package net.aspw.nightx.features.module.modules.client
 
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.PacketEvent
@@ -8,7 +8,7 @@ import net.aspw.nightx.features.module.ModuleInfo
 import net.minecraft.network.play.client.C14PacketTabComplete
 import net.minecraft.network.play.server.S3APacketTabComplete
 
-@ModuleInfo(name = "AntiTabComplete", spacedName = "Anti Tab Complete", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "AntiTabComplete", spacedName = "Anti Tab Complete", category = ModuleCategory.CLIENT)
 class AntiTabComplete : Module() {
 
     @EventTarget

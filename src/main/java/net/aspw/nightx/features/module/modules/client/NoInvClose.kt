@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.misc
+package net.aspw.nightx.features.module.modules.client
 
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.PacketEvent
@@ -8,7 +8,7 @@ import net.aspw.nightx.features.module.ModuleInfo
 import net.minecraft.client.gui.inventory.GuiInventory
 import net.minecraft.network.play.server.S2EPacketCloseWindow
 
-@ModuleInfo(name = "NoInvClose", spacedName = "NoInv Close", category = ModuleCategory.MISC)
+@ModuleInfo(name = "NoInvClose", spacedName = "NoInv Close", category = ModuleCategory.CLIENT, array = false)
 class NoInvClose : Module() {
     @EventTarget
     fun onPacket(event: PacketEvent) {
@@ -16,5 +16,9 @@ class NoInvClose : Module() {
 
         if (event.packet is S2EPacketCloseWindow && mc.currentScreen is GuiInventory)
             event.cancelEvent()
+    }
+
+    init {
+        state = true
     }
 }

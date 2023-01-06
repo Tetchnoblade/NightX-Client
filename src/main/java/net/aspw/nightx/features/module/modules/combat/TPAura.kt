@@ -42,7 +42,6 @@ class TPAura : Module() {
     private val maxTargetsValue = IntegerValue("MaxTargets", 3, 1, 8)
     private val rangeValue = IntegerValue("Range", 50, 10, 200, "m")
     private val fovValue = FloatValue("FOV", 180F, 0F, 180F, "°")
-    private val maxMoveDistValue = FloatValue("MaxMoveSpeed", 3F, 2F, 15F, "m")
     private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Normal")
     private val noPureC03Value = BoolValue("NoStandingPackets", false)
     private val noKillAuraValue = BoolValue("NoKillAura", false)
@@ -128,7 +127,7 @@ class TPAura : Module() {
         targets.forEach {
             if (mc.thePlayer == null || mc.theWorld == null) return
 
-            val path = PathUtils.findTeleportPath(mc.thePlayer, it, maxMoveDistValue.get().toDouble())
+            val path = PathUtils.findTeleportPath(mc.thePlayer, it, 3.0)
 
             if (noKillAuraValue.get() && auraMod.target != null) return
 

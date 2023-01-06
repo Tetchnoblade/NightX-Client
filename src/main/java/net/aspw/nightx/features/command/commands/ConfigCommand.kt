@@ -72,6 +72,12 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                                 NightX.tipSoundManager.popSound.asyncPlay(90f)
                             }
                             chat("§aSuccessfully saved new config!")
+                            NightX.hud.addNotification(
+                                Notification(
+                                    "Config saved successfully!",
+                                    Notification.Type.SUCCESS
+                                )
+                            )
                         } catch (throwable: Throwable) {
                         }
                         return
@@ -91,6 +97,12 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                                 NightX.tipSoundManager.popSound.asyncPlay(90f)
                             }
                             chat("§6Config deleted successfully!")
+                            NightX.hud.addNotification(
+                                Notification(
+                                    "Config deleted successfully!",
+                                    Notification.Type.SUCCESS
+                                )
+                            )
                             return
                         }
                         return

@@ -26,11 +26,7 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
             try {
                 if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
                     final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
-
-                    if (!customPayload.getChannelName().startsWith("MC|"))
-                        event.cancelEvent();
-                    else if (customPayload.getChannelName().equalsIgnoreCase("MC|Brand"))
-                        customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("vanilla"));
+                    customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("vanilla"));
                 }
             } catch (final Exception e) {
                 e.printStackTrace();
@@ -41,11 +37,7 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
             try {
                 if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
                     final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
-
-                    if (!customPayload.getChannelName().startsWith("MC|"))
-                        event.cancelEvent();
-                    else if (customPayload.getChannelName().equalsIgnoreCase("MC|Brand"))
-                        customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("LMC"));
+                    customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("LMC"));
                 }
             } catch (final Exception e) {
                 e.printStackTrace();
@@ -56,11 +48,7 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
             try {
                 if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
                     final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
-
-                    if (!customPayload.getChannelName().startsWith("MC|"))
-                        event.cancelEvent();
-                    else if (customPayload.getChannelName().equalsIgnoreCase("MC|Brand"))
-                        customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("CB"));
+                    customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("CB"));
                 }
             } catch (final Exception e) {
                 e.printStackTrace();
@@ -71,11 +59,7 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
             try {
                 if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
                     final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
-
-                    if (!customPayload.getChannelName().startsWith("MC|"))
-                        event.cancelEvent();
-                    else if (customPayload.getChannelName().equalsIgnoreCase("REGISTER"))
-                        customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("Lunar-Client"));
+                    customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("Lunar-Client"));
                 }
             } catch (final Exception e) {
                 e.printStackTrace();
@@ -86,11 +70,7 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
             try {
                 if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
                     final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
-
-                    if (!customPayload.getChannelName().startsWith("MC|"))
-                        event.cancelEvent();
-                    else if (customPayload.getChannelName().equalsIgnoreCase("MC|Brand"))
-                        customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("PLC18"));
+                    customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("PLC18"));
                 }
             } catch (final Exception e) {
                 e.printStackTrace();

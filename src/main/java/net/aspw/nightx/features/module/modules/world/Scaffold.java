@@ -109,12 +109,7 @@ public class Scaffold extends Module {
         }
     };
 
-    // idfk what is this
-    private final BoolValue smartDelay = new BoolValue("SmartDelay", false);
-
-    // AutoBlock
-    private final ListValue autoBlockMode = new ListValue("AutoBlock", new String[]{"Spoof", "Switch", "Off"}, "Spoof");
-    private final BoolValue stayAutoBlock = new BoolValue("LiteSpoof", true);
+    public final FloatValue speedModifierValue = new FloatValue("SpeedModifier", 0.8F, 0, 2F, "x");
 
     //make sprint compatible with tower.add sprint tricks
     public final ListValue sprintModeValue = new ListValue("SprintMode", new String[]{"Same", "Silent", "Ground", "Air", "Off"}, "Same");
@@ -185,7 +180,8 @@ public class Scaffold extends Module {
 
     // Game
     private final FloatValue timerValue = new FloatValue("Timer", 1F, 0.1F, 10F, () -> !isTowerOnly());
-    public final FloatValue speedModifierValue = new FloatValue("SpeedModifier", 1F, 0, 2F, "x");
+    // AutoBlock
+    private final ListValue autoBlockMode = new ListValue("AutoBlock", new String[]{"LiteSpoof", "Spoof", "Switch", "Off"}, "Spoof");
     public final FloatValue xzMultiplier = new FloatValue("XZ-Multiplier", 1F, 0F, 4F, "x");
     private final BoolValue customSpeedValue = new BoolValue("CustomSpeed", false);
     private final FloatValue customMoveSpeedValue = new FloatValue("CustomMoveSpeed", 0.2F, 0, 5F, () -> customSpeedValue.get());
@@ -419,27 +415,6 @@ public class Scaffold extends Module {
      */
     @EventTarget
     public void onUpdate(final UpdateEvent event) {
-        int blockSlot = -1;
-        ItemStack itemStack = mc.thePlayer.getHeldItem();
-
-        if (mc.thePlayer.getHeldItem() == null || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemBlock)) {
-            if (autoBlockMode.get().equalsIgnoreCase("Off"))
-                return;
-
-            blockSlot = InventoryUtils.findAutoBlockBlock();
-
-            if (blockSlot == -1)
-                return;
-
-            if (autoBlockMode.get().equalsIgnoreCase("Spoof")) {
-                mc.getNetHandler().addToSendQueue(new C09PacketHeldItemChange(blockSlot - 36));
-                itemStack = mc.thePlayer.inventoryContainer.getSlot(blockSlot).getStack();
-            } else {
-                mc.thePlayer.inventory.currentItem = blockSlot - 36;
-                mc.playerController.updateController();
-            }
-        }
-
         if (autoDisableSpeedValue.get() && NightX.moduleManager.getModule(Speed.class).getState()) {
             NightX.moduleManager.getModule(Speed.class).setState(false);
             NightX.hud.addNotification(new Notification("Speed is disabled.", Notification.Type.WARNING));
@@ -825,7 +800,7 @@ public class Scaffold extends Module {
             return;
         }
 
-        if (!towerActivation() && (!delayTimer.hasTimePassed(delay) || (smartDelay.get() && mc.rightClickDelayTimer > 0) || ((sameYValue.get() || ((autoJumpValue.get() || (smartSpeedValue.get() && NightX.moduleManager.getModule(Speed.class).getState())) && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump))) && launchY - 1 != (int) (towerActive ? towerPlace : targetPlace).getVec3().yCoord)))
+        if (!towerActivation() && (!delayTimer.hasTimePassed(delay) || ((sameYValue.get() || ((autoJumpValue.get() || (smartSpeedValue.get() && NightX.moduleManager.getModule(Speed.class).getState())) && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump))) && launchY - 1 != (int) (towerActive ? towerPlace : targetPlace).getVec3().yCoord)))
             return;
 
         int blockSlot = -1;
@@ -840,12 +815,19 @@ public class Scaffold extends Module {
             if (blockSlot == -1)
                 return;
 
+            if (autoBlockMode.get().equalsIgnoreCase("Switch")) {
+                mc.thePlayer.inventory.currentItem = blockSlot - 36;
+                mc.playerController.updateController();
+            }
+
             if (autoBlockMode.get().equalsIgnoreCase("Spoof")) {
                 mc.getNetHandler().addToSendQueue(new C09PacketHeldItemChange(blockSlot - 36));
                 itemStack = mc.thePlayer.inventoryContainer.getSlot(blockSlot).getStack();
-            } else {
-                mc.thePlayer.inventory.currentItem = blockSlot - 36;
-                mc.playerController.updateController();
+            }
+
+            if (autoBlockMode.get().equalsIgnoreCase("LiteSpoof")) {
+                mc.getNetHandler().addToSendQueue(new C09PacketHeldItemChange(blockSlot - 36));
+                itemStack = mc.thePlayer.inventoryContainer.getSlot(blockSlot).getStack();
             }
         }
 
@@ -880,7 +862,7 @@ public class Scaffold extends Module {
         else
             this.targetPlace = null;
 
-        if (!stayAutoBlock.get() && blockSlot >= 0 && !autoBlockMode.get().equalsIgnoreCase("Switch"))
+        if (blockSlot >= 0 && autoBlockMode.get().equalsIgnoreCase("Spoof"))
             mc.getNetHandler().addToSendQueue(new C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem));
     }
 
@@ -916,7 +898,7 @@ public class Scaffold extends Module {
             mc.playerController.updateController();
         }
 
-        if (slot != mc.thePlayer.inventory.currentItem && autoBlockMode.get().equalsIgnoreCase("spoof"))
+        if (slot != mc.thePlayer.inventory.currentItem && autoBlockMode.get().equalsIgnoreCase("spoof") || slot != mc.thePlayer.inventory.currentItem && autoBlockMode.get().equalsIgnoreCase("litespoof"))
             mc.getNetHandler().addToSendQueue(new C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem));
     }
 

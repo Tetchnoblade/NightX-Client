@@ -65,6 +65,12 @@ class ThemeCommand : Command("theme", emptyArray()) {
                                 NightX.tipSoundManager.popSound.asyncPlay(90f)
                             }
                             chat("§6Successfully saved new theme!")
+                            NightX.hud.addNotification(
+                                Notification(
+                                    "Config saved successfully!",
+                                    Notification.Type.SUCCESS
+                                )
+                            )
                         } catch (throwable: Throwable) {
                         }
                         return
@@ -84,6 +90,12 @@ class ThemeCommand : Command("theme", emptyArray()) {
                                 NightX.tipSoundManager.popSound.asyncPlay(90f)
                             }
                             chat("§6Theme deleted successfully!")
+                            NightX.hud.addNotification(
+                                Notification(
+                                    "Config deleted successfully!",
+                                    Notification.Type.SUCCESS
+                                )
+                            )
                             return
                         }
                         return

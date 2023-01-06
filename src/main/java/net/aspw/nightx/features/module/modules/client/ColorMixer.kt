@@ -55,7 +55,7 @@ class ColorMixer : Module() {
 
     companion object {
         @JvmField
-        val jumpPatch = BoolValue("JumpFix", false)
+        val jumpPatch = BoolValue("JumpFix", true)
         var lastColors = arrayOf<Color?>()
         private var lastFraction = floatArrayOf()
 
