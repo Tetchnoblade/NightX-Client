@@ -6,20 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9d01c55b-d37f-497b-a569-910a52b4446d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/ConfigCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/ConfigCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/ThemeCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/ThemeCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/ModuleManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/ModuleManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/ColorMixer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/ColorMixer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/combat/TPAura.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/combat/TPAura.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/RiderGod.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/EntityDesync.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/Teleport.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/NoInvClose.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/NoInvClose.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/AntiTabComplete.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/AntiTabComplete.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/world/Scaffold.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/world/Scaffold.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/ClientSpoof.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/special/ClientSpoof.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/entity/MixinEntityPlayerSP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/entity/MixinEntityPlayerSP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/network/MixinNetHandlerPlayClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/network/MixinNetHandlerPlayClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/SettingsUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/SettingsUtils.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
