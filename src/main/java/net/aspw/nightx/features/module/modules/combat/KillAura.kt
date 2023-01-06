@@ -16,7 +16,6 @@ import net.aspw.nightx.utils.*
 import net.aspw.nightx.utils.extensions.getDistanceToEntityBox
 import net.aspw.nightx.utils.misc.RandomUtils
 import net.aspw.nightx.utils.timer.MSTimer
-import net.aspw.nightx.utils.timer.TickTimer
 import net.aspw.nightx.utils.timer.TimeUtils
 import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
@@ -25,6 +24,7 @@ import net.aspw.nightx.value.ListValue
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.gui.inventory.GuiInventory
 import net.minecraft.client.settings.KeyBinding
+import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityArmorStand
@@ -317,11 +317,9 @@ class KillAura : Module() {
     private val prevTargetEntities = mutableListOf<Int>()
 
     private var markEntity: EntityLivingBase? = null
-    private val markTimer = MSTimer()
 
     // Attack delay
     private val attackTimer = MSTimer()
-    private val tickTimer = TickTimer()
     private var attackDelay = 0L
     private var clicks = 0
 
@@ -865,6 +863,10 @@ class KillAura : Module() {
         if (keepSprintValue.get()) {
             if (mc.playerController.currentGameType != WorldSettings.GameType.SPECTATOR)
                 mc.thePlayer.attackTargetEntityWithCurrentItem(entity)
+        }
+
+        if (EnchantmentHelper.getModifierForCreature(mc.thePlayer.heldItem, entity.creatureAttribute) > 0F) {
+            mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
         }
 
         // Start blocking after attack

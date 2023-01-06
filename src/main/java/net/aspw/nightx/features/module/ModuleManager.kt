@@ -163,7 +163,6 @@ class ModuleManager : Listenable {
             ResetVL::class.java,
             FastMine::class.java,
             Annoy::class.java,
-            HitTP::class.java,
             RiderGod::class.java,
             HudEditor::class.java,
             ThunderNotifier::class.java,

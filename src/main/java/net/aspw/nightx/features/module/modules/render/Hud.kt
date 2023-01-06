@@ -27,7 +27,7 @@ class Hud : Module() {
     val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.06F, 0.01F, 0.5F, { chatAnimationValue.get() })
     private val toggleMessageValue = BoolValue("Toggle-Notification", false)
     private val toggleSoundValue = ListValue("Toggle-Sound", arrayOf("None", "Default", "Custom"), "None")
-    val flagSoundValue = BoolValue("Flag-Sound", true)
+    val flagSoundValue = BoolValue("Pop-Sound", true)
     val guiButtonStyle =
         ListValue("Button-Style", arrayOf("Minecraft", "LiquidBounce", "Rounded", "LiquidBounce+"), "Minecraft")
 
