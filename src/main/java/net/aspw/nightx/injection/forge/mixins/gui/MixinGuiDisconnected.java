@@ -13,6 +13,7 @@ import me.liuli.elixir.account.CrackedAccount;
 import me.liuli.elixir.account.MinecraftAccount;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.SessionEvent;
+import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.utils.ClientUtils;
 import net.aspw.nightx.utils.ServerUtils;
 import net.aspw.nightx.utils.SessionUtils;
@@ -134,11 +135,12 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
                 final CrackedAccount crackedAccount = new CrackedAccount();
                 crackedAccount.setName(RandomUtils.randomString(RandomUtils.nextInt(5, 16)));
                 crackedAccount.update();
-
+                if (NightX.moduleManager.getModule(Hud.class).getFlagSoundValue().get()) {
+                    NightX.tipSoundManager.getPopSound().asyncPlay(90f);
+                }
                 mc.session = new Session(crackedAccount.getSession().getUsername(), crackedAccount.getSession().getUuid(),
                         crackedAccount.getSession().getToken(), crackedAccount.getSession().getType());
                 NightX.eventManager.callEvent(new SessionEvent());
-                ServerUtils.connectToLastServer();
                 break;
             case 999:
                 mc.displayGuiScreen(new GuiProxy((GuiScreen) (Object) this));

@@ -5,7 +5,6 @@ import net.aspw.nightx.NightX;
 import net.aspw.nightx.config.FileConfig;
 import net.aspw.nightx.config.FileManager;
 import net.aspw.nightx.features.module.Module;
-import net.aspw.nightx.features.special.ClientSpoof;
 import net.aspw.nightx.features.special.MacroManager;
 import net.aspw.nightx.utils.EntityUtils;
 import net.aspw.nightx.value.Value;
@@ -72,14 +71,6 @@ public class ValuesConfig extends FileConfig {
                     MacroManager.INSTANCE.addMacro(keyValue.getAsInt(), commandValue.getAsString());
                 }
             } else if (entry.getKey().equalsIgnoreCase("features")) {
-                JsonObject jsonValue = (JsonObject) entry.getValue();
-
-                if (jsonValue.has("ClientSpoof"))
-                    ClientSpoof.enabled = jsonValue.get("ClientSpoof").getAsBoolean();
-                if (jsonValue.has("FMLSpoof"))
-                    ClientSpoof.blockFML = jsonValue.get("FMLSpoof").getAsBoolean();
-                if (jsonValue.has("PayloadsSpoof"))
-                    ClientSpoof.blockPayloadPackets = jsonValue.get("PayloadsSpoof").getAsBoolean();
             } else if (entry.getKey().equalsIgnoreCase("thealtening")) {
                 JsonObject jsonValue = (JsonObject) entry.getValue();
 
@@ -138,9 +129,6 @@ public class ValuesConfig extends FileConfig {
         final JsonObject jsonFeatures = new JsonObject();
 
         jsonObject.add("features", jsonFeatures);
-        jsonFeatures.addProperty("ClientSpoof", ClientSpoof.enabled);
-        jsonFeatures.addProperty("FMLSpoof", ClientSpoof.blockFML);
-        jsonFeatures.addProperty("PayloadsSpoof", ClientSpoof.blockPayloadPackets);
         final JsonObject theAlteningObject = new JsonObject();
         theAlteningObject.addProperty("API-Key", GuiTheAltening.Companion.getApiKey());
         jsonObject.add("thealtening", theAlteningObject);

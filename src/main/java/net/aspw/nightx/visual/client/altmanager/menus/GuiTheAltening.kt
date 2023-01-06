@@ -9,6 +9,7 @@ import com.thealtening.AltService
 import com.thealtening.api.TheAltening
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.SessionEvent
+import net.aspw.nightx.features.module.modules.render.Hud
 import net.aspw.nightx.utils.ClientUtils
 import net.aspw.nightx.utils.misc.MiscUtils
 import net.aspw.nightx.utils.render.RenderUtils
@@ -112,9 +113,15 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
 
                 val altening = TheAltening(apiKey)
                 val asynchronous = TheAltening.Asynchronous(altening)
+                if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    NightX.tipSoundManager.popSound.asyncPlay(90f)
+                }
                 status = "§cGenerating account..."
 
                 asynchronous.accountData.thenAccept { account ->
+                    if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        NightX.tipSoundManager.popSound.asyncPlay(90f)
+                    }
                     status = "§aGenerated account: §b§l${account.username}"
 
                     try {
@@ -123,6 +130,9 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                         // Change Alt Service
                         GuiAltManager.altService.switchService(AltService.EnumAltService.THEALTENING)
 
+                        if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            NightX.tipSoundManager.popSound.asyncPlay(90f)
+                        }
                         status = "§cLogging in..."
 
                         // Set token as username
@@ -152,6 +162,9 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                             "§cFailed to login: ${e.message}"
                         }
                     } catch (throwable: Throwable) {
+                        if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            NightX.tipSoundManager.popSound.asyncPlay(90f)
+                        }
                         status = "§cFailed to login. Unknown error."
                         ClientUtils.getLogger().error("Failed to login.", throwable)
                     }
@@ -177,6 +190,9 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
 
                         // Change Alt Service
                         GuiAltManager.altService.switchService(AltService.EnumAltService.THEALTENING)
+                        if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            NightX.tipSoundManager.popSound.asyncPlay(90f)
+                        }
                         status = "§cLogging in..."
 
                         // Set token as username
@@ -206,6 +222,9 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                             "§cFailed to login: ${e.message}"
                         }
                     } catch (throwable: Throwable) {
+                        if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            NightX.tipSoundManager.popSound.asyncPlay(90f)
+                        }
                         ClientUtils.getLogger().error("Failed to login.", throwable)
                         status = "§cFailed to login. Unknown error."
                     }

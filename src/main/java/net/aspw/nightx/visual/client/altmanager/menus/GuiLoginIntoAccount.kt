@@ -6,6 +6,7 @@ import me.liuli.elixir.account.CrackedAccount
 import me.liuli.elixir.account.MicrosoftAccount
 import me.liuli.elixir.account.MojangAccount
 import net.aspw.nightx.NightX
+import net.aspw.nightx.features.module.modules.render.Hud
 import net.aspw.nightx.utils.ClientUtils
 import net.aspw.nightx.utils.TabUtils
 import net.aspw.nightx.utils.misc.MiscUtils
@@ -151,6 +152,9 @@ class GuiLoginIntoAccount(private val prevGui: GuiAltManager, val directLogin: B
 
                         NightX.fileManager.accountsConfig.addAccount(account)
                         NightX.fileManager.saveConfig(NightX.fileManager.accountsConfig)
+                        if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            NightX.tipSoundManager.popSound.asyncPlay(90f)
+                        }
                         status = "§aThe account has been added."
                         prevGui.status = status
                         mc.displayGuiScreen(prevGui)
@@ -267,10 +271,16 @@ class GuiLoginIntoAccount(private val prevGui: GuiAltManager, val directLogin: B
                     minecraftAccount.session.username,
                     minecraftAccount.session.uuid, minecraftAccount.session.token, "mojang"
                 )
+                if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    NightX.tipSoundManager.popSound.asyncPlay(90f)
+                }
                 status = "§aLogged successfully to ${mc.session.username}."
             } else {
                 NightX.fileManager.accountsConfig.addAccount(minecraftAccount)
                 NightX.fileManager.saveConfig(NightX.fileManager.accountsConfig)
+                if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    NightX.tipSoundManager.popSound.asyncPlay(90f)
+                }
                 status = "§aThe account has been added."
             }
             prevGui.status = status

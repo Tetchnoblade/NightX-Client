@@ -14,8 +14,6 @@ import net.minecraft.network.play.client.C17PacketCustomPayload;
 public class ClientSpoof extends MinecraftInstance implements Listenable {
 
     public static boolean enabled = true;
-    public static boolean blockFML = true;
-    public static boolean blockPayloadPackets = true;
 
     @EventTarget
     public void onPacket(PacketEvent event) {
@@ -24,7 +22,7 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
 
         if (enabled && !Minecraft.getMinecraft().isIntegratedServerRunning() && clientSpoof.modeValue.get().equals("Vanilla")) {
             try {
-                if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
+                if (packet instanceof C17PacketCustomPayload) {
                     final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
                     customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("vanilla"));
                 }
@@ -35,7 +33,7 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
 
         if (enabled && !Minecraft.getMinecraft().isIntegratedServerRunning() && clientSpoof.modeValue.get().equals("LabyMod")) {
             try {
-                if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
+                if (packet instanceof C17PacketCustomPayload) {
                     final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
                     customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("LMC"));
                 }
@@ -46,7 +44,7 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
 
         if (enabled && !Minecraft.getMinecraft().isIntegratedServerRunning() && clientSpoof.modeValue.get().equals("CheatBreaker")) {
             try {
-                if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
+                if (packet instanceof C17PacketCustomPayload) {
                     final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
                     customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("CB"));
                 }
@@ -57,7 +55,7 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
 
         if (enabled && !Minecraft.getMinecraft().isIntegratedServerRunning() && clientSpoof.modeValue.get().equals("Lunar")) {
             try {
-                if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
+                if (packet instanceof C17PacketCustomPayload) {
                     final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
                     customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("Lunar-Client"));
                 }
@@ -68,7 +66,7 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
 
         if (enabled && !Minecraft.getMinecraft().isIntegratedServerRunning() && clientSpoof.modeValue.get().equals("PvPLounge")) {
             try {
-                if (blockPayloadPackets && packet instanceof C17PacketCustomPayload) {
+                if (packet instanceof C17PacketCustomPayload) {
                     final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
                     customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("PLC18"));
                 }

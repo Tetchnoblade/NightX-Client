@@ -26,6 +26,6 @@ public class MixinC00Handshake {
      */
     @ModifyConstant(method = "writePacketData", constant = @Constant(stringValue = "\u0000FML\u0000"))
     private String injectAntiForge(String constant) {
-        return ClientSpoof.enabled && ClientSpoof.blockFML && !Minecraft.getMinecraft().isIntegratedServerRunning() ? "" : "\u0000FML\u0000";
+        return ClientSpoof.enabled && !Minecraft.getMinecraft().isIntegratedServerRunning() ? "" : "\u0000FML\u0000";
     }
 }

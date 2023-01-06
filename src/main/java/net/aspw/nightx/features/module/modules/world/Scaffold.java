@@ -415,6 +415,29 @@ public class Scaffold extends Module {
      */
     @EventTarget
     public void onUpdate(final UpdateEvent event) {
+        int blockSlot = -1;
+        ItemStack itemStack = mc.thePlayer.getHeldItem();
+
+        if (mc.thePlayer.getHeldItem() == null || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemBlock)) {
+            if (autoBlockMode.get().equalsIgnoreCase("Off"))
+                return;
+
+            blockSlot = InventoryUtils.findAutoBlockBlock();
+
+            if (blockSlot == -1)
+                return;
+
+            if (autoBlockMode.get().equalsIgnoreCase("Switch")) {
+                mc.thePlayer.inventory.currentItem = blockSlot - 36;
+                mc.playerController.updateController();
+            }
+
+            if (autoBlockMode.get().equalsIgnoreCase("LiteSpoof")) {
+                mc.getNetHandler().addToSendQueue(new C09PacketHeldItemChange(blockSlot - 36));
+                itemStack = mc.thePlayer.inventoryContainer.getSlot(blockSlot).getStack();
+            }
+        }
+
         if (autoDisableSpeedValue.get() && NightX.moduleManager.getModule(Speed.class).getState()) {
             NightX.moduleManager.getModule(Speed.class).setState(false);
             NightX.hud.addNotification(new Notification("Speed is disabled.", Notification.Type.WARNING));

@@ -15,7 +15,7 @@ import static org.objectweb.asm.Opcodes.*;
 public class ForgeNetworkTransformer implements IClassTransformer {
 
     public static boolean returnMethod() {
-        return ClientSpoof.enabled && ClientSpoof.blockFML && !Minecraft.getMinecraft().isIntegratedServerRunning();
+        return ClientSpoof.enabled && !Minecraft.getMinecraft().isIntegratedServerRunning();
     }
 
     /**
