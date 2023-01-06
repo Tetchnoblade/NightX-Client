@@ -87,6 +87,9 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
                 ServerUtils.connectToLastServer();
                 break;
             case 3:
+                if (NightX.moduleManager.getModule(Hud.class).getFlagSoundValue().get()) {
+                    NightX.tipSoundManager.getPopSound().asyncPlay(90f);
+                }
                 if (!GuiTheAltening.Companion.getApiKey().isEmpty()) {
                     final String apiKey = GuiTheAltening.Companion.getApiKey();
                     final TheAltening theAltening = new TheAltening(apiKey);
@@ -102,7 +105,6 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
 
                         mc.session = new Session(yggdrasilUserAuthentication.getSelectedProfile().getName(), yggdrasilUserAuthentication.getSelectedProfile().getId().toString(), yggdrasilUserAuthentication.getAuthenticatedToken(), "microsoft");
                         NightX.eventManager.callEvent(new SessionEvent());
-                        ServerUtils.connectToLastServer();
                         break;
                     } catch (final Throwable throwable) {
                         ClientUtils.getLogger().error("Failed to login into random account from The Altening.", throwable);

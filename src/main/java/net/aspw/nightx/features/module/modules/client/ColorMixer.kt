@@ -5,7 +5,6 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.utils.render.BlendUtils
-import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.IntegerValue
 import java.awt.Color
 
@@ -55,7 +54,6 @@ class ColorMixer : Module() {
 
     companion object {
         @JvmField
-        val jumpPatch = BoolValue("JumpFix", true)
         var lastColors = arrayOf<Color?>()
         private var lastFraction = floatArrayOf()
 
