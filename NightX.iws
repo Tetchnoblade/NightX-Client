@@ -7,9 +7,19 @@
     <list default="true" id="9d01c55b-d37f-497b-a569-910a52b4446d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/downloads.json" beforeDir="false" afterPath="$PROJECT_DIR$/downloads.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/ColorMixer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/ColorMixer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/entity/MixinEntityLivingBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/entity/MixinEntityLivingBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiDisconnected.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiDisconnected.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/Animations.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/Animations.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/Flight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/Flight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/player/TargetStrafe.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/player/TargetStrafe.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Cape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/Cape.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Sensor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/Sensor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/SilentView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/SilentView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/world/Scaffold.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/world/Scaffold.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/client/MixinMinecraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/client/MixinMinecraft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/entity/MixinAbstractClientPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/entity/MixinAbstractClientPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/item/MixinItemRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/item/MixinItemRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/render/MixinModelBiped.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/render/MixinModelBiped.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/render/MixinRendererLivingEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/render/MixinRendererLivingEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/SettingsUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/SettingsUtils.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,11 +178,11 @@
       <recent name="net.aspw.nightx.visual.client" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="net.aspw.nightx.injection.forge.mixins.render" />
+      <recent name="net.aspw.nightx.features.module.modules.render" />
       <recent name="net.aspw.nightx.features.module.modules.misc" />
       <recent name="net.aspw.nightx.utils" />
       <recent name="net.aspw.nightx.features.module.modules.exploit" />
-      <recent name="net.aspw.nightx.features.module.modules.client" />
-      <recent name="net.aspw.nightx.config.configs" />
     </key>
   </component>
   <component name="RunManager" selected="アプリケーション.Minecraft Client">

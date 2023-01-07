@@ -1,7 +1,7 @@
 package net.aspw.nightx.injection.forge.mixins.entity;
 
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.render.Cape;
+import net.aspw.nightx.features.module.modules.client.Cape;
 import net.aspw.nightx.features.module.modules.render.Fov;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;

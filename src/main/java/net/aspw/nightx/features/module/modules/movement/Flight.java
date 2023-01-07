@@ -1011,8 +1011,10 @@ public class Flight extends Module {
 
         switch (modeValue.get().toLowerCase()) {
             case "funcraft":
-                mc.timer.timerSpeed = 1.8f;
                 event.setOnGround(true);
+                if (MovementUtils.isMoving()) {
+                    mc.timer.timerSpeed = 1.8f;
+                }
                 if (!MovementUtils.isMoving())
                     moveSpeed = 0.25;
                 if (moveSpeed > 0.25) {
@@ -1422,7 +1424,7 @@ public class Flight extends Module {
         if (event.getBlock() instanceof BlockAir && mode.equalsIgnoreCase("Jump") && event.getY() < startY)
             event.setBoundingBox(AxisAlignedBB.fromBounds(event.getX(), event.getY(), event.getZ(), event.getX() + 1, startY, event.getZ() + 1));
 
-        if (event.getBlock() instanceof BlockAir && ((mode.equalsIgnoreCase("collide") && !mc.thePlayer.isSneaking()) || mode.equalsIgnoreCase("veruslowhop") && mc.gameSettings.keyBindSneak.isKeyDown()))
+        if (event.getBlock() instanceof BlockAir && ((mode.equalsIgnoreCase("collide") && !mc.thePlayer.isSneaking()) || mode.equalsIgnoreCase("veruslowhop") && !mc.gameSettings.keyBindSneak.isKeyDown()))
             event.setBoundingBox(new AxisAlignedBB(-2, -1, -2, 2, 1, 2).offset(event.getX(), event.getY(), event.getZ()));
 
         if (event.getBlock() instanceof BlockAir && (mode.equalsIgnoreCase("Hypixel") ||

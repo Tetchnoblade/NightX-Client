@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.render
+package net.aspw.nightx.features.module.modules.client
 
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
@@ -8,7 +8,7 @@ import net.aspw.nightx.value.ListValue
 import net.minecraft.util.ResourceLocation
 import java.util.*
 
-@ModuleInfo(name = "Cape", category = ModuleCategory.RENDER, array = false)
+@ModuleInfo(name = "Cape", category = ModuleCategory.CLIENT, array = false)
 class Cape : Module() {
 
     val styleValue = ListValue(

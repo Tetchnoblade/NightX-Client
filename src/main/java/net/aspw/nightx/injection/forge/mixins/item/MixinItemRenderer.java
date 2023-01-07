@@ -92,8 +92,8 @@ public abstract class MixinItemRenderer {
         GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
         float var3 = MathHelper.sin(p_178096_2_ * p_178096_2_ * (float) Math.PI);
         float var4 = MathHelper.sin(MathHelper.sqrt_float(p_178096_2_) * (float) Math.PI);
-        GlStateManager.rotate(var3 * -22.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var4 * -22.0F, 0.0F, 0.0F, 1.0F);
+        GlStateManager.rotate(var3 * -20.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(var4 * -20.0F, 0.0F, 0.0F, 1.0F);
         GlStateManager.rotate(var4 * -80.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }

@@ -188,13 +188,13 @@ class Animations : Module() {
         @JvmField
         val tabAnimations = ListValue("Tab-Animation", arrayOf("None", "Zoom", "Slide"), "None")
 
-        // fake blocking
-        @JvmField
-        val fakeBlock = BoolValue("Visual-Blocking", true)
-
         // block break
         @JvmField
         val noBlockParticles = BoolValue("NoBlockParticles", false)
+
+        // blocking
+        @JvmField
+        val fakeBlock = BoolValue("Visual-Blocking", true)
 
         @JvmField
         val blockingEquipValue = BoolValue("Blocking-Equip", false)

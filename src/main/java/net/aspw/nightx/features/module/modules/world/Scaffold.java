@@ -181,7 +181,7 @@ public class Scaffold extends Module {
     // Game
     private final FloatValue timerValue = new FloatValue("Timer", 1F, 0.1F, 10F, () -> !isTowerOnly());
     // AutoBlock
-    private final ListValue autoBlockMode = new ListValue("AutoBlock", new String[]{"LiteSpoof", "Spoof", "Switch", "Off"}, "LiteSpoof");
+    private final ListValue autoBlockMode = new ListValue("AutoBlock", new String[]{"LiteSpoof", "Spoof", "Switch", "Off"}, "Switch");
     public final FloatValue xzMultiplier = new FloatValue("XZ-Multiplier", 1F, 0F, 4F, "x");
     private final BoolValue customSpeedValue = new BoolValue("CustomSpeed", false);
     private final FloatValue customMoveSpeedValue = new FloatValue("CustomMoveSpeed", 0.2F, 0, 5F, () -> customSpeedValue.get());

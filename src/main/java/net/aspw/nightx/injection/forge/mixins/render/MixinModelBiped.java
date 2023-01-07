@@ -1,10 +1,10 @@
 package net.aspw.nightx.injection.forge.mixins.render;
 
 import net.aspw.nightx.NightX;
+import net.aspw.nightx.features.module.modules.client.SilentView;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
 import net.aspw.nightx.features.module.modules.misc.Annoy;
 import net.aspw.nightx.features.module.modules.render.Rotate;
-import net.aspw.nightx.features.module.modules.render.SilentView;
 import net.aspw.nightx.features.module.modules.world.Scaffold;
 import net.aspw.nightx.utils.RotationUtils;
 import net.minecraft.client.Minecraft;
@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ModelBiped.class)
-public class MixinModelBiped {
+public class MixinModelBiped<T extends MixinRendererLivingEntity> {
 
     @Shadow
     public ModelRenderer bipedRightArm;
