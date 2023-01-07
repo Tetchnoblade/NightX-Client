@@ -23,6 +23,8 @@ import net.minecraft.tileentity.*;
 
 import java.awt.*;
 
+import com.sun.jdi.IntegerValue;
+
 import static org.lwjgl.opengl.GL11.*;
 
 @ModuleInfo(name = "ChestESP", spacedName = "Chest ESP", category = ModuleCategory.RENDER, array = false)
@@ -34,6 +36,10 @@ public class ChestESP extends Module {
     private final BoolValue furnaceValue = new BoolValue("Furnace", true);
     private final BoolValue dispenserValue = new BoolValue("Dispenser", true);
     private final BoolValue hopperValue = new BoolValue("Hopper", true);
+
+    private IntegerValue R = new IntegerValue("R", 255, 0, 255);
+    private IntegerValue G = new IntegerValue("G", 255, 0, 255);
+    private IntegerValue B = new IntegerValue("B", 255, 0, 255);
 
     @EventTarget
     public void onRender3D(Render3DEvent event) {
@@ -52,7 +58,7 @@ public class ChestESP extends Module {
                 Color color = null;
 
                 if (chestValue.get() && tileEntity instanceof TileEntityChest && !StealAura.INSTANCE.getClickedBlocks().contains(tileEntity.getPos()))
-                    color = new Color(0, 66, 255);
+                    color = new Color(R.get(), G.get(), B.get());
 
                 if (enderChestValue.get() && tileEntity instanceof TileEntityEnderChest && !StealAura.INSTANCE.getClickedBlocks().contains(tileEntity.getPos()))
                     color = Color.MAGENTA;
@@ -121,23 +127,23 @@ public class ChestESP extends Module {
                     switch (mode.toLowerCase()) {
                         case "otherbox":
                         case "box":
-                            RenderUtils.drawEntityBox(entity, new Color(0, 66, 255), !mode.equalsIgnoreCase("otherbox"));
+                            RenderUtils.drawEntityBox(entity, new Color(R.get(), G.get(), B.get()), !mode.equalsIgnoreCase("otherbox"));
                             break;
                         case "2d":
-                            RenderUtils.draw2D(entity.getPosition(), new Color(0, 66, 255).getRGB(), Color.BLACK.getRGB());
+                            RenderUtils.draw2D(entity.getPosition(), new Color(R.get(), G.get(), B.get()).getRGB(), Color.BLACK.getRGB());
                             break;
                         case "outline": {
                             final boolean entityShadow = mc.gameSettings.entityShadows;
                             mc.gameSettings.entityShadows = false;
 
-                            RenderUtils.glColor(new Color(0, 66, 255));
+                            RenderUtils.glColor(new Color(R.get(), G.get(), 255B.get());
                             OutlineUtils.renderOne(3F);
                             mc.getRenderManager().renderEntityStatic(entity, mc.timer.renderPartialTicks, true);
                             OutlineUtils.renderTwo();
                             mc.getRenderManager().renderEntityStatic(entity, mc.timer.renderPartialTicks, true);
                             OutlineUtils.renderThree();
                             mc.getRenderManager().renderEntityStatic(entity, mc.timer.renderPartialTicks, true);
-                            OutlineUtils.renderFour(new Color(0, 66, 255));
+                            OutlineUtils.renderFour(new Color(R.get(), G.get(), 255B.get());
                             mc.getRenderManager().renderEntityStatic(entity, mc.timer.renderPartialTicks, true);
                             OutlineUtils.renderFive();
 
@@ -159,9 +165,9 @@ public class ChestESP extends Module {
                             glEnable(GL_LINE_SMOOTH);
                             glEnable(GL_BLEND);
                             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                            RenderUtils.glColor(new Color(0, 66, 255));
+                            RenderUtils.glColor(new Color(R.get(), G.get(), 255B.get());
                             mc.getRenderManager().renderEntityStatic(entity, mc.timer.renderPartialTicks, true);
-                            RenderUtils.glColor(new Color(0, 66, 255));
+                            RenderUtils.glColor(new Color(R.get(), G.get(), 255B.get());
                             glLineWidth(1.5F);
                             mc.getRenderManager().renderEntityStatic(entity, mc.timer.renderPartialTicks, true);
                             glPopAttrib();
@@ -219,7 +225,6 @@ public class ChestESP extends Module {
             ClientUtils.getLogger().error("An error occurred while rendering all storages for shader esp", ex);
         }
 
-        shader.stopDraw(new Color(0, 66, 255), mode.equalsIgnoreCase("shaderglow") ? 2.5F : 1.5F, 1F);
+        shader.stopDraw(new Color(R.get(), G.get(), B.get()), mode.equalsIgnoreCase("shaderglow") ? 2.5F : 1.5F, 1F);
     }
 }
-
