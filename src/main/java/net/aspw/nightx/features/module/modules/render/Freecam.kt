@@ -74,6 +74,11 @@ class Freecam : Module() {
     @EventTarget
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
-        if (packet is C03PacketPlayer || packet is C0BPacketEntityAction) event.cancelEvent()
+        if (packet is C03PacketPlayer || packet is C0BPacketEntityAction) {
+            event.cancelEvent()
+        }
+        if (packet is C0BPacketEntityAction && (packet.action == C0BPacketEntityAction.Action.STOP_SPRINTING || packet.action == C0BPacketEntityAction.Action.START_SPRINTING)) {
+            event.cancelEvent()
+        }
     }
 }

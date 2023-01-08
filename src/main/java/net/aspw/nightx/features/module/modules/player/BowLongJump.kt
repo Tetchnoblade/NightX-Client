@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement
+package net.aspw.nightx.features.module.modules.player
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.*
@@ -25,14 +25,14 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import java.awt.Color
 
-@ModuleInfo(name = "BowLongJump", spacedName = "Bow Long Jump", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "BowLongJump", spacedName = "Bow Long Jump", category = ModuleCategory.PLAYER)
 class BowLongJump : Module() {
     private val boostValue = FloatValue("Boost", 0.96f, 0f, 10f, "x")
     private val heightValue = FloatValue("Height", 0.58f, 0f, 10f, "m")
     private val timerValue = FloatValue("Timer", 1f, 0.1f, 10f, "x")
     private val delayBeforeLaunch = IntegerValue("DelayBeforeArrowLaunch", 1, 1, 20, " tick")
     private val autoDisable = BoolValue("AutoDisable", true)
-    private val bobbingValue = BoolValue("Bobbing", true)
+    private val bobbingValue = BoolValue("Bobbing", false)
     private val bobbingAmountValue = FloatValue("BobbingAmount", 0.07f, 0f, 1f) { bobbingValue.get() }
     private val renderValue = BoolValue("RenderStatus", false)
     private var bowState = 0

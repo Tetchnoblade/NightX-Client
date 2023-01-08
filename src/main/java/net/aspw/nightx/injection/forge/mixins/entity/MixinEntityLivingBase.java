@@ -7,12 +7,10 @@ import net.aspw.nightx.features.module.modules.client.Animations;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
 import net.aspw.nightx.features.module.modules.cool.AntiNausea;
 import net.aspw.nightx.features.module.modules.movement.DoubleJump;
-import net.aspw.nightx.features.module.modules.movement.Flight;
 import net.aspw.nightx.features.module.modules.movement.Jesus;
 import net.aspw.nightx.features.module.modules.player.Sprint;
 import net.aspw.nightx.utils.RotationUtils;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -123,11 +121,6 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
         if (NightX.moduleManager.getModule(DoubleJump.class).getState() && isJumping && this.jumpTicks == 0) {
             this.jump();
             this.jumpTicks = 10;
-        }
-
-        if (NightX.moduleManager.getModule(Flight.class).getState() && NightX.moduleManager.getModule(Flight.class).modeValue.get().equals("Jetpack2") && Minecraft.getMinecraft().gameSettings.keyBindJump.isKeyDown()) {
-            this.jump();
-            this.jumpTicks = 0;
         }
 
         final Jesus liquidWalk = NightX.moduleManager.getModule(Jesus.class);

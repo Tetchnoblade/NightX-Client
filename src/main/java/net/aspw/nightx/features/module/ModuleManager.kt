@@ -180,7 +180,6 @@ class ModuleManager : Listenable {
             Wings::class.java,
             NoC0Fs::class.java,
             SilentView::class.java,
-            PacketFlight::class.java,
             LagBack::class.java,
             Animals::class.java,
             Invis::class.java,
@@ -201,8 +200,8 @@ class ModuleManager : Listenable {
             ClientSpoof::class.java,
             Knockback::class.java,
             TriggerBot::class.java,
-            DesyncFlight::class.java,
-            FakePlayer::class.java
+            FakePlayer::class.java,
+            MurderDetector::class.java
         )
 
         registerModule(Fucker)

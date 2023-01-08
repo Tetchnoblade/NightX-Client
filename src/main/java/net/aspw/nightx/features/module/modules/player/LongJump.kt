@@ -107,8 +107,8 @@ class LongJump : Module() {
     private val damageARValue =
         BoolValue("Damage-AutoReset", false) { modeValue.get().equals("damage", ignoreCase = true) }
     private val autoDisableValue = BoolValue("AutoDisable", true)
-    private val fakeDmgValue = BoolValue("FakeDamage", true)
-    private val bobbingValue = BoolValue("Bobbing", true)
+    private val fakeDmgValue = BoolValue("FakeDamage", false)
+    private val bobbingValue = BoolValue("Bobbing", false)
     private val bobbingAmountValue = FloatValue("BobbingAmount", 0.07f, 0f, 1f) { bobbingValue.get() }
     private val dmgTimer = MSTimer()
     private val posLookInstance = PosLookInstance()
