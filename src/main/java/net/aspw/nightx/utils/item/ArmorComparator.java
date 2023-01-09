@@ -8,8 +8,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;
 
-//import static net.ccbluex.liquidbounce.utils.item.ItemUtils.getEnchantmentCount;
-
 public class ArmorComparator implements Comparator<ArmorPiece> {
     private static final Enchantment[] DAMAGE_REDUCTION_ENCHANTMENTS = {Enchantment.protection, Enchantment.projectileProtection, Enchantment.fireProtection, Enchantment.blastProtection};
     private static final float[] ENCHANTMENT_FACTORS = {1.5f, 0.4f, 0.39f, 0.38f};
@@ -17,9 +15,7 @@ public class ArmorComparator implements Comparator<ArmorPiece> {
     private static final Enchantment[] OTHER_ENCHANTMENTS = {Enchantment.featherFalling, Enchantment.thorns, Enchantment.respiration, Enchantment.aquaAffinity, Enchantment.unbreaking};
     private static final float[] OTHER_ENCHANTMENT_FACTORS = {3.0f, 1.0f, 0.1f, 0.05f, 0.01f};
 
-    /**
-     * Rounds a double. From https://stackoverflow.com/a/2808648/9140494
-     *
+    /*
      * @param value  the value to be rounded
      * @param places Decimal places
      * @return The rounded value

@@ -15,6 +15,7 @@ object AbstractJavaLinkerHandler {
     /**
      * Handle member set name to hashmap of AbstractJavaLinkerHandler
      *
+     * Name will be remapped from srgs
      * Example: swingItem to func_71038_i
      *
      * @class jdk/internal/dynalink/beans/AbstractJavaLinker
@@ -23,18 +24,18 @@ object AbstractJavaLinkerHandler {
      * @param accessibleObject method of member set
      */
     @JvmStatic
-    fun addMember(clazz: Class<*>, name: String, accessibleObject: AccessibleObject): String {
-        if (accessibleObject !is Method)
+    fun addMember(clazz : Class<*>, name : String, accessibleObject : AccessibleObject) : String {
+        if(accessibleObject !is Method)
             return name
 
         var currentClass = clazz
-        while (currentClass.name != "java.lang.Object") {
+        while(currentClass.name != "java.lang.Object") {
             val remapped = Remapper.remapMethod(currentClass, name, Type.getMethodDescriptor(accessibleObject))
 
-            if (remapped != name)
+            if(remapped != name)
                 return remapped
 
-            if (currentClass.superclass == null)
+            if(currentClass.superclass == null)
                 break
 
             currentClass = currentClass.superclass
@@ -46,6 +47,7 @@ object AbstractJavaLinkerHandler {
     /**
      * Handle member set name to hashmap of AbstractJavaLinkerHandler
      *
+     * Name will be remapped from srgs
      * Example: thePlayer to field_71439_g
      *
      * @class jdk/internal/dynalink/beans/AbstractJavaLinker
@@ -53,15 +55,15 @@ object AbstractJavaLinkerHandler {
      * @param name of property getter
      */
     @JvmStatic
-    fun addMember(clazz: Class<*>, name: String): String {
+    fun addMember(clazz : Class<*>, name : String) : String {
         var currentClass = clazz
-        while (currentClass.name != "java.lang.Object") {
+        while(currentClass.name != "java.lang.Object") {
             val remapped = Remapper.remapField(currentClass, name)
 
-            if (remapped != name)
+            if(remapped != name)
                 return remapped
 
-            if (currentClass.superclass == null)
+            if(currentClass.superclass == null)
                 break
 
             currentClass = currentClass.superclass
@@ -73,6 +75,7 @@ object AbstractJavaLinkerHandler {
     /**
      * Handle property getter set name to hashmap of AbstractJavaLinkerHandler
      *
+     * Name will be remapped from srgs
      * Example: thePlayer to field_71439_g
      *
      * @class jdk/internal/dynalink/beans/AbstractJavaLinker
@@ -80,15 +83,15 @@ object AbstractJavaLinkerHandler {
      * @param name of property getter
      */
     @JvmStatic
-    fun setPropertyGetter(clazz: Class<*>, name: String): String {
+    fun setPropertyGetter(clazz : Class<*>, name : String) : String {
         var currentClass = clazz
-        while (currentClass.name != "java.lang.Object") {
+        while(currentClass.name != "java.lang.Object") {
             val remapped = Remapper.remapField(currentClass, name)
 
-            if (remapped != name)
+            if(remapped != name)
                 return remapped
 
-            if (currentClass.superclass == null)
+            if(currentClass.superclass == null)
                 break
 
             currentClass = currentClass.superclass

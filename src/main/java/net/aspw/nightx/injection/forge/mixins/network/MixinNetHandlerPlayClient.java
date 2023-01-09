@@ -4,7 +4,6 @@ import io.netty.buffer.Unpooled;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.EntityDamageEvent;
 import net.aspw.nightx.event.EntityMovementEvent;
-import net.aspw.nightx.features.special.AntiForge;
 import net.aspw.nightx.visual.hud.designer.GuiHudDesigner;
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.Minecraft;
@@ -101,9 +100,6 @@ public abstract class MixinNetHandlerPlayClient {
 
     @Inject(method = "handleJoinGame", at = @At("HEAD"), cancellable = true)
     private void handleJoinGameWithAntiForge(S01PacketJoinGame packetIn, final CallbackInfo callbackInfo) {
-        if (!AntiForge.enabled || !AntiForge.blockFML || Minecraft.getMinecraft().isIntegratedServerRunning())
-            return;
-
         PacketThreadUtil.checkThreadAndEnqueue(packetIn, (NetHandlerPlayClient) (Object) this, gameController);
         this.gameController.playerController = new PlayerControllerMP(gameController, (NetHandlerPlayClient) (Object) this);
         this.clientWorldController = new WorldClient((NetHandlerPlayClient) (Object) this, new WorldSettings(0L, packetIn.getGameType(), false, packetIn.isHardcoreMode(), packetIn.getWorldType()), packetIn.getDimension(), packetIn.getDifficulty(), this.gameController.mcProfiler);

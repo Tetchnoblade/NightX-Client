@@ -18,7 +18,7 @@ class NoClip : Module() {
 
         if (speed != null) {
             if (!speed.state) {
-                MovementUtils.strafe(0.3f)
+                MovementUtils.strafe(0.2f)
             }
         }
 
@@ -28,7 +28,6 @@ class NoClip : Module() {
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         mc.thePlayer.noClip = true
-        mc.thePlayer.fallDistance = 0f
         mc.thePlayer.onGround = false
 
         mc.thePlayer.capabilities.isFlying = false

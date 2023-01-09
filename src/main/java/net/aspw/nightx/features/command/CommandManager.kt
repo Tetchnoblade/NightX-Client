@@ -19,7 +19,6 @@ class CommandManager {
     fun registerCommands() {
         registerCommand(BindCommand())
         registerCommand(VClipCommand())
-        registerCommand(HClipCommand())
         registerCommand(HelpCommand())
         registerCommand(SayCommand())
         registerCommand(MacroCommand())
@@ -48,10 +47,8 @@ class CommandManager {
         registerCommand(ThemeCommand())
         registerCommand(CloudConfigCommand())
         registerCommand(LoginCommand())
-        registerCommand(PacketTeleportCommand())
-        registerCommand(PacketVClipCommand())
         registerCommand(CloudScriptCommand())
-        registerCommand(BruhCommand())
+        registerCommand(ClipCommand())
     }
 
     /**

@@ -16,7 +16,6 @@ import net.aspw.nightx.utils.*
 import net.aspw.nightx.utils.extensions.getDistanceToEntityBox
 import net.aspw.nightx.utils.misc.RandomUtils
 import net.aspw.nightx.utils.timer.MSTimer
-import net.aspw.nightx.utils.timer.TickTimer
 import net.aspw.nightx.utils.timer.TimeUtils
 import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
@@ -318,15 +317,11 @@ class KillAura : Module() {
     private val prevTargetEntities = mutableListOf<Int>()
 
     private var markEntity: EntityLivingBase? = null
-    private val markTimer = MSTimer()
 
     // Attack delay
     private val attackTimer = MSTimer()
-    private val tickTimer = TickTimer()
     private var attackDelay = 0L
     private var clicks = 0
-
-    private var lastHitTick = 0
 
     // Container Delay
     private var containerOpen = -1L
@@ -857,10 +852,7 @@ class KillAura : Module() {
         }
 
         // Attack target
-        if (EnchantmentHelper.getModifierForCreature(mc.thePlayer.heldItem, entity.creatureAttribute) > 0F)
-            mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
-
-        if (swingValue.get() || ViaForge.getInstance().version <= 47) // version fix
+        if (swingValue.get() && ViaForge.getInstance().version <= 47) // version fix
             mc.thePlayer.swingItem()
 
         mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
@@ -871,6 +863,10 @@ class KillAura : Module() {
         if (keepSprintValue.get()) {
             if (mc.playerController.currentGameType != WorldSettings.GameType.SPECTATOR)
                 mc.thePlayer.attackTargetEntityWithCurrentItem(entity)
+        }
+
+        if (EnchantmentHelper.getModifierForCreature(mc.thePlayer.heldItem, entity.creatureAttribute) > 0F) {
+            mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
         }
 
         // Start blocking after attack

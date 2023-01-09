@@ -6,10 +6,7 @@ import net.aspw.nightx.utils.render.BlurUtils
 import net.aspw.nightx.utils.render.RenderUtils
 import net.aspw.nightx.utils.render.Stencil
 import net.aspw.nightx.utils.timer.MSTimer
-import net.aspw.nightx.value.BoolValue
-import net.aspw.nightx.value.FloatValue
-import net.aspw.nightx.value.IntegerValue
-import net.aspw.nightx.value.ListValue
+import net.aspw.nightx.value.*
 import net.aspw.nightx.visual.font.Fonts
 import net.aspw.nightx.visual.hud.designer.GuiHudDesigner
 import net.aspw.nightx.visual.hud.element.Border
@@ -24,7 +21,7 @@ import java.util.*
 
 @ElementInfo(name = "Notifications", single = true)
 class Notifications(
-    x: Double = 7.0, y: Double = 42.0, scale: Float = 1F,
+    x: Double = 2.0, y: Double = 10.0, scale: Float = 1F,
     side: Side = Side(Side.Horizontal.RIGHT, Side.Vertical.DOWN)
 ) : Element(x, y, scale, side) {
 
@@ -44,6 +41,7 @@ class Notifications(
         0.01F,
         10F,
         { hAnimModeValue.get().equals("smooth", true) || vAnimModeValue.get().equals("smooth", true) })
+    private val fontValue = FontValue("Font", Fonts.fontSFUI40)
 
     /**
      * Example notification for CustomHUD designer
@@ -104,17 +102,17 @@ class Notifications(
 }
 
 class Notification(message: String, type: Type, displayLength: Long) {
-    private val notifyDir = "nightx/notification/"
+    private val notifyDir = "client/notification/"
 
     private val imgSuccess = ResourceLocation("${notifyDir}checkmark.png")
     private val imgError = ResourceLocation("${notifyDir}error.png")
     private val imgWarning = ResourceLocation("${notifyDir}warning.png")
     private val imgInfo = ResourceLocation("${notifyDir}info.png")
 
-    private val newSuccess = ResourceLocation("${notifyDir}new/checkmark.png")
-    private val newError = ResourceLocation("${notifyDir}new/error.png")
-    private val newWarning = ResourceLocation("${notifyDir}new/warning.png")
-    private val newInfo = ResourceLocation("${notifyDir}new/info.png")
+    private val newSuccess = ResourceLocation("${notifyDir}checkmark.png")
+    private val newError = ResourceLocation("${notifyDir}error.png")
+    private val newWarning = ResourceLocation("${notifyDir}warning.png")
+    private val newInfo = ResourceLocation("${notifyDir}info.png")
 
     var x = 0F
     var textLength = 0
@@ -283,7 +281,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
                     RenderUtils.drawRect(kek, -y, kek + dist, -1F - y, enumColor)
 
                 GlStateManager.resetColor()
-                Fonts.fontSFUI40.drawString(message, -x + 2, -18F - y, -1)
+                Fonts.fontSFUI40.drawString(message, (-x + 2).toInt(), (-18F - y).toInt(), -1)
             }
 
             "material" -> {
@@ -352,7 +350,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
 
                 var yHeight = 7F
                 for (s in messageList) {
-                    Fonts.fontSFUI40.drawString(s, 30F, yHeight, if (type == Type.ERROR) -1 else 0)
+                    Fonts.fontSFUI40.drawString(s, 30, yHeight.toInt(), if (type == Type.ERROR) -1 else 0)
                     yHeight += Fonts.fontSFUI40.FONT_HEIGHT.toFloat() + 2F
                 }
 

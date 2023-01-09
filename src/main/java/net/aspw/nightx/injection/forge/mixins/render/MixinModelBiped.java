@@ -1,10 +1,10 @@
 package net.aspw.nightx.injection.forge.mixins.render;
 
 import net.aspw.nightx.NightX;
+import net.aspw.nightx.features.module.modules.client.SilentView;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
 import net.aspw.nightx.features.module.modules.misc.Annoy;
 import net.aspw.nightx.features.module.modules.render.Rotate;
-import net.aspw.nightx.features.module.modules.render.SilentView;
 import net.aspw.nightx.features.module.modules.world.Scaffold;
 import net.aspw.nightx.utils.RotationUtils;
 import net.minecraft.client.Minecraft;
@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ModelBiped.class)
-public class MixinModelBiped {
+public class MixinModelBiped<T extends MixinRendererLivingEntity> {
 
     @Shadow
     public ModelRenderer bipedRightArm;
@@ -43,13 +43,7 @@ public class MixinModelBiped {
             final Annoy annoy = NightX.moduleManager.getModule(Annoy.class);
             if (spinBot.getState() && !spinBot.getPitchMode().get().equalsIgnoreCase("none"))
                 this.bipedHead.rotateAngleX = spinBot.getPitch() / (180F / (float) Math.PI);
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && killAura.getTarget() != null) {
-                this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (180F / (float) Math.PI);
-            }
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && scaffold.getState()) {
-                this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (180F / (float) Math.PI);
-            }
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && annoy.getState()) {
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadNormalRotate().get() && killAura.getTarget() != null || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadPrevRotate().get() && killAura.getTarget() != null || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadNormalRotate().get() && scaffold.getState() || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadPrevRotate().get() && scaffold.getState() || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadNormalRotate().get() && annoy.getState() || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadPrevRotate().get() && annoy.getState()) {
                 this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / (180F / (float) Math.PI);
             }
         }

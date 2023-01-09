@@ -4,9 +4,9 @@ import de.enzaxd.viaforge.ViaForge;
 import de.enzaxd.viaforge.util.AttackOrder;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.*;
+import net.aspw.nightx.features.module.modules.client.SilentView;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
 import net.aspw.nightx.features.module.modules.misc.Annoy;
-import net.aspw.nightx.features.module.modules.render.SilentView;
 import net.aspw.nightx.features.module.modules.world.FastPlace;
 import net.aspw.nightx.features.module.modules.world.Scaffold;
 import net.aspw.nightx.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
@@ -107,7 +107,7 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER))
     private void createDisplay(CallbackInfo callbackInfo) {
-        Display.setTitle("Minecraft 1.8.8");
+        Display.setTitle(NightX.CLIENT_BEST + " - " + NightX.CLIENT_VERSION);
     }
 
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
@@ -245,19 +245,16 @@ public abstract class MixinMinecraft {
             final Annoy annoy = NightX.moduleManager.getModule(Annoy.class);
             final EntityLivingBase entityLivingBase = (EntityLivingBase) renderViewEntity;
             final float yaw = RotationUtils.serverRotation.getYaw();
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && killAura.getTarget() != null) {
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadNormalRotate().get() && killAura.getTarget() != null || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadNormalRotate().get() && scaffold.getState() || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadNormalRotate().get() && annoy.getState()) {
                 entityLivingBase.rotationYawHead = yaw;
-                entityLivingBase.renderYawOffset = yaw;
-                entityLivingBase.prevRenderYawOffset = yaw;
             }
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && scaffold.getState()) {
-                entityLivingBase.rotationYawHead = yaw;
-                entityLivingBase.renderYawOffset = yaw;
-                entityLivingBase.prevRenderYawOffset = yaw;
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadPrevRotate().get() && killAura.getTarget() != null || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadPrevRotate().get() && scaffold.getState() || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadPrevRotate().get() && annoy.getState()) {
+                entityLivingBase.prevRotationYawHead = yaw;
             }
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && annoy.getState()) {
-                entityLivingBase.rotationYawHead = yaw;
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && killAura.getTarget() != null || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && scaffold.getState() || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && annoy.getState()) {
                 entityLivingBase.renderYawOffset = yaw;
+            }
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyPrevRotate().get() && killAura.getTarget() != null || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyPrevRotate().get() && scaffold.getState() || silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyPrevRotate().get() && annoy.getState()) {
                 entityLivingBase.prevRenderYawOffset = yaw;
             }
         }
@@ -307,6 +304,6 @@ public abstract class MixinMinecraft {
      */
     @ModifyConstant(method = "getLimitFramerate", constant = @Constant(intValue = 30))
     public int getLimitFramerate(int constant) {
-        return 60;
+        return 30;
     }
 }

@@ -4,16 +4,11 @@ import net.aspw.nightx.NightX
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.KeyEvent
 import net.aspw.nightx.event.Listenable
-import net.aspw.nightx.features.module.modules.client.Gui
-import net.aspw.nightx.features.module.modules.client.HudEditor
-import net.aspw.nightx.features.module.modules.client.PluginsChecker
+import net.aspw.nightx.features.module.modules.client.*
 import net.aspw.nightx.features.module.modules.combat.*
 import net.aspw.nightx.features.module.modules.cool.*
 import net.aspw.nightx.features.module.modules.exploit.*
-import net.aspw.nightx.features.module.modules.ghost.Aimbot
-import net.aspw.nightx.features.module.modules.ghost.AutoClicker
-import net.aspw.nightx.features.module.modules.ghost.FastBridge
-import net.aspw.nightx.features.module.modules.ghost.Hitboxes
+import net.aspw.nightx.features.module.modules.ghost.*
 import net.aspw.nightx.features.module.modules.misc.*
 import net.aspw.nightx.features.module.modules.movement.*
 import net.aspw.nightx.features.module.modules.player.*
@@ -131,7 +126,6 @@ class ModuleManager : Listenable {
             AntiFireBall::class.java,
             KeepSprint::class.java,
             LookTP::class.java,
-            Teleport::class.java,
             Sensor::class.java,
             BowLongJump::class.java,
             ConsoleSpammer::class.java,
@@ -168,8 +162,7 @@ class ModuleManager : Listenable {
             ResetVL::class.java,
             FastMine::class.java,
             Annoy::class.java,
-            InfiniteReach::class.java,
-            RiderGod::class.java,
+            EntityDesync::class.java,
             HudEditor::class.java,
             ThunderNotifier::class.java,
             NoClip::class.java,
@@ -187,7 +180,6 @@ class ModuleManager : Listenable {
             Wings::class.java,
             NoC0Fs::class.java,
             SilentView::class.java,
-            PacketFlight::class.java,
             LagBack::class.java,
             Animals::class.java,
             Invis::class.java,
@@ -204,7 +196,12 @@ class ModuleManager : Listenable {
             HitParticles::class.java,
             CivBreak::class.java,
             PlayerEdit::class.java,
-            AntiTabComplete::class.java
+            AntiTabComplete::class.java,
+            ClientSpoof::class.java,
+            Knockback::class.java,
+            TriggerBot::class.java,
+            FakePlayer::class.java,
+            MurderDetector::class.java
         )
 
         registerModule(Fucker)

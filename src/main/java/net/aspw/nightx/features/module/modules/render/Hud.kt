@@ -7,32 +7,33 @@ import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.utils.AnimationUtils
 import net.aspw.nightx.utils.render.RenderUtils
-import net.aspw.nightx.value.*
+import net.aspw.nightx.value.BoolValue
+import net.aspw.nightx.value.FloatValue
+import net.aspw.nightx.value.FontValue
+import net.aspw.nightx.value.ListValue
 import net.aspw.nightx.visual.font.Fonts
 import net.aspw.nightx.visual.hud.designer.GuiHudDesigner
 
 @ModuleInfo(name = "Hud", category = ModuleCategory.RENDER, array = false)
 class Hud : Module() {
-    val tabHead = BoolValue("Tab-HeadOverlay", true)
-    val nof5Crosshair = BoolValue("NoF5Crosshair", true)
-    val animHotbarValue = BoolValue("HotbarAnimation", false)
+    val nof5Crosshair = BoolValue("No-F5Crosshair", true)
+    val animHotbarValue = BoolValue("Hotbar-Animation", false)
     val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F, { animHotbarValue.get() })
-    val blackHotbarValue = BoolValue("BlackHotbar", false)
+    val blackHotbarValue = BoolValue("Black-Hotbar", false)
     val fontChatValue = BoolValue("FontChat", false)
     val fontType = FontValue("Font", Fonts.fontSFUI40, { fontChatValue.get() })
     val chatRectValue = BoolValue("ChatRect", true)
-    val chatAnimationValue = BoolValue("ChatAnimation", false)
+    val chatAnimationValue = BoolValue("Chat-Animation", false)
     val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.06F, 0.01F, 0.5F, { chatAnimationValue.get() })
-    private val toggleMessageValue = BoolValue("DisplayToggleMessage", false)
-    private val toggleSoundValue = ListValue("ToggleSound", arrayOf("None", "Default", "Custom"), "None")
-    private val toggleVolumeValue =
-        IntegerValue("ToggleVolume", 90, 0, 100, { toggleSoundValue.get().equals("custom", true) })
+    private val toggleMessageValue = BoolValue("Toggle-Notification", false)
+    private val toggleSoundValue = ListValue("Toggle-Sound", arrayOf("None", "Default", "Custom"), "None")
+    val flagSoundValue = BoolValue("Pop-Sound", true)
     val guiButtonStyle =
         ListValue("Button-Style", arrayOf("Minecraft", "LiquidBounce", "Rounded", "LiquidBounce+"), "Minecraft")
 
-    val containerBackground = BoolValue("Container-Background", true)
-    val containerButton = ListValue("Container-Button", arrayOf("TopLeft", "TopRight", "Off"), "Off")
-    val invEffectOffset = BoolValue("InvEffect-Offset", false)
+    val containerBackground = BoolValue("Gui-Background", true)
+    val containerButton = ListValue("Gui-Button", arrayOf("TopLeft", "TopRight", "Off"), "Off")
+    val invEffectOffset = BoolValue("InventoryEffect-Moveable", false)
 
     private var hotBarX = 0F
 
@@ -50,8 +51,8 @@ class Hud : Module() {
         if (NightX.moduleManager.toggleSoundMode != toggleSoundValue.values.indexOf(toggleSoundValue.get()))
             NightX.moduleManager.toggleSoundMode = toggleSoundValue.values.indexOf(toggleSoundValue.get())
 
-        if (NightX.moduleManager.toggleVolume != toggleVolumeValue.get().toFloat())
-            NightX.moduleManager.toggleVolume = toggleVolumeValue.get().toFloat()
+        if (NightX.moduleManager.toggleVolume != 90f)
+            NightX.moduleManager.toggleVolume = 90f
     }
 
     @EventTarget

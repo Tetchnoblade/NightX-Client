@@ -51,9 +51,9 @@ class Text(
         fun defaultClient(): Text {
             val text = Text(x = 2.0, y = 5.0, scale = 1F)
 
-            text.displayString.set("%clientName% [%fps% FPS]")
+            text.displayString.set("%clientName% §7[§f%portalVersion%§7] [§f%fps% FPS§7] [§f%ping%ms§7]")
             text.shadow.set(true)
-            text.fontValue.set(Fonts.fontSFUI40)
+            text.fontValue.set(Fonts.fontSFUI37)
             text.setColor(Color(255, 255, 255))
 
             return text
@@ -61,7 +61,8 @@ class Text(
 
     }
 
-    private val displayString = TextValue("DisplayText", "%clientName%")
+    private val displayString =
+        TextValue("DisplayText", "%clientName% §7[§f%portalVersion%§7] [§f%fps% FPS§7] [§f%ping%ms§7]")
     private val backgroundValue = BoolValue("Background", false)
     private val skeetRectValue = BoolValue("SkeetRect", false)
     private val lineValue = BoolValue("Line", false)
@@ -83,7 +84,7 @@ class Text(
     private val distanceValue = IntegerValue("Line-Distance", 0, 0, 400)
     private val gradientAmountValue = IntegerValue("Gradient-Amount", 25, 1, 50)
     private val shadow = BoolValue("Shadow", true)
-    private var fontValue = FontValue("Font", Fonts.fontSFUI40)
+    private var fontValue = FontValue("Font", Fonts.fontSFUI37)
 
     private var editMode = false
     private var editTicks = 0
@@ -142,7 +143,7 @@ class Text(
 
         return when (str) {
             "userName" -> mc.session.username
-            "clientName" -> "§lN§fightX"
+            "clientName" -> NightX.CLIENT_COLORED
             "clientVersion" -> NightX.CLIENT_VERSION
             "clientCreator" -> NightX.CLIENT_CREATOR
             "fps" -> Minecraft.getDebugFPS().toString()

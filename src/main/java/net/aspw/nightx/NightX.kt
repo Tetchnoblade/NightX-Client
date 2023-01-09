@@ -6,7 +6,7 @@ import net.aspw.nightx.event.ClientShutdownEvent
 import net.aspw.nightx.event.EventManager
 import net.aspw.nightx.features.command.CommandManager
 import net.aspw.nightx.features.module.ModuleManager
-import net.aspw.nightx.features.special.AntiForge
+import net.aspw.nightx.features.special.ClientSpoof
 import net.aspw.nightx.features.special.MacroManager
 import net.aspw.nightx.features.special.ModItems
 import net.aspw.nightx.features.special.script.ScriptManager
@@ -23,9 +23,10 @@ object NightX {
 
     // Client information
     const val CLIENT_BEST = "NightX"
+    const val CLIENT_COLORED = "§lN§fightX"
     const val CLIENT_FOLDER = ".nightx"
     const val CLIENT_VERSION = "Developer"
-    const val CLIENT_CREATOR = "CCBlueX, exit-scammed, As_pw, Zywl"
+    const val CLIENT_CREATOR = "CCBlueX, Exit-scammed, As_pw, Zywl"
     const val CLIENT_CONFIGS = "https://nightx.api-minecraft.net/s/zf45j6uzog"
     const val CLIENT_SCRIPTS = "https://nightx.api-minecraft.net/s/pqbhqshhqz"
     const val CLIENT_DISCORD = "https://nightx.api-minecraft.net/s/rgul30dkqw"
@@ -51,7 +52,7 @@ object NightX {
     // Discord RPC
     lateinit var clientRichPresence: ClientRichPresence
 
-    var lastTick: Long = 0L
+    private var lastTick: Long = 0L
 
     var playTimeStart: Long = 0
 
@@ -72,7 +73,7 @@ object NightX {
 
         // Register listeners
         eventManager.registerListener(RotationUtils())
-        eventManager.registerListener(AntiForge())
+        eventManager.registerListener(ClientSpoof())
         eventManager.registerListener(InventoryUtils())
         eventManager.registerListener(InventoryHelper)
         eventManager.registerListener(PacketUtils())

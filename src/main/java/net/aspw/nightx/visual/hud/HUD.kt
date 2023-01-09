@@ -40,7 +40,6 @@ open class HUD : MinecraftInstance() {
         fun createDefault() = HUD()
             .addElement(Text.defaultClient())
             .addElement(Arraylist())
-            .addElement(TabGui())
             .addElement(ScoreboardElement())
             .addElement(Effects())
             .addElement(Armor())

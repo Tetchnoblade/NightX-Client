@@ -2,6 +2,7 @@ package net.aspw.nightx.features.command.commands
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
+import net.aspw.nightx.features.module.modules.render.Hud
 import net.aspw.nightx.utils.SettingsUtils
 import net.aspw.nightx.utils.misc.StringUtils
 import net.aspw.nightx.visual.hud.element.elements.Notification
@@ -23,6 +24,9 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                             try {
                                 val settings = scriptFile.readText()
                                 SettingsUtils.executeScript(settings)
+                                if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                                    NightX.tipSoundManager.popSound.asyncPlay(90f)
+                                }
                                 chat("§6Config updated successfully!")
                                 NightX.hud.addNotification(
                                     Notification(
@@ -64,7 +68,16 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                             }
                             val settingsScript = SettingsUtils.generateScript(values, binds, states)
                             scriptFile.writeText(settingsScript)
+                            if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                                NightX.tipSoundManager.popSound.asyncPlay(90f)
+                            }
                             chat("§aSuccessfully saved new config!")
+                            NightX.hud.addNotification(
+                                Notification(
+                                    "Config saved successfully!",
+                                    Notification.Type.SUCCESS
+                                )
+                            )
                         } catch (throwable: Throwable) {
                         }
                         return
@@ -80,7 +93,16 @@ class ConfigCommand : Command("config", arrayOf("c")) {
 
                         if (scriptFile.exists()) {
                             scriptFile.delete()
+                            if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                                NightX.tipSoundManager.popSound.asyncPlay(90f)
+                            }
                             chat("§6Config deleted successfully!")
+                            NightX.hud.addNotification(
+                                Notification(
+                                    "Config deleted successfully!",
+                                    Notification.Type.SUCCESS
+                                )
+                            )
                             return
                         }
                         return

@@ -97,6 +97,10 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
         if (NightX.commandManager.getLatestAutoComplete().length != 0) callbackInfo.cancel();
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         RenderUtils.drawRect(2F, this.height - fade, this.width - 2, this.height - fade + 12, Integer.MIN_VALUE);

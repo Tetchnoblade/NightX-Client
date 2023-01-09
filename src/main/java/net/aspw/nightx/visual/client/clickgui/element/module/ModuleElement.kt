@@ -28,7 +28,7 @@ import java.awt.Color
 class ModuleElement(val module: Module) : MinecraftInstance() {
 
     companion object {
-        protected val expandIcon = ResourceLocation("nightx/expand.png")
+        protected val expandIcon = ResourceLocation("client/expand.png")
     }
 
     private val toggleSwitch = ToggleSwitch()

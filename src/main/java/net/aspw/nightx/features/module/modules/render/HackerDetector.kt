@@ -39,6 +39,9 @@ class HackerDetector : Module() {
                 }
                 val playerSpeed = getBPS(player).toDouble()
                 if ((player.isUsingItem || player.isBlocking) && player.onGround && playerSpeed >= 6.5) {
+                    if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        NightX.tipSoundManager.popSound.asyncPlay(90f)
+                    }
                     NightX.hud.addNotification(
                         Notification(
                             "${player.name} is using noslow",
@@ -50,6 +53,9 @@ class HackerDetector : Module() {
                 if (player.isSprinting
                     && (player.moveForward < 0.0f || player.moveForward == 0.0f && player.moveStrafing != 0.0f)
                 ) {
+                    if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        NightX.tipSoundManager.popSound.asyncPlay(90f)
+                    }
                     NightX.hud.addNotification(
                         Notification(
                             "${player.name} is using speed",
@@ -65,6 +71,9 @@ class HackerDetector : Module() {
                         )
                         .isEmpty() && player.motionY > 0.0 && playerSpeed > 10.0
                 ) {
+                    if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        NightX.tipSoundManager.popSound.asyncPlay(90f)
+                    }
                     NightX.hud.addNotification(
                         Notification(
                             "${player.name} is using flight",
@@ -77,6 +86,9 @@ class HackerDetector : Module() {
                 val lastY = Math.abs(player.lastTickPosY.toInt()).toDouble()
                 val yDiff = if (y > lastY) y - lastY else lastY - y
                 if (yDiff > 0.0 && mc.thePlayer.onGround && player.motionY == -0.0784000015258789) {
+                    if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        NightX.tipSoundManager.popSound.asyncPlay(90f)
+                    }
                     NightX.hud.addNotification(
                         Notification(
                             "${player.name} is using step",
@@ -86,6 +98,9 @@ class HackerDetector : Module() {
                     hackers.add(player)
                 }
                 if (player.hurtTime in 5..8 && mc.thePlayer.onGround && player.motionY == -0.0784000015258789 && player.motionX == 0.0 && player.motionZ == 0.0) {
+                    if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        NightX.tipSoundManager.popSound.asyncPlay(90f)
+                    }
                     NightX.hud.addNotification(
                         Notification(
                             "${player.name} is using velocity",
@@ -96,6 +111,9 @@ class HackerDetector : Module() {
                 }
                 if (player.fallDistance != 0.0f || player.motionY >= -0.08 || InsideBlock(player) || player.onGround || !mc.thePlayer.isInWater) {
                     continue
+                }
+                if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    NightX.tipSoundManager.popSound.asyncPlay(90f)
                 }
                 NightX.hud.addNotification(
                     Notification(

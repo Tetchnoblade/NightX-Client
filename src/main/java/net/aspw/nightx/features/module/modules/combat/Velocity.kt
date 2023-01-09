@@ -104,12 +104,6 @@ class Velocity : Module() {
         mc.thePlayer?.speedInAir = 0.02F
     }
 
-    /*
-        override fun onEnable() {
-            if (modeValue.get().equals("simple", true) && horizontalValue.get() == 0F && verticalValue.get() == 0F && !LiquidBounce.isStarting)
-                LiquidBounce.hud.addNotification(Notification("Trying to cancel knockback? Consider using Cancel mode.", 2000L))
-        }
-    */
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         if (mc.thePlayer.hurtTime <= 0) shouldAffect = (Math.random().toFloat() < reduceChance.get() / 100F)

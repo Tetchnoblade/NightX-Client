@@ -1,6 +1,5 @@
 package net.aspw.nightx.features.module.modules.player
 
-import net.aspw.nightx.NightX
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.JumpEvent
 import net.aspw.nightx.event.PacketEvent
@@ -8,7 +7,6 @@ import net.aspw.nightx.event.UpdateEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.features.module.modules.combat.KillAura
 import net.aspw.nightx.utils.MovementUtils
 import net.aspw.nightx.utils.Rotation
 import net.aspw.nightx.utils.RotationUtils
@@ -37,7 +35,7 @@ class Sprint : Module() {
     fun onJump(event: JumpEvent) {
         if (allDirectionsValue.get() && !modified && !mc.isIntegratedServerRunning) {
             event.cancelEvent()
-            var prevYaw = mc.thePlayer.rotationYaw
+            val prevYaw = mc.thePlayer.rotationYaw
             mc.thePlayer.rotationYaw = MovementUtils.getRawDirection()
             modified = true
             mc.thePlayer.jump()
@@ -48,8 +46,6 @@ class Sprint : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        val killAura = NightX.moduleManager.getModule(KillAura::class.java)!!
-
         if (!MovementUtils.isMoving() || mc.thePlayer.isSneaking || !allDirectionsValue.get() && RotationUtils.targetRotation != null &&
             RotationUtils.getRotationDifference(
                 Rotation(

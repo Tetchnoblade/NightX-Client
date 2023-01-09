@@ -7,6 +7,7 @@ import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.utils.RotationUtils
 import net.aspw.nightx.value.BoolValue
+import net.aspw.nightx.value.IntegerValue
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
@@ -19,6 +20,11 @@ import org.lwjgl.opengl.GL11
 class Trajectories : Module() {
 
     private val dynamicBowPower = BoolValue("BowPower", false)
+    private var R = IntegerValue("R", 255, 0, 255)
+    private var G = IntegerValue("G", 255, 0, 255)
+    private var B = IntegerValue("B", 255, 0, 255)
+    private var Alpha = IntegerValue("Alpha", 80, 0, 255)
+
 
     @EventTarget
     fun onRender3D(event: Render3DEvent) {
@@ -206,9 +212,9 @@ class Trajectories : Module() {
         GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST)
         net.aspw.nightx.utils.render.RenderUtils.glColor(
             if (hitEntity) {
-                java.awt.Color(255, 100, 255, 80)
+                java.awt.Color(R.get(), G.get(), B.get(), Alpha.get())
             } else {
-                java.awt.Color(255, 100, 255, 80)
+                java.awt.Color(R.get(), G.get(), B.get(), Alpha.get())
             }
         )
         GL11.glLineWidth(2f)
@@ -234,9 +240,9 @@ class Trajectories : Module() {
             net.aspw.nightx.utils.render.RenderUtils.drawAxisAlignedBB(
                 AxisAlignedBB(-0.5, 0.0, -0.5, 0.5, 0.1, 0.5),
                 if (hitEntity) {
-                    java.awt.Color(255, 100, 255, 80)
+                    java.awt.Color(R.get(), G.get(), B.get(), Alpha.get())
                 } else {
-                    java.awt.Color(255, 100, 255, 80)
+                    java.awt.Color(R.get(), G.get(), B.get(), Alpha.get())
                 }
             )
         }

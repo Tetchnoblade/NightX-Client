@@ -1,6 +1,6 @@
 package net.aspw.nightx.injection.forge.mixins.packets;
 
-import net.aspw.nightx.features.special.AntiForge;
+import net.aspw.nightx.features.special.ClientSpoof;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.handshake.client.C00Handshake;
@@ -26,6 +26,6 @@ public class MixinC00Handshake {
      */
     @ModifyConstant(method = "writePacketData", constant = @Constant(stringValue = "\u0000FML\u0000"))
     private String injectAntiForge(String constant) {
-        return AntiForge.enabled && AntiForge.blockFML && !Minecraft.getMinecraft().isIntegratedServerRunning() ? "" : "\u0000FML\u0000";
+        return ClientSpoof.enabled && !Minecraft.getMinecraft().isIntegratedServerRunning() ? "" : "\u0000FML\u0000";
     }
 }

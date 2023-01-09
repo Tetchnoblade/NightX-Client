@@ -10,7 +10,7 @@ import net.aspw.nightx.value.IntegerValue
 
 @ModuleInfo(name = "Tweaks", category = ModuleCategory.UTILITY)
 class Tweaks : Module() {
-    private val speedValue = IntegerValue("Speed", 0, 0, 20)
+    private val speedValue = IntegerValue("Sneak-Speed", 0, 0, 20)
 
     private val tickTimer = TickTimer()
     @EventTarget

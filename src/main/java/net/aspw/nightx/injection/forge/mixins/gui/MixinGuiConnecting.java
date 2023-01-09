@@ -49,6 +49,10 @@ public abstract class MixinGuiConnecting extends GuiScreen {
         ServerUtils.serverData = new ServerData("", ip + ":" + port, false);
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     private void connect(final String ip, final int port) {
         logger.info("Authenticating to " + ip + ", " + port);

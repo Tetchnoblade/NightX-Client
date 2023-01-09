@@ -38,7 +38,7 @@ public class Sensor extends Module {
     private final FloatValue brightnessValue = new FloatValue("Brightness", 1F, 0F, 1F);
     private final IntegerValue mixerSecondsValue = new IntegerValue("Seconds", 2, 1, 10);
     private final IntegerValue spaceValue = new IntegerValue("Color-Space", 100, 0, 100);
-    private final BoolValue noFirstPerson = new BoolValue("NoFirstPerson", false);
+    private final BoolValue noFirstPerson = new BoolValue("NoFirstPerson", true);
     private final BoolValue hatBorder = new BoolValue("HatBorder", false);
     private final IntegerValue borderAlphaValue = new IntegerValue("BorderAlpha", 120, 0, 255);
     private final FloatValue borderWidthValue = new FloatValue("BorderWidth", 1F, 0.1F, 4F);

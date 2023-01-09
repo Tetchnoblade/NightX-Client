@@ -165,21 +165,6 @@ public abstract class MixinEntity {
             callbackInfoReturnable.setReturnValue(0.1F + hitBox.getSizeValue().get());
     }
 
-    /*
-        @Inject(method = "setAngles", at = @At("HEAD"), cancellable = true)
-        private void setAngles(final float yaw, final float pitch, final CallbackInfo callbackInfo) {
-            if (LiquidBounce.moduleManager.getModule(NoPitchLimit.class).getState()) {
-                callbackInfo.cancel();
-
-                float f = this.rotationPitch;
-                float f1 = this.rotationYaw;
-                this.rotationYaw = (float) ((double) this.rotationYaw + (double) yaw * 0.15D);
-                this.rotationPitch = (float) ((double) this.rotationPitch - (double) pitch * 0.15D);
-                this.prevRotationPitch += this.rotationPitch - f;
-                this.prevRotationYaw += this.rotationYaw - f1;
-            }
-        }
-    */
     @Inject(method = "moveFlying", at = @At("HEAD"), cancellable = true)
     private void handleRotations(float strafe, float forward, float friction, final CallbackInfo callbackInfo) {
         if ((Object) this != Minecraft.getMinecraft().thePlayer)

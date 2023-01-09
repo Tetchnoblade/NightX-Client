@@ -1,6 +1,6 @@
 package net.aspw.nightx.injection.forge.mixins.gui;
 
-import net.aspw.nightx.features.module.modules.render.Animations;
+import net.aspw.nightx.features.module.modules.client.Animations;
 import net.aspw.nightx.utils.AnimationUtils;
 import net.aspw.nightx.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
@@ -52,6 +52,10 @@ public abstract class MixinGuiIngameForge extends MixinGuiInGame {
         GlStateManager.disableAlpha();
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite(remap = false)
     protected void renderPlayerList(int width, int height) {
         final Minecraft mc = Minecraft.getMinecraft();

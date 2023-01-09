@@ -9,14 +9,13 @@ import me.liuli.elixir.account.MojangAccount
 import net.aspw.nightx.NightX
 import net.aspw.nightx.NightX.fileManager
 import net.aspw.nightx.event.SessionEvent
+import net.aspw.nightx.features.module.modules.render.Hud
 import net.aspw.nightx.utils.ClientUtils
 import net.aspw.nightx.utils.login.LoginUtils
 import net.aspw.nightx.utils.login.UserUtils.isValidTokenOffline
 import net.aspw.nightx.utils.misc.MiscUtils
 import net.aspw.nightx.utils.misc.RandomUtils
-import net.aspw.nightx.visual.client.altmanager.menus.GuiChangeName
 import net.aspw.nightx.visual.client.altmanager.menus.GuiLoginIntoAccount
-import net.aspw.nightx.visual.client.altmanager.menus.GuiSessionLogin
 import net.aspw.nightx.visual.client.altmanager.menus.GuiTheAltening
 import net.aspw.nightx.visual.font.Fonts
 import net.minecraft.client.Minecraft
@@ -27,8 +26,6 @@ import net.minecraft.client.gui.GuiTextField
 import net.minecraft.util.Session
 import org.lwjgl.input.Keyboard
 import java.awt.Color
-import java.awt.Toolkit
-import java.awt.datatransfer.StringSelection
 import java.util.*
 import kotlin.concurrent.thread
 
@@ -70,11 +67,9 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         buttonList.add(GuiButton(4, 5, startPositionY + 24 * 2, 90, 20, "Random Alt").also { randomButton = it })
         buttonList.add(GuiButton(99, 5, startPositionY + 24 * 3, 90, 20, "Random Cracked").also { randomCracked = it })
         buttonList.add(GuiButton(6, 5, startPositionY + 24 * 4, 90, 20, "Direct Login"))
-        buttonList.add(GuiButton(10, 5, startPositionY + 24 * 5, 90, 20, "Session Login"))
-        buttonList.add(GuiButton(88, 5, startPositionY + 24 * 6, 90, 20, "Change Name"))
 
         if (activeGenerators.getOrDefault("thealtening", true))
-            buttonList.add(GuiButton(9, 5, startPositionY + 24 * 7, 90, 20, "The Altening"))
+            buttonList.add(GuiButton(9, 5, startPositionY + 24 * 5, 90, 20, "The Altening"))
     }
 
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
@@ -118,12 +113,15 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
             return
 
         when (button.id) {
-            0 -> MiscUtils.showURL("https://iplogger.com/NightX")
+            0 -> mc.displayGuiScreen(prevGui)
             1 -> mc.displayGuiScreen(GuiLoginIntoAccount(this))
             2 -> {
                 status = if (altsList.selectedSlot != -1 && altsList.selectedSlot < altsList.size) {
                     fileManager.accountsConfig.removeAccount(altsList.accounts[altsList.selectedSlot])
                     fileManager.saveConfig(fileManager.accountsConfig)
+                    if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        NightX.tipSoundManager.popSound.asyncPlay(90f)
+                    }
                     "§aThe account has been deleted."
                 } else {
                     "§cSelect an account."
@@ -140,8 +138,14 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     randomCracked.enabled = false
 
                     login(it, {
+                        if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            NightX.tipSoundManager.popSound.asyncPlay(90f)
+                        }
                         status = "§aLogged successfully to ${mc.session.username}."
                     }, { exception ->
+                        if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            NightX.tipSoundManager.popSound.asyncPlay(90f)
+                        }
                         status = "§cLogin failed to '${exception.message}'."
                     }, {
                         loginButton.enabled = true
@@ -149,6 +153,9 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                         randomCracked.enabled = true
                     })
 
+                    if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        NightX.tipSoundManager.popSound.asyncPlay(90f)
+                    }
                     "§aLogging in..."
                 } ?: "§cSelect an account."
             }
@@ -163,6 +170,9 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     randomCracked.enabled = false
 
                     login(it, {
+                        if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            NightX.tipSoundManager.popSound.asyncPlay(90f)
+                        }
                         status = "§aLogged successfully to ${mc.session.username}."
                     }, { exception ->
                         status = "§cLogin failed to '${exception.message}'."
@@ -172,6 +182,9 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                         randomCracked.enabled = true
                     })
 
+                    if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        NightX.tipSoundManager.popSound.asyncPlay(90f)
+                    }
                     "§aLogging in..."
                 } ?: "§cYou do not have any accounts."
             }
@@ -190,6 +203,9 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 status = "§aGenerating..."
 
                 login(rand, {
+                    if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        NightX.tipSoundManager.popSound.asyncPlay(90f)
+                    }
                     status = "§aLogged successfully to ${mc.session.username}."
                 }, { exception ->
                     status = "§cLogin failed to '${exception.message}'."
@@ -253,42 +269,17 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 }
             }
 
-            8 -> {
-                val currentAccount = altsList.selectedAccount
-
-                if (currentAccount == null) {
-                    status = "§cSelect an account."
-                    return
-                }
-
-                // Format data for other tools
-                val formattedData = when (currentAccount) {
-                    is MojangAccount -> "${currentAccount.email}:${currentAccount.password}" // EMAIL:PASSWORD
-                    is MicrosoftAccount -> "${currentAccount.name}:${currentAccount.session.token}" // NAME:SESSION
-                    else -> currentAccount.name
-                }
-
-                // Copy to clipboard
-                Toolkit.getDefaultToolkit().systemClipboard.setContents(StringSelection(formattedData), null)
-                status = "§aCopied account into your clipboard."
-            }
-
-            88 -> { // Gui Change Name Button
-                mc.displayGuiScreen(GuiChangeName(this))
-            }
-
             9 -> { // Altening Button
                 mc.displayGuiScreen(GuiTheAltening(this))
-            }
-
-            10 -> { // Session Login Button
-                mc.displayGuiScreen(GuiSessionLogin(this))
             }
 
             727 -> {
                 loginButton.enabled = false
                 randomButton.enabled = false
                 randomCracked.enabled = false
+                if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    NightX.tipSoundManager.popSound.asyncPlay(90f)
+                }
                 status = "§aLogging in..."
 
                 thread {
@@ -429,6 +420,9 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     randomCracked.enabled = false
 
                     login(it, {
+                        if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            NightX.tipSoundManager.popSound.asyncPlay(90f)
+                        }
                         status = "§aLogged successfully to ${mc.session.username}."
                     }, { exception ->
                         status = "§cLogin failed to '${exception.message}'."
@@ -438,6 +432,9 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                         randomCracked.enabled = true
                     })
 
+                    if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        NightX.tipSoundManager.popSound.asyncPlay(90f)
+                    }
                     "§aLogging in..."
                 } ?: "§cSelect an account."
             }

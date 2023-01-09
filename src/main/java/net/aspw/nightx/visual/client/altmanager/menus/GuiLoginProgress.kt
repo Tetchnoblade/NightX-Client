@@ -19,10 +19,9 @@ class GuiLoginProgress(
     }
 
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
-        val scaledResolution = ScaledResolution(Minecraft.getMinecraft())
+        ScaledResolution(Minecraft.getMinecraft())
 
         drawDefaultBackground()
-        //RenderUtils.drawLoadingCircle((scaledResolution.scaledWidth / 2).toFloat(), (scaledResolution.scaledHeight / 4 + 70).toFloat())
         drawCenteredString(fontRendererObj, "Logging in...", width / 2, height / 2 - 60, 16777215)
         super.drawScreen(mouseX, mouseY, partialTicks)
     }

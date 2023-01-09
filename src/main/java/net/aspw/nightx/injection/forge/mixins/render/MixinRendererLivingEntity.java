@@ -2,9 +2,13 @@ package net.aspw.nightx.injection.forge.mixins.render;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.features.module.modules.client.ColorMixer;
+import net.aspw.nightx.features.module.modules.client.SilentView;
 import net.aspw.nightx.features.module.modules.cool.Chams;
 import net.aspw.nightx.features.module.modules.cool.TwoDTags;
-import net.aspw.nightx.features.module.modules.render.*;
+import net.aspw.nightx.features.module.modules.render.NameTags;
+import net.aspw.nightx.features.module.modules.render.NoRender;
+import net.aspw.nightx.features.module.modules.render.PlayerEdit;
+import net.aspw.nightx.features.module.modules.render.ShowInvis;
 import net.aspw.nightx.utils.EntityUtils;
 import net.aspw.nightx.utils.RotationUtils;
 import net.aspw.nightx.utils.render.ColorUtils;
@@ -256,9 +260,9 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
                 GL11.glDisable(2896);
                 GL11.glPolygonMode(1032, 6914);
                 if (Minecraft.getMinecraft().thePlayer.hurtTime > 0) {
-                    GL11.glColor4f(255, 0, 0, rotations.getAlpha().get() / 255);
+                    GL11.glColor4f(rotations.getR().get() / 255, rotations.getG().get() / 255, rotations.getB().get() / 255, rotations.getAlpha().get() / 255);
                 } else {
-                    GL11.glColor4f(rotations.getR().get() / 255, rotations.getG().get() / 255, rotations.getB().get(), rotations.getAlpha().get() / 255);
+                    GL11.glColor4f(rotations.getR().get() / 255, rotations.getG().get() / 255, rotations.getB().get() / 255, rotations.getAlpha().get() / 255);
                 }
                 GL11.glRotatef(renderyaw - f, 0, 0.001f, 0);
                 this.mainModel.render(Minecraft.getMinecraft().thePlayer, f6, f5, renderpitch, f2, renderpitch, 0.0625F);

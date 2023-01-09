@@ -84,17 +84,32 @@ public abstract class MixinGuiNewChat {
         return instance.getChatLineID();
     }
 
+    /**
+     * @author
+     * @reason
+     */
+    @Overwrite
+    public void printChatMessage(IChatComponent chatComponent) {
+        checkHud();
+        printChatMessageWithOptionalDeletion(chatComponent, this.line);
+    }
+
+
     @Inject(method = "printChatMessageWithOptionalDeletion", at = @At("HEAD"))
     private void resetPercentage(CallbackInfo ci) {
         displayPercent = 0F;
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     public void drawChat(int updateCounter) {
         checkHud();
         boolean canFont = hud.getState() && hud.getFontChatValue().get();
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(0, -12, 0);
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(0, -12, 0);
 
         if (this.mc.gameSettings.chatVisibility != EntityPlayer.EnumChatVisibility.HIDDEN) {
             int i = this.getLineCount();
@@ -198,7 +213,7 @@ public abstract class MixinGuiNewChat {
             }
         }
 
-            GlStateManager.popMatrix();
+        GlStateManager.popMatrix();
     }
 
     private String fixString(String str) {
@@ -226,6 +241,10 @@ public abstract class MixinGuiNewChat {
         return original;
     }
 
+    /**
+     * @author
+     * @reason
+     */
     @Overwrite
     public IChatComponent getChatComponent(int p_146236_1_, int p_146236_2_) {
         checkHud();

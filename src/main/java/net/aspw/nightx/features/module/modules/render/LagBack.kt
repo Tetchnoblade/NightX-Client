@@ -28,6 +28,9 @@ class LagBack : Module() {
                             net.aspw.nightx.visual.hud.element.elements.Notification.Type.WARNING
                         )
                     )
+                    if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        NightX.tipSoundManager.popSound.asyncPlay(90f)
+                    }
                 }
             }
         }

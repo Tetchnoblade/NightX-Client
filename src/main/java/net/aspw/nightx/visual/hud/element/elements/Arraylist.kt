@@ -81,14 +81,14 @@ class Arraylist(
     private val backgroundColorRedValue = IntegerValue("Background-R", 0, 0, 255)
     private val backgroundColorGreenValue = IntegerValue("Background-G", 0, 0, 255)
     private val backgroundColorBlueValue = IntegerValue("Background-B", 0, 0, 255)
-    private val backgroundColorAlphaValue = IntegerValue("Background-Alpha", 80, 0, 255)
+    private val backgroundColorAlphaValue = IntegerValue("Background-Alpha", 100, 0, 255)
     private val rectRightValue =
         ListValue("Rect-Right", arrayOf("None", "Left", "Right", "Outline", "Special", "Top"), "Outline")
     private val rectLeftValue = ListValue("Rect-Left", arrayOf("None", "Left", "Right"), "None")
     private val caseValue = ListValue("Case", arrayOf("None", "Lower", "Upper"), "None")
     private val spaceValue = FloatValue("Space", 0F, 0F, 5F)
     private val textHeightValue = FloatValue("TextHeight", 10F, 1F, 20F)
-    private val textYValue = FloatValue("TextY", 2F, 0F, 20F)
+    private val textYValue = FloatValue("TextY", 1.5F, 0F, 20F)
     private val tagsArrayColor = BoolValue("TagsArrayColor", false)
     private val fontValue = FontValue("Font", Fonts.fontSFUI37)
 

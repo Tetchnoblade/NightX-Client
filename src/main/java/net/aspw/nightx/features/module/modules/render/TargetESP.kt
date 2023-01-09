@@ -24,7 +24,7 @@ class TargetESP : Module() {
     private val colorType =
         ListValue("Color", arrayOf("Custom", "Rainbow", "Rainbow2", "Sky", "Fade", "Mixer"), "Custom")
     private val redValue = IntegerValue("Red", 255, 0, 255)
-    private val greenValue = IntegerValue("Green", 150, 0, 255)
+    private val greenValue = IntegerValue("Green", 100, 0, 255)
     private val blueValue = IntegerValue("Blue", 255, 0, 255)
     private val saturationValue = FloatValue("Saturation", 0.45F, 0F, 1F)
     private val brightnessValue = FloatValue("Brightness", 1F, 0F, 1F)

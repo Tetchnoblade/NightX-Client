@@ -24,8 +24,8 @@ import java.awt.Color
  */
 @ElementInfo(name = "Target", disableScale = true, retrieveDamage = true)
 class Target(
-    x: Double = 215.0, y: Double = 160.0, scale: Float = 1F,
-    side: Side = Side(Side.Horizontal.LEFT, Side.Vertical.UP)
+    x: Double = 11.0, y: Double = -13.0, scale: Float = 1F,
+    side: Side = Side(Side.Horizontal.MIDDLE, Side.Vertical.MIDDLE)
 ) : Element(x, y, scale, side) {
 
     val styleList = mutableListOf<TargetStyle>()
@@ -51,7 +51,7 @@ class Target(
     val fadeValue = BoolValue("FadeAnim", false)
     val fadeSpeed = FloatValue("Fade-Speed", 0.9F, 0F, 5F, { fadeValue.get() })
 
-    val noAnimValue = BoolValue("No-Animation", false)
+    val noAnimValue = BoolValue("No-Animation", true)
     val globalAnimSpeed = FloatValue("Global-AnimSpeed", 5F, 1F, 9F, { !noAnimValue.get() })
 
     val showWithChatOpen = BoolValue("Show-ChatOpen", true)

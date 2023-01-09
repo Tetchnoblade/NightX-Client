@@ -28,7 +28,6 @@ class ThunderNotifier : Module() {
 
             if (chatValue.get())
                 ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§fDetected thunder at [§7X: $x, Y: $y, Z: $z§f]")
-
             if (notifValue.get())
                 NightX.hud.addNotification(
                     Notification(

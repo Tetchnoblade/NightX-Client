@@ -3,18 +3,14 @@ package net.aspw.nightx.injection.forge.mixins.entity;
 import de.enzaxd.viaforge.ViaForge;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.JumpEvent;
-import net.aspw.nightx.features.module.modules.client.ColorMixer;
+import net.aspw.nightx.features.module.modules.client.Animations;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
 import net.aspw.nightx.features.module.modules.cool.AntiNausea;
 import net.aspw.nightx.features.module.modules.movement.DoubleJump;
-import net.aspw.nightx.features.module.modules.movement.Flight;
 import net.aspw.nightx.features.module.modules.movement.Jesus;
 import net.aspw.nightx.features.module.modules.player.Sprint;
-import net.aspw.nightx.features.module.modules.render.Animations;
-import net.aspw.nightx.utils.MovementUtils;
 import net.aspw.nightx.utils.RotationUtils;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -102,11 +98,9 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
             final KillAura auraMod = NightX.moduleManager.getModule(KillAura.class);
             final Sprint sprintMod = NightX.moduleManager.getModule(Sprint.class);
             float yaw = this.rotationYaw;
-            if (ColorMixer.jumpPatch.get())
-                if (auraMod.getState() && auraMod.getRotationStrafeValue().get().equalsIgnoreCase("strict") && auraMod.getTarget() != null)
-                    yaw = RotationUtils.targetRotation != null ? RotationUtils.targetRotation.getYaw() : (RotationUtils.serverRotation != null ? RotationUtils.serverRotation.getYaw() : yaw);
-                else if (sprintMod.getState() && sprintMod.getAllDirectionsValue().get())
-                    yaw = MovementUtils.getRawDirection();
+            if (auraMod.getState() && auraMod.getRotationStrafeValue().get().equalsIgnoreCase("strict") && auraMod.getTarget() != null) {
+                yaw = RotationUtils.targetRotation != null ? RotationUtils.targetRotation.getYaw() : (RotationUtils.serverRotation != null ? RotationUtils.serverRotation.getYaw() : yaw);
+            }
             float f = yaw * 0.017453292F;
             this.motionX -= MathHelper.sin(f) * 0.2F;
             this.motionZ += MathHelper.cos(f) * 0.2F;
@@ -127,11 +121,6 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
         if (NightX.moduleManager.getModule(DoubleJump.class).getState() && isJumping && this.jumpTicks == 0) {
             this.jump();
             this.jumpTicks = 10;
-        }
-
-        if (NightX.moduleManager.getModule(Flight.class).getState() && NightX.moduleManager.getModule(Flight.class).modeValue.get().equals("Jetpack2") && Minecraft.getMinecraft().gameSettings.keyBindJump.isKeyDown()) {
-            this.jump();
-            this.jumpTicks = 0;
         }
 
         final Jesus liquidWalk = NightX.moduleManager.getModule(Jesus.class);
