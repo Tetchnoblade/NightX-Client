@@ -168,18 +168,6 @@ public abstract class MixinItemRenderer {
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
-    private void astolfo(float var10, float var9) {
-        GlStateManager.translate(0.56F, -0.5F, -0.71999997F);
-        GlStateManager.translate(0.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
-        float var11 = MathHelper.sin(var9 * var9 * (float) Math.PI);
-        float var12 = MathHelper.sin(MathHelper.sqrt_float(var9) * (float) Math.PI);
-        GlStateManager.rotate(var11 * -30.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var12 * 0.0F, 0.0F, 0.0f, 1.0F);
-        GlStateManager.rotate(var12 * -35.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
     private void slidePut(float var10, float var9) {
         GlStateManager.translate(0.56F, -0.5F, -0.71999997F);
         GlStateManager.translate(0.0F, 0.0F, 0.0F);
@@ -519,13 +507,12 @@ public abstract class MixinItemRenderer {
                                     break;
                                 }
                                 case "Astolfo": {
-                                    this.astolfo(f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
+                                    transformFirstPersonItem(f / Animations.Equip.getValue(), f1);
+                                    GL11.glTranslated(0.0D, 0.0D, 0.0D);
+                                    float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                    GlStateManager.rotate(Swang * -35.0F / 2.0F, -Swang, -0.0F, 9.0F);
+                                    GlStateManager.rotate(Swang * 40.0F, 1.0F, -Swang / 2.0F, -0.0F);
+                                    doBlockTransformations();
                                     break;
                                 }
                                 case "Dash": {

@@ -1,6 +1,5 @@
 package dev.tr7zw.waveycapes.sim;
 
-import dev.tr7zw.waveycapes.WaveyCapesBase;
 import dev.tr7zw.waveycapes.util.Mth;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class StickSimulation {
     private float maxBend = 5;
 
     public void simulate() {
-        gravity = WaveyCapesBase.config.gravity;
+        gravity = 3;
         //maxBend = WaveyCapesBase.config.maxBend;
 
         float deltaTime = 50f/1000f; // fixed timescale

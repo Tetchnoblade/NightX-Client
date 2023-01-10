@@ -119,7 +119,6 @@ class ModuleManager : Listenable {
             Crosshair::class.java,
             Rotate::class.java,
             AntiFall::class.java,
-            AutoHypixel::class.java,
             TargetESP::class.java,
             TwoDTags::class.java,
             BanStats::class.java,

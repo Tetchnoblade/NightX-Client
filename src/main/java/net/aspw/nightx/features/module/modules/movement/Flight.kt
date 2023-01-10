@@ -837,7 +837,7 @@ class Flight : Module() {
 
             "blockdrop" -> {
                 mc.thePlayer.capabilities.isFlying = false
-                mc.thePlayer.motionY = 0.07
+                mc.thePlayer.motionY = 0.0
                 mc.thePlayer.motionX = 0.0
                 mc.thePlayer.motionZ = 0.0
                 if (mc.gameSettings.keyBindJump.isKeyDown) {

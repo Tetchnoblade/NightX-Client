@@ -3,7 +3,6 @@ package net.aspw.nightx.injection.forge.mixins.gui;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.Render2DEvent;
 import net.aspw.nightx.features.module.modules.cool.AntiNausea;
-import net.aspw.nightx.features.module.modules.misc.AutoHypixel;
 import net.aspw.nightx.features.module.modules.render.Crosshair;
 import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.utils.render.ColorUtils;
@@ -50,7 +49,7 @@ public abstract class MixinGuiInGame extends MixinGui {
 
     @Inject(method = "renderScoreboard", at = @At("HEAD"), cancellable = true)
     private void renderScoreboard(ScoreObjective scoreObjective, ScaledResolution scaledResolution, CallbackInfo callbackInfo) {
-        if (scoreObjective != null) AutoHypixel.gameMode = ColorUtils.stripColor(scoreObjective.getDisplayName());
+        if (scoreObjective != null) ColorUtils.stripColor(scoreObjective.getDisplayName());
 
         final AntiNausea antiBlind = NightX.moduleManager.getModule(AntiNausea.class);
         if ((antiBlind.getState() && antiBlind.getScoreBoard().get()) || NightX.moduleManager.getModule(Hud.class).getState())

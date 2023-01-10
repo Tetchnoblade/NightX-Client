@@ -10,6 +10,4 @@ public class Config {
     public WindMode windMode = WindMode.WAVES;
     public CapeStyle capeStyle = CapeStyle.SMOOTH;
     public CapeMovement capeMovement = CapeMovement.BASIC_SIMULATION;
-    public int gravity = 5;
-    public int heightMultiplier = 5;
 }

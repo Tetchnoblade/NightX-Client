@@ -22,7 +22,7 @@ class VClipCommand : Command("vclip", emptyArray()) {
                 if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
                     NightX.tipSoundManager.popSound.asyncPlay(90f)
                 }
-                PathUtils.findPath(entity.posX, entity.posY + y, entity.posZ, 3.0).forEach(Consumer { pos: Vector3d ->
+                PathUtils.findPath(entity.posX, entity.posY + y, entity.posZ, 4.0).forEach(Consumer { pos: Vector3d ->
                     mc.netHandler
                         .addToSendQueue(
                             C03PacketPlayer.C04PacketPlayerPosition(
