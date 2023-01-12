@@ -200,7 +200,8 @@ class ModuleManager : Listenable {
             Knockback::class.java,
             TriggerBot::class.java,
             FakePlayer::class.java,
-            MurderDetector::class.java
+            MurderDetector::class.java,
+            JumpCircle::class.java
         )
 
         registerModule(Fucker)

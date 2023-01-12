@@ -63,7 +63,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 17909432,
-        "download_count": 687,
+        "download_count": 941,
         "created_at": "2023-01-06T23:26:24Z",
         "updated_at": "2023-01-06T23:26:29Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B31/nightx-release-b31.jar"
@@ -71,7 +71,19 @@
     ],
     "tarball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/tarball/B31",
     "zipball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/zipball/B31",
-    "body": "- Added back Animations (Jello, Shield, Lennox, VisionFX, Stab)\r\n- Added ClientSpoof more modes (Lunar, LabyMod, CheatBreaker)\r\n- Added FakePlayer\r\n- Added EntityDesync\r\n- Added BowLongJump stopmotion\r\n- Added Scaffold AutoBlock LiteSpoof mode (and improved all other modes) (fixed spoof mode viaversion glitch)\r\n- Added Speed NoBob option\r\n- Added CivBreak Color option (R, G, B, Outline)\r\n- Added SilentView options (Head-Rotation, Head-PrevRotation, Body-Rotation, Body-PrevRotation)\r\n- Added .clip command (old function)\r\n- Removed .pvclip .ptp command (shit)\r\n- Removed LookTP NoSpam option\r\n- Recoded LookTP (changed function and fixed lags)\r\n- Recoded .tp and .vclip command (changed function)\r\n- Fixed BlocksMC Automatically banning (and other servers)\r\n- Fixed ClientSpoof sometimes not working\r\n- Fixed Animations Visual-Blocking every player blocking (only me)\r\n- Fixed SilentView CSGO mode Color option not working & optimized\r\n- Fixed KillAura Strafe mode Strict jump bugs\r\n- Fixed Sprint when collided horizontally\r\n- Fixed Scripts not working\r\n- Fixed Any modules stopmotion detectable\r\n- Fixed Cape Animation (when sneaking)\r\n- Fixed KillAura particles\r\n- Improved Hud module (improved Toggle-Notification and Added Pop-Sound option)\r\n- Improved Animations SmoothSwingAnimation option\r\n- Improved TargetStrafe VoidCheck\r\n- Improved Freecam\r\n- Improved NoSlow\r\n- Improved Flight (VerusLowHop, BlockDrop) (you haven't stay 3 seconds! & fixed auto banning)\r\n- Improved .config, .theme, .reload, .remoteview command\r\n- Improved Mainmenu icons\r\nUpdated Configs\r\nhttps://nightx.api-minecraft.net/s/zf45j6uzog"
+    "body": "- Added back Animations (Jello, Shield, Lennox, VisionFX, Stab)\r\n- Added ClientSpoof more modes (Lunar, LabyMod, CheatBreaker)\r\n- Added FakePlayer\r\n- Added EntityDesync\r\n- Added BowLongJump stopmotion\r\n- Added Scaffold AutoBlock LiteSpoof mode (and improved all other modes) (fixed spoof mode viaversion glitch)\r\n- Added Speed NoBob option\r\n- Added CivBreak Color option (R, G, B, Outline)\r\n- Added SilentView options (Head-Rotation, Head-PrevRotation, Body-Rotation, Body-PrevRotation)\r\n- Added .clip command (old function)\r\n- Removed .pvclip .ptp command (shit)\r\n- Removed LookTP NoSpam option\r\n- Recoded LookTP (changed function and fixed lags)\r\n- Recoded .tp and .vclip command (changed function)\r\n- Fixed BlocksMC Automatically banning (and other servers)\r\n- Fixed ClientSpoof sometimes not working\r\n- Fixed Animations Visual-Blocking every player blocking (only me)\r\n- Fixed SilentView CSGO mode Color option not working & optimized\r\n- Fixed KillAura Strafe mode Strict jump bugs\r\n- Fixed Sprint when collided horizontally\r\n- Fixed Scripts not working\r\n- Fixed Any modules stopmotion detectable\r\n- Fixed Cape Animation (when sneaking)\r\n- Fixed KillAura particles\r\n- Improved Hud module (improved Toggle-Notification and Added Pop-Sound option)\r\n- Improved Animations SmoothSwingAnimation option\r\n- Improved TargetStrafe VoidCheck\r\n- Improved Freecam\r\n- Improved NoSlow\r\n- Improved Flight (VerusLowHop, BlockDrop) (you haven't stay 3 seconds! & fixed auto banning)\r\n- Improved .config, .theme, .reload, .remoteview command\r\n- Improved Mainmenu icons\r\nUpdated Configs\r\nhttps://nightx.api-minecraft.net/s/zf45j6uzog",
+    "reactions": {
+      "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/88188949/reactions",
+      "total_count": 1,
+      "+1": 0,
+      "-1": 0,
+      "laugh": 0,
+      "hooray": 1,
+      "confused": 0,
+      "heart": 0,
+      "rocket": 0,
+      "eyes": 0
+    }
   },
   {
     "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/87745500",
@@ -137,7 +149,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 17751854,
-        "download_count": 651,
+        "download_count": 671,
         "created_at": "2023-01-03T06:11:17Z",
         "updated_at": "2023-01-03T06:11:22Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B30/nightx-release-b30.jar"
@@ -285,7 +297,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 18176116,
-        "download_count": 312,
+        "download_count": 313,
         "created_at": "2022-12-24T14:29:13Z",
         "updated_at": "2022-12-24T14:29:19Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B28/nightx-release-b28.jar"
@@ -359,7 +371,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 20710992,
-        "download_count": 260,
+        "download_count": 261,
         "created_at": "2022-12-17T23:39:25Z",
         "updated_at": "2022-12-17T23:39:31Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B27/nightx-release-b27.jar"
@@ -531,7 +543,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 19794678,
-        "download_count": 112,
+        "download_count": 113,
         "created_at": "2022-12-07T14:13:48Z",
         "updated_at": "2022-12-07T14:13:52Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B25/nightx-release-b25.jar"
@@ -765,7 +777,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 20594364,
-        "download_count": 135,
+        "download_count": 136,
         "created_at": "2022-11-25T13:55:47Z",
         "updated_at": "2022-11-25T13:55:52Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B22/nightx-release-b22.jar"
@@ -913,7 +925,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 4245949,
-        "download_count": 34,
+        "download_count": 35,
         "created_at": "2022-11-19T14:24:04Z",
         "updated_at": "2022-11-19T14:24:05Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B20/Forge.1.8.9.Installer.jar"
@@ -2361,7 +2373,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 19190768,
-        "download_count": 40,
+        "download_count": 41,
         "created_at": "2022-10-01T12:39:11Z",
         "updated_at": "2022-10-01T12:39:16Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B3/nightx-b3.jar"

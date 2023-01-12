@@ -5,24 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d01c55b-d37f-497b-a569-910a52b4446d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/render/JumpCircle.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/utils/render/Render.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/downloads.json" beforeDir="false" afterPath="$PROJECT_DIR$/downloads.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/tr7zw/waveycapes/CapeHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/tr7zw/waveycapes/CapeHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/tr7zw/waveycapes/WaveyCapesBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/tr7zw/waveycapes/WaveyCapesBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/tr7zw/waveycapes/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/tr7zw/waveycapes/config/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/tr7zw/waveycapes/config/ConfigUpgrader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/tr7zw/waveycapes/config/ConfigUpgrader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/tr7zw/waveycapes/sim/StickSimulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/tr7zw/waveycapes/sim/StickSimulation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/TeleportCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/TeleportCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/VClipCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/command/commands/VClipCommand.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/ModuleManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/ModuleManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/Animations.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/Animations.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/SilentView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/client/SilentView.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/LookTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/exploit/LookTP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/misc/AutoHypixel.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/Flight.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/Flight.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/world/Scaffold.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/world/Scaffold.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiInGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiInGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/item/MixinItemRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/item/MixinItemRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/player/Step.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/player/Step.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiNewChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/gui/MixinGuiNewChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Arraylist.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/visual/hud/element/elements/Arraylist.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,18 +164,18 @@
       <recent name="net.aspw.nightx.visual.client.clickgui.next.style" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="net.aspw.nightx.features.module.modules.render" />
       <recent name="net.aspw.nightx.features.command.commands" />
       <recent name="net.aspw.nightx.features.module.modules.exploit" />
       <recent name="net.aspw.nightx.features.module.modules.ghost" />
       <recent name="net.aspw.nightx.features.module.modules.movement.speeds.matrix" />
-      <recent name="net.aspw.nightx.visual.client" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="net.aspw.nightx.utils.render" />
       <recent name="net.aspw.nightx.injection.forge.mixins.optimize" />
       <recent name="net.aspw.nightx.injection.forge.mixins.render" />
       <recent name="net.aspw.nightx.features.module.modules.render" />
       <recent name="net.aspw.nightx.features.module.modules.misc" />
-      <recent name="net.aspw.nightx.utils" />
     </key>
   </component>
   <component name="RunManager" selected="アプリケーション.Minecraft Client">

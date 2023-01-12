@@ -228,10 +228,10 @@ class Arraylist(
 
                     "Astolfo" -> {
                         if (module.arrayY < yPos) {
-                            module.arrayY += animationSpeed.get() / 2F * delta
+                            module.arrayY += animationSpeed.get() / 1.5F * delta
                             module.arrayY = Math.min(yPos, module.arrayY)
                         } else {
-                            module.arrayY -= animationSpeed.get() / 2F * delta
+                            module.arrayY -= animationSpeed.get() / 1.5F * delta
                             module.arrayY = Math.max(module.arrayY, yPos)
                         }
                     }

@@ -94,7 +94,6 @@ public abstract class MixinGuiNewChat {
         printChatMessageWithOptionalDeletion(chatComponent, this.line);
     }
 
-
     @Inject(method = "printChatMessageWithOptionalDeletion", at = @At("HEAD"))
     private void resetPercentage(CallbackInfo ci) {
         displayPercent = 0F;
@@ -219,7 +218,7 @@ public abstract class MixinGuiNewChat {
     private String fixString(String str) {
         if (stringCache.containsKey(str)) return stringCache.get(str);
 
-        str = str.replaceAll("\uF8FF", "");//remove air chars
+        str = str.replaceAll("\uF8FF", "");
 
         StringBuilder sb = new StringBuilder();
         for (char c : str.toCharArray()) {

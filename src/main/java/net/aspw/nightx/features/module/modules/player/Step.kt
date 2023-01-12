@@ -29,12 +29,14 @@ class Step : Module() {
         "Mode", arrayOf(
             "Vanilla",
             "Jump",
+            "NewNCP",
             "NCPPacket",
             "NCP",
             "MotionNCP",
             "OldNCP",
             "Verus",
             "Vulcan",
+            "Matrix",
             "AAC",
             "LAAC",
             "AAC3.3.4",
@@ -218,8 +220,16 @@ class Step : Module() {
     fun onStepConfirm(event: StepConfirmEvent) {
         mc.timer.timerSpeed = 1f
 
-        if (NightX.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround) {
+        if (NightX.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && !modeValue.get()
+                .equals("Matrix")
+        ) {
             mc.timer.timerSpeed = 0.65f
+        }
+
+        if (NightX.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && modeValue.get()
+                .equals("Matrix")
+        ) {
+            mc.timer.timerSpeed = 0.2f
         }
 
         if (mc.thePlayer == null || !isStep) // Check if step
@@ -427,10 +437,66 @@ class Step : Module() {
                     mc.timer.timerSpeed = 1f / ceil(superHeight * 2.0).toFloat()
                     var superHighest = 0.0
                     fakeJump()
-                    repeat ((ceil(superHeight * 2.0) - 1.0).toInt()) {
+                    repeat((ceil(superHeight * 2.0) - 1.0).toInt()) {
                         superHighest += 0.5
-                        mc.thePlayer.sendQueue.addToSendQueue(C03PacketPlayer.C04PacketPlayerPosition(stepX, stepY + superHighest, stepZ, true))
+                        mc.thePlayer.sendQueue.addToSendQueue(
+                            C03PacketPlayer.C04PacketPlayerPosition(
+                                stepX,
+                                stepY + superHighest,
+                                stepZ,
+                                true
+                            )
+                        )
                     }
+                    timer.reset()
+                }
+
+                mode.equals("NewNCP", true) -> {
+                    fakeJump()
+                    mc.netHandler.addToSendQueue(
+                        C03PacketPlayer.C04PacketPlayerPosition(
+                            stepX,
+                            stepY + 0.41999998688698, stepZ, false
+                        )
+                    )
+                    mc.netHandler.addToSendQueue(
+                        C03PacketPlayer.C04PacketPlayerPosition(
+                            stepX,
+                            stepY + 0.7531999805212, stepZ, false
+                        )
+                    )
+                    mc.netHandler.addToSendQueue(
+                        C03PacketPlayer.C04PacketPlayerPosition(
+                            stepX,
+                            stepY + 1, stepZ, true
+                        )
+                    )
+                }
+
+                mode.equals("Matrix", true) -> {
+                    fakeJump()
+
+                    // Vanilla step (3 packets) [COULD TRIGGER TOO MANY PACKETS]
+                    mc.netHandler.addToSendQueue(
+                        C03PacketPlayer.C04PacketPlayerPosition(
+                            stepX,
+                            stepY + 0.41999998688698, stepZ, false
+                        )
+                    )
+                    mc.netHandler.addToSendQueue(
+                        C03PacketPlayer.C04PacketPlayerPosition(
+                            stepX,
+                            stepY + 0.7531999805212, stepZ, false
+                        )
+                    )
+                    mc.netHandler.addToSendQueue(
+                        C03PacketPlayer.C04PacketPlayerPosition(
+                            stepX,
+                            stepY + 1.001335979112147, stepZ, false
+                        )
+                    )
+
+                    // Reset timer
                     timer.reset()
                 }
 
