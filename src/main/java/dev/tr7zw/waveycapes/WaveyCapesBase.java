@@ -1,23 +1,21 @@
 package dev.tr7zw.waveycapes;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import dev.tr7zw.waveycapes.config.Config;
+import dev.tr7zw.waveycapes.config.ConfigUpgrader;
+import dev.tr7zw.waveycapes.config.CustomConfigScreen;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import dev.tr7zw.waveycapes.config.Config;
-import dev.tr7zw.waveycapes.config.ConfigUpgrader;
-import dev.tr7zw.waveycapes.config.CustomConfigScreen;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 
 public abstract class WaveyCapesBase {
 
@@ -76,10 +74,6 @@ public abstract class WaveyCapesBase {
             options.add(getEnumOption("text.wc.setting.capestyle", CapeStyle.class, () -> config.capeStyle, (v) -> config.capeStyle = v));
             options.add(getEnumOption("text.wc.setting.windmode", WindMode.class, () -> config.windMode, (v) -> config.windMode = v));
             options.add(getEnumOption("text.wc.setting.capemovement", CapeMovement.class, () -> config.capeMovement, (v) -> config.capeMovement = v));
-            //options.add(getIntOption("text.wc.setting.capeparts", 16, 64, () -> config.capeParts, (v) -> config.capeParts = v));
-            options.add(getIntOption("text.wc.setting.gravity", 5, 32, () -> config.gravity, (v) -> config.gravity = v));
-            options.add(getIntOption("text.wc.setting.heightMultiplier", 4, 16, () -> config.heightMultiplier, (v) -> config.heightMultiplier = v));
-            //options.add(getIntOption("text.wc.setting.maxBend", 1, 20, () -> config.maxBend, (v) -> config.maxBend = v));
 
             addOptionsList(options);
 

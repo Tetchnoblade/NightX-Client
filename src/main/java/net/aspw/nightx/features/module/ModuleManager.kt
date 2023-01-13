@@ -119,7 +119,6 @@ class ModuleManager : Listenable {
             Crosshair::class.java,
             Rotate::class.java,
             AntiFall::class.java,
-            AutoHypixel::class.java,
             TargetESP::class.java,
             TwoDTags::class.java,
             BanStats::class.java,
@@ -201,7 +200,8 @@ class ModuleManager : Listenable {
             Knockback::class.java,
             TriggerBot::class.java,
             FakePlayer::class.java,
-            MurderDetector::class.java
+            MurderDetector::class.java,
+            JumpCircle::class.java
         )
 
         registerModule(Fucker)

@@ -128,6 +128,7 @@ class Animations : Module() {
             Sword.get().equals("push", ignoreCase = true) || Sword.get()
                 .equals("swank", ignoreCase = true) || Sword.get().equals("swong", ignoreCase = true) || Sword.get()
                 .equals("swang", ignoreCase = true) ||
+                    Sword.get().equals("astolfo", ignoreCase = true) ||
                     Sword.get().equals("swaing", ignoreCase = true) || Sword.get()
                 .equals("dash", ignoreCase = true) || Sword.get().equals("smart", ignoreCase = true) || Sword.get()
                 .equals("moon", ignoreCase = true) || Sword.get().equals("dortware1", ignoreCase = true) || Sword.get()

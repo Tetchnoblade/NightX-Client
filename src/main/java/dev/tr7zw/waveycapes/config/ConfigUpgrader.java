@@ -10,8 +10,6 @@ public class ConfigUpgrader {
         // check for more changes here
         if(config.configVersion == 1) {
             config.configVersion = 2;
-            if(config.gravity < 0)
-                config.gravity *= -1;//fixed gravity
         }
         if(config.configVersion == 2) {
             config.configVersion = 3;
