@@ -29,6 +29,10 @@ class Animations : Module() {
         if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && blockingEquipValue.get() && mc.thePlayer.isBlocking || event.eventState === EventState.POST && blockingEquipValue.get() && mc.thePlayer.isSwingInProgress && killAura?.target != null) {
             mc.thePlayer.renderArmPitch = -120 + mc.thePlayer.rotationPitch
         }
+
+        if (event.eventState === EventState.POST && pullUPValue.get()) {
+            mc.thePlayer.renderArmPitch = -60 + mc.thePlayer.rotationPitch
+        }
     }
 
     companion object {
@@ -198,6 +202,7 @@ class Animations : Module() {
         val fakeBlock = BoolValue("Visual-Blocking", true)
 
         @JvmField
+        val pullUPValue = BoolValue("Item-Pull-Up", false)
         val blockingEquipValue = BoolValue("Blocking-Equip", false)
 
         @JvmField

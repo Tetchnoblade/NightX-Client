@@ -302,7 +302,6 @@ class NoSlow : Module() {
                         else
                             sendPacket(event, false, true, false, 0, true, true)
                     }
-
                     "oldhypixel" -> {
                         if (event.eventState == EventState.PRE)
                             mc.netHandler.addToSendQueue(
