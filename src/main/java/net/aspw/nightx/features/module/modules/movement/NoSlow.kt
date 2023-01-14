@@ -148,7 +148,7 @@ class NoSlow : Module() {
         if (modeValue.get().equals(
                 "watchdog",
                 true
-            ) && packet is S30PacketWindowItems && (mc.thePlayer.isUsingItem || mc.thePlayer.isBlocking)
+            ) && packet is S30PacketWindowItems && (mc.thePlayer.isUsingItem)
         ) {
             event.cancelEvent()
             if (debugValue.get())
@@ -287,6 +287,7 @@ class NoSlow : Module() {
             else -> {
                 if (!mc.thePlayer.isBlocking && !killAura.blockingStatus)
                     return
+                val item = mc.thePlayer.itemInUse.item
                 when (modeValue.get().lowercase(Locale.getDefault())) {
                     "aac" -> {
                         if (mc.thePlayer.ticksExisted % 3 == 0)
@@ -296,12 +297,14 @@ class NoSlow : Module() {
                     }
 
                     "ncp" -> sendPacket(event, true, true, false, 0, false)
+
                     "newncp" -> {
                         if (mc.thePlayer.ticksExisted % 2 == 0)
                             sendPacket(event, true, false, false, 50, true)
                         else
                             sendPacket(event, false, true, false, 0, true, true)
                     }
+
                     "oldhypixel" -> {
                         if (event.eventState == EventState.PRE)
                             mc.netHandler.addToSendQueue(

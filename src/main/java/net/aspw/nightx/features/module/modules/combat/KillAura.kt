@@ -166,7 +166,7 @@ class KillAura : Module() {
         false,
         { !autoBlockModeValue.get().equals("None", true) && displayAutoBlockSettings.get() })
     private val verusAutoBlockValue = BoolValue(
-        "VerusAutoBlock",
+        "UnBlock-Exploit",
         false,
         { !autoBlockModeValue.get().equals("None", true) && displayAutoBlockSettings.get() })
     private val abThruWallValue = BoolValue(
