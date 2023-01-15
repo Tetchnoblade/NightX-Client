@@ -63,7 +63,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 17967770,
-        "download_count": 147,
+        "download_count": 155,
         "created_at": "2023-01-14T13:55:03Z",
         "updated_at": "2023-01-14T13:55:09Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B32/nightx-release-b32.jar"
@@ -137,7 +137,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 17909432,
-        "download_count": 1202,
+        "download_count": 1203,
         "created_at": "2023-01-06T23:26:24Z",
         "updated_at": "2023-01-06T23:26:29Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B31/nightx-release-b31.jar"
@@ -999,7 +999,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 4245949,
-        "download_count": 35,
+        "download_count": 36,
         "created_at": "2022-11-19T14:24:04Z",
         "updated_at": "2022-11-19T14:24:05Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B20/Forge.1.8.9.Installer.jar"
