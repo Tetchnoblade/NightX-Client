@@ -161,9 +161,4 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
                 6f,
                 0xffffff);
     }
-
-    private void updateReconnectButton() {
-        if (reconnectButton != null)
-            reconnectButton.displayString = "Reconnect to §7" + ServerUtils.serverData.serverIP;
-    }
 }

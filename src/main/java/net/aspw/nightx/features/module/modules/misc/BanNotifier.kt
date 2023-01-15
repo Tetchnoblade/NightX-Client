@@ -11,12 +11,11 @@ import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.visual.hud.element.elements.Notification
 
-@ModuleInfo(name = "BanStats", spacedName = "Ban Stats", category = ModuleCategory.MISC)
-class BanStats : Module() {
+@ModuleInfo(name = "BanNotifier", spacedName = "Ban Notifier", category = ModuleCategory.MISC)
+class BanNotifier : Module() {
     val alertValue = BoolValue("Alert", true)
     val serverCheckValue = BoolValue("ServerCheck", true)
     val alertTimeValue = IntegerValue("Alert-Time", 10, 1, 50, " seconds")
-    override var tag = "Idle..."
 
     init {
         object : Thread("Hypixel-BanChecker") {
@@ -36,27 +35,28 @@ class BanStats : Module() {
                                     STAFF_BAN_LAST_MIN = staffBanTotal - LAST_TOTAL_STAFF
                                     LAST_TOTAL_STAFF = staffBanTotal
                                 }
-                                tag = STAFF_BAN_LAST_MIN.toString() + ""
-                                if (NightX.moduleManager.getModule(BanStats::class.java)!!.state && alertValue.get() && mc.thePlayer != null && (!serverCheckValue.get() || isOnHypixel)) if (STAFF_BAN_LAST_MIN > 0) NightX.hud.addNotification(
+                                if (NightX.moduleManager.getModule(BanNotifier::class.java)!!.state && alertValue.get() && mc.thePlayer != null && (!serverCheckValue.get() || isOnHypixel)) if (STAFF_BAN_LAST_MIN > 0) NightX.hud.addNotification(
                                     Notification(
-                                        "Staffs banned " + STAFF_BAN_LAST_MIN + " players in the last minute!",
-                                        if (STAFF_BAN_LAST_MIN > 3) Notification.Type.ERROR else Notification.Type.WARNING,
+                                        "" + STAFF_BAN_LAST_MIN + " players get banned in the last minute!",
+                                        if (STAFF_BAN_LAST_MIN > 3) Notification.Type.WARNING else Notification.Type.WARNING,
                                         alertTimeValue.get() * 1000L
                                     )
                                 ) else NightX.hud.addNotification(
                                     Notification(
-                                        "Staffs didn't ban any player in the last minute.",
+                                        "Didn't get banned any player in the last minute.",
                                         Notification.Type.SUCCESS,
                                         alertTimeValue.get() * 1000L
                                     )
                                 )
-
-                                // watchdog ban doesnt matter, open an issue if you want to add it.
                             }
                         } catch (e: Exception) {
                             e.printStackTrace()
-                            if (NightX.moduleManager.getModule(BanStats::class.java)!!.state && alertValue.get() && mc.thePlayer != null && (!serverCheckValue.get() || isOnHypixel)) NightX.hud.addNotification(
-                                Notification("An error has occurred.", Notification.Type.ERROR, 1000L)
+                            if (NightX.moduleManager.getModule(BanNotifier::class.java)!!.state && alertValue.get() && mc.thePlayer != null && (!serverCheckValue.get() || isOnHypixel)) NightX.hud.addNotification(
+                                Notification(
+                                    "Didn't get banned any player in the last minute.",
+                                    Notification.Type.ERROR,
+                                    1000L
+                                )
                             )
                         }
                         checkTimer.reset()
@@ -70,13 +70,12 @@ class BanStats : Module() {
         get() = !mc.isIntegratedServerRunning && mc.currentServerData.serverIP.contains("hypixel.net")
 
     companion object {
-        // no u
         private val API_PUNISHMENT =
             aB("68747470733a2f2f6170692e706c616e636b652e696f2f6879706978656c2f76312f70756e6973686d656e745374617473")
         var WATCHDOG_BAN_LAST_MIN = 0
         var LAST_TOTAL_STAFF = -1
         var STAFF_BAN_LAST_MIN = 0
-        fun aB(str: String): String { // :trole:
+        fun aB(str: String): String {
             var result = ""
             val charArray = str.toCharArray()
             var i = 0

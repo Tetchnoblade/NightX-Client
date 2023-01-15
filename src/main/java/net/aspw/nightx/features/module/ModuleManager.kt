@@ -121,7 +121,7 @@ class ModuleManager : Listenable {
             AntiFall::class.java,
             TargetESP::class.java,
             TwoDTags::class.java,
-            BanStats::class.java,
+            BanNotifier::class.java,
             AntiFireBall::class.java,
             KeepSprint::class.java,
             LookTP::class.java,

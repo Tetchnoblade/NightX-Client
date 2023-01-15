@@ -25,7 +25,6 @@ class CommandManager {
         registerCommand(ShortcutCommand())
         registerCommand(FriendCommand())
         registerCommand(ConfigCommand())
-        registerCommand(ServerInfoCommand())
         registerCommand(ToggleCommand())
         registerCommand(TacoCommand())
         registerCommand(BindsCommand())
