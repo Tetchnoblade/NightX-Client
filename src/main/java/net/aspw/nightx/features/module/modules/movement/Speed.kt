@@ -24,6 +24,7 @@ import net.aspw.nightx.features.module.modules.movement.speeds.vulcan.VulcanHop2
 import net.aspw.nightx.features.module.modules.movement.speeds.vulcan.VulcanYPort
 import net.aspw.nightx.features.module.modules.movement.speeds.watchdog.WatchdogBoost
 import net.aspw.nightx.features.module.modules.movement.speeds.watchdog.WatchdogCustom
+import net.aspw.nightx.features.module.modules.movement.speeds.watchdog.WatchdogNew
 import net.aspw.nightx.features.module.modules.movement.speeds.watchdog.WatchdogStable
 import net.aspw.nightx.features.module.modules.player.Inventory
 import net.aspw.nightx.value.BoolValue
@@ -64,6 +65,7 @@ class Speed : Module() {
         AACHop438(),
         AACYPort(),
         AACYPort2(),
+        WatchdogNew(),
         WatchdogBoost(),
         WatchdogStable(),
         WatchdogCustom(),
@@ -212,8 +214,8 @@ class Speed : Module() {
 
     val hypixelModeValue: ListValue = object : ListValue(
         "Watchdog-Mode",
-        arrayOf("Boost", "Stable", "Custom"),
-        "Custom",
+        arrayOf("New", "Boost", "Stable", "Custom"),
+        "New",
         { typeValue.get().equals("watchdog", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
@@ -347,12 +349,32 @@ class Speed : Module() {
             if (state) onEnable()
         }
     }
-    val timerValue = BoolValue("UseTimer", true) { modeName.equals("watchdogcustom", ignoreCase = true) }
-    val smoothStrafe = BoolValue("SmoothStrafe", true) { modeName.equals("watchdogcustom", ignoreCase = true) }
+    val timerValue = BoolValue("UseTimer", true) {
+        modeName.equals(
+            "watchdogcustom",
+            ignoreCase = true
+        ) && !modeName.equals("watchdognew", ignoreCase = true)
+    }
+    val smoothStrafe = BoolValue("SmoothStrafe", true) {
+        modeName.equals(
+            "watchdogcustom",
+            ignoreCase = true
+        ) && !modeName.equals("watchdognew", ignoreCase = true)
+    }
     val strafing = BoolValue("Strafing", true) { modeName.equals("blocksmc", ignoreCase = true) }
     val customSpeedValue =
-        FloatValue("StrSpeed", 0.42f, 0.2f, 2f) { modeName.equals("watchdogcustom", ignoreCase = true) }
-    val motionYValue = FloatValue("MotionY", 0.42f, 0f, 2f) { modeName.equals("watchdogcustom", ignoreCase = true) }
+        FloatValue("StrSpeed", 0.42f, 0.2f, 2f) {
+            modeName.equals(
+                "watchdogcustom",
+                ignoreCase = true
+            ) && !modeName.equals("watchdognew", ignoreCase = true)
+        }
+    val motionYValue = FloatValue("MotionY", 0.42f, 0f, 2f) {
+        modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
+            "watchdognew",
+            ignoreCase = true
+        )
+    }
 
     @JvmField
     val verusTimer = FloatValue("Verus-Timer", 1f, 0.1f, 10f) { modeName.equals("verushard", ignoreCase = true) }
@@ -407,12 +429,18 @@ class Speed : Module() {
 
     @JvmField
     val sendJumpValue = BoolValue("SendJump", true) {
-        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals("watchdogcustom", ignoreCase = true)
+        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
+            "watchdogcustom",
+            ignoreCase = true
+        )
     }
 
     @JvmField
     val recalcValue = BoolValue("ReCalculate", false) {
         typeValue.get().equals("watchdog", ignoreCase = true) && sendJumpValue.get() && !modeName.equals(
+            "watchdognew",
+            ignoreCase = true
+        ) && !modeName.equals(
             "watchdogcustom",
             ignoreCase = true
         )
@@ -420,30 +448,52 @@ class Speed : Module() {
 
     @JvmField
     val glideStrengthValue = FloatValue("GlideStrength", 0f, 0f, 0.05f) {
-        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals("watchdogcustom", ignoreCase = true)
+        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
+            "watchdognew",
+            ignoreCase = true
+        ) && !modeName.equals("watchdogcustom", ignoreCase = true)
     }
 
     @JvmField
     val moveSpeedValue = FloatValue("MoveSpeed", 1.7f, 1f, 1.7f) {
-        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals("watchdogcustom", ignoreCase = true)
+        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
+            "watchdognew",
+            ignoreCase = true
+        ) && !modeName.equals("watchdogcustom", ignoreCase = true)
     }
 
     @JvmField
     val jumpYValue = FloatValue("JumpY", 0.42f, 0f, 1f) {
-        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals("watchdogcustom", ignoreCase = true)
+        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
+            "watchdognew",
+            ignoreCase = true
+        ) && !modeName.equals("watchdogcustom", ignoreCase = true)
     }
 
     @JvmField
     val baseStrengthValue = FloatValue("BaseMultiplier", 1f, 0.5f, 1f) {
-        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals("watchdogcustom", ignoreCase = true)
+        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
+            "watchdognew",
+            ignoreCase = true
+        ) && !modeName.equals("watchdogcustom", ignoreCase = true)
     }
 
     @JvmField
-    val baseTimerValue = FloatValue("BaseTimer", 1.5f, 1f, 3f) { modeName.equals("watchdogboost", ignoreCase = true) }
+    val baseTimerValue = FloatValue("BaseTimer", 1.5f, 1f, 3f) {
+        modeName.equals(
+            "watchdogboost",
+            ignoreCase = true && !modeName.equals("watchdognew", ignoreCase = true)
+        )
+    }
 
     @JvmField
     val baseMTimerValue =
-        FloatValue("BaseMultiplierTimer", 1f, 0f, 3f) { modeName.equals("watchdogboost", ignoreCase = true) }
+        FloatValue("BaseMultiplierTimer", 1f, 0f, 3f) {
+            modeName.equals(
+                "watchdogboost",
+                ignoreCase = true && !modeName.equals("watchdognew", ignoreCase = true)
+            )
+        }
 
     @JvmField
     val portMax = FloatValue("AAC-PortLength", 1f, 1f, 20f) { typeValue.get().equals("aac", ignoreCase = true) }

@@ -4,7 +4,7 @@ import de.enzaxd.viaforge.ViaForge
 import de.enzaxd.viaforge.protocol.ProtocolCollection
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.module.modules.client.ColorMixer
-import net.aspw.nightx.features.module.modules.misc.BanStats
+import net.aspw.nightx.features.module.modules.misc.BanNotifier
 import net.aspw.nightx.utils.*
 import net.aspw.nightx.utils.render.BlurUtils
 import net.aspw.nightx.utils.render.ColorUtils
@@ -154,8 +154,8 @@ class Text(
             "mcps" -> return CPSCounter.getCPS(CPSCounter.MouseButton.MIDDLE).toString()
             "rcps" -> return CPSCounter.getCPS(CPSCounter.MouseButton.RIGHT).toString()
             "portalVersion" -> ProtocolCollection.getProtocolById(ViaForge.getInstance().version).name
-            "watchdogLastMin" -> BanStats.WATCHDOG_BAN_LAST_MIN.toString()
-            "staffLastMin" -> BanStats.STAFF_BAN_LAST_MIN.toString()
+            "watchdogLastMin" -> BanNotifier.WATCHDOG_BAN_LAST_MIN.toString()
+            "staffLastMin" -> BanNotifier.STAFF_BAN_LAST_MIN.toString()
             "wdStatus" -> return if (PacketUtils.isWatchdogActive()) "Active" else "Inactive"
             "sessionTime" -> return SessionUtils.getFormatSessionTime()
             "worldTime" -> return SessionUtils.getFormatWorldTime()
