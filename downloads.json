@@ -63,7 +63,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 17967770,
-        "download_count": 585,
+        "download_count": 615,
         "created_at": "2023-01-14T13:55:03Z",
         "updated_at": "2023-01-14T13:55:09Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B32/nightx-release-b32.jar"
@@ -223,7 +223,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 17751854,
-        "download_count": 688,
+        "download_count": 689,
         "created_at": "2023-01-03T06:11:17Z",
         "updated_at": "2023-01-03T06:11:22Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B30/nightx-release-b30.jar"
@@ -445,7 +445,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 20710992,
-        "download_count": 262,
+        "download_count": 263,
         "created_at": "2022-12-17T23:39:25Z",
         "updated_at": "2022-12-17T23:39:31Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B27/nightx-release-b27.jar"
