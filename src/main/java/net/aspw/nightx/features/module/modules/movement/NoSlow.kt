@@ -157,7 +157,8 @@ class NoSlow : Module() {
         if (modeValue.get().equals(
                 "blink",
                 true
-            ) && !(killAura.state && killAura.blockingStatus) && mc.thePlayer.itemInUse != null && mc.thePlayer.itemInUse.item != null
+            ) && !(killAura.state && !NightX.moduleManager[KillAura::class.java]!!.autoBlockModeValue.get()
+                .equals("None")) && mc.thePlayer.itemInUse != null && mc.thePlayer.itemInUse.item != null
         ) {
             val item = mc.thePlayer.itemInUse.item
             if (mc.thePlayer.isUsingItem && (item is ItemFood || item is ItemBucketMilk || item is ItemPotion) && (!ciucValue.get() || mc.thePlayer.itemInUseCount >= 1)) {
@@ -223,7 +224,9 @@ class NoSlow : Module() {
         val killAura = NightX.moduleManager[KillAura::class.java]!!
 
         when (modeValue.get().lowercase(Locale.getDefault())) {
-            "aac5" -> if (event.eventState == EventState.POST && (mc.thePlayer.isUsingItem || mc.thePlayer.isBlocking || killAura.blockingStatus)) {
+            "aac5" -> if (event.eventState == EventState.POST && (mc.thePlayer.isUsingItem || mc.thePlayer.isBlocking || !NightX.moduleManager[KillAura::class.java]!!.autoBlockModeValue.get()
+                    .equals("None"))
+            ) {
                 mc.netHandler.addToSendQueue(
                     C08PacketPlayerBlockPlacement(
                         BlockPos(-1, -1, -1),
@@ -236,7 +239,7 @@ class NoSlow : Module() {
                 )
             }
 
-            "watchdog" -> if (testValue.get() && (!killAura.state || !killAura.blockingStatus)
+            "watchdog" -> if (testValue.get() && (!killAura.state)
                 && event.eventState == EventState.PRE
                 && mc.thePlayer.itemInUse != null && mc.thePlayer.itemInUse.item != null
             ) {
@@ -285,7 +288,7 @@ class NoSlow : Module() {
             }
 
             else -> {
-                if (!mc.thePlayer.isBlocking && !killAura.blockingStatus)
+                if (!mc.thePlayer.isBlocking)
                     return
                 val item = mc.thePlayer.itemInUse.item
                 when (modeValue.get().lowercase(Locale.getDefault())) {

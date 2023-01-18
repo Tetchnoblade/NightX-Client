@@ -156,7 +156,7 @@ class KillAura : Module() {
     private val keepSprintValue = BoolValue("NoKeepSprint", false)
 
     // AutoBlock
-    private val autoBlockModeValue =
+    val autoBlockModeValue =
         ListValue("AutoBlock", arrayOf("None", "Interact", "Packet", "AfterTick", "NCP", "OldHypixel"), "Packet")
 
     private val displayAutoBlockSettings =
@@ -327,7 +327,6 @@ class KillAura : Module() {
     private var containerOpen = -1L
 
     // Fake block status
-    var blockingStatus = false
     var verusBlocking = false
     var fakeBlock = false
 
@@ -361,7 +360,7 @@ class KillAura : Module() {
         clicks = 0
 
         stopBlocking()
-        if (verusBlocking && !blockingStatus && !mc.thePlayer.isBlocking) {
+        if (verusBlocking && !mc.thePlayer.isBlocking) {
             verusBlocking = false
             if (verusAutoBlockValue.get())
                 PacketUtils.sendPacketNoEvent(
@@ -523,7 +522,7 @@ class KillAura : Module() {
             }
         }
 
-        if (blockingStatus || mc.thePlayer.isBlocking)
+        if (mc.thePlayer.isBlocking)
             verusBlocking = true
         else if (verusBlocking) {
             verusBlocking = false
@@ -828,7 +827,7 @@ class KillAura : Module() {
      */
     private fun attackEntity(entity: EntityLivingBase) {
         // Stop blocking
-        if (mc.thePlayer.isBlocking || blockingStatus)
+        if (mc.thePlayer.isBlocking)
             stopBlocking()
 
         // Call attack event
@@ -1041,7 +1040,7 @@ class KillAura : Module() {
         }
 
         if (autoBlockModeValue.get().equals("ncp", true)) {
-            mc.netHandler.addToSendQueue(
+            PacketUtils.sendPacketNoEvent(
                 C08PacketPlayerBlockPlacement(
                     BlockPos(-1, -1, -1),
                     255,
@@ -1051,16 +1050,16 @@ class KillAura : Module() {
                     0.0f
                 )
             )
-            blockingStatus = true
             return
         }
 
         if (autoBlockModeValue.get().equals("interact", true)) {
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), true);
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, true)
+            return
         }
 
         if (autoBlockModeValue.get().equals("oldhypixel", true)) {
-            mc.netHandler.addToSendQueue(
+            PacketUtils.sendPacketNoEvent(
                 C08PacketPlayerBlockPlacement(
                     BlockPos(-1, -1, -1),
                     255,
@@ -1070,7 +1069,6 @@ class KillAura : Module() {
                     0.0f
                 )
             )
-            blockingStatus = true
             return
         }
 
@@ -1108,7 +1106,6 @@ class KillAura : Module() {
         }
 
         mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
-        blockingStatus = true
     }
 
     /**
@@ -1117,27 +1114,24 @@ class KillAura : Module() {
     private fun stopBlocking() {
         fakeBlock = false
 
-        if (blockingStatus) {
-            if (autoBlockModeValue.get().equals("oldhypixel", true))
-                mc.netHandler.addToSendQueue(
-                    C07PacketPlayerDigging(
-                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                        BlockPos(1.0, 1.0, 1.0),
-                        EnumFacing.DOWN
-                    )
+        if (autoBlockModeValue.get().equals("oldhypixel", true))
+            PacketUtils.sendPacketNoEvent(
+                C07PacketPlayerDigging(
+                    C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
+                    BlockPos(1.0, 1.0, 1.0),
+                    EnumFacing.DOWN
                 )
-            else
-                mc.netHandler.addToSendQueue(
-                    C07PacketPlayerDigging(
-                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                        BlockPos.ORIGIN,
-                        EnumFacing.DOWN
-                    )
+            )
+        else
+            PacketUtils.sendPacketNoEvent(
+                C07PacketPlayerDigging(
+                    C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
+                    BlockPos.ORIGIN,
+                    EnumFacing.DOWN
                 )
-            if (autoBlockModeValue.get().equals("interact", true))
-                KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
-        }
-        blockingStatus = false
+            )
+        if (autoBlockModeValue.get().equals("interact", true))
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
     }
 
     /**
