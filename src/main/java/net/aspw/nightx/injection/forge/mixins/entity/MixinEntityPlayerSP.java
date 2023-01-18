@@ -2,7 +2,6 @@ package net.aspw.nightx.injection.forge.mixins.entity;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.*;
-import net.aspw.nightx.features.module.modules.combat.KillAura;
 import net.aspw.nightx.features.module.modules.exploit.AntiHunger;
 import net.aspw.nightx.features.module.modules.exploit.PortalMenu;
 import net.aspw.nightx.features.module.modules.movement.Flight;
@@ -279,9 +278,8 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         this.movementInput.updatePlayerMoveState();
 
         final NoSlow noSlow = NightX.moduleManager.getModule(NoSlow.class);
-        final KillAura killAura = NightX.moduleManager.getModule(KillAura.class);
 
-        if (getHeldItem() != null && (this.isUsingItem() || (getHeldItem().getItem() instanceof ItemSword && this.isBlocking() && !this.isRiding()))) {
+        if (getHeldItem() != null && (this.isUsingItem() || (getHeldItem().getItem() instanceof ItemSword && mc.thePlayer.isBlocking() && !this.isRiding()))) {
             final SlowDownEvent slowDownEvent = new SlowDownEvent(0.2F, 0.2F);
             NightX.eventManager.callEvent(slowDownEvent);
             this.movementInput.moveStrafe *= slowDownEvent.getStrafe();

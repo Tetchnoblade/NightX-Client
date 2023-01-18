@@ -224,8 +224,8 @@ class NoSlow : Module() {
         val killAura = NightX.moduleManager[KillAura::class.java]!!
 
         when (modeValue.get().lowercase(Locale.getDefault())) {
-            "aac5" -> if (event.eventState == EventState.POST && (mc.thePlayer.isUsingItem || mc.thePlayer.isBlocking || !NightX.moduleManager[KillAura::class.java]!!.autoBlockModeValue.get()
-                    .equals("None"))
+            "aac5" -> if (event.eventState == EventState.POST && (mc.thePlayer.isUsingItem || mc.thePlayer.isBlocking || !killAura.autoBlockModeValue.get()
+                    .equals("None") && killAura.target != null)
             ) {
                 mc.netHandler.addToSendQueue(
                     C08PacketPlayerBlockPlacement(
@@ -239,7 +239,7 @@ class NoSlow : Module() {
                 )
             }
 
-            "watchdog" -> if (testValue.get() && (!killAura.state)
+            "watchdog" -> if (testValue.get() && (!killAura.state || killAura.target == null)
                 && event.eventState == EventState.PRE
                 && mc.thePlayer.itemInUse != null && mc.thePlayer.itemInUse.item != null
             ) {
@@ -288,9 +288,8 @@ class NoSlow : Module() {
             }
 
             else -> {
-                if (!mc.thePlayer.isBlocking)
+                if (!mc.thePlayer.isBlocking && killAura.target == null)
                     return
-                val item = mc.thePlayer.itemInUse.item
                 when (modeValue.get().lowercase(Locale.getDefault())) {
                     "aac" -> {
                         if (mc.thePlayer.ticksExisted % 3 == 0)
