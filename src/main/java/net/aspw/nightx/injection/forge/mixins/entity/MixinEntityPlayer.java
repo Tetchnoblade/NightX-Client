@@ -12,6 +12,9 @@ import org.spongepowered.asm.mixin.Shadow;
 public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
 
     @Shadow
+    public abstract boolean isBlocking();
+
+    @Shadow
     public PlayerCapabilities capabilities;
     @Shadow
     protected int flyToggleTimer;

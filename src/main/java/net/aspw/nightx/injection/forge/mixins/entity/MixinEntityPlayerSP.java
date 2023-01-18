@@ -281,7 +281,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         final NoSlow noSlow = NightX.moduleManager.getModule(NoSlow.class);
         final KillAura killAura = NightX.moduleManager.getModule(KillAura.class);
 
-        if (getHeldItem() != null && (this.isUsingItem() || (getHeldItem().getItem() instanceof ItemSword && killAura.getBlockingStatus())) && !this.isRiding()) {
+        if (getHeldItem() != null && (this.isUsingItem() || (getHeldItem().getItem() instanceof ItemSword && this.isBlocking() && !this.isRiding()))) {
             final SlowDownEvent slowDownEvent = new SlowDownEvent(0.2F, 0.2F);
             NightX.eventManager.callEvent(slowDownEvent);
             this.movementInput.moveStrafe *= slowDownEvent.getStrafe();

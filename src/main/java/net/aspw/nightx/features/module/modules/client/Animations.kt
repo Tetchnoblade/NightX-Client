@@ -22,16 +22,12 @@ class Animations : Module() {
     @EventTarget
     fun onMotion(event: MotionEvent) {
         val killAura = NightX.moduleManager.getModule(KillAura::class.java)
-        if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && smoothAnimValue.get()) {
-            mc.thePlayer.renderArmPitch = 80f + mc.thePlayer.rotationPitch
+        if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && onlyBlockingValue.get() && mc.thePlayer.isBlocking || event.eventState === EventState.POST && onlyBlockingValue.get() && mc.thePlayer.isSwingInProgress && killAura?.target != null) {
+            mc.thePlayer.renderArmPitch = handPos.get() + mc.thePlayer.rotationPitch
         }
 
-        if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && blockingEquipValue.get() && mc.thePlayer.isBlocking || event.eventState === EventState.POST && blockingEquipValue.get() && mc.thePlayer.isSwingInProgress && killAura?.target != null) {
-            mc.thePlayer.renderArmPitch = -120 + mc.thePlayer.rotationPitch
-        }
-
-        if (event.eventState === EventState.POST && pullUPValue.get()) {
-            mc.thePlayer.renderArmPitch = -60 + mc.thePlayer.rotationPitch
+        if (event.eventState === EventState.POST && !onlyBlockingValue.get()) {
+            mc.thePlayer.renderArmPitch = handPos.get() + mc.thePlayer.rotationPitch
         }
     }
 
@@ -50,7 +46,6 @@ class Animations : Module() {
                 "Swing",
                 "SwingFull",
                 "Swank",
-                "Swong",
                 "Swang",
                 "Swaing",
                 "Stella",
@@ -130,7 +125,7 @@ class Animations : Module() {
         @JvmField
         val Equip = FloatValue("Equip-Motion", 1.8f, -5f, 5f) {
             Sword.get().equals("push", ignoreCase = true) || Sword.get()
-                .equals("swank", ignoreCase = true) || Sword.get().equals("swong", ignoreCase = true) || Sword.get()
+                .equals("swank", ignoreCase = true) || Sword.get()
                 .equals("swang", ignoreCase = true) ||
                     Sword.get().equals("astolfo", ignoreCase = true) ||
                     Sword.get().equals("swaing", ignoreCase = true) || Sword.get()
@@ -138,6 +133,10 @@ class Animations : Module() {
                 .equals("moon", ignoreCase = true) || Sword.get().equals("dortware1", ignoreCase = true) || Sword.get()
                 .equals("dortware2", ignoreCase = true)
         }
+
+        @JvmField
+        val handPos = IntegerValue("Hand-Pos", 0, -500, 500)
+        val onlyBlockingValue = BoolValue("Only-Blocking", false)
 
         @JvmField
         val RotateItems = BoolValue("Rotate-Items", false)
@@ -202,11 +201,6 @@ class Animations : Module() {
         val fakeBlock = BoolValue("Visual-Blocking", true)
 
         @JvmField
-        val pullUPValue = BoolValue("Item-Pull-Up", false)
-        val blockingEquipValue = BoolValue("Blocking-Equip", false)
-
-        @JvmField
-        val swingAnimValue = BoolValue("FluxSwing-Animation", false)
-        val smoothAnimValue = BoolValue("SmoothSwing-Animation", false)
+        val swingAnimValue = BoolValue("Swing-Animation", false)
     }
 }

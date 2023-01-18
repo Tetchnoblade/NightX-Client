@@ -3,7 +3,6 @@ package net.aspw.nightx.utils
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.modules.client.*
-import net.aspw.nightx.features.module.modules.utility.Spammer
 import net.aspw.nightx.features.special.MacroManager
 import net.aspw.nightx.utils.misc.HttpUtils.get
 import net.aspw.nightx.utils.misc.StringUtils
@@ -148,7 +147,7 @@ object SettingsUtils {
         MacroManager.macroMapping.filter { it.key != 0 }
             .forEach { stringBuilder.append("macro ${it.key} ${it.value}").append("\n") }
 
-        NightX.moduleManager.modules.filter { it.category !== ModuleCategory.RENDER && it !is Spammer && it !is Cape && it !is SilentView && it !is AntiTabComplete && it !is NoInvClose && it !is HudEditor && it !is Gui && it !is Animations }
+        NightX.moduleManager.modules.filter { it.category !== ModuleCategory.RENDER && it !is Cape && it !is SilentView && it !is AntiTabComplete && it !is NoInvClose && it !is HudEditor && it !is Gui && it !is Animations }
             .forEach {
                 if (values)
                     it.values.forEach { value ->

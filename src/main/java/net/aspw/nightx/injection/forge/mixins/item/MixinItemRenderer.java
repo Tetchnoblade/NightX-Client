@@ -313,11 +313,11 @@ public abstract class MixinItemRenderer {
             if (this.itemToRender.getItem() instanceof ItemMap) {
                 this.renderItemMap(abstractclientplayer, f2, f, f1);
             } else if (abstractclientplayer.getItemInUseCount() > 0
-                    || (itemToRender.getItem() instanceof ItemSword && (killAura.getBlockingStatus() || killAura.getFakeBlock()))
+                    || (itemToRender.getItem() instanceof ItemSword && (killAura.getTarget() != null || killAura.getFakeBlock()))
                     || (itemToRender.getItem() instanceof ItemSword && NightX.moduleManager.getModule(Animations.class).getState()
                     && Animations.fakeBlock.get() && killAura.getTarget() != null)) {
 
-                EnumAction enumaction = (killAura.getBlockingStatus()) ? EnumAction.BLOCK : this.itemToRender.getItemUseAction();
+                EnumAction enumaction = (killAura.getTarget() != null) ? EnumAction.BLOCK : this.itemToRender.getItemUseAction();
 
                 switch (enumaction) {
                     case NONE:
@@ -805,15 +805,6 @@ public abstract class MixinItemRenderer {
                                     this.transformFirstPersonItem(f / Animations.Equip.getValue(), 0.0f);
                                     GlStateManager.rotate(-var9 * -30.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
                                     GlStateManager.rotate(-var9 * 7.5F, 1.0F, var9 / 3.0F, -0.0F);
-                                    this.func_178103_d(0.2F);
-                                    break;
-                                }
-                                case "Swong": {
-                                    float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
-                                    GL11.glTranslated(0.0D, 0.0D, 0.0D);
-                                    this.transformFirstPersonItem(f / Animations.Equip.getValue(), 0.0f);
-                                    GlStateManager.rotate(-var9 * -70.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
-                                    GlStateManager.rotate(-var9 * 15.5F, 1.0F, var9 / 3.0F, -0.0F);
                                     this.func_178103_d(0.2F);
                                     break;
                                 }
