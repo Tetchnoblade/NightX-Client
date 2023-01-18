@@ -195,7 +195,6 @@ class ModuleManager : Listenable {
             HitParticles::class.java,
             CivBreak::class.java,
             PlayerEdit::class.java,
-            AntiTabComplete::class.java,
             ClientSpoof::class.java,
             Knockback::class.java,
             TriggerBot::class.java,
