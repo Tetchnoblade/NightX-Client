@@ -6,9 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="9d01c55b-d37f-497b-a569-910a52b4446d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/combat/KillAura.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/combat/KillAura.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/NoSlow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/features/module/modules/movement/NoSlow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/item/MixinItemRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/nightx/injection/forge/mixins/item/MixinItemRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/downloads.json" beforeDir="false" afterPath="$PROJECT_DIR$/downloads.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/ViaBackwards-4.2.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/libs/ViaBackwards-4.2.1.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/ViaVersion-4.2.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/libs/ViaVersion-4.2.1.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/nashorn.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/platform/Platform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/platform/Platform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/protocol/ProtocolCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/protocol/ProtocolCollection.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
