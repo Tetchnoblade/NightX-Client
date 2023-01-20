@@ -6,6 +6,7 @@ import net.aspw.nightx.event.PacketEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
+import net.aspw.nightx.features.module.modules.client.Hud
 import net.aspw.nightx.value.BoolValue
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 

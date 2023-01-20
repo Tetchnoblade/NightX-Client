@@ -147,7 +147,7 @@ object SettingsUtils {
         MacroManager.macroMapping.filter { it.key != 0 }
             .forEach { stringBuilder.append("macro ${it.key} ${it.value}").append("\n") }
 
-        NightX.moduleManager.modules.filter { it.category !== ModuleCategory.RENDER && it !is Cape && it !is SilentView && it !is NoInvClose && it !is HudEditor && it !is Gui && it !is Animations }
+        NightX.moduleManager.modules.filter { it.category !== ModuleCategory.RENDER && it !is Cape && it !is SilentView && it !is Hud && it !is NoInvClose && it !is HudEditor && it !is Gui && it !is Animations }
             .forEach {
                 if (values)
                     it.values.forEach { value ->

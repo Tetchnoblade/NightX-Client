@@ -13,7 +13,7 @@ import me.liuli.elixir.account.CrackedAccount;
 import me.liuli.elixir.account.MinecraftAccount;
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.SessionEvent;
-import net.aspw.nightx.features.module.modules.render.Hud;
+import net.aspw.nightx.features.module.modules.client.Hud;
 import net.aspw.nightx.utils.ClientUtils;
 import net.aspw.nightx.utils.ServerUtils;
 import net.aspw.nightx.utils.SessionUtils;

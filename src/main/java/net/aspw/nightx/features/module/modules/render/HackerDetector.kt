@@ -7,6 +7,7 @@ import net.aspw.nightx.event.MotionEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
+import net.aspw.nightx.features.module.modules.client.Hud
 import net.aspw.nightx.features.module.modules.combat.AntiBot
 import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.block.BlockAir

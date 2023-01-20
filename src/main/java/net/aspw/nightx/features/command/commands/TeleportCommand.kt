@@ -2,8 +2,8 @@ package net.aspw.nightx.features.command.commands
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
+import net.aspw.nightx.features.module.modules.client.Hud
 import net.aspw.nightx.features.module.modules.combat.AntiBot
-import net.aspw.nightx.features.module.modules.render.Hud
 import net.aspw.nightx.utils.PathUtils
 import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
