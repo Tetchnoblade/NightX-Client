@@ -1,7 +1,7 @@
 package net.aspw.nightx.injection.forge.mixins.render;
 
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.cool.Chams;
+import net.aspw.nightx.features.module.modules.client.Chams;
 import net.aspw.nightx.features.module.modules.render.ItemPhysics;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;

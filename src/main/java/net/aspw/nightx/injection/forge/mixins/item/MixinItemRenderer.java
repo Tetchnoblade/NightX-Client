@@ -2,8 +2,8 @@ package net.aspw.nightx.injection.forge.mixins.item;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.features.module.modules.client.Animations;
+import net.aspw.nightx.features.module.modules.client.AntiNausea;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
-import net.aspw.nightx.features.module.modules.cool.AntiNausea;
 import net.aspw.nightx.utils.timer.MSTimer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
