@@ -157,4 +157,9 @@ public class Platform implements ViaPlatform<UUID> {
     public boolean isOldClientsAllowed() {
         return true;
     }
+
+    @Override
+    public boolean hasPlugin(String s) {
+        return false;
+    }
 }

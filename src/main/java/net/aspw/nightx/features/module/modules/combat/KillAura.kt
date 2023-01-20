@@ -327,6 +327,7 @@ class KillAura : Module() {
     private var containerOpen = -1L
 
     // Fake block status
+    var blockingStatus = false
     var verusBlocking = false
     var fakeBlock = false
 
@@ -360,7 +361,7 @@ class KillAura : Module() {
         clicks = 0
 
         stopBlocking()
-        if (verusBlocking && !mc.thePlayer.isBlocking) {
+        if (verusBlocking && !blockingStatus && !mc.thePlayer.isBlocking) {
             verusBlocking = false
             if (verusAutoBlockValue.get())
                 PacketUtils.sendPacketNoEvent(
@@ -522,7 +523,7 @@ class KillAura : Module() {
             }
         }
 
-        if (mc.thePlayer.isBlocking)
+        if (mc.thePlayer.isBlocking || blockingStatus)
             verusBlocking = true
         else if (verusBlocking) {
             verusBlocking = false
@@ -827,7 +828,7 @@ class KillAura : Module() {
      */
     private fun attackEntity(entity: EntityLivingBase) {
         // Stop blocking
-        if (mc.thePlayer.isBlocking)
+        if (mc.thePlayer.isBlocking || blockingStatus)
             stopBlocking()
 
         // Call attack event
@@ -1055,7 +1056,6 @@ class KillAura : Module() {
 
         if (autoBlockModeValue.get().equals("interact", true)) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, true)
-            return
         }
 
         if (autoBlockModeValue.get().equals("oldhypixel", true)) {
@@ -1069,6 +1069,7 @@ class KillAura : Module() {
                     0.0f
                 )
             )
+            blockingStatus = true
             return
         }
 
@@ -1106,6 +1107,7 @@ class KillAura : Module() {
         }
 
         mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
+        blockingStatus = true
     }
 
     /**
@@ -1114,24 +1116,27 @@ class KillAura : Module() {
     private fun stopBlocking() {
         fakeBlock = false
 
-        if (autoBlockModeValue.get().equals("oldhypixel", true))
-            PacketUtils.sendPacketNoEvent(
-                C07PacketPlayerDigging(
-                    C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                    BlockPos(1.0, 1.0, 1.0),
-                    EnumFacing.DOWN
+        if (blockingStatus) {
+            if (autoBlockModeValue.get().equals("oldhypixel", true))
+                PacketUtils.sendPacketNoEvent(
+                    C07PacketPlayerDigging(
+                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
+                        BlockPos(1.0, 1.0, 1.0),
+                        EnumFacing.DOWN
+                    )
                 )
-            )
-        else
-            PacketUtils.sendPacketNoEvent(
-                C07PacketPlayerDigging(
-                    C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                    BlockPos.ORIGIN,
-                    EnumFacing.DOWN
+            else
+                PacketUtils.sendPacketNoEvent(
+                    C07PacketPlayerDigging(
+                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
+                        BlockPos.ORIGIN,
+                        EnumFacing.DOWN
+                    )
                 )
-            )
-        if (autoBlockModeValue.get().equals("interact", true))
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
+            if (autoBlockModeValue.get().equals("interact", true))
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
+        }
+        blockingStatus = false
     }
 
     /**

@@ -1,5 +1,9 @@
 package net.aspw.nightx.injection.forge.mixins.gui;
 
+import de.enzaxd.viaforge.ViaForge;
+import de.enzaxd.viaforge.protocol.ProtocolCollection;
+import net.aspw.nightx.utils.EntityUtils;
+import net.aspw.nightx.utils.PacketUtils;
 import net.aspw.nightx.visual.font.Fonts;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiIngameMenu;
@@ -32,22 +36,22 @@ public abstract class MixinGuiIngameMenu extends MixinGuiScreen {
                     16f,
                     0xffffff);
             Fonts.minecraftFont.drawStringWithShadow(
-                    "§7Brand: §a" + mc.getCurrentServerData().gameVersion,
+                    "§7Protocol: §a" + ProtocolCollection.getProtocolById(ViaForge.getInstance().getVersion()).getName(),
                     6f,
                     26f,
                     0xffffff);
             Fonts.minecraftFont.drawStringWithShadow(
-                    "§7Protocol: §a" + mc.getCurrentServerData().version,
+                    "§7Ping: §a" + EntityUtils.getPing(mc.thePlayer),
                     6f,
                     36f,
                     0xffffff);
             Fonts.minecraftFont.drawStringWithShadow(
-                    "§7Ping: §a" + mc.getCurrentServerData().pingToServer,
+                    "§7inBound: §a" + PacketUtils.avgInBound,
                     6f,
                     46f,
                     0xffffff);
             Fonts.minecraftFont.drawStringWithShadow(
-                    "§7Players: §a" + mc.getCurrentServerData().populationInfo,
+                    "§7outBound: §a" + PacketUtils.avgOutBound,
                     6f,
                     56f,
                     0xffffff);

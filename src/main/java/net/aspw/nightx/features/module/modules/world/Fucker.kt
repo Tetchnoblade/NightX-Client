@@ -9,7 +9,7 @@ import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.combat.KillAura
-import net.aspw.nightx.features.module.modules.utility.AutoTool
+import net.aspw.nightx.features.module.modules.misc.AutoTool
 import net.aspw.nightx.utils.RotationUtils
 import net.aspw.nightx.utils.block.BlockUtils.getBlock
 import net.aspw.nightx.utils.block.BlockUtils.getBlockName

@@ -3,8 +3,8 @@ package net.aspw.nightx.visual.hud.element.elements
 import com.google.common.collect.Iterables
 import com.google.common.collect.Lists
 import net.aspw.nightx.NightX
+import net.aspw.nightx.features.module.modules.client.AntiNausea
 import net.aspw.nightx.features.module.modules.client.ColorMixer
-import net.aspw.nightx.features.module.modules.cool.AntiNausea
 import net.aspw.nightx.features.module.modules.render.Hud
 import net.aspw.nightx.utils.misc.StringUtils
 import net.aspw.nightx.utils.render.*

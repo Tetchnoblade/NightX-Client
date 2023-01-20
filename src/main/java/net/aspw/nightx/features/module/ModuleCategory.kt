@@ -10,8 +10,5 @@ enum class ModuleCategory(val displayName: String) {
     PLAYER("Player"),
     WORLD("World"),
     MISC("Misc"),
-    EXPLOIT("Exploit"),
-    UTILITY("Utility"),
-    GHOST("Ghost"),
-    COOL("Cool")
+    EXPLOIT("Exploit")
 }

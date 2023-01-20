@@ -1,10 +1,10 @@
 package net.aspw.nightx.injection.forge.mixins.render;
 
 import net.aspw.nightx.NightX;
+import net.aspw.nightx.features.module.modules.client.Chams;
 import net.aspw.nightx.features.module.modules.client.ColorMixer;
 import net.aspw.nightx.features.module.modules.client.SilentView;
-import net.aspw.nightx.features.module.modules.cool.Chams;
-import net.aspw.nightx.features.module.modules.cool.TwoDTags;
+import net.aspw.nightx.features.module.modules.client.TwoDTags;
 import net.aspw.nightx.features.module.modules.render.NameTags;
 import net.aspw.nightx.features.module.modules.render.NoRender;
 import net.aspw.nightx.features.module.modules.render.PlayerEdit;

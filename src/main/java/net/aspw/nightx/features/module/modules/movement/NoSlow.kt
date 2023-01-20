@@ -157,8 +157,7 @@ class NoSlow : Module() {
         if (modeValue.get().equals(
                 "blink",
                 true
-            ) && !(killAura.state && !NightX.moduleManager[KillAura::class.java]!!.autoBlockModeValue.get()
-                .equals("None")) && mc.thePlayer.itemInUse != null && mc.thePlayer.itemInUse.item != null
+            ) && !(killAura.state && killAura.blockingStatus) && mc.thePlayer.itemInUse != null && mc.thePlayer.itemInUse.item != null
         ) {
             val item = mc.thePlayer.itemInUse.item
             if (mc.thePlayer.isUsingItem && (item is ItemFood || item is ItemBucketMilk || item is ItemPotion) && (!ciucValue.get() || mc.thePlayer.itemInUseCount >= 1)) {
@@ -224,10 +223,9 @@ class NoSlow : Module() {
         val killAura = NightX.moduleManager[KillAura::class.java]!!
 
         when (modeValue.get().lowercase(Locale.getDefault())) {
-            "aac5" -> if (event.eventState == EventState.POST && (mc.thePlayer.isUsingItem || mc.thePlayer.isBlocking || !killAura.autoBlockModeValue.get()
-                    .equals("None") && killAura.target != null)
+            "aac5" -> if (event.eventState == EventState.POST && (mc.thePlayer.isUsingItem || mc.thePlayer.isBlocking || killAura.blockingStatus)
             ) {
-                mc.netHandler.addToSendQueue(
+                PacketUtils.sendPacketNoEvent(
                     C08PacketPlayerBlockPlacement(
                         BlockPos(-1, -1, -1),
                         255,
@@ -239,7 +237,7 @@ class NoSlow : Module() {
                 )
             }
 
-            "watchdog" -> if (testValue.get() && (!killAura.state || killAura.target == null)
+            "watchdog" -> if (testValue.get() && (!killAura.state || !killAura.blockingStatus)
                 && event.eventState == EventState.PRE
                 && mc.thePlayer.itemInUse != null && mc.thePlayer.itemInUse.item != null
             ) {
@@ -288,7 +286,7 @@ class NoSlow : Module() {
             }
 
             else -> {
-                if (!mc.thePlayer.isBlocking && killAura.target == null)
+                if (!mc.thePlayer.isBlocking && !killAura.blockingStatus)
                     return
                 when (modeValue.get().lowercase(Locale.getDefault())) {
                     "aac" -> {

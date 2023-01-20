@@ -2,8 +2,8 @@ package net.aspw.nightx.injection.forge.mixins.item;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.features.module.modules.client.Animations;
+import net.aspw.nightx.features.module.modules.client.AntiNausea;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
-import net.aspw.nightx.features.module.modules.cool.AntiNausea;
 import net.aspw.nightx.utils.timer.MSTimer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -313,11 +313,11 @@ public abstract class MixinItemRenderer {
             if (this.itemToRender.getItem() instanceof ItemMap) {
                 this.renderItemMap(abstractclientplayer, f2, f, f1);
             } else if (abstractclientplayer.getItemInUseCount() > 0
-                    || (itemToRender.getItem() instanceof ItemSword && (killAura.getTarget() != null || killAura.getFakeBlock()))
+                    || (itemToRender.getItem() instanceof ItemSword && (killAura.getBlockingStatus() || killAura.getFakeBlock()))
                     || (itemToRender.getItem() instanceof ItemSword && NightX.moduleManager.getModule(Animations.class).getState()
                     && Animations.fakeBlock.get() && killAura.getTarget() != null)) {
 
-                EnumAction enumaction = (killAura.getTarget() != null) ? EnumAction.BLOCK : this.itemToRender.getItemUseAction();
+                EnumAction enumaction = (killAura.getBlockingStatus()) ? EnumAction.BLOCK : this.itemToRender.getItemUseAction();
 
                 switch (enumaction) {
                     case NONE:

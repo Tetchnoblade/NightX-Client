@@ -2,7 +2,7 @@ package net.aspw.nightx.injection.forge.mixins.gui;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.event.Render2DEvent;
-import net.aspw.nightx.features.module.modules.cool.AntiNausea;
+import net.aspw.nightx.features.module.modules.client.AntiNausea;
 import net.aspw.nightx.features.module.modules.render.Crosshair;
 import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.utils.render.ColorUtils;

@@ -10,12 +10,6 @@ import java.awt.Color
 
 @ModuleInfo(name = "ColorMixer", category = ModuleCategory.CLIENT, canEnable = false)
 class ColorMixer : Module() {
-    /*
-    @Override
-    public void onInitialize() {
-        regenerateColors();
-    }
-    */
     val col1RedValue = ColorElement(1, ColorElement.Material.RED)
     val col1GreenValue = ColorElement(1, ColorElement.Material.GREEN)
     val blendAmount: IntegerValue = object : IntegerValue("Mixer-Amount", 2, 2, 10) {
