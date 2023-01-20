@@ -159,7 +159,7 @@ class Text(
             "wdStatus" -> return if (PacketUtils.isWatchdogActive()) "Active" else "Inactive"
             "sessionTime" -> return SessionUtils.getFormatSessionTime()
             "worldTime" -> return SessionUtils.getFormatWorldTime()
-            else -> null // Null = don't replace
+            else -> null
         }
     }
 
