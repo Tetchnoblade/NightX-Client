@@ -1,7 +1,5 @@
 # NightX Client (LiquidBounce Custom Build)
 
-# EVERY BYPASSES ARE OUTDATED!
-
 If you have request and issue -> Join discord server to support! ↓
 >https://nightx.api-minecraft.net/s/rgul30dkqw
 
