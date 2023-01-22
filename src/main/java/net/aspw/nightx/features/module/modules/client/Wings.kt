@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.render
+package net.aspw.nightx.features.module.modules.client
 
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.Render3DEvent
@@ -8,9 +8,9 @@ import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.utils.RenderWings
 import net.aspw.nightx.value.BoolValue
 
-@ModuleInfo(name = "Wings", category = ModuleCategory.RENDER, array = false)
+@ModuleInfo(name = "Wings", category = ModuleCategory.CLIENT, array = false)
 class Wings : Module() {
-    private val onlyThirdPerson = BoolValue("OnlyThirdPerson", true)
+    private val onlyThirdPerson = BoolValue("Only-ThirdPerson", true)
 
     @EventTarget
     fun onRenderPlayer(event: Render3DEvent) {

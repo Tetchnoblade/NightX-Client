@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.render
+package net.aspw.nightx.features.module.modules.client
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.EventState
@@ -7,7 +7,6 @@ import net.aspw.nightx.event.MotionEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.features.module.modules.client.Hud
 import net.aspw.nightx.features.module.modules.combat.AntiBot
 import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.block.BlockAir
@@ -19,7 +18,7 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
 
-@ModuleInfo(name = "HackerDetector", spacedName = "Hacker Detector", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "HackerDetector", spacedName = "Hacker Detector", category = ModuleCategory.CLIENT)
 class HackerDetector : Module() {
     private val hackers = ArrayList<EntityPlayer>()
     @EventTarget

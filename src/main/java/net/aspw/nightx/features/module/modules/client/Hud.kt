@@ -16,7 +16,7 @@ import net.aspw.nightx.visual.hud.designer.GuiHudDesigner
 
 @ModuleInfo(name = "Hud", category = ModuleCategory.CLIENT, array = false)
 class Hud : Module() {
-    val nof5Crosshair = BoolValue("No-F5Crosshair", true)
+    val nof5Crosshair = BoolValue("No-ThirdPerson-Crosshair", true)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)
     val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F, { animHotbarValue.get() })
     val blackHotbarValue = BoolValue("Black-Hotbar", false)

@@ -23,9 +23,9 @@ class TargetESP : Module() {
     val radius = FloatValue("Radius", 1.2f, 0.1f, 4.0f, "m")
     private val colorType =
         ListValue("Color", arrayOf("Custom", "Rainbow", "Rainbow2", "Sky", "Fade", "Mixer"), "Custom")
-    private val redValue = IntegerValue("Red", 255, 0, 255)
-    private val greenValue = IntegerValue("Green", 100, 0, 255)
-    private val blueValue = IntegerValue("Blue", 255, 0, 255)
+    private val redValue = IntegerValue("Red", 0, 0, 255)
+    private val greenValue = IntegerValue("Green", 255, 0, 255)
+    private val blueValue = IntegerValue("Blue", 0, 0, 255)
     private val saturationValue = FloatValue("Saturation", 0.45F, 0F, 1F)
     private val brightnessValue = FloatValue("Brightness", 1F, 0F, 1F)
     private val mixerSecondsValue = IntegerValue("Mixer-Seconds", 2, 1, 10)

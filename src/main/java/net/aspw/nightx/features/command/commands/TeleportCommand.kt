@@ -29,7 +29,7 @@ class TeleportCommand : Command("tp", arrayOf("teleport")) {
                 if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
                     NightX.tipSoundManager.popSound.asyncPlay(90f)
                 }
-                PathUtils.findPath(targetPlayer.posX, targetPlayer.posY, targetPlayer.posZ, 4.0)
+                PathUtils.findPath(targetPlayer.posX, targetPlayer.posY, targetPlayer.posZ, 3.0)
                     .forEach(Consumer { pos: Vector3d ->
                         mc.netHandler
                             .addToSendQueue(C04PacketPlayerPosition(pos.getX(), pos.getY(), pos.getZ(), true))
@@ -59,7 +59,7 @@ class TeleportCommand : Command("tp", arrayOf("teleport")) {
                 if (NightX.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
                     NightX.tipSoundManager.popSound.asyncPlay(90f)
                 }
-                PathUtils.findPath(posX, posY, posZ, 4.0).forEach(Consumer { pos: Vector3d ->
+                PathUtils.findPath(posX, posY, posZ, 3.0).forEach(Consumer { pos: Vector3d ->
                     mc.netHandler
                         .addToSendQueue(C04PacketPlayerPosition(pos.getX(), pos.getY(), pos.getZ(), true))
                 })
