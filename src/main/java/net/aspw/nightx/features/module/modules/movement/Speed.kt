@@ -34,9 +34,13 @@ import net.aspw.nightx.value.ListValue
 import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.GuiIngameMenu
 import net.minecraft.client.settings.GameSettings
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 @ModuleInfo(name = "Speed", category = ModuleCategory.MOVEMENT)
 class Speed : Module() {
+    private var wasDown: Boolean = false
     val speedModes = arrayOf(
         NCPBHop(),
         NCPFHop(),
@@ -124,11 +128,73 @@ class Speed : Module() {
         }
     }
 
+    private fun getMoveYaw(): Float {
+        var moveYaw = mc.thePlayer!!.rotationYaw
+        if (mc.thePlayer!!.moveForward != 0F && mc.thePlayer!!.moveStrafing == 0F) {
+            moveYaw += if (mc.thePlayer!!.moveForward > 0) 0 else 180
+        } else if (mc.thePlayer!!.moveForward != 0F && mc.thePlayer!!.moveStrafing != 0F) {
+            if (mc.thePlayer!!.moveForward > 0) {
+                moveYaw += if (mc.thePlayer!!.moveStrafing > 0) -45 else 45
+            } else {
+                moveYaw -= if (mc.thePlayer!!.moveStrafing > 0) -45 else 45
+            }
+            moveYaw += if (mc.thePlayer!!.moveForward > 0) 0 else 180
+        } else if (mc.thePlayer!!.moveStrafing != 0F && mc.thePlayer!!.moveForward == 0F) {
+            moveYaw += if (mc.thePlayer!!.moveStrafing > 0) -90 else 90
+        }
+        return moveYaw
+    }
+
     @EventTarget
     fun onUpdate(event: UpdateEvent?) {
         if (mc.thePlayer.isSneaking) return
         val speedMode = mode
+
         speedMode?.onUpdate()
+
+        if (typeValue.get().equals("BlocksMC") || typeValue.get()
+                .equals("NCP") || modeName.equals("WatchdogCustom") || typeValue.get()
+                .equals("Verus") || typeValue.get().equals("Spartan") || typeValue.equals("Verus") || typeValue.get()
+                .equals("VanillaBhop") || typeValue.get().equals("Spectre")
+        ) {
+            if (mc.thePlayer!!.onGround && mc.gameSettings.keyBindJump.isKeyDown && (mc.thePlayer!!.movementInput.moveForward != 0F || mc.thePlayer!!.movementInput.moveStrafe != 0F) && !(mc.thePlayer!!.isInWater || mc.thePlayer!!.isInLava || mc.thePlayer!!.isOnLadder || mc.thePlayer!!.isInWeb)) {
+                if (mc.gameSettings.keyBindJump.isKeyDown) {
+                    mc.gameSettings.keyBindJump.pressed = false
+                    wasDown = true
+                }
+                val yaw = mc.thePlayer!!.rotationYaw
+                mc.thePlayer!!.rotationYaw = getMoveYaw()
+                mc.thePlayer!!.jump()
+                mc.thePlayer!!.rotationYaw = yaw
+                if (wasDown) {
+                    mc.gameSettings.keyBindJump.pressed = true
+                    wasDown = false
+                }
+            }
+        }
+    }
+
+    @EventTarget
+    fun onStrafe(event: StrafeEvent) {
+        val shotSpeed =
+            sqrt((mc.thePlayer!!.motionX * mc.thePlayer!!.motionX) + (mc.thePlayer!!.motionZ * mc.thePlayer!!.motionZ))
+        val speed = (shotSpeed * 1)
+        val motionX = (mc.thePlayer!!.motionX * (1 - 1))
+        val motionZ = (mc.thePlayer!!.motionZ * (1 - 1))
+        if (typeValue.get().equals("BlocksMC") || typeValue.get()
+                .equals("NCP") || modeName.equals("WatchdogCustom") || typeValue.get()
+                .equals("Verus") || typeValue.get().equals("Spartan") || typeValue.equals("Verus") || typeValue.get()
+                .equals("VanillaBhop") || typeValue.get().equals("Spectre")
+        ) {
+            if (!(mc.thePlayer!!.movementInput.moveForward != 0F || mc.thePlayer!!.movementInput.moveStrafe != 0F)) {
+                return
+            }
+            if (!mc.thePlayer!!.onGround) {
+                val yaw = getMoveYaw()
+                mc.thePlayer!!.motionX = (((-sin(Math.toRadians(yaw.toDouble())) * speed) + motionX))
+                mc.thePlayer!!.motionZ = (((cos(Math.toRadians(yaw.toDouble())) * speed) + motionZ))
+            }
+        }
     }
 
     val ncpModeValue: ListValue = object : ListValue(
@@ -227,6 +293,7 @@ class Speed : Module() {
     }
 
     override fun onEnable() {
+        wasDown = false
         if (mc.thePlayer == null) return
         mc.timer.timerSpeed = 1f
         val speedMode = mode

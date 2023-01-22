@@ -12,6 +12,7 @@ import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.value.ListValue
+import net.minecraft.item.ItemSword
 
 @ModuleInfo(name = "Animations", category = ModuleCategory.CLIENT, array = false)
 class Animations : Module() {
@@ -21,8 +22,9 @@ class Animations : Module() {
 
     @EventTarget
     fun onMotion(event: MotionEvent) {
+        val item = mc.thePlayer.itemInUse.item
         val killAura = NightX.moduleManager.getModule(KillAura::class.java)
-        if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && onlyBlockingValue.get() && mc.thePlayer.isBlocking || event.eventState === EventState.POST && onlyBlockingValue.get() && mc.thePlayer.isSwingInProgress && killAura?.target != null) {
+        if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && onlyBlockingValue.get() && mc.thePlayer.isBlocking || event.eventState === EventState.POST && item is ItemSword && onlyBlockingValue.get() && mc.thePlayer.isSwingInProgress && killAura?.target != null) {
             mc.thePlayer.renderArmPitch = handPos.get() + mc.thePlayer.rotationPitch
         }
 
@@ -42,7 +44,6 @@ class Animations : Module() {
                 "SlideFull",
                 "SlidePut",
                 "Push",
-                "Dash",
                 "Swing",
                 "SwingFull",
                 "Swank",
@@ -129,7 +130,7 @@ class Animations : Module() {
                 .equals("swang", ignoreCase = true) ||
                     Sword.get().equals("astolfo", ignoreCase = true) ||
                     Sword.get().equals("swaing", ignoreCase = true) || Sword.get()
-                .equals("dash", ignoreCase = true) || Sword.get().equals("smart", ignoreCase = true) || Sword.get()
+                .equals("smart", ignoreCase = true) || Sword.get()
                 .equals("moon", ignoreCase = true) || Sword.get().equals("dortware1", ignoreCase = true) || Sword.get()
                 .equals("dortware2", ignoreCase = true)
         }

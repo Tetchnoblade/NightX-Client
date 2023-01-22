@@ -219,7 +219,6 @@ class NoSlow : Module() {
         if (!MovementUtils.isMoving() && !modeValue.get().equals("blink", true))
             return
 
-        val heldItem = mc.thePlayer.heldItem
         val killAura = NightX.moduleManager[KillAura::class.java]!!
 
         when (modeValue.get().lowercase(Locale.getDefault())) {

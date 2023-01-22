@@ -515,15 +515,6 @@ public abstract class MixinItemRenderer {
                                     doBlockTransformations();
                                     break;
                                 }
-                                case "Dash": {
-                                    this.transformFirstPersonItem(f / Animations.Equip.getValue(), 0.0F);
-                                    GL11.glTranslated(-0.05D, 0.0D, -0.02D);
-                                    float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
-                                    GL11.glRotated(-var9 * 60.0F / 2.0F, -var9 / 2.0F, -0.0F, 9.0F);
-                                    GL11.glRotated(-var9 * 53.0F, 1.0F, var9 / 2.0F, -0.0F);
-                                    this.func_178103_d(0.2F);
-                                    break;
-                                }
                                 case "Ninja": {
                                     float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
                                     GL11.glTranslated(0.0D, 0.0D, 0.0D);
