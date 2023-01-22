@@ -80,9 +80,9 @@ public class OutlineUtils {
         final Framebuffer fbo = Minecraft.getMinecraft().getFramebuffer();
 
         // Check if FBO isn't null
-        if(fbo != null) {
+        if (fbo != null) {
             // Checks if screen has been resized or new FBO has been created
-            if(fbo.depthBuffer > -1) {
+            if (fbo.depthBuffer > -1) {
                 // Sets up the FBO with depth and stencil extensions (24/8 bit)
                 setupFBO(fbo);
                 // Reset the ID to prevent multiple FBO's

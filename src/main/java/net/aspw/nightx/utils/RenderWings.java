@@ -7,10 +7,10 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 public class RenderWings extends ModelBase {
-    private ResourceLocation location;
-    private ModelRenderer wing;
-    private ModelRenderer wingTip;
-    private boolean playerUsesFullHeight;
+    private final ResourceLocation location;
+    private final ModelRenderer wing;
+    private final ModelRenderer wingTip;
+    private final boolean playerUsesFullHeight;
 
     public RenderWings() {
         this.location = new ResourceLocation("client/wing.png");
@@ -31,6 +31,7 @@ public class RenderWings extends ModelBase {
         this.wingTip.addBox("skin", -10.0F, 0.0F, 0.5F, 10, 0, 10);
         this.wing.addChild(this.wingTip);
     }
+
     public void renderWings(float partialTicks) {
         boolean per = Minecraft.getMinecraft().gameSettings.thirdPersonView == 0;
         double scale = 100 / 100.0D;
@@ -38,10 +39,10 @@ public class RenderWings extends ModelBase {
         GL11.glPushMatrix();
         GL11.glScaled(-scale, -scale, scale);
         GL11.glRotated(180.0D + rotate, 0.0D, 1.0D, 0.0D);
-        GL11.glTranslated((double) 0.0, (double) ((-(this.playerUsesFullHeight ? 1.45 : 1.25)) / scale), (double) 0.0);
+        GL11.glTranslated(0.0, (-(this.playerUsesFullHeight ? 1.45 : 1.25)) / scale, 0.0);
         GL11.glTranslated(0.0D, 0.0D, 0.2D / scale);
         if (Minecraft.getMinecraft().thePlayer.isSneaking()) {
-            GL11.glTranslated((double) 0.0, (double) (0.125 / scale), (double) 0.0);
+            GL11.glTranslated(0.0, 0.125 / scale, 0.0);
         }
         GL11.glColor3f(0.9F, 0.9F, 0.9F);
 

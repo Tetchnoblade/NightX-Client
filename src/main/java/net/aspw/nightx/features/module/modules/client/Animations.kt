@@ -12,7 +12,6 @@ import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import net.aspw.nightx.value.IntegerValue
 import net.aspw.nightx.value.ListValue
-import net.minecraft.item.ItemSword
 
 @ModuleInfo(name = "Animations", category = ModuleCategory.CLIENT, array = false)
 class Animations : Module() {
@@ -22,9 +21,8 @@ class Animations : Module() {
 
     @EventTarget
     fun onMotion(event: MotionEvent) {
-        val item = mc.thePlayer.itemInUse.item
         val killAura = NightX.moduleManager.getModule(KillAura::class.java)
-        if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && onlyBlockingValue.get() && mc.thePlayer.isBlocking || event.eventState === EventState.POST && item is ItemSword && onlyBlockingValue.get() && mc.thePlayer.isSwingInProgress && killAura?.target != null) {
+        if (event.eventState === EventState.POST && mc.thePlayer.isSwingInProgress && onlyBlockingValue.get() && mc.thePlayer.isBlocking || event.eventState === EventState.POST && onlyBlockingValue.get() && mc.thePlayer.isSwingInProgress && killAura?.target != null) {
             mc.thePlayer.renderArmPitch = handPos.get() + mc.thePlayer.rotationPitch
         }
 

@@ -159,7 +159,7 @@ object SettingsUtils {
 
                 if (binds)
                     stringBuilder.append("${it.name} bind ${Keyboard.getKeyName(it.keyBind)}").append("\n")
-        }
+            }
 
         return stringBuilder.toString()
     }

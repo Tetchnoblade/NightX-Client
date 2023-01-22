@@ -26,20 +26,17 @@ public class ViaForge {
     public final static int SHARED_VERSION = 47;
 
     private static final ViaForge instance = new ViaForge();
+    private final Logger jLogger = new JLoggerToLog4j(LogManager.getLogger("ViaMCP"));
+    private final CompletableFuture<Void> initFuture = new CompletableFuture<>();
+    private ExecutorService asyncExecutor;
+    private EventLoop eventLoop;
+    private File file;
+    private int version;
+    private String lastServer;
 
     public static ViaForge getInstance() {
         return instance;
     }
-
-    private final Logger jLogger = new JLoggerToLog4j(LogManager.getLogger("ViaMCP"));
-    private final CompletableFuture<Void> initFuture = new CompletableFuture<>();
-
-    private ExecutorService asyncExecutor;
-    private EventLoop eventLoop;
-
-    private File file;
-    private int version;
-    private String lastServer;
 
     public void start() {
         ThreadFactory factory = new ThreadFactoryBuilder().setDaemon(true).setNameFormat("ViaMCP-%d").build();
@@ -90,8 +87,16 @@ public class ViaForge {
         return file;
     }
 
+    public void setFile(File file) {
+        this.file = file;
+    }
+
     public String getLastServer() {
         return lastServer;
+    }
+
+    public void setLastServer(String lastServer) {
+        this.lastServer = lastServer;
     }
 
     public int getVersion() {
@@ -100,13 +105,5 @@ public class ViaForge {
 
     public void setVersion(int version) {
         this.version = version;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    public void setLastServer(String lastServer) {
-        this.lastServer = lastServer;
     }
 }

@@ -14,7 +14,7 @@ public class RewindLoader implements ViaRewindPlatform {
         conf.reloadConfig();
         this.init(conf);
     }
-    
+
     @Override
     public Logger getLogger() {
         return Via.getPlatform().getLogger();

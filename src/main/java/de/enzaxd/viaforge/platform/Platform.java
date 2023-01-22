@@ -54,7 +54,7 @@ public class Platform implements ViaPlatform<UUID> {
 
     @Override
     public String getPlatformVersion() {
-        return ViaForge.SHARED_VERSION+"";
+        return ViaForge.SHARED_VERSION + "";
     }
 
     @Override
@@ -88,8 +88,8 @@ public class Platform implements ViaPlatform<UUID> {
 
     @Override
     public PlatformTask runRepeatingSync(Runnable runnable, long ticks) {
-         return new FutureTaskId(ViaForge.getInstance().getEventLoop().scheduleAtFixedRate(() -> runSync(runnable),
-                 0, ticks * 50, TimeUnit.MILLISECONDS).addListener(errorLogger()));
+        return new FutureTaskId(ViaForge.getInstance().getEventLoop().scheduleAtFixedRate(() -> runSync(runnable),
+                0, ticks * 50, TimeUnit.MILLISECONDS).addListener(errorLogger()));
     }
 
     private <T extends Future<?>> GenericFutureListener<T> errorLogger() {
