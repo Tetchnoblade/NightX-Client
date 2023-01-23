@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement.speeds.blocksmc;
+package net.aspw.nightx.features.module.modules.movement.speeds.blocksmc
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.JumpEvent
@@ -15,7 +15,7 @@ class BlocksMC : SpeedMode("BlocksMC") {
     override fun onJump(event: JumpEvent) {
         if (mc.thePlayer != null && isMoving())
             mc.timer.timerSpeed = 1.06f
-            event.cancelEvent()
+        event.cancelEvent()
     }
 
     override fun onUpdate() {}

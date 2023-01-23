@@ -1,4 +1,3 @@
-
 package net.aspw.nightx.visual.client.altmanager
 
 import com.thealtening.AltService

@@ -400,32 +400,48 @@ class Step : Module() {
                         superHeight > 2.0 -> {
                             val stpPacket = arrayOf(0.5, 1.0, 1.5, 2.0)
                             stpPacket.forEach {
-                                mc.thePlayer.sendQueue.addToSendQueue(C03PacketPlayer.C04PacketPlayerPosition(stepX,
-                                    stepY + it, stepZ, true))
+                                mc.thePlayer.sendQueue.addToSendQueue(
+                                    C03PacketPlayer.C04PacketPlayerPosition(
+                                        stepX,
+                                        stepY + it, stepZ, true
+                                    )
+                                )
                             }
                         }
 
                         superHeight <= 2.0 && superHeight > 1.5 -> {
                             val stpPacket = arrayOf(0.5, 1.0, 1.5)
                             stpPacket.forEach {
-                                mc.thePlayer.sendQueue.addToSendQueue(C03PacketPlayer.C04PacketPlayerPosition(stepX,
-                                    stepY + it, stepZ, true))
+                                mc.thePlayer.sendQueue.addToSendQueue(
+                                    C03PacketPlayer.C04PacketPlayerPosition(
+                                        stepX,
+                                        stepY + it, stepZ, true
+                                    )
+                                )
                             }
                         }
 
                         superHeight <= 1.5 && superHeight > 1.0 -> {
                             val stpPacket = arrayOf(0.5, 1.0)
                             stpPacket.forEach {
-                                mc.thePlayer.sendQueue.addToSendQueue(C03PacketPlayer.C04PacketPlayerPosition(stepX,
-                                    stepY + it, stepZ, true))
+                                mc.thePlayer.sendQueue.addToSendQueue(
+                                    C03PacketPlayer.C04PacketPlayerPosition(
+                                        stepX,
+                                        stepY + it, stepZ, true
+                                    )
+                                )
                             }
                         }
 
                         superHeight <= 1.0 && superHeight > 0.6 -> {
                             val stpPacket = arrayOf(0.5)
                             stpPacket.forEach {
-                                mc.thePlayer.sendQueue.addToSendQueue(C03PacketPlayer.C04PacketPlayerPosition(stepX,
-                                    stepY + it, stepZ, true))
+                                mc.thePlayer.sendQueue.addToSendQueue(
+                                    C03PacketPlayer.C04PacketPlayerPosition(
+                                        stepX,
+                                        stepY + it, stepZ, true
+                                    )
+                                )
                             }
                         }
                     }

@@ -21,6 +21,7 @@ import net.minecraft.world.World
 @ModuleInfo(name = "HackerDetector", spacedName = "Hacker Detector", category = ModuleCategory.CLIENT)
 class HackerDetector : Module() {
     private val hackers = ArrayList<EntityPlayer>()
+
     @EventTarget
     fun onMotion(event: MotionEvent) {
         if (event.eventState !== EventState.PRE) return
@@ -169,6 +170,7 @@ class HackerDetector : Module() {
         }
         return false
     }
+
     init {
         state = true
     }

@@ -1,4 +1,3 @@
-
 package net.aspw.nightx.visual.client.altmanager.menus
 
 import me.liuli.elixir.account.MinecraftAccount

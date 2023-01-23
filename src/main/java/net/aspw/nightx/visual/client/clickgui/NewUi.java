@@ -25,10 +25,11 @@ public class NewUi extends GuiScreen {
 
     private static NewUi instance;
     public final List<CategoryElement> categoryElements = new ArrayList<>();
+    public int scroll = 0;
     private float startYAnim = height / 2F;
     private float endYAnim = height / 2F;
     private float fading = 0F;
-    public int scroll = 0;
+    private SearchElement searchElement;
 
     private NewUi() {
         for (ModuleCategory c : ModuleCategory.values())
@@ -43,8 +44,6 @@ public class NewUi extends GuiScreen {
     public static void resetInstance() {
         instance = new NewUi();
     }
-
-    private SearchElement searchElement;
 
     public void initGui() {
         Keyboard.enableRepeatEvents(true);
@@ -126,7 +125,7 @@ public class NewUi extends GuiScreen {
     }
 
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        if(keyCode == Keyboard.KEY_UP) {
+        if (keyCode == Keyboard.KEY_UP) {
             scroll = 1;
         } else if (keyCode == Keyboard.KEY_DOWN) {
             scroll = -1;
@@ -144,10 +143,10 @@ public class NewUi extends GuiScreen {
     }
 
     protected void mouseReleased(int mouseX, int mouseY, int state) {
-            for (CategoryElement ce : categoryElements) {
-                if (ce.getFocused())
-                    ce.handleMouseRelease(mouseX, mouseY, state, 230, 50, width - 260, height - 80);
-            }
+        for (CategoryElement ce : categoryElements) {
+            if (ce.getFocused())
+                ce.handleMouseRelease(mouseX, mouseY, state, 230, 50, width - 260, height - 80);
+        }
         super.mouseReleased(mouseX, mouseY, state);
     }
 

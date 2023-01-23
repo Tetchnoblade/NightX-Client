@@ -1,4 +1,3 @@
-
 package net.aspw.nightx.visual.client.altmanager.menus
 
 import com.thealtening.AltService.EnumAltService

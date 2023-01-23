@@ -1,4 +1,3 @@
-
 package net.aspw.nightx.visual.client.altmanager.menus
 
 import com.mojang.authlib.Agent.MINECRAFT

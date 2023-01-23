@@ -8,7 +8,6 @@ import net.aspw.nightx.features.module.ModuleInfo
 import net.aspw.nightx.features.module.modules.combat.AntiBot
 import net.aspw.nightx.utils.EntityUtils
 import net.aspw.nightx.utils.render.ColorUtils
-import net.aspw.nightx.utils.render.RenderUtils
 import net.aspw.nightx.utils.render.RenderUtils.*
 import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
@@ -245,7 +244,11 @@ class NameTags : Module() {
                     continue
 
                 mc.renderItem.zLevel = -147F
-                mc.renderItem.renderItemAndEffectIntoGUI(entity.getEquipmentInSlot(index), -50 + index * 20, if (potionValue.get() && foundPotion) -42 else -22)
+                mc.renderItem.renderItemAndEffectIntoGUI(
+                    entity.getEquipmentInSlot(index),
+                    -50 + index * 20,
+                    if (potionValue.get() && foundPotion) -42 else -22
+                )
             }
 
             enableAlpha()
@@ -259,8 +262,17 @@ class NameTags : Module() {
                 if (entity.getEquipmentInSlot(index) == null)
                     continue
 
-                mc.renderItem.renderItemOverlays(mc.fontRendererObj, entity.getEquipmentInSlot(index), -50 + index * 20, if (potionValue.get() && foundPotion) -42 else -22)
-                RenderUtils.drawExhiEnchants(entity.getEquipmentInSlot(index), -50f + index * 20f, if (potionValue.get() && foundPotion) -42f else -22f)
+                mc.renderItem.renderItemOverlays(
+                    mc.fontRendererObj,
+                    entity.getEquipmentInSlot(index),
+                    -50 + index * 20,
+                    if (potionValue.get() && foundPotion) -42 else -22
+                )
+                drawExhiEnchants(
+                    entity.getEquipmentInSlot(index),
+                    -50f + index * 20f,
+                    if (potionValue.get() && foundPotion) -42f else -22f
+                )
             }
 
 

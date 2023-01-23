@@ -22,8 +22,8 @@ public class VanillaBhop extends SpeedMode {
         }
         final Speed speed = NightX.moduleManager.getModule(Speed.class);
 
-        if (speed == null || eventMotion.getEventState() != EventState.PRE)
-            return;
+        if (speed == null || eventMotion.getEventState() != EventState.PRE) {
+        }
     }
 
     @Override

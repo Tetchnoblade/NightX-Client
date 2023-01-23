@@ -1,4 +1,3 @@
-
 package net.aspw.nightx.features.module.modules.world
 
 import net.aspw.nightx.NightX

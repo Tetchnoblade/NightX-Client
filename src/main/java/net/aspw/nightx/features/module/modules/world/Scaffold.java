@@ -11,7 +11,6 @@ import net.aspw.nightx.utils.*;
 import net.aspw.nightx.utils.block.BlockUtils;
 import net.aspw.nightx.utils.block.PlaceInfo;
 import net.aspw.nightx.utils.misc.RandomUtils;
-import net.aspw.nightx.utils.render.BlurUtils;
 import net.aspw.nightx.utils.render.RenderUtils;
 import net.aspw.nightx.utils.timer.MSTimer;
 import net.aspw.nightx.utils.timer.TickTimer;
@@ -203,9 +202,12 @@ public class Scaffold extends Module {
     private final IntegerValue blueValue = new IntegerValue("Blue", 255, 0, 255, () -> markValue.get());
     private final IntegerValue alphaValue = new IntegerValue("Alpha", 120, 0, 255, () -> markValue.get());
 
-    private final BoolValue blurValue = new BoolValue("Blur-Advanced", false, () -> counterDisplayValue.get().equalsIgnoreCase("advanced"));
-    private final FloatValue blurStrength = new FloatValue("Blur-Strength", 1F, 0F, 30F, "x", () -> counterDisplayValue.get().equalsIgnoreCase("advanced"));
-
+    // Delay
+    private final MSTimer delayTimer = new MSTimer();
+    private final MSTimer towerDelayTimer = new MSTimer();
+    private final MSTimer zitterTimer = new MSTimer();
+    // Mode stuff
+    private final TickTimer timer = new TickTimer();
     /**
      * MODULE
      */
@@ -227,27 +229,16 @@ public class Scaffold extends Module {
 
     // Zitter Smooth
     private boolean zitterDirection;
-
-    // Delay
-    private final MSTimer delayTimer = new MSTimer();
-    private final MSTimer towerDelayTimer = new MSTimer();
-    private final MSTimer zitterTimer = new MSTimer();
     private long delay;
-
     // Eagle
     private int placedBlocksWithoutEagle = 0;
     private boolean eagleSneaking;
-
     // Down
     private boolean shouldGoDown = false;
-
     // Render thingy
     private float progress = 0;
     private float spinYaw = 0F;
     private long lastMS = 0L;
-
-    // Mode stuff
-    private final TickTimer timer = new TickTimer();
     private double jumpGround = 0;
     private int verusState = 0;
     private boolean verusJumped = false;
@@ -570,7 +561,7 @@ public class Scaffold extends Module {
         // Sprint
         if (sprintModeValue.get().equalsIgnoreCase("silent")) {
             if (packet instanceof C0BPacketEntityAction &&
-            (((C0BPacketEntityAction) packet).getAction() == C0BPacketEntityAction.Action.STOP_SPRINTING || ((C0BPacketEntityAction) packet).getAction() == C0BPacketEntityAction.Action.START_SPRINTING))
+                    (((C0BPacketEntityAction) packet).getAction() == C0BPacketEntityAction.Action.STOP_SPRINTING || ((C0BPacketEntityAction) packet).getAction() == C0BPacketEntityAction.Action.START_SPRINTING))
                 event.cancelEvent();
         }
 
@@ -889,7 +880,6 @@ public class Scaffold extends Module {
             mc.getNetHandler().addToSendQueue(new C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem));
     }
 
-
     /**
      * Disable scaffold module
      */
@@ -969,12 +959,6 @@ public class Scaffold extends Module {
         }
         if (counterMode.equalsIgnoreCase("advanced")) {
             boolean canRenderStack = (slot >= 0 && slot < 9 && mc.thePlayer.inventory.mainInventory[slot] != null && mc.thePlayer.inventory.mainInventory[slot].getItem() != null && mc.thePlayer.inventory.mainInventory[slot].getItem() instanceof ItemBlock);
-            if (blurValue.get())
-                BlurUtils.blurArea(scaledResolution.getScaledWidth() / 2 - (infoWidth / 2) - 4, scaledResolution.getScaledHeight() / 2 - 39, scaledResolution.getScaledWidth() / 2 + (infoWidth / 2) + 4, scaledResolution.getScaledHeight() / 2 - (canRenderStack ? 5 : 26), blurStrength.get());
-
-            RenderUtils.drawRect(scaledResolution.getScaledWidth() / 2 - (infoWidth / 2) - 4, scaledResolution.getScaledHeight() / 2 - 40, scaledResolution.getScaledWidth() / 2 + (infoWidth / 2) + 4, scaledResolution.getScaledHeight() / 2 - 39, (getBlocksAmount() > 1 ? 0xFFFFFFFF : 0xFFFF1010));
-            RenderUtils.drawRect(scaledResolution.getScaledWidth() / 2 - (infoWidth / 2) - 4, scaledResolution.getScaledHeight() / 2 - 39, scaledResolution.getScaledWidth() / 2 + (infoWidth / 2) + 4, scaledResolution.getScaledHeight() / 2 - 26, 0xA0000000);
-
             if (canRenderStack) {
                 RenderUtils.drawRect(scaledResolution.getScaledWidth() / 2 - (infoWidth / 2) - 4, scaledResolution.getScaledHeight() / 2 - 26, scaledResolution.getScaledWidth() / 2 + (infoWidth / 2) + 4, scaledResolution.getScaledHeight() / 2 - 5, 0xA0000000);
                 GlStateManager.pushMatrix();
@@ -1211,4 +1195,6 @@ public class Scaffold extends Module {
 
         return amount;
     }
+
+
 }

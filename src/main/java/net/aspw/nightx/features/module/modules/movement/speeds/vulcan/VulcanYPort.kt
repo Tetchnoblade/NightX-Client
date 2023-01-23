@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement.speeds.vulcan;
+package net.aspw.nightx.features.module.modules.movement.speeds.vulcan
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.MotionEvent
@@ -37,12 +37,12 @@ class VulcanYPort : SpeedMode("VulcanYPort") {
             }
             mc.timer.timerSpeed = 1.2f
             wasTimer = true
-            if(getSpeed() < 0.48f) {
+            if (getSpeed() < 0.48f) {
                 strafe(0.48f)
-            }else{
-                strafe((getSpeed()*0.985).toFloat())
+            } else {
+                strafe((getSpeed() * 0.985).toFloat())
             }
-        }else if (!isMoving()) {
+        } else if (!isMoving()) {
             mc.timer.timerSpeed = 1.00f
             mc.thePlayer.motionX = 0.0
             mc.thePlayer.motionZ = 0.0

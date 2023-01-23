@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement.speeds.watchdog;
+package net.aspw.nightx.features.module.modules.movement.speeds.watchdog
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.JumpEvent

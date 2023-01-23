@@ -27,8 +27,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
     var lastXPos = 0F
 
-    companion object {
-    }
+    companion object;
 
     override fun initGui() {
         slideX = 0F
@@ -111,22 +110,22 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         var shouldAnimate = false
         var displayString: String? = null
         var moveX = 0F
-            for (icon in ImageButton.values()) {
-                if (isMouseHover(
-                        staticX + 40F * index,
-                        staticY,
-                        staticX + 40F * (index + 1),
-                        staticY + 20F,
-                        mouseX,
-                        mouseY
-                    )
-                ) {
-                    shouldAnimate = true
-                    displayString = icon.buttonName
-                    moveX = staticX + 40F * index
-                }
-                index++
+        for (icon in ImageButton.values()) {
+            if (isMouseHover(
+                    staticX + 40F * index,
+                    staticY,
+                    staticX + 40F * (index + 1),
+                    staticY + 20F,
+                    mouseX,
+                    mouseY
+                )
+            ) {
+                shouldAnimate = true
+                displayString = icon.buttonName
+                moveX = staticX + 40F * index
             }
+            index++
+        }
 
         if (displayString != null)
             Fonts.fontSFUI40.drawCenteredString(displayString, width / 2F, staticY + 30F, -1)
@@ -162,10 +161,10 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
         index = 0
         GlStateManager.disableAlpha()
-            for (i in ImageButton.values()) {
-                RenderUtils.drawImage2(i.texture, staticX + 40F * index + 11F, staticY + 1F, 18, 18)
-                index++
-            }
+        for (i in ImageButton.values()) {
+            RenderUtils.drawImage2(i.texture, staticX + 40F * index + 11F, staticY + 1F, 18, 18)
+            index++
+        }
         GlStateManager.enableAlpha()
     }
 
