@@ -1,4 +1,3 @@
-
 package net.aspw.nightx.visual.client.altmanager.menus
 
 import com.thealtening.AltService.EnumAltService
@@ -6,7 +5,7 @@ import me.liuli.elixir.account.CrackedAccount
 import me.liuli.elixir.account.MicrosoftAccount
 import me.liuli.elixir.account.MojangAccount
 import net.aspw.nightx.NightX
-import net.aspw.nightx.features.module.modules.render.Hud
+import net.aspw.nightx.features.module.modules.client.Hud
 import net.aspw.nightx.utils.ClientUtils
 import net.aspw.nightx.utils.TabUtils
 import net.aspw.nightx.utils.misc.MiscUtils

@@ -435,6 +435,7 @@ class KillAura : Module() {
                     }
                     event.cancelEvent()
                 }
+
                 "silent" -> {
                     update()
 
@@ -1013,7 +1014,8 @@ class KillAura : Module() {
             }
 
             if (raycastValue.get() && raycastedEntity is EntityLivingBase
-                && (!EntityUtils.isFriend(raycastedEntity)))
+                && (!EntityUtils.isFriend(raycastedEntity))
+            )
                 currentTarget = raycastedEntity
 
             hitable = if (maxTurnSpeed.get() > 0F) currentTarget == raycastedEntity else true

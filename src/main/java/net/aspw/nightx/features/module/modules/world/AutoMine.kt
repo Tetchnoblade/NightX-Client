@@ -17,6 +17,6 @@ class AutoMine : Module() {
     }
 
     override fun onDisable() {
-            mc.gameSettings.keyBindAttack.pressed = false
+        mc.gameSettings.keyBindAttack.pressed = false
     }
 }

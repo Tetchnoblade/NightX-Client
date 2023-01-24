@@ -18,49 +18,41 @@ import java.util.Locale;
 public class TTFFontRenderer {
 
     /**
-     * The font to be drawn.
-     */
-    private Font font;
-
-    /**
-     * If fractional metrics should be used in the font renderer.
-     */
-    private boolean fractionalMetrics = false;
-
-    /**
-     * All the character data information (regular).
-     */
-    private CharacterData[] regularData;
-
-    /**
-     * All the character data information (bold).
-     */
-    private CharacterData[] boldData;
-
-    /**
-     * All the character data information (italics).
-     */
-    private CharacterData[] italicsData;
-
-    /**
-     * All the color codes used in minecraft.
-     */
-    private int[] colorCodes = new int[32];
-
-    /**
      * The margin on each texture.
      */
     private static final int MARGIN = 4;
-
     /**
      * The character that invokes color in a string when rendered.
      */
     private static final char COLOR_INVOKER = '\247';
-
     /**
      * The random offset in obfuscated text.
      */
-    private static int RANDOM_OFFSET = 1;
+    private static final int RANDOM_OFFSET = 1;
+    /**
+     * The font to be drawn.
+     */
+    private final Font font;
+    /**
+     * If fractional metrics should be used in the font renderer.
+     */
+    private boolean fractionalMetrics = false;
+    /**
+     * All the character data information (regular).
+     */
+    private final CharacterData[] regularData;
+    /**
+     * All the character data information (bold).
+     */
+    private final CharacterData[] boldData;
+    /**
+     * All the character data information (italics).
+     */
+    private final CharacterData[] italicsData;
+    /**
+     * All the color codes used in minecraft.
+     */
+    private final int[] colorCodes = new int[32];
 
     public TTFFontRenderer(Font font) {
         this(font, 256);
@@ -188,15 +180,15 @@ public class TTFFontRenderer {
                 int pixel = pixels[y * image.getWidth() + x];
 
                 // Puts the data into the byte buffer.
-                buffer.put((byte)((pixel >> 16) & 0xFF));
-                buffer.put((byte)((pixel >> 8) & 0xFF));
-                buffer.put((byte)(pixel & 0xFF));
-                buffer.put((byte)((pixel >> 24) & 0xFF));
+                buffer.put((byte) ((pixel >> 16) & 0xFF));
+                buffer.put((byte) ((pixel >> 8) & 0xFF));
+                buffer.put((byte) (pixel & 0xFF));
+                buffer.put((byte) ((pixel >> 24) & 0xFF));
             }
         }
 
         // Flips the byte buffer, not sure why this is needed.
-        ((java.nio.Buffer)buffer).flip();
+        buffer.flip();
 
         // Binds the opengl texture by the texture id.
         GlStateManager.bindTexture(textureId);
@@ -284,10 +276,10 @@ public class TTFFontRenderer {
         // The multiplier.
         float multiplier = (shadow ? 4 : 1);
 
-        float a = (float)(color >> 24 & 255) / 255F;
-        float r = (float)(color >> 16 & 255) / 255F;
-        float g = (float)(color >> 8 & 255) / 255F;
-        float b = (float)(color & 255) / 255F;
+        float a = (float) (color >> 24 & 255) / 255F;
+        float r = (float) (color >> 16 & 255) / 255F;
+        float g = (float) (color >> 8 & 255) / 255F;
+        float b = (float) (color & 255) / 255F;
 
         GL11.glColor4f(r / multiplier, g / multiplier, b / multiplier, a);
 
@@ -359,7 +351,7 @@ public class TTFFontRenderer {
 
                 // Sets the character to a random char if obfuscated is enabled.
                 if (obfuscated)
-                    character = (char)(((int) character) + RANDOM_OFFSET);
+                    character = (char) (((int) character) + RANDOM_OFFSET);
 
                 // Draws the character.
                 drawChar(character, characterData, x, y);
@@ -528,7 +520,8 @@ public class TTFFontRenderer {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
         // Begins drawing the quad.
-        GL11.glBegin(GL11.GL_QUADS); {
+        GL11.glBegin(GL11.GL_QUADS);
+        {
             // Maps out where the texture should be drawn.
             GL11.glTexCoord2f(0, 0);
             GL11.glVertex2d(x, y);
@@ -564,7 +557,8 @@ public class TTFFontRenderer {
         GL11.glLineWidth(width);
 
         // Begins drawing the line.
-        GL11.glBegin(GL11.GL_LINES); {
+        GL11.glBegin(GL11.GL_LINES);
+        {
             GL11.glVertex2f(start.x, start.y);
             GL11.glVertex2f(end.x, end.y);
         }
@@ -635,7 +629,7 @@ public class TTFFontRenderer {
         /**
          * The id of the character texture.
          */
-        private int textureId;
+        private final int textureId;
 
         public CharacterData(char character, float width, float height, int textureId) {
             this.character = character;

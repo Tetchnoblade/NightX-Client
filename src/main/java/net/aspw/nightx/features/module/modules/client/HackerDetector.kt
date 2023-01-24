@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.render
+package net.aspw.nightx.features.module.modules.client
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.EventState
@@ -18,9 +18,10 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
 
-@ModuleInfo(name = "HackerDetector", spacedName = "Hacker Detector", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "HackerDetector", spacedName = "Hacker Detector", category = ModuleCategory.CLIENT)
 class HackerDetector : Module() {
     private val hackers = ArrayList<EntityPlayer>()
+
     @EventTarget
     fun onMotion(event: MotionEvent) {
         if (event.eventState !== EventState.PRE) return
@@ -169,6 +170,7 @@ class HackerDetector : Module() {
         }
         return false
     }
+
     init {
         state = true
     }

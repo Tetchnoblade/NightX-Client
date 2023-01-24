@@ -1,7 +1,7 @@
 package net.aspw.nightx.injection.forge.mixins.render;
 
 import net.aspw.nightx.NightX;
-import net.aspw.nightx.features.module.modules.render.Hud;
+import net.aspw.nightx.features.module.modules.client.Hud;
 import net.aspw.nightx.injection.forge.mixins.gui.MixinGuiContainer;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
 import org.spongepowered.asm.mixin.Mixin;

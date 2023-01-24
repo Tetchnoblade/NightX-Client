@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement.speeds.vulcan;
+package net.aspw.nightx.features.module.modules.movement.speeds.vulcan
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.MotionEvent

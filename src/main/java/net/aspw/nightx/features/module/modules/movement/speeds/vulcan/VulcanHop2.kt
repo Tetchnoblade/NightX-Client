@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.movement.speeds.vulcan;
+package net.aspw.nightx.features.module.modules.movement.speeds.vulcan
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.MotionEvent
@@ -24,7 +24,7 @@ class VulcanHop2 : SpeedMode("VulcanHop2") {
                 if (jumpTicks > 3)
                     mc.thePlayer.motionY = (mc.thePlayer.motionY - 0.08) * 0.98
 
-                strafe(getSpeed() * (1.01 - (Math.random() / 500)).toFloat() )
+                strafe(getSpeed() * (1.01 - (Math.random() / 500)).toFloat())
             }
         } else {
             mc.timer.timerSpeed = 1.00f

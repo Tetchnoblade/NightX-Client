@@ -4,7 +4,7 @@ import net.aspw.nightx.NightX
 import net.aspw.nightx.event.EventTarget
 import net.aspw.nightx.event.PacketEvent
 import net.aspw.nightx.features.command.Command
-import net.aspw.nightx.features.module.modules.render.Hud
+import net.aspw.nightx.features.module.modules.client.Hud
 import net.minecraft.network.play.client.C0BPacketEntityAction
 
 class RemoteViewCommand : Command("remoteview", arrayOf("rv")) {

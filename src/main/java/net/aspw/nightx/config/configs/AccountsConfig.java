@@ -1,4 +1,3 @@
-
 package net.aspw.nightx.config.configs;
 
 import com.google.gson.*;

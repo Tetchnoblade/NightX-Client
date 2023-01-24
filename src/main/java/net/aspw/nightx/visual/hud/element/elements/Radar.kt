@@ -67,7 +67,7 @@ class Radar(x: Double = 7.0, y: Double = 72.0) : Element(x, y) {
     private val borderBlueValue = IntegerValue("Border Blue", 0, 0, 255)
     private val borderAlphaValue = IntegerValue("Border Alpha", 150, 0, 255)
 
-    override fun drawElement(): Border? {
+    override fun drawElement(): Border {
         val renderViewEntity = mc.renderViewEntity
 
         val size = sizeValue.get()
@@ -96,39 +96,90 @@ class Radar(x: Double = 7.0, y: Double = 72.0) : Element(x, y) {
         if (exhiValue.get())
             RenderUtils.drawExhiRect(0F, if (lineValue.get()) -1F else 0F, size, size)
         else
-            RenderUtils.drawRect(0F, 0F, size, size, Color(backgroundRedValue.get(), backgroundGreenValue.get(),
-                backgroundBlueValue.get(), backgroundAlphaValue.get()).rgb)
+            RenderUtils.drawRect(
+                0F, 0F, size, size, Color(
+                    backgroundRedValue.get(), backgroundGreenValue.get(),
+                    backgroundBlueValue.get(), backgroundAlphaValue.get()
+                ).rgb
+            )
 
         if (lineValue.get()) {
             val barLength = size.toDouble()
 
-            for (i in 0..(gradientAmountValue.get()-1)) {
+            for (i in 0..(gradientAmountValue.get() - 1)) {
                 val barStart = i.toDouble() / gradientAmountValue.get().toDouble() * barLength
                 val barEnd = (i + 1).toDouble() / gradientAmountValue.get().toDouble() * barLength
-                RenderUtils.drawGradientSideways(barStart, -1.0, barEnd, 0.0,
+                RenderUtils.drawGradientSideways(
+                    barStart, -1.0, barEnd, 0.0,
                     when (rainbowType) {
-                        "CRainbow" -> RenderUtils.getRainbowOpaque(cRainbowSecValue.get(), saturationValue.get(), brightnessValue.get(), i * distanceValue.get())
-                        "Sky" -> RenderUtils.SkyRainbow(i * distanceValue.get(), saturationValue.get(), brightnessValue.get())
-                        "LiquidSlowly" -> ColorUtils.LiquidSlowly(System.nanoTime(), i * distanceValue.get(), saturationValue.get(), brightnessValue.get())!!.rgb
+                        "CRainbow" -> RenderUtils.getRainbowOpaque(
+                            cRainbowSecValue.get(),
+                            saturationValue.get(),
+                            brightnessValue.get(),
+                            i * distanceValue.get()
+                        )
+
+                        "Sky" -> RenderUtils.SkyRainbow(
+                            i * distanceValue.get(),
+                            saturationValue.get(),
+                            brightnessValue.get()
+                        )
+
+                        "LiquidSlowly" -> ColorUtils.LiquidSlowly(
+                            System.nanoTime(),
+                            i * distanceValue.get(),
+                            saturationValue.get(),
+                            brightnessValue.get()
+                        ).rgb
+
                         "Mixer" -> ColorMixer.getMixedColor(i * distanceValue.get(), cRainbowSecValue.get()).rgb
-                        "Fade" -> ColorUtils.fade(Color(redValue.get(), greenValue.get(), blueValue.get()), i * distanceValue.get(), 100).rgb
+                        "Fade" -> ColorUtils.fade(
+                            Color(redValue.get(), greenValue.get(), blueValue.get()),
+                            i * distanceValue.get(),
+                            100
+                        ).rgb
+
                         else -> cColor
                     },
                     when (rainbowType) {
-                        "CRainbow" -> RenderUtils.getRainbowOpaque(cRainbowSecValue.get(), saturationValue.get(), brightnessValue.get(), (i + 1) * distanceValue.get())
-                        "Sky" -> RenderUtils.SkyRainbow((i + 1) * distanceValue.get(), saturationValue.get(), brightnessValue.get())
-                        "LiquidSlowly" -> ColorUtils.LiquidSlowly(System.nanoTime(), (i + 1) * distanceValue.get(), saturationValue.get(), brightnessValue.get())!!.rgb
+                        "CRainbow" -> RenderUtils.getRainbowOpaque(
+                            cRainbowSecValue.get(),
+                            saturationValue.get(),
+                            brightnessValue.get(),
+                            (i + 1) * distanceValue.get()
+                        )
+
+                        "Sky" -> RenderUtils.SkyRainbow(
+                            (i + 1) * distanceValue.get(),
+                            saturationValue.get(),
+                            brightnessValue.get()
+                        )
+
+                        "LiquidSlowly" -> ColorUtils.LiquidSlowly(
+                            System.nanoTime(),
+                            (i + 1) * distanceValue.get(),
+                            saturationValue.get(),
+                            brightnessValue.get()
+                        ).rgb
+
                         "Mixer" -> ColorMixer.getMixedColor((i + 1) * distanceValue.get(), cRainbowSecValue.get()).rgb
-                        "Fade" -> ColorUtils.fade(Color(redValue.get(), greenValue.get(), blueValue.get()), (i + 1) * distanceValue.get(), 100).rgb
+                        "Fade" -> ColorUtils.fade(
+                            Color(redValue.get(), greenValue.get(), blueValue.get()),
+                            (i + 1) * distanceValue.get(),
+                            100
+                        ).rgb
+
                         else -> cColor
-                    })
+                    }
+                )
             }
         }
 
         // border section
         if (borderValue.get()) {
             val strength = borderStrengthValue.get() / 2F
-            val borderColor = Color(borderRedValue.get(), borderGreenValue.get(), borderBlueValue.get(), borderAlphaValue.get()).rgb
+            val borderColor =
+                Color(borderRedValue.get(), borderGreenValue.get(), borderBlueValue.get(), borderAlphaValue.get()).rgb
 
             // vertical
             RenderUtils.drawRect(halfSize - strength, 0F, halfSize + strength, size, borderColor)
@@ -175,8 +226,10 @@ class Radar(x: Double = 7.0, y: Double = 72.0) : Element(x, y) {
 
         for (entity in mc.theWorld.loadedEntityList) {
             if (entity != null && entity !== mc.thePlayer && EntityUtils.isSelected(entity, false)) {
-                val positionRelativeToPlayer = Vector2f((renderViewEntity.posX - entity.posX).toFloat(),
-                    (renderViewEntity.posZ - entity.posZ).toFloat())
+                val positionRelativeToPlayer = Vector2f(
+                    (renderViewEntity.posX - entity.posX).toFloat(),
+                    (renderViewEntity.posZ - entity.posZ).toFloat()
+                )
 
                 if (maxDisplayableDistanceSquare < positionRelativeToPlayer.lengthSquared())
                     continue
@@ -186,15 +239,21 @@ class Radar(x: Double = 7.0, y: Double = 72.0) : Element(x, y) {
                 if (transform) {
                     glPushMatrix()
 
-                    glTranslatef((positionRelativeToPlayer.x / viewDistance) * size,
-                        (positionRelativeToPlayer.y / viewDistance) * size, 0f)
+                    glTranslatef(
+                        (positionRelativeToPlayer.x / viewDistance) * size,
+                        (positionRelativeToPlayer.y / viewDistance) * size, 0f
+                    )
                     glRotatef(entity.rotationYaw, 0f, 0f, 1f)
                 }
 
-                worldRenderer.pos(((positionRelativeToPlayer.x / viewDistance) * size).toDouble(),
-                    ((positionRelativeToPlayer.y / viewDistance) * size).toDouble(), 0.0)
-                    .color(255.0f, 0.0f,
-                        255.0f, 1.0f).endVertex()
+                worldRenderer.pos(
+                    ((positionRelativeToPlayer.x / viewDistance) * size).toDouble(),
+                    ((positionRelativeToPlayer.y / viewDistance) * size).toDouble(), 0.0
+                )
+                    .color(
+                        255.0f, 0.0f,
+                        255.0f, 1.0f
+                    ).endVertex()
 
 
                 if (transform)

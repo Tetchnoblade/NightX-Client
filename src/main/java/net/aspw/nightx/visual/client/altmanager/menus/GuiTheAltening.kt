@@ -1,4 +1,3 @@
-
 package net.aspw.nightx.visual.client.altmanager.menus
 
 import com.mojang.authlib.Agent.MINECRAFT
@@ -9,7 +8,7 @@ import com.thealtening.AltService
 import com.thealtening.api.TheAltening
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.SessionEvent
-import net.aspw.nightx.features.module.modules.render.Hud
+import net.aspw.nightx.features.module.modules.client.Hud
 import net.aspw.nightx.utils.ClientUtils
 import net.aspw.nightx.utils.misc.MiscUtils
 import net.aspw.nightx.utils.render.RenderUtils

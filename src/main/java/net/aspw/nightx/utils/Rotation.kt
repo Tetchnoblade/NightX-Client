@@ -53,8 +53,10 @@ data class Rotation(var yaw: Float, var pitch: Float) {
 
     fun applyStrafeToPlayer(event: StrafeEvent) {
         val player = MinecraftInstance.mc.thePlayer
-        val dif = ((MathHelper.wrapAngleTo180_float(player.rotationYaw - this.yaw
-                    - 23.5f - 135)
+        val dif = ((MathHelper.wrapAngleTo180_float(
+            player.rotationYaw - this.yaw
+                    - 23.5f - 135
+        )
                 + 180) / 45).toInt()
 
         val yaw = this.yaw

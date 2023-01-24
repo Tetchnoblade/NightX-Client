@@ -2,7 +2,7 @@ package net.aspw.nightx.features.command.commands
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.features.command.Command
-import net.aspw.nightx.features.module.modules.render.Hud
+import net.aspw.nightx.features.module.modules.client.Hud
 import net.aspw.nightx.utils.SettingsUtils
 import net.aspw.nightx.utils.misc.StringUtils
 import net.aspw.nightx.visual.hud.element.elements.Notification

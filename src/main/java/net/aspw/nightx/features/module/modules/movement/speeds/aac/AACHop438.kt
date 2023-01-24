@@ -1,4 +1,3 @@
-
 package net.aspw.nightx.features.module.modules.movement.speeds.aac
 
 import net.aspw.nightx.event.MoveEvent

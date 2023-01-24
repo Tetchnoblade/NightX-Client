@@ -1,4 +1,3 @@
-
 package net.aspw.nightx.utils.login
 
 import com.google.gson.Gson

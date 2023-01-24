@@ -2,9 +2,9 @@ package net.aspw.nightx.injection.forge.mixins.gui;
 
 import net.aspw.nightx.NightX;
 import net.aspw.nightx.features.module.modules.client.Animations;
+import net.aspw.nightx.features.module.modules.client.Hud;
 import net.aspw.nightx.features.module.modules.combat.KillAura;
 import net.aspw.nightx.features.module.modules.player.InventoryManager;
-import net.aspw.nightx.features.module.modules.render.Hud;
 import net.aspw.nightx.features.module.modules.world.Stealer;
 import net.aspw.nightx.utils.render.EaseUtils;
 import net.aspw.nightx.utils.render.RenderUtils;

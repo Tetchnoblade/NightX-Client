@@ -49,14 +49,10 @@ public enum ProtocolCollection {
 
     R1_8(new ProtocolVersion(47, "1.8.x"));
 
-    private ProtocolVersion version;
+    private final ProtocolVersion version;
 
-    private ProtocolCollection(ProtocolVersion version) {
+    ProtocolCollection(ProtocolVersion version) {
         this.version = version;
-    }
-
-    public ProtocolVersion getVersion() {
-        return version;
     }
 
     public static ProtocolVersion getProtocolById(int id) {
@@ -64,5 +60,9 @@ public enum ProtocolCollection {
             if (coll.getVersion().getVersion() == id)
                 return coll.getVersion();
         return null;
+    }
+
+    public ProtocolVersion getVersion() {
+        return version;
     }
 }

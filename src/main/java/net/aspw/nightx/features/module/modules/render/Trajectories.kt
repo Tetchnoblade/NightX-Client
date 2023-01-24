@@ -100,9 +100,11 @@ class Trajectories : Module() {
         // Motions
         var motionX = (-MathHelper.sin(yaw / 180f * 3.1415927F) * MathHelper.cos(pitch / 180F * 3.1415927F) *
                 if (isBow) 1.0 else 0.4)
-        var motionY = -MathHelper.sin((pitch +
-                if (item is ItemPotion && ItemPotion.isSplash(mc.thePlayer.heldItem.itemDamage)) -20 else 0) /
-                180f * 3.1415927f) * if (isBow) 1.0 else 0.4
+        var motionY = -MathHelper.sin(
+            (pitch +
+                    if (item is ItemPotion && ItemPotion.isSplash(mc.thePlayer.heldItem.itemDamage)) -20 else 0) /
+                    180f * 3.1415927f
+        ) * if (isBow) 1.0 else 0.4
         var motionZ = (MathHelper.cos(yaw / 180f * 3.1415927F) * MathHelper.cos(pitch / 180F * 3.1415927F) *
                 if (isBow) 1.0 else 0.4)
         val distance = MathHelper.sqrt_double(motionX * motionX + motionY * motionY + motionZ * motionZ)
@@ -129,8 +131,10 @@ class Trajectories : Module() {
             var posAfter = Vec3(posX + motionX, posY + motionY, posZ + motionZ)
 
             // Get landing position
-            landingPosition = mc.theWorld.rayTraceBlocks(posBefore, posAfter, false,
-                true, false)
+            landingPosition = mc.theWorld.rayTraceBlocks(
+                posBefore, posAfter, false,
+                true, false
+            )
 
             // Set pos before and after
             posBefore = Vec3(posX, posY, posZ)
@@ -139,12 +143,15 @@ class Trajectories : Module() {
             // Check if arrow is landing
             if (landingPosition != null) {
                 hasLanded = true
-                posAfter = Vec3(landingPosition.hitVec.xCoord, landingPosition.hitVec.yCoord, landingPosition.hitVec.zCoord)
+                posAfter =
+                    Vec3(landingPosition.hitVec.xCoord, landingPosition.hitVec.yCoord, landingPosition.hitVec.zCoord)
             }
 
             // Set arrow box
-            val arrowBox = AxisAlignedBB(posX - size, posY - size, posZ - size, posX + size,
-                posY + size, posZ + size).addCoord(motionX, motionY, motionZ).expand(1.0, 1.0, 1.0)
+            val arrowBox = AxisAlignedBB(
+                posX - size, posY - size, posZ - size, posX + size,
+                posY + size, posZ + size
+            ).addCoord(motionX, motionY, motionZ).expand(1.0, 1.0, 1.0)
             val chunkMinX = MathHelper.floor_double((arrowBox.minX - 2.0) / 16.0)
             val chunkMaxX = MathHelper.floor_double((arrowBox.maxX + 2.0) / 16.0)
             val chunkMinZ = MathHelper.floor_double((arrowBox.minZ - 2.0) / 16.0)
@@ -228,8 +235,10 @@ class Trajectories : Module() {
         // End the rendering of the path
         Tessellator.getInstance().draw()
         GL11.glPushMatrix()
-        GL11.glTranslated(posX - renderManager.renderPosX, posY - renderManager.renderPosY,
-            posZ - renderManager.renderPosZ)
+        GL11.glTranslated(
+            posX - renderManager.renderPosX, posY - renderManager.renderPosY,
+            posZ - renderManager.renderPosZ
+        )
 
         if (landingPosition != null) {
             when (landingPosition.sideHit.axis.ordinal) {
@@ -251,6 +260,7 @@ class Trajectories : Module() {
         net.aspw.nightx.utils.render.RenderUtils.resetCaps()
         GL11.glColor4f(1F, 1F, 1F, 1F)
     }
+
     init {
         state = true
     }

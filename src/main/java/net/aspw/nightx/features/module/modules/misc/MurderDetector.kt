@@ -7,7 +7,7 @@ import net.aspw.nightx.event.WorldEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
-import net.aspw.nightx.features.module.modules.render.Hud
+import net.aspw.nightx.features.module.modules.client.Hud
 import net.aspw.nightx.utils.ClientUtils
 import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.client.Minecraft

@@ -91,7 +91,12 @@ class FloatElement(val savedValue: FloatValue) : ValueElement<Float>(savedValue)
             y + 10F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F,
             -1
         )
-        Fonts.fontSFUI40.drawString("-", x + width - 3F - valueDisplay, y + 10F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F, -1)
+        Fonts.fontSFUI40.drawString(
+            "-",
+            x + width - 3F - valueDisplay,
+            y + 10F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F,
+            -1
+        )
         Fonts.fontSFUI40.drawString("+", x + width - 17F, y + 10F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F, -1)
 
         return valueHeight

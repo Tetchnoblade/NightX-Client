@@ -20,16 +20,16 @@ import java.awt.Color
 
 @ModuleInfo(name = "TargetESP", spacedName = "Target ESP", category = ModuleCategory.RENDER, array = false)
 class TargetESP : Module() {
-    val radius = FloatValue("Radius", 1.2f, 0.1f, 4.0f, "m")
+    val radius = FloatValue("Radius", 0.8f, 0.1f, 4.0f, "m")
     private val colorType =
         ListValue("Color", arrayOf("Custom", "Rainbow", "Rainbow2", "Sky", "Fade", "Mixer"), "Custom")
-    private val redValue = IntegerValue("Red", 255, 0, 255)
-    private val greenValue = IntegerValue("Green", 100, 0, 255)
-    private val blueValue = IntegerValue("Blue", 255, 0, 255)
+    private val redValue = IntegerValue("Red", 50, 0, 255)
+    private val greenValue = IntegerValue("Green", 255, 0, 255)
+    private val blueValue = IntegerValue("Blue", 50, 0, 255)
     private val saturationValue = FloatValue("Saturation", 0.45F, 0F, 1F)
     private val brightnessValue = FloatValue("Brightness", 1F, 0F, 1F)
     private val mixerSecondsValue = IntegerValue("Mixer-Seconds", 2, 1, 10)
-    private val accuracyValue = IntegerValue("Accuracy", 0, 0, 59)
+    private val accuracyValue = IntegerValue("Accuracy", 30, 0, 59)
     private val thicknessValue = FloatValue("Thickness", 3F, 0.1F, 5F)
     private val outLine = BoolValue("Outline", true)
     val killAura = NightX.moduleManager.getModule(KillAura::class.java)

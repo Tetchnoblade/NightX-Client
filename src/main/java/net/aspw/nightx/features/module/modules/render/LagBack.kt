@@ -6,6 +6,7 @@ import net.aspw.nightx.event.PacketEvent
 import net.aspw.nightx.features.module.Module
 import net.aspw.nightx.features.module.ModuleCategory
 import net.aspw.nightx.features.module.ModuleInfo
+import net.aspw.nightx.features.module.modules.client.Hud
 import net.aspw.nightx.value.BoolValue
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 
@@ -14,13 +15,14 @@ class LagBack : Module() {
     private val longJumpValue = BoolValue("LongJump", value = true)
     private val speedValue = BoolValue("Speed", value = true)
     private val bowLongJumpValue = BoolValue("BowLongJump", value = true)
-    private val valueList = arrayOf(longJumpValue,speedValue,bowLongJumpValue)
+    private val valueList = arrayOf(longJumpValue, speedValue, bowLongJumpValue)
+
     @EventTarget
     fun onPacket(event: PacketEvent) {
-        if(event.packet is S08PacketPlayerPosLook) {
-            for(i in valueList) {
-                val module = NightX.moduleManager.getModule(i.name);
-                if(module!!.state) {
+        if (event.packet is S08PacketPlayerPosLook) {
+            for (i in valueList) {
+                val module = NightX.moduleManager.getModule(i.name)
+                if (module!!.state) {
                     module.state = false
                     NightX.hud.addNotification(
                         net.aspw.nightx.visual.hud.element.elements.Notification(
@@ -35,6 +37,7 @@ class LagBack : Module() {
             }
         }
     }
+
     init {
         state = true
     }

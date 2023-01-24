@@ -13,6 +13,7 @@ class Tweaks : Module() {
     private val speedValue = IntegerValue("Sneak-Speed", 0, 0, 20)
 
     private val tickTimer = TickTimer()
+
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         tickTimer.update()

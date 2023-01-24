@@ -1157,7 +1157,7 @@ public final class RenderUtils extends MinecraftInstance {
                 y += 4;
             }
             if (unb > 0) {
-                drawExhiOutlined(unb + "", drawExhiOutlined("U", x, y, 0.35F, darkBorder, -1, true), y, 0.35F, getBorderColor(unb),getMainColor(unb), true);
+                drawExhiOutlined(unb + "", drawExhiOutlined("U", x, y, 0.35F, darkBorder, -1, true), y, 0.35F, getBorderColor(unb), getMainColor(unb), true);
                 y += 4;
             }
             if (thorn > 0) {
@@ -1394,6 +1394,7 @@ public final class RenderUtils extends MinecraftInstance {
         final int factor = scaledResolution.getScaleFactor();
         glScissor((int) (x * factor), (int) ((scaledResolution.getScaledHeight() - y2) * factor), (int) ((x2 - x) * factor), (int) ((y2 - y) * factor));
     }
+
     public static void resetCaps() {
         glCapMap.forEach(RenderUtils::setGlState);
     }

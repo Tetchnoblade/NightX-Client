@@ -1,4 +1,4 @@
-package net.aspw.nightx.features.module.modules.render
+package net.aspw.nightx.features.module.modules.client
 
 import net.aspw.nightx.NightX
 import net.aspw.nightx.event.EventTarget
@@ -12,10 +12,10 @@ import net.aspw.nightx.visual.hud.element.elements.Notification
 import net.minecraft.network.play.server.S2CPacketSpawnGlobalEntity
 import kotlin.math.roundToInt
 
-@ModuleInfo(name = "ThunderNotifier", spacedName = "Thunder Notifier", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "ThunderNotifier", spacedName = "Thunder Notifier", category = ModuleCategory.CLIENT)
 class ThunderNotifier : Module() {
-    val chatValue = BoolValue("Chat", true)
-    val notifValue = BoolValue("Notification", false)
+    private val chatValue = BoolValue("Chat", true)
+    private val notifyValue = BoolValue("Notification", false)
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
@@ -28,7 +28,7 @@ class ThunderNotifier : Module() {
 
             if (chatValue.get())
                 ClientUtils.displayChatMessage(NightX.CLIENT_CHAT + "§fDetected thunder at [§7X: $x, Y: $y, Z: $z§f]")
-            if (notifValue.get())
+            if (notifyValue.get())
                 NightX.hud.addNotification(
                     Notification(
                         "Detected thunder at [X: $x, Y: $y, Z: $z]",

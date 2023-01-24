@@ -18,6 +18,7 @@ import net.aspw.nightx.value.ListValue
 import net.minecraft.entity.Entity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.MathHelper
+import java.util.*
 
 @ModuleInfo(name = "TargetStrafe", spacedName = "Target Strafe", category = ModuleCategory.PLAYER)
 class TargetStrafe : Module() {
@@ -101,7 +102,7 @@ class TargetStrafe : Module() {
 
 
     val keyMode: Boolean
-        get() = when (modeValue.get().toLowerCase()) {
+        get() = when (modeValue.get().lowercase(Locale.getDefault())) {
             "jump" -> mc.gameSettings.keyBindJump.isKeyDown
             "none" -> mc.thePlayer.movementInput.moveStrafe != 0f || mc.thePlayer.movementInput.moveForward != 0f
             else -> false
