@@ -48,6 +48,7 @@ class Animations : Module() {
                 "Swang",
                 "Swaing",
                 "Stella",
+                "Edit",
                 "Smart",
                 "Sloth",
                 "Autumn",
@@ -130,6 +131,7 @@ class Animations : Module() {
                     Sword.get().equals("swaing", ignoreCase = true) || Sword.get()
                 .equals("smart", ignoreCase = true) || Sword.get()
                 .equals("moon", ignoreCase = true) || Sword.get().equals("dortware1", ignoreCase = true) || Sword.get()
+                .equals("edit", ignoreCase = true) || Sword.get()
                 .equals("dortware2", ignoreCase = true)
         }
 
