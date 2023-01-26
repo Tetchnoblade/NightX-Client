@@ -61,6 +61,7 @@ class Flight : Module() {
             "Exploit",
             "Zoom",
             "Zonecraft",
+            "PurplePrison",
             "BlockDrop",
             "Cubecraft",
             "TeleportRewinside",
@@ -1482,6 +1483,20 @@ class Flight : Module() {
             }
             if (ticks == 0) {
                 mc.thePlayer.motionY = -0.07
+            }
+            ticks++
+        }
+        if (event.eventState == EventState.PRE && !mc.thePlayer.onGround && modeValue.get()
+                .equals("purpleprison", ignoreCase = true)
+        ) {
+            mc.timer.timerSpeed = 1f
+            mc.thePlayer.motionY = -if (ticks % 2 == 0) {
+                0.17
+            } else {
+                0.10
+            }
+            if (ticks == 0) {
+                mc.thePlayer.motionY = -0.16
             }
             ticks++
         }
