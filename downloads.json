@@ -63,7 +63,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15553329,
-        "download_count": 1208,
+        "download_count": 1241,
         "created_at": "2023-01-19T14:07:00Z",
         "updated_at": "2023-01-19T14:07:05Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B33/nightx-release-b33.jar"
@@ -74,8 +74,8 @@
     "body": "- Added Protocol 1.19.1, 1.19.2, 1.19.3\r\n- Added GuiIngame more information\r\n- Added Animations Hand-Pos option\r\n- Added KillAura UnBlock-Exploit option\r\n- Added Speed mode WatchdogNew (faster than vanilla)\r\n- Added BanNotifier\r\n- Removed AntiTabComplete\r\n- Fixed KillAura AutoBlock fps drop\r\n- Improved Performance\r\nUpdated Configs\r\nhttps://nightx.api-minecraft.net/s/zf45j6uzog",
     "reactions": {
       "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/89550718/reactions",
-      "total_count": 6,
-      "+1": 6,
+      "total_count": 7,
+      "+1": 7,
       "-1": 0,
       "laugh": 0,
       "hooray": 0,
@@ -457,7 +457,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 18176116,
-        "download_count": 327,
+        "download_count": 328,
         "created_at": "2022-12-24T14:29:13Z",
         "updated_at": "2022-12-24T14:29:19Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B28/nightx-release-b28.jar"
