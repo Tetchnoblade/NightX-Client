@@ -1,4 +1,4 @@
-package net.aspw.nightx.injection.forge.mixins.patcher.performance;
+package net.aspw.nightx.injection.forge.mixins.render;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

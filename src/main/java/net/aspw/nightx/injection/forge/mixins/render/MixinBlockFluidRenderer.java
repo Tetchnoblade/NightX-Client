@@ -1,4 +1,4 @@
-package net.aspw.nightx.injection.forge.mixins.patcher.bugfixes;
+package net.aspw.nightx.injection.forge.mixins.render;
 
 import net.minecraft.client.renderer.BlockFluidRenderer;
 import org.spongepowered.asm.mixin.Mixin;

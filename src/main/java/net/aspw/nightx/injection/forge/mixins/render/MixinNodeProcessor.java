@@ -1,4 +1,4 @@
-package net.aspw.nightx.injection.forge.mixins.patcher.performance;
+package net.aspw.nightx.injection.forge.mixins.render;
 
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.pathfinder.NodeProcessor;
