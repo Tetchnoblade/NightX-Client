@@ -9,6 +9,7 @@ import net.aspw.nightx.features.module.ModuleManager
 import net.aspw.nightx.features.special.ClientSpoof
 import net.aspw.nightx.features.special.MacroManager
 import net.aspw.nightx.features.special.ModItems
+import net.aspw.nightx.features.special.StackItems
 import net.aspw.nightx.features.special.script.ScriptManager
 import net.aspw.nightx.utils.*
 import net.aspw.nightx.utils.ClassUtils.hasForge
@@ -116,6 +117,7 @@ object NightX {
         // Creative items
         if (hasForge()) {
             ModItems()
+            StackItems()
         }
 
         // Set HUD

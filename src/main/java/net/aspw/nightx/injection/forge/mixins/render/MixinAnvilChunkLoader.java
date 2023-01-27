@@ -1,4 +1,4 @@
-package net.aspw.nightx.injection.forge.mixins.patcher.performance;
+package net.aspw.nightx.injection.forge.mixins.render;
 
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
