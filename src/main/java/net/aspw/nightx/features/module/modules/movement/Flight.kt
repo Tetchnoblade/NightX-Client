@@ -46,6 +46,7 @@ class Flight : Module() {
         "Mode", arrayOf(
             "Motion",
             "Creative",
+            "Vanilla",
             "Pearl",
             "Packet",
             "Desync",
@@ -658,6 +659,9 @@ class Flight : Module() {
         if (!speed!!.state && !mode.uppercase(Locale.getDefault()).startsWith("NCP") && !mode.equals(
                 "float",
                 ignoreCase = true
+            ) && !mode.equals("vanilla", ignoreCase = true) && !mode.equals(
+                "creative",
+                ignoreCase = true
             ) && !mode.equals("veruslowhop", ignoreCase = true) && !mode.equals(
                 "aac1.9.10",
                 ignoreCase = true
@@ -685,7 +689,10 @@ class Flight : Module() {
             ) && !mode.equals("watchcat", ignoreCase = true) && !mode.equals(
                 "slime",
                 ignoreCase = true
-            ) && !mode.equals("jetpack", ignoreCase = true) && !mode.equals("clip", ignoreCase = true) && !mode.equals(
+            ) && !mode.equals("jetpack", ignoreCase = true) && !mode.equals(
+                "clip",
+                ignoreCase = true
+            ) && !mode.equals("purpleprison", ignoreCase = true) && !mode.equals(
                 "jump",
                 ignoreCase = true
             ) && !mode.equals("derp", ignoreCase = true) && !mode.equals("collide", ignoreCase = true)
@@ -696,6 +703,10 @@ class Flight : Module() {
             sendAAC5Packets()
         }
         mc.thePlayer.capabilities.isFlying = false
+        mc.thePlayer.capabilities.allowFlying = false
+        if (mc.thePlayer.capabilities.isCreativeMode) {
+            mc.thePlayer.capabilities.allowFlying = true
+        }
         mc.timer.timerSpeed = 1f
         mc.thePlayer.speedInAir = 0.02f
     }
@@ -725,6 +736,10 @@ class Flight : Module() {
                 }
                 MovementUtils.strafe(vanillaSpeed)
                 handleVanillaKickBypass()
+            }
+
+            "vanilla" -> {
+                mc.thePlayer.capabilities.allowFlying = true
             }
 
             "vulcan2" -> {

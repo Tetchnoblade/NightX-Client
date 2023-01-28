@@ -54,7 +54,6 @@ public class Scaffold extends Module {
             "Jump", "Motion", "StableMotion", "ConstantMotion", "MotionTP", "Packet", "Teleport", "AAC3.3.9", "AAC3.6.4", "Verus"
     }, "ConstantMotion", () -> towerEnabled.get());
     private final ListValue towerPlaceModeValue = new ListValue("Tower-PlaceTiming", new String[]{"Pre", "Post"}, "Post");
-    private final BoolValue stopWhenBlockAbove = new BoolValue("StopWhenBlockAbove", true, () -> towerEnabled.get());
     private final BoolValue onJumpValue = new BoolValue("OnJump", true, () -> towerEnabled.get());
     private final BoolValue noMoveOnlyValue = new BoolValue("NoMove", true, () -> towerEnabled.get());
     private final BoolValue noMoveFreezeValue = new BoolValue("NoMoveFreezePlayer", true, () -> towerEnabled.get() && noMoveOnlyValue.get());
@@ -431,7 +430,7 @@ public class Scaffold extends Module {
 
         if (autoDisableSpeedValue.get() && NightX.moduleManager.getModule(Speed.class).getState()) {
             NightX.moduleManager.getModule(Speed.class).setState(false);
-            NightX.hud.addNotification(new Notification("Speed is disabled.", Notification.Type.WARNING));
+            NightX.hud.addNotification(new Notification("Speed was disabled!", Notification.Type.WARNING));
         }
 
         if (towerActivation()) {
@@ -574,7 +573,6 @@ public class Scaffold extends Module {
     }
 
     @EventTarget
-    //took it from applyrotationstrafe XD. staticyaw comes from bestnub.
     public void onStrafe(final StrafeEvent event) {
         if (lookupRotation != null && rotationStrafeValue.get()) {
             final int dif = (int) ((MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationYaw - lookupRotation.getYaw() - 23.5F - 135) + 180) / 45);
@@ -754,7 +752,7 @@ public class Scaffold extends Module {
             if (InventoryUtils.findAutoBlockBlock() != -1 || isHeldItemBlock) {
                 launchY = (int) mc.thePlayer.posY;
 
-                if (towerModeValue.get().equalsIgnoreCase("verus") || !stopWhenBlockAbove.get() || BlockUtils.getBlock(new BlockPos(mc.thePlayer.posX,
+                if (towerModeValue.get().equalsIgnoreCase("verus") || BlockUtils.getBlock(new BlockPos(mc.thePlayer.posX,
                         mc.thePlayer.posY + 2, mc.thePlayer.posZ)) instanceof BlockAir) {
                     move(event);
                 }

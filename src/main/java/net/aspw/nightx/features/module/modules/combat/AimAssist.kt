@@ -15,8 +15,8 @@ import net.aspw.nightx.value.BoolValue
 import net.aspw.nightx.value.FloatValue
 import kotlin.random.Random
 
-@ModuleInfo(name = "Aimbot", category = ModuleCategory.COMBAT)
-class Aimbot : Module() {
+@ModuleInfo(name = "AimAssist", spacedName = "Aim Assist", category = ModuleCategory.COMBAT)
+class AimAssist : Module() {
 
     private val rangeValue = FloatValue("Range", 1000F, 1F, 1000F, "m")
     private val turnSpeedValue = FloatValue("TurnSpeed", 180F, 1F, 180F, "°")
