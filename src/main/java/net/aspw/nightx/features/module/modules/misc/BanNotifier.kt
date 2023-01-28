@@ -37,13 +37,13 @@ class BanNotifier : Module() {
                                 }
                                 if (NightX.moduleManager.getModule(BanNotifier::class.java)!!.state && alertValue.get() && mc.thePlayer != null && (!serverCheckValue.get() || isOnHypixel)) if (STAFF_BAN_LAST_MIN > 0) NightX.hud.addNotification(
                                     Notification(
-                                        "" + STAFF_BAN_LAST_MIN + " players get banned in the last minute!",
+                                        "" + STAFF_BAN_LAST_MIN + " players got banned in the last minute!",
                                         if (STAFF_BAN_LAST_MIN > 3) Notification.Type.WARNING else Notification.Type.WARNING,
                                         alertTimeValue.get() * 1000L
                                     )
                                 ) else NightX.hud.addNotification(
                                     Notification(
-                                        "Didn't get banned any player in the last minute.",
+                                        "Didn't got banned any player in the last minute.",
                                         Notification.Type.SUCCESS,
                                         alertTimeValue.get() * 1000L
                                     )

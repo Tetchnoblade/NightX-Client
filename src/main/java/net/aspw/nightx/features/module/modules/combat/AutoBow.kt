@@ -16,11 +16,11 @@ import net.minecraft.util.EnumFacing
 @ModuleInfo(name = "AutoBow", spacedName = "Auto Bow", category = ModuleCategory.COMBAT)
 class AutoBow : Module() {
 
-    private val waitForBowAimbot = BoolValue("WaitForBowAimbot", true)
+    private val waitForBowAimbot = BoolValue("WaitForBowAim", true)
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        val bowAimbot = NightX.moduleManager[BowAimbot::class.java] as BowAimbot
+        val bowAimbot = NightX.moduleManager[BowAim::class.java] as BowAim
 
         if (mc.thePlayer.isUsingItem && mc.thePlayer.heldItem?.item == Items.bow &&
             mc.thePlayer.itemInUseDuration > 20 && (!waitForBowAimbot.get() || !bowAimbot.state || bowAimbot.hasTarget())

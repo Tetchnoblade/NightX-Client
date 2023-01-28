@@ -57,6 +57,7 @@ class StackItems : CreativeTabs("Stack Items") {
         itemList.add(ItemUtils.createItem("tnt_minecart 64 0"))
         itemList.add(ItemUtils.createItem("hopper_minecart 64 0"))
         itemList.add(ItemUtils.createItem("cake 64 0"))
+        itemList.add(ItemUtils.createItem("mushroom_stew 64 0"))
         itemList.add(ItemUtils.createItem("rabbit_stew 64 0"))
         itemList.add(ItemUtils.createItem("record_13 64 0"))
         itemList.add(ItemUtils.createItem("record_cat 64 0"))

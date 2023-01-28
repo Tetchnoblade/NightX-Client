@@ -39,8 +39,8 @@ class ModuleManager : Listenable {
 
         registerModules(
             AutoSword::class.java,
-            BowAimbot::class.java,
-            Aimbot::class.java,
+            BowAim::class.java,
+            AimAssist::class.java,
             AutoBow::class.java,
             AutoSoup::class.java,
             FastBow::class.java,
@@ -171,8 +171,6 @@ class ModuleManager : Listenable {
             Trajectories::class.java,
             RealBobbing::class.java,
             TargetStrafe::class.java,
-            Bhop::class.java,
-            VanillaFlight::class.java,
             Wings::class.java,
             NoC0Fs::class.java,
             SilentView::class.java,
