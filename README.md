@@ -1,4 +1,4 @@
-![FDP take over lol](https://i.ibb.co/sWXrFDB/istockphoto-176430993-170667a.jpg) 
+![NightX Banner](https://i.ibb.co/sWXrFDB/istockphoto-176430993-170667a.jpg) 
 
 # NightX Client (LiquidBounce Custom Build)
 
