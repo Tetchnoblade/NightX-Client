@@ -1,6 +1,5 @@
-![NightX Banner](https://i.ibb.co/sWXrFDB/istockphoto-176430993-170667a.jpg) 
-
 # NightX Client (LiquidBounce Custom Build)
+# It project is discontinued. Thank you everyone!
 
 Why i should be NightX Developer?
 > https://www.youtube.com/watch?v=8q8pYpbslwg
