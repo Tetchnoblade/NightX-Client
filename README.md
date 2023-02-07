@@ -1,5 +1,5 @@
 # NightX Client (LiquidBounce Custom Build)
-# It project is discontinued. Thank you everyone!
+# Recontinued!
 
 Configs Download
 > https://nightx.api-minecraft.net/s/zf45j6uzog
