@@ -218,22 +218,23 @@ class Step : Module() {
 
     @EventTarget(ignoreCondition = true)
     fun onStepConfirm(event: StepConfirmEvent) {
-        mc.timer.timerSpeed = 1f
-
-        if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && !modeValue.get()
-                .equals("Matrix")
-        ) {
-            mc.timer.timerSpeed = 0.65f
-        }
-
-        if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && modeValue.get()
-                .equals("Matrix")
-        ) {
-            mc.timer.timerSpeed = 0.2f
-        }
-
         if (mc.thePlayer == null || !isStep) // Check if step
             return
+
+        if (mc.thePlayer.entityBoundingBox.minY - stepY > 0.5) {
+            if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && !modeValue.get()
+                    .equals("Matrix")
+            ) {
+                mc.timer.timerSpeed = 0.55f
+            }
+            if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && modeValue.get()
+                    .equals("Matrix")
+            ) {
+                mc.timer.timerSpeed = 0.12f
+            }
+        } else {
+            mc.timer.timerSpeed = 1.0f
+        }
 
         if (mc.thePlayer.entityBoundingBox.minY - stepY > 0.5) { // Check if full block step
             val mode = modeValue.get()
