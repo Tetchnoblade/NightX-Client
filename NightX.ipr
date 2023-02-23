@@ -65,7 +65,7 @@
     <setting name="root" />
   </component>
   <component name="HotSwapAgentPluginSettingsProvider">
-    <option name="agentPath" value="C:\Users\0kcab\AppData\Roaming\JetBrains\IdeaIC2022.2\plugins\hotswap-agent-intellij-plugin\lib\agent\hotswap-agent-1.4.1.jar" />
+    <option name="agentPath" value="C:\Users\0kcab\AppData\Roaming\JetBrains\IdeaIC2022.3\plugins\hotswap-agent-intellij-plugin\lib\agent\hotswap-agent-1.4.1.jar" />
   </component>
   <component name="IdProvider" IDEtalkID="11DA1DB66DD62DDA1ED602B7079FE97C" />
   <component name="InspectionProjectProfileManager">
@@ -354,6 +354,7 @@
     </group>
   </component>
   <component name="ProjectCodeStyleConfiguration">
+    <option name="USE_PER_PROJECT_SETTINGS" value="true" />
     <option name="PREFERRED_PROJECT_CODE_STYLE" value="Default" />
     <code_scheme name="Project" version="173">
       <JetCodeStyleSettings>
@@ -369,13 +370,16 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AvoidWare.api.iml" filepath="$PROJECT_DIR$/AvoidWare.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AvoidWare.main.iml" filepath="$PROJECT_DIR$/AvoidWare.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AvoidWare.test.iml" filepath="$PROJECT_DIR$/AvoidWare.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.iml" filepath="$PROJECT_DIR$/NightX.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.api.iml" filepath="$PROJECT_DIR$/NightX.api.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.main.iml" filepath="$PROJECT_DIR$/NightX.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.test.iml" filepath="$PROJECT_DIR$/NightX.test.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8 (2)" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="RemoteRepositoriesConfiguration">
@@ -1261,6 +1265,13 @@
     <library name="Gradle: tv.twitch:twitch:6.5">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch/6.5/320a2dfd18513a5f41b4e75729df684488cbd925/twitch-6.5.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="lombok">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/libs/lombok.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

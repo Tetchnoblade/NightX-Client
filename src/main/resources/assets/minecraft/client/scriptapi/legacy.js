@@ -89,7 +89,7 @@ var _AdaptedModule = function (module) {
 
     this.module = module;
 
-    this.moduleManager = Java.type("net.aspw.nightx.NightX").moduleManager;
+    this.moduleManager = Java.type("net.aspw.client.Client").moduleManager;
 
     this.getName = function () {
         return this.module.getName();
@@ -152,8 +152,8 @@ Object.defineProperty(_AdaptedModule.prototype, "bind", {
 
 var _ModuleManager = function () {
 
-    this.moduleManager = Java.type("net.aspw.nightx.NightX").moduleManager;
-    this.Module = Java.type("net.aspw.nightx.features.module.Module");
+    this.moduleManager = Java.type("net.aspw.client.Client").moduleManager;
+    this.Module = Java.type("net.aspw.client.features.module.Module");
     this.ArrayList = Java.type("java.util.ArrayList");
 
     this.registerModule = function (scriptModule) {
@@ -244,8 +244,8 @@ var _ModuleManager = function () {
 
 var _CommandManager = function () {
 
-    this.Command = Java.type("net.aspw.nightx.features.command.Command");
-    this.commandManager = Java.type("net.aspw.nightx.NightX").commandManager;
+    this.Command = Java.type("net.aspw.client.features.command.Command");
+    this.commandManager = Java.type("net.aspw.client.Client").commandManager;
 
     this.registerCommand = function (scriptCommand) {
         script.registerCommand({

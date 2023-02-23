@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="NightX:api" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$" external.system.id="GRADLE" external.system.module.group="net.ccbluex" external.system.module.type="sourceSet" external.system.module.version="dev" type="JAVA_MODULE" version="4">
+<module external.linked.project.id="NightX:api" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$" external.system.id="GRADLE" external.system.module.group="net.aspw" external.system.module.type="sourceSet" external.system.module.version="dev" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="minecraft" name="Minecraft">
       <configuration>
         <autoDetectTypes>
-          <platformType>FORGE</platformType>
           <platformType>MIXIN</platformType>
-          <platformType>MCP</platformType>
         </autoDetectTypes>
       </configuration>
     </facet>
@@ -22,7 +20,6 @@
           <stringArguments>
             <stringArg name="classpath">
               <args>
-                <arg>$MODULE_DIR$/libs/nashorn.jar</arg>
                 <arg>$MODULE_DIR$/libs/ViaBackwards-4.2.1.jar</arg>
                 <arg>$MODULE_DIR$/libs/ViaRewind-2.0.3-SNAPSHOT.jar</arg>
                 <arg>$MODULE_DIR$/libs/ViaVersion-4.2.1.jar</arg>
@@ -146,15 +143,6 @@
     <content url="file://$MODULE_DIR$/src/api" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/nashorn.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -284,5 +272,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: tv.twitch:twitch-platform:natives-windows-64:6.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: tv.twitch:twitch-external-platform:natives-windows-32:4.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: tv.twitch:twitch-external-platform:natives-windows-64:4.5" level="project" />
+    <orderEntry type="library" name="lombok" level="project" />
   </component>
 </module>
