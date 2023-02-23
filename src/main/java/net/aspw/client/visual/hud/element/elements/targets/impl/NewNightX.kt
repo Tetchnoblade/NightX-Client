@@ -16,7 +16,7 @@ class NewNightX(inst: Target) : TargetStyle("NewNightX", inst, true) {
     val font = Fonts.minecraftFont
 
     override fun drawTarget(entity: EntityPlayer) {
-        val healthString = "${decimalFormat2.format(entity.health)} "
+        val healthString = "${decimalFormat2.format(entity.health)}"
 
         if (entity != lastTarget || easingHealth < 0 || easingHealth > entity.maxHealth ||
             abs(easingHealth - entity.health) < 0.01
@@ -28,21 +28,21 @@ class NewNightX(inst: Target) : TargetStyle("NewNightX", inst, true) {
             .toFloat()
 
         // Draw rect box
-        RenderUtils.drawRect(6F, -1F, width - 6F, 32F, targetInstance.bgColor.rgb)
+        RenderUtils.drawRect(6F, -1F, 130F, 32F, targetInstance.bgColor.rgb)
 
         // Health bar
         val barLength = 69F * (entity.health / entity.maxHealth).coerceIn(0F, 1F)
         RenderUtils.drawRect(
             37F,
             26F,
-            40F + 69F,
+            58F + 69F,
             30F,
             getColor(RenderUtils.skyRainbow(0, 0.6f, 1f)).darker().rgb
         )
         RenderUtils.drawRect(
             37F,
             26F,
-            40F + barLength,
+            58F + barLength,
             30F,
             getColor(RenderUtils.skyRainbow(0, 0.6f, 1f)).rgb
         )
@@ -55,7 +55,7 @@ class NewNightX(inst: Target) : TargetStyle("NewNightX", inst, true) {
         // HP
         GL11.glPushMatrix()
         GL11.glScalef(1F, 1F, 1F)
-        Fonts.fontPixel.drawString(healthString + "HP", 37F, 16.6F, Color(255, 255, 255).rgb)
+        Fonts.fontPixel.drawString(healthString + "HP", 98F, 16.2F, Color(255, 255, 255).rgb)
         GL11.glPopMatrix()
 
         GlStateManager.resetColor()

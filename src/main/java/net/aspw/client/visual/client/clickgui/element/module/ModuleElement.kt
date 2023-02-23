@@ -89,7 +89,7 @@ class ModuleElement(val module: Module) : MinecraftInstance() {
         )
         Stencil.erase(true)
         RenderUtils.newDrawRect(x + 10F, y + height - 5F, x + width - 10F, y + height - 4.5F, 4281348144L.toInt())
-        Fonts.fontSFUI40.drawString(module.name, x + 20F, y + height / 2F - Fonts.fontSFUI40.FONT_HEIGHT + 3F, -1)
+        Fonts.fontSFUI40.drawString(module.name, x + 20F, y + height / 2F - Fonts.fontSFUI35.FONT_HEIGHT + 3F, -1)
 
         val keyName = if (listeningToKey) "Press key (esc to none)" else Keyboard.getKeyName(module.keyBind)
 

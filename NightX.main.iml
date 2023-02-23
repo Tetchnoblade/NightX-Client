@@ -5,6 +5,8 @@
       <configuration>
         <autoDetectTypes>
           <platformType>MIXIN</platformType>
+          <platformType>FORGE</platformType>
+          <platformType>MCP</platformType>
         </autoDetectTypes>
       </configuration>
     </facet>
@@ -288,6 +290,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="lombok" level="project" />
   </component>
 </module>

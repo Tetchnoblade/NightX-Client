@@ -1,15 +1,20 @@
 package net.aspw.client.visual.client.clickgui;
 
+import de.enzaxd.viaforge.ViaForge;
+import de.enzaxd.viaforge.protocol.ProtocolCollection;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.modules.client.Fix;
 import net.aspw.client.features.module.modules.client.Gui;
 import net.aspw.client.utils.AnimationUtils;
+import net.aspw.client.utils.EntityUtils;
 import net.aspw.client.utils.MouseUtils;
+import net.aspw.client.utils.PacketUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.utils.render.Stencil;
 import net.aspw.client.visual.client.clickgui.element.CategoryElement;
 import net.aspw.client.visual.client.clickgui.element.SearchElement;
 import net.aspw.client.visual.client.clickgui.element.module.ModuleElement;
+import net.aspw.client.visual.font.Fonts;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
@@ -69,7 +74,17 @@ public class NewUi extends GuiScreen {
     }
 
     private void drawFullSized(int mouseX, int mouseY, float partialTicks, Color accentColor) {
-        RenderUtils.originalRoundedRect(30F, 30F, this.width - 30F, this.height - 30F, 0F, 0xFF101010);
+        RenderUtils.originalRoundedRect(31F, 31F, this.width - 31F, this.height - 31F, 8F, 0xFF060606);
+            Fonts.fontSFUI40.drawStringWithShadow(
+                    "inBound: §a" + PacketUtils.avgInBound,
+                    242f,
+                    Fonts.fontSFUI35.FONT_HEIGHT + 28f,
+                    -1);
+            Fonts.fontSFUI40.drawStringWithShadow(
+                    "outBound: §a" + PacketUtils.avgOutBound,
+                    308f,
+                    Fonts.fontSFUI35.FONT_HEIGHT + 28f,
+                    -1);
         if (MouseUtils.mouseWithinBounds(mouseX, mouseY, this.width - 54F, 30F, this.width - 30F, 50F))
             fading += 0.2F * RenderUtils.deltaTime * 0.045F;
         else

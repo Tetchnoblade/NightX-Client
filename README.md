@@ -1,5 +1,4 @@
 # NightX Client (LiquidBounce Custom Build)
-# Recontinued
 
 Why i should be NightX Developer?
 > https://www.youtube.com/watch?v=8q8pYpbslwg

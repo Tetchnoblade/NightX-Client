@@ -5,6 +5,8 @@
       <configuration>
         <autoDetectTypes>
           <platformType>MIXIN</platformType>
+          <platformType>FORGE</platformType>
+          <platformType>MCP</platformType>
         </autoDetectTypes>
       </configuration>
     </facet>
@@ -272,6 +274,5 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: tv.twitch:twitch-platform:natives-windows-64:6.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: tv.twitch:twitch-external-platform:natives-windows-32:4.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: tv.twitch:twitch-external-platform:natives-windows-64:4.5" level="project" />
-    <orderEntry type="library" name="lombok" level="project" />
   </component>
 </module>
