@@ -54,9 +54,6 @@ public class Scaffold extends Module {
             "Jump", "Motion", "StableMotion", "ConstantMotion", "MotionTP", "Packet", "Teleport", "AAC3.3.9", "AAC3.6.4", "Verus"
     }, "ConstantMotion", () -> towerEnabled.get());
     private final ListValue towerPlaceModeValue = new ListValue("Tower-PlaceTiming", new String[]{"Pre", "Post"}, "Post");
-    private final BoolValue onJumpValue = new BoolValue("OnJump", true, () -> towerEnabled.get());
-    private final BoolValue noMoveOnlyValue = new BoolValue("NoMove", true, () -> towerEnabled.get());
-    private final BoolValue noMoveFreezeValue = new BoolValue("NoMoveFreezePlayer", true, () -> towerEnabled.get() && noMoveOnlyValue.get());
     private final FloatValue towerTimerValue = new FloatValue("TowerTimer", 1F, 0.1F, 10F, () -> towerEnabled.get());
 
     // Jump mode
@@ -84,6 +81,11 @@ public class Scaffold extends Module {
      */
     // Mode
     public final ListValue modeValue = new ListValue("Mode", new String[]{"Normal", "Rewinside", "Expand"}, "Normal");
+    public final ListValue sprintModeValue = new ListValue("SprintMode", new String[]{"Same", "Silent", "Ground", "Air", "Off"}, "Same");
+    private final ListValue placeModeValue = new ListValue("PlaceTiming", new String[]{"Pre", "Post"}, "Post");
+    public final ListValue counterDisplayValue = new ListValue("Counter", new String[]{"Off", "Simple", "Dark", "Exhibition", "Advanced", "Sigma", "Novoline"}, "Dark");
+    private final ListValue autoBlockMode = new ListValue("AutoBlock", new String[]{"LiteSpoof", "Spoof", "Switch", "Off"}, "LiteSpoof");
+    private final ListValue placeConditionValue = new ListValue("Place-Condition", new String[]{"Air", "FallDown", "NegativeMotion", "Always"}, "Always");
 
     // Delay
     private final BoolValue placeableDelay = new BoolValue("PlaceableDelay", false);
@@ -106,33 +108,29 @@ public class Scaffold extends Module {
                 set(i);
         }
     };
-
+    private final FloatValue timerValue = new FloatValue("Timer", 1F, 0.1F, 10F);
     public final FloatValue speedModifierValue = new FloatValue("SpeedModifier", 1F, 0, 2F, "x");
-
-    //make sprint compatible with tower.add sprint tricks
-    public final ListValue sprintModeValue = new ListValue("SprintMode", new String[]{"Same", "Silent", "Ground", "Air", "Off"}, "Same");
-    // Basic stuff
+    public final FloatValue xzMultiplier = new FloatValue("XZ-Multiplier", 1F, 0F, 4F, "x");
+    private final BoolValue customSpeedValue = new BoolValue("CustomSpeed", false);
+    private final FloatValue customMoveSpeedValue = new FloatValue("CustomMoveSpeed", 0.2F, 0, 5F, () -> customSpeedValue.get());
+    private final BoolValue markValue = new BoolValue("Mark", false);
+    private final IntegerValue redValue = new IntegerValue("Red", 255, 0, 255, () -> markValue.get());
+    private final IntegerValue greenValue = new IntegerValue("Green", 255, 0, 255, () -> markValue.get());
+    private final IntegerValue blueValue = new IntegerValue("Blue", 255, 0, 255, () -> markValue.get());
+    private final IntegerValue alphaValue = new IntegerValue("Alpha", 120, 0, 255, () -> markValue.get());
     private final BoolValue swingValue = new BoolValue("Swing", false);
     private final BoolValue downValue = new BoolValue("Down", true);
-    private final BoolValue searchValue = new BoolValue("Search", true);
-    private final ListValue placeModeValue = new ListValue("PlaceTiming", new String[]{"Pre", "Post"}, "Post");
-
-    // Eagle
-    private final BoolValue eagleValue = new BoolValue("Eagle", false);
-    private final BoolValue eagleSilentValue = new BoolValue("EagleSilent", false, () -> eagleValue.get());
-    private final IntegerValue blocksToEagleValue = new IntegerValue("BlocksToEagle", 0, 0, 10, () -> eagleValue.get());
-    private final FloatValue eagleEdgeDistanceValue = new FloatValue("EagleEdgeDistance", 0.2F, 0F, 0.5F, "m", () -> eagleValue.get());
-
-    // Expand
-    private final BoolValue omniDirectionalExpand = new BoolValue("OmniDirectionalExpand", true, () -> modeValue.get().equalsIgnoreCase("expand"));
-    private final IntegerValue expandLengthValue = new IntegerValue("ExpandLength", 3, 1, 6, " blocks", () -> modeValue.get().equalsIgnoreCase("expand"));
-
-    // Rotations
+    private final BoolValue sameYValue = new BoolValue("KeepY", false);
+    private final BoolValue autoJumpValue = new BoolValue("AutoJump", false);
+    private final BoolValue smartSpeedValue = new BoolValue("SpeedKeepY", true);
+    private final BoolValue safeWalkValue = new BoolValue("SafeWalk", false);
+    private final BoolValue airSafeValue = new BoolValue("AirSafe", false, () -> safeWalkValue.get());
+    private final BoolValue autoDisableSpeedValue = new BoolValue("AutoDisable-Speed", false);
+    private final BoolValue noSpeedPotValue = new BoolValue("NoSpeedPot", false);
     private final BoolValue rotationsValue = new BoolValue("Rotations", true);
+    private final BoolValue keepRotationValue = new BoolValue("KeepRotation", true, () -> rotationsValue.get());
+    private final BoolValue rotationStrafeValue = new BoolValue("RotationStrafe", false);
     private final BoolValue noHitCheckValue = new BoolValue("NoHitCheck", false, () -> rotationsValue.get());
-    public final ListValue rotationModeValue = new ListValue("RotationMode", new String[]{"Normal", "AAC", "Static", "Static2", "Static3", "Spin", "Custom"}, "Normal"); // searching reason
-    public final ListValue rotationLookupValue = new ListValue("RotationLookup", new String[]{"Normal", "AAC", "Same"}, "Normal");
-
     private final FloatValue maxTurnSpeed = new FloatValue("MaxTurnSpeed", 120F, 0F, 180F, "°", () -> rotationsValue.get()) {
         @Override
         protected void onChanged(final Float oldValue, final Float newValue) {
@@ -152,6 +150,8 @@ public class Scaffold extends Module {
                 set(i);
         }
     };
+    public final ListValue rotationModeValue = new ListValue("RotationMode", new String[]{"Normal", "AAC", "Static", "Static2", "Static3", "Spin", "Custom"}, "Normal"); // searching reason
+    public final ListValue rotationLookupValue = new ListValue("RotationLookup", new String[]{"Normal", "AAC", "Same"}, "Normal");
 
     private final FloatValue staticPitchValue = new FloatValue("Static-Pitch", 86F, 80F, 90F, "°", () -> rotationModeValue.get().toLowerCase().startsWith("static"));
 
@@ -162,12 +162,17 @@ public class Scaffold extends Module {
     private final FloatValue speenPitchValue = new FloatValue("Spin-Pitch", 90F, -90F, 90F, "°", () -> rotationModeValue.get().equalsIgnoreCase("spin"));
 
     private final BoolValue keepRotOnJumpValue = new BoolValue("KeepRotOnJump", true, () -> (!rotationModeValue.get().equalsIgnoreCase("normal") && !rotationModeValue.get().equalsIgnoreCase("aac")));
-
-    private final BoolValue keepRotationValue = new BoolValue("KeepRotation", true, () -> rotationsValue.get());
     private final IntegerValue keepLengthValue = new IntegerValue("KeepRotationLength", 0, 0, 20, () -> rotationsValue.get() && !keepRotationValue.get());
-    private final ListValue placeConditionValue = new ListValue("Place-Condition", new String[]{"Air", "FallDown", "NegativeMotion", "Always"}, "Always");
 
-    private final BoolValue rotationStrafeValue = new BoolValue("RotationStrafe", false);
+    // Eagle
+    private final BoolValue eagleValue = new BoolValue("Eagle", false);
+    private final BoolValue eagleSilentValue = new BoolValue("EagleSilent", false, () -> eagleValue.get());
+    private final IntegerValue blocksToEagleValue = new IntegerValue("BlocksToEagle", 0, 0, 10, () -> eagleValue.get());
+    private final FloatValue eagleEdgeDistanceValue = new FloatValue("EagleEdgeDistance", 0.2F, 0F, 0.5F, "m", () -> eagleValue.get());
+
+    // Expand
+    private final BoolValue omniDirectionalExpand = new BoolValue("OmniDirectionalExpand", true, () -> modeValue.get().equalsIgnoreCase("expand"));
+    private final IntegerValue expandLengthValue = new IntegerValue("ExpandLength", 3, 1, 6, " blocks", () -> modeValue.get().equalsIgnoreCase("expand"));
 
     // Zitter
     private final BoolValue zitterValue = new BoolValue("Zitter", false, () -> !isTowerOnly());
@@ -175,31 +180,6 @@ public class Scaffold extends Module {
     private final FloatValue zitterSpeed = new FloatValue("ZitterSpeed", 0.13F, 0.1F, 0.3F, () -> !isTowerOnly() && zitterValue.get() && zitterModeValue.get().equalsIgnoreCase("teleport"));
     private final FloatValue zitterStrength = new FloatValue("ZitterStrength", 0.072F, 0.05F, 0.2F, () -> !isTowerOnly() && zitterValue.get() && zitterModeValue.get().equalsIgnoreCase("teleport"));
     private final IntegerValue zitterDelay = new IntegerValue("ZitterDelay", 100, 0, 500, "ms", () -> !isTowerOnly() && zitterValue.get() && zitterModeValue.get().equalsIgnoreCase("smooth"));
-
-    // Game
-    private final FloatValue timerValue = new FloatValue("Timer", 1F, 0.1F, 10F, () -> !isTowerOnly());
-    // AutoBlock
-    private final ListValue autoBlockMode = new ListValue("AutoBlock", new String[]{"LiteSpoof", "Spoof", "Switch", "Off"}, "LiteSpoof");
-    public final FloatValue xzMultiplier = new FloatValue("XZ-Multiplier", 1F, 0F, 4F, "x");
-    private final BoolValue customSpeedValue = new BoolValue("CustomSpeed", false);
-    private final FloatValue customMoveSpeedValue = new FloatValue("CustomMoveSpeed", 0.2F, 0, 5F, () -> customSpeedValue.get());
-
-    // Safety
-    private final BoolValue sameYValue = new BoolValue("KeepY", false);
-    private final BoolValue autoJumpValue = new BoolValue("AutoJump", false, () -> !isTowerOnly());
-    private final BoolValue smartSpeedValue = new BoolValue("SpeedKeepY", true, () -> !isTowerOnly());
-    private final BoolValue safeWalkValue = new BoolValue("SafeWalk", false);
-    private final BoolValue airSafeValue = new BoolValue("AirSafe", false, () -> safeWalkValue.get());
-    private final BoolValue autoDisableSpeedValue = new BoolValue("AutoDisable-Speed", false);
-    private final BoolValue noSpeedPotValue = new BoolValue("NoSpeedPot", false);
-    // Visuals
-    public final ListValue counterDisplayValue = new ListValue("Counter", new String[]{"Off", "Simple", "Dark", "Exhibition", "Advanced", "Sigma", "Novoline"}, "Dark");
-
-    private final BoolValue markValue = new BoolValue("Mark", false);
-    private final IntegerValue redValue = new IntegerValue("Red", 255, 0, 255, () -> markValue.get());
-    private final IntegerValue greenValue = new IntegerValue("Green", 255, 0, 255, () -> markValue.get());
-    private final IntegerValue blueValue = new IntegerValue("Blue", 255, 0, 255, () -> markValue.get());
-    private final IntegerValue alphaValue = new IntegerValue("Alpha", 120, 0, 255, () -> markValue.get());
 
     // Delay
     private final MSTimer delayTimer = new MSTimer();
@@ -243,11 +223,11 @@ public class Scaffold extends Module {
     private boolean verusJumped = false;
 
     public boolean isTowerOnly() {
-        return (towerEnabled.get() && !onJumpValue.get());
+        return (towerEnabled.get());
     }
 
     public boolean towerActivation() {
-        return towerEnabled.get() && (!onJumpValue.get() || mc.gameSettings.keyBindJump.isKeyDown()) && (!noMoveOnlyValue.get() || !MovementUtils.isMoving());
+        return towerEnabled.get() && (mc.gameSettings.keyBindJump.isKeyDown());
     }
 
     /**
@@ -436,7 +416,6 @@ public class Scaffold extends Module {
         if (towerActivation()) {
             shouldGoDown = false;
             mc.gameSettings.keyBindSneak.pressed = false;
-            mc.thePlayer.setSprinting(false);
             return;
         }
 
@@ -715,11 +694,15 @@ public class Scaffold extends Module {
                 mc.thePlayer.inventory.mainInventory[i] = null;
         }
 
-        if ((!rotationsValue.get() || noHitCheckValue.get() || faceBlock) && placeModeValue.get().equalsIgnoreCase(eventState.getStateName()) && !towerActivation()) {
+        if ((!rotationsValue.get() || noHitCheckValue.get() || faceBlock) && placeModeValue.get().equalsIgnoreCase(eventState.getStateName())) {
             place(false);
         }
 
-        if (eventState == EventState.PRE && !towerActivation()) {
+        if ((!rotationsValue.get() || noHitCheckValue.get() || faceBlock) && eventState == EventState.POST && towerActivation()) {
+            place(false);
+        }
+
+        if (eventState == EventState.PRE) {
             if (!shouldPlace() || (!autoBlockMode.get().equalsIgnoreCase("Off") ? InventoryUtils.findAutoBlockBlock() == -1 : mc.thePlayer.getHeldItem() == null ||
                     !(mc.thePlayer.getHeldItem().getItem() instanceof ItemBlock)))
                 return;
@@ -739,12 +722,10 @@ public class Scaffold extends Module {
         }
 
         mc.timer.timerSpeed = towerTimerValue.get();
-        if (noMoveOnlyValue.get() && noMoveFreezeValue.get())
-            mc.thePlayer.motionX = mc.thePlayer.motionZ = 0;
 
         if (towerPlaceModeValue.get().equalsIgnoreCase(eventState.getStateName())) place(true);
 
-        if (eventState == EventState.PRE) {
+        if (eventState == EventState.POST) {
             towerPlace = null;
             timer.update();
 
@@ -778,7 +759,7 @@ public class Scaffold extends Module {
     private void findBlock(final boolean expand) {
         final BlockPos blockPosition = shouldGoDown ? (mc.thePlayer.posY == (int) mc.thePlayer.posY + 0.5D ? new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 0.6D, mc.thePlayer.posZ)
                 : new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 0.6, mc.thePlayer.posZ).down()) :
-                (!towerActivation() && (sameYValue.get() || ((autoJumpValue.get() && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump) || (smartSpeedValue.get() && Client.moduleManager.getModule(Speed.class).getState())) && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump))) && launchY <= mc.thePlayer.posY ? (new BlockPos(mc.thePlayer.posX, launchY - 1, mc.thePlayer.posZ)) :
+                (!towerActivation() && (sameYValue.get() || ((autoJumpValue.get() || (smartSpeedValue.get() && Client.moduleManager.getModule(Speed.class).getState())) && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump))) && launchY <= mc.thePlayer.posY ? (new BlockPos(mc.thePlayer.posX, launchY - 1, mc.thePlayer.posZ)) :
                         (mc.thePlayer.posY == (int) mc.thePlayer.posY + 0.5D ? new BlockPos(mc.thePlayer)
                                 : new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ).down()));
 
@@ -794,7 +775,7 @@ public class Scaffold extends Module {
                 if (search(blockPosition.add(x * i, 0, z * i), false, false))
                     return;
             }
-        } else if (searchValue.get()) {
+        } else {
             for (int x = -1; x <= 1; x++)
                 for (int z = -1; z <= 1; z++)
                     if (search(blockPosition.add(x, 0, z), !shouldGoDown, false))

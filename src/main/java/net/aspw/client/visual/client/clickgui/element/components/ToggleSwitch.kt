@@ -10,7 +10,7 @@ class ToggleSwitch {
     var state = false
 
     fun onDraw(x: Float, y: Float, width: Float, height: Float, bgColor: Color, accentColor: Color) {
-        smooth = smooth.animLinear((if (state) 0.25F else -0.25F) * RenderUtils.deltaTime * 0.045F, 0F, 1F)
+        smooth = smooth.animLinear((if (state) 0.2F else -0.2F) * RenderUtils.deltaTime * 0.045F, 0F, 1F)
         val borderColor =
             BlendUtils.blendColors(floatArrayOf(0F, 1F), arrayOf(Color(160, 160, 160), accentColor), smooth)
         val mainColor = BlendUtils.blendColors(floatArrayOf(0F, 1F), arrayOf(bgColor, accentColor), smooth)

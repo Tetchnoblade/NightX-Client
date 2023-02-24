@@ -270,14 +270,13 @@ class LongJump : Module() {
     @EventTarget
     fun onUpdate(event: UpdateEvent?) {
         if (!no && mc.thePlayer.onGround) {
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.keyCode, true)
             jumped = true
             if (hasJumped && autoDisableValue.get()) {
                 jumpState = 0
                 state = false
                 return
             }
-            mc.thePlayer.jump()
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.keyCode, true)
             hasJumped = true
         }
         if (modeValue.get().equals("matrixflag", ignoreCase = true)) {

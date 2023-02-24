@@ -69,8 +69,8 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
         }
         if (lastHeight >= 10F) lastHeight -= 10F
         handleScrolling(wheel, h)
-        drawScroll(x, y + 60F, w, h)
-        var startY = y + 60
+        drawScroll(x, y + 40F, w, h)
+        var startY = y + 40F
         if (mouseY < startY || mouseY >= y + h)
             mouseY = -1
         RenderUtils.makeScissorBox(x, startY, x + w, y + h)
@@ -112,7 +112,7 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
                 x + width - 4F,
                 y + 5F + (height - 60F) * ((height - 60F) / lastHeight) + multiply,
                 1F,
-                1358954495L.toInt()
+                0x50FFFFFF
             )
         }
     }
@@ -135,9 +135,9 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
         var mouseY = mY
         searchBox.mouseClicked(mouseX, mouseY, mouseButton)
         if (searchBox.text.length <= 0) return
-        if (mouseY < y + 60F || mouseY >= y + h)
+        if (mouseY < y + 40F || mouseY >= y + h)
             mouseY = -1
-        var startY = y + 60F
+        var startY = y + 40F
         for (ce in ces)
             for (me in ce.moduleElements)
                 if (me.module.name.startsWith(searchBox.text, true)) {
@@ -159,9 +159,9 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
         var mouseX = mX
         var mouseY = mY
         if (searchBox.text.length <= 0) return
-        if (mouseY < y + 60F || mouseY >= y + h)
+        if (mouseY < y + 40F || mouseY >= y + h)
             mouseY = -1
-        var startY = y + 60F
+        var startY = y + 40F
         for (ce in ces)
             for (me in ce.moduleElements)
                 if (me.module.name.startsWith(searchBox.text, true)) {

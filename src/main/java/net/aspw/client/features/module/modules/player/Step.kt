@@ -221,11 +221,11 @@ class Step : Module() {
         if (mc.thePlayer == null || !isStep) // Check if step
             return
 
-        if (mc.thePlayer.entityBoundingBox.minY - stepY > 0.5) {
+        if (mc.thePlayer.entityBoundingBox.minY - stepY > 0.8) {
             if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && !modeValue.get()
                     .equals("Matrix")
             ) {
-                mc.timer.timerSpeed = 0.55f
+                mc.timer.timerSpeed = 0.52f
             }
             if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && modeValue.get()
                     .equals("Matrix")
@@ -236,7 +236,7 @@ class Step : Module() {
             mc.timer.timerSpeed = 1.0f
         }
 
-        if (mc.thePlayer.entityBoundingBox.minY - stepY > 0.5) { // Check if full block step
+        if (mc.thePlayer.entityBoundingBox.minY - stepY > 0.8) { // Check if full block step
             val mode = modeValue.get()
 
             when {

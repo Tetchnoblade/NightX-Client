@@ -10,7 +10,7 @@ class Slider {
     private var value = 0F
 
     fun onDraw(x: Float, y: Float, width: Float, accentColor: Color) {
-        smooth = smooth.animSmooth(value, 0.6F)
+        smooth = smooth.animSmooth(value, 0.5F)
         RenderUtils.originalRoundedRect(x - 1F, y - 1F, x + width + 1F, y + 1F, 1F, ColorManager.unusedSlider.rgb)
         RenderUtils.originalRoundedRect(x - 1F, y - 1F, x + width * (smooth / 100F) + 1F, y + 1F, 1F, accentColor.rgb)
         RenderUtils.drawFilledCircle(x + width * (smooth / 100F), y, 5F, Color.white)

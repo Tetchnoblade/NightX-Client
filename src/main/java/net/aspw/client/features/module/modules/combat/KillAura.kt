@@ -157,7 +157,7 @@ class KillAura : Module() {
 
     // AutoBlock
     val autoBlockModeValue =
-        ListValue("AutoBlock", arrayOf("None", "Interact", "Packet", "AfterTick", "NCP", "OldHypixel"), "Packet")
+        ListValue("AutoBlock", arrayOf("None", "Interact", "Packet", "AfterTick", "OldHypixel"), "Packet")
 
     private val interactAutoBlockValue = BoolValue(
         "InteractAutoBlock",
@@ -1062,20 +1062,6 @@ class KillAura : Module() {
                 fakeBlock = true
                 return
             }
-        }
-
-        if (autoBlockModeValue.get().equals("ncp", true)) {
-            PacketUtils.sendPacketNoEvent(
-                C08PacketPlayerBlockPlacement(
-                    BlockPos(-1, -1, -1),
-                    255,
-                    null,
-                    0.0f,
-                    0.0f,
-                    0.0f
-                )
-            )
-            return
         }
 
         if (autoBlockModeValue.get().equals("interact", true)) {
