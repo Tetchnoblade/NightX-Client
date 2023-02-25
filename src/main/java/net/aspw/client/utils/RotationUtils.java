@@ -20,7 +20,7 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
 
     private static final Random random = new Random();
     public static Rotation targetRotation;
-    public static Rotation serverRotation = new Rotation(30, 30);
+    public static Rotation serverRotation = new Rotation(90, 90);
     public static boolean keepCurrentRotation = false;
     private static int keepLength;
     private static double x = random.nextDouble();

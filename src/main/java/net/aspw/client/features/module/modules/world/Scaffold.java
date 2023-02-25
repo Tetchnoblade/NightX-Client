@@ -82,7 +82,7 @@ public class Scaffold extends Module {
     // Mode
     public final ListValue modeValue = new ListValue("Mode", new String[]{"Normal", "Rewinside", "Expand"}, "Normal");
     public final ListValue sprintModeValue = new ListValue("SprintMode", new String[]{"Same", "Silent", "Ground", "Air", "Off"}, "Same");
-    private final ListValue placeModeValue = new ListValue("PlaceTiming", new String[]{"Pre", "Post"}, "Post");
+    private final ListValue placeModeValue = new ListValue("PlaceTiming", new String[]{"Pre", "Post", "Legit"}, "Post");
     public final ListValue counterDisplayValue = new ListValue("Counter", new String[]{"Off", "Simple", "Dark", "Exhibition", "Advanced", "Sigma", "Novoline"}, "Simple");
     private final ListValue autoBlockMode = new ListValue("AutoBlock", new String[]{"LiteSpoof", "Spoof", "Switch", "Off"}, "LiteSpoof");
     private final ListValue placeConditionValue = new ListValue("Place-Condition", new String[]{"Air", "FallDown", "NegativeMotion", "Always"}, "Always");
@@ -388,6 +388,10 @@ public class Scaffold extends Module {
         if (autoDisableSpeedValue.get() && Client.moduleManager.getModule(Speed.class).getState()) {
             Client.moduleManager.getModule(Speed.class).setState(false);
             Client.hud.addNotification(new Notification("Speed was disabled!", Notification.Type.WARNING));
+        }
+
+        if ((!rotationsValue.get() || noHitCheckValue.get() || faceBlock) && placeModeValue.get().equals("Legit") && mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1D, mc.thePlayer.posZ)).getBlock() == Blocks.air) {
+            place(false);
         }
 
         if (towerActivation()) {
