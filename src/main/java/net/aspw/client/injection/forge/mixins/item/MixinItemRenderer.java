@@ -98,6 +98,42 @@ public abstract class MixinItemRenderer {
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
+    private void slide1(float p_178096_1_, float p_178096_2_) {
+        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
+        GlStateManager.translate(0.0F, p_178096_1_ * -0.6F, 0.0F);
+        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
+        float var3 = MathHelper.sin(p_178096_2_ * p_178096_2_ * (float) Math.PI);
+        float var4 = MathHelper.sin(MathHelper.sqrt_float(p_178096_2_) * (float) Math.PI);
+        GlStateManager.rotate(var3 * 0.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(var4 * 0.0F, 0.0F, 0.0F, 1.0F);
+        GlStateManager.rotate(var4 * -80.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
+    }
+
+    private void slide2(float p_178096_1_, float p_178096_2_) {
+        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
+        GlStateManager.translate(0.0F, p_178096_1_ * -0.6F, 0.0F);
+        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
+        float var3 = MathHelper.sin(p_178096_2_ * p_178096_2_ * (float) Math.PI);
+        float var4 = MathHelper.sin(MathHelper.sqrt_float(p_178096_2_) * (float) Math.PI);
+        GlStateManager.rotate(var3 * 0.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(var4 * 0.0F, 0.0F, 0.0F, 1.0F);
+        GlStateManager.rotate(var4 * -60.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
+    }
+
+    private void slide3(float p_178096_1_, float p_178096_2_) {
+        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
+        GlStateManager.translate(0.0F, p_178096_1_ * -0.6F, 0.0F);
+        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
+        float var3 = MathHelper.sin(p_178096_2_ * p_178096_2_ * (float) Math.PI);
+        float var4 = MathHelper.sin(MathHelper.sqrt_float(p_178096_2_) * (float) Math.PI);
+        GlStateManager.rotate(var3 * 0.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(var4 * 0.0F, 0.0F, 0.0F, 1.0F);
+        GlStateManager.rotate(var4 * -40.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
+    }
+
     private void Random() {
         ++this.delay;
         GlStateManager.translate(0.7D, -0.4000000059604645D, -0.800000011920929D);
@@ -117,66 +153,6 @@ public abstract class MixinItemRenderer {
         GlStateManager.rotate(f * -20.0f, 0.0f, 1.0f, 0.0f);
         GlStateManager.rotate(f2 * -20.0f, 0.0f, 0.0f, 1.0f);
         GlStateManager.rotate(f2 * -40.0f, 1.0f, 0.0f, 0.0f);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void slide(float var10, float var9) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.translate(0.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
-        float var11 = MathHelper.sin(var9 * var9 * (float) Math.PI);
-        float var12 = MathHelper.sin(MathHelper.sqrt_float(var9) * (float) Math.PI);
-        GlStateManager.rotate(var11 * 0.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var12 * 0.0F, 0.0F, 0.0f, 1.0F);
-        GlStateManager.rotate(var12 * -40.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void slide3(float var10, float var9) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.translate(0.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
-        float var11 = MathHelper.sin(var9 * var9 * (float) Math.PI);
-        float var12 = MathHelper.sin(MathHelper.sqrt_float(var9) * (float) Math.PI);
-        GlStateManager.rotate(var11 * 0.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var12 * 0.0F, 0.0F, 0.0f, 1.0F);
-        GlStateManager.rotate(var12 * -60.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void slide2(float var10, float var9) {
-        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
-        GlStateManager.translate(0.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
-        float var11 = MathHelper.sin(var9 * var9 * (float) Math.PI);
-        float var12 = MathHelper.sin(MathHelper.sqrt_float(var9) * (float) Math.PI);
-        GlStateManager.rotate(var11 * 0.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var12 * 0.0F, 0.0F, 0.0f, 1.0F);
-        GlStateManager.rotate(var12 * -80.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void dortwarenew(float var10, float var9) {
-        GlStateManager.translate(0.56F, -0.5F, -0.71999997F);
-        GlStateManager.translate(0.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
-        float var11 = MathHelper.sin(var9 * var9 * (float) Math.PI);
-        float var12 = MathHelper.sin(MathHelper.sqrt_float(var9) * (float) Math.PI);
-        GlStateManager.rotate(var11 * 0.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var12 * 0.0F, 0.0F, 0.0f, 1.0F);
-        GlStateManager.rotate(var12 * -90.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
-    }
-
-    private void slidePut(float var10, float var9) {
-        GlStateManager.translate(0.56F, -0.5F, -0.71999997F);
-        GlStateManager.translate(0.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(45.0f, 0.0f, 1.0f, 0.0f);
-        float var11 = MathHelper.sin(var9 * var9 * (float) Math.PI);
-        float var12 = MathHelper.sin(MathHelper.sqrt_float(var9) * (float) Math.PI);
-        GlStateManager.rotate(var11 * -20.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(var12 * 0.0F, 0.0F, 0.0f, 1.0F);
-        GlStateManager.rotate(var12 * -70.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
@@ -436,7 +412,7 @@ public abstract class MixinItemRenderer {
                             final String z = Animations.Sword.get();
                             switch (z) {
                                 case "SlideFull": {
-                                    this.slide2(f / Animations.Equip.getValue(), f1);
+                                    this.slide1(f / Animations.Equip.getValue(), f1);
                                     if (Animations.RotateItems.get())
                                         rotateItemAnim();
 
@@ -446,17 +422,7 @@ public abstract class MixinItemRenderer {
                                     break;
                                 }
                                 case "SlideMedium": {
-                                    this.slide3(f / Animations.Equip.getValue(), f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "DortwareNew": {
-                                    this.dortwarenew(f / Animations.Equip.getValue(), f1);
+                                    this.slide2(f / Animations.Equip.getValue(), f1);
                                     if (Animations.RotateItems.get())
                                         rotateItemAnim();
 
@@ -477,16 +443,6 @@ public abstract class MixinItemRenderer {
                                 }
                                 case "VisionFX": {
                                     this.continuity(0.1f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-                                    break;
-                                }
-                                case "SlidePut": {
-                                    this.slidePut(f / Animations.Equip.getValue(), f1);
                                     if (Animations.RotateItems.get())
                                         rotateItemAnim();
 
@@ -623,7 +579,7 @@ public abstract class MixinItemRenderer {
                                     break;
                                 }
                                 case "SlideLow": {
-                                    this.slide(f / Animations.Equip.getValue(), f1);
+                                    this.slide3(f / Animations.Equip.getValue(), f1);
                                     if (Animations.RotateItems.get())
                                         rotateItemAnim();
 

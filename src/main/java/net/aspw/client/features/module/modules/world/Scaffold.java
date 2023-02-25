@@ -638,11 +638,9 @@ public class Scaffold extends Module {
     public void onMotion(final MotionEvent event) {
         // No SpeedPot
         if (noSpeedPotValue.get()) {
-            if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
+            if (mc.thePlayer.isPotionActive(Potion.moveSpeed) && !towerActivation() && mc.thePlayer.onGround) {
                 mc.thePlayer.motionX = mc.thePlayer.motionX * 0.8F;
                 mc.thePlayer.motionZ = mc.thePlayer.motionZ * 0.8F;
-                mc.thePlayer.motionX = mc.thePlayer.motionX * 0.85F;
-                mc.thePlayer.motionZ = mc.thePlayer.motionZ * 0.85F;
             }
         }
 
@@ -943,7 +941,7 @@ public class Scaffold extends Module {
             GL11.glDisable(GL11.GL_BLEND);
             GL11.glDisable(GL11.GL_LINE_SMOOTH);
             GlStateManager.resetColor();
-            Fonts.fontSFUI37.drawCenteredString(info, scaledResolution.getScaledWidth() / 2 + 0.1F, scaledResolution.getScaledHeight() - 70, new Color(1F, 1F, 1F, progress).getRGB(), false);
+            Fonts.fontSFUI37.drawCenteredString(info, scaledResolution.getScaledWidth() / 2 + 0.1F, scaledResolution.getScaledHeight() - 70, new Color(1F, 1F, 1F, progress).getRGB(), true);
             GlStateManager.translate(0, 14F + (progress * 4F), 0);
         }
 
@@ -960,12 +958,6 @@ public class Scaffold extends Module {
         }
 
         if (counterMode.equalsIgnoreCase("simple")) {
-            if (slot >= 0 && slot < 9 && mc.thePlayer.inventory.mainInventory[slot] != null && mc.thePlayer.inventory.mainInventory[slot].getItem() != null && mc.thePlayer.inventory.mainInventory[slot].getItem() instanceof ItemBlock) {
-                GlStateManager.pushMatrix();
-                GlStateManager.popMatrix();
-            }
-            GlStateManager.resetColor();
-
             Fonts.minecraftFont.drawString(getBlocksAmount() + " Blocks", scaledResolution.getScaledWidth() / 1.95f, scaledResolution.getScaledHeight() / 2 + 20, -1, true);
         }
 

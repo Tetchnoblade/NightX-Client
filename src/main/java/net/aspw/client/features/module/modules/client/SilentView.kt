@@ -20,7 +20,7 @@ class SilentView : Module() {
     var headPrevRotate = BoolValue("Head-Fixer", false, { mode.get().equals("normal", true) })
     var headPitch = BoolValue("Head-Pitch", true, { mode.get().equals("normal", true) })
     var headPitchLimit =
-        IntegerValue("Pitch-Limit", 240, 180, 540, { mode.get().equals("normal", true) && headPitch.get() })
+        IntegerValue("Pitch-Limit", 180, 180, 540, { mode.get().equals("normal", true) && headPitch.get() })
     var bodyNormalRotate = BoolValue("Body-Rotation", true, { mode.get().equals("normal", true) })
     var bodyPrevRotate = BoolValue("Body-Fixer", false, { mode.get().equals("normal", true) })
     var R = FloatValue("R", 255f, 0f, 255f, { mode.get().equals("csgo", true) })

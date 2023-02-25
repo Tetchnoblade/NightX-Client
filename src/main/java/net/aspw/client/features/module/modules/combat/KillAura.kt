@@ -522,7 +522,7 @@ class KillAura : Module() {
             }
         }
 
-        if (mc.thePlayer.isBlocking || blockingStatus)
+        if (mc.thePlayer.isBlocking || blockingStatus || target != null)
             verusBlocking = true
         else if (verusBlocking) {
             verusBlocking = false
@@ -882,7 +882,7 @@ class KillAura : Module() {
 
         if (modify) return true // just ignore then
 
-        var defRotation = getTargetRotation(entity) ?: return false
+        val defRotation = getTargetRotation(entity) ?: return false
 
         if (defRotation != RotationUtils.serverRotation && roundTurnAngle.get())
             defRotation.yaw = RotationUtils.roundRotation(defRotation.yaw, roundAngleDirs.get())

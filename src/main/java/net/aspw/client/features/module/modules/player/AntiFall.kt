@@ -12,6 +12,8 @@ import net.aspw.client.utils.PacketUtils
 import net.aspw.client.utils.block.BlockUtils.getBlock
 import net.aspw.client.utils.misc.NewFallingPlayer
 import net.aspw.client.utils.misc.RandomUtils
+import net.aspw.client.utils.pathfinder.MainPathFinder
+import net.aspw.client.utils.pathfinder.Vec3
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -121,8 +123,28 @@ class AntiFall : Module() {
                             }
                         }
 
-                        "Teleport" -> mc.thePlayer.setPositionAndUpdate(lastX, lastY, lastZ)
+                        "Teleport" -> Thread {
+                            val path: ArrayList<Vec3> = MainPathFinder.computePath(
+                                Vec3(
+                                    mc.thePlayer.posX,
+                                    mc.thePlayer.posY,
+                                    mc.thePlayer.posZ
+                                ),
+                                Vec3(lastX, lastY, lastZ)
+                            )
+                            for (point in path) PacketUtils.sendPacketNoEvent(
+                                C04PacketPlayerPosition(
+                                    point.getX(),
+                                    point.getY(),
+                                    point.getZ(),
+                                    true
+                                )
+                            )
+                            mc.thePlayer.setPosition(lastX, lastY, lastZ)
+                        }.start()
+
                         "FlyFlag" -> mc.thePlayer.motionY = 0.0
+
                         "StopMotion" -> {
                             val oldFallDist = mc.thePlayer.fallDistance
                             mc.thePlayer.motionY = 0.0
@@ -213,8 +235,28 @@ class AntiFall : Module() {
                             }
                         }
 
-                        "Teleport" -> mc.thePlayer.setPositionAndUpdate(lastX, lastY, lastZ)
+                        "Teleport" -> Thread {
+                            val path: ArrayList<Vec3> = MainPathFinder.computePath(
+                                Vec3(
+                                    mc.thePlayer.posX,
+                                    mc.thePlayer.posY,
+                                    mc.thePlayer.posZ
+                                ),
+                                Vec3(lastX, lastY, lastZ)
+                            )
+                            for (point in path) PacketUtils.sendPacketNoEvent(
+                                C04PacketPlayerPosition(
+                                    point.getX(),
+                                    point.getY(),
+                                    point.getZ(),
+                                    true
+                                )
+                            )
+                            mc.thePlayer.setPosition(lastX, lastY, lastZ)
+                        }.start()
+
                         "FlyFlag" -> mc.thePlayer.motionY = 0.0
+
                         "StopMotion" -> {
                             val oldFallDist = mc.thePlayer.fallDistance
                             mc.thePlayer.motionY = 0.0

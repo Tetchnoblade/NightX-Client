@@ -41,8 +41,7 @@ public class MixinModelBiped<T extends MixinRendererLivingEntity> {
             final KillAura killAura = Client.moduleManager.getModule(KillAura.class);
             final Scaffold scaffold = Client.moduleManager.getModule(Scaffold.class);
             final Annoy annoy = Client.moduleManager.getModule(Annoy.class);
-            double bitch = RotationUtils.serverRotation.getPitch();
-            float pitch = (float) bitch;
+            float pitch = RotationUtils.serverRotation.getPitch();
             if (spinBot.getState() && !spinBot.getPitchMode().get().equalsIgnoreCase("none"))
                 this.bipedHead.rotateAngleX = spinBot.getPitch() / (180F / (float) Math.PI);
             if (silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && killAura.getTarget() != null || silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && scaffold.getState() && scaffold.rotationsValue.get() || silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && annoy.getState() || silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && Minecraft.getMinecraft().thePlayer.ridingEntity != null) {

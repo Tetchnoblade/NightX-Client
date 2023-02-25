@@ -9,7 +9,6 @@ import net.aspw.client.features.module.modules.movement.Flight
 import net.aspw.client.features.module.modules.render.Freecam
 import net.aspw.client.utils.MovementUtils
 import net.aspw.client.utils.PacketUtils
-import net.aspw.client.utils.RotationUtils
 import net.aspw.client.utils.VecRotation
 import net.aspw.client.utils.block.BlockUtils
 import net.aspw.client.utils.misc.NewFallingPlayer
@@ -20,23 +19,14 @@ import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 import net.minecraft.block.BlockLiquid
-import net.minecraft.init.Blocks
-import net.minecraft.init.Items
-import net.minecraft.item.ItemBlock
-import net.minecraft.item.ItemBucket
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
-import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.network.play.server.S12PacketEntityVelocity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
-import net.minecraft.util.EnumFacing
-import net.minecraft.util.Vec3
 import java.util.*
 import kotlin.concurrent.schedule
-import kotlin.math.ceil
-import kotlin.math.sqrt
 
 @ModuleInfo(name = "NoFall", spacedName = "No Fall", category = ModuleCategory.PLAYER)
 class NoFall : Module() {
@@ -45,7 +35,7 @@ class NoFall : Module() {
         arrayOf(
             "Edit",
             "Packet",
-            "MLG",
+            "NoPacket",
             "AAC",
             "Spartan",
             "CubeCraft",
@@ -81,15 +71,12 @@ class NoFall : Module() {
         ListValue("Matrix-Mode", arrayOf("Old", "6.2.x", "6.6.3"), "6.6.3", { typeValue.get().equals("matrix", true) })
 
     private val phaseOffsetValue = IntegerValue("PhaseOffset", 1, 0, 5, { typeValue.get().equals("phase", true) })
-    private val minFallDistanceValue =
-        FloatValue("MinMLGHeight", 5F, 2F, 50F, "m", { typeValue.get().equals("mlg", true) })
     private val flySpeedValue = FloatValue("MotionSpeed", -0.01F, -5F, 5F, { typeValue.get().equals("motion", true) })
 
     private val voidCheckValue = BoolValue("Void-Check", false)
 
     private val aac4FlagCooldown = MSTimer()
     private val spartanTimer = TickTimer()
-    private val mlgTimer = TickTimer()
 
     private var oldaacState = 0
 
@@ -100,10 +87,6 @@ class NoFall : Module() {
     private var aac5Check = false
     private var aac5Timer = 0
     private val aac4Packets = mutableListOf<C03PacketPlayer>()
-
-    private var currentMlgRotation: VecRotation? = null
-    private var currentMlgItemIndex = 0
-    private var currentMlgBlock: BlockPos? = null
 
     private var matrixFalling = false
     private var matrixCanSpoof = false
@@ -529,82 +512,6 @@ class NoFall : Module() {
             }
             if (!aac4Fakelag)
                 aac4Fakelag = true
-        } else if (typeValue.get().equals("mlg", true)) {
-            if (event.eventState == EventState.PRE) {
-                currentMlgRotation = null
-                mlgTimer.update()
-
-                if (!mlgTimer.hasTimePassed(10))
-                    return
-
-                if (mc.thePlayer.fallDistance > minFallDistanceValue.get()) {
-                    val NewFallingPlayer = NewFallingPlayer(mc.thePlayer)
-                    val maxDist = mc.playerController.blockReachDistance + 1.5
-                    val collision =
-                        NewFallingPlayer.findCollision(ceil(1.0 / mc.thePlayer.motionY * -maxDist).toInt()) ?: return
-                    var ok = Vec3(
-                        mc.thePlayer.posX,
-                        mc.thePlayer.posY + mc.thePlayer.eyeHeight,
-                        mc.thePlayer.posZ
-                    ).distanceTo(
-                        Vec3(collision).addVector(
-                            0.5,
-                            0.5,
-                            0.5
-                        )
-                    ) < mc.playerController.blockReachDistance + sqrt(0.75)
-
-                    if (mc.thePlayer.motionY < collision.y + 1 - mc.thePlayer.posY)
-                        ok = true
-
-                    if (!ok)
-                        return
-
-                    var index = -1
-
-                    for (i in 36..44) {
-                        val itemStack = mc.thePlayer.inventoryContainer.getSlot(i).stack
-
-                        if (itemStack != null && (itemStack.item == Items.water_bucket || itemStack.item is ItemBlock && (itemStack.item as ItemBlock).block == Blocks.web)) {
-                            index = i - 36
-
-                            if (mc.thePlayer.inventory.currentItem == index)
-                                break
-                        }
-                    }
-
-                    if (index == -1)
-                        return
-
-                    currentMlgItemIndex = index
-                    currentMlgBlock = collision
-
-                    if (mc.thePlayer.inventory.currentItem != index) {
-                        mc.thePlayer.sendQueue.addToSendQueue(C09PacketHeldItemChange(index))
-                    }
-
-                    currentMlgRotation = RotationUtils.faceBlock(collision)
-                    currentMlgRotation!!.rotation.toPlayer(mc.thePlayer)
-                }
-            } else if (currentMlgRotation != null) {
-                val stack = mc.thePlayer.inventory.mainInventory[currentMlgItemIndex]
-
-                if (stack.item is ItemBucket)
-                    mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, stack)
-                else if (mc.playerController.onPlayerRightClick(
-                        mc.thePlayer,
-                        mc.theWorld,
-                        stack,
-                        currentMlgBlock,
-                        EnumFacing.UP,
-                        Vec3(0.0, 0.5, 0.0).add(Vec3(currentMlgBlock ?: return))
-                    )
-                )
-                    mlgTimer.reset()
-
-                if (mc.thePlayer.inventory.currentItem != currentMlgItemIndex)
-                    mc.thePlayer.sendQueue.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
-            }
         }
     }
 
@@ -703,6 +610,14 @@ class NoFall : Module() {
             if (typeValue.get().equals("verus", true) && needSpoof) {
                 packet.onGround = true
                 needSpoof = false
+            }
+
+            val playerPacket = event.packet as C03PacketPlayer
+            if (typeValue.get().equals("nopacket", true) && mc.thePlayer != null && mc.thePlayer.fallDistance > 2) {
+                if (mc.thePlayer.ticksExisted % 2 === 0) {
+                    playerPacket.onGround = true
+                    playerPacket.setMoving(false)
+                }
             }
 
             if (typeValue.get().equals("aac", true)) {
