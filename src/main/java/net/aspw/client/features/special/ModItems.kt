@@ -18,6 +18,7 @@ class ModItems : CreativeTabs("Mod Items") {
         itemList.add(ItemUtils.createItem("mob_spawner 64 0"))
         itemList.add(ItemUtils.createItem("farmland 64 0"))
         itemList.add(ItemUtils.createItem("lit_furnace 64 0"))
+        itemList.add(ItemUtils.createItem("tallgrass 64 0"))
         itemList.add(ItemUtils.createItem("armor_stand 64 0 {EntityTag:{NoBasePlate:1,id:\"minecraft:armor_stand\",ShowArms:1,},}"))
         itemList.add(ItemUtils.createItem("spawn_egg 64 0"))
         itemList.add(ItemUtils.createItem("spawn_egg 64 64"))
