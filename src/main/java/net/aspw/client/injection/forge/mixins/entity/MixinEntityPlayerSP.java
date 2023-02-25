@@ -222,6 +222,10 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     public void onLivingUpdate() {
         Client.eventManager.callEvent(new UpdateEvent());
 
+        if (mc.thePlayer.ridingEntity != null) {
+            RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw, 0));
+        }
+
         if (this.sprintingTicksLeft > 0) {
             --this.sprintingTicksLeft;
 

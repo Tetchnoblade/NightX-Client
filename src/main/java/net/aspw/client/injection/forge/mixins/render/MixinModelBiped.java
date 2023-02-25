@@ -45,7 +45,7 @@ public class MixinModelBiped<T extends MixinRendererLivingEntity> {
             float pitch = (float) bitch;
             if (spinBot.getState() && !spinBot.getPitchMode().get().equalsIgnoreCase("none"))
                 this.bipedHead.rotateAngleX = spinBot.getPitch() / (180F / (float) Math.PI);
-            if (silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && killAura.getTarget() != null || silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && scaffold.getState() || silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && annoy.getState()) {
+            if (silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && killAura.getTarget() != null || silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && scaffold.getState() && scaffold.rotationsValue.get() || silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && annoy.getState() || silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && Minecraft.getMinecraft().thePlayer.ridingEntity != null) {
                 this.bipedHead.rotateAngleX = pitch / (silentView.getHeadPitchLimit().getValue() / (float) Math.PI);
             }
         }

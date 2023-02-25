@@ -150,13 +150,10 @@ public class CustomCapeRenderLayer implements LayerRenderer<AbstractClientPlayer
 
     float getNatrualWindSwing(int part) {
         if (WaveyCapesBase.config.windMode == WindMode.WAVES) {
-            long highlightedPart = (System.currentTimeMillis() / 3) % 360;
+            long highlightedPart = 360;
             float relativePart = (float) (part + 1) / partCount;
-            return (float) (Math.sin(Math.toRadians((relativePart) * 360 - (highlightedPart))) * 3);
+            return (float) (Math.sin(Math.toRadians((relativePart) * 360 - (highlightedPart))));
         }
-//        if (WaveyCapesBase.config.windMode == WindMode.SLIGHT) {
-//            return getWind(60);
-//        }
         return 0;
     }
 

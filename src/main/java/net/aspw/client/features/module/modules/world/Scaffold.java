@@ -83,7 +83,7 @@ public class Scaffold extends Module {
     public final ListValue modeValue = new ListValue("Mode", new String[]{"Normal", "Rewinside", "Expand"}, "Normal");
     public final ListValue sprintModeValue = new ListValue("SprintMode", new String[]{"Same", "Silent", "Ground", "Air", "Off"}, "Same");
     private final ListValue placeModeValue = new ListValue("PlaceTiming", new String[]{"Pre", "Post"}, "Post");
-    public final ListValue counterDisplayValue = new ListValue("Counter", new String[]{"Off", "Simple", "Dark", "Exhibition", "Advanced", "Sigma", "Novoline"}, "Dark");
+    public final ListValue counterDisplayValue = new ListValue("Counter", new String[]{"Off", "Simple", "Dark", "Exhibition", "Advanced", "Sigma", "Novoline"}, "Simple");
     private final ListValue autoBlockMode = new ListValue("AutoBlock", new String[]{"LiteSpoof", "Spoof", "Switch", "Off"}, "LiteSpoof");
     private final ListValue placeConditionValue = new ListValue("Place-Condition", new String[]{"Air", "FallDown", "NegativeMotion", "Always"}, "Always");
 
@@ -127,7 +127,7 @@ public class Scaffold extends Module {
     private final BoolValue airSafeValue = new BoolValue("AirSafe", false, () -> safeWalkValue.get());
     private final BoolValue autoDisableSpeedValue = new BoolValue("AutoDisable-Speed", false);
     private final BoolValue noSpeedPotValue = new BoolValue("NoSpeedPot", false);
-    private final BoolValue rotationsValue = new BoolValue("Rotations", true);
+    public final BoolValue rotationsValue = new BoolValue("Rotations", true);
     private final BoolValue keepRotationValue = new BoolValue("KeepRotation", true, () -> rotationsValue.get());
     private final BoolValue rotationStrafeValue = new BoolValue("RotationStrafe", false);
     private final BoolValue noHitCheckValue = new BoolValue("NoHitCheck", false, () -> rotationsValue.get());
@@ -385,29 +385,6 @@ public class Scaffold extends Module {
      */
     @EventTarget
     public void onUpdate(final UpdateEvent event) {
-        int blockSlot = -1;
-        ItemStack itemStack = mc.thePlayer.getHeldItem();
-
-        if (mc.thePlayer.getHeldItem() == null || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemBlock)) {
-            if (autoBlockMode.get().equalsIgnoreCase("Off"))
-                return;
-
-            blockSlot = InventoryUtils.findAutoBlockBlock();
-
-            if (blockSlot == -1)
-                return;
-
-            if (autoBlockMode.get().equalsIgnoreCase("Switch")) {
-                mc.thePlayer.inventory.currentItem = blockSlot - 36;
-                mc.playerController.updateController();
-            }
-
-            if (autoBlockMode.get().equalsIgnoreCase("LiteSpoof")) {
-                mc.getNetHandler().addToSendQueue(new C09PacketHeldItemChange(blockSlot - 36));
-                itemStack = mc.thePlayer.inventoryContainer.getSlot(blockSlot).getStack();
-            }
-        }
-
         if (autoDisableSpeedValue.get() && Client.moduleManager.getModule(Speed.class).getState()) {
             Client.moduleManager.getModule(Speed.class).setState(false);
             Client.hud.addNotification(new Notification("Speed was disabled!", Notification.Type.WARNING));
@@ -682,6 +659,8 @@ public class Scaffold extends Module {
                 RotationUtils.setTargetRotation(speenRotation);
             } else if (lockRotation != null)
                 RotationUtils.setTargetRotation(RotationUtils.limitAngleChange(RotationUtils.serverRotation, lockRotation, RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())));
+        } else if (rotationsValue.get() && keepRotationValue.get()) {
+            RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw - 180, 90));
         }
 
         final String mode = modeValue.get();

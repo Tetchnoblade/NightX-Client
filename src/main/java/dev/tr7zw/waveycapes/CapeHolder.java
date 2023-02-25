@@ -4,7 +4,6 @@ import dev.tr7zw.waveycapes.sim.StickSimulation;
 import dev.tr7zw.waveycapes.sim.StickSimulation.Point;
 import dev.tr7zw.waveycapes.sim.StickSimulation.Stick;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
 
 public interface CapeHolder {
     public StickSimulation getSimulation();
@@ -32,23 +31,14 @@ public interface CapeHolder {
         }
     }
 
-    public default void simulate(EntityPlayer abstractClientPlayer) {
+    default void simulate(EntityPlayer abstractClientPlayer) {
         StickSimulation simulation = getSimulation();
         if (simulation.points.isEmpty()) {
-            return; // no cape, nothing to update
+            return;
         }
         simulation.points.get(0).prevPosition.copy(simulation.points.get(0).position);
-        double d = abstractClientPlayer.chasingPosX
-                - abstractClientPlayer.posX;
-        double m = abstractClientPlayer.chasingPosZ
-                - abstractClientPlayer.posZ;
-        float n = abstractClientPlayer.prevRenderYawOffset + abstractClientPlayer.renderYawOffset - abstractClientPlayer.prevRenderYawOffset;
-        double o = Math.sin(n * 0.017453292F);
-        double p = -Math.cos(n * 0.017453292F);
-        // gives the cape a small swing when jumping/falling to not clip with itself/simulate some air getting under it
-        double fallHack = MathHelper.clamp_double((simulation.points.get(0).position.y - (abstractClientPlayer.posY) + 2), 0d, 1d);
-        simulation.points.get(0).position.x += (d * o + m * p) + fallHack;
-        simulation.points.get(0).position.y = (float) (abstractClientPlayer.posY + 2);
+        simulation.points.get(0).position.x += 0.16;
+        simulation.points.get(0).position.y = 0;
         simulation.simulate();
     }
 

@@ -7,7 +7,7 @@ import dev.tr7zw.waveycapes.WindMode;
 public class Config {
 
     public int configVersion = 3;
-    public WindMode windMode = WindMode.WAVES;
+    public WindMode windMode = WindMode.NONE;
     public CapeStyle capeStyle = CapeStyle.SMOOTH;
     public CapeMovement capeMovement = CapeMovement.BASIC_SIMULATION;
 }
