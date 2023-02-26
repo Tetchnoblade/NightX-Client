@@ -247,7 +247,6 @@ class Flight : Module() {
     private var boostGround = false
     private var disableLogger = false
     private val packetBuffer = LinkedBlockingQueue<Packet<INetHandlerPlayServer>>()
-    private val boostValue = BoolValue("Boost", false)
     var wdState = 0
     var wdTick = 0
     private val lastPosition: BlockPos? = null
