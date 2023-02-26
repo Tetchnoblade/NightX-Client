@@ -24,10 +24,10 @@ object Client {
     const val CLIENT_BEST = "NightX"
     const val CLIENT_COLORED = "§lN§fightX"
     const val CLIENT_FOLDER = "NightX"
-    const val CLIENT_VERSION = "Developer"
+    const val CLIENT_VERSION = "Release B37"
     const val CLIENT_CREATOR = "CCBlueX, Exit-scammed, As_pw, Zywl, TheMosKau"
     const val CLIENT_DISCORD = "https://nightx.api-minecraft.net/s/rgul30dkqw"
-    const val CLIENT_FONTS = "https://nightx.api-minecraft.net/s/rv5z9dotyu"
+    const val CLIENT_FONTS = "https://nightx.api-minecraft.net/s/pe6o0ytkot"
     const val CLIENT_CHAT = "§c§l>> "
 
     var isStarting = false

@@ -7,7 +7,6 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.modules.movement.speeds.SpeedMode
 import net.aspw.client.features.module.modules.movement.speeds.aac.*
-import net.aspw.client.features.module.modules.movement.speeds.blocksmc.BlocksMC
 import net.aspw.client.features.module.modules.movement.speeds.matrix.MatrixHop
 import net.aspw.client.features.module.modules.movement.speeds.matrix.ShotBow
 import net.aspw.client.features.module.modules.movement.speeds.ncp.*
@@ -97,7 +96,6 @@ class Speed : Module() {
         VulcanHop1(),
         VulcanHop2(),
         VulcanYPort(),
-        BlocksMC(),
         ShotBow(),
         MatrixHop()
     )
@@ -112,7 +110,7 @@ class Speed : Module() {
             "Verus",
             "ShotBow",
             "MatrixHop",
-            "BlocksMC",
+            "Minemora",
             "Custom",
             "VanillaBhop",
             "Other"
@@ -325,13 +323,13 @@ class Speed : Module() {
                         .equals("oldbhop", ignoreCase = true)
                 ) "OldAACBHop" else "AAC" + aacModeValue.get()
 
-                "Spartan" -> mode = "SpartanYPort"
-                "Spectre" -> mode = "Spectre" + spectreModeValue.get()
-                "Watchdog" -> mode = "Watchdog" + hypixelModeValue.get()
-                "Verus" -> mode = "Verus" + verusModeValue.get()
+                "Spartan" -> mode = "Spartan"
+                "Spectre" -> mode = "Spectre"
+                "Watchdog" -> mode = "Watchdog"
+                "Verus" -> mode = "Verus"
                 "MatrixHop" -> mode = "MatrixHop"
                 "ShotBow" -> mode = "ShotBow"
-                "BlocksMC" -> mode = "BlocksMC"
+                "Minemora" -> mode = "Minemora"
                 "VanillaBhop" -> mode = "VanillaBhop"
                 "Custom" -> mode = "Custom"
                 "Other" -> mode = otherModeValue.get()
@@ -368,7 +366,6 @@ class Speed : Module() {
             ignoreCase = true
         ) && !modeName.equals("watchdognew", ignoreCase = true)
     }
-    val strafing = BoolValue("Strafing", true) { modeName.equals("blocksmc", ignoreCase = true) }
     val customSpeedValue =
         FloatValue("StrSpeed", 0.42f, 0.2f, 2f) {
             modeName.equals(

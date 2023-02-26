@@ -24,6 +24,8 @@ import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.item.ItemBlock
 import net.minecraft.item.ItemEnderPearl
+import net.minecraft.network.Packet
+import net.minecraft.network.play.INetHandlerPlayServer
 import net.minecraft.network.play.client.*
 import net.minecraft.network.play.client.C03PacketPlayer.*
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
@@ -31,6 +33,7 @@ import net.minecraft.potion.Potion
 import net.minecraft.util.*
 import org.lwjgl.input.Keyboard
 import java.util.*
+import java.util.concurrent.LinkedBlockingQueue
 import javax.vecmath.Vector2f
 import kotlin.math.cos
 import kotlin.math.round
@@ -64,6 +67,7 @@ class Flight : Module() {
             "Zonecraft",
             "PurplePrison",
             "BlockDrop",
+            "Minemora",
             "Cubecraft",
             "TeleportRewinside",
             "Funcraft",
@@ -238,6 +242,12 @@ class Flight : Module() {
     private val cubecraftTeleportTickTimer = TickTimer()
     private val freeHypixelTimer = TickTimer()
     private val aac5C03List = ArrayList<C03PacketPlayer>()
+    private var tick = 0
+    private var boost = false
+    private var boostGround = false
+    private var disableLogger = false
+    private val packetBuffer = LinkedBlockingQueue<Packet<INetHandlerPlayServer>>()
+    private val boostValue = BoolValue("Boost", false)
     var wdState = 0
     var wdTick = 0
     private val lastPosition: BlockPos? = null
@@ -342,6 +352,14 @@ class Flight : Module() {
                 mc.thePlayer.motionY = -ncpMotionValue.get().toDouble()
                 if (mc.gameSettings.keyBindSneak.isKeyDown) mc.thePlayer.motionY = -0.5
                 MovementUtils.strafe()
+            }
+
+            "minemora" -> {
+                boostGround = !mc.thePlayer.onGround
+                boost = false
+                tick = 0
+                mc.gameSettings.keyBindJump.pressed = false
+                mc.gameSettings.keyBindSneak.pressed = false
             }
 
             "vulcan1" -> {
@@ -663,6 +681,18 @@ class Flight : Module() {
         if (mc.thePlayer == null) return
         noFlag = false
         val mode = modeValue.get()
+        if (mode.equals("Minemora")) {
+            tick = 0
+            try {
+                disableLogger = true
+                while (!packetBuffer.isEmpty()) {
+                    mc.netHandler.addToSendQueue(packetBuffer.take())
+                }
+                disableLogger = false
+            } finally {
+                disableLogger = false
+            }
+        }
         if (!speed!!.state && !mode.uppercase(Locale.getDefault()).startsWith("NCP") && !mode.equals(
                 "float",
                 ignoreCase = true
@@ -750,6 +780,31 @@ class Flight : Module() {
 
             "vanilla" -> {
                 mc.thePlayer.capabilities.allowFlying = true
+            }
+
+            "minemora" -> {
+                if (boost) {
+                    repeat(10) {
+                        mc.timer.timerSpeed = (it / 10).toFloat()
+                        mc.netHandler.addToSendQueue(
+                            C04PacketPlayerPosition(
+                                mc.thePlayer.posX,
+                                mc.thePlayer.posY,
+                                mc.thePlayer.posZ,
+                                false
+                            )
+                        )
+                        mc.netHandler.addToSendQueue(
+                            C04PacketPlayerPosition(
+                                mc.thePlayer.posX,
+                                mc.thePlayer.posY,
+                                mc.thePlayer.posZ,
+                                true
+                            )
+                        )
+                    }
+                    state = false
+                }
             }
 
             "vulcan2" -> {
@@ -1568,6 +1623,58 @@ class Flight : Module() {
             }
             ticks++
         }
+        if (modeValue.get().equals("minemora", ignoreCase = true)) {
+            if (event.eventState != EventState.PRE) return
+            tick++
+            mc.timer.timerSpeed = 1.0f
+            if (tick == 1) {
+                mc.timer.timerSpeed = 0.25f
+                mc.netHandler.addToSendQueue(
+                    C04PacketPlayerPosition(
+                        mc.thePlayer.posX,
+                        mc.thePlayer.posY + 3.42f,
+                        mc.thePlayer.posZ,
+                        false
+                    )
+                )
+                mc.netHandler.addToSendQueue(
+                    C04PacketPlayerPosition(
+                        mc.thePlayer.posX,
+                        mc.thePlayer.posY,
+                        mc.thePlayer.posZ,
+                        false
+                    )
+                )
+                mc.netHandler.addToSendQueue(
+                    C04PacketPlayerPosition(
+                        mc.thePlayer.posX,
+                        mc.thePlayer.posY,
+                        mc.thePlayer.posZ,
+                        true
+                    )
+                )
+                mc.thePlayer.jump()
+            } else {
+                if (MovementUtils.isMoving()) {
+                    MovementUtils.strafe(1.7f)
+                }
+
+                if (mc.gameSettings.keyBindJump.pressed) {
+                    mc.thePlayer.motionY = 1.7
+                } else if (mc.gameSettings.keyBindSneak.pressed) {
+                    mc.thePlayer.motionY = -1.7
+                    if (mc.thePlayer.onGround) {
+                        if (boostGround) {
+                            boost = true
+                        } else {
+                            state = false
+                        }
+                    }
+                } else {
+                    mc.thePlayer.motionY = 0.0
+                }
+            }
+        }
         if (modeValue.get().equals("blockdrop", ignoreCase = true)) {
             when (event.eventState) {
                 EventState.PRE -> {
@@ -1843,6 +1950,21 @@ class Flight : Module() {
                     packetLol.add(packet)
                 }
                 event.cancelEvent()
+            }
+        }
+        if (mode.equals("minemora", ignoreCase = true)) {
+            if (mc.thePlayer == null || disableLogger) return
+
+            if (packet is C03PacketPlayer) {
+                event.cancelEvent()
+            }
+            if (packet is C04PacketPlayerPosition || packet is C06PacketPlayerPosLook ||
+                packet is C08PacketPlayerBlockPlacement ||
+                packet is C0APacketAnimation ||
+                packet is C0BPacketEntityAction || packet is C02PacketUseEntity
+            ) {
+                event.cancelEvent()
+                packetBuffer.add(packet as Packet<INetHandlerPlayServer>)
             }
         }
         if (mode.equals("vulcan1", ignoreCase = true)) {

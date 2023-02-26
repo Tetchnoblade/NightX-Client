@@ -55,7 +55,7 @@ class NewNightX(inst: Target) : TargetStyle("NewNightX", inst, true) {
         // HP
         GL11.glPushMatrix()
         GL11.glScalef(1F, 1F, 1F)
-        Fonts.fontPixel.drawString(healthString + "HP", 98F, 16.2F, Color(255, 255, 255).rgb)
+        Fonts.fontPixel.drawString(healthString + "HP", 96F, 16.2F, Color(255, 255, 255).rgb)
         GL11.glPopMatrix()
 
         GlStateManager.resetColor()

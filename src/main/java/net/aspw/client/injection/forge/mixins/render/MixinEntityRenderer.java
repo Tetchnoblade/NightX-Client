@@ -6,7 +6,7 @@ import net.aspw.client.event.Render3DEvent;
 import net.aspw.client.features.module.modules.client.Brightness;
 import net.aspw.client.features.module.modules.client.NoHurt;
 import net.aspw.client.features.module.modules.client.ViewClip;
-import net.aspw.client.features.module.modules.player.Reach;
+import net.aspw.client.features.module.modules.combat.Reach;
 import net.aspw.client.features.module.modules.render.XRay;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

@@ -82,7 +82,7 @@ public class Scaffold extends Module {
     // Mode
     public final ListValue modeValue = new ListValue("Mode", new String[]{"Normal", "Rewinside", "Expand"}, "Normal");
     public final ListValue sprintModeValue = new ListValue("SprintMode", new String[]{"Same", "Silent", "Ground", "Air", "Off"}, "Same");
-    private final ListValue placeModeValue = new ListValue("PlaceTiming", new String[]{"Pre", "Post", "Legit"}, "Post");
+    private final ListValue placeModeValue = new ListValue("PlaceTiming", new String[]{"Pre", "Post", "Legit"}, "Legit");
     public final ListValue counterDisplayValue = new ListValue("Counter", new String[]{"Off", "Simple", "Dark", "Exhibition", "Advanced", "Sigma", "Novoline"}, "Simple");
     private final ListValue autoBlockMode = new ListValue("AutoBlock", new String[]{"LiteSpoof", "Spoof", "Switch", "Off"}, "LiteSpoof");
     private final ListValue placeConditionValue = new ListValue("Place-Condition", new String[]{"Air", "FallDown", "NegativeMotion", "Always"}, "Always");
@@ -118,7 +118,7 @@ public class Scaffold extends Module {
     private final IntegerValue greenValue = new IntegerValue("Green", 255, 0, 255, () -> markValue.get());
     private final IntegerValue blueValue = new IntegerValue("Blue", 255, 0, 255, () -> markValue.get());
     private final IntegerValue alphaValue = new IntegerValue("Alpha", 120, 0, 255, () -> markValue.get());
-    private final BoolValue swingValue = new BoolValue("Swing", false);
+    private final BoolValue swingValue = new BoolValue("Swing", true);
     private final BoolValue downValue = new BoolValue("Down", true);
     private final BoolValue sameYValue = new BoolValue("KeepY", false);
     private final BoolValue autoJumpValue = new BoolValue("AutoJump", false);

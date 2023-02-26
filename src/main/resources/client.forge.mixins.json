@@ -74,7 +74,6 @@
     "render.MixinEffectRenderer",
     "render.MixinEntityPackets",
     "render.MixinEntityRenderer",
-    "render.MixinFluidRegistry",
     "render.MixinFontRenderer",
     "render.MixinGameRulesValue",
     "render.MixinInventoryEffectRenderer",

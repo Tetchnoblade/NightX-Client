@@ -51,8 +51,14 @@ public class Fonts {
     public static TTFFontRenderer fontTahomaSmall;
     @FontDetails(fontName = "Bangers", fontSize = 45)
     public static GameFontRenderer fontBangers;
-    @FontDetails(fontName = "Pixel", fontSize = 45)
+    @FontDetails(fontName = "Pixel", fontSize = 48)
     public static GameFontRenderer fontPixel;
+    @FontDetails(fontName = "Mojangles", fontSize = 60)
+    public static GameFontRenderer mojangles;
+    @FontDetails(fontName = "Mojangles Bold", fontSize = 60)
+    public static GameFontRenderer mojanglesBold;
+    @FontDetails(fontName = "NiSans", fontSize = 60)
+    public static GameFontRenderer niSans;
 
     public static void loadFonts() {
         long l = System.currentTimeMillis();
@@ -77,7 +83,10 @@ public class Fonts {
         fontTahoma38 = new GameFontRenderer(getFont("TahomaBold.ttf", 38));
         fontTahomaSmall = new TTFFontRenderer(getFont("Tahoma.ttf", 11));
         fontBangers = new GameFontRenderer(getFont("Bangers-Regular.ttf", 45));
-        fontPixel = new GameFontRenderer(getFont("Pixel.ttf", 45));
+        fontPixel = new GameFontRenderer(getFont("Pixel.ttf", 48));
+        mojangles = new GameFontRenderer(getFont("Mojangles.ttf", 60));
+        mojanglesBold = new GameFontRenderer(getFont("MojanglesBold.ttf", 60));
+        niSans = new GameFontRenderer(getFont("NiSans.ttf", 60));
 
         try {
             CUSTOM_FONT_RENDERERS.clear();

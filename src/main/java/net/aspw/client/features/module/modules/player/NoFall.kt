@@ -9,7 +9,6 @@ import net.aspw.client.features.module.modules.movement.Flight
 import net.aspw.client.features.module.modules.render.Freecam
 import net.aspw.client.utils.MovementUtils
 import net.aspw.client.utils.PacketUtils
-import net.aspw.client.utils.VecRotation
 import net.aspw.client.utils.block.BlockUtils
 import net.aspw.client.utils.misc.NewFallingPlayer
 import net.aspw.client.utils.timer.MSTimer
