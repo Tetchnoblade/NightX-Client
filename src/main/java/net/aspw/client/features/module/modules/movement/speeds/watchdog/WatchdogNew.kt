@@ -29,10 +29,7 @@ class WatchdogNew : SpeedMode("WatchdogNew") {
             if (mc.thePlayer.onGround) {
                 if (groundTick >= 0) {
                     mc.timer.timerSpeed = 1.02f
-                    if (speed.sendJumpValue.get()) {
-                        mc.thePlayer.jump()
-                    } else {
-                        mc.thePlayer.motionY = 0.41999998688698
+                    mc.thePlayer.motionY = 0.41999998688698
                     }
                     if (!mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
                         MovementUtils.strafe(0.41f)
@@ -43,9 +40,8 @@ class WatchdogNew : SpeedMode("WatchdogNew") {
                 }
                 groundTick++
             } else {
-                groundTick = 0
-                mc.thePlayer.motionY += -0.021 * 0.021
-            }
+            groundTick = 0
+            mc.thePlayer.motionY += -0.021 * 0.021
         }
     }
 

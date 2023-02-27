@@ -108,9 +108,9 @@ class Speed : Module() {
             "Spectre",
             "Watchdog",
             "Verus",
+            "Vulcan",
             "ShotBow",
             "MatrixHop",
-            "Minemora",
             "Custom",
             "VanillaBhop",
             "Other"
@@ -265,7 +265,7 @@ class Speed : Module() {
     }
 
     override val tag: String
-        get() = modeName
+        get() = typeValue.get()
 
     private val onlySingleName: String
         private get() {
@@ -277,6 +277,7 @@ class Speed : Module() {
                 "Spectre" -> mode = spectreModeValue.get()
                 "Watchdog" -> mode = hypixelModeValue.get()
                 "Verus" -> mode = verusModeValue.get()
+                "Vulcan" -> mode = vulcanModeValue.get()
             }
             return mode
         }
@@ -295,9 +296,6 @@ class Speed : Module() {
             "AEMine",
             "GWEN",
             "HiveHop",
-            "VulcanHop1",
-            "VulcanHop2",
-            "VulcanYPort",
             "MineplexGround",
             "TeleportCubeCraft"
         ),
@@ -323,13 +321,13 @@ class Speed : Module() {
                         .equals("oldbhop", ignoreCase = true)
                 ) "OldAACBHop" else "AAC" + aacModeValue.get()
 
-                "Spartan" -> mode = "Spartan"
-                "Spectre" -> mode = "Spectre"
-                "Watchdog" -> mode = "Watchdog"
-                "Verus" -> mode = "Verus"
+                "Spartan" -> mode = "SpartanYPort"
+                "Spectre" -> mode = "Spectre" + spectreModeValue.get()
+                "Watchdog" -> mode = "Watchdog" + hypixelModeValue.get()
+                "Verus" -> mode = "Verus" + verusModeValue.get()
+                "Vulcan" -> mode = "Vulcan" + vulcanModeValue.get()
                 "MatrixHop" -> mode = "MatrixHop"
                 "ShotBow" -> mode = "ShotBow"
-                "Minemora" -> mode = "Minemora"
                 "VanillaBhop" -> mode = "VanillaBhop"
                 "Custom" -> mode = "Custom"
                 "Other" -> mode = otherModeValue.get()
@@ -346,6 +344,19 @@ class Speed : Module() {
         arrayOf("Hop", "LowHop", "Hard"),
         "LowHop",
         { typeValue.get().equals("verus", ignoreCase = true) }) {
+        override fun onChange(oldValue: String, newValue: String) {
+            if (state) onDisable()
+        }
+
+        override fun onChanged(oldValue: String, newValue: String) {
+            if (state) onEnable()
+        }
+    }
+    val vulcanModeValue: ListValue = object : ListValue("Vulcan-Mode", arrayOf(
+        "Hop1",
+        "Hop2",
+        "YPort"
+    ), "YPort", { typeValue.get().equals("vulcan", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
         }
@@ -434,6 +445,9 @@ class Speed : Module() {
     @JvmField
     val sendJumpValue = BoolValue("SendJump", true) {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
+            "watchdognew",
+            ignoreCase = true
+        ) && !modeName.equals(
             "watchdogcustom",
             ignoreCase = true
         )
@@ -442,10 +456,10 @@ class Speed : Module() {
     @JvmField
     val recalcValue = BoolValue("ReCalculate", false) {
         typeValue.get().equals("watchdog", ignoreCase = true) && sendJumpValue.get() && !modeName.equals(
-            "watchdognew",
+            "watchdogcustom",
             ignoreCase = true
         ) && !modeName.equals(
-            "watchdogcustom",
+            "watchdognew",
             ignoreCase = true
         )
     }

@@ -2,6 +2,7 @@ package net.aspw.client.features.module.modules.movement.speeds.spartan;
 
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.modules.movement.speeds.SpeedMode;
+import net.aspw.client.utils.MovementUtils;
 
 public class SpartanYPort extends SpeedMode {
 
@@ -13,7 +14,7 @@ public class SpartanYPort extends SpeedMode {
 
     @Override
     public void onMotion() {
-        if (!mc.gameSettings.keyBindJump.isKeyDown()) {
+        if (!mc.gameSettings.keyBindJump.isKeyDown() && MovementUtils.isMoving()) {
             if (mc.thePlayer.onGround) {
                 mc.thePlayer.jump();
                 airMoves = 0;
