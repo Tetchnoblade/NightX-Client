@@ -231,7 +231,7 @@ class KillAura : Module() {
     // Bypass
     private val aacValue = BoolValue("AAC", false)
 
-    private val silentRotationValue = BoolValue("SilentRotation", true, { !rotations.get().equals("none", true) })
+    public val silentRotationValue = BoolValue("SilentRotation", true, { !rotations.get().equals("none", true) })
     val rotationStrafeValue = ListValue("Strafe", arrayOf("Off", "Strict", "Silent"), "Off")
 
     private val fovValue = FloatValue("FOV", 180f, 0f, 180f)

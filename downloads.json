@@ -35,9 +35,9 @@
     "published_at": "2023-02-26T14:14:34Z",
     "assets": [
       {
-        "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/assets/97190090",
-        "id": 97190090,
-        "node_id": "RA_kwDOIG0dIs4FywDK",
+        "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/assets/97296603",
+        "id": 97296603,
+        "node_id": "RA_kwDOIG0dIs4FzKDb",
         "name": "nightx-release-b37.jar",
         "label": null,
         "uploader": {
@@ -62,16 +62,16 @@
         },
         "content_type": "application/octet-stream",
         "state": "uploaded",
-        "size": 16016317,
-        "download_count": 179,
-        "created_at": "2023-02-26T14:21:26Z",
-        "updated_at": "2023-02-26T14:21:31Z",
+        "size": 16018809,
+        "download_count": 2,
+        "created_at": "2023-02-27T10:51:43Z",
+        "updated_at": "2023-02-27T10:51:49Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B37/nightx-release-b37.jar"
       }
     ],
     "tarball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/tarball/B37",
     "zipball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/zipball/B37",
-    "body": "*Fixed PojavLauncher Compatible Edition*\r\n- Added Creative Inventory more Items\r\n- Added Disabler modes (NewHycraft, HeirteirAC, Jump, Spartan-Combat, OldMatrix, VulcanStrafeReach)\r\n- Added New Fonts (NiSans, Mojangles, MojanglesBold, Improved Pixel)\r\n- Added Flight mode Minemora\r\n- Added NoFall mode NoPacket (bypass verus)\r\n- Added Animations SlideLow, SlideMedium, SlideFull supports Equip-Motion\r\n- Removed Speed mode BlocksMC\r\n- Fixed KillAura UnBlock-Exploit option not working\r\n- Fixed can't use boats in every servers\r\n- Fixed Step UseTimer reacts to slabs\r\n- Fixed LongJump sending shitty packets\r\n- Improved Font Downloader\r\n- Improved ClickGui and Search feature\r\n- Improved Cape Animation\r\n- Improved TargetHud\r\n- Improved AntiFall mode Teleport\r\n- Improved Scaffold EVERYTHING!!! (PlaceTiming: Legit, TowerMove, AutoBlockFix, NotUsingScaffoldRotation(?) and more)\r\n\r\nUpdated Crazy Configs (BlocksMC Bypasso)\r\nhttps://nightx.api-minecraft.net/s/zf45j6uzog\r\n\r\nreuploaded",
+    "body": "*Fixed PojavLauncher Compatible Edition*\r\n- Added Creative Inventory more Items\r\n- Added Disabler modes (NewHycraft, HeirteirAC, Jump, Spartan-Combat, OldMatrix, VulcanStrafeReach)\r\n- Added New Fonts (NiSans, Mojangles, MojanglesBold, Improved Pixel)\r\n- Added Flight mode Minemora\r\n- Added NoFall mode NoPacket (bypass verus)\r\n- Added Animations SlideLow, SlideMedium, SlideFull supports Equip-Motion\r\n- Removed Speed mode BlocksMC\r\n- Fixed KillAura UnBlock-Exploit option not working\r\n- Fixed can't use boats in every servers\r\n- Fixed Step UseTimer reacts to slabs\r\n- Fixed LongJump sending shitty packets\r\n- Improved Font Downloader\r\n- Improved ClickGui and Search feature\r\n- Improved Cape Animation\r\n- Improved TargetHud\r\n- Improved AntiFall mode Teleport\r\n- Improved Scaffold EVERYTHING!!! (PlaceTiming: Legit, TowerMove, AutoBlockFix, NotUsingScaffoldRotation(?) and more)\r\n\r\nUpdated Crazy Configs (BlocksMC Bypasso)\r\nhttps://nightx.api-minecraft.net/s/zf45j6uzog\r\n\r\n02/27 hotfix\r\n- Fixed any Speed modes not working\r\n- Fixed Cape Renderer\r\n\r\nreuploaded x2",
     "reactions": {
       "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/93712685/reactions",
       "total_count": 5,
