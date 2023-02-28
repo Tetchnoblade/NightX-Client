@@ -35,9 +35,9 @@
     "published_at": "2023-02-26T14:14:34Z",
     "assets": [
       {
-        "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/assets/97297598",
-        "id": 97297598,
-        "node_id": "RA_kwDOIG0dIs4FzKS-",
+        "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/assets/97298132",
+        "id": 97298132,
+        "node_id": "RA_kwDOIG0dIs4FzKbU",
         "name": "nightx-release-b37.jar",
         "label": null,
         "uploader": {
@@ -62,20 +62,20 @@
         },
         "content_type": "application/octet-stream",
         "state": "uploaded",
-        "size": 16018901,
-        "download_count": 0,
-        "created_at": "2023-02-27T11:04:47Z",
-        "updated_at": "2023-02-27T11:04:53Z",
+        "size": 16018857,
+        "download_count": 122,
+        "created_at": "2023-02-27T11:13:14Z",
+        "updated_at": "2023-02-27T11:13:19Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B37/nightx-release-b37.jar"
       }
     ],
     "tarball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/tarball/B37",
     "zipball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/zipball/B37",
-    "body": "*Fixed PojavLauncher Compatible Edition*\r\n- Added Creative Inventory more Items\r\n- Added Disabler modes (NewHycraft, HeirteirAC, Jump, Spartan-Combat, OldMatrix, VulcanStrafeReach)\r\n- Added New Fonts (NiSans, Mojangles, MojanglesBold, Improved Pixel)\r\n- Added Flight mode Minemora\r\n- Added NoFall mode NoPacket (bypass verus)\r\n- Added Animations SlideLow, SlideMedium, SlideFull supports Equip-Motion\r\n- Removed Speed mode BlocksMC\r\n- Fixed KillAura UnBlock-Exploit option not working\r\n- Fixed can't use boats in every servers\r\n- Fixed Step UseTimer reacts to slabs\r\n- Fixed LongJump sending shitty packets\r\n- Improved Font Downloader\r\n- Improved ClickGui and Search feature\r\n- Improved Cape Animation\r\n- Improved TargetHud\r\n- Improved AntiFall mode Teleport\r\n- Improved Scaffold EVERYTHING!!! (PlaceTiming: Legit, TowerMove, AutoBlockFix, NotUsingScaffoldRotation(?) and more)\r\n\r\nUpdated Crazy Configs (BlocksMC Bypasso)\r\nhttps://nightx.api-minecraft.net/s/zf45j6uzog\r\n\r\n02/27 hotfix\r\n- Fixed any Speed modes not working\r\n- Fixed Cape Renderer\r\n\r\nreuploaded x3 XDD",
+    "body": "*Fixed PojavLauncher Compatible Edition*\r\n- Added Creative Inventory more Items\r\n- Added Disabler modes (NewHycraft, HeirteirAC, Jump, Spartan-Combat, OldMatrix, VulcanStrafeReach)\r\n- Added New Fonts (NiSans, Mojangles, MojanglesBold, Improved Pixel)\r\n- Added Flight mode Minemora\r\n- Added NoFall mode NoPacket (bypass verus)\r\n- Added Animations SlideLow, SlideMedium, SlideFull supports Equip-Motion\r\n- Removed Speed mode BlocksMC\r\n- Fixed KillAura UnBlock-Exploit option not working\r\n- Fixed can't use boats in every servers\r\n- Fixed Step UseTimer reacts to slabs\r\n- Fixed LongJump sending shitty packets\r\n- Improved Font Downloader\r\n- Improved ClickGui and Search feature\r\n- Improved Cape Animation\r\n- Improved TargetHud\r\n- Improved AntiFall mode Teleport\r\n- Improved Scaffold EVERYTHING!!! (PlaceTiming: Legit, TowerMove, AutoBlockFix, NotUsingScaffoldRotation(?) and more)\r\n\r\nUpdated Crazy Configs (BlocksMC Bypasso)\r\nhttps://nightx.api-minecraft.net/s/zf45j6uzog\r\n\r\n02/27 08:13 hotfix\r\n- Fixed any Speed modes not working\r\n- Fixed Cape Renderer\r\n\r\nreuploaded x4 XDD",
     "reactions": {
       "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/93712685/reactions",
-      "total_count": 5,
-      "+1": 4,
+      "total_count": 7,
+      "+1": 6,
       "-1": 0,
       "laugh": 1,
       "hooray": 0,
@@ -149,7 +149,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 16023490,
-        "download_count": 610,
+        "download_count": 616,
         "created_at": "2023-02-23T05:06:31Z",
         "updated_at": "2023-02-23T05:06:37Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B36/nightx-release-b36.jar"
@@ -223,7 +223,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 16010813,
-        "download_count": 831,
+        "download_count": 832,
         "created_at": "2023-02-17T15:53:02Z",
         "updated_at": "2023-02-17T15:53:08Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B35v2/nightx-beta-b35-v2.jar"
@@ -383,7 +383,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15641020,
-        "download_count": 2100,
+        "download_count": 2103,
         "created_at": "2023-01-26T14:24:05Z",
         "updated_at": "2023-01-26T14:24:10Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B34/nightx-release-b34.jar"
@@ -1183,7 +1183,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 19789189,
-        "download_count": 157,
+        "download_count": 158,
         "created_at": "2022-12-03T03:09:46Z",
         "updated_at": "2022-12-03T03:09:51Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B24/nightx-release-b24.jar"
