@@ -85,7 +85,7 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
                     if (!customPayload.getChannelName().startsWith("MC|"))
                         event.cancelEvent();
 
-                    else if (customPayload.getChannelName().equalsIgnoreCase("REGISTER"))
+                    else if (customPayload.getChannelName().equalsIgnoreCase("MC|Brand"))
                         customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("Lunar-Client"));
                 }
             } catch (final Exception e) {
