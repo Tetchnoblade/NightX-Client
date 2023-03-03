@@ -668,9 +668,7 @@ public class Scaffold extends Module {
             } else if (lockRotation != null)
                 RotationUtils.setTargetRotation(RotationUtils.limitAngleChange(RotationUtils.serverRotation, lockRotation, RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())));
         } else if (rotationsValue.get() && keepRotationValue.get()) {
-            if (mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown() || !mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
-                RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw - 180, 87));
-            }
+            RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw - 180, 87));
             if (!mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && mc.gameSettings.keyBindBack.isKeyDown()) {
                 RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw, 87));
             }
