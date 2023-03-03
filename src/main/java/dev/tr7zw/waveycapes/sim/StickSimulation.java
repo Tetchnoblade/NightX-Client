@@ -20,10 +20,8 @@ public class StickSimulation {
 
     public void simulate() {
         gravity = 3;
-        //maxBend = WaveyCapesBase.config.maxBend;
 
-        float deltaTime = 300f; // fixed timescale
-        Vector2 down = new Vector2(0, gravity * deltaTime);
+        Vector2 down = new Vector2(0, 300);
         Vector2 tmp = new Vector2(0, 0);
         for (Point p : points) {
             if (!p.locked) {

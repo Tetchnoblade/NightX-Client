@@ -67,7 +67,7 @@ class InventoryManager : Module() {
 
     // Others
     private val noMoveValue = BoolValue("NoMove", false)
-    private val noScaffoldValue = BoolValue("NoScaffold", true)
+    private val noScaffoldValue = BoolValue("NoScaffold", false)
     private val hotbarValue = BoolValue("Hotbar", false)
     private val randomSlotValue = BoolValue("RandomSlot", false)
     private val sortValue = BoolValue("Sort", true)

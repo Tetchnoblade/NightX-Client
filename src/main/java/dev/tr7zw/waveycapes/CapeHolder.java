@@ -37,7 +37,7 @@ public interface CapeHolder {
             return;
         }
         simulation.points.get(0).prevPosition.copy(simulation.points.get(0).position);
-        simulation.points.get(0).position.x += 600;
+        simulation.points.get(0).position.x += 400;
         simulation.points.get(0).position.y = 0;
         simulation.simulate();
     }

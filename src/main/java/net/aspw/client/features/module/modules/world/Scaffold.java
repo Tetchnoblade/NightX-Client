@@ -50,10 +50,11 @@ public class Scaffold extends Module {
      */
     // Global settings
     private final BoolValue towerEnabled = new BoolValue("EnableTower", true);
+    private final BoolValue towerCenterValue = new BoolValue("Tower-Center", false, () -> towerEnabled.get());
     private final ListValue towerModeValue = new ListValue("TowerMode", new String[]{
             "Jump", "Motion", "StableMotion", "ConstantMotion", "MotionTP", "Packet", "Teleport", "AAC3.3.9", "AAC3.6.4", "Verus"
     }, "ConstantMotion", () -> towerEnabled.get());
-    private final ListValue towerPlaceModeValue = new ListValue("Tower-PlaceTiming", new String[]{"Pre", "Post"}, "Post");
+    private final ListValue towerPlaceModeValue = new ListValue("Tower-PlaceTiming", new String[]{"Pre", "Post", "Legit"}, "Legit");
     private final FloatValue towerTimerValue = new FloatValue("TowerTimer", 1F, 0.1F, 10F, () -> towerEnabled.get());
 
     // Jump mode
@@ -118,7 +119,7 @@ public class Scaffold extends Module {
     private final IntegerValue greenValue = new IntegerValue("Green", 255, 0, 255, () -> markValue.get());
     private final IntegerValue blueValue = new IntegerValue("Blue", 255, 0, 255, () -> markValue.get());
     private final IntegerValue alphaValue = new IntegerValue("Alpha", 120, 0, 255, () -> markValue.get());
-    private final BoolValue swingValue = new BoolValue("Swing", true);
+    private final BoolValue swingValue = new BoolValue("Swing", false);
     private final BoolValue downValue = new BoolValue("Down", true);
     private final BoolValue sameYValue = new BoolValue("KeepY", false);
     private final BoolValue autoJumpValue = new BoolValue("AutoJump", false);
@@ -227,7 +228,7 @@ public class Scaffold extends Module {
     }
 
     public boolean towerActivation() {
-        return towerEnabled.get() && (mc.gameSettings.keyBindJump.isKeyDown());
+        return towerEnabled.get() && (mc.gameSettings.keyBindJump.isKeyDown() && (!towerCenterValue.get() || towerCenterValue.get() && !MovementUtils.isMoving()));
     }
 
     /**
@@ -390,7 +391,7 @@ public class Scaffold extends Module {
             Client.hud.addNotification(new Notification("Speed was disabled!", Notification.Type.WARNING));
         }
 
-        if ((!rotationsValue.get() || noHitCheckValue.get() || faceBlock) && placeModeValue.get().equals("Legit") && mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1D, mc.thePlayer.posZ)).getBlock() == Blocks.air) {
+        if ((!rotationsValue.get() || noHitCheckValue.get() || faceBlock) && placeModeValue.get().equals("Legit") && !towerActivation() || towerPlaceModeValue.get().equals("Legit") && towerActivation()) {
             place(false);
         }
 
@@ -640,6 +641,11 @@ public class Scaffold extends Module {
 
     @EventTarget
     public void onMotion(final MotionEvent event) {
+        if (towerActivation() && event.getEventState() != EventState.POST && towerCenterValue.get()) {
+            mc.thePlayer.motionX = 0F;
+            mc.thePlayer.motionZ = 0F;
+        }
+
         // No SpeedPot
         if (noSpeedPotValue.get()) {
             if (mc.thePlayer.isPotionActive(Potion.moveSpeed) && !towerActivation() && mc.thePlayer.onGround) {
@@ -662,7 +668,30 @@ public class Scaffold extends Module {
             } else if (lockRotation != null)
                 RotationUtils.setTargetRotation(RotationUtils.limitAngleChange(RotationUtils.serverRotation, lockRotation, RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())));
         } else if (rotationsValue.get() && keepRotationValue.get()) {
-            RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw - 180, 90));
+            if (mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown() || !mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
+                RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw - 180, 87));
+            }
+            if (!mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && mc.gameSettings.keyBindBack.isKeyDown()) {
+                RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw, 87));
+            }
+            if (mc.gameSettings.keyBindForward.isKeyDown() && mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
+                RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw - 135, 87));
+            }
+            if (!mc.gameSettings.keyBindForward.isKeyDown() && mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
+                RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw - 90, 87));
+            }
+            if (!mc.gameSettings.keyBindForward.isKeyDown() && mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && mc.gameSettings.keyBindBack.isKeyDown()) {
+                RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw - 45, 87));
+            }
+            if (mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
+                RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw - 225, 87));
+            }
+            if (!mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
+                RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw - 270, 87));
+            }
+            if (!mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && mc.gameSettings.keyBindLeft.isKeyDown() && mc.gameSettings.keyBindBack.isKeyDown()) {
+                RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw - 315, 87));
+            }
         }
 
         final String mode = modeValue.get();
@@ -675,11 +704,7 @@ public class Scaffold extends Module {
                 mc.thePlayer.inventory.mainInventory[i] = null;
         }
 
-        if ((!rotationsValue.get() || noHitCheckValue.get() || faceBlock) && placeModeValue.get().equalsIgnoreCase(eventState.getStateName())) {
-            place(false);
-        }
-
-        if ((!rotationsValue.get() || noHitCheckValue.get() || faceBlock) && eventState == EventState.POST && towerActivation()) {
+        if ((!rotationsValue.get() || noHitCheckValue.get() || faceBlock) && placeModeValue.get().equalsIgnoreCase(eventState.getStateName()) && !towerActivation() || towerPlaceModeValue.get().equalsIgnoreCase(eventState.getStateName()) && towerActivation()) {
             place(false);
         }
 
@@ -703,8 +728,6 @@ public class Scaffold extends Module {
         }
 
         mc.timer.timerSpeed = towerTimerValue.get();
-
-        if (towerPlaceModeValue.get().equalsIgnoreCase(eventState.getStateName())) place(true);
 
         if (eventState == EventState.POST) {
             towerPlace = null;
@@ -827,7 +850,7 @@ public class Scaffold extends Module {
             if (swingValue.get())
                 mc.thePlayer.swingItem();
             else
-                mc.getNetHandler().addToSendQueue(new C0APacketAnimation());
+                PacketUtils.sendPacketNoEvent(new C0APacketAnimation());
         }
 
         // Reset
@@ -852,6 +875,13 @@ public class Scaffold extends Module {
 
             if (eagleSneaking)
                 mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SNEAKING));
+        }
+
+        if (sprintModeValue.get().equalsIgnoreCase("silent")) {
+            if (mc.thePlayer.isSprinting()) {
+                PacketUtils.sendPacketNoEvent(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+                PacketUtils.sendPacketNoEvent(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
+            }
         }
 
         if (!GameSettings.isKeyDown(mc.gameSettings.keyBindRight))

@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11
 import java.awt.Color
 import kotlin.math.abs
 
-class NewNightX(inst: Target) : TargetStyle("NewNightX", inst, true) {
+class NightX(inst: Target) : TargetStyle("NightX", inst, true) {
     private var lastTarget: EntityPlayer? = null
     val font = Fonts.minecraftFont
 
@@ -23,7 +23,7 @@ class NewNightX(inst: Target) : TargetStyle("NewNightX", inst, true) {
         ) {
             easingHealth = entity.health
         }
-        val width = (38 + font.getStringWidth(entity.name))
+        (38 + font.getStringWidth(entity.name))
             .coerceAtLeast(118)
             .toFloat()
 
