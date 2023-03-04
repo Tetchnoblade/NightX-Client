@@ -851,6 +851,8 @@ class KillAura : Module() {
         }
 
         // Attack target
+        mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
+
         if (swingValue.get() && ViaForge.getInstance().version <= 47) // version fix
             mc.thePlayer.swingItem()
 

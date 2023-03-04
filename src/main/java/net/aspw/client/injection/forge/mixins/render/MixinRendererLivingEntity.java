@@ -137,12 +137,9 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
 
     @Inject(method = "canRenderName(Lnet/minecraft/entity/EntityLivingBase;)Z", at = @At("HEAD"), cancellable = true)
     private <T extends EntityLivingBase> void canRenderName(T entity, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        final NoRender noRender = Client.moduleManager.getModule(NoRender.class);
-        final ESP twoDTags = Client.moduleManager.getModule(ESP.class);
-
-        if (entity == Minecraft.getMinecraft().thePlayer && (Minecraft.getMinecraft().gameSettings.thirdPersonView != 0) || EntityUtils.isSelected(entity, false)
-                || (noRender.getState() && noRender.getNameTagsValue().get()) || twoDTags.getState() && twoDTags.tagsValue.get())
+        if (Client.moduleManager.getModule(ESP.class).getState() && Client.moduleManager.getModule(ESP.class).tagsValue.get() || Client.moduleManager.getModule(NoRender.class).getState() && Client.moduleManager.getModule(NoRender.class).getNameTagsValue().get()) {
             callbackInfoReturnable.setReturnValue(false);
+        }
     }
 
     @Inject(method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V", at = @At("HEAD"))
