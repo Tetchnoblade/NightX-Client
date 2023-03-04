@@ -44,43 +44,11 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
     @Inject(method = "initGui", at = @At("HEAD"), cancellable = true)
     public void injectInitGui(CallbackInfo callbackInfo) {
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
-        final Hud hud = Client.moduleManager.getModule(Hud.class);
-
-        int firstY = 0;
 
         if (guiScreen instanceof GuiChest) {
-            switch (hud.getContainerButton().get()) {
-                case "TopLeft":
-                    if (Client.moduleManager.getModule(KillAura.class).getState()) {
-                        buttonList.add(killAuraButton = new GuiButton(1024576, 5, 5, 140, 20, "Disable KillAura"));
-                        firstY += 20;
-                    }
-                    if (Client.moduleManager.getModule(InventoryManager.class).getState()) {
-                        buttonList.add(invManagerButton = new GuiButton(321123, 5, 5 + firstY, 140, 20, "Disable InventoryManager"));
-                        firstY += 20;
-                    }
-                    if (Client.moduleManager.getModule(Stealer.class).getState()) {
-                        buttonList.add(chestStealerButton = new GuiButton(727, 5, 5 + firstY, 140, 20, "Disable Stealer"));
-                        firstY += 20;
-                    }
-                    buttonList.add(stealButton = new GuiButton(1234123, 5, 5 + firstY, 140, 20, "Steal"));
-                    break;
-                case "TopRight":
-                    if (Client.moduleManager.getModule(KillAura.class).getState()) {
-                        buttonList.add(killAuraButton = new GuiButton(1024576, width - 145, 5, 140, 20, "Disable KillAura"));
-                        firstY += 20;
-                    }
-                    if (Client.moduleManager.getModule(InventoryManager.class).getState()) {
-                        buttonList.add(invManagerButton = new GuiButton(321123, width - 145, 5 + firstY, 140, 20, "Disable InventoryManager"));
-                        firstY += 20;
-                    }
-                    if (Client.moduleManager.getModule(Stealer.class).getState()) {
-                        buttonList.add(chestStealerButton = new GuiButton(727, width - 145, 5 + firstY, 140, 20, "Disable Stealer"));
-                        firstY += 20;
-                    }
-                    buttonList.add(stealButton = new GuiButton(1234123, width - 145, 5 + firstY, 140, 20, "Steal"));
-                    break;
-            }
+            buttonList.add(killAuraButton = new GuiButton(1024576, 5, 5, 150, 20, "Disable KillAura"));
+            buttonList.add(invManagerButton = new GuiButton(321123, 5, 27, 150, 20, "Disable InventoryManager"));
+            buttonList.add(chestStealerButton = new GuiButton(727, 5, 49, 150, 20, "Disable Stealer"));
         }
 
         lastMS = System.currentTimeMillis();
@@ -89,19 +57,12 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
     @Override
     protected void injectedActionPerformed(GuiButton button) {
-        Stealer chestStealer = Client.moduleManager.getModule(Stealer.class);
-
         if (button.id == 1024576)
             Client.moduleManager.getModule(KillAura.class).setState(false);
         if (button.id == 321123)
             Client.moduleManager.getModule(InventoryManager.class).setState(false);
         if (button.id == 727)
-            chestStealer.setState(false);
-        if (button.id == 1234123 && !chestStealer.getState()) {
-            chestStealer.setContentReceived(mc.thePlayer.openContainer.windowId);
-            chestStealer.setOnce(true);
-            chestStealer.setState(true);
-        }
+            Client.moduleManager.getModule(Stealer.class).setState(false);
     }
 
     @Inject(method = "drawScreen", at = @At("HEAD"), cancellable = true)

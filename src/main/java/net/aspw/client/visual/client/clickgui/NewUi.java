@@ -1,8 +1,10 @@
 package net.aspw.client.visual.client.clickgui;
 
+import net.aspw.client.Client;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.modules.client.Fix;
 import net.aspw.client.features.module.modules.client.Gui;
+import net.aspw.client.features.module.modules.client.Hud;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.MouseUtils;
 import net.aspw.client.utils.PacketUtils;
@@ -71,6 +73,9 @@ public class NewUi extends GuiScreen {
     }
 
     private void drawFullSized(int mouseX, int mouseY, float partialTicks, Color accentColor) {
+        if (Client.moduleManager.getModule(Hud.class).getContainerBackground().get()) {
+            RenderUtils.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
+        }
         RenderUtils.originalRoundedRect(31F, 31F, this.width - 31F, this.height - 31F, 8F, 0xFF060606);
         Fonts.fontSFUI40.drawStringWithShadow(
                 "inBound: §a" + PacketUtils.avgInBound,

@@ -32,7 +32,6 @@ class Hud : Module() {
         ListValue("Button-Style", arrayOf("Minecraft", "LiquidBounce", "Rounded", "LiquidBounce+"), "Minecraft")
 
     val containerBackground = BoolValue("Gui-Background", true)
-    val containerButton = ListValue("Gui-Button", arrayOf("TopLeft", "TopRight", "Off"), "Off")
     val invEffectOffset = BoolValue("InventoryEffect-Moveable", false)
 
     private var hotBarX = 0F

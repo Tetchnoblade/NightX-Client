@@ -371,7 +371,6 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
                 || rotation.getPitch() > 90 || rotation.getPitch() < -90)
             return;
 
-        rotation.fixedSensitivity(mc.gameSettings.mouseSensitivity);
         targetRotation = rotation;
         RotationUtils.keepLength = keepLength;
     }
@@ -394,8 +393,8 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
         double y = posY - (player.posY + (double) player.getEyeHeight());
         double z = posZ - player.posZ;
         double dist = MathHelper.sqrt_double(x * x + z * z);
-        float yaw = (float) (Math.atan2(z, x) * 180.0 / 3.141592653589793) - 90.0f;
-        float pitch = (float) (-(Math.atan2(y, dist) * 180.0 / 3.141592653589793));
+        float yaw = (float) (Math.atan2(z, x) * 180.0 / Math.PI) - 90.0f;
+        float pitch = (float) (-(Math.atan2(y, dist) * 180.0 / Math.PI));
         return new Rotation(yaw, pitch);
     }
 

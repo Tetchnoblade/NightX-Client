@@ -27,11 +27,11 @@ public final class GCDFix {
         return Math.round(paramFloat / getGCDValue());
     }
 
-    public final float getYaw() {
+    public float getYaw() {
         return this.yaw;
     }
 
-    public final GCDFix copy(float paramFloat1, float paramFloat2) {
+    public GCDFix copy(float paramFloat1, float paramFloat2) {
         return new GCDFix(paramFloat1, paramFloat2);
     }
 
@@ -44,22 +44,19 @@ public final class GCDFix {
         return (float) (getGCD() * 0.15D);
     }
 
-    public final void toPlayer(EntityPlayer paramEntityPlayer) {
+    public void toPlayer(EntityPlayer paramEntityPlayer) {
         float f = this.yaw;
-        boolean bool = false;
         if (!Float.isNaN(f)) {
             f = this.pitch;
-            bool = false;
             if (!Float.isNaN(f)) {
                 fixedSensitivity((Minecraft.getMinecraft()).gameSettings.mouseSensitivity);
                 paramEntityPlayer.rotationYaw = this.yaw;
                 paramEntityPlayer.rotationPitch = this.pitch;
-                return;
             }
         }
     }
 
-    public final float getPitch() {
+    public float getPitch() {
         return this.pitch;
     }
 
@@ -70,15 +67,15 @@ public final class GCDFix {
         this.pitch -= this.pitch % f2;
     }
 
-    public final void setYaw(float paramFloat) {
+    public void setYaw(float paramFloat) {
         this.yaw = paramFloat;
     }
 
-    public final float component1() {
+    public float component1() {
         return this.yaw;
     }
 
-    public static GCDFix copy$default(GCDFix paramGCDFix, float paramFloat1, float paramFloat2, int paramInt, Object paramObject) {
+    public static GCDFix copy$default(GCDFix paramGCDFix, float paramFloat1, float paramFloat2, int paramInt) {
         if ((paramInt & 0x1) != 0)
             paramFloat1 = paramGCDFix.yaw;
         if ((paramInt & 0x2) != 0)
@@ -94,11 +91,11 @@ public final class GCDFix {
         return getDeltaMouse(paramFloat) * getGCDValue();
     }
 
-    public final void setPitch(float paramFloat) {
+    public void setPitch(float paramFloat) {
         this.pitch = paramFloat;
     }
 
-    public final float component2() {
+    public float component2() {
         return this.pitch;
     }
 
