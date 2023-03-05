@@ -25,7 +25,7 @@ class ShotBow : SpeedMode("ShotBow") {
                 mc.timer.timerSpeed = 1.0f
             }
             if (tickTimer.hasTimePassed(17)) {
-                mc.timer.timerSpeed = 1.12f
+                mc.timer.timerSpeed = 1.04f
                 tickTimer.reset()
             }
         } else {
