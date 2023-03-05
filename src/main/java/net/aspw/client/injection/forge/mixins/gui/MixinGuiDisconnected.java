@@ -1,6 +1,5 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import com.google.gson.JsonObject;
 import com.mojang.authlib.Agent;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
@@ -10,7 +9,6 @@ import com.thealtening.api.data.AccountData;
 import de.enzaxd.viaforge.ViaForge;
 import de.enzaxd.viaforge.protocol.ProtocolCollection;
 import me.liuli.elixir.account.CrackedAccount;
-import me.liuli.elixir.account.MinecraftAccount;
 import net.aspw.client.Client;
 import net.aspw.client.event.SessionEvent;
 import net.aspw.client.features.module.modules.client.Hud;
@@ -20,11 +18,11 @@ import net.aspw.client.utils.SessionUtils;
 import net.aspw.client.utils.misc.RandomUtils;
 import net.aspw.client.visual.client.GuiProxy;
 import net.aspw.client.visual.client.altmanager.GuiAltManager;
-import net.aspw.client.visual.client.altmanager.menus.GuiLoginProgress;
 import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening;
 import net.aspw.client.visual.font.Fonts;
-import net.minecraft.client.gui.*;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiDisconnected;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.Session;
 import net.minecraftforge.fml.client.config.GuiSlider;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,8 +33,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.net.Proxy;
 import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Random;
 
 @Mixin(GuiDisconnected.class)
 public abstract class MixinGuiDisconnected extends MixinGuiScreen {
@@ -110,28 +106,6 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
                         ClientUtils.getLogger().error("Failed to login into random account from The Altening.", throwable);
                     }
                 }
-
-                final List<MinecraftAccount> accounts = Client.fileManager.accountsConfig.getAccounts();
-                if (accounts.isEmpty())
-                    break;
-                final MinecraftAccount minecraftAccount = accounts.get(new Random().nextInt(accounts.size()));
-
-                mc.displayGuiScreen(new GuiLoginProgress(minecraftAccount, () -> {
-                    mc.addScheduledTask(() -> {
-                        Client.eventManager.callEvent(new SessionEvent());
-                        ServerUtils.connectToLastServer();
-                    });
-                    return null;
-                }, e -> {
-                    mc.addScheduledTask(() -> {
-                        final JsonObject jsonObject = new JsonObject();
-                        jsonObject.addProperty("text", e.getMessage());
-
-                        mc.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new GuiMainMenu()), e.getMessage(), IChatComponent.Serializer.jsonToComponent(jsonObject.toString())));
-                    });
-                    return null;
-                }, () -> null));
-
                 break;
             case 4:
                 final CrackedAccount crackedAccount = new CrackedAccount();
