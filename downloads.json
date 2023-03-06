@@ -63,7 +63,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15958826,
-        "download_count": 42,
+        "download_count": 258,
         "created_at": "2023-03-05T00:47:35Z",
         "updated_at": "2023-03-05T00:47:49Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B38/nightx-release-b38.jar"
@@ -74,14 +74,14 @@
     "body": "- Added Velocity mode Watchdog\r\n- Super Improved SilentView\r\n- Removed SmoothCape Animation (because shit)\r\n- Removed Vulcan Disabler\r\n- Improved ClickGui\r\n- Improved ChestGui\r\n- Improved Speed mode ShotBow\r\n- Fixed Rotations sometimes detectable\r\n- Fixed NameTags not shown\r\n- Fixed KillAura Particles\r\n- Fixed Hycraft Disabler\r\n\r\nScaffold ChangeLog:\r\n- Added RotationMode Watchdog\r\n- Added Tower-Center option\r\n- Added Tower-PlaceTiming mode Legit\r\n- Fixed Tower-PlaceTiming option not working\r\n- Fixed Not placing direction\r\n- Fixed Sprint mode Silent disable check\r\n- Improved Performance\r\nUpdated Configs\r\nhttps://nightx.api-minecraft.net/s/zf45j6uzog",
     "reactions": {
       "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/94531780/reactions",
-      "total_count": 2,
+      "total_count": 4,
       "+1": 0,
       "-1": 0,
       "laugh": 0,
       "hooray": 0,
       "confused": 0,
       "heart": 0,
-      "rocket": 1,
+      "rocket": 3,
       "eyes": 1
     }
   },
@@ -149,7 +149,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 16018857,
-        "download_count": 693,
+        "download_count": 700,
         "created_at": "2023-02-27T11:13:14Z",
         "updated_at": "2023-02-27T11:13:19Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B37/nightx-release-b37.jar"
@@ -235,7 +235,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 16023490,
-        "download_count": 630,
+        "download_count": 631,
         "created_at": "2023-02-23T05:06:31Z",
         "updated_at": "2023-02-23T05:06:37Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B36/nightx-release-b36.jar"
@@ -1343,7 +1343,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 19782162,
-        "download_count": 115,
+        "download_count": 116,
         "created_at": "2022-11-29T14:21:40Z",
         "updated_at": "2022-11-29T14:21:46Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B23/nightx-release-b23.jar"

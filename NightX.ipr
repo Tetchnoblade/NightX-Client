@@ -453,13 +453,13 @@
     <mapping directory="" vcs="Git" />
   </component>
   <component name="libraryTable">
-    <library name="Gradle: com.github.CCBlueX:Elixir:1.2.4">
+    <library name="Gradle: com.github.CCBlueX:Elixir:1.2.6">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.CCBlueX/Elixir/1.2.4/628b17ce04804bd8105f4d540153dcd54faacede/Elixir-1.2.4.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.CCBlueX/Elixir/1.2.6/7f3fae12c1311c11652a955272fbc9e9d67546bd/Elixir-1.2.6.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.CCBlueX/Elixir/1.2.4/1fac4adbe054e6d5a28974d699185ce97ec0e44f/Elixir-1.2.4-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.CCBlueX/Elixir/1.2.6/d471c02cdfd7151bcf096051153bb7070b78a7da/Elixir-1.2.6-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.github.TheAltening:TheAltening4j:d0771f42d3">

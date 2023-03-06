@@ -78,7 +78,7 @@ class Flight : Module() {
             "VerusLowHop",
             "Vulcan1",
             "Vulcan2",
-            "LatestSpartan",
+            "NewSpartan",
             "Spartan1",
             "Spartan2",
             "BugSpartan",
@@ -102,7 +102,6 @@ class Flight : Module() {
     private val vanillaSpeedValue = FloatValue("Speed", 1f, 0f, 5f) {
         modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
             .equals("blockdrop", ignoreCase = true) || modeValue.get()
-            .equals("latestspartan", ignoreCase = true) || modeValue.get()
             .equals("desync", ignoreCase = true) || modeValue.get()
             .equals("pearl", ignoreCase = true) || modeValue.get()
             .equals("aac5-vanilla", ignoreCase = true) || modeValue.get()
@@ -112,20 +111,16 @@ class Flight : Module() {
     private val vanillaVSpeedValue = FloatValue("V-Speed", 0.6f, 0f, 5f) {
         modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
             .equals("blockdrop", ignoreCase = true) || modeValue.get()
-            .equals("desync", ignoreCase = true) || modeValue.get()
-            .equals("latestspartan", ignoreCase = true) || modeValue.get().equals("bugspartan", ignoreCase = true)
+            .equals("desync", ignoreCase = true) || modeValue.get().equals("bugspartan", ignoreCase = true)
     }
     private val vanillaMotionYValue = FloatValue("Y-Motion", 0f, -1f, 1f) {
-        modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
-            .equals("latestspartan", ignoreCase = true)
+        modeValue.get().equals("motion", ignoreCase = true)
     }
     private val vanillaKickBypassValue = BoolValue("AntiKick", false) {
-        modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
-            .equals("latestspartan", ignoreCase = true) || modeValue.get().equals("creative", ignoreCase = true)
+        modeValue.get().equals("motion", ignoreCase = true) || modeValue.get().equals("creative", ignoreCase = true)
     }
     private val groundSpoofValue = BoolValue("SpoofGround", false) {
-        modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
-            .equals("latestspartan", ignoreCase = true) || modeValue.get().equals("creative", ignoreCase = true)
+        modeValue.get().equals("motion", ignoreCase = true) || modeValue.get().equals("creative", ignoreCase = true)
     }
     private val ncpMotionValue =
         FloatValue("NCPMotion", 0.04f, 0f, 1f) { modeValue.get().equals("ncp", ignoreCase = true) }
@@ -400,26 +395,6 @@ class Flight : Module() {
                 if (mc.gameSettings.keyBindJump.isKeyDown && mc.thePlayer.posY < startY - 0.1) mc.thePlayer.motionY =
                     0.2
                 MovementUtils.strafe()
-            }
-
-            "latestspartan" -> {
-                mc.thePlayer.sendQueue.addToSendQueue(
-                    C04PacketPlayerPosition(
-                        mc.thePlayer.posX,
-                        mc.thePlayer.posY,
-                        mc.thePlayer.posZ,
-                        true
-                    )
-                )
-                mc.thePlayer.sendQueue.addToSendQueue(
-                    C04PacketPlayerPosition(
-                        mc.thePlayer.posX,
-                        mc.thePlayer.posY + 1,
-                        mc.thePlayer.posZ,
-                        true
-                    )
-                )
-                mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + 1.0, mc.thePlayer.posZ)
             }
 
             "verus" -> {
@@ -698,6 +673,9 @@ class Flight : Module() {
             ) && !mode.equals("vanilla", ignoreCase = true) && !mode.equals(
                 "creative",
                 ignoreCase = true
+            ) && !mode.equals("vanilla", ignoreCase = true) && !mode.equals(
+                "newspartan",
+                ignoreCase = true
             ) && !mode.equals("veruslowhop", ignoreCase = true) && !mode.equals(
                 "aac1.9.10",
                 ignoreCase = true
@@ -761,7 +739,7 @@ class Flight : Module() {
         val vanillaVSpeed = vanillaVSpeedValue.get()
         mc.thePlayer.noClip = false
         when (modeValue.get().lowercase(Locale.getDefault())) {
-            "motion", "latestspartan" -> {
+            "motion" -> {
                 mc.thePlayer.capabilities.isFlying = false
                 mc.thePlayer.motionY = vanillaMotionYValue.get().toDouble()
                 mc.thePlayer.motionX = 0.0
@@ -775,6 +753,21 @@ class Flight : Module() {
                 }
                 MovementUtils.strafe(vanillaSpeed)
                 handleVanillaKickBypass()
+            }
+
+            "newspartan" -> {
+                if (modeValue.get().equals("NewSpartan") && !mc.thePlayer.onGround && !mc.thePlayer.isSneaking) {
+                    if (mc.thePlayer.ticksExisted % 3 != 0) return
+                    mc.thePlayer.motionY = 0.0
+                    if (mc.thePlayer.fallDistance > 0) {
+                        mc.thePlayer.motionY = 0.2
+                        mc.thePlayer.fallDistance = 0f
+                    }
+                    if (mc.thePlayer.moveForward == 0f) {
+                        mc.thePlayer.motionX = 0.0
+                        mc.thePlayer.motionZ = 0.0
+                    }
+                }
             }
 
             "vanilla" -> {
@@ -1884,11 +1877,6 @@ class Flight : Module() {
         val packet = event.packet
         val mode = modeValue.get()
         if (noPacketModify) return
-        if (mode.equals("latestspartan", ignoreCase = true)) {
-            if (packet is C03PacketPlayer) {
-                packet.onGround = true
-            }
-        }
         if (mode.equals("desync", ignoreCase = true)) {
             if (packet is C03PacketPlayer) {
                 val yPos = round(mc.thePlayer.posY / 0.015625) * 0.015625

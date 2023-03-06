@@ -15,10 +15,8 @@ class Cape : Module() {
         "Style",
         arrayOf(
             "None",
-            "NewNightX",
-            "OldNightX",
+            "NightX",
             "Infinity",
-            "As",
             "Defoko1",
             "Defoko2",
             "Defoko3",
@@ -32,6 +30,7 @@ class Cape : Module() {
             "Moon",
             "Rise1",
             "Rise2",
+            "Rise3",
             "Tenacity",
             "FDP",
             "Lunar",
@@ -43,7 +42,7 @@ class Cape : Module() {
             "Migrator",
             "Vanilla"
         ),
-        "NewNightX"
+        "NightX"
     )
 
     private val capeCache = hashMapOf<String, CapeStyle>()
@@ -61,10 +60,8 @@ class Cape : Module() {
 
     enum class CapeStyle(val location: ResourceLocation) {
         NONE(ResourceLocation("client/cape/none.png")),
-        NEWNIGHTX(ResourceLocation("client/cape/newnightx.png")),
-        OLDNIGHTX(ResourceLocation("client/cape/oldnightx.png")),
+        NIGHTX(ResourceLocation("client/cape/nightx.png")),
         INFINITY(ResourceLocation("client/cape/infinity.png")),
-        AS(ResourceLocation("client/cape/as.png")),
         DEFOKO1(ResourceLocation("client/cape/defoko1.png")),
         DEFOKO2(ResourceLocation("client/cape/defoko2.png")),
         DEFOKO3(ResourceLocation("client/cape/defoko3.png")),
@@ -78,6 +75,7 @@ class Cape : Module() {
         MOON(ResourceLocation("client/cape/moon.png")),
         RISE1(ResourceLocation("client/cape/rise1.png")),
         RISE2(ResourceLocation("client/cape/rise2.png")),
+        RISE3(ResourceLocation("client/cape/rise3.png")),
         TENACITY(ResourceLocation("client/cape/tenacity.png")),
         FDP(ResourceLocation("client/cape/fdp.png")),
         LUNAR(ResourceLocation("client/cape/lunar.png")),
