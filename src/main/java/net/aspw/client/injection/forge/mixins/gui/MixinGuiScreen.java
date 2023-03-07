@@ -1,14 +1,11 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
-import net.aspw.client.utils.render.shader.shaders.BackgroundShader;
-import net.aspw.client.visual.client.GuiBackground;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.util.ChatStyle;
@@ -67,32 +64,6 @@ public abstract class MixinGuiScreen {
     private void drawClientBackground(final CallbackInfo callbackInfo) {
         GlStateManager.disableLighting();
         GlStateManager.disableFog();
-
-        if (GuiBackground.Companion.getEnabled()) {
-            if (Client.INSTANCE.getBackground() == null) {
-                BackgroundShader.BACKGROUND_SHADER.startShader();
-
-                final Tessellator instance = Tessellator.getInstance();
-                final WorldRenderer worldRenderer = instance.getWorldRenderer();
-                worldRenderer.begin(7, DefaultVertexFormats.POSITION);
-                worldRenderer.pos(0, height, 0.0D).endVertex();
-                worldRenderer.pos(width, height, 0.0D).endVertex();
-                worldRenderer.pos(width, 0, 0.0D).endVertex();
-                worldRenderer.pos(0, 0, 0.0D).endVertex();
-                instance.draw();
-
-                BackgroundShader.BACKGROUND_SHADER.stopShader();
-            } else {
-                final ScaledResolution scaledResolution = new ScaledResolution(mc);
-                final int width = scaledResolution.getScaledWidth();
-                final int height = scaledResolution.getScaledHeight();
-
-                mc.getTextureManager().bindTexture(Client.INSTANCE.getBackground());
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, width, height, width, height, width, height);
-            }
-            callbackInfo.cancel();
-        }
     }
 
     @Inject(method = "sendChatMessage(Ljava/lang/String;Z)V", at = @At("HEAD"), cancellable = true)

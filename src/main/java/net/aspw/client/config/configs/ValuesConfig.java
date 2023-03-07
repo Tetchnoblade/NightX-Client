@@ -8,7 +8,6 @@ import net.aspw.client.features.module.Module;
 import net.aspw.client.features.special.MacroManager;
 import net.aspw.client.utils.EntityUtils;
 import net.aspw.client.value.Value;
-import net.aspw.client.visual.client.GuiBackground;
 import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening;
 
 import java.io.*;
@@ -74,12 +73,7 @@ public class ValuesConfig extends FileConfig {
 
                 if (jsonValue.has("API-Key"))
                     GuiTheAltening.Companion.setApiKey(jsonValue.get("API-Key").getAsString());
-            } else if (entry.getKey().equalsIgnoreCase("Background")) {
-                JsonObject jsonValue = (JsonObject) entry.getValue();
 
-                if (jsonValue.has("Enabled"))
-                    GuiBackground.Companion.setEnabled(jsonValue.get("Enabled").getAsBoolean());
-            } else {
                 final Module module = Client.moduleManager.getModule(entry.getKey());
 
                 if (module != null) {
@@ -129,10 +123,6 @@ public class ValuesConfig extends FileConfig {
         final JsonObject theAlteningObject = new JsonObject();
         theAlteningObject.addProperty("API-Key", GuiTheAltening.Companion.getApiKey());
         jsonObject.add("thealtening", theAlteningObject);
-
-        final JsonObject backgroundObject = new JsonObject();
-        backgroundObject.addProperty("Enabled", GuiBackground.Companion.getEnabled());
-        jsonObject.add("Background", backgroundObject);
 
         Client.moduleManager.getModules().stream().filter(module -> !module.getValues().isEmpty()).forEach(module -> {
             final JsonObject jsonModule = new JsonObject();

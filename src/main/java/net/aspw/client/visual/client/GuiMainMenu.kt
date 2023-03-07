@@ -15,7 +15,7 @@ import java.awt.Color
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
     val kawaiiLogo = ResourceLocation("client/kawaii.png")
-    val coolLogo = ResourceLocation("client/cool.png")
+    val nightxLogo = ResourceLocation("client/logo.png")
 
 
     var slideX: Float = 0F
@@ -45,7 +45,17 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             alrUpdate = true
         }
         val playerInfo = "Welcome, §a${mc.session.username}"
-        drawBackground(0)
+        mc.textureManager.bindTexture(ResourceLocation("client/background.png"))
+        drawModalRectWithCustomSizedTexture(
+            0,
+            0,
+            0f,
+            0f,
+            this.width,
+            this.height,
+            this.width.toFloat(),
+            this.height.toFloat()
+        )
         GL11.glPushMatrix()
         Fonts.fontSFUI40.drawStringWithShadow(
             Client.CLIENT_BEST + " Client!",
@@ -59,7 +69,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             height - 12F,
             -1
         )
-        RenderUtils.drawImage2(coolLogo, width / 2F - 50F, height / 2F - 90F, 100, 100)
+        RenderUtils.drawImage2(nightxLogo, width / 2F - 50F, height / 2F - 90F, 100, 100)
         RenderUtils.drawImage2(kawaiiLogo, width / 1.04F - 49.04F, height / 1.02F - 89.02F, 80, 80)
         GlStateManager.enableAlpha()
         renderBar(mouseX, mouseY, partialTicks)
@@ -72,7 +82,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
         val staticX = width / 2F - 120F
         val staticY = height / 2F + 20F
-        for ((index, icon) in ImageButton.values().withIndex()) {
+        for ((index, _) in ImageButton.values().withIndex()) {
             if (isMouseHover(
                     staticX + 40F * index,
                     staticY,
@@ -139,7 +149,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             slideX = if (fade == 0F)
                 moveX
             else
-                AnimationUtils.animate(moveX, slideX, 10F * (1F - partialTicks))
+                AnimationUtils.animate(moveX, slideX, 100F * (1F - partialTicks))
 
             lastXPos = moveX
 
@@ -149,7 +159,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             fade -= 10F
             if (fade <= 0F) fade = 0F
 
-            slideX = AnimationUtils.animate(lastXPos, slideX, 10F * (1F - partialTicks))
+            slideX = AnimationUtils.animate(lastXPos, slideX, 100F * (1F - partialTicks))
         }
 
         if (fade != 0F)
@@ -157,9 +167,9 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                 slideX,
                 staticY,
                 slideX + 40F,
-                staticY + 20F,
+                staticY + 22.5F,
                 0F,
-                (Color(50, 50, 50, 120)).rgb
+                (Color(70, 70, 70, 140)).rgb
             )
 
         index = 0
