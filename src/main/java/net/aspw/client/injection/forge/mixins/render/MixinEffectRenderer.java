@@ -44,25 +44,4 @@ public abstract class MixinEffectRenderer {
         } catch (final ConcurrentModificationException ignored) {
         }
     }
-
-    @Inject(
-            method = {
-                    "addBlockDestroyEffects",
-                    "addBlockHitEffects(Lnet/minecraft/util/BlockPos;Lnet/minecraft/util/EnumFacing;)V"
-            }, at = @At("HEAD"), cancellable = true
-    )
-    private void removeBlockBreakingParticles(CallbackInfo ci) {
-        if (Animations.noBlockParticles.get())
-            ci.cancel();
-    }
-
-    // this is added by forge, so this shouldn't be remapped (and causes a compile error if it is)
-    @Inject(
-            method = "addBlockHitEffects(Lnet/minecraft/util/BlockPos;Lnet/minecraft/util/MovingObjectPosition;)V",
-            at = @At("HEAD"), cancellable = true, remap = false
-    )
-    private void removeBlockBreakingParticles_Forge(CallbackInfo ci) {
-        if (Animations.noBlockParticles.get())
-            ci.cancel();
-    }
 }

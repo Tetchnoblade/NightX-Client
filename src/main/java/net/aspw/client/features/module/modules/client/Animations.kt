@@ -76,11 +76,9 @@ class Animations : Module() {
             ), "Swing"
         )
 
-        // item general scale
         @JvmField
         val Scale = FloatValue("Scale", 0.4f, 0f, 4f)
 
-        // normal item position
         @JvmField
         val itemPosX = FloatValue("ItemPosX", 0f, -1f, 1f)
 
@@ -99,7 +97,6 @@ class Animations : Module() {
         @JvmField
         val itemFovZ = FloatValue("ItemFovZ", 0f, -10f, 10f)
 
-        // change Position Blocking Sword
         @JvmField
         val blockPosX = FloatValue("BlockPosX", 0f, -1f, 1f)
 
@@ -109,7 +106,6 @@ class Animations : Module() {
         @JvmField
         val blockPosZ = FloatValue("BlockPosZ", 0f, -1f, 1f)
 
-        // modify item swing and rotate
         @JvmField
         val SpeedSwing = IntegerValue("Swing-Speed", 0, -9, 5)
 
@@ -121,39 +117,12 @@ class Animations : Module() {
         val onlySwingValue = BoolValue("Only-Swing", false)
 
         @JvmField
-        val RotateItems = BoolValue("Rotate-Items", false)
-
-        @JvmField
-        val SpeedRotate = FloatValue("Rotate-Speed", 1f, 0f, 10f) {
-            RotateItems.get() || Sword.get().equals("spinny", ignoreCase = true) || Sword.get()
-                .equals("rotate", ignoreCase = true)
+        val SpeedRotate = FloatValue("Spin-Speed", 10f, 0f, 10f) {
+            Sword.get().equals("spinny", ignoreCase = true) || Sword.get()
+                .equals("rotate", ignoreCase = true) || Sword.get()
+                .equals("spin", ignoreCase = true)
         }
 
-        @JvmField
-        val SpinSpeed = FloatValue("Spin-Speed", 10f, 0f, 50f) { Sword.get().equals("spin", ignoreCase = true) }
-
-        // transform rotation
-        @JvmField
-        val transformFirstPersonRotate =
-            ListValue("RotateMode", arrayOf("RotateY", "RotateXY", "Custom", "None"), "RotateY")
-
-        // custom item rotate
-        @JvmField
-        val customRotate1 = FloatValue("RotateXAxis", 0f, -180f, 180f) {
-            RotateItems.get() && transformFirstPersonRotate.get().equals("custom", ignoreCase = true)
-        }
-
-        @JvmField
-        val customRotate2 = FloatValue("RotateYAxis", 0f, -180f, 180f) {
-            RotateItems.get() && transformFirstPersonRotate.get().equals("custom", ignoreCase = true)
-        }
-
-        @JvmField
-        val customRotate3 = FloatValue("RotateZAxis", 0f, -180f, 180f) {
-            RotateItems.get() && transformFirstPersonRotate.get().equals("custom", ignoreCase = true)
-        }
-
-        // gui animations
         @JvmField
         val guiAnimations = ListValue("Container-Animation", arrayOf("None", "Zoom", "Slide", "Smooth"), "None")
 
@@ -174,15 +143,13 @@ class Animations : Module() {
         @JvmField
         val tabAnimations = ListValue("Tab-Animation", arrayOf("None", "Zoom", "Slide"), "None")
 
-        // block break
-        @JvmField
-        val noBlockParticles = BoolValue("NoBlockParticles", false)
-
-        // blocking
         @JvmField
         val fakeBlock = BoolValue("Visual-Blocking", true)
 
         @JvmField
         val swingAnimValue = BoolValue("Swing-Animation", false)
+
+        @JvmField
+        val oldAnimations = BoolValue("1.7Animations", false)
     }
 }

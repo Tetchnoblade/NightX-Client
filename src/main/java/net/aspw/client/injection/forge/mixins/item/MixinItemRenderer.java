@@ -13,10 +13,7 @@ import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.ItemMap;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
+import net.minecraft.item.*;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
@@ -139,7 +136,7 @@ public abstract class MixinItemRenderer {
         GlStateManager.translate(0.7D, -0.4000000059604645D, -0.800000011920929D);
         GlStateManager.rotate(30.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.rotate(30.0F, 0.0F, 0.0F, -1.0F);
-        GlStateManager.rotate(this.delay * 0.2F * (Animations.SpinSpeed.get()).floatValue(), 0.0F, 0.0F, 1.0F);
+        GlStateManager.rotate(this.delay * 0.2F * Animations.SpeedRotate.get(), 0.0F, 0.0F, 1.0F);
         GlStateManager.rotate(-25.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
@@ -272,6 +269,16 @@ public abstract class MixinItemRenderer {
         }
 
         if (this.itemToRender != null) {
+            if (Animations.oldAnimations.getValue() && (itemToRender.getItem() instanceof ItemCarrotOnAStick || itemToRender.getItem() instanceof ItemFishingRod) && Client.moduleManager.getModule(Animations.class).getState()) {
+                GlStateManager.translate(0.08F, -0.027F, -0.33F);
+                GlStateManager.scale(0.93F, 1.0F, 1.0F);
+            }
+
+            if (Animations.oldAnimations.getValue() && f1 != 0.0F && (!mc.thePlayer.isBlocking()) && !mc.thePlayer.isEating() && !mc.thePlayer.isUsingItem() && Client.moduleManager.getModule(Animations.class).getState()) {
+                GlStateManager.scale(0.85F, 0.85F, 0.85F);
+                GlStateManager.translate(-0.06F, 0.003F, 0.05F);
+            }
+
             final KillAura killAura = Client.moduleManager.getModule(KillAura.class);
 
             if (this.itemToRender.getItem() instanceof ItemMap) {
@@ -290,10 +297,11 @@ public abstract class MixinItemRenderer {
                     case EAT:
                     case DRINK:
                         this.performDrinking(abstractclientplayer, partialTicks);
-                        this.transformFirstPersonItem(f, 0.0F);
-
-                        if (Client.moduleManager.getModule(Animations.class).getState() && Animations.RotateItems.get())
-                            rotateItemAnim();
+                        if (Animations.oldAnimations.getValue() && Client.moduleManager.getModule(Animations.class).getState()) {
+                            this.transformFirstPersonItem(f, f1);
+                        } else {
+                            this.transformFirstPersonItem(f, 0.0F);
+                        }
                         break;
                     case BLOCK:
                         if (Client.moduleManager.getModule(Animations.class).getState() && Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("jello")) {
@@ -323,37 +331,18 @@ public abstract class MixinItemRenderer {
                         if (Client.moduleManager.getModule(Animations.class).getState() && Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("sloth")) {
                             GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.11, Animations.blockPosY.get().doubleValue() + 0.06, Animations.blockPosZ.get().doubleValue() - 0.24);
                             this.func_178096_b(f / Animations.Equip.getValue(), f1);
-                            if (Animations.RotateItems.get())
-                                rotateItemAnim();
-
-                            this.func_178103_d();
-                            if (Animations.RotateItems.get())
-                                rotateItemAnim();
                             break;
                         }
 
                         if (Client.moduleManager.getModule(Animations.class).getState() && Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("shield")) {
                             GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.26, Animations.blockPosZ.get().doubleValue() + 0.06);
                             this.shield(f / Animations.Equip.getValue(), f1);
-                            if (Animations.RotateItems.get())
-                                rotateItemAnim();
-
-                            this.func_178103_d();
-                            if (Animations.RotateItems.get())
-                                rotateItemAnim();
                             break;
                         }
 
                         if (Client.moduleManager.getModule(Animations.class).getState() && Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("reverse")) {
                             GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.2, Animations.blockPosZ.get().doubleValue() - 0.12);
                             this.func_178096_b(f / Animations.Equip.getValue(), f1);
-                            if (Animations.RotateItems.get())
-                                rotateItemAnim();
-
-                            this.func_178103_d();
-                            GL11.glTranslated(0.08D, -0.1D, -0.3D);
-                            if (Animations.RotateItems.get())
-                                rotateItemAnim();
                             break;
                         }
 
@@ -389,13 +378,6 @@ public abstract class MixinItemRenderer {
                         if (Client.moduleManager.getModule(Animations.class).getState() && Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("old")) {
                             GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.08, Animations.blockPosY.get().doubleValue() - 0.04, Animations.blockPosZ.get().doubleValue() - 0.05);
                             this.transformFirstPersonItem(f / Animations.Equip.getValue(), f1);
-                            if (Animations.RotateItems.get())
-                                rotateItemAnim();
-
-                            this.doBlockTransformations();
-                            GlStateManager.translate(-0.35F, 0.2F, 0.0F);
-                            if (Animations.RotateItems.get())
-                                rotateItemAnim();
                             break;
                         }
 
@@ -413,42 +395,18 @@ public abstract class MixinItemRenderer {
                             switch (z) {
                                 case "SlideFull": {
                                     this.slide1(f / Animations.Equip.getValue(), f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                                 case "SlideMedium": {
                                     this.slide2(f / Animations.Equip.getValue(), f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                                 case "Stab": {
                                     this.stab(f / Animations.Equip.getValue(), f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                                 case "VisionFX": {
                                     this.continuity(0.1f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                                 case "Astolfo": {
@@ -560,42 +518,18 @@ public abstract class MixinItemRenderer {
                                 }
                                 case "Lennox": {
                                     this.lennox(-0.3f, f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                                 case "Avatar": {
                                     this.avatar(f / Animations.Equip.getValue(), f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                                 case "SlideLow": {
                                     this.slide3(f / Animations.Equip.getValue(), f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                                 case "ETB": {
                                     this.ETB(f / Animations.Equip.getValue(), f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                                 case "1.8": {
@@ -608,64 +542,46 @@ public abstract class MixinItemRenderer {
                                     this.sigmaold(f / Animations.Equip.getValue(), 0.0f);
                                     GlStateManager.rotate(-var15 * 55 / 2.0F, -8.0F, -0.0F, 9.0F);
                                     GlStateManager.rotate(-var15 * 45, 1.0F, var15 / 2, -0.0F);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
 
                                     this.func_178103_d();
                                     GL11.glTranslated(1.2, 0.3, 0.5);
                                     GL11.glTranslatef(-1, this.mc.thePlayer.isSneaking() ? -0.1F : -0.2F, 0.2F);
                                     GlStateManager.scale(1.2f, 1.2f, 1.2f);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                                 case "Spinny": {
-                                    this.func_178096_b(f / Animations.Equip.getValue(), 0.95f);
+                                    this.func_178096_b(0.0f, 0.95f);
                                     GlStateManager.rotate(this.delay, 1.0F, 0.0F, 2.0F);
                                     if (this.rotateTimer.hasTimePassed(1)) {
                                         ++this.delay;
-                                        this.delay = this.delay + Animations.SpeedRotate.get();
+                                        this.delay = this.delay + Animations.SpeedRotate.get() - 9;
                                         this.rotateTimer.reset();
                                     }
                                     if (this.delay > 360.0F) {
                                         this.delay = 0.0F;
                                     }
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
 
                                     this.func_178103_d();
                                     GlStateManager.rotate(this.delay, 0.0F, 1.0F, 0.0F);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                                 case "Rotate": {
                                     this.func_178096_b(f / Animations.Equip.getValue(), 0.95f);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
 
                                     this.func_178103_d();
                                     GlStateManager.rotate(this.delay, 1.0F, 0.0F, 2.0F);
                                     if (this.rotateTimer.hasTimePassed(1)) {
                                         ++this.delay;
-                                        this.delay = this.delay + Animations.SpeedRotate.get();
+                                        this.delay = this.delay + Animations.SpeedRotate.get() - 9;
                                         this.rotateTimer.reset();
                                     }
                                     if (this.delay > 360.0F) {
                                         this.delay = 0.0F;
                                     }
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                                 case "Swing": {
                                     this.func_178096_b(f / Animations.Equip.getValue(), f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                                 case "Flux1": {
@@ -713,12 +629,6 @@ public abstract class MixinItemRenderer {
                                 }
                                 case "Zoom": {
                                     this.Zoom(f / Animations.Equip.getValue(), f1);
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
-
-                                    this.func_178103_d();
-                                    if (Animations.RotateItems.get())
-                                        rotateItemAnim();
                                     break;
                                 }
                             }
@@ -730,19 +640,16 @@ public abstract class MixinItemRenderer {
                         }
                         break;
                     case BOW:
-                        this.transformFirstPersonItem(f, 0.0F);
-                        if (Client.moduleManager.getModule(Animations.class).getState() && Animations.RotateItems.get())
-                            rotateItemAnim();
-                        this.doBowTransformations(partialTicks, abstractclientplayer);
-                        if (Client.moduleManager.getModule(Animations.class).getState() && Animations.RotateItems.get())
-                            rotateItemAnim();
+                        if (Animations.oldAnimations.getValue() && Client.moduleManager.getModule(Animations.class).getState()) {
+                            this.transformFirstPersonItem(f, f1);
+                        } else {
+                            this.transformFirstPersonItem(f, 0.0F);
+                        }
                 }
             } else {
                 if (!Animations.swingAnimValue.get())
                     this.doItemUsedTransformations(f1);
                 this.transformFirstPersonItem(f, f1);
-                if (Client.moduleManager.getModule(Animations.class).getState() && Animations.RotateItems.get())
-                    rotateItemAnim();
             }
 
             this.renderItem(abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
@@ -755,28 +662,6 @@ public abstract class MixinItemRenderer {
 
         if (Client.moduleManager.getModule(Animations.class).getState())
             GL11.glTranslated(-Animations.itemPosX.get().doubleValue(), -Animations.itemPosY.get().doubleValue(), -Animations.itemPosZ.get().doubleValue());
-    }
-
-    private void rotateItemAnim() {
-        if (Animations.transformFirstPersonRotate.get().equalsIgnoreCase("RotateY")) {
-            GlStateManager.rotate(this.delay, 0.0F, 1.0F, 0.0F);
-        }
-        if (Animations.transformFirstPersonRotate.get().equalsIgnoreCase("RotateXY")) {
-            GlStateManager.rotate(this.delay, 1.0F, 1.0F, 0.0F);
-        }
-
-        if (Animations.transformFirstPersonRotate.get().equalsIgnoreCase("Custom")) {
-            GlStateManager.rotate(this.delay, Animations.customRotate1.get(), Animations.customRotate2.get(), Animations.customRotate3.get());
-        }
-
-        if (this.rotateTimer.hasTimePassed(1)) {
-            ++this.delay;
-            this.delay = this.delay + Animations.SpeedRotate.get();
-            this.rotateTimer.reset();
-        }
-        if (this.delay > 360.0F) {
-            this.delay = 0.0F;
-        }
     }
 
     @Inject(method = "renderFireInFirstPerson", at = @At("HEAD"), cancellable = true)
