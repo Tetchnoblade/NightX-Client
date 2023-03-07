@@ -29,11 +29,11 @@ class Animations : Module() {
     }
 
     companion object {
-        // some ListValue
         @JvmField
         val Sword = ListValue(
             "Style", arrayOf(
                 "1.8",
+                "Hide",
                 "Old",
                 "SlideLow",
                 "SlideMedium",
@@ -49,6 +49,7 @@ class Animations : Module() {
                 "Reverse",
                 "Autumn",
                 "Astolfo",
+                "Fruit",
                 "VisionFX",
                 "ETB",
                 "Moon",
@@ -74,6 +75,14 @@ class Animations : Module() {
                 "Spin",
                 "Spinny"
             ), "Swing"
+        )
+
+        @JvmField
+        val swingAnimValue = ListValue(
+            "Swing-Animation", arrayOf(
+                "Vanilla",
+                "Flux"
+            ), "Vanilla"
         )
 
         @JvmField
@@ -144,12 +153,6 @@ class Animations : Module() {
         val tabAnimations = ListValue("Tab-Animation", arrayOf("None", "Zoom", "Slide"), "None")
 
         @JvmField
-        val fakeBlock = BoolValue("Visual-Blocking", true)
-
-        @JvmField
-        val swingAnimValue = BoolValue("Swing-Animation", false)
-
-        @JvmField
-        val oldAnimations = BoolValue("1.7Animations", false)
+        val oldAnimations = BoolValue("1.7-Animations", false)
     }
 }

@@ -95,6 +95,18 @@ public abstract class MixinItemRenderer {
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
 
+    private void fruit(float p_178096_1_, float p_178096_2_) {
+        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
+        GlStateManager.translate(0.0F, p_178096_1_ * -0.6F, 0.0F);
+        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
+        float var3 = MathHelper.sin(p_178096_2_ * p_178096_2_ * (float) Math.PI);
+        float var4 = MathHelper.sin(MathHelper.sqrt_float(p_178096_2_) * (float) Math.PI);
+        GlStateManager.rotate(var3 * -20.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(var4 * -20.0F, 0.0F, 0.0F, 1.0F);
+        GlStateManager.rotate(var4 * -20.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
+    }
+
     private void slide1(float p_178096_1_, float p_178096_2_) {
         GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
         GlStateManager.translate(0.0F, p_178096_1_ * -0.6F, 0.0F);
@@ -274,7 +286,7 @@ public abstract class MixinItemRenderer {
                 GlStateManager.scale(0.93F, 1.0F, 1.0F);
             }
 
-            if (Animations.oldAnimations.getValue() && f1 != 0.0F && (!mc.thePlayer.isBlocking()) && !mc.thePlayer.isEating() && !mc.thePlayer.isUsingItem() && Client.moduleManager.getModule(Animations.class).getState()) {
+            if (Animations.oldAnimations.getValue() && f1 != 0.0F && (Animations.Sword.get().equals("Hide") || !mc.thePlayer.isBlocking() && !mc.thePlayer.isEating() && !mc.thePlayer.isUsingItem()) && Client.moduleManager.getModule(Animations.class).getState()) {
                 GlStateManager.scale(0.85F, 0.85F, 0.85F);
                 GlStateManager.translate(-0.06F, 0.003F, 0.05F);
             }
@@ -286,7 +298,7 @@ public abstract class MixinItemRenderer {
             } else if (abstractclientplayer.getItemInUseCount() > 0
                     || (itemToRender.getItem() instanceof ItemSword && (killAura.getBlockingStatus() || killAura.getFakeBlock()))
                     || (itemToRender.getItem() instanceof ItemSword && Client.moduleManager.getModule(Animations.class).getState()
-                    && Animations.fakeBlock.get() && killAura.getTarget() != null)) {
+                    && killAura.getTarget() != null)) {
 
                 EnumAction enumaction = (killAura.getBlockingStatus()) ? EnumAction.BLOCK : this.itemToRender.getItemUseAction();
 
@@ -331,18 +343,22 @@ public abstract class MixinItemRenderer {
                         if (Client.moduleManager.getModule(Animations.class).getState() && Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("sloth")) {
                             GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.11, Animations.blockPosY.get().doubleValue() + 0.06, Animations.blockPosZ.get().doubleValue() - 0.24);
                             this.func_178096_b(f / Animations.Equip.getValue(), f1);
+                            this.func_178103_d();
                             break;
                         }
 
                         if (Client.moduleManager.getModule(Animations.class).getState() && Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("shield")) {
                             GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.26, Animations.blockPosZ.get().doubleValue() + 0.06);
                             this.shield(f / Animations.Equip.getValue(), f1);
+                            this.func_178103_d();
                             break;
                         }
 
                         if (Client.moduleManager.getModule(Animations.class).getState() && Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("reverse")) {
                             GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.2, Animations.blockPosZ.get().doubleValue() - 0.12);
                             this.func_178096_b(f / Animations.Equip.getValue(), f1);
+                            this.func_178103_d();
+                            GL11.glTranslated(0.08D, -0.1D, -0.3D);
                             break;
                         }
 
@@ -354,6 +370,18 @@ public abstract class MixinItemRenderer {
                             GlStateManager.translate(-0.36f, 0.25f, -0.06f);
                             GlStateManager.rotate(-var91 * 35.0f, -8.0f, -0.0f, 9.0f);
                             GlStateManager.rotate(-var91 * 70.0f, 1.0f, 0.4f, -0.0f);
+                            break;
+                        }
+
+                        if (Client.moduleManager.getModule(Animations.class).getState() && Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("hide")) {
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
+                            if (Animations.swingAnimValue.get().equals("Vanilla")) {
+                                this.doItemUsedTransformations(f1);
+                                this.transformFirstPersonItem(f, f1);
+                            }
+                            if (Animations.swingAnimValue.get().equals("Flux")) {
+                                this.transformFirstPersonItem(f, f1);
+                            }
                             break;
                         }
 
@@ -378,6 +406,8 @@ public abstract class MixinItemRenderer {
                         if (Client.moduleManager.getModule(Animations.class).getState() && Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("old")) {
                             GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.08, Animations.blockPosY.get().doubleValue() - 0.04, Animations.blockPosZ.get().doubleValue() - 0.05);
                             this.transformFirstPersonItem(f / Animations.Equip.getValue(), f1);
+                            this.doBlockTransformations();
+                            GlStateManager.translate(-0.35F, 0.2F, 0.0F);
                             break;
                         }
 
@@ -389,24 +419,28 @@ public abstract class MixinItemRenderer {
                             break;
                         }
 
-                        if (Client.moduleManager.getModule(Animations.class).getState() && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("reverse") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("jello") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("shield") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("jigsaw") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("spin") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("old") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("sloth") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("smooth") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("autumn")) {
+                        if (Client.moduleManager.getModule(Animations.class).getState() && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("reverse") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("hide") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("jello") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("shield") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("jigsaw") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("spin") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("old") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("sloth") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("smooth") && !Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("autumn")) {
                             GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.1, Animations.blockPosZ.get().doubleValue());
                             final String z = Animations.Sword.get();
                             switch (z) {
                                 case "SlideFull": {
                                     this.slide1(f / Animations.Equip.getValue(), f1);
+                                    this.func_178103_d();
                                     break;
                                 }
                                 case "SlideMedium": {
                                     this.slide2(f / Animations.Equip.getValue(), f1);
+                                    this.func_178103_d();
                                     break;
                                 }
                                 case "Stab": {
                                     this.stab(f / Animations.Equip.getValue(), f1);
+                                    this.func_178103_d();
                                     break;
                                 }
                                 case "VisionFX": {
                                     this.continuity(0.1f, f1);
+                                    this.func_178103_d();
                                     break;
                                 }
                                 case "Astolfo": {
@@ -518,18 +552,22 @@ public abstract class MixinItemRenderer {
                                 }
                                 case "Lennox": {
                                     this.lennox(-0.3f, f1);
+                                    this.func_178103_d();
                                     break;
                                 }
                                 case "Avatar": {
                                     this.avatar(f / Animations.Equip.getValue(), f1);
+                                    this.func_178103_d();
                                     break;
                                 }
                                 case "SlideLow": {
                                     this.slide3(f / Animations.Equip.getValue(), f1);
+                                    this.func_178103_d();
                                     break;
                                 }
                                 case "ETB": {
                                     this.ETB(f / Animations.Equip.getValue(), f1);
+                                    this.func_178103_d();
                                     break;
                                 }
                                 case "1.8": {
@@ -582,6 +620,12 @@ public abstract class MixinItemRenderer {
                                 }
                                 case "Swing": {
                                     this.func_178096_b(f / Animations.Equip.getValue(), f1);
+                                    this.func_178103_d();
+                                    break;
+                                }
+                                case "Fruit": {
+                                    this.fruit(f / Animations.Equip.getValue(), f1);
+                                    this.func_178103_d();
                                     break;
                                 }
                                 case "Flux1": {
@@ -629,12 +673,13 @@ public abstract class MixinItemRenderer {
                                 }
                                 case "Zoom": {
                                     this.Zoom(f / Animations.Equip.getValue(), f1);
+                                    this.func_178103_d();
                                     break;
                                 }
                             }
                         } else {
                             GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.1, Animations.blockPosZ.get().doubleValue());
-                            transformFirstPersonItem(f, f1);
+                            transformFirstPersonItem(f, 0.0f);
                             doBlockTransformations();
                             break;
                         }
@@ -645,11 +690,16 @@ public abstract class MixinItemRenderer {
                         } else {
                             this.transformFirstPersonItem(f, 0.0F);
                         }
+                        this.doBowTransformations(partialTicks, abstractclientplayer);
                 }
             } else {
-                if (!Animations.swingAnimValue.get())
+                if (Client.moduleManager.getModule(Animations.class).getState() && Animations.swingAnimValue.get().equals("Vanilla") || !Client.moduleManager.getModule(Animations.class).getState()) {
                     this.doItemUsedTransformations(f1);
-                this.transformFirstPersonItem(f, f1);
+                    this.transformFirstPersonItem(f, f1);
+                }
+                if (Client.moduleManager.getModule(Animations.class).getState() && Animations.swingAnimValue.get().equals("Flux")) {
+                    this.transformFirstPersonItem(f, f1);
+                }
             }
 
             this.renderItem(abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);

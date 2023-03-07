@@ -19,6 +19,7 @@ import net.aspw.client.features.module.modules.movement.speeds.vanillabhop.Vanil
 import net.aspw.client.features.module.modules.movement.speeds.verus.VerusHard
 import net.aspw.client.features.module.modules.movement.speeds.verus.VerusHop
 import net.aspw.client.features.module.modules.movement.speeds.verus.VerusLowHop
+import net.aspw.client.features.module.modules.movement.speeds.vulcan.VulcanGround
 import net.aspw.client.features.module.modules.movement.speeds.vulcan.VulcanHop1
 import net.aspw.client.features.module.modules.movement.speeds.vulcan.VulcanHop2
 import net.aspw.client.features.module.modules.movement.speeds.vulcan.VulcanYPort
@@ -96,6 +97,7 @@ class Speed : Module() {
         VulcanHop1(),
         VulcanHop2(),
         VulcanYPort(),
+        VulcanGround(),
         ShotBow(),
         MatrixHop()
     )
@@ -355,7 +357,8 @@ class Speed : Module() {
     val vulcanModeValue: ListValue = object : ListValue("Vulcan-Mode", arrayOf(
         "Hop1",
         "Hop2",
-        "YPort"
+        "YPort",
+        "Ground"
     ), "YPort", { typeValue.get().equals("vulcan", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
