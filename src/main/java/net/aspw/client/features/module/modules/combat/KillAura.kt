@@ -157,39 +157,39 @@ class KillAura : Module() {
 
     // AutoBlock
     val autoBlockModeValue =
-        ListValue("AutoBlock", arrayOf("None", "Interact", "Packet", "AfterTick", "OldHypixel"), "Packet")
+        ListValue("AutoBlock", arrayOf("Fake", "Interact", "Packet", "AfterTick", "NCP", "OldHypixel"), "Fake")
 
     private val interactAutoBlockValue = BoolValue(
         "InteractAutoBlock",
         false
-    ) { !autoBlockModeValue.get().equals("None", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) }
     private val verusAutoBlockValue = BoolValue(
         "UnBlock-Exploit",
         false
-    ) { !autoBlockModeValue.get().equals("None", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) }
     private val abThruWallValue = BoolValue(
         "ThroughAutoBlock",
         true
-    ) { !autoBlockModeValue.get().equals("None", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) }
 
     // smart autoblock stuff
     private val smartAutoBlockValue = BoolValue(
         "SmartAutoBlock",
         false
-    ) { !autoBlockModeValue.get().equals("None", true) } // thanks czech
+    ) { !autoBlockModeValue.get().equals("Fake", true) } // thanks czech
     private val smartABItemValue = BoolValue(
         "SmartAutoBlock-ItemCheck",
         true
     ) {
         !autoBlockModeValue.get()
-            .equals("None", true) && smartAutoBlockValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get()
     }
     private val smartABFacingValue = BoolValue(
         "SmartAutoBlock-FacingCheck",
         true
     ) {
         !autoBlockModeValue.get()
-            .equals("None", true) && smartAutoBlockValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get()
     }
     private val smartABRangeValue = FloatValue(
         "SmartAB-Range",
@@ -199,7 +199,7 @@ class KillAura : Module() {
         "m"
     ) {
         !autoBlockModeValue.get()
-            .equals("None", true) && smartAutoBlockValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get()
     }
     private val smartABTolerationValue = FloatValue(
         "SmartAB-Toleration",
@@ -208,7 +208,7 @@ class KillAura : Module() {
         2F
     ) {
         !autoBlockModeValue.get()
-            .equals("None", true) && smartAutoBlockValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get()
     }
 
     private val afterTickPatchValue = BoolValue(
@@ -221,7 +221,7 @@ class KillAura : Module() {
         1,
         100,
         "%"
-    ) { !autoBlockModeValue.get().equals("None", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) }
 
     // Raycast
     private val raycastValue = BoolValue("PostAttack", true)
@@ -1054,7 +1054,7 @@ class KillAura : Module() {
 
     private fun startBlocking(interactEntity: Entity, interact: Boolean) {
         if (!canSmartBlock || autoBlockModeValue.get()
-                .equals("none", true) || !(blockRate.get() > 0 && Random().nextInt(100) <= blockRate.get())
+                .equals("Fake", true) || !(blockRate.get() > 0 && Random().nextInt(100) <= blockRate.get())
         )
             return
 
@@ -1064,6 +1064,20 @@ class KillAura : Module() {
                 fakeBlock = true
                 return
             }
+        }
+
+        if (autoBlockModeValue.get().equals("ncp", true)) {
+            PacketUtils.sendPacketNoEvent(
+                C08PacketPlayerBlockPlacement(
+                    BlockPos(-1, -1, -1),
+                    255,
+                    null,
+                    0.0f,
+                    0.0f,
+                    0.0f
+                )
+            )
+            return
         }
 
         if (autoBlockModeValue.get().equals("interact", true)) {
@@ -1129,6 +1143,22 @@ class KillAura : Module() {
         fakeBlock = false
 
         if (blockingStatus) {
+            if (autoBlockModeValue.get().equals("ncp", true)) {
+                PacketUtils.sendPacketNoEvent(
+                    C07PacketPlayerDigging(
+                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
+                        BlockPos(1.0, 1.0, 1.0),
+                        EnumFacing.DOWN
+                    )
+                )
+                PacketUtils.sendPacketNoEvent(
+                    C07PacketPlayerDigging(
+                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
+                        BlockPos.ORIGIN,
+                        EnumFacing.DOWN
+                    )
+                )
+            }
             if (autoBlockModeValue.get().equals("oldhypixel", true))
                 PacketUtils.sendPacketNoEvent(
                     C07PacketPlayerDigging(

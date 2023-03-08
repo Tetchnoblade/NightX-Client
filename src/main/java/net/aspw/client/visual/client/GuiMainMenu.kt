@@ -149,17 +149,17 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             slideX = if (fade == 0F)
                 moveX
             else
-                AnimationUtils.animate(moveX, slideX, 100F * (1F - partialTicks))
+                AnimationUtils.animate(moveX, slideX, 15F * (1F - partialTicks))
 
             lastXPos = moveX
 
             fade += 10F
-            if (fade >= 100F) fade = 100F
+            if (fade >= 15F) fade = 15F
         } else {
             fade -= 10F
             if (fade <= 0F) fade = 0F
 
-            slideX = AnimationUtils.animate(lastXPos, slideX, 100F * (1F - partialTicks))
+            slideX = AnimationUtils.animate(lastXPos, slideX, 15F * (1F - partialTicks))
         }
 
         if (fade != 0F)
