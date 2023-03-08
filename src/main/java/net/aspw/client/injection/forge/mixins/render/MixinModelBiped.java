@@ -2,10 +2,7 @@ package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.modules.client.SilentView;
-import net.aspw.client.features.module.modules.combat.KillAura;
-import net.aspw.client.features.module.modules.misc.Annoy;
 import net.aspw.client.features.module.modules.render.Rotate;
-import net.aspw.client.features.module.modules.world.Scaffold;
 import net.aspw.client.utils.RotationUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -38,13 +35,10 @@ public class MixinModelBiped<T extends MixinRendererLivingEntity> {
         if (p_setRotationAngles_7_ instanceof EntityPlayer && p_setRotationAngles_7_.equals(Minecraft.getMinecraft().thePlayer)) {
             final SilentView silentView = Client.moduleManager.getModule(SilentView.class);
             final Rotate spinBot = Client.moduleManager.getModule(Rotate.class);
-            final KillAura killAura = Client.moduleManager.getModule(KillAura.class);
-            final Scaffold scaffold = Client.moduleManager.getModule(Scaffold.class);
-            final Annoy annoy = Client.moduleManager.getModule(Annoy.class);
             float pitch = RotationUtils.serverRotation.getPitch();
             if (spinBot.getState() && !spinBot.getPitchMode().get().equalsIgnoreCase("none"))
                 this.bipedHead.rotateAngleX = spinBot.getPitch() / (180F / (float) Math.PI);
-            if (silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && killAura.getTarget() != null && killAura.getSilentRotationValue().get() && !killAura.getRotations().get().equals("None") || silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && scaffold.getState() && scaffold.rotationsValue.get() || silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && annoy.getState() || silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && Minecraft.getMinecraft().thePlayer.ridingEntity != null) {
+            if (silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.shouldRotate()) {
                 this.bipedHead.rotateAngleX = pitch / (silentView.getHeadPitchLimit().getValue() / (float) Math.PI);
             }
         }

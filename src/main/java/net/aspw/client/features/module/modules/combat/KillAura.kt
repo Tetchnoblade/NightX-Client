@@ -1143,22 +1143,6 @@ class KillAura : Module() {
         fakeBlock = false
 
         if (blockingStatus) {
-            if (autoBlockModeValue.get().equals("ncp", true)) {
-                PacketUtils.sendPacketNoEvent(
-                    C07PacketPlayerDigging(
-                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                        BlockPos(1.0, 1.0, 1.0),
-                        EnumFacing.DOWN
-                    )
-                )
-                PacketUtils.sendPacketNoEvent(
-                    C07PacketPlayerDigging(
-                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                        BlockPos.ORIGIN,
-                        EnumFacing.DOWN
-                    )
-                )
-            }
             if (autoBlockModeValue.get().equals("oldhypixel", true))
                 PacketUtils.sendPacketNoEvent(
                     C07PacketPlayerDigging(

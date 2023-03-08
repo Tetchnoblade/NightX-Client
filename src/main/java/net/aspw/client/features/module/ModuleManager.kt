@@ -189,7 +189,8 @@ class ModuleManager : Listenable {
             FakePlayer::class.java,
             JumpCircle::class.java,
             NoZeroZeroThrees::class.java,
-            Wings::class.java
+            Wings::class.java,
+            Disabler2::class.java
         )
 
         registerModule(Fucker)

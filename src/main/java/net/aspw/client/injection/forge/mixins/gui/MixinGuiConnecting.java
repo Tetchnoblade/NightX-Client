@@ -1,7 +1,6 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.utils.ServerUtils;
-import net.aspw.client.visual.font.Fonts;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;
@@ -109,8 +108,8 @@ public abstract class MixinGuiConnecting extends GuiScreen {
         if (serverData != null)
             ip = serverData.serverIP;
 
-        Fonts.fontSFUI40.drawCenteredString("Authenticating to", scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 4 + 110, 0xFFFFFF, true);
-        Fonts.fontSFUI35.drawCenteredString(ip, scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 4 + 120, 0x5281FB, true);
+        drawCenteredString(fontRendererObj, "Logging in to", scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 4 + 105, 16777215);
+        drawCenteredString(fontRendererObj, "§7" + ip, scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 4 + 115, 16777215);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }

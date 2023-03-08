@@ -32,9 +32,13 @@ class SilentView : Module() {
 
     fun shouldRotate(): Boolean {
         val killAura = Client.moduleManager.getModule(KillAura::class.java) as KillAura
+        val scaffold = Client.moduleManager.getModule(Scaffold::class.java) as Scaffold
         return getState(Scaffold::class.java) ||
-                (getState(KillAura::class.java) && killAura.target != null) ||
-                (getState(Scaffold::class.java)) || (getState(Annoy::class.java))
+                (getState(KillAura::class.java) && killAura.target != null) && killAura.silentRotationValue.get() && !killAura.rotations.get()
+            .equals("None") ||
+                (getState(Scaffold::class.java) && scaffold.rotationsValue.get()) || mc.thePlayer.ridingEntity != null || (getState(
+            Annoy::class.java
+        ))
     }
 
     init {
