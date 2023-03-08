@@ -73,7 +73,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
         final Minecraft mc = Minecraft.getMinecraft();
 
         if (progress >= 1F) progress = 1F;
-        else progress = (float) (System.currentTimeMillis() - lastMS) / (float) Animations.animTimeValue.get();
+        else progress = (float) (System.currentTimeMillis() - lastMS) / (float) 200;
 
         double trueAnim = EaseUtils.easeOutQuart(progress);
 
@@ -94,25 +94,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
                     GL11.glScaled(trueAnim, trueAnim, trueAnim);
                     break;
                 case "Slide":
-                    switch (Animations.hSlideValue.get()) {
-                        case "Right":
-                            GL11.glTranslated((1 - trueAnim) * -width, 0D, 0D);
-                            break;
-                        case "Left":
-                            GL11.glTranslated((1 - trueAnim) * width, 0D, 0D);
-                            break;
-                    }
-                    switch (Animations.vSlideValue.get()) {
-                        case "Upward":
-                            GL11.glTranslated(0D, (1 - trueAnim) * height, 0D);
-                            break;
-                        case "Downward":
-                            GL11.glTranslated(0D, (1 - trueAnim) * -height, 0D);
-                            break;
-                    }
-                    break;
-                case "Smooth":
-                    GL11.glTranslated((1 - trueAnim) * -width, (1 - trueAnim) * -height / 4F, 0D);
+                    GL11.glTranslated((1 - trueAnim) * width, 0D, 0D);
                     break;
             }
         }

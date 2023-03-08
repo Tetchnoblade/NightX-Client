@@ -133,21 +133,7 @@ class Animations : Module() {
         }
 
         @JvmField
-        val guiAnimations = ListValue("Container-Animation", arrayOf("None", "Zoom", "Slide", "Smooth"), "None")
-
-        @JvmField
-        val vSlideValue = ListValue("Slide-Vertical", arrayOf("None", "Upward", "Downward"), "None") {
-            guiAnimations.get().equals("slide", ignoreCase = true)
-        }
-
-        @JvmField
-        val hSlideValue = ListValue("Slide-Horizontal", arrayOf("None", "Right", "Left"), "Left") {
-            guiAnimations.get().equals("slide", ignoreCase = true)
-        }
-
-        @JvmField
-        val animTimeValue =
-            IntegerValue("Container-AnimTime", 200, 0, 3000) { !guiAnimations.get().equals("none", ignoreCase = true) }
+        val guiAnimations = ListValue("Container-Animation", arrayOf("None", "Zoom", "Slide"), "None")
 
         @JvmField
         val tabAnimations = ListValue("Tab-Animation", arrayOf("None", "Zoom", "Slide"), "None")
