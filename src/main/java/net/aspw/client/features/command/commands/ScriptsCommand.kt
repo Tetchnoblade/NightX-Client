@@ -2,7 +2,6 @@ package net.aspw.client.features.command.commands
 
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
-import net.aspw.client.features.command.CommandManager
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.misc.MiscUtils
 import org.apache.commons.io.IOUtils
@@ -11,7 +10,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.zip.ZipFile
 
-class ScriptManagerCommand : Command("scriptmanager", arrayOf("scripts")) {
+class ScriptsCommand : Command("scripts", arrayOf("scripts")) {
     /**
      * Execute commands with provided [args]
      */
@@ -72,7 +71,7 @@ class ScriptManagerCommand : Command("scriptmanager", arrayOf("scripts")) {
                 args[1].equals("delete", true) -> {
                     try {
                         if (args.size <= 2) {
-                            chatSyntax("scriptmanager delete <index>")
+                            chatSyntax("scripts delete <index>")
                             return
                         }
 
@@ -94,27 +93,6 @@ class ScriptManagerCommand : Command("scriptmanager", arrayOf("scripts")) {
                         chatSyntaxError()
                     } catch (t: Throwable) {
                         ClientUtils.getLogger().error("Something went wrong while deleting a script.", t)
-                        chat("${t.javaClass.name}: ${t.message}")
-                    }
-                }
-
-                args[1].equals("reload", true) -> {
-                    try {
-                        Client.commandManager = CommandManager()
-                        Client.commandManager.registerCommands()
-                        Client.isStarting = true
-                        Client.scriptManager.disableScripts()
-                        Client.scriptManager.unloadScripts()
-                        for (module in Client.moduleManager.modules)
-                            Client.moduleManager.generateCommand(module)
-                        Client.scriptManager.loadScripts()
-                        Client.scriptManager.enableScripts()
-                        Client.fileManager.loadConfig(Client.fileManager.modulesConfig)
-                        Client.isStarting = false
-                        Client.fileManager.loadConfig(Client.fileManager.valuesConfig)
-                        chat("Successfully reloaded all scripts.")
-                    } catch (t: Throwable) {
-                        ClientUtils.getLogger().error("Something went wrong while reloading all scripts.", t)
                         chat("${t.javaClass.name}: ${t.message}")
                     }
                 }
@@ -149,14 +127,14 @@ class ScriptManagerCommand : Command("scriptmanager", arrayOf("scripts")) {
             }
         }
 
-        chatSyntax("scriptmanager <import/delete/reload/folder>")
+        chatSyntax("scripts <import/delete/folder>")
     }
 
     override fun tabComplete(args: Array<String>): List<String> {
         if (args.isEmpty()) return emptyList()
 
         return when (args.size) {
-            1 -> listOf("delete", "import", "folder", "reload")
+            1 -> listOf("delete", "import", "folder")
                 .filter { it.startsWith(args[0], true) }
 
             else -> emptyList()

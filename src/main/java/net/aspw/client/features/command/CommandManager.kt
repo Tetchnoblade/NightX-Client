@@ -30,7 +30,7 @@ class CommandManager {
         registerCommand(BindsCommand())
         registerCommand(PingCommand())
         registerCommand(ReloadCommand())
-        registerCommand(ScriptManagerCommand())
+        registerCommand(ScriptsCommand())
         registerCommand(PrefixCommand())
         registerCommand(HideCommand())
         registerCommand(TeleportCommand())
@@ -43,6 +43,7 @@ class CommandManager {
         registerCommand(XrayCommand())
         registerCommand(ThemeCommand())
         registerCommand(LoginCommand())
+        registerCommand(EnemyCommand())
     }
 
     /**
