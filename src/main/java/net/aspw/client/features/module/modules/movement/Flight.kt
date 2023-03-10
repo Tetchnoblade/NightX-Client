@@ -359,8 +359,8 @@ class Flight : Module() {
                 mc.thePlayer.jumpMovementFactor = 0.00f
                 if (mc.thePlayer.onGround) {
                     mc.thePlayer.onGround = false
-                    started = true
                     mc.timer.timerSpeed = 0.2f
+                    started = true
                     PacketUtils.sendPacketNoEvent(
                         C04PacketPlayerPosition(
                             mc.thePlayer.posX,
@@ -372,9 +372,9 @@ class Flight : Module() {
                     PacketUtils.sendPacketNoEvent(
                         C04PacketPlayerPosition(
                             mc.thePlayer.posX,
-                            mc.thePlayer.posY - 2 + Math.random() / 2,
+                            mc.thePlayer.posY - 0.96 + Math.random() / 2,
                             mc.thePlayer.posZ,
-                            false
+                            true
                         )
                     )
                     PacketUtils.sendPacketNoEvent(
@@ -789,15 +789,19 @@ class Flight : Module() {
                 if (started && pog) {
                     mc.gameSettings.keyBindJump.pressed = false
                     mc.gameSettings.keyBindSneak.pressed = false
-                    MovementUtils.strafe((0.96 + Math.random() / 50).toFloat())
-                    mc.thePlayer.motionY = 0.0
+                    MovementUtils.strafe((0.66 + Math.random() / 0.96).toFloat())
+                    if (mc.thePlayer.onGround) {
+                        mc.thePlayer.motionX = 0.0
+                        mc.thePlayer.motionZ = 0.0
+                        mc.timer.timerSpeed = 0.7f
+                        mc.thePlayer.motionY = 0.05
+                    } else {
+                        mc.timer.timerSpeed = 1.2f
+                    }
                     if (!MovementUtils.isMoving()) {
                         mc.thePlayer.motionX = 0.0
                         mc.thePlayer.motionZ = 0.0
                     }
-                } else if (started) {
-                    mc.thePlayer.motionX = 0.0
-                    mc.thePlayer.motionZ = 0.0
                     mc.thePlayer.jumpMovementFactor = 0.00f
                 }
             }
@@ -1948,7 +1952,7 @@ class Flight : Module() {
                 val deltaY = packet.y - lastSentY
                 val deltaZ = packet.z - lastSentZ
 
-                if (sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) > 9.5) {
+                if (sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) > 9.06) {
                     lastSentX = packet.x
                     lastSentY = packet.y
                     lastSentZ = packet.z
@@ -1956,6 +1960,9 @@ class Flight : Module() {
                 }
                 event.cancelEvent()
             } else if (packet is C03PacketPlayer) {
+                event.cancelEvent()
+            }
+            if (packet is C0FPacketConfirmTransaction) {
                 event.cancelEvent()
             }
             if (packet is S08PacketPlayerPosLook) {
@@ -2392,7 +2399,11 @@ class Flight : Module() {
     fun onBB(event: BlockBBEvent) {
         if (mc.thePlayer == null) return
         val mode = modeValue.get()
-        if (event.block is BlockAir && mode.equals("Jump", ignoreCase = true) && event.y < startY) event.boundingBox =
+        if (event.block is BlockAir && (mode.equals("Jump", ignoreCase = true) || mode.equals(
+                "Buzz",
+                ignoreCase = true
+            )) && event.y < startY
+        ) event.boundingBox =
             AxisAlignedBB.fromBounds(
                 event.x.toDouble(),
                 event.y.toDouble(),

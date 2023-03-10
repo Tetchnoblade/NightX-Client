@@ -159,39 +159,41 @@ class KillAura : Module() {
 
     // AutoBlock
     val autoBlockModeValue =
-        ListValue("AutoBlock", arrayOf("Fake", "Interact", "Packet", "AfterTick", "NCP", "OldHypixel"), "Fake")
+        ListValue("AutoBlock", arrayOf("None", "Fake", "Interact", "Packet", "AfterTick", "NCP", "OldHypixel"), "Fake")
 
     private val interactAutoBlockValue = BoolValue(
         "InteractAutoBlock",
         false
-    ) { !autoBlockModeValue.get().equals("Fake", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) }
     private val verusAutoBlockValue = BoolValue(
         "UnBlock-Exploit",
         false
-    ) { !autoBlockModeValue.get().equals("Fake", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) }
     private val abThruWallValue = BoolValue(
         "ThroughAutoBlock",
         true
-    ) { !autoBlockModeValue.get().equals("Fake", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) }
 
     // smart autoblock stuff
     private val smartAutoBlockValue = BoolValue(
         "SmartAutoBlock",
         false
-    ) { !autoBlockModeValue.get().equals("Fake", true) } // thanks czech
+    ) {
+        !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true)
+    } // thanks czech
     private val smartABItemValue = BoolValue(
         "SmartAutoBlock-ItemCheck",
         true
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) && smartAutoBlockValue.get()
+            .equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) || smartAutoBlockValue.get()
     }
     private val smartABFacingValue = BoolValue(
         "SmartAutoBlock-FacingCheck",
         true
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) && smartAutoBlockValue.get()
+            .equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) || smartAutoBlockValue.get()
     }
     private val smartABRangeValue = FloatValue(
         "SmartAB-Range",
@@ -201,7 +203,7 @@ class KillAura : Module() {
         "m"
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) && smartAutoBlockValue.get()
+            .equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) || smartAutoBlockValue.get()
     }
     private val smartABTolerationValue = FloatValue(
         "SmartAB-Toleration",
@@ -210,7 +212,7 @@ class KillAura : Module() {
         2F
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) && smartAutoBlockValue.get()
+            .equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) || smartAutoBlockValue.get()
     }
 
     private val afterTickPatchValue = BoolValue(
@@ -223,7 +225,7 @@ class KillAura : Module() {
         1,
         100,
         "%"
-    ) { !autoBlockModeValue.get().equals("Fake", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) }
 
     // Raycast
     private val raycastValue = BoolValue("PostAttack", true)
@@ -1068,8 +1070,7 @@ class KillAura : Module() {
 
 
     private fun startBlocking(interactEntity: Entity, interact: Boolean) {
-        if (!canSmartBlock || !(blockRate.get() > 0 && Random().nextInt(100) <= blockRate.get())
-        )
+        if (!canSmartBlock || !(blockRate.get() > 0 && Random().nextInt(100) <= blockRate.get()))
             return
 
         if (!abThruWallValue.get() && interactEntity is EntityLivingBase) {
@@ -1078,6 +1079,12 @@ class KillAura : Module() {
                 fakeBlock = true
                 return
             }
+        }
+
+        if (autoBlockModeValue.get().equals("none", true)) {
+            fakeBlock = false
+            blockingStatus = false
+            return
         }
 
         if (autoBlockModeValue.get().equals("fake", true)) {
