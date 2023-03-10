@@ -20,7 +20,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar" />
         </processorPath>
-        <module name="NightX.main" />
+        <module name="net.aspw.NightX.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8" />
@@ -362,6 +362,10 @@
       <module fileurl="file://$PROJECT_DIR$/NightX.api.iml" filepath="$PROJECT_DIR$/NightX.api.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.main.iml" filepath="$PROJECT_DIR$/NightX.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.test.iml" filepath="$PROJECT_DIR$/NightX.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/net.aspw.NightX.iml" filepath="$PROJECT_DIR$/net.aspw.NightX.iml" />
+      <module fileurl="file://$PROJECT_DIR$/net.aspw.NightX.api.iml" filepath="$PROJECT_DIR$/net.aspw.NightX.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/net.aspw.NightX.main.iml" filepath="$PROJECT_DIR$/net.aspw.NightX.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/net.aspw.NightX.test.iml" filepath="$PROJECT_DIR$/net.aspw.NightX.test.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
@@ -372,7 +376,7 @@
       <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../../../../../Program Files/Java/jdk1.8.0_181" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="GradleStart" />
-      <module name="NightX.main" />
+      <module name="net.aspw.NightX.main" />
       <option name="PROGRAM_PARAMETERS" value="-Xmx8G -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M -Djavax.net.ssl.trustStoreType=Windows-ROOT" />
       <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
@@ -384,7 +388,7 @@
     </configuration>
     <configuration default="false" name="Minecraft Server" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
-      <module name="NightX.main" />
+      <module name="net.aspw.NightX.main" />
       <option name="PROGRAM_PARAMETERS" value="-Xmx8G -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M -Djavax.net.ssl.trustStoreType=Windows-ROOT" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
       <RunnerSettings RunnerId="Run" />

@@ -63,6 +63,7 @@ class Flight : Module() {
             "AAC5-Vanilla",
             "Exploit",
             "Zoom",
+            "Buzz",
             "ShotBow",
             "Zonecraft",
             "PurplePrison",
@@ -236,6 +237,11 @@ class Flight : Module() {
     private val tickTimer = TickTimer()
     private val cubecraftTeleportTickTimer = TickTimer()
     private val freeHypixelTimer = TickTimer()
+    private var pog = false
+    private var started = false
+    private var lastSentX = 0.0
+    private var lastSentY = 0.0
+    private var lastSentZ = 0.0
     private val aac5C03List = ArrayList<C03PacketPlayer>()
     private var tick = 0
     private var boost = false
@@ -342,6 +348,46 @@ class Flight : Module() {
         wdState = 0
         wdTick = 0
         when (mode.lowercase(Locale.getDefault())) {
+            "buzz" -> {
+                pog = false
+                lastSentX = mc.thePlayer.posX
+                lastSentY = mc.thePlayer.posY
+                lastSentZ = mc.thePlayer.posZ
+                started = false
+                mc.thePlayer.motionX = 0.0
+                mc.thePlayer.motionZ = 0.0
+                mc.thePlayer.jumpMovementFactor = 0.00f
+                if (mc.thePlayer.onGround) {
+                    mc.thePlayer.onGround = false
+                    started = true
+                    mc.timer.timerSpeed = 0.2f
+                    PacketUtils.sendPacketNoEvent(
+                        C04PacketPlayerPosition(
+                            mc.thePlayer.posX,
+                            mc.thePlayer.posY,
+                            mc.thePlayer.posZ,
+                            true
+                        )
+                    )
+                    PacketUtils.sendPacketNoEvent(
+                        C04PacketPlayerPosition(
+                            mc.thePlayer.posX,
+                            mc.thePlayer.posY - 2 + Math.random() / 2,
+                            mc.thePlayer.posZ,
+                            false
+                        )
+                    )
+                    PacketUtils.sendPacketNoEvent(
+                        C04PacketPlayerPosition(
+                            mc.thePlayer.posX,
+                            mc.thePlayer.posY,
+                            mc.thePlayer.posZ,
+                            true
+                        )
+                    )
+                }
+            }
+
             "ncp" -> {
                 mc.thePlayer.motionY = -ncpMotionValue.get().toDouble()
                 if (mc.gameSettings.keyBindSneak.isKeyDown) mc.thePlayer.motionY = -0.5
@@ -739,6 +785,23 @@ class Flight : Module() {
         val vanillaVSpeed = vanillaVSpeedValue.get()
         mc.thePlayer.noClip = false
         when (modeValue.get().lowercase(Locale.getDefault())) {
+            "buzz" -> {
+                if (started && pog) {
+                    mc.gameSettings.keyBindJump.pressed = false
+                    mc.gameSettings.keyBindSneak.pressed = false
+                    MovementUtils.strafe((0.96 + Math.random() / 50).toFloat())
+                    mc.thePlayer.motionY = 0.0
+                    if (!MovementUtils.isMoving()) {
+                        mc.thePlayer.motionX = 0.0
+                        mc.thePlayer.motionZ = 0.0
+                    }
+                } else if (started) {
+                    mc.thePlayer.motionX = 0.0
+                    mc.thePlayer.motionZ = 0.0
+                    mc.thePlayer.jumpMovementFactor = 0.00f
+                }
+            }
+
             "motion" -> {
                 mc.thePlayer.capabilities.isFlying = false
                 mc.thePlayer.motionY = vanillaMotionYValue.get().toDouble()
@@ -1877,6 +1940,35 @@ class Flight : Module() {
         val packet = event.packet
         val mode = modeValue.get()
         if (noPacketModify) return
+        if (mode.equals("buzz", ignoreCase = true)) {
+            if (packet is C03PacketPlayer && !pog) {
+                event.cancelEvent()
+            } else if (packet is C03PacketPlayer && (packet is C04PacketPlayerPosition || packet is C06PacketPlayerPosLook)) {
+                val deltaX = packet.x - lastSentX
+                val deltaY = packet.y - lastSentY
+                val deltaZ = packet.z - lastSentZ
+
+                if (sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) > 9.5) {
+                    lastSentX = packet.x
+                    lastSentY = packet.y
+                    lastSentZ = packet.z
+                    return
+                }
+                event.cancelEvent()
+            } else if (packet is C03PacketPlayer) {
+                event.cancelEvent()
+            }
+            if (packet is S08PacketPlayerPosLook) {
+                if (!pog) {
+                    lastSentX = packet.x
+                    lastSentY = packet.y
+                    lastSentZ = packet.z
+                    pog = true
+                    mc.timer.timerSpeed = 1.0f
+                    event.cancelEvent()
+                }
+            }
+        }
         if (mode.equals("desync", ignoreCase = true)) {
             if (packet is C03PacketPlayer) {
                 val yPos = round(mc.thePlayer.posY / 0.015625) * 0.015625
@@ -2309,7 +2401,7 @@ class Flight : Module() {
                 startY,
                 (event.z + 1).toDouble()
             )
-        if (event.block is BlockAir && (mode.equals(
+        if ((mode.equals(
                 "collide",
                 ignoreCase = true
             ) && !mc.thePlayer.isSneaking || mode.equals(

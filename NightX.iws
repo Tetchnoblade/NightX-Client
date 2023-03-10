@@ -4,9 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="449de9e2-de3e-49eb-99b9-663162932c68" name="変更" comment="">
+    <list default="true" id="af093b99-5942-419c-869b-8b2d7cb4dd2a" name="変更" comment="">
+      <change beforePath="$PROJECT_DIR$/NightX.api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.api.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NightX.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NightX.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NightX.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NightX.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/downloads.json" beforeDir="false" afterPath="$PROJECT_DIR$/downloads.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/Client.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/Client.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/combat/KillAura.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/combat/KillAura.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/exploit/Disabler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/exploit/Disabler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/movement/Flight.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/movement/Flight.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,84 +33,38 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <task path="$PROJECT_DIR$">
-          <activation />
-        </task>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="NightX" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="NightX" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="NightX" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="forgegradle" type="c8890929:TasksNode$1" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>
       </state>
     </system>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-        <option value="Kotlin Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MacroExpansionManager">
-    <option name="directoryName" value="yvr88tuv" />
+    <option name="directoryName" value="k0oxlwnb" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
-  <component name="ProjectId" id="2M8Ljg6CkqqQU6VQ5Oi98HrJadk" />
+  <component name="ProjectId" id="2Mo5oFsgNUeckmvSkjZ1caNEoa6" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/0kcab/Downloads/RiseClient-master/RiseClient-master/src&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
-      <recent name="net.aspw.client.features.module.modules.movement.speeds.verus" />
-      <recent name="net.aspw.client.features.module.modules.exploit" />
-      <recent name="net.aspw.client.features.module.modules.combat" />
-    </key>
-    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
-      <recent name="net.aspw.client.features.command.commands" />
-      <recent name="net.aspw.client.features.module.modules.movement.speeds.vulcan" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="net.aspw.client.config.configs" />
-    </key>
-  </component>
+}]]></component>
   <component name="RunManager" selected="アプリケーション.Minecraft Client">
     <list>
       <item itemvalue="アプリケーション.Minecraft Client" />
@@ -111,11 +74,11 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="アプリケーションレベル" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="デフォルトタスク">
-      <changelist id="449de9e2-de3e-49eb-99b9-663162932c68" name="変更" comment="" />
-      <created>1677144399357</created>
+      <changelist id="af093b99-5942-419c-869b-8b2d7cb4dd2a" name="変更" comment="" />
+      <created>1678421273054</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1677144399357</updated>
+      <updated>1678421273054</updated>
     </task>
     <servers />
   </component>

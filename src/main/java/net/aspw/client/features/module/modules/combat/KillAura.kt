@@ -155,6 +155,7 @@ class KillAura : Module() {
     private val keepSprintValue = BoolValue("NoKeepSprint", false)
     private val enemyValue = BoolValue("Only-Enemy", false)
     private val gcdFixValue = BoolValue("GCD-Fix", true, { rotations.get().equals("full", true) })
+    private val attackModeValue = ListValue("Attack-Timing", arrayOf("Pre", "Post", "Normal"), "Normal")
 
     // AutoBlock
     val autoBlockModeValue =
@@ -378,6 +379,14 @@ class KillAura : Module() {
      */
     @EventTarget
     fun onMotion(event: MotionEvent) {
+        if (attackModeValue.get().equals("Pre") && event.eventState != EventState.PRE) {
+            updateKA()
+        }
+
+        if (attackModeValue.get().equals("Post") && event.eventState != EventState.POST) {
+            updateKA()
+        }
+
         if (event.eventState == EventState.POST) {
             target ?: return
             currentTarget ?: return
@@ -486,7 +495,9 @@ class KillAura : Module() {
      */
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        updateKA()
+        if (attackModeValue.get().equals("Normal")) {
+            updateKA()
+        }
 
         smartBlocking = false
         if (smartAutoBlockValue.get() && target != null) {
@@ -1057,8 +1068,7 @@ class KillAura : Module() {
 
 
     private fun startBlocking(interactEntity: Entity, interact: Boolean) {
-        if (!canSmartBlock || autoBlockModeValue.get()
-                .equals("Fake", true) || !(blockRate.get() > 0 && Random().nextInt(100) <= blockRate.get())
+        if (!canSmartBlock || !(blockRate.get() > 0 && Random().nextInt(100) <= blockRate.get())
         )
             return
 
@@ -1068,6 +1078,11 @@ class KillAura : Module() {
                 fakeBlock = true
                 return
             }
+        }
+
+        if (autoBlockModeValue.get().equals("fake", true)) {
+            fakeBlock = true
+            return
         }
 
         if (autoBlockModeValue.get().equals("ncp", true)) {
@@ -1081,11 +1096,14 @@ class KillAura : Module() {
                     0.0f
                 )
             )
+            blockingStatus = true
             return
         }
 
         if (autoBlockModeValue.get().equals("interact", true)) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, true)
+            fakeBlock = true
+            return
         }
 
         if (autoBlockModeValue.get().equals("oldhypixel", true)) {
