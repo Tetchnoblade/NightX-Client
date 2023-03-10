@@ -296,9 +296,9 @@ public abstract class MixinItemRenderer {
             if (this.itemToRender.getItem() instanceof ItemMap) {
                 this.renderItemMap(abstractclientplayer, f2, f, f1);
             } else if (abstractclientplayer.getItemInUseCount() > 0
-                    || (itemToRender.getItem() instanceof ItemSword && (killAura.getBlockingStatus() || killAura.getFakeBlock()))
+                    || (itemToRender.getItem() instanceof ItemSword && (killAura.getBlockingStatus() || killAura.getFakeBlock()) && !killAura.getAutoBlockModeValue().get().equals("None"))
                     || (itemToRender.getItem() instanceof ItemSword && Client.moduleManager.getModule(Animations.class).getState()
-                    && killAura.getTarget() != null)) {
+                    && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None"))) {
 
                 EnumAction enumaction = (killAura.getBlockingStatus()) ? EnumAction.BLOCK : this.itemToRender.getItemUseAction();
 

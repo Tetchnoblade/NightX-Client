@@ -30,7 +30,6 @@ class CommandManager {
         registerCommand(BindsCommand())
         registerCommand(PingCommand())
         registerCommand(ReloadCommand())
-        registerCommand(ScriptsCommand())
         registerCommand(PrefixCommand())
         registerCommand(HideCommand())
         registerCommand(TeleportCommand())

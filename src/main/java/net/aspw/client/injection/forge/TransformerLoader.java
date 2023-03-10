@@ -1,8 +1,5 @@
 package net.aspw.client.injection.forge;
 
-import net.aspw.client.features.special.script.remapper.injection.transformers.AbstractJavaLinkerTransformer;
-import net.aspw.client.injection.transformers.ForgeNetworkTransformer;
-import net.aspw.client.injection.transformers.OptimizeTransformer;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.MixinEnvironment;
@@ -21,7 +18,7 @@ public class TransformerLoader implements IFMLLoadingPlugin {
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[]{ForgeNetworkTransformer.class.getName(), OptimizeTransformer.class.getName(), AbstractJavaLinkerTransformer.class.getName()};
+        return new String[0];
     }
 
     @Override

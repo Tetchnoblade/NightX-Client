@@ -9,7 +9,6 @@ import net.aspw.client.features.special.ClientSpoof
 import net.aspw.client.features.special.MacroManager
 import net.aspw.client.features.special.ModItems
 import net.aspw.client.features.special.StackItems
-import net.aspw.client.features.special.script.ScriptManager
 import net.aspw.client.utils.*
 import net.aspw.client.utils.ClassUtils.hasForge
 import net.aspw.client.utils.misc.sound.TipSoundManager
@@ -37,7 +36,6 @@ object Client {
     lateinit var commandManager: CommandManager
     lateinit var eventManager: EventManager
     lateinit var fileManager: FileManager
-    lateinit var scriptManager: ScriptManager
     lateinit var tipSoundManager: TipSoundManager
 
     // Hud
@@ -86,14 +84,6 @@ object Client {
         // Setup module manager and register modules
         moduleManager = ModuleManager()
         moduleManager.registerModules()
-
-        try {
-            scriptManager = ScriptManager()
-            scriptManager.loadScripts()
-            scriptManager.enableScripts()
-        } catch (throwable: Throwable) {
-            ClientUtils.getLogger().error("Failed to load scripts.", throwable)
-        }
 
         // Register commands
         commandManager.registerCommands()

@@ -10,7 +10,7 @@ import net.minecraft.client.audio.PositionedSoundRecord
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.input.Keyboard
 
-open class Module : MinecraftInstance(), Listenable {
+abstract class Module : MinecraftInstance(), Listenable {
 
     // Module information
     var name: String

@@ -174,26 +174,27 @@ class KillAura : Module() {
         true
     ) { !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) }
 
-    // smart autoblock stuff
     private val smartAutoBlockValue = BoolValue(
         "SmartAutoBlock",
         false
     ) {
         !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true)
-    } // thanks czech
+    }
     private val smartABItemValue = BoolValue(
         "SmartAutoBlock-ItemCheck",
         true
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) || smartAutoBlockValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get() || !autoBlockModeValue.get()
+            .equals("None", true) && smartAutoBlockValue.get()
     }
     private val smartABFacingValue = BoolValue(
         "SmartAutoBlock-FacingCheck",
         true
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) || smartAutoBlockValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get() || !autoBlockModeValue.get()
+            .equals("None", true) && smartAutoBlockValue.get()
     }
     private val smartABRangeValue = FloatValue(
         "SmartAB-Range",
@@ -203,7 +204,8 @@ class KillAura : Module() {
         "m"
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) || smartAutoBlockValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get() || !autoBlockModeValue.get()
+            .equals("None", true) && smartAutoBlockValue.get()
     }
     private val smartABTolerationValue = FloatValue(
         "SmartAB-Toleration",
@@ -212,7 +214,8 @@ class KillAura : Module() {
         2F
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) || smartAutoBlockValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get() || !autoBlockModeValue.get()
+            .equals("None", true) && smartAutoBlockValue.get()
     }
 
     private val afterTickPatchValue = BoolValue(
@@ -1083,7 +1086,6 @@ class KillAura : Module() {
 
         if (autoBlockModeValue.get().equals("none", true)) {
             fakeBlock = false
-            blockingStatus = false
             return
         }
 

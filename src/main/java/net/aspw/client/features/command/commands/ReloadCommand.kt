@@ -15,12 +15,8 @@ class ReloadCommand : Command("reload", arrayOf("configreload")) {
     override fun execute(args: Array<String>) {
         Client.commandManager = CommandManager()
         Client.commandManager.registerCommands()
-        Client.scriptManager.disableScripts()
-        Client.scriptManager.unloadScripts()
         for (module in Client.moduleManager.modules)
             Client.moduleManager.generateCommand(module)
-        Client.scriptManager.loadScripts()
-        Client.scriptManager.enableScripts()
         Fonts.loadFonts()
         Client.tipSoundManager = TipSoundManager()
         Client.fileManager.loadConfig(Client.fileManager.modulesConfig)
