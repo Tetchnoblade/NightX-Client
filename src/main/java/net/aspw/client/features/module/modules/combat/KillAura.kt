@@ -1111,8 +1111,6 @@ class KillAura : Module() {
 
         if (autoBlockModeValue.get().equals("interact", true)) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, true)
-            fakeBlock = true
-            return
         }
 
         if (autoBlockModeValue.get().equals("oldhypixel", true)) {
@@ -1190,8 +1188,9 @@ class KillAura : Module() {
                         EnumFacing.DOWN
                     )
                 )
-            if (autoBlockModeValue.get().equals("interact", true))
+            if (autoBlockModeValue.get().equals("interact", true)) {
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
+            }
         }
         blockingStatus = false
     }
