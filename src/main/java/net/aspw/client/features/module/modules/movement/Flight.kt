@@ -796,7 +796,7 @@ class Flight : Module() {
                         mc.timer.timerSpeed = 0.7f
                         mc.thePlayer.motionY = 0.05
                     } else {
-                        mc.timer.timerSpeed = 1.2f
+                        mc.timer.timerSpeed = 1.1f
                     }
                     if (!MovementUtils.isMoving()) {
                         mc.thePlayer.motionX = 0.0
