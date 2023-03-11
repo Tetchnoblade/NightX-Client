@@ -1952,7 +1952,7 @@ class Flight : Module() {
                 val deltaY = packet.y - lastSentY
                 val deltaZ = packet.z - lastSentZ
 
-                if (sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) > 9.06) {
+                if (sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) > 9.5) {
                     lastSentX = packet.x
                     lastSentY = packet.y
                     lastSentZ = packet.z

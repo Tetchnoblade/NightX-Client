@@ -22,6 +22,7 @@ import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.stream.IStream;
@@ -81,6 +82,9 @@ public abstract class MixinMinecraft {
 
     @Shadow
     public abstract IResourceManager getResourceManager();
+
+    @Shadow
+    public abstract RenderManager getRenderManager();
 
     @Inject(method = "<init>", at = @At("RETURN"))
     public void injectConstructor(GameConfiguration p_i45547_1_, CallbackInfo ci) {
@@ -240,26 +244,23 @@ public abstract class MixinMinecraft {
     @Inject(method = "getRenderViewEntity", at = @At("HEAD"))
     public void getRenderViewEntity(CallbackInfoReturnable<Entity> cir) {
         if (renderViewEntity instanceof EntityLivingBase && RotationUtils.serverRotation != null && thePlayer != null) {
-            final SilentView silentView = Client.moduleManager.getModule(SilentView.class);
-            final TargetStrafe targetStrafe = Client.moduleManager.getModule(TargetStrafe.class);
-            final EntityLivingBase entityLivingBase = (EntityLivingBase) renderViewEntity;
-            final float yaw = RotationUtils.serverRotation.getYaw();
+            SilentView silentView = Client.moduleManager.getModule(SilentView.class);
+            TargetStrafe targetStrafe = Client.moduleManager.getModule(TargetStrafe.class);
+            EntityLivingBase entityLivingBase = (EntityLivingBase) renderViewEntity;
+            float yaw = RotationUtils.serverRotation.getYaw();
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadNormalRotate().get() && silentView.shouldRotate()) {
                 entityLivingBase.rotationYawHead = yaw;
-            }
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadPrevRotate().get() && silentView.shouldRotate()) {
-                entityLivingBase.prevRotationYawHead = yaw;
             }
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && silentView.shouldRotate()) {
                 entityLivingBase.renderYawOffset = yaw + 40;
                 if (!Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.renderYawOffset = yaw - 60;
+                    entityLivingBase.renderYawOffset = yaw - 55;
                 }
                 if (targetStrafe.getDirection() < 0.5 && targetStrafe.getCanStrafe() && targetStrafe.getState() || Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
                     entityLivingBase.renderYawOffset = yaw + 40;
                 }
                 if (!Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.renderYawOffset = yaw + 60;
+                    entityLivingBase.renderYawOffset = yaw + 55;
                 }
                 if (targetStrafe.getDirection() > 0.5 && targetStrafe.getCanStrafe() && targetStrafe.getState() || Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
                     entityLivingBase.renderYawOffset = yaw - 40;
@@ -268,13 +269,13 @@ public abstract class MixinMinecraft {
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyPrevRotate().get() && silentView.shouldRotate()) {
                 entityLivingBase.prevRenderYawOffset = yaw + 40;
                 if (!Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.prevRenderYawOffset = yaw - 60;
+                    entityLivingBase.prevRenderYawOffset = yaw - 55;
                 }
                 if (targetStrafe.getDirection() < 0.5 && targetStrafe.getCanStrafe() && targetStrafe.getState() || Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
                     entityLivingBase.prevRenderYawOffset = yaw + 40;
                 }
                 if (!Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.prevRenderYawOffset = yaw + 60;
+                    entityLivingBase.prevRenderYawOffset = yaw + 55;
                 }
                 if (targetStrafe.getDirection() > 0.5 && targetStrafe.getCanStrafe() && targetStrafe.getState() || Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
                     entityLivingBase.prevRenderYawOffset = yaw - 40;

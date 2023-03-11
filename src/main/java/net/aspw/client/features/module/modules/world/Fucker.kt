@@ -4,25 +4,21 @@ import net.aspw.client.Client
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.Render3DEvent
 import net.aspw.client.event.UpdateEvent
-import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.features.module.modules.combat.KillAura
 import net.aspw.client.features.module.modules.misc.AutoTool
 import net.aspw.client.utils.RotationUtils
 import net.aspw.client.utils.block.BlockUtils.getBlock
-import net.aspw.client.utils.block.BlockUtils.getBlockName
 import net.aspw.client.utils.block.BlockUtils.getCenterDistance
 import net.aspw.client.utils.block.BlockUtils.isFullBlock
 import net.aspw.client.utils.extensions.getBlock
 import net.aspw.client.utils.render.RenderUtils
-import net.aspw.client.utils.timer.MSTimer
-import net.aspw.client.value.*
-import net.aspw.client.visual.hud.element.elements.Notification
+import net.aspw.client.value.BoolValue
+import net.aspw.client.value.FloatValue
+import net.aspw.client.value.ListValue
 import net.minecraft.block.Block
 import net.minecraft.block.BlockAir
-import net.minecraft.client.multiplayer.WorldClient
 import net.minecraft.network.play.client.C07PacketPlayerDigging
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
@@ -37,62 +33,26 @@ object Fucker : Module() {
      * SETTINGS
      */
 
-    private val blockValue = BlockValue("Block", 26)
-    private val ignoreFirstBlockValue = BoolValue("IgnoreFirstDetection", false)
-    private val resetOnWorldValue = BoolValue("ResetOnWorldChange", false, { ignoreFirstBlockValue.get() })
-    private val renderValue = ListValue("Render-Mode", arrayOf("Box", "Outline", "2D", "None"), "Box")
     private val throughWallsValue = ListValue("ThroughWalls", arrayOf("None", "Raycast", "Around"), "Around")
     private val rangeValue = FloatValue("Range", 5F, 1F, 7F, "m")
     private val actionValue = ListValue("Action", arrayOf("Destroy", "Use"), "Destroy")
     private val instantValue = BoolValue("Instant", false)
-    private val switchValue = IntegerValue("SwitchDelay", 5, 0, 1000, "ms")
-    private val coolDownValue = IntegerValue("Cooldown-Seconds", 0, 0, 60)
-    private val swingValue = BoolValue("Swing", false)
+    private val swingValue = BoolValue("VisualSwing", true)
     private val rotationsValue = BoolValue("Rotations", true)
     private val surroundingsValue = BoolValue("Surroundings", false)
-    private val noHitValue = BoolValue("NoAura", false)
-    private val toggleResetCDValue = BoolValue("ResetCoolDownWhenToggled", false)
 
     /**
      * VALUES
      */
 
-    private var firstPos: BlockPos? = null
-    private var firstPosBed: BlockPos? = null
     private var pos: BlockPos? = null
     private var oldPos: BlockPos? = null
     private var blockHitDelay = 0
-    private val switchTimer = MSTimer()
-    private val coolDownTimer = MSTimer()
     var currentDamage = 0F
-
-    private var lastWorld: WorldClient? = null
-
-    override fun onEnable() {
-        if (toggleResetCDValue.get()) coolDownTimer.reset()
-        firstPos = null
-        firstPosBed = null
-    }
-
-    @EventTarget
-    fun onWorld(event: WorldEvent) {
-        if (event.worldClient != lastWorld && resetOnWorldValue.get()) {
-            firstPos = null
-            firstPosBed = null
-        }
-        lastWorld = event.worldClient
-    }
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        if (noHitValue.get()) {
-            val killAura = Client.moduleManager.getModule(KillAura::class.java) as KillAura
-
-            if (killAura.state && killAura.target != null)
-                return
-        }
-
-        val targetId = blockValue.get()
+        val targetId = 26
 
         if (pos == null || Block.getIdFromBlock(getBlock(pos)) != targetId ||
             getCenterDistance(pos!!) > rangeValue.get()
@@ -131,16 +91,9 @@ object Fucker : Module() {
         // Reset switch timer when position changed
         if (oldPos != null && oldPos != currentPos) {
             currentDamage = 0F
-            switchTimer.reset()
         }
 
         oldPos = currentPos
-
-        if (!switchTimer.hasTimePassed(
-                switchValue.get().toLong()
-            ) || (coolDownValue.get() > 0 && !coolDownTimer.hasTimePassed(coolDownValue.get().toLong() * 1000L))
-        )
-            return
 
         // Block hit delay
         if (blockHitDelay > 0) {
@@ -180,7 +133,6 @@ object Fucker : Module() {
                         )
                     )
                     currentDamage = 0F
-                    if (!surroundingsValue.get()) coolDownTimer.reset()
                     return
                 }
 
@@ -204,7 +156,6 @@ object Fucker : Module() {
 
                         currentDamage = 0F
                         pos = null
-                        if (!surroundingsValue.get()) coolDownTimer.reset()
                         return
                     }
                 }
@@ -226,7 +177,6 @@ object Fucker : Module() {
                     blockHitDelay = 4
                     currentDamage = 0F
                     pos = null
-                    if (!surroundingsValue.get()) coolDownTimer.reset()
                 }
             }
 
@@ -242,35 +192,13 @@ object Fucker : Module() {
                 blockHitDelay = 4
                 currentDamage = 0F
                 pos = null
-                coolDownTimer.reset()
             }
         }
     }
 
     @EventTarget
     fun onRender3D(event: Render3DEvent) {
-        when (renderValue.get().lowercase(Locale.getDefault())) {
-            "box" -> RenderUtils.drawBlockBox(
-                pos ?: return,
-                if (!coolDownTimer.hasTimePassed(coolDownValue.get().toLong() * 1000L)) Color.DARK_GRAY else Color.RED,
-                false
-            )
-
-            "outline" -> RenderUtils.drawBlockBox(
-                pos ?: return,
-                if (!coolDownTimer.hasTimePassed(coolDownValue.get().toLong() * 1000L)) Color.DARK_GRAY else Color.RED,
-                true
-            )
-
-            "2d" -> RenderUtils.draw2D(
-                pos ?: return,
-                if (!coolDownTimer.hasTimePassed(
-                        coolDownValue.get().toLong() * 1000L
-                    )
-                ) Color.DARK_GRAY.rgb else Color.RED.rgb,
-                Color.BLACK.rgb
-            )
-        }
+        RenderUtils.drawBlockBox(pos ?: return, Color.WHITE, true)
     }
 
     private fun find(targetID: Int): BlockPos? {
@@ -300,41 +228,7 @@ object Fucker : Module() {
                 }
             }
         }
-
-        if (ignoreFirstBlockValue.get() && nearestBlock != null) {
-            if (firstPos == null) {
-                firstPos = nearestBlock
-                Client.hud.addNotification(
-                    Notification(
-                        "Found first ${getBlockName(targetID)} block at ${nearestBlock.x.toInt()} ${nearestBlock.y.toInt()} ${nearestBlock.z.toInt()}",
-                        Notification.Type.SUCCESS
-                    )
-                )
-            }
-            if (targetID == 26 && firstPos != null && firstPosBed == null) { // bed
-                when (true) {
-                    getBlock(firstPos!!.east()) != null && Block.getIdFromBlock(getBlock(firstPos!!.east())!!) == 26 -> firstPosBed =
-                        firstPos!!.east()
-
-                    getBlock(firstPos!!.west()) != null && Block.getIdFromBlock(getBlock(firstPos!!.west())!!) == 26 -> firstPosBed =
-                        firstPos!!.west()
-
-                    getBlock(firstPos!!.south()) != null && Block.getIdFromBlock(getBlock(firstPos!!.south())!!) == 26 -> firstPosBed =
-                        firstPos!!.south()
-
-                    getBlock(firstPos!!.north()) != null && Block.getIdFromBlock(getBlock(firstPos!!.north())!!) == 26 -> firstPosBed =
-                        firstPos!!.north()
-                }
-                if (firstPosBed != null)
-                    Client.hud.addNotification(
-                        Notification(
-                            "Found second Bed block at ${firstPosBed!!.x.toInt()} ${firstPosBed!!.y.toInt()} ${firstPosBed!!.z.toInt()}",
-                            Notification.Type.SUCCESS
-                        )
-                    )
-            }
-        }
-        return if (ignoreFirstBlockValue.get() && (firstPos == nearestBlock || firstPosBed == nearestBlock)) null else nearestBlock
+        return nearestBlock
     }
 
     /**

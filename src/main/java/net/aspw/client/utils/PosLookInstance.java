@@ -14,14 +14,6 @@ public class PosLookInstance {
     public PosLookInstance() {
     }
 
-    public PosLookInstance(double a, double b, double c, float d, float e) {
-        this.x = a;
-        this.y = b;
-        this.z = c;
-        this.yaw = d;
-        this.pitch = e;
-    }
-
     public void reset() {
         set(0, 0, 0, 0, 0);
     }

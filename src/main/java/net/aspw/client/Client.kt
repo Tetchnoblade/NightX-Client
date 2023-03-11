@@ -22,7 +22,7 @@ object Client {
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_COLORED = "§lN§fightX"
-    const val CLIENT_FOLDER = "Night-X"
+    const val CLIENT_FOLDER = "NightX-Ware"
     const val CLIENT_VERSION = "Developer"
     const val CLIENT_CREATOR = "CCBlueX, Exit-scammed, As_pw, Zywl"
     const val CLIENT_DISCORD = "https://nightx.api-minecraft.net/s/rgul30dkqw"

@@ -398,6 +398,7 @@ public abstract class MixinItemRenderer {
 
                         if (Client.moduleManager.getModule(Animations.class).getState() && Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("spin")) {
                             GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.06, Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
+                            this.transformFirstPersonItem(f / Animations.Equip.getValue(), 0.0f);
                             Random();
                             this.doBlockTransformations();
                             break;
@@ -648,17 +649,8 @@ public abstract class MixinItemRenderer {
                                     transformFirstPersonItem(f / Animations.Equip.getValue(), f1);
                                     GL11.glTranslated(0.0D, 0.0D, 0.0D);
                                     float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
-                                    GlStateManager.rotate(Swang * 30.0F / 2.0F, -Swang, -0.0F, 9.0F);
+                                    GlStateManager.rotate(Swang * 28.0F / 2.0F, -Swang, -0.0F, 9.0F);
                                     GlStateManager.rotate(Swang * 30.0F, 1.0F, -Swang / 2.0F, -0.0F);
-                                    doBlockTransformations();
-                                    break;
-                                }
-                                case "Swank": {
-                                    transformFirstPersonItem(f / Animations.Equip.getValue(), f1);
-                                    GL11.glTranslated(0.0D, 0.0D, 0.0D);
-                                    float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
-                                    GlStateManager.rotate(Swang * 35.0F / 2.0F, -Swang, -0.0F, 9.0F);
-                                    GlStateManager.rotate(Swang * 45.0F, 1.0F, -Swang / 2.0F, -0.0F);
                                     doBlockTransformations();
                                     break;
                                 }

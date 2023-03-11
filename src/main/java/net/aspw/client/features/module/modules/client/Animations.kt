@@ -40,7 +40,6 @@ class Animations : Module() {
                 "SlideFull",
                 "Push",
                 "Swing",
-                "Swank",
                 "Swang",
                 "Swaing",
                 "Stella",

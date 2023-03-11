@@ -8,7 +8,6 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.features.module.modules.world.Scaffold
 import net.aspw.client.injection.implementations.IItemStack
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.InventoryHelper
@@ -67,7 +66,6 @@ class InventoryManager : Module() {
 
     // Others
     private val noMoveValue = BoolValue("NoMove", false)
-    private val noScaffoldValue = BoolValue("NoScaffold", false)
     private val hotbarValue = BoolValue("Hotbar", false)
     private val randomSlotValue = BoolValue("RandomSlot", false)
     private val sortValue = BoolValue("Sort", true)
@@ -160,7 +158,7 @@ class InventoryManager : Module() {
     }
 
     fun performManager() {
-        if ((noScaffoldValue.get() && Client.moduleManager[Scaffold::class.java]!!.state) || !InventoryUtils.CLICK_TIMER.hasTimePassed(
+        if (!InventoryUtils.CLICK_TIMER.hasTimePassed(
                 delay
             ) ||
             noMoveValue.get() && MovementUtils.isMoving() ||
