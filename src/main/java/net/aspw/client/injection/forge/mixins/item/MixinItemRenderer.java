@@ -148,7 +148,7 @@ public abstract class MixinItemRenderer {
         GlStateManager.translate(0.7D, -0.4000000059604645D, -0.800000011920929D);
         GlStateManager.rotate(30.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.rotate(30.0F, 0.0F, 0.0F, -1.0F);
-        GlStateManager.rotate(this.delay * 0.2F * Animations.SpeedRotate.get(), 0.0F, 0.0F, 1.0F);
+        GlStateManager.rotate(this.delay * 0.2F * Animations.SpeedRotate.get() + 10, 0.0F, 0.0F, 1.0F);
         GlStateManager.rotate(-25.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.scale(Animations.Scale.get(), Animations.Scale.get(), Animations.Scale.get());
     }
@@ -397,7 +397,7 @@ public abstract class MixinItemRenderer {
                         }
 
                         if (Client.moduleManager.getModule(Animations.class).getState() && Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("spin")) {
-                            GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.06, Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.21, Animations.blockPosY.get().doubleValue() + 0.4, Animations.blockPosZ.get().doubleValue() + 0.6);
                             this.transformFirstPersonItem(f / Animations.Equip.getValue(), 0.0f);
                             Random();
                             this.doBlockTransformations();

@@ -63,7 +63,6 @@ class Flight : Module() {
             "AAC5-Vanilla",
             "Exploit",
             "Zoom",
-            "Buzz",
             "ShotBow",
             "Zonecraft",
             "PurplePrison",
@@ -79,6 +78,7 @@ class Flight : Module() {
             "VerusLowHop",
             "Vulcan1",
             "Vulcan2",
+            "Vulcan3",
             "NewSpartan",
             "Spartan1",
             "Spartan2",
@@ -348,7 +348,7 @@ class Flight : Module() {
         wdState = 0
         wdTick = 0
         when (mode.lowercase(Locale.getDefault())) {
-            "buzz" -> {
+            "vulcan3" -> {
                 pog = false
                 lastSentX = mc.thePlayer.posX
                 lastSentY = mc.thePlayer.posY
@@ -359,7 +359,7 @@ class Flight : Module() {
                 mc.thePlayer.jumpMovementFactor = 0.00f
                 if (mc.thePlayer.onGround) {
                     mc.thePlayer.onGround = false
-                    mc.timer.timerSpeed = 0.2f
+                    mc.timer.timerSpeed = 0.1f
                     started = true
                     PacketUtils.sendPacketNoEvent(
                         C04PacketPlayerPosition(
@@ -372,7 +372,7 @@ class Flight : Module() {
                     PacketUtils.sendPacketNoEvent(
                         C04PacketPlayerPosition(
                             mc.thePlayer.posX,
-                            mc.thePlayer.posY - 0.96 + Math.random() / 2,
+                            mc.thePlayer.posY - 0.96 + Math.random() / 1.8,
                             mc.thePlayer.posZ,
                             false
                         )
@@ -785,18 +785,15 @@ class Flight : Module() {
         val vanillaVSpeed = vanillaVSpeedValue.get()
         mc.thePlayer.noClip = false
         when (modeValue.get().lowercase(Locale.getDefault())) {
-            "buzz" -> {
+            "vulcan3" -> {
                 if (started && pog) {
                     mc.gameSettings.keyBindJump.pressed = false
                     mc.gameSettings.keyBindSneak.pressed = false
-                    MovementUtils.strafe((0.66 + Math.random() / 0.96).toFloat())
+                    MovementUtils.strafe((0.96 + Math.random() / 50).toFloat())
                     if (mc.thePlayer.onGround) {
                         mc.thePlayer.motionX = 0.0
                         mc.thePlayer.motionZ = 0.0
-                        mc.timer.timerSpeed = 0.7f
-                        mc.thePlayer.motionY = 0.05
-                    } else {
-                        mc.timer.timerSpeed = 1.1f
+                        mc.thePlayer.motionY = 0.2
                     }
                     if (!MovementUtils.isMoving()) {
                         mc.thePlayer.motionX = 0.0
@@ -1944,7 +1941,7 @@ class Flight : Module() {
         val packet = event.packet
         val mode = modeValue.get()
         if (noPacketModify) return
-        if (mode.equals("buzz", ignoreCase = true)) {
+        if (mode.equals("vulcan3", ignoreCase = true)) {
             if (packet is C03PacketPlayer && !pog) {
                 event.cancelEvent()
             } else if (packet is C03PacketPlayer && (packet is C04PacketPlayerPosition || packet is C06PacketPlayerPosLook)) {
@@ -1952,7 +1949,7 @@ class Flight : Module() {
                 val deltaY = packet.y - lastSentY
                 val deltaZ = packet.z - lastSentZ
 
-                if (sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) > 9) {
+                if (sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) > 9.5) {
                     lastSentX = packet.x
                     lastSentY = packet.y
                     lastSentZ = packet.z
@@ -1960,9 +1957,6 @@ class Flight : Module() {
                 }
                 event.cancelEvent()
             } else if (packet is C03PacketPlayer) {
-                event.cancelEvent()
-            }
-            if (packet is C0FPacketConfirmTransaction) {
                 event.cancelEvent()
             }
             if (packet is S08PacketPlayerPosLook) {
@@ -2399,8 +2393,8 @@ class Flight : Module() {
     fun onBB(event: BlockBBEvent) {
         if (mc.thePlayer == null) return
         val mode = modeValue.get()
-        if (event.block is BlockAir && (mode.equals("Jump", ignoreCase = true) || mode.equals(
-                "Buzz",
+        if ((mode.equals("Jump", ignoreCase = true) || mode.equals(
+                "vulcan3",
                 ignoreCase = true
             )) && event.y < startY
         ) event.boundingBox =
