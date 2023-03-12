@@ -190,7 +190,8 @@ class ModuleManager : Listenable {
             JumpCircle::class.java,
             NoZeroZeroThrees::class.java,
             Wings::class.java,
-            Disabler2::class.java
+            Disabler2::class.java,
+            FreeLook::class.java
         )
 
         registerModule(Fucker)

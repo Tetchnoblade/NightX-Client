@@ -4,6 +4,7 @@ import com.google.common.base.Predicates;
 import net.aspw.client.Client;
 import net.aspw.client.event.Render3DEvent;
 import net.aspw.client.features.module.modules.client.Brightness;
+import net.aspw.client.features.module.modules.client.FreeLook;
 import net.aspw.client.features.module.modules.client.NoHurt;
 import net.aspw.client.features.module.modules.client.ViewClip;
 import net.aspw.client.features.module.modules.combat.Reach;
@@ -27,11 +28,14 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
 import java.util.List;
+
+import static org.objectweb.asm.Opcodes.GETFIELD;
 
 @Mixin(EntityRenderer.class)
 public abstract class MixinEntityRenderer {
@@ -74,6 +78,9 @@ public abstract class MixinEntityRenderer {
 
     @Shadow
     public abstract void setupCameraTransform(float partialTicks, int pass);
+
+    @Shadow
+    private float fovModifierHand;
 
     @Inject(method = "renderStreamIndicator", at = @At("HEAD"), cancellable = true)
     private void cancelStreamIndicator(CallbackInfo ci) {
@@ -276,6 +283,31 @@ public abstract class MixinEntityRenderer {
         }
 
         ci.cancel();
+    }
+
+    @Redirect(method = "updateCameraAndRender", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;inGameHasFocus:Z", opcode = GETFIELD))
+    public boolean updateCameraAndRender(Minecraft minecraft) {
+        return FreeLook.overrideMouse();
+    }
+
+    @Redirect(method = "orientCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;rotationYaw:F", opcode = GETFIELD))
+    public float getRotationYaw(Entity entity) {
+        return FreeLook.perspectiveToggled ? FreeLook.cameraYaw : entity.rotationYaw;
+    }
+
+    @Redirect(method = "orientCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;prevRotationYaw:F", opcode = GETFIELD))
+    public float getPrevRotationYaw(Entity entity) {
+        return FreeLook.perspectiveToggled ? FreeLook.cameraYaw : entity.prevRotationYaw;
+    }
+
+    @Redirect(method = "orientCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;rotationPitch:F", opcode = GETFIELD))
+    public float getRotationPitch(Entity entity) {
+        return FreeLook.perspectiveToggled ? FreeLook.cameraPitch : entity.rotationPitch;
+    }
+
+    @Redirect(method = "orientCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;prevRotationPitch:F"))
+    public float getPrevRotationPitch(Entity entity) {
+        return FreeLook.perspectiveToggled ? FreeLook.cameraPitch : entity.prevRotationPitch;
     }
 
     /**

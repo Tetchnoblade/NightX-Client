@@ -7,7 +7,6 @@ import net.aspw.client.features.module.modules.client.Gui;
 import net.aspw.client.features.module.modules.client.Hud;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.MouseUtils;
-import net.aspw.client.utils.PacketUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.utils.render.Stencil;
 import net.aspw.client.visual.client.clickgui.element.CategoryElement;
@@ -77,16 +76,6 @@ public class NewUi extends GuiScreen {
             RenderUtils.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
         }
         RenderUtils.originalRoundedRect(31F, 31F, this.width - 31F, this.height - 31F, 8F, 0xFF060606);
-        Fonts.fontSFUI40.drawStringWithShadow(
-                "inBound: §a" + PacketUtils.avgInBound,
-                242f,
-                Fonts.fontSFUI35.FONT_HEIGHT + 28f,
-                -1);
-        Fonts.fontSFUI40.drawStringWithShadow(
-                "outBound: §a" + PacketUtils.avgOutBound,
-                308f,
-                Fonts.fontSFUI35.FONT_HEIGHT + 28f,
-                -1);
         if (MouseUtils.mouseWithinBounds(mouseX, mouseY, this.width - 54F, 30F, this.width - 30F, 50F))
             fading += 0.2F * RenderUtils.deltaTime * 0.045F;
         else
@@ -102,15 +91,15 @@ public class NewUi extends GuiScreen {
         if (searchElement.isTyping()) {
             Fonts.fontSFUI40.drawStringWithShadow(
                     "Search",
-                    380f,
-                    Fonts.fontSFUI35.FONT_HEIGHT + 28f,
+                    242f,
+                    Fonts.fontSFUI35.FONT_HEIGHT + 30f,
                     -1
             );
         } else {
             Fonts.fontSFUI40.drawStringWithShadow(
                     "Modules",
-                    380f,
-                    Fonts.fontSFUI35.FONT_HEIGHT + 28f,
+                    242f,
+                    Fonts.fontSFUI35.FONT_HEIGHT + 30f,
                     -1
             );
         }

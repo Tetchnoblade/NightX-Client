@@ -11,7 +11,7 @@ import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
 
-@ModuleInfo(name = "SilentView", category = ModuleCategory.CLIENT)
+@ModuleInfo(name = "SilentView", spacedName = "Silent View", category = ModuleCategory.CLIENT, array = false)
 class SilentView : Module() {
 
     var mode = ListValue("Mode", arrayOf("Normal", "CSGO"), "Normal")
