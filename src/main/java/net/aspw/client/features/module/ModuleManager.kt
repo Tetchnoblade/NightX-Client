@@ -95,7 +95,6 @@ class ModuleManager : Listenable {
             ShowInvis::class.java,
             AntiNausea::class.java,
             Trails::class.java,
-            ViewClip::class.java,
             Reach::class.java,
             Hud::class.java,
             PackSpoofer::class.java,
