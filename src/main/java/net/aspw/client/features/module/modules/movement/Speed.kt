@@ -395,6 +395,12 @@ class Speed : Module() {
     }
 
     @JvmField
+    val boostSpeedValue = BoolValue("Ground-Boost", true) { modeName.equals("vulcanground", ignoreCase = true) }
+
+    @JvmField
+    val boostDelayValue = IntegerValue("Boost-Delay", 8, 2, 15) { modeName.equals("vulcanground", ignoreCase = true) }
+
+    @JvmField
     val verusTimer = FloatValue("Verus-Timer", 1f, 0.1f, 10f) { modeName.equals("verushard", ignoreCase = true) }
 
     @JvmField

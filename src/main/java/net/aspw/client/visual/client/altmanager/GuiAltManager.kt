@@ -1,6 +1,11 @@
 package net.aspw.client.visual.client.altmanager
 
+import com.mojang.authlib.Agent
+import com.mojang.authlib.exceptions.AuthenticationException
+import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
+import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication
 import com.thealtening.AltService
+import com.thealtening.api.TheAltening
 import me.liuli.elixir.account.CrackedAccount
 import me.liuli.elixir.account.MicrosoftAccount
 import me.liuli.elixir.account.MinecraftAccount
@@ -25,6 +30,7 @@ import net.minecraft.client.gui.GuiTextField
 import net.minecraft.util.Session
 import org.lwjgl.input.Keyboard
 import java.awt.Color
+import java.net.Proxy
 import java.util.*
 import kotlin.concurrent.thread
 
@@ -61,6 +67,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         buttonList.add(GuiButton(2, width - 80, startPositionY + 24 * 2, 70, 20, "Delete"))
         buttonList.add(GuiButton(7, width - 80, startPositionY + 24 * 3, 70, 20, "Import"))
         buttonList.add(GuiButton(12, width - 80, startPositionY + 24 * 4, 70, 20, "Export"))
+        buttonList.add(GuiButton(5, width - 80, startPositionY + 24 * 5, 70, 20, "Free Alt"))
         buttonList.add(GuiButton(0, width - 80, height - 65, 70, 20, "Done"))
         buttonList.add(GuiButton(3, 5, startPositionY + 24, 90, 20, "Login").also { loginButton = it })
         buttonList.add(GuiButton(4, 5, startPositionY + 24 * 2, 90, 20, "Random Alt").also { randomButton = it })
@@ -90,7 +97,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         )
         Fonts.fontSFUI35.drawStringWithShadow(
             "§7Type: §a${
-                if (altService.currentService == AltService.EnumAltService.THEALTENING) "The Altening" else if (isValidTokenOffline(
+                if (altService.currentService == AltService.EnumAltService.THEALTENING) "TheAltening" else if (isValidTokenOffline(
                         mc.getSession().token
                     )
                 ) "Microsoft" else "Cracked"
@@ -98,7 +105,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         )
         searchField.drawTextBox()
         if (searchField.text.isEmpty() && !searchField.isFocused) Fonts.fontSFUI40.drawStringWithShadow(
-            "§7Search...",
+            "§7Search",
             (searchField.xPosition + 4).toFloat(),
             17f,
             0xffffff
@@ -186,6 +193,42 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     }
                     "§aLogging in..."
                 } ?: "§cYou do not have any accounts."
+            }
+
+            5 -> {
+                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    Client.tipSoundManager.popSound.asyncPlay(90f)
+                }
+                val altening = TheAltening("api-qvo1-22iq-bt80")
+                val asynchronous = TheAltening.Asynchronous(altening)
+                asynchronous.accountData.thenAccept { account ->
+                    if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        Client.tipSoundManager.popSound.asyncPlay(90f)
+                    }
+                    try {
+                        altService.switchService(AltService.EnumAltService.THEALTENING)
+                        if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            Client.tipSoundManager.popSound.asyncPlay(90f)
+                        }
+                        status = "§aLogged successfully to ${account.username}."
+                        val yggdrasilUserAuthentication =
+                            YggdrasilUserAuthentication(
+                                YggdrasilAuthenticationService(Proxy.NO_PROXY, ""),
+                                Agent.MINECRAFT
+                            )
+                        yggdrasilUserAuthentication.setUsername(account.token)
+                        yggdrasilUserAuthentication.setPassword(Client.CLIENT_BEST)
+                        yggdrasilUserAuthentication.logIn()
+                        mc.session = Session(
+                            yggdrasilUserAuthentication.selectedProfile.name, yggdrasilUserAuthentication
+                                .selectedProfile.id.toString(),
+                            yggdrasilUserAuthentication.authenticatedToken, "mojang"
+                        )
+                        Client.eventManager.callEvent(SessionEvent())
+                    } catch (e: AuthenticationException) {
+                        altService.switchService(AltService.EnumAltService.MOJANG)
+                    }
+                }
             }
 
             99 -> {

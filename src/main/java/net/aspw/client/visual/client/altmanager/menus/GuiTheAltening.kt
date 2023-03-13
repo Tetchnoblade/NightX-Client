@@ -59,7 +59,7 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
         buttonList.add(generateButton)
 
         // Buy & Back buttons
-        buttonList.add(GuiButton(3, width / 2 - 100, height - 54, 98, 20, "Free Gen"))
+        buttonList.add(GuiButton(3, width / 2 - 100, height - 54, 98, 20, "Website"))
         buttonList.add(GuiButton(0, width / 2 + 2, height - 54, 98, 20, "Back"))
 
         // Token text field
@@ -83,7 +83,7 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
         RenderUtils.drawRect(30.0f, 30.0f, width - 30.0f, height - 30.0f, Integer.MIN_VALUE)
 
         // Draw title and status and logo
-        RenderUtils.drawImage2(alteningLogo, width / 2F - 50F, height / 2F - 90F, 100, 100)
+        RenderUtils.drawImage2(alteningLogo, width / 2F - 41F, height / 2F + 10, 80, 80)
         Fonts.fontLarge.drawCenteredString("The Altening", width / 2.0f, 12.0f, 0xffffff)
         Fonts.fontSFUI40.drawCenteredString(status, width / 2.0f, 30.0f, 0xffffff)
 
@@ -233,7 +233,7 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                 }).start()
             }
 
-            3 -> MiscUtils.showURL("https://thealtening.com/free/free-minecraft-alts")
+            3 -> MiscUtils.showURL("https://thealtening.com")
         }
     }
 
