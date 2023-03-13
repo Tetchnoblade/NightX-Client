@@ -18,7 +18,6 @@ import net.aspw.client.utils.SessionUtils;
 import net.aspw.client.utils.misc.RandomUtils;
 import net.aspw.client.visual.client.GuiProxy;
 import net.aspw.client.visual.client.altmanager.GuiAltManager;
-import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening;
 import net.aspw.client.visual.font.Fonts;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiDisconnected;
@@ -86,25 +85,19 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
                 if (Client.moduleManager.getModule(Hud.class).getFlagSoundValue().get()) {
                     Client.tipSoundManager.getPopSound().asyncPlay(90f);
                 }
-                if (!GuiTheAltening.Companion.getApiKey().isEmpty()) {
-                    final String apiKey = GuiTheAltening.Companion.getApiKey();
-                    final TheAltening theAltening = new TheAltening(apiKey);
-
-                    try {
-                        final AccountData account = theAltening.getAccountData();
-                        GuiAltManager.Companion.getAltService().switchService(AltService.EnumAltService.THEALTENING);
-
-                        final YggdrasilUserAuthentication yggdrasilUserAuthentication = new YggdrasilUserAuthentication(new YggdrasilAuthenticationService(Proxy.NO_PROXY, ""), Agent.MINECRAFT);
-                        yggdrasilUserAuthentication.setUsername(account.getToken());
-                        yggdrasilUserAuthentication.setPassword(Client.CLIENT_BEST);
-                        yggdrasilUserAuthentication.logIn();
-
-                        mc.session = new Session(yggdrasilUserAuthentication.getSelectedProfile().getName(), yggdrasilUserAuthentication.getSelectedProfile().getId().toString(), yggdrasilUserAuthentication.getAuthenticatedToken(), "microsoft");
-                        Client.eventManager.callEvent(new SessionEvent());
-                        break;
-                    } catch (final Throwable throwable) {
-                        ClientUtils.getLogger().error("Failed to login into random account from The Altening.", throwable);
-                    }
+                final TheAltening theAltening = new TheAltening("api-qvo1-22iq-bt80");
+                try {
+                    final AccountData account = theAltening.getAccountData();
+                    GuiAltManager.Companion.getAltService().switchService(AltService.EnumAltService.THEALTENING);
+                    final YggdrasilUserAuthentication yggdrasilUserAuthentication = new YggdrasilUserAuthentication(new YggdrasilAuthenticationService(Proxy.NO_PROXY, ""), Agent.MINECRAFT);
+                    yggdrasilUserAuthentication.setUsername(account.getToken());
+                    yggdrasilUserAuthentication.setPassword(Client.CLIENT_BEST);
+                    yggdrasilUserAuthentication.logIn();
+                    mc.session = new Session(yggdrasilUserAuthentication.getSelectedProfile().getName(), yggdrasilUserAuthentication.getSelectedProfile().getId().toString(), yggdrasilUserAuthentication.getAuthenticatedToken(), "mojang");
+                    Client.eventManager.callEvent(new SessionEvent());
+                    break;
+                } catch (final Throwable throwable) {
+                    ClientUtils.getLogger().error("Failed to login.", throwable);
                 }
                 break;
             case 4:
