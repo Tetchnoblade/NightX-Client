@@ -107,7 +107,8 @@ class AntiWeb : Module() {
                 if (!mc.gameSettings.keyBindSneak.isKeyDown)
                     mc.thePlayer.motionY = 0.0
             }
-              "test" -> {
+            
+             "test" -> {
                 mc.thePlayer.jumpMovementFactor = 0.85f
 
                 if (!mc.gameSettings.keyBindSneak.isKeyDown)
