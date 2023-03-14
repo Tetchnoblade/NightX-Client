@@ -1,6 +1,6 @@
 package net.aspw.instruction
 
-import net.aspw.nightx.NightX
+import net.aspw.client.Client
 import java.awt.BorderLayout
 import javax.swing.JFrame
 import javax.swing.JLabel
@@ -17,8 +17,8 @@ fun main() {
     // Add instruction as label
     @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     val label = JLabel(
-        NightX::class.java.getResourceAsStream("/instructions.html").reader().readText()
-            .replace("{assets}", NightX.javaClass.classLoader.getResource("assets").toString())
+        Client::class.java.getResourceAsStream("/instructions.html").reader().readText()
+            .replace("{assets}", Client.javaClass.classLoader.getResource("assets").toString())
     )
     frame.add(label, BorderLayout.CENTER)
 
