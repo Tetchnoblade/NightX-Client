@@ -16,7 +16,7 @@ class AntiWeb : Module() {
 
     private val modeValue = ListValue(
         "Mode",
-        arrayOf("None", "AAC", "LAAC", "Rewi", "AACv4", "Cardinal", "Horizon", "Spartan", Test, "Negativity"),
+        arrayOf("None", "AAC", "LAAC", "Rewi", "AACv4", "Cardinal", "Horizon", "Spartan", "Negativity"),
         "AAC"
     )
     private val horizonSpeed = FloatValue("HorizonSpeed", 0.1F, 0.01F, 0.8F)
@@ -97,12 +97,6 @@ class AntiWeb : Module() {
                     mc.timer.timerSpeed = 3F
                 }
                 usedTimer = true
-            }
-              "test" -> {
-                mc.thePlayer.jumpMovementFactor = 0.85f
-
-                if (!mc.gameSettings.keyBindSneak.isKeyDown)
-                    mc.thePlayer.motionY = 0.0
             }
 
             "negativity" -> {
