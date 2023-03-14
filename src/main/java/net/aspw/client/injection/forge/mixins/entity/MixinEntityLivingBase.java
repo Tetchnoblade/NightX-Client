@@ -3,8 +3,8 @@ package net.aspw.client.injection.forge.mixins.entity;
 import de.enzaxd.viaforge.ViaForge;
 import net.aspw.client.Client;
 import net.aspw.client.event.JumpEvent;
-import net.aspw.client.features.module.modules.client.Animations;
 import net.aspw.client.features.module.modules.client.AntiNausea;
+import net.aspw.client.features.module.modules.client.BlockAnimations;
 import net.aspw.client.features.module.modules.movement.DoubleJump;
 import net.aspw.client.features.module.modules.movement.Flight;
 import net.aspw.client.features.module.modules.movement.Jesus;
@@ -146,7 +146,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
      */
     @Overwrite
     private int getArmSwingAnimationEnd() {
-        int speed = Client.moduleManager.getModule(Animations.class).getState() ? 2 + (20 - Animations.SpeedSwing.get() - 16) : 6;
+        int speed = Client.moduleManager.getModule(BlockAnimations.class).getState() ? 2 + (20 - BlockAnimations.SpeedSwing.get() - 16) : 6;
         return this.isPotionActive(Potion.digSpeed) ? speed - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) : (this.isPotionActive(Potion.digSlowdown) ? speed + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : speed);
     }
 

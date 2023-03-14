@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.aspw.client.features.module.modules.client.Animations;
+import net.aspw.client.features.module.modules.client.BlockAnimations;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
@@ -63,13 +63,13 @@ public abstract class MixinGuiIngameForge extends MixinGuiInGame {
         NetHandlerPlayClient handler = mc.thePlayer.sendQueue;
 
         if (!mc.isIntegratedServerRunning() || handler.getPlayerInfoMap().size() > 1 || scoreobjective != null) {
-            xScale = AnimationUtils.animate((mc.gameSettings.keyBindPlayerList.isKeyDown() ? 100F : 0F), xScale, Animations.tabAnimations.get().equalsIgnoreCase("none") ? 1F : 0.0125F * RenderUtils.deltaTime);
+            xScale = AnimationUtils.animate((mc.gameSettings.keyBindPlayerList.isKeyDown() ? 100F : 0F), xScale, BlockAnimations.tabAnimations.get().equalsIgnoreCase("none") ? 1F : 0.0125F * RenderUtils.deltaTime);
             float rescaled = xScale / 100F;
             boolean displayable = rescaled > 0F;
             this.overlayPlayerList.updatePlayerList(displayable);
             if (!displayable || pre(PLAYER_LIST)) return;
             GlStateManager.pushMatrix();
-            switch (Animations.tabAnimations.get().toLowerCase()) {
+            switch (BlockAnimations.tabAnimations.get().toLowerCase()) {
                 case "zoom":
                     GlStateManager.translate(width / 2F * (1F - rescaled), 0F, 0F);
                     GlStateManager.scale(rescaled, rescaled, rescaled);

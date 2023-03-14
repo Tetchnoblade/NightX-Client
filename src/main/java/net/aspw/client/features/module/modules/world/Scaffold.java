@@ -119,7 +119,7 @@ public class Scaffold extends Module {
     private final IntegerValue greenValue = new IntegerValue("Green", 255, 0, 255, () -> markValue.get());
     private final IntegerValue blueValue = new IntegerValue("Blue", 255, 0, 255, () -> markValue.get());
     private final IntegerValue alphaValue = new IntegerValue("Alpha", 120, 0, 255, () -> markValue.get());
-    private final BoolValue swingValue = new BoolValue("Swing", true);
+    private final BoolValue swingValue = new BoolValue("Swing", false);
     private final BoolValue downValue = new BoolValue("Down", true);
     private final BoolValue sameYValue = new BoolValue("KeepY", false);
     private final BoolValue autoJumpValue = new BoolValue("AutoJump", false);

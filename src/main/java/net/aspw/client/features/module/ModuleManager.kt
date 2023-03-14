@@ -90,7 +90,7 @@ class ModuleManager : Listenable {
             Phase::class.java,
             Crasher::class.java,
             Fov::class.java,
-            Animations::class.java,
+            BlockAnimations::class.java,
             InventoryManager::class.java,
             ShowInvis::class.java,
             AntiNausea::class.java,

@@ -11,21 +11,10 @@ import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 
-@ModuleInfo(name = "Animations", category = ModuleCategory.CLIENT, array = false)
-class Animations : Module() {
+@ModuleInfo(name = "BlockAnimations", spacedName = "Block Animations", category = ModuleCategory.CLIENT, array = false)
+class BlockAnimations : Module() {
     override fun onInitialize() {
         state = true
-    }
-
-    @EventTarget
-    fun onMotion(event: MotionEvent) {
-        if (event.eventState === EventState.PRE && onlySwingValue.get() && mc.thePlayer.isSwingInProgress) {
-            mc.thePlayer.renderArmPitch = handPos.get() + mc.thePlayer.rotationPitch
-        }
-
-        if (event.eventState === EventState.PRE && !onlySwingValue.get()) {
-            mc.thePlayer.renderArmPitch = handPos.get() + mc.thePlayer.rotationPitch
-        }
     }
 
     companion object {
@@ -139,5 +128,16 @@ class Animations : Module() {
 
         @JvmField
         val oldAnimations = BoolValue("1.7-Animations", false)
+    }
+
+    @EventTarget
+    fun onMotion(event: MotionEvent) {
+        if (event.eventState === EventState.PRE && onlySwingValue.get() && mc.thePlayer.isSwingInProgress) {
+            mc.thePlayer.renderArmPitch = handPos.get() + mc.thePlayer.rotationPitch
+        }
+
+        if (event.eventState === EventState.PRE && !onlySwingValue.get()) {
+            mc.thePlayer.renderArmPitch = handPos.get() + mc.thePlayer.rotationPitch
+        }
     }
 }

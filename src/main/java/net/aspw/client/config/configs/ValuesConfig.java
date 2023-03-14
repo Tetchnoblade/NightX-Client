@@ -73,6 +73,7 @@ public class ValuesConfig extends FileConfig {
 
                 if (jsonValue.has("API-Key"))
                     GuiTheAltening.Companion.setApiKey(jsonValue.get("API-Key").getAsString());
+            } else {
 
                 final Module module = Client.moduleManager.getModule(entry.getKey());
 
