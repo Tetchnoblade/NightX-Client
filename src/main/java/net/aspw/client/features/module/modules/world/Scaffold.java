@@ -129,7 +129,7 @@ public class Scaffold extends Module {
     private final BoolValue autoDisableSpeedValue = new BoolValue("AutoDisable-Speed", false);
     private final BoolValue noSpeedPotValue = new BoolValue("NoSpeedPot", false);
     public final BoolValue rotationsValue = new BoolValue("Rotations", true);
-    private final BoolValue keepRotationValue = new BoolValue("KeepRotation", true, () -> rotationsValue.get());
+    public final BoolValue keepRotationValue = new BoolValue("KeepRotation", true, () -> rotationsValue.get());
     private final BoolValue rotationStrafeValue = new BoolValue("RotationStrafe", false);
     private final BoolValue noHitCheckValue = new BoolValue("NoHitCheck", false, () -> rotationsValue.get());
     private final FloatValue maxTurnSpeed = new FloatValue("MaxTurnSpeed", 120F, 0F, 180F, "°", () -> rotationsValue.get()) {
