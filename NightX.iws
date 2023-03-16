@@ -6,13 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="af093b99-5942-419c-869b-8b2d7cb4dd2a" name="変更" comment="">
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/downloads.json" beforeDir="false" afterPath="$PROJECT_DIR$/downloads.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/platform/Platform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/platform/Platform.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/client/SilentView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/client/SilentView.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/exploit/Disabler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/exploit/Disabler.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/movement/Flight.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/movement/Flight.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/render/TargetESP.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/render/TargetESP.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityPlayerSP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityPlayerSP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/ViaBackwards-4.2.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/libs/ViaBackwards-4.2.1.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/ViaVersion-4.2.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/libs/ViaVersion-4.2.1.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/client/ClientSpoof.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/client/ClientSpoof.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/special/ClientSpoof.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/special/ClientSpoof.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,13 +64,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "OverrideImplement.generate.javadoc": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;OverrideImplement.generate.javadoc&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="de.enzaxd.viaforge.platform" />
