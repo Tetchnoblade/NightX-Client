@@ -372,7 +372,15 @@ class Flight : Module() {
                     PacketUtils.sendPacketNoEvent(
                         C04PacketPlayerPosition(
                             mc.thePlayer.posX,
-                            mc.thePlayer.posY - 0.96 + Math.random() / 1.8,
+                            mc.thePlayer.posY - 2 + Math.random() / 2,
+                            mc.thePlayer.posZ,
+                            false
+                        )
+                    )
+                    PacketUtils.sendPacketNoEvent(
+                        C04PacketPlayerPosition(
+                            mc.thePlayer.posX,
+                            mc.thePlayer.posY - 2 + Math.random() / 2,
                             mc.thePlayer.posZ,
                             false
                         )
@@ -789,7 +797,7 @@ class Flight : Module() {
                 if (started && pog) {
                     mc.gameSettings.keyBindJump.pressed = false
                     mc.gameSettings.keyBindSneak.pressed = false
-                    MovementUtils.strafe((0.96 + Math.random() / 50).toFloat())
+                    MovementUtils.strafe((1.96 + Math.random() / 50).toFloat())
                     if (mc.thePlayer.onGround) {
                         mc.thePlayer.motionX = 0.0
                         mc.thePlayer.motionZ = 0.0
@@ -1949,7 +1957,7 @@ class Flight : Module() {
                 val deltaY = packet.y - lastSentY
                 val deltaZ = packet.z - lastSentZ
 
-                if (sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) > 9.5) {
+                if (sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) > 9.06) {
                     lastSentX = packet.x
                     lastSentY = packet.y
                     lastSentZ = packet.z
@@ -2341,13 +2349,15 @@ class Flight : Module() {
             "slime" -> if (wdState < 4) event.zeroXZ()
             "cubecraft" -> {
                 val yaw = Math.toRadians(mc.thePlayer.rotationYaw.toDouble())
-                if (cubecraftTeleportTickTimer.hasTimePassed(2)) {
-                    event.x = -Math.sin(yaw) * 2.4
-                    event.z = Math.cos(yaw) * 2.4
-                    cubecraftTeleportTickTimer.reset()
-                } else {
-                    event.x = -Math.sin(yaw) * 0.2
-                    event.z = Math.cos(yaw) * 0.2
+                if (MovementUtils.isMoving()) {
+                    if (cubecraftTeleportTickTimer.hasTimePassed(2)) {
+                        event.x = -Math.sin(yaw) * 2.4
+                        event.z = Math.cos(yaw) * 2.4
+                        cubecraftTeleportTickTimer.reset()
+                    } else {
+                        event.x = -Math.sin(yaw) * 0.2
+                        event.z = Math.cos(yaw) * 0.2
+                    }
                 }
             }
 
