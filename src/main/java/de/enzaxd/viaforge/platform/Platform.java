@@ -76,6 +76,11 @@ public class Platform implements ViaPlatform<UUID> {
     }
 
     @Override
+    public PlatformTask runRepeatingAsync(Runnable runnable, long l) {
+        return null;
+    }
+
+    @Override
     public FutureTaskId runSync(Runnable runnable) {
         return new FutureTaskId(ViaForge.getInstance().getEventLoop().submit(runnable).addListener(errorLogger()));
     }
