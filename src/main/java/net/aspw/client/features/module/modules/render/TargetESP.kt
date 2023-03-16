@@ -20,7 +20,7 @@ import java.awt.Color
 
 @ModuleInfo(name = "TargetESP", spacedName = "Target ESP", category = ModuleCategory.RENDER, array = false)
 class TargetESP : Module() {
-    val radius = FloatValue("Radius", 0.8f, 0.1f, 4.0f, "m")
+    val radius = FloatValue("Radius", 0.9f, 0.1f, 4.0f, "m")
     private val colorType =
         ListValue("Color", arrayOf("Custom", "Rainbow", "Rainbow2", "Sky", "Fade", "Mixer"), "Custom")
     private val redValue = IntegerValue("Red", 0, 0, 255)

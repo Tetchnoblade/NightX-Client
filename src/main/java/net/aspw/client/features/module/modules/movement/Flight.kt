@@ -372,15 +372,7 @@ class Flight : Module() {
                     PacketUtils.sendPacketNoEvent(
                         C04PacketPlayerPosition(
                             mc.thePlayer.posX,
-                            mc.thePlayer.posY - 2 + Math.random() / 2,
-                            mc.thePlayer.posZ,
-                            false
-                        )
-                    )
-                    PacketUtils.sendPacketNoEvent(
-                        C04PacketPlayerPosition(
-                            mc.thePlayer.posX,
-                            mc.thePlayer.posY - 2 + Math.random() / 2,
+                            mc.thePlayer.posY - 2.8 + Math.random() / 50,
                             mc.thePlayer.posZ,
                             false
                         )
@@ -1957,7 +1949,7 @@ class Flight : Module() {
                 val deltaY = packet.y - lastSentY
                 val deltaZ = packet.z - lastSentZ
 
-                if (sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) > 9.06) {
+                if (sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) > 9.3) {
                     lastSentX = packet.x
                     lastSentY = packet.y
                     lastSentZ = packet.z
