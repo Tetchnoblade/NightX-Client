@@ -18,7 +18,7 @@ class SilentView : Module() {
     var headNormalRotate = BoolValue("Head-Rotation", true, { mode.get().equals("normal", true) })
     var headPitch = BoolValue("Head-Pitch", true, { mode.get().equals("normal", true) })
     var bodyNormalRotate = BoolValue("Body-Rotation", true, { mode.get().equals("normal", true) })
-    var bodyPrevRotate = BoolValue("Cape-Fixer", true, { mode.get().equals("normal", true) })
+    var bodyPrevRotate = BoolValue("Cape-Fixer", true, { mode.get().equals("normal", true) && bodyNormalRotate.get() })
     var R = FloatValue("R", 255f, 0f, 255f, { mode.get().equals("csgo", true) })
     var G = FloatValue("G", 120f, 0f, 255f, { mode.get().equals("csgo", true) })
     var B = FloatValue("B", 255f, 0f, 255f, { mode.get().equals("csgo", true) })
@@ -29,12 +29,11 @@ class SilentView : Module() {
     fun shouldRotate(): Boolean {
         val killAura = Client.moduleManager.getModule(KillAura::class.java) as KillAura
         val scaffold = Client.moduleManager.getModule(Scaffold::class.java) as Scaffold
-        return getState(Scaffold::class.java) ||
-                (getState(KillAura::class.java) && killAura.target != null) && killAura.silentRotationValue.get() && !killAura.rotations.get()
+        return (getState(KillAura::class.java) && killAura.target != null && killAura.silentRotationValue.get() && !killAura.rotations.get()
             .equals("None") ||
-                (getState(Scaffold::class.java) && scaffold.rotationsValue.get()) || mc.thePlayer.ridingEntity != null || (getState(
-            Annoy::class.java
-        ))
+                (getState(Scaffold::class.java) && scaffold.rotationsValue.get() || mc.thePlayer.ridingEntity != null || (getState(
+                    Annoy::class.java
+                ))))
     }
 
     init {

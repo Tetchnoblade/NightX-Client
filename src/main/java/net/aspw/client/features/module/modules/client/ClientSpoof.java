@@ -13,6 +13,7 @@ public final class ClientSpoof extends Module {
             "Lunar",
             "LabyMod",
             "CheatBreaker",
-            "PvPLounge"
+            "PvPLounge",
+            "Geyser"
     }, "Vanilla");
 }

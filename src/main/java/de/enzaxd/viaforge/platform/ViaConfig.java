@@ -37,11 +37,6 @@ public class ViaConfig extends AbstractViaConfig {
     }
 
     @Override
-    public boolean isAntiXRay() {
-        return false;
-    }
-
-    @Override
     public boolean isNMSPlayerTicking() {
         return false;
     }
