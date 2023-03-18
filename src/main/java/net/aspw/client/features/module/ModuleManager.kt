@@ -102,7 +102,6 @@ class ModuleManager : Listenable {
             WorldTime::class.java,
             EnchantColor::class.java,
             Cape::class.java,
-            NoRender::class.java,
             DamageParticle::class.java,
             AntiVanish::class.java,
             AutoLogin::class.java,

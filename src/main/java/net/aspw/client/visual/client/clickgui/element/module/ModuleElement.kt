@@ -70,14 +70,6 @@ class ModuleElement(val module: Module) : MinecraftInstance() {
                 expectedHeight += ve.valueHeight
         animHeight = animPercent / 100F * (expectedHeight + 10F)
 
-        RenderUtils.originalRoundedRect(
-            x + 9.5F,
-            y + 4.5F,
-            x + width - 9.5F,
-            y + height + animHeight - 4.5F,
-            4F,
-            ColorManager.buttonOutline.rgb
-        )
         Stencil.write(true)
         RenderUtils.originalRoundedRect(
             x + 10F,

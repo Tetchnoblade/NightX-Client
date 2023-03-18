@@ -30,15 +30,15 @@ class WatchdogNew : SpeedMode("WatchdogNew") {
                 if (groundTick >= 0) {
                     mc.timer.timerSpeed = 1.02f
                     mc.thePlayer.motionY = 0.41999998688698
-                    }
-                    if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                        MovementUtils.strafe(0.57f)
-                    } else {
-                        MovementUtils.strafe(0.42f)
-                    }
                 }
-                groundTick++
-            } else {
+                if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                    MovementUtils.strafe(0.57f)
+                } else {
+                    MovementUtils.strafe(0.42f)
+                }
+            }
+            groundTick++
+        } else {
             groundTick = 0
             mc.thePlayer.motionY += -0.021 * 0.021
         }

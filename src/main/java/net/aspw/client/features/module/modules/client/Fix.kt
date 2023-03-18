@@ -13,6 +13,6 @@ import net.aspw.client.value.BoolValue
 class Fix : Module() {
     companion object {
         @JvmField
-        val fixValue = BoolValue("Fix", true)
+        val fixValue = BoolValue("Fix", false)
     }
 }

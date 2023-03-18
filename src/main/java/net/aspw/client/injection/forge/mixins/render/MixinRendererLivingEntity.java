@@ -5,7 +5,6 @@ import net.aspw.client.features.module.modules.client.Chams;
 import net.aspw.client.features.module.modules.client.ColorMixer;
 import net.aspw.client.features.module.modules.client.ESP;
 import net.aspw.client.features.module.modules.client.SilentView;
-import net.aspw.client.features.module.modules.render.NoRender;
 import net.aspw.client.features.module.modules.render.PlayerEdit;
 import net.aspw.client.features.module.modules.render.ShowInvis;
 import net.aspw.client.utils.EntityUtils;
@@ -110,12 +109,6 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
     @Inject(method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V", at = @At("HEAD"), cancellable = true)
     private <T extends EntityLivingBase> void injectChamsPre(T entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo callbackInfo) {
         final Chams chams = Client.moduleManager.getModule(Chams.class);
-        final NoRender noRender = Client.moduleManager.getModule(NoRender.class);
-
-        if (noRender.getState() && noRender.shouldStopRender(entity)) {
-            callbackInfo.cancel();
-            return;
-        }
 
         if (chams.getState() && chams.getTargetsValue().get() && chams.getLegacyMode().get() && ((chams.getLocalPlayerValue().get() && entity == Minecraft.getMinecraft().thePlayer) || EntityUtils.isSelected(entity, false))) {
             GL11.glEnable(GL11.GL_POLYGON_OFFSET_FILL);
@@ -126,10 +119,8 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
     @Inject(method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V", at = @At("RETURN"))
     private <T extends EntityLivingBase> void injectChamsPost(T entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo callbackInfo) {
         final Chams chams = Client.moduleManager.getModule(Chams.class);
-        final NoRender noRender = Client.moduleManager.getModule(NoRender.class);
 
-        if (chams.getState() && chams.getTargetsValue().get() && chams.getLegacyMode().get() && ((chams.getLocalPlayerValue().get() && entity == Minecraft.getMinecraft().thePlayer) || EntityUtils.isSelected(entity, false))
-                && !(noRender.getState() && noRender.shouldStopRender(entity))) {
+        if (chams.getState() && chams.getTargetsValue().get() && chams.getLegacyMode().get() && ((chams.getLocalPlayerValue().get() && entity == Minecraft.getMinecraft().thePlayer) || EntityUtils.isSelected(entity, false))) {
             GL11.glPolygonOffset(1.0F, 1000000F);
             GL11.glDisable(GL11.GL_POLYGON_OFFSET_FILL);
         }
@@ -137,7 +128,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
 
     @Inject(method = "canRenderName(Lnet/minecraft/entity/EntityLivingBase;)Z", at = @At("HEAD"), cancellable = true)
     private <T extends EntityLivingBase> void canRenderName(T entity, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        if (Client.moduleManager.getModule(ESP.class).getState() && Client.moduleManager.getModule(ESP.class).tagsValue.get() || Client.moduleManager.getModule(NoRender.class).getState() && Client.moduleManager.getModule(NoRender.class).getNameTagsValue().get()) {
+        if (Client.moduleManager.getModule(ESP.class).getState() && Client.moduleManager.getModule(ESP.class).tagsValue.get()) {
             callbackInfoReturnable.setReturnValue(false);
         }
     }

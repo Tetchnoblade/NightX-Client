@@ -1025,7 +1025,7 @@ class Flight : Module() {
             }
 
             "cubecraft" -> {
-                mc.thePlayer.motionY = 0.0;
+                mc.thePlayer.motionY = 0.0
                 if (MovementUtils.isMoving()) {
                     mc.timer.timerSpeed = 0.6f
                     cubecraftTeleportTickTimer.update()
