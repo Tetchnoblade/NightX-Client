@@ -40,9 +40,6 @@ public final class EntityUtils extends MinecraftInstance {
                         if (isFriend(entityPlayer))
                             return false;
 
-                        if (isEnemy(entityPlayer))
-                            return false;
-
                         if (entityPlayer.isSpectator())
                             return false;
 
@@ -63,11 +60,6 @@ public final class EntityUtils extends MinecraftInstance {
     public static boolean isFriend(final Entity entity) {
         return entity instanceof EntityPlayer && entity.getName() != null &&
                 Client.fileManager.friendsConfig.isFriend(ColorUtils.stripColor(entity.getName()));
-    }
-
-    public static boolean isEnemy(final Entity entity) {
-        return entity instanceof EntityPlayer && entity.getName() != null &&
-                !Client.fileManager.enemysConfig.isEnemy(ColorUtils.stripColor(entity.getName()));
     }
 
     public static boolean isAnimal(final Entity entity) {

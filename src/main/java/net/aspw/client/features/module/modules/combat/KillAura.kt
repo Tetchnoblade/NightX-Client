@@ -149,7 +149,6 @@ class KillAura : Module() {
     // Bypass
     private val swingValue = BoolValue("Swing", true)
     private val keepSprintValue = BoolValue("NoKeepSprint", false)
-    private val enemyValue = BoolValue("Only-Enemy", false)
     private val attackModeValue = ListValue("Attack-Timing", arrayOf("Normal", "Pre", "Post"), "Normal")
 
     // AutoBlock
@@ -803,9 +802,6 @@ class KillAura : Module() {
                 if (EntityUtils.isFriend(entity))
                     return false
 
-                if (EntityUtils.isEnemy(entity) && enemyValue.get())
-                    return false
-
                 val teams = Client.moduleManager[Teams::class.java] as Teams
 
                 return !teams.state || !teams.isInYourTeam(entity)
@@ -986,7 +982,7 @@ class KillAura : Module() {
         }
 
         if (raycastedEntity is EntityLivingBase
-            && (!EntityUtils.isFriend(raycastedEntity) || enemyValue.get() && !EntityUtils.isEnemy(raycastedEntity))
+            && (!EntityUtils.isFriend(raycastedEntity))
         )
             currentTarget = raycastedEntity
 

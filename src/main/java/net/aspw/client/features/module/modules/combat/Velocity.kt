@@ -137,7 +137,7 @@ class Velocity : Module() {
                     return
 
                 if (!mc.thePlayer.onGround) {
-                    MovementUtils.strafe(MovementUtils.getSpeed() * 0.97f)
+                    MovementUtils.strafe(MovementUtils.getSpeed() * 0.94f)
                 } else if (velocityTimer.hasTimePassed(80L))
                     velocityInput = false
             }
