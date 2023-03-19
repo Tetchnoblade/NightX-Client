@@ -5,41 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af093b99-5942-419c-869b-8b2d7cb4dd2a" name="変更" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/client/CustomModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinLayerArmorBase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinModelPlayerFix.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Simple.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/downloads.json" beforeDir="false" afterPath="$PROJECT_DIR$/downloads.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/commands/TacoCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/commands/TacoCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/ModuleManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/ModuleManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRenderPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRenderPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/RenderWings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/RenderWings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/SettingsUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/SettingsUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/ShadowUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/ShadowUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/GuiMainMenu.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/GuiMainMenu.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/altmanager/menus/GuiTheAltening.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/altmanager/menus/GuiTheAltening.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/module/ModuleElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/module/ModuleElement.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/module/value/impl/ListElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/module/value/impl/ListElement.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/altening.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/background.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/expand.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/kawaii.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/shadow.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/10.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/11.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/12.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/3.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/4.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/wing.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/client.forge.mixins.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/client.forge.mixins.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/client/BlockAnimations.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/client/BlockAnimations.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/combat/KillAura.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/combat/KillAura.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/movement/speeds/watchdog/WatchdogNew.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/modules/movement/speeds/watchdog/WatchdogNew.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/item/MixinItemRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/item/MixinItemRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Target.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Target.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +44,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
