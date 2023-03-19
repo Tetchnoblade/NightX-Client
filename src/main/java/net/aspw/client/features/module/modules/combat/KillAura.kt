@@ -1,6 +1,5 @@
 package net.aspw.client.features.module.modules.combat
 
-import de.enzaxd.viaforge.ViaForge
 import net.aspw.client.Client
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
@@ -15,6 +14,7 @@ import net.aspw.client.utils.*
 import net.aspw.client.utils.extensions.getDistanceToEntityBox
 import net.aspw.client.utils.misc.RandomUtils
 import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.utils.timer.TimeUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -309,6 +309,8 @@ class KillAura : Module() {
 
     // Attack delay
     private val attackTimer = MSTimer()
+    private val tickTimer = TickTimer()
+    private val endTimer = TickTimer()
     private var attackDelay = 0L
     private var clicks = 0
 
@@ -558,6 +560,7 @@ class KillAura : Module() {
         }
 
         if (target != null && currentTarget != null) {
+            tickTimer.update()
             while (clicks > 0) {
                 runAttack()
                 clicks--
@@ -670,7 +673,6 @@ class KillAura : Module() {
             if (swing || failHit)
                 mc.thePlayer.swingItem()
         } else {
-            // Attack
             if (!multi) {
                 attackEntity(currentTarget!!)
             } else {
@@ -818,6 +820,8 @@ class KillAura : Module() {
      * Attack [entity]
      */
     private fun attackEntity(entity: EntityLivingBase) {
+        endTimer.update()
+
         // Stop blocking
         if (mc.thePlayer.isBlocking || blockingStatus)
             stopBlocking()
@@ -843,17 +847,22 @@ class KillAura : Module() {
         }
 
         // Attack target
-        if (EnchantmentHelper.getModifierForCreature(mc.thePlayer.heldItem, entity.creatureAttribute) > 0F) {
+        if (EnchantmentHelper.getModifierForCreature(
+                mc.thePlayer.heldItem,
+                entity.creatureAttribute
+            ) > 0F && tickTimer.hasTimePassed(2)
+        ) {
             mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
         }
 
-        if (swingValue.get() && ViaForge.getInstance().version <= 47) // version fix
-            mc.thePlayer.swingItem()
-
         mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
-        if (swingValue.get() && ViaForge.getInstance().version > 47)
+        if (swingValue.get() && tickTimer.hasTimePassed(5)) {
             mc.thePlayer.swingItem()
+            tickTimer.reset()
+        } else {
+            mc.netHandler.addToSendQueue(C0APacketAnimation())
+        }
 
         if (keepSprintValue.get()) {
             if (mc.playerController.currentGameType != WorldSettings.GameType.SPECTATOR)
@@ -1091,7 +1100,13 @@ class KillAura : Module() {
      * Stop blocking
      */
     private fun stopBlocking() {
+        tickTimer.reset()
         fakeBlock = false
+        blockingStatus = false
+        if (endTimer.hasTimePassed(1)) {
+            mc.thePlayer.swingItem()
+            endTimer.reset()
+        }
 
         if (blockingStatus) {
             if (autoBlockModeValue.get().equals("oldhypixel", true))
@@ -1114,7 +1129,6 @@ class KillAura : Module() {
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
             }
         }
-        blockingStatus = false
     }
 
     /**
