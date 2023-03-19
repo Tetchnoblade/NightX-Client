@@ -2,6 +2,7 @@ package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.modules.client.CustomModel;
+import net.aspw.client.features.module.modules.client.SilentView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,6 +18,9 @@ public class MixinLayerArmorBase {
         if (Client.moduleManager.getModule(CustomModel.class).getState() && Client.moduleManager.getModule(CustomModel.class).getOnlySelf().get() && entitylivingbaseIn == Minecraft.getMinecraft().thePlayer) {
             ci.cancel();
         } else if (Client.moduleManager.getModule(CustomModel.class).getState() && !Client.moduleManager.getModule(CustomModel.class).getOnlySelf().get()) {
+            ci.cancel();
+        }
+        if (Client.moduleManager.getModule(SilentView.class).getState() && Client.moduleManager.getModule(SilentView.class).getMode().get().equals("CSGO") && Client.moduleManager.getModule(SilentView.class).shouldRotate() && entitylivingbaseIn == Minecraft.getMinecraft().thePlayer) {
             ci.cancel();
         }
     }

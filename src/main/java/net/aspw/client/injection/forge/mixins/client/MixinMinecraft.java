@@ -266,7 +266,7 @@ public abstract class MixinMinecraft {
                     entityLivingBase.renderYawOffset = yaw - 40;
                 }
             }
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyPrevRotate().get() && silentView.shouldRotate()) {
+            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && silentView.getBodyPrevRotate().get() && silentView.shouldRotate()) {
                 entityLivingBase.prevRenderYawOffset = yaw + 40;
                 if (!Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
                     entityLivingBase.prevRenderYawOffset = yaw - 55;
