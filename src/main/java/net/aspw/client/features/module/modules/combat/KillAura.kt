@@ -1099,7 +1099,11 @@ class KillAura : Module() {
         tickTimer.reset()
         fakeBlock = false
         blockingStatus = false
-        if (endTimer.hasTimePassed(0)) {
+        if (endTimer.hasTimePassed(1)) {
+            mc.thePlayer.swingItem()
+            endTimer.reset()
+        }
+        if (endTimer.hasTimePassed(2)) {
             if (autoBlockModeValue.get().equals("interact", true)) {
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
             }
@@ -1120,10 +1124,6 @@ class KillAura : Module() {
                     )
                 )
             }
-        }
-        if (endTimer.hasTimePassed(1)) {
-            mc.thePlayer.swingItem()
-            endTimer.reset()
         }
     }
 
