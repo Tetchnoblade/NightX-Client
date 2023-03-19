@@ -851,13 +851,15 @@ class KillAura : Module() {
             mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
         }
 
-        mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
-
-        if (swingValue.get() && tickTimer.hasTimePassed(5)) {
-            mc.thePlayer.swingItem()
-            tickTimer.reset()
-        } else {
-            mc.netHandler.addToSendQueue(C0APacketAnimation())
+        if (swingValue.get()) {
+            if (tickTimer.hasTimePassed(5)) {
+                mc.thePlayer.swingItem()
+                mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
+                tickTimer.reset()
+            } else {
+                mc.netHandler.addToSendQueue(C0APacketAnimation())
+                mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
+            }
         }
 
         if (keepSprintValue.get()) {
@@ -1099,11 +1101,9 @@ class KillAura : Module() {
         tickTimer.reset()
         fakeBlock = false
         blockingStatus = false
-        if (endTimer.hasTimePassed(1)) {
+        if (endTimer.hasTimePassed(2)) {
             mc.thePlayer.swingItem()
             endTimer.reset()
-        }
-        if (endTimer.hasTimePassed(2)) {
             if (autoBlockModeValue.get().equals("interact", true)) {
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
             }
