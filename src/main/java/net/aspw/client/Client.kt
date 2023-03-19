@@ -23,7 +23,7 @@ object Client {
     const val CLIENT_BEST = "NightX"
     const val CLIENT_COLORED = "§lN§fightX"
     const val CLIENT_FOLDER = "NightX"
-    const val CLIENT_VERSION = "Developer"
+    const val CLIENT_VERSION = "Beta B41"
     const val CLIENT_CREATOR = "CCBlueX, Exit-scammed, As_pw, Zywl"
     const val CLIENT_DISCORD = "https://nightx.api-minecraft.net/s/rgul30dkqw"
     const val CLIENT_FONTS = "https://nightx.api-minecraft.net/s/pe6o0ytkot"
@@ -91,7 +91,7 @@ object Client {
         // Load configs
         fileManager.loadConfigs(
             fileManager.modulesConfig, fileManager.valuesConfig, fileManager.accountsConfig,
-            fileManager.friendsConfig, fileManager.enemysConfig, fileManager.xrayConfig
+            fileManager.friendsConfig, fileManager.xrayConfig
         )
 
         // Creative items

@@ -408,42 +408,6 @@ public abstract class MixinWorld implements IWorld {
         return false;
     }
 
-    //     @Override
-    //    public boolean setBlockState(int n, int n2, int n3, IBlockState iBlockState, int n4) {
-    //        if (!this.isValid(n, n2, n3)) {
-    //            return false;
-    //        }
-    //        if (!this.isRemote && this.worldInfo.getTerrainType() == WorldType.DEBUG_WORLD) {
-    //            return false;
-    //        }
-    //        Chunk chunk = this.getChunkFromBlockCoords(n, n2, n3);
-    //        IBlock IBlock2 = (IBlock)iBlockState.getBlock();
-    //        BlockSnapshot blockSnapshot = null;
-    //        if (this.captureBlockSnapshots && !this.isRemote) {
-    //            blockSnapshot = BlockSnapshot.getBlockSnapshot((World)(Object)this, new BlockPos(n, n2, n3), n4);
-    //            this.capturedBlockSnapshots.add(blockSnapshot);
-    //        }
-    //        IBlock IBlock3 = (IBlock)this.getBlockState(n, n2, n3).getBlock();
-    //        int n5 = IBlock3.getLightValue((World)(Object)this, n, n2, n3);
-    //        int n6 = IBlock3.getLightOpacity((World)(Object)this, n, n2, n3);
-    //        IBlockState iBlockState2 = null;
-    //        if (iBlockState2 == null) {
-    //            if (blockSnapshot != null) {
-    //                this.capturedBlockSnapshots.remove(blockSnapshot);
-    //            }
-    //            return false;
-    //        }
-    //        if (IBlock2.getLightOpacity((World)(Object)this, n, n2, n3) != n6 || IBlock2.getLightValue((IBlockAccess)((World)(Object)this), n, n2, n3) != n5) {
-    //            this.theProfiler.startSection("checkLight");
-    //            this.checkLight(n, n2, n3);
-    //            this.theProfiler.endSection();
-    //        }
-    //        if (blockSnapshot == null) {
-    //            this.markAndNotifyBlock(n, n2, n3, chunk, iBlockState2, iBlockState, n4);
-    //        }
-    //        return true;
-    //    }
-
     @Override
     public void markBlockForUpdate(int n, int n2, int n3) {
         for (IWorldAccess iWorldAccess : this.worldAccesses) {
@@ -455,9 +419,6 @@ public abstract class MixinWorld implements IWorld {
     public void markAndNotifyBlock(int n, int n2, int n3, Chunk chunk, IBlockState iBlockState, IBlockState iBlockState2, int n4) {
         if (!((n4 & 2) == 0 || this.isRemote && (n4 & 4) != 0 || chunk != null && !chunk.isPopulated())) {
             this.markBlockForUpdate(n, n2, n3);
-        }
-        if (this.isRemote || (n4 & 1) == 0 || iBlockState2.getBlock().hasComparatorInputOverride()) {
-            // empty if block
         }
     }
 

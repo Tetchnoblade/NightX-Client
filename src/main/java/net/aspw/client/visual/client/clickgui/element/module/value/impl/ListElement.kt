@@ -20,7 +20,7 @@ class ListElement(val saveValue: ListValue) : ValueElement<String>(saveValue) {
         -(saveValue.values.map { -Fonts.fontSFUI40.getStringWidth(it) }.sorted().firstOrNull() ?: 0F).toFloat() + 20F
 
     companion object {
-        val expanding = ResourceLocation("client/expand.png")
+        val expanding = ResourceLocation("client/menu/expand.png")
     }
 
     override fun drawElement(

@@ -134,9 +134,9 @@ class AntiFall : Module() {
                             )
                             for (point in path) PacketUtils.sendPacketNoEvent(
                                 C04PacketPlayerPosition(
-                                    point.getX(),
-                                    point.getY(),
-                                    point.getZ(),
+                                    point.x,
+                                    point.y,
+                                    point.z,
                                     true
                                 )
                             )
@@ -246,9 +246,9 @@ class AntiFall : Module() {
                             )
                             for (point in path) PacketUtils.sendPacketNoEvent(
                                 C04PacketPlayerPosition(
-                                    point.getX(),
-                                    point.getY(),
-                                    point.getZ(),
+                                    point.x,
+                                    point.y,
+                                    point.z,
                                     true
                                 )
                             )

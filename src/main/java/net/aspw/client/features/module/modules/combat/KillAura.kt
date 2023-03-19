@@ -1,6 +1,5 @@
 package net.aspw.client.features.module.modules.combat
 
-import de.enzaxd.viaforge.ViaForge
 import net.aspw.client.Client
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
@@ -15,6 +14,7 @@ import net.aspw.client.utils.*
 import net.aspw.client.utils.extensions.getDistanceToEntityBox
 import net.aspw.client.utils.misc.RandomUtils
 import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.utils.timer.TimeUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -149,7 +149,6 @@ class KillAura : Module() {
     // Bypass
     private val swingValue = BoolValue("Swing", true)
     private val keepSprintValue = BoolValue("NoKeepSprint", false)
-    private val enemyValue = BoolValue("Only-Enemy", false)
     private val attackModeValue = ListValue("Attack-Timing", arrayOf("Normal", "Pre", "Post"), "Normal")
 
     // AutoBlock
@@ -310,6 +309,8 @@ class KillAura : Module() {
 
     // Attack delay
     private val attackTimer = MSTimer()
+    private val tickTimer = TickTimer()
+    private val endTimer = TickTimer()
     private var attackDelay = 0L
     private var clicks = 0
 
@@ -559,6 +560,7 @@ class KillAura : Module() {
         }
 
         if (target != null && currentTarget != null) {
+            tickTimer.update()
             while (clicks > 0) {
                 runAttack()
                 clicks--
@@ -669,9 +671,8 @@ class KillAura : Module() {
         // Check is not hitable or check failrate
         if (!hitable || failHit) {
             if (swing || failHit)
-                mc.thePlayer.swingItem()
+                mc.netHandler.addToSendQueue(C0APacketAnimation())
         } else {
-            // Attack
             if (!multi) {
                 attackEntity(currentTarget!!)
             } else {
@@ -803,9 +804,6 @@ class KillAura : Module() {
                 if (EntityUtils.isFriend(entity))
                     return false
 
-                if (EntityUtils.isEnemy(entity) && enemyValue.get())
-                    return false
-
                 val teams = Client.moduleManager[Teams::class.java] as Teams
 
                 return !teams.state || !teams.isInYourTeam(entity)
@@ -822,9 +820,7 @@ class KillAura : Module() {
      * Attack [entity]
      */
     private fun attackEntity(entity: EntityLivingBase) {
-        // Stop blocking
-        if (mc.thePlayer.isBlocking || blockingStatus)
-            stopBlocking()
+        endTimer.update()
 
         // Call attack event
         Client.eventManager.callEvent(AttackEvent(entity))
@@ -847,17 +843,24 @@ class KillAura : Module() {
         }
 
         // Attack target
-        if (EnchantmentHelper.getModifierForCreature(mc.thePlayer.heldItem, entity.creatureAttribute) > 0F) {
+        if (EnchantmentHelper.getModifierForCreature(
+                mc.thePlayer.heldItem,
+                entity.creatureAttribute
+            ) > 0F && tickTimer.hasTimePassed(2)
+        ) {
             mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
         }
 
-        if (swingValue.get() && ViaForge.getInstance().version <= 47) // version fix
-            mc.thePlayer.swingItem()
-
-        mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
-
-        if (swingValue.get() && ViaForge.getInstance().version > 47)
-            mc.thePlayer.swingItem()
+        if (swingValue.get()) {
+            if (tickTimer.hasTimePassed(5)) {
+                mc.thePlayer.swingItem()
+                mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
+                tickTimer.reset()
+            } else {
+                mc.netHandler.addToSendQueue(C0APacketAnimation())
+                mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
+            }
+        }
 
         if (keepSprintValue.get()) {
             if (mc.playerController.currentGameType != WorldSettings.GameType.SPECTATOR)
@@ -986,7 +989,7 @@ class KillAura : Module() {
         }
 
         if (raycastedEntity is EntityLivingBase
-            && (!EntityUtils.isFriend(raycastedEntity) || enemyValue.get() && !EntityUtils.isEnemy(raycastedEntity))
+            && (!EntityUtils.isFriend(raycastedEntity))
         )
             currentTarget = raycastedEntity
 
@@ -1095,10 +1098,16 @@ class KillAura : Module() {
      * Stop blocking
      */
     private fun stopBlocking() {
+        tickTimer.reset()
         fakeBlock = false
-
-        if (blockingStatus) {
-            if (autoBlockModeValue.get().equals("oldhypixel", true))
+        blockingStatus = false
+        if (endTimer.hasTimePassed(2)) {
+            mc.thePlayer.swingItem()
+            endTimer.reset()
+            if (autoBlockModeValue.get().equals("interact", true)) {
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
+            }
+            if (autoBlockModeValue.get().equals("oldhypixel", true)) {
                 PacketUtils.sendPacketNoEvent(
                     C07PacketPlayerDigging(
                         C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
@@ -1106,7 +1115,7 @@ class KillAura : Module() {
                         EnumFacing.DOWN
                     )
                 )
-            else
+            } else {
                 PacketUtils.sendPacketNoEvent(
                     C07PacketPlayerDigging(
                         C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
@@ -1114,11 +1123,8 @@ class KillAura : Module() {
                         EnumFacing.DOWN
                     )
                 )
-            if (autoBlockModeValue.get().equals("interact", true)) {
-                KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
             }
         }
-        blockingStatus = false
     }
 
     /**

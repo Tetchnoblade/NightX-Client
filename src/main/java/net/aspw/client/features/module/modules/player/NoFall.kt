@@ -615,7 +615,7 @@ class NoFall : Module() {
             if (typeValue.get().equals("nopacket", true) && mc.thePlayer != null && mc.thePlayer.fallDistance > 2) {
                 if (mc.thePlayer.ticksExisted % 2 === 0) {
                     playerPacket.onGround = true
-                    playerPacket.setMoving(false)
+                    playerPacket.isMoving = false
                 }
             }
 

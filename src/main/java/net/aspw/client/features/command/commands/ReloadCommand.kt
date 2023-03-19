@@ -23,7 +23,6 @@ class ReloadCommand : Command("reload", arrayOf("configreload")) {
         Client.fileManager.loadConfig(Client.fileManager.valuesConfig)
         Client.fileManager.loadConfig(Client.fileManager.accountsConfig)
         Client.fileManager.loadConfig(Client.fileManager.friendsConfig)
-        Client.fileManager.loadConfig(Client.fileManager.enemysConfig)
         Client.fileManager.loadConfig(Client.fileManager.xrayConfig)
         Client.fileManager.loadConfig(Client.fileManager.hudConfig)
         NewUi.resetInstance()

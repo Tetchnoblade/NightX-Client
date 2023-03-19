@@ -22,38 +22,29 @@ class WatchdogNew : SpeedMode("WatchdogNew") {
             Speed::class.java
         )
         if (speed == null || eventMotion.eventState !== EventState.PRE || mc.thePlayer.isInWater) return
-        if (!mc.thePlayer.onGround || !MovementUtils.isMoving()) {
-            mc.timer.timerSpeed = 1f
-        }
         if (MovementUtils.isMoving()) {
             if (mc.thePlayer.onGround) {
                 if (groundTick >= 0) {
-                    mc.timer.timerSpeed = 1.02f
                     mc.thePlayer.motionY = 0.41999998688698
-                    }
-                    if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                        MovementUtils.strafe(0.57f)
-                    } else {
-                        MovementUtils.strafe(0.42f)
-                    }
                 }
-                groundTick++
-            } else {
+                if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                    MovementUtils.strafe(0.57f)
+                } else {
+                    MovementUtils.strafe(0.42f)
+                }
+            }
+            groundTick++
+        } else {
             groundTick = 0
             mc.thePlayer.motionY += -0.021 * 0.021
         }
     }
 
     override fun onEnable() {
-        val speed = Client.moduleManager.getModule(
+        Client.moduleManager.getModule(
             Speed::class.java
         ) ?: return
         super.onEnable()
-    }
-
-    override fun onDisable() {
-        mc.timer.timerSpeed = 1f
-        super.onDisable()
     }
 
     override fun onUpdate() {}

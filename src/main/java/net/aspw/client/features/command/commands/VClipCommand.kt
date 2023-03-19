@@ -33,9 +33,9 @@ class VClipCommand : Command("vclip", emptyArray()) {
                     )
                     for (point in path) PacketUtils.sendPacketNoEvent(
                         C03PacketPlayer.C04PacketPlayerPosition(
-                            point.getX(),
-                            point.getY(),
-                            point.getZ(),
+                            point.x,
+                            point.y,
+                            point.z,
                             true
                         )
                     )

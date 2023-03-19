@@ -29,7 +29,9 @@ class BlockAnimations : Module() {
                 "SlideFull",
                 "Push",
                 "Swing",
+                "Swank",
                 "Swang",
+                "Swonk",
                 "Swaing",
                 "Stella",
                 "Sloth",
@@ -37,6 +39,7 @@ class BlockAnimations : Module() {
                 "Reverse",
                 "Autumn",
                 "Astolfo",
+                "Radium",
                 "Fruit",
                 "VisionFX",
                 "ETB",
@@ -107,7 +110,7 @@ class BlockAnimations : Module() {
         val SpeedSwing = IntegerValue("Swing-Speed", 0, -9, 5)
 
         @JvmField
-        val Equip = FloatValue("Equip-Motion", 1.8f, -5f, 5f)
+        val Equip = FloatValue("Equip-Motion", 2.2f, -5f, 5f)
 
         @JvmField
         val handPos = IntegerValue("Hand-Pos", 0, -500, 500)

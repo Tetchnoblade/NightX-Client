@@ -453,6 +453,30 @@ public abstract class MixinItemRenderer {
                                     doBlockTransformations();
                                     break;
                                 }
+                                case "Radium": {
+                                    float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
+                                    transformFirstPersonItem(f / BlockAnimations.Equip.getValue(), 0.0f);
+                                    GL11.glRotated(-var9 * 20.0F, var9 / 2, 0.0F, 9.0F);
+                                    GL11.glRotated(-var9 * 50.0F, 0.8F, var9 / 2, 0F);
+                                    doBlockTransformations();
+                                    break;
+                                }
+                                case "Swank": {
+                                    float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
+                                    transformFirstPersonItem(f / BlockAnimations.Equip.getValue(), f1);
+                                    GL11.glRotatef(var9 * 30.0F / 2.0F, -var9, -0.0F, 9.0F);
+                                    GL11.glRotatef(var9 * 40.0F, 1.0F, -var9 / 2.0F, -0.0F);
+                                    doBlockTransformations();
+                                    break;
+                                }
+                                case "Swonk": {
+                                    float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
+                                    transformFirstPersonItem(f / BlockAnimations.Equip.getValue(), 0.0f);
+                                    GL11.glRotated(-var9 * -30.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
+                                    GL11.glRotated(-var9 * 7.5F, 1.0F, var9 / 3.0F, -0.0F);
+                                    doBlockTransformations();
+                                    break;
+                                }
                                 case "Ninja": {
                                     float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
                                     GL11.glTranslated(0.0D, 0.0D, 0.0D);

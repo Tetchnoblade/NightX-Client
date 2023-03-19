@@ -19,15 +19,7 @@ class TacoCommand : Command("taco", emptyArray()), Listenable {
         ResourceLocation("client/taco/1.png"),
         ResourceLocation("client/taco/2.png"),
         ResourceLocation("client/taco/3.png"),
-        ResourceLocation("client/taco/4.png"),
-        ResourceLocation("client/taco/5.png"),
-        ResourceLocation("client/taco/6.png"),
-        ResourceLocation("client/taco/7.png"),
-        ResourceLocation("client/taco/8.png"),
-        ResourceLocation("client/taco/9.png"),
-        ResourceLocation("client/taco/10.png"),
-        ResourceLocation("client/taco/11.png"),
-        ResourceLocation("client/taco/12.png")
+        ResourceLocation("client/taco/4.png")
     )
 
     init {

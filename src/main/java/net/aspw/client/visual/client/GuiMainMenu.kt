@@ -14,8 +14,8 @@ import java.awt.Color
 
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
-    val kawaiiLogo = ResourceLocation("client/kawaii.png")
-    val nightxLogo = ResourceLocation("client/logo.png")
+    val kawaiiLogo = ResourceLocation("client/menu/defo.png")
+    val nightxLogo = ResourceLocation("client/menu/logo.png")
 
 
     var slideX: Float = 0F
@@ -45,7 +45,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             alrUpdate = true
         }
         val playerInfo = "Welcome, §a${mc.session.username}"
-        mc.textureManager.bindTexture(ResourceLocation("client/background.png"))
+        mc.textureManager.bindTexture(ResourceLocation("client/menu/background.png"))
         drawModalRectWithCustomSizedTexture(
             0,
             0,

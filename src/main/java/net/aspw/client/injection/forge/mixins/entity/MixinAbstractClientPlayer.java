@@ -2,6 +2,7 @@ package net.aspw.client.injection.forge.mixins.entity;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.modules.client.Cape;
+import net.aspw.client.features.module.modules.client.SilentView;
 import net.aspw.client.features.module.modules.render.Fov;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -22,6 +23,9 @@ public abstract class MixinAbstractClientPlayer extends MixinEntityPlayer {
         final Cape cape = Client.moduleManager.getModule(Cape.class);
         if (cape.getState() && Objects.equals(getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
             callbackInfoReturnable.setReturnValue(cape.getCapeLocation(cape.getStyleValue().get()));
+        }
+        if (Client.moduleManager.getModule(SilentView.class).getState() && Client.moduleManager.getModule(SilentView.class).getMode().get().equals("CSGO") && Client.moduleManager.getModule(SilentView.class).shouldRotate()) {
+            callbackInfoReturnable.setReturnValue(new ResourceLocation("client/cape/none.png"));
         }
     }
 
