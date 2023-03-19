@@ -21,6 +21,7 @@ import net.minecraft.network.play.server.S08PacketPlayerPosLook
 class LagBack : Module() {
     private val killAuraValue = BoolValue("KillAura-WorldChange", value = true)
     private val flightwValue = BoolValue("Flight-WorldChange", value = true)
+    private val speedwValue = BoolValue("Speed-WorldChange", value = true)
     private val invManagerValue = BoolValue("InventoryManager-WorldChange", value = false)
     private val stealerValue = BoolValue("Stealer-WorldChange", value = false)
     private val flightValue = BoolValue("Flight-LagBack", value = false)
@@ -32,6 +33,7 @@ class LagBack : Module() {
     fun onWorld(e: WorldEvent) {
         val killAura = Client.moduleManager.getModule(KillAura::class.java)
         val flight = Client.moduleManager.getModule(KillAura::class.java)
+        val speed = Client.moduleManager.getModule(Speed::class.java)
         val invManager = Client.moduleManager.getModule(InventoryManager::class.java)
         val stealer = Client.moduleManager.getModule(Stealer::class.java)
 
@@ -52,6 +54,18 @@ class LagBack : Module() {
             Client.hud.addNotification(
                 net.aspw.client.visual.hud.element.elements.Notification(
                     "Flight was disabled",
+                    net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
+                )
+            )
+            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                Client.tipSoundManager.popSound.asyncPlay(90f)
+            }
+        }
+        if (speed!!.state && speedwValue.get()) {
+            speed.state = false
+            Client.hud.addNotification(
+                net.aspw.client.visual.hud.element.elements.Notification(
+                    "Speed was disabled",
                     net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                 )
             )
