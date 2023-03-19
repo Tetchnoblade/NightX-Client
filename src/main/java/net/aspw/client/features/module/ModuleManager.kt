@@ -190,7 +190,8 @@ class ModuleManager : Listenable {
             Wings::class.java,
             Disabler2::class.java,
             FreeLook::class.java,
-            ViewClip::class.java
+            ViewClip::class.java,
+            CustomModel::class.java
         )
 
         registerModule(Fucker)
