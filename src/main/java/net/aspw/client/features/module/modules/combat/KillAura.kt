@@ -1102,27 +1102,26 @@ class KillAura : Module() {
         if (endTimer.hasTimePassed(1)) {
             mc.thePlayer.swingItem()
             endTimer.reset()
-        }
-
-        if (autoBlockModeValue.get().equals("interact", true)) {
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
-        }
-        if (autoBlockModeValue.get().equals("oldhypixel", true)) {
-            PacketUtils.sendPacketNoEvent(
-                C07PacketPlayerDigging(
-                    C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                    BlockPos(1.0, 1.0, 1.0),
-                    EnumFacing.DOWN
+            if (autoBlockModeValue.get().equals("interact", true)) {
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
+            }
+            if (autoBlockModeValue.get().equals("oldhypixel", true)) {
+                PacketUtils.sendPacketNoEvent(
+                    C07PacketPlayerDigging(
+                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
+                        BlockPos(1.0, 1.0, 1.0),
+                        EnumFacing.DOWN
+                    )
                 )
-            )
-        } else {
-            PacketUtils.sendPacketNoEvent(
-                C07PacketPlayerDigging(
-                    C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                    BlockPos.ORIGIN,
-                    EnumFacing.DOWN
+            } else {
+                PacketUtils.sendPacketNoEvent(
+                    C07PacketPlayerDigging(
+                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
+                        BlockPos.ORIGIN,
+                        EnumFacing.DOWN
+                    )
                 )
-            )
+            }
         }
     }
 
