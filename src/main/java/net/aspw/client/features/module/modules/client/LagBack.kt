@@ -3,84 +3,142 @@ package net.aspw.client.features.module.modules.client
 import net.aspw.client.Client
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.PacketEvent
+import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.modules.combat.KillAura
 import net.aspw.client.features.module.modules.movement.Flight
 import net.aspw.client.features.module.modules.movement.Speed
 import net.aspw.client.features.module.modules.player.BowLongJump
+import net.aspw.client.features.module.modules.player.InventoryManager
 import net.aspw.client.features.module.modules.player.LongJump
+import net.aspw.client.features.module.modules.world.Stealer
 import net.aspw.client.value.BoolValue
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 
 @ModuleInfo(name = "LagBack", spacedName = "Lag Back", category = ModuleCategory.CLIENT, array = false)
 class LagBack : Module() {
-    private val flightValue = BoolValue("Flight", value = false)
-    private val speedValue = BoolValue("Speed", value = true)
-    private val longJumpValue = BoolValue("LongJump", value = true)
-    private val bowLongJumpValue = BoolValue("BowLongJump", value = true)
+    private val killAuraValue = BoolValue("KillAura-WorldChange", value = true)
+    private val flightwValue = BoolValue("Flight-WorldChange", value = true)
+    private val invManagerValue = BoolValue("InventoryManager-WorldChange", value = false)
+    private val stealerValue = BoolValue("Stealer-WorldChange", value = false)
+    private val flightValue = BoolValue("Flight-LagBack", value = false)
+    private val speedValue = BoolValue("Speed-LagBack", value = true)
+    private val longJumpValue = BoolValue("LongJump-LagBack", value = true)
+    private val bowLongJumpValue = BoolValue("BowLongJump-LagBack", value = true)
+
+    @EventTarget
+    fun onWorld(e: WorldEvent) {
+        val killAura = Client.moduleManager.getModule(KillAura::class.java)
+        val flight = Client.moduleManager.getModule(KillAura::class.java)
+        val invManager = Client.moduleManager.getModule(InventoryManager::class.java)
+        val stealer = Client.moduleManager.getModule(Stealer::class.java)
+
+        if (killAura!!.state && killAuraValue.get()) {
+            killAura.state = false
+            Client.hud.addNotification(
+                net.aspw.client.visual.hud.element.elements.Notification(
+                    "KillAura was disabled",
+                    net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
+                )
+            )
+            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                Client.tipSoundManager.popSound.asyncPlay(90f)
+            }
+        }
+        if (flight!!.state && flightwValue.get()) {
+            flight.state = false
+            Client.hud.addNotification(
+                net.aspw.client.visual.hud.element.elements.Notification(
+                    "Flight was disabled",
+                    net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
+                )
+            )
+            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                Client.tipSoundManager.popSound.asyncPlay(90f)
+            }
+        }
+        if (invManager!!.state && invManagerValue.get()) {
+            invManager.state = false
+            Client.hud.addNotification(
+                net.aspw.client.visual.hud.element.elements.Notification(
+                    "InventoryManager was disabled",
+                    net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
+                )
+            )
+            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                Client.tipSoundManager.popSound.asyncPlay(90f)
+            }
+        }
+        if (stealer!!.state && stealerValue.get()) {
+            stealer.state = false
+            Client.hud.addNotification(
+                net.aspw.client.visual.hud.element.elements.Notification(
+                    "Stealer was disabled",
+                    net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
+                )
+            )
+            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                Client.tipSoundManager.popSound.asyncPlay(90f)
+            }
+        }
+    }
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
         if (event.packet is S08PacketPlayerPosLook) {
-            if (longJumpValue.get()) {
-                val longJump = Client.moduleManager.getModule(LongJump::class.java)
-                if (longJump!!.state) {
-                    longJump.state = false
-                    Client.hud.addNotification(
-                        net.aspw.client.visual.hud.element.elements.Notification(
-                            "LagBack LongJump.",
-                            net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
-                        )
+            val longJump = Client.moduleManager.getModule(LongJump::class.java)
+            val speed = Client.moduleManager.getModule(Speed::class.java)
+            val bowLongJump = Client.moduleManager.getModule(BowLongJump::class.java)
+            val flight = Client.moduleManager.getModule(Flight::class.java)
+
+            if (longJump!!.state && longJumpValue.get()) {
+                longJump.state = false
+                Client.hud.addNotification(
+                    net.aspw.client.visual.hud.element.elements.Notification(
+                        "Disabling LongJump due to lag back",
+                        net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                     )
-                    if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(90f)
-                    }
+                )
+                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    Client.tipSoundManager.popSound.asyncPlay(90f)
                 }
             }
-            if (speedValue.get()) {
-                val speed = Client.moduleManager.getModule(Speed::class.java)
-                if (speed!!.state) {
-                    speed.state = false
-                    Client.hud.addNotification(
-                        net.aspw.client.visual.hud.element.elements.Notification(
-                            "LagBack Speed.",
-                            net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
-                        )
+            if (speed!!.state && speedValue.get()) {
+                speed.state = false
+                Client.hud.addNotification(
+                    net.aspw.client.visual.hud.element.elements.Notification(
+                        "Disabling Speed due to lag back",
+                        net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                     )
-                    if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(90f)
-                    }
+                )
+                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    Client.tipSoundManager.popSound.asyncPlay(90f)
                 }
             }
-            if (bowLongJumpValue.get()) {
-                val bowLongJump = Client.moduleManager.getModule(BowLongJump::class.java)
-                if (bowLongJump!!.state) {
-                    bowLongJump.state = false
-                    Client.hud.addNotification(
-                        net.aspw.client.visual.hud.element.elements.Notification(
-                            "LagBack BowLongJump.",
-                            net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
-                        )
+            if (bowLongJump!!.state && bowLongJumpValue.get()) {
+                bowLongJump.state = false
+                Client.hud.addNotification(
+                    net.aspw.client.visual.hud.element.elements.Notification(
+                        "Disabling BowLongJump due to lag back",
+                        net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                     )
-                    if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(90f)
-                    }
+                )
+                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    Client.tipSoundManager.popSound.asyncPlay(90f)
                 }
             }
-            if (flightValue.get()) {
-                val flight = Client.moduleManager.getModule(Flight::class.java)
-                if (flight!!.state) {
-                    flight.state = false
-                    Client.hud.addNotification(
-                        net.aspw.client.visual.hud.element.elements.Notification(
-                            "LagBack Flight.",
-                            net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
-                        )
+            if (flight!!.state && flightValue.get()) {
+                flight.state = false
+                Client.hud.addNotification(
+                    net.aspw.client.visual.hud.element.elements.Notification(
+                        "Disabling Flight due to lag back",
+                        net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                     )
-                    if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(90f)
-                    }
+                )
+                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    Client.tipSoundManager.popSound.asyncPlay(90f)
                 }
             }
         }

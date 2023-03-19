@@ -147,7 +147,7 @@ object SettingsUtils {
         MacroManager.macroMapping.filter { it.key != 0 }
             .forEach { stringBuilder.append("macro ${it.key} ${it.value}").append("\n") }
 
-        Client.moduleManager.modules.filter { it.category !== ModuleCategory.RENDER && it !is Cape && it !is FreeLook && it !is LagBack && it !is Plugins && it !is Wings && it !is ThunderNotifier && it !is AntiVanish && it !is HackerDetector && it !is SilentView && it !is Hud && it !is NoInvClose && it !is HudEditor && it !is Gui && it !is BlockAnimations }
+        Client.moduleManager.modules.filter { it.category !== ModuleCategory.RENDER && it !is Cape && it !is FreeLook && it !is Plugins && it !is Wings && it !is ThunderNotifier && it !is AntiVanish && it !is HackerDetector && it !is SilentView && it !is Hud && it !is NoInvClose && it !is HudEditor && it !is Gui && it !is BlockAnimations }
             .forEach {
                 if (values)
                     it.values.forEach { value ->
