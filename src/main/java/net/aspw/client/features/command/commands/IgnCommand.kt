@@ -19,7 +19,7 @@ class IgnCommand : Command("ign", emptyArray()) {
         }
         Client.hud.addNotification(
             Notification(
-                "Copied Username §a${username}",
+                "Copied Username: §a${username}",
                 Notification.Type.SUCCESS
             )
         )

@@ -40,9 +40,6 @@ public final class EntityUtils extends MinecraftInstance {
                         if (isFriend(entityPlayer))
                             return false;
 
-                        if (Client.combatManager.isFocusEntity(entityPlayer))
-                            return false;
-
                         if (entityPlayer.isSpectator())
                             return false;
 

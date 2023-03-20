@@ -671,7 +671,7 @@ class KillAura : Module() {
         // Check is not hitable or check failrate
         if (!hitable || failHit) {
             if (swing || failHit)
-                mc.netHandler.addToSendQueue(C0APacketAnimation())
+                PacketUtils.sendPacketNoEvent(C0APacketAnimation())
         } else {
             if (!multi) {
                 attackEntity(currentTarget!!)
@@ -856,7 +856,7 @@ class KillAura : Module() {
                 mc.thePlayer.swingItem()
                 tickTimer.reset()
             } else {
-                mc.netHandler.addToSendQueue(C0APacketAnimation())
+                PacketUtils.sendPacketNoEvent(C0APacketAnimation())
             }
         }
 
@@ -867,7 +867,7 @@ class KillAura : Module() {
                 mc.thePlayer.swingItem()
                 tickTimer.reset()
             } else {
-                mc.netHandler.addToSendQueue(C0APacketAnimation())
+                PacketUtils.sendPacketNoEvent(C0APacketAnimation())
             }
         }
 
