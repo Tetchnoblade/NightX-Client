@@ -5,10 +5,7 @@ import net.aspw.client.event.ClientShutdownEvent
 import net.aspw.client.event.EventManager
 import net.aspw.client.features.command.CommandManager
 import net.aspw.client.features.module.ModuleManager
-import net.aspw.client.features.special.ClientSpoof
-import net.aspw.client.features.special.MacroManager
-import net.aspw.client.features.special.ModItems
-import net.aspw.client.features.special.StackItems
+import net.aspw.client.features.special.*
 import net.aspw.client.utils.*
 import net.aspw.client.utils.ClassUtils.hasForge
 import net.aspw.client.utils.misc.sound.TipSoundManager
@@ -37,6 +34,7 @@ object Client {
     lateinit var eventManager: EventManager
     lateinit var fileManager: FileManager
     lateinit var tipSoundManager: TipSoundManager
+    lateinit var combatManager: CombatManager
 
     // Hud
     lateinit var hud: HUD
@@ -62,6 +60,7 @@ object Client {
 
         // Crate event manager
         eventManager = EventManager()
+        combatManager = CombatManager()
 
         // Register listeners
         eventManager.registerListener(RotationUtils())
@@ -71,6 +70,7 @@ object Client {
         eventManager.registerListener(PacketUtils())
         eventManager.registerListener(SessionUtils())
         eventManager.registerListener(MacroManager)
+        eventManager.registerListener(combatManager)
 
         // Create command manager
         commandManager = CommandManager()

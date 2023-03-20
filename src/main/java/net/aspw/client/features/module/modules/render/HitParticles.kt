@@ -19,10 +19,10 @@ import net.minecraft.network.play.server.S2CPacketSpawnGlobalEntity
 import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.ResourceLocation
 
-@ModuleInfo(name = "HitParticles", spacedName = "Hit Particles", category = ModuleCategory.RENDER, array = false)
+@ModuleInfo(name = "HitParticles", spacedName = "Hit Particles", category = ModuleCategory.RENDER)
 class HitParticles : Module() {
     private val modeValue = ListValue("Mode", arrayOf("Thunder", "Blood", "Fire", "Criticals", "Sharpness"), "Thunder")
-    private val timesValue = IntegerValue("Times", 1, 1, 10)
+    private val timesValue = IntegerValue("Multi", 1, 1, 10)
     private val soundValue = BoolValue("Sound", false, { modeValue.get().equals("thunder", true) })
     private val blockState = Block.getStateId(Blocks.redstone_block.defaultState)
 

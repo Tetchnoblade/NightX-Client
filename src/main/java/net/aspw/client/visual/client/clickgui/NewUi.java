@@ -1,10 +1,8 @@
 package net.aspw.client.visual.client.clickgui;
 
-import net.aspw.client.Client;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.modules.client.Fix;
 import net.aspw.client.features.module.modules.client.Gui;
-import net.aspw.client.features.module.modules.client.Hud;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.MouseUtils;
 import net.aspw.client.utils.render.RenderUtils;
@@ -72,9 +70,7 @@ public class NewUi extends GuiScreen {
     }
 
     private void drawFullSized(int mouseX, int mouseY, float partialTicks, Color accentColor) {
-        if (Client.moduleManager.getModule(Hud.class).getContainerBackground().get()) {
-            RenderUtils.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
-        }
+        RenderUtils.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
         RenderUtils.drawRoundedRect(31F, 31F, this.width - 31F, this.height - 31F, 8F, new Color(5, 5, 5, 170).getRGB());
         if (MouseUtils.mouseWithinBounds(mouseX, mouseY, this.width - 54F, 30F, this.width - 30F, 50F))
             fading += 0.2F * RenderUtils.deltaTime * 0.045F;

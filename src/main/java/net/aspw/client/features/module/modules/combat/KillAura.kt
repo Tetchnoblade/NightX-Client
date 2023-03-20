@@ -1,5 +1,6 @@
 package net.aspw.client.features.module.modules.combat
 
+import de.enzaxd.viaforge.ViaForge
 import net.aspw.client.Client
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
@@ -32,7 +33,6 @@ import net.minecraft.item.ItemSword
 import net.minecraft.network.play.client.*
 import net.minecraft.potion.Potion
 import net.minecraft.util.*
-import net.minecraft.world.WorldSettings
 import org.lwjgl.opengl.GL11
 import java.util.*
 import kotlin.math.cos
@@ -851,20 +851,28 @@ class KillAura : Module() {
             mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
         }
 
-        if (swingValue.get()) {
+        if (swingValue.get() && ViaForge.getInstance().version <= 47) {
             if (tickTimer.hasTimePassed(5)) {
                 mc.thePlayer.swingItem()
-                mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
                 tickTimer.reset()
             } else {
                 mc.netHandler.addToSendQueue(C0APacketAnimation())
-                mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
+            }
+        }
+
+        mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
+
+        if (swingValue.get() && ViaForge.getInstance().version > 47) {
+            if (tickTimer.hasTimePassed(5)) {
+                mc.thePlayer.swingItem()
+                tickTimer.reset()
+            } else {
+                mc.netHandler.addToSendQueue(C0APacketAnimation())
             }
         }
 
         if (keepSprintValue.get()) {
-            if (mc.playerController.currentGameType != WorldSettings.GameType.SPECTATOR)
-                mc.thePlayer.attackTargetEntityWithCurrentItem(entity)
+            mc.thePlayer.attackTargetEntityWithCurrentItem(entity)
         }
 
         // Start blocking after attack

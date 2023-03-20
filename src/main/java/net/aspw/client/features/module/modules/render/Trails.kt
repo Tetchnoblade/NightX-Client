@@ -19,12 +19,13 @@ import java.util.*
 @ModuleInfo(name = "Trails", category = ModuleCategory.RENDER)
 class Trails : Module() {
     val unlimitedValue = BoolValue("Unlimited", false)
-    val lineWidth = FloatValue("LineWidth", 5f, 1f, 10f)
+    val lineWidth = FloatValue("LineWidth", 4f, 1f, 10f)
     val colorRedValue = IntegerValue("R", 255, 0, 255)
-    val colorGreenValue = IntegerValue("G", 150, 0, 255)
+    val colorGreenValue = IntegerValue("G", 255, 0, 255)
     val colorBlueValue = IntegerValue("B", 255, 0, 255)
+    val alphaValue = IntegerValue("Alpha", 150, 0, 255)
     val fadeSpeedValue = IntegerValue("Fade-Speed", 1, 0, 255)
-    val colorRainbow = BoolValue("Rainbow", false)
+    val colorRainbow = BoolValue("Rainbow", true)
     private val positions = LinkedList<Dot>()
     private var lastX = 0.0
     private var lastY = 0.0
@@ -114,7 +115,7 @@ class Trails : Module() {
     }
 
     internal inner class Dot(private val pos: DoubleArray) {
-        var alpha = 255
+        var alpha = alphaValue.get()
         fun render(color: Color?, renderPosX: Double, renderPosY: Double, renderPosZ: Double, decreaseBy: Int) {
             val reColor = reAlpha(color!!, alpha)
             RenderUtils.glColor(reColor)

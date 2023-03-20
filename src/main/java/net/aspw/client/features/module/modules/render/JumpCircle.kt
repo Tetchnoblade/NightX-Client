@@ -27,7 +27,7 @@ import kotlin.math.sin
 class JumpCircle : Module() {
     val radius = FloatValue("Radius", 1f, 1f, 5f, "m")
     private val colorModeValue =
-        ListValue("Color", arrayOf("Custom", "Rainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Custom")
+        ListValue("Color", arrayOf("Custom", "Rainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Fade")
     private val colorRedValue = IntegerValue("Red", 200, 0, 255)
     private val colorGreenValue = IntegerValue("Green", 150, 0, 255)
     private val colorBlueValue = IntegerValue("Blue", 200, 0, 255)
@@ -111,7 +111,7 @@ class JumpCircle : Module() {
             }
 
             val dif = (System.currentTimeMillis() - time)
-            val c = 255 - (dif / 1000.toFloat()) * 255
+            val c = 125 - (dif / 1000.toFloat()) * 125
 
             GL11.glPushMatrix()
 
