@@ -33,7 +33,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.awt.*;
-import java.util.Objects;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -285,7 +284,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
         boolean chamsFlag = (chams.getState() && chams.getTargetsValue().get() && !chams.getLegacyMode().get() && ((chams.getLocalPlayerValue().get() && p_renderModel_1_ == Minecraft.getMinecraft().thePlayer) || EntityUtils.isSelected(p_renderModel_1_, false)));
         boolean semiVisible = !visible && (!p_renderModel_1_.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) || (trueSight.getState() && trueSight.getEntitiesValue().get()));
 
-        if (visible || semiVisible || Client.moduleManager.getModule(SilentView.class).getState() && Client.moduleManager.getModule(SilentView.class).getMode().get().equals("CSGO") && Client.moduleManager.getModule(SilentView.class).shouldRotate() && Objects.equals(Minecraft.getMinecraft().thePlayer.getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
+        if (visible || semiVisible) {
             if (!this.bindEntityTexture(p_renderModel_1_))
                 return;
 
