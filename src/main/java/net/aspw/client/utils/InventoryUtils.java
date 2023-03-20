@@ -134,6 +134,10 @@ public final class InventoryUtils extends MinecraftInstance implements Listenabl
             CLICK_TIMER.reset();
     }
 
+    public static void swap(int slot, int hotBarNumber) {
+        mc.playerController.windowClick(mc.thePlayer.inventoryContainer.windowId, slot, hotBarNumber, 2, mc.thePlayer);
+    }
+
     @Override
     public boolean handleEvents() {
         return true;

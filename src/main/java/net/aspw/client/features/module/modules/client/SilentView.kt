@@ -14,7 +14,7 @@ import net.aspw.client.value.ListValue
 @ModuleInfo(name = "SilentView", spacedName = "Silent View", category = ModuleCategory.CLIENT, array = false)
 class SilentView : Module() {
 
-    var mode = ListValue("Mode", arrayOf("Normal", "CSGO"), "CSGO")
+    var mode = ListValue("Mode", arrayOf("Normal", "CSGO"), "Normal")
     var headNormalRotate = BoolValue("Head-Rotation", true, { mode.get().equals("normal", true) })
     var headPitch = BoolValue("Head-Pitch", true, { mode.get().equals("normal", true) })
     var bodyNormalRotate = BoolValue("Body-Rotation", true, { mode.get().equals("normal", true) })
@@ -22,7 +22,7 @@ class SilentView : Module() {
     var R = FloatValue("R", 0f, 0f, 255f, { mode.get().equals("csgo", true) })
     var G = FloatValue("G", 255f, 0f, 255f, { mode.get().equals("csgo", true) })
     var B = FloatValue("B", 255f, 0f, 255f, { mode.get().equals("csgo", true) })
-    var Alpha = FloatValue("Alpha", 50f, 0f, 255f, { mode.get().equals("csgo", true) })
+    var Alpha = FloatValue("Alpha", 55f, 0f, 255f, { mode.get().equals("csgo", true) })
 
     private fun getState(module: Class<out Module>) = Client.moduleManager[module]!!.state
 

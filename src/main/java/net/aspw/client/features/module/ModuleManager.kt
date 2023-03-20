@@ -187,11 +187,12 @@ class ModuleManager : Listenable {
             FakePlayer::class.java,
             JumpCircle::class.java,
             NoZeroZeroThrees::class.java,
-            Wings::class.java,
             Disabler2::class.java,
             FreeLook::class.java,
             ViewClip::class.java,
-            CustomModel::class.java
+            CustomModel::class.java,
+            AntiTabComplete::class.java,
+            InfiniteDurability::class.java
         )
 
         registerModule(Fucker)

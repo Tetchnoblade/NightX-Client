@@ -19,8 +19,8 @@ class Checkbox {
         RenderUtils.originalRoundedRect(x - 0.5F, y - 0.5F, x + width + 0.5F, y + width + 0.5F, 3F, borderColor.rgb)
         RenderUtils.originalRoundedRect(x, y, x + width, y + width, 3F, mainColor.rgb)
         GL11.glColor4f(bgColor.red / 255F, bgColor.green / 255F, bgColor.blue / 255F, 1F)
-        RenderUtils.drawLine(x + width / 4F, y + width / 2F, x + width / 2.15F, y + width / 4F * 3F, 2F)
-        RenderUtils.drawLine(x + width / 2.15F, y + width / 4F * 3F, x + width / 3.95F * 3F, y + width / 3F, 2F)
+        RenderUtils.drawLine(x + width / 4F, y + width / 3F, x + width / 2.15F, y + width / 4F * 3F, 3F)
+        RenderUtils.drawLine(x + width / 2.15F, y + width / 5F * 4F, x + width / 3.95F * 3F, y + width / 3F, 3F)
         GL11.glColor4f(1F, 1F, 1F, 1F)
     }
 }

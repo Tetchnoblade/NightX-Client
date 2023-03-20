@@ -40,6 +40,7 @@ object Fucker : Module() {
     private val swingValue = BoolValue("VisualSwing", true)
     private val rotationsValue = BoolValue("Rotations", true)
     private val surroundingsValue = BoolValue("Surroundings", false)
+    private val hypixelValue = BoolValue("Hypixel", false)
 
     /**
      * VALUES
@@ -85,6 +86,21 @@ object Fucker : Module() {
                 pos = blockPos
                 currentPos = pos ?: return
                 rotations = RotationUtils.faceBlock(currentPos) ?: return
+            }
+        }
+
+        val b = Block.getIdFromBlock(getBlock(currentPos)) == targetId
+        if (hypixelValue.get()) {
+            if (b) {
+                val blockPos = currentPos.up()
+                if (getBlock(blockPos) !is BlockAir) {
+                    if (currentPos.x != blockPos.x || currentPos.y != blockPos.y || currentPos.z != blockPos.z)
+                        surroundings = true
+
+                    pos = blockPos
+                    currentPos = pos ?: return
+                    rotations = RotationUtils.faceBlock(currentPos) ?: return
+                }
             }
         }
 

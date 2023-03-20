@@ -63,7 +63,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 18433715,
-        "download_count": 392,
+        "download_count": 494,
         "created_at": "2023-03-18T07:10:12Z",
         "updated_at": "2023-03-18T07:10:18Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B40/nightx-release-b40.jar"
@@ -74,8 +74,8 @@
     "body": "- Added Protocol 1.19.4 Support! (faster than viaforge XD)\r\n- Added Built-in FREE Account Generator! (Can generate Premium Minecraft Account for Free) (unlimited) (in AltManager \"Free Alt\" button)\r\n- Added Disabler mode ColdPvP-KitPvP-Full, PacketInvade, Spectate, New VulcanStrafe, Input, Cubecraft\r\n- Added ClientSpoof mode Geyser\r\n- Added Flight mode Vulcan3\r\n- Added Crasher mode Exploit, NaN\r\n- Added KillAura Attack-Timing, New Rotation Modes and more features!\r\n- Added FreeLook Module\r\n- Removed Scripts system (can't fix not working 😉)\r\n- Removed Scaffold AutoBlock LiteSpoof (sending shitty packets)\r\n- Improved Disconnected Gui (Reconnect with Alt = free gen!!!)\r\n- Improved VulcanGround Speed\r\n- Improved Cubecraft Flight\r\n- Improved ClickGui\r\n- Improved Animations mode Edit, Spin\r\n- Improved SilentView checks\r\n- Improved Fucker\r\n- Improved Performance (EntityCulling)\r\n- Fixed KillAura AutoBlock mode NCP not disabling and ThroughWall option not working\r\n- Fixed ClientSpoof Lunar not working\r\n- Fixed Scaffold performance issues\r\n- Fixed Animations, Cape etc configs not saving (B37~ bug)\r\nUpdated Configs\r\nhttps://nightx.api-minecraft.net/s/zf45j6uzog",
     "reactions": {
       "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/96064216/reactions",
-      "total_count": 7,
-      "+1": 5,
+      "total_count": 8,
+      "+1": 6,
       "-1": 0,
       "laugh": 2,
       "hooray": 0,
@@ -727,7 +727,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15553329,
-        "download_count": 1359,
+        "download_count": 1361,
         "created_at": "2023-01-19T14:07:00Z",
         "updated_at": "2023-01-19T14:07:05Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B33/nightx-release-b33.jar"
