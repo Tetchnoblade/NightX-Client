@@ -1,6 +1,5 @@
 package net.aspw.client.features.module.modules.combat
 
-import net.aspw.client.Client
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.event.Render3DEvent
@@ -44,7 +43,6 @@ class TPAura : Module() {
     private val fovValue = FloatValue("FOV", 180F, 0F, 180F, "°")
     private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Normal")
     private val noPureC03Value = BoolValue("NoStandingPackets", false)
-    private val noKillAuraValue = BoolValue("NoKillAura", false)
     private val renderValue = ListValue("Render", arrayOf("Box", "Lines", "None"), "Lines")
     private val priorityValue = ListValue("Priority", arrayOf("Health", "Distance", "LivingTime"), "Distance")
 
@@ -74,13 +72,9 @@ class TPAura : Module() {
         lastTarget = null
     }
 
-    override fun onInitialize() {
-        auraMod = Client.moduleManager.getModule(KillAura::class.java)!!
-    }
-
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        if ((noKillAuraValue.get() && auraMod.target != null) || !clickTimer.hasTimePassed(attackDelay)) return
+        if (!clickTimer.hasTimePassed(attackDelay)) return
 
         if (thread == null || !thread!!.isAlive) {
             tpVectors.clear()
@@ -92,7 +86,7 @@ class TPAura : Module() {
     }
 
     private fun runAttack() {
-        if ((noKillAuraValue.get() && auraMod.target != null) || mc.thePlayer == null || mc.theWorld == null) return
+        if (mc.thePlayer == null || mc.theWorld == null) return
 
         val targets = arrayListOf<EntityLivingBase>()
         var entityCount = 0
@@ -128,8 +122,6 @@ class TPAura : Module() {
             if (mc.thePlayer == null || mc.theWorld == null) return
 
             val path = PathUtils.findTeleportPath(mc.thePlayer, it, 3.0)
-
-            if (noKillAuraValue.get() && auraMod.target != null) return
 
             path.forEach { point ->
                 tpVectors.add(point)

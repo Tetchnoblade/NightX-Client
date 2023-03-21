@@ -61,7 +61,6 @@
     "optimize.MixinChunk",
     "optimize.MixinCullable",
     "optimize.MixinDebugHud",
-    "optimize.MixinEntityFX",
     "optimize.MixinEntityRenderer",
     "optimize.MixinLoadingScreenSkipProgress",
     "optimize.MixinRenderGlobal",

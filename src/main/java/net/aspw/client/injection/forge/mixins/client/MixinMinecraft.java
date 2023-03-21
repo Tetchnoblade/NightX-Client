@@ -248,6 +248,11 @@ public abstract class MixinMinecraft {
             TargetStrafe targetStrafe = Client.moduleManager.getModule(TargetStrafe.class);
             EntityLivingBase entityLivingBase = (EntityLivingBase) renderViewEntity;
             float yaw = RotationUtils.serverRotation.getYaw();
+            int etb = (int) RotationUtils.serverRotation.getYaw();
+            if (silentView.getState() && silentView.getMode().get().equals("ETB") && silentView.getHeadNormalRotate().get() && silentView.shouldRotate()) {
+                entityLivingBase.rotationYawHead = etb;
+                entityLivingBase.renderYawOffset = etb;
+            }
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadNormalRotate().get() && silentView.shouldRotate()) {
                 entityLivingBase.rotationYawHead = yaw;
             }

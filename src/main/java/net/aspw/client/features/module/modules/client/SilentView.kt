@@ -14,7 +14,7 @@ import net.aspw.client.value.ListValue
 @ModuleInfo(name = "SilentView", spacedName = "Silent View", category = ModuleCategory.CLIENT, array = false)
 class SilentView : Module() {
 
-    var mode = ListValue("Mode", arrayOf("Normal", "CSGO"), "Normal")
+    var mode = ListValue("Mode", arrayOf("Normal", "CSGO", "ETB"), "ETB")
     var headNormalRotate = BoolValue("Head-Rotation", true, { mode.get().equals("normal", true) })
     var headPitch = BoolValue("Head-Pitch", true, { mode.get().equals("normal", true) })
     var bodyNormalRotate = BoolValue("Body-Rotation", true, { mode.get().equals("normal", true) })
@@ -30,10 +30,9 @@ class SilentView : Module() {
         val killAura = Client.moduleManager.getModule(KillAura::class.java) as KillAura
         val scaffold = Client.moduleManager.getModule(Scaffold::class.java) as Scaffold
         return (getState(KillAura::class.java) && killAura.target != null && killAura.silentRotationValue.get() && !killAura.rotations.get()
-            .equals("None") ||
-                (getState(Scaffold::class.java) && scaffold.rotationsValue.get() || mc.thePlayer.ridingEntity != null || (getState(
-                    Annoy::class.java
-                ))))
+            .equals("None") || (getState(Scaffold::class.java) && scaffold.rotationsValue.get() || mc.thePlayer.ridingEntity != null || (getState(
+            Annoy::class.java
+        ))))
     }
 
     init {

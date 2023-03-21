@@ -42,6 +42,7 @@ class CommandManager {
         registerCommand(XrayCommand())
         registerCommand(ThemeCommand())
         registerCommand(LoginCommand())
+        registerCommand(ClipCommand())
     }
 
     /**

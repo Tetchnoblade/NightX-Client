@@ -1106,28 +1106,29 @@ public class Scaffold extends Module {
                             if (rotationModeValue.get().equalsIgnoreCase("static") && (keepRotOnJumpValue.get() || !mc.gameSettings.keyBindJump.isKeyDown()))
                                 rotation = new Rotation(MovementUtils.getScaffoldRotation(mc.thePlayer.rotationYaw, mc.thePlayer.moveStrafing), staticPitchValue.get());
 
-                            if (rotationModeValue.get().equalsIgnoreCase("watchdog") && (keepRotOnJumpValue.get() || !mc.gameSettings.keyBindJump.isKeyDown()))
+                            if (rotationModeValue.get().equalsIgnoreCase("watchdog") && (keepRotOnJumpValue.get() || !mc.gameSettings.keyBindJump.isKeyDown())) {
                                 rotation = new Rotation(mc.thePlayer.rotationYaw - 180, 84);
-                            if (!mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && mc.gameSettings.keyBindBack.isKeyDown()) {
-                                rotation = new Rotation(mc.thePlayer.rotationYaw, 84);
-                            }
-                            if (mc.gameSettings.keyBindForward.isKeyDown() && mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
-                                rotation = new Rotation(mc.thePlayer.rotationYaw - 135, 84);
-                            }
-                            if (!mc.gameSettings.keyBindForward.isKeyDown() && mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
-                                rotation = new Rotation(mc.thePlayer.rotationYaw - 90, 84);
-                            }
-                            if (!mc.gameSettings.keyBindForward.isKeyDown() && mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && mc.gameSettings.keyBindBack.isKeyDown()) {
-                                rotation = new Rotation(mc.thePlayer.rotationYaw - 45, 84);
-                            }
-                            if (mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
-                                rotation = new Rotation(mc.thePlayer.rotationYaw - 225, 84);
-                            }
-                            if (!mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
-                                rotation = new Rotation(mc.thePlayer.rotationYaw - 270, 84);
-                            }
-                            if (!mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && mc.gameSettings.keyBindLeft.isKeyDown() && mc.gameSettings.keyBindBack.isKeyDown()) {
-                                rotation = new Rotation(mc.thePlayer.rotationYaw - 315, 84);
+                                if (!mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && mc.gameSettings.keyBindBack.isKeyDown()) {
+                                    rotation = new Rotation(mc.thePlayer.rotationYaw, 84);
+                                }
+                                if (mc.gameSettings.keyBindForward.isKeyDown() && mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
+                                    rotation = new Rotation(mc.thePlayer.rotationYaw - 135, 84);
+                                }
+                                if (!mc.gameSettings.keyBindForward.isKeyDown() && mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
+                                    rotation = new Rotation(mc.thePlayer.rotationYaw - 90, 84);
+                                }
+                                if (!mc.gameSettings.keyBindForward.isKeyDown() && mc.gameSettings.keyBindRight.isKeyDown() && !mc.gameSettings.keyBindLeft.isKeyDown() && mc.gameSettings.keyBindBack.isKeyDown()) {
+                                    rotation = new Rotation(mc.thePlayer.rotationYaw - 45, 84);
+                                }
+                                if (mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
+                                    rotation = new Rotation(mc.thePlayer.rotationYaw - 225, 84);
+                                }
+                                if (!mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && mc.gameSettings.keyBindLeft.isKeyDown() && !mc.gameSettings.keyBindBack.isKeyDown()) {
+                                    rotation = new Rotation(mc.thePlayer.rotationYaw - 270, 84);
+                                }
+                                if (!mc.gameSettings.keyBindForward.isKeyDown() && !mc.gameSettings.keyBindRight.isKeyDown() && mc.gameSettings.keyBindLeft.isKeyDown() && mc.gameSettings.keyBindBack.isKeyDown()) {
+                                    rotation = new Rotation(mc.thePlayer.rotationYaw - 315, 84);
+                                }
                             }
 
                             if ((rotationModeValue.get().equalsIgnoreCase("static2") || rotationModeValue.get().equalsIgnoreCase("static3")) && (keepRotOnJumpValue.get() || !mc.gameSettings.keyBindJump.isKeyDown()))
