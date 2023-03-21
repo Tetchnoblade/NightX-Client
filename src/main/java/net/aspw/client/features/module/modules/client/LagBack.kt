@@ -32,7 +32,7 @@ class LagBack : Module() {
     @EventTarget
     fun onWorld(e: WorldEvent) {
         val killAura = Client.moduleManager.getModule(KillAura::class.java)
-        val flight = Client.moduleManager.getModule(KillAura::class.java)
+        val flight = Client.moduleManager.getModule(Flight::class.java)
         val speed = Client.moduleManager.getModule(Speed::class.java)
         val invManager = Client.moduleManager.getModule(InventoryManager::class.java)
         val stealer = Client.moduleManager.getModule(Stealer::class.java)
