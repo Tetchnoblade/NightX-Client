@@ -19,9 +19,6 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
 
         if (!Minecraft.getMinecraft().isIntegratedServerRunning()) {
             try {
-                if (packet.getClass().getName().equals("net.minecraftforge.fml.common.network.internal.FMLProxyPacket"))
-                    event.cancelEvent();
-
                 if (packet instanceof C17PacketCustomPayload) {
                     final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
 

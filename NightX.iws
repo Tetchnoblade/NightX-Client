@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af093b99-5942-419c-869b-8b2d7cb4dd2a" name="変更" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/optimize/MixinAnimationTick.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/optimize/MixinEntityFX.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/optimize/MixinLoadingScreenSkipProgress.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/downloads.json" beforeDir="false" afterPath="$PROJECT_DIR$/downloads.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/protocol/ProtocolCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/protocol/ProtocolCollection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/special/ClientSpoof.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/special/ClientSpoof.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinModelPlayerFix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinModelPlayerFix.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/client.forge.mixins.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/client.forge.mixins.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,8 +43,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Kotlin Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -63,12 +68,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="de.enzaxd.viaforge.platform" />
