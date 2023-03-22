@@ -24,7 +24,6 @@ class WatchdogNew : SpeedMode("WatchdogNew") {
         if (speed == null || eventMotion.eventState !== EventState.PRE || mc.thePlayer.isInWater) return
         if (MovementUtils.isMoving()) {
             if (mc.thePlayer.onGround) {
-                mc.timer.timerSpeed = 1.04f
                 if (groundTick >= 0) {
                     mc.thePlayer.motionY = 0.41999998688698
                 }
