@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11
 import java.awt.Color
 import kotlin.math.abs
 
-class NightX(inst: Target) : TargetStyle("NightX", inst, true) {
+class Blocky(inst: Target) : TargetStyle("Blocky", inst, true) {
     private var lastTarget: EntityPlayer? = null
     val font = Fonts.minecraftFont
 

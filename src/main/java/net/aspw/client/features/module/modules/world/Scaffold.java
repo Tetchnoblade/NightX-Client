@@ -743,7 +743,7 @@ public class Scaffold extends Module {
                 final BlockPos blockPos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1D, mc.thePlayer.posZ);
                 if (mc.theWorld.getBlockState(blockPos).getBlock() instanceof BlockAir) {
                     if (search(blockPos, true, true) && rotationsValue.get()) {
-                        final VecRotation vecRotation = RotationUtils.faceBlock(blockPos);
+                        final VecRotation.VecRotation vecRotation = RotationUtils.faceBlock(blockPos);
 
                         if (vecRotation != null) {
                             RotationUtils.setTargetRotation(RotationUtils.limitAngleChange(RotationUtils.serverRotation, vecRotation.getRotation(), RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())));
@@ -1068,7 +1068,7 @@ public class Scaffold extends Module {
 
         final Vec3 eyesPos = new Vec3(mc.thePlayer.posX, mc.thePlayer.getEntityBoundingBox().minY + mc.thePlayer.getEyeHeight(), mc.thePlayer.posZ);
 
-        PlaceRotation placeRotation = null;
+        VecRotation.PlaceRotation placeRotation = null;
 
         for (final EnumFacing side : StaticStorage.facings()) {
             final BlockPos neighbor = blockPosition.offset(side);
@@ -1148,7 +1148,7 @@ public class Scaffold extends Module {
                                 continue;
 
                             if (placeRotation == null || RotationUtils.getRotationDifference(rotation) < RotationUtils.getRotationDifference(placeRotation.getRotation()))
-                                placeRotation = new PlaceRotation(new PlaceInfo(neighbor, side.getOpposite(), hitVec), rotation);
+                                placeRotation = new VecRotation.PlaceRotation(new PlaceInfo(neighbor, side.getOpposite(), hitVec), rotation);
                         }
                     }
                 }

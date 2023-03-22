@@ -115,14 +115,6 @@ class KillAura : Module() {
             }
         }
 
-    private val roundTurnAngle = BoolValue("RoundAngle", false, { !rotations.get().equals("none", true) })
-    private val roundAngleDirs = IntegerValue(
-        "RoundAngle-Directions",
-        15,
-        2,
-        100,
-        { !rotations.get().equals("none", true) && roundTurnAngle.get() })
-
     private val noHitCheck = BoolValue("NoHitCheck", false, { !rotations.get().equals("none", true) })
 
     private val priorityValue = ListValue(
@@ -894,9 +886,6 @@ class KillAura : Module() {
         if (modify) return true // just ignore then
 
         val defRotation = getTargetRotation(entity) ?: return false
-
-        if (defRotation != RotationUtils.serverRotation && roundTurnAngle.get())
-            defRotation.yaw = RotationUtils.roundRotation(defRotation.yaw, roundAngleDirs.get())
 
         if (silentRotationValue.get()) {
             RotationUtils.setTargetRotation(

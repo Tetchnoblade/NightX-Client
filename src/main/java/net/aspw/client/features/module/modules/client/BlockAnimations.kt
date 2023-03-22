@@ -11,7 +11,7 @@ import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 
-@ModuleInfo(name = "BlockAnimations", spacedName = "Block Animations", category = ModuleCategory.CLIENT, array = false)
+@ModuleInfo(name = "BlockAnimations", spacedName = "Block Animations", category = ModuleCategory.CLIENT)
 class BlockAnimations : Module() {
     override fun onInitialize() {
         state = true
@@ -28,18 +28,17 @@ class BlockAnimations : Module() {
                 "SlideMedium",
                 "SlideFull",
                 "Push",
+                "Dash",
                 "Swing",
                 "Swank",
                 "Swang",
                 "Swonk",
-                "Swaing",
                 "Stella",
                 "Sloth",
                 "Edit",
                 "Reverse",
                 "Autumn",
                 "Astolfo",
-                "Radium",
                 "Fruit",
                 "VisionFX",
                 "ETB",
@@ -110,7 +109,7 @@ class BlockAnimations : Module() {
         val SpeedSwing = IntegerValue("Swing-Speed", 0, -9, 5)
 
         @JvmField
-        val Equip = FloatValue("Equip-Motion", 2.2f, -5f, 5f)
+        val Equip = FloatValue("Equip-Motion", 1.8f, -5f, 5f)
 
         @JvmField
         val handPos = IntegerValue("Hand-Pos", 0, -500, 500)

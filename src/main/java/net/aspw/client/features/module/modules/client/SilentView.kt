@@ -11,10 +11,10 @@ import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
 
-@ModuleInfo(name = "SilentView", spacedName = "Silent View", category = ModuleCategory.CLIENT, array = false)
+@ModuleInfo(name = "SilentView", spacedName = "Silent View", category = ModuleCategory.CLIENT)
 class SilentView : Module() {
 
-    var mode = ListValue("Mode", arrayOf("Normal", "CSGO", "ETB"), "ETB")
+    var mode = ListValue("Mode", arrayOf("Normal", "CSGO", "ETB"), "Normal")
     var headNormalRotate = BoolValue("Head-Rotation", true, { mode.get().equals("normal", true) })
     var headPitch = BoolValue("Head-Pitch", true, { mode.get().equals("normal", true) })
     var bodyNormalRotate = BoolValue("Body-Rotation", true, { mode.get().equals("normal", true) })

@@ -43,6 +43,7 @@ class CommandManager {
         registerCommand(ThemeCommand())
         registerCommand(LoginCommand())
         registerCommand(ClipCommand())
+        registerCommand(RepeatCommand())
     }
 
     /**

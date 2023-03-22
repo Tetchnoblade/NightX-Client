@@ -86,9 +86,9 @@ class Target(
                 Exhibition(this),
                 Remix(this),
                 Slowly(this),
-                Simple(this),
-                NightX(this)
-            ).toTypedArray(), "NightX"
+                Blocky(this),
+                Simple(this)
+            ).toTypedArray(), "Simple"
         )
     }
 

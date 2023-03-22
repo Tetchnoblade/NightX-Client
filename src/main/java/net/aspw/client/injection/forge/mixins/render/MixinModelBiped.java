@@ -45,7 +45,6 @@ public abstract class MixinModelBiped<T extends MixinRendererLivingEntity> {
                 this.bipedHead.rotateAngleX = spinBot.getPitch() / 57.295776f;
             if (silentView.getState() && silentView.getMode().get().equals("ETB") && silentView.shouldRotate()) {
                 this.bipedHead.rotateAngleX = (int) RotationUtils.serverRotation.getPitch() / (150 / (int) Math.PI);
-                ;
             }
             if (silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.shouldRotate()) {
                 this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / 57.295776f;

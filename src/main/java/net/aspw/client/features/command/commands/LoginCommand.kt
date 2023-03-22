@@ -3,6 +3,7 @@ package net.aspw.client.features.command.commands
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.modules.client.Hud
+import net.aspw.client.visual.hud.element.elements.Notification
 
 class LoginCommand : Command("login", arrayOf("l")) {
     /**
@@ -14,5 +15,11 @@ class LoginCommand : Command("login", arrayOf("l")) {
         }
         mc.thePlayer.sendChatMessage("/register rrrr rrrr")
         mc.thePlayer.sendChatMessage("/login rrrr")
+        Client.hud.addNotification(
+            Notification(
+                "Logging in...",
+                Notification.Type.INFO
+            )
+        )
     }
 }
