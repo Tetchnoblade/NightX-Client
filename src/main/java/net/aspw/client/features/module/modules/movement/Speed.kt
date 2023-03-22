@@ -8,7 +8,7 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.modules.movement.speeds.SpeedMode
 import net.aspw.client.features.module.modules.movement.speeds.aac.*
 import net.aspw.client.features.module.modules.movement.speeds.matrix.MatrixHop
-import net.aspw.client.features.module.modules.movement.speeds.matrix.ShotBow
+import net.aspw.client.features.module.modules.movement.speeds.matrix.MatrixShotBow
 import net.aspw.client.features.module.modules.movement.speeds.ncp.*
 import net.aspw.client.features.module.modules.movement.speeds.other.*
 import net.aspw.client.features.module.modules.movement.speeds.spartan.SpartanYPort
@@ -98,7 +98,7 @@ class Speed : Module() {
         VulcanHop2(),
         VulcanYPort(),
         VulcanGround(),
-        ShotBow(),
+        MatrixShotBow(),
         MatrixHop()
     )
     val typeValue: ListValue = object : ListValue(
@@ -111,8 +111,7 @@ class Speed : Module() {
             "Watchdog",
             "Verus",
             "Vulcan",
-            "ShotBow",
-            "MatrixHop",
+            "Matrix",
             "Custom",
             "VanillaBhop",
             "Other"
@@ -280,6 +279,7 @@ class Speed : Module() {
                 "Watchdog" -> mode = hypixelModeValue.get()
                 "Verus" -> mode = verusModeValue.get()
                 "Vulcan" -> mode = vulcanModeValue.get()
+                "Matrix" -> mode = matrixModeValue.get()
             }
             return mode
         }
@@ -328,8 +328,7 @@ class Speed : Module() {
                 "Watchdog" -> mode = "Watchdog" + hypixelModeValue.get()
                 "Verus" -> mode = "Verus" + verusModeValue.get()
                 "Vulcan" -> mode = "Vulcan" + vulcanModeValue.get()
-                "MatrixHop" -> mode = "MatrixHop"
-                "ShotBow" -> mode = "ShotBow"
+                "Matrix" -> mode = "Matrix" + matrixModeValue.get()
                 "VanillaBhop" -> mode = "VanillaBhop"
                 "Custom" -> mode = "Custom"
                 "Other" -> mode = otherModeValue.get()
@@ -360,6 +359,18 @@ class Speed : Module() {
         "YPort",
         "Ground"
     ), "YPort", { typeValue.get().equals("vulcan", ignoreCase = true) }) {
+        override fun onChange(oldValue: String, newValue: String) {
+            if (state) onDisable()
+        }
+
+        override fun onChanged(oldValue: String, newValue: String) {
+            if (state) onEnable()
+        }
+    }
+    val matrixModeValue: ListValue = object : ListValue("Matrix-Mode", arrayOf(
+        "Hop",
+        "ShotBow"
+    ), "Hop", { typeValue.get().equals("matrix", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
         }

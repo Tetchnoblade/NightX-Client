@@ -5,7 +5,7 @@ import net.aspw.client.features.module.modules.movement.speeds.SpeedMode
 import net.aspw.client.utils.MovementUtils.isMoving
 import net.aspw.client.utils.timer.TickTimer
 
-class ShotBow : SpeedMode("ShotBow") {
+class MatrixShotBow : SpeedMode("MatrixShotBow") {
     private val tickTimer = TickTimer()
     override fun onDisable() {
         tickTimer.reset()

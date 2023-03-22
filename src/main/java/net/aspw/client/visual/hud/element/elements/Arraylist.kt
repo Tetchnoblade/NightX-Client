@@ -783,7 +783,7 @@ class Arraylist(
     private fun getModTag(m: Module): String {
         if (!tags.get() || m.tag == null) return ""
 
-        var returnTag = " ${if (tagsArrayColor.get()) "" else "§7"}"
+        var returnTag = " ${if (tagsArrayColor.get()) "" else "§f"}"
 
         // tag prefix, ignore default value
         if (!tagsStyleValue.get().equals("default", true))

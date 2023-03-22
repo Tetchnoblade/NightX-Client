@@ -41,15 +41,14 @@ public abstract class MixinModelBiped<T extends MixinRendererLivingEntity> {
         if (p_setRotationAngles_7_ instanceof EntityPlayer && p_setRotationAngles_7_.equals(Minecraft.getMinecraft().thePlayer)) {
             SilentView silentView = Client.moduleManager.getModule(SilentView.class);
             Rotate spinBot = Client.moduleManager.getModule(Rotate.class);
-            float pitch = RotationUtils.serverRotation.getPitch();
-            int etb = (int) RotationUtils.serverRotation.getPitch();
             if (spinBot.getState() && !spinBot.getPitchMode().get().equalsIgnoreCase("none"))
-                this.bipedHead.rotateAngleX = spinBot.getPitch() / (180 / (float) Math.PI);
-            if (silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.shouldRotate()) {
-                this.bipedHead.rotateAngleX = pitch / (240 / (float) Math.PI);
-            }
+                this.bipedHead.rotateAngleX = spinBot.getPitch() / 57.295776f;
             if (silentView.getState() && silentView.getMode().get().equals("ETB") && silentView.shouldRotate()) {
-                this.bipedHead.rotateAngleX = etb / (180 / (int) Math.PI);
+                this.bipedHead.rotateAngleX = (int) RotationUtils.serverRotation.getPitch() / (150 / (int) Math.PI);
+                ;
+            }
+            if (silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.shouldRotate()) {
+                this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / 57.295776f;
             }
         }
     }
