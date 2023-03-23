@@ -861,7 +861,7 @@ class KillAura : Module() {
             }
         }
 
-        if (tickTimer.hasTimePassed(8)) {
+        if (tickTimer.hasTimePassed(6)) {
             tickTimer.reset()
         }
 
