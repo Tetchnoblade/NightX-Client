@@ -846,7 +846,6 @@ class KillAura : Module() {
         if (swingValue.get() && ViaForge.getInstance().version <= 47) {
             if (tickTimer.hasTimePassed(5)) {
                 mc.thePlayer.swingItem()
-                tickTimer.reset()
             } else {
                 PacketUtils.sendPacketNoEvent(C0APacketAnimation())
             }
@@ -857,10 +856,13 @@ class KillAura : Module() {
         if (swingValue.get() && ViaForge.getInstance().version > 47) {
             if (tickTimer.hasTimePassed(5)) {
                 mc.thePlayer.swingItem()
-                tickTimer.reset()
             } else {
                 PacketUtils.sendPacketNoEvent(C0APacketAnimation())
             }
+        }
+
+        if (tickTimer.hasTimePassed(8)) {
+            tickTimer.reset()
         }
 
         if (keepSprintValue.get()) {
