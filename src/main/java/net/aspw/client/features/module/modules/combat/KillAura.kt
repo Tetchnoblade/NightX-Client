@@ -831,7 +831,7 @@ class KillAura : Module() {
             )
 
             if (debugValue.get())
-                ClientUtils.displayChatMessage("[KillAura] Silent rotation change.")
+                ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "Silent rotation change.")
         }
 
         // Attack target

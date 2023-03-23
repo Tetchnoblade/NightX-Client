@@ -23,10 +23,7 @@ import net.aspw.client.features.module.modules.movement.speeds.vulcan.VulcanGrou
 import net.aspw.client.features.module.modules.movement.speeds.vulcan.VulcanHop1
 import net.aspw.client.features.module.modules.movement.speeds.vulcan.VulcanHop2
 import net.aspw.client.features.module.modules.movement.speeds.vulcan.VulcanYPort
-import net.aspw.client.features.module.modules.movement.speeds.watchdog.WatchdogBoost
-import net.aspw.client.features.module.modules.movement.speeds.watchdog.WatchdogCustom
-import net.aspw.client.features.module.modules.movement.speeds.watchdog.WatchdogNew
-import net.aspw.client.features.module.modules.movement.speeds.watchdog.WatchdogStable
+import net.aspw.client.features.module.modules.movement.speeds.watchdog.*
 import net.aspw.client.features.module.modules.player.Inventory
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -71,6 +68,7 @@ class Speed : Module() {
         WatchdogBoost(),
         WatchdogStable(),
         WatchdogCustom(),
+        WatchdogSemiStrafe(),
         VanillaBhop(),
         SpartanYPort(),
         SpectreBHop(),
@@ -218,7 +216,7 @@ class Speed : Module() {
 
     val hypixelModeValue: ListValue = object : ListValue(
         "Watchdog-Mode",
-        arrayOf("New", "Boost", "Stable", "Custom"),
+        arrayOf("New", "SemiStrafe", "Boost", "Stable", "Custom"),
         "New",
         { typeValue.get().equals("watchdog", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
@@ -383,24 +381,42 @@ class Speed : Module() {
         modeName.equals(
             "watchdogcustom",
             ignoreCase = true
-        ) && !modeName.equals("watchdognew", ignoreCase = true)
+        ) && !modeName.equals("watchdognew", ignoreCase = true) && !modeName.equals(
+            "watchdogsemistrafe",
+            ignoreCase = true
+        ) || modeName.equals(
+            "watchdogcustom",
+            ignoreCase = true
+        ) && !modeName.equals(
+            "watchdogsemistrafe",
+            ignoreCase = true
+        )
     }
     val smoothStrafe = BoolValue("SmoothStrafe", true) {
         modeName.equals(
             "watchdogcustom",
             ignoreCase = true
-        ) && !modeName.equals("watchdognew", ignoreCase = true)
+        ) && !modeName.equals("watchdognew", ignoreCase = true) && !modeName.equals(
+            "watchdogsemistrafe",
+            ignoreCase = true
+        )
     }
     val customSpeedValue =
         FloatValue("StrSpeed", 0.42f, 0.2f, 2f) {
             modeName.equals(
                 "watchdogcustom",
                 ignoreCase = true
-            ) && !modeName.equals("watchdognew", ignoreCase = true)
+            ) && !modeName.equals("watchdognew", ignoreCase = true) && !modeName.equals(
+                "watchdogsemistrafe",
+                ignoreCase = true
+            )
         }
     val motionYValue = FloatValue("MotionY", 0.42f, 0f, 2f) {
         modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
             "watchdognew",
+            ignoreCase = true
+        ) && !modeName.equals(
+            "watchdogsemistrafe",
             ignoreCase = true
         )
     }
@@ -470,6 +486,9 @@ class Speed : Module() {
         ) && !modeName.equals(
             "watchdogcustom",
             ignoreCase = true
+        ) && !modeName.equals(
+            "watchdogsemistrafe",
+            ignoreCase = true
         )
     }
 
@@ -481,6 +500,9 @@ class Speed : Module() {
         ) && !modeName.equals(
             "watchdognew",
             ignoreCase = true
+        ) && !modeName.equals(
+            "watchdogsemistrafe",
+            ignoreCase = true
         )
     }
 
@@ -489,7 +511,10 @@ class Speed : Module() {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
             "watchdognew",
             ignoreCase = true
-        ) && !modeName.equals("watchdogcustom", ignoreCase = true)
+        ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
+            "watchdogsemistrafe",
+            ignoreCase = true
+        )
     }
 
     @JvmField
@@ -497,7 +522,10 @@ class Speed : Module() {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
             "watchdognew",
             ignoreCase = true
-        ) && !modeName.equals("watchdogcustom", ignoreCase = true)
+        ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
+            "watchdogsemistrafe",
+            ignoreCase = true
+        )
     }
 
     @JvmField
@@ -505,7 +533,10 @@ class Speed : Module() {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
             "watchdognew",
             ignoreCase = true
-        ) && !modeName.equals("watchdogcustom", ignoreCase = true)
+        ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
+            "watchdogsemistrafe",
+            ignoreCase = true
+        )
     }
 
     @JvmField
@@ -513,14 +544,20 @@ class Speed : Module() {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
             "watchdognew",
             ignoreCase = true
-        ) && !modeName.equals("watchdogcustom", ignoreCase = true)
+        ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
+            "watchdogsemistrafe",
+            ignoreCase = true
+        )
     }
 
     @JvmField
     val baseTimerValue = FloatValue("BaseTimer", 1.5f, 1f, 3f) {
         modeName.equals(
             "watchdogboost",
-            ignoreCase = true && !modeName.equals("watchdognew", ignoreCase = true)
+            ignoreCase = true && !modeName.equals("watchdognew", ignoreCase = true) && !modeName.equals(
+                "watchdogsemistrafe",
+                ignoreCase = true
+            )
         )
     }
 
@@ -529,7 +566,10 @@ class Speed : Module() {
         FloatValue("BaseMultiplierTimer", 1f, 0f, 3f) {
             modeName.equals(
                 "watchdogboost",
-                ignoreCase = true && !modeName.equals("watchdognew", ignoreCase = true)
+                ignoreCase = true && !modeName.equals("watchdognew", ignoreCase = true) && !modeName.equals(
+                    "watchdogsemistrafe",
+                    ignoreCase = true
+                )
             )
         }
 
