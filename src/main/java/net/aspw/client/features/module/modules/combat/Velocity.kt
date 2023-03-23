@@ -54,7 +54,6 @@ class Velocity : Module() {
             "MatrixSpoof",
             "MatrixGround",
             "Legit",
-            "Watchdog",
             "AEMine"
         ), "Cancel"
     )
@@ -128,16 +127,6 @@ class Velocity : Module() {
 
                 if (!mc.thePlayer.onGround) {
                     MovementUtils.strafe(MovementUtils.getSpeed() * reverseStrengthValue.get())
-                } else if (velocityTimer.hasTimePassed(80L))
-                    velocityInput = false
-            }
-
-            "watchdog" -> {
-                if (!velocityInput)
-                    return
-
-                if (!mc.thePlayer.onGround) {
-                    MovementUtils.strafe(MovementUtils.getSpeed() * 0.94f)
                 } else if (velocityTimer.hasTimePassed(80L))
                     velocityInput = false
             }
@@ -306,12 +295,6 @@ class Velocity : Module() {
 
             velocityTimer.reset()
 
-            if (modeValue.get().lowercase().equals("watchdog")) {
-                if (mc.thePlayer.fallDistance > 0.7) {
-                    event.cancelEvent()
-                }
-            }
-
             when (modeValue.get().lowercase(Locale.getDefault())) {
                 "cancel", "vulcan" -> event.cancelEvent()
                 "simple" -> {
@@ -329,7 +312,7 @@ class Velocity : Module() {
                     packet.motionZ = (packet.getMotionZ() * 0.6).toInt()
                 }
 
-                "aac", "aac5reduce", "reverse", "aacv4", "watchdog", "smoothreverse", "aaczero" -> velocityInput = true
+                "aac", "aac5reduce", "reverse", "aacv4", "smoothreverse", "aaczero" -> velocityInput = true
 
                 "aac5.2.0" -> {
                     event.cancelEvent()

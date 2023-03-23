@@ -12,31 +12,38 @@ import net.minecraft.potion.Potion
 
 class WatchdogNew : SpeedMode("WatchdogNew") {
     private var groundTick = 0
+    private var ticks = 0
     override fun onJump(event: JumpEvent) {
         if (mc.thePlayer != null && MovementUtils.isMoving())
             event.cancelEvent()
     }
 
     override fun onMotion(eventMotion: MotionEvent) {
+        if (mc.thePlayer.hurtTime > 6) {
+            mc.thePlayer.jumpMovementFactor = 0.04f
+        }
+        ticks++
         val speed = Client.moduleManager.getModule(
             Speed::class.java
         )
         if (speed == null || eventMotion.eventState !== EventState.PRE || mc.thePlayer.isInWater) return
         if (MovementUtils.isMoving()) {
+            groundTick++
             if (mc.thePlayer.onGround) {
+                mc.timer.timerSpeed = 1.01f
                 if (groundTick >= 0) {
                     mc.thePlayer.motionY = 0.41999998688698
                 }
                 if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                    MovementUtils.strafe(0.57f)
+                    MovementUtils.strafe(0.578f)
                 } else {
-                    MovementUtils.strafe(0.42f)
+                    MovementUtils.strafe(0.428f)
                 }
+            } else if (ticks > 3 && mc.thePlayer.motionY > 0) {
+                mc.thePlayer.jumpMovementFactor = 0.022f
             }
-            groundTick++
         } else {
             groundTick = 0
-            mc.thePlayer.motionY += -0.021 * 0.021
         }
     }
 
