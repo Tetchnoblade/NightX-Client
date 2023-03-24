@@ -55,8 +55,6 @@ class TPAura : Module() {
 
     var lastTarget: EntityLivingBase? = null
 
-    private lateinit var auraMod: KillAura
-
     private val attackDelay: Long
         get() = 1000L / apsValue.get().toLong()
 

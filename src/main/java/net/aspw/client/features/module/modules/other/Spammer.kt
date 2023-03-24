@@ -8,13 +8,11 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.utils.misc.RandomUtils
 import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.utils.timer.TimeUtils
-import net.aspw.client.value.BoolValue
 import net.aspw.client.value.IntegerValue
 import java.util.*
 
 @ModuleInfo(name = "Spammer", category = ModuleCategory.OTHER)
 class Spammer : Module() {
-    private val customValue = BoolValue("Custom", false)
     private val maxDelayValue: IntegerValue = object : IntegerValue("MaxDelay", 1500, 0, 5000, "ms") {
         override fun onChanged(oldValue: Int, newValue: Int) {
             val minDelayValueObject = minDelayValue.get()

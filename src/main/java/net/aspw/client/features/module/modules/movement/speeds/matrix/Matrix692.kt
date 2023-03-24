@@ -15,6 +15,8 @@ class Matrix692 : SpeedMode("Matrix6.9.2") {
     override fun onTick() {}
     override fun onMotion() {}
     override fun onUpdate() {
+        if (mc.thePlayer!!.isInWater) return
+
         if (wasTimer) {
             wasTimer = false
             mc.timer.timerSpeed = 1.0f

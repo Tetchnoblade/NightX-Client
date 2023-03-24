@@ -10,7 +10,7 @@ import net.aspw.client.features.module.modules.movement.speeds.aac.*
 import net.aspw.client.features.module.modules.movement.speeds.matrix.Matrix670
 import net.aspw.client.features.module.modules.movement.speeds.matrix.Matrix692
 import net.aspw.client.features.module.modules.movement.speeds.matrix.MatrixHop
-import net.aspw.client.features.module.modules.movement.speeds.matrix.MatrixShotBow
+import net.aspw.client.features.module.modules.movement.speeds.matrix.MatrixYPort
 import net.aspw.client.features.module.modules.movement.speeds.ncp.*
 import net.aspw.client.features.module.modules.movement.speeds.other.*
 import net.aspw.client.features.module.modules.movement.speeds.spartan.SpartanYPort
@@ -99,8 +99,8 @@ class Speed : Module() {
         VulcanHop2(),
         VulcanYPort(),
         VulcanGround(),
-        MatrixShotBow(),
         MatrixHop(),
+        MatrixYPort(),
         Matrix670(),
         Matrix692()
     )
@@ -372,9 +372,9 @@ class Speed : Module() {
     }
     val matrixModeValue: ListValue = object : ListValue("Matrix-Mode", arrayOf(
         "Hop",
+        "YPort",
         "6.7.0",
-        "6.9.2",
-        "ShotBow"
+        "6.9.2"
     ), "Hop", { typeValue.get().equals("matrix", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()

@@ -3,36 +3,29 @@ package net.aspw.client.features.module.modules.movement.speeds.matrix
 import net.aspw.client.event.MoveEvent
 import net.aspw.client.features.module.modules.movement.speeds.SpeedMode
 import net.aspw.client.utils.MovementUtils.isMoving
-import net.aspw.client.utils.timer.TickTimer
 
-class MatrixShotBow : SpeedMode("MatrixShotBow") {
-    private val tickTimer = TickTimer()
+class MatrixYPort : SpeedMode("MatrixYPort") {
     override fun onDisable() {
-        tickTimer.reset()
         mc.timer.timerSpeed = 1f
     }
+
     override fun onTick() {}
     override fun onMotion() {}
     override fun onUpdate() {
         if (mc.thePlayer!!.isInWater) return
+
         if (isMoving()) {
-            tickTimer.update()
             if (mc.thePlayer!!.onGround) {
                 mc.thePlayer!!.jump()
             }
-            if (tickTimer.hasTimePassed(8)) {
-                mc.timer.timerSpeed = 1.0f
-            }
-            if (tickTimer.hasTimePassed(17)) {
-                mc.timer.timerSpeed = 1.04f
-                tickTimer.reset()
-            }
+            mc.timer.timerSpeed = 10f
         } else {
-            tickTimer.reset()
+            mc.timer.timerSpeed = 1f
         }
     }
 
     override fun onMove(event: MoveEvent) {}
     override fun onEnable() {
+        mc.timer.timerSpeed = 1f
     }
 }

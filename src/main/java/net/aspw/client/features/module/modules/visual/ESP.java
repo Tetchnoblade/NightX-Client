@@ -16,7 +16,6 @@ import net.aspw.client.value.IntegerValue;
 import net.aspw.client.value.ListValue;
 import net.aspw.client.visual.font.GameFontRenderer;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GLAllocation;
@@ -26,7 +25,6 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
@@ -158,9 +156,6 @@ public final class ESP extends Module {
         GL11.glScaled(scaling, scaling, scaling);
         int black = this.black;
         int background = this.backgroundColor;
-        float scale = 0.65F;
-        float upscale = 1.0F / scale;
-        FontRenderer fr = mc.fontRendererObj;
         RenderManager renderMng = mc.getRenderManager();
         EntityRenderer entityRenderer = mc.entityRenderer;
         boolean outline = this.outline.get();
@@ -205,7 +200,7 @@ public final class ESP extends Module {
                     double endPosX = position.z;
                     double endPosY = position.w;
                     if (outline) {
-                        if (this.boxMode.get() == "Box") {
+                        if (this.boxMode.get().equals("Box")) {
                             RenderUtils.newDrawRect(posX - 1.0D, posY, posX + 0.5D, endPosY + 0.5D, black);
                             RenderUtils.newDrawRect(posX - 1.0D, posY - 0.5D, endPosX + 0.5D, posY + 0.5D + 0.5D, black);
                             RenderUtils.newDrawRect(endPosX - 0.5D - 0.5D, posY, endPosX + 0.5D, endPosY + 0.5D, black);
@@ -235,7 +230,6 @@ public final class ESP extends Module {
                     }
 
                     boolean living = entity instanceof EntityLivingBase;
-                    boolean isPlayer = entity instanceof EntityPlayer;
                     EntityLivingBase entityLivingBase;
                     float armorValue;
                     float itemDurability;

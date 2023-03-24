@@ -18,6 +18,8 @@ class Matrix670 : SpeedMode("Matrix6.7.0") {
     override fun onTick() {}
     override fun onMotion() {}
     override fun onUpdate() {
+        if (mc.thePlayer!!.isInWater) return
+
         if (noVelocityY >= 0) {
             noVelocityY -= 1
         }
