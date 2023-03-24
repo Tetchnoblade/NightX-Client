@@ -11,7 +11,6 @@ class MatrixShotBow : SpeedMode("MatrixShotBow") {
         tickTimer.reset()
         mc.timer.timerSpeed = 1f
     }
-
     override fun onTick() {}
     override fun onMotion() {}
     override fun onUpdate() {

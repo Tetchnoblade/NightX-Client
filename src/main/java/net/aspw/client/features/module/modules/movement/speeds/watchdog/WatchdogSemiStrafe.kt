@@ -29,38 +29,40 @@ class WatchdogSemiStrafe : SpeedMode("WatchdogSemiStrafe") {
     }
 
     override fun onMotion(eventMotion: MotionEvent) {
-        if (mc.thePlayer.hurtTime > 6) {
-            mc.thePlayer.jumpMovementFactor = 0.04f
-        }
         val speed = Client.moduleManager.getModule(
             Speed::class.java
         )
         if (speed == null || eventMotion.eventState !== EventState.PRE || mc.thePlayer.isInWater) return
         if (MovementUtils.isMoving()) {
-            if (!mc.thePlayer.onGround) {
-                PacketUtils.sendPacketNoEvent(
-                    C07PacketPlayerDigging(
-                        C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                        BlockPos(-1, -1, -1),
-                        EnumFacing.UP
-                    )
+            PacketUtils.sendPacketNoEvent(
+                C07PacketPlayerDigging(
+                    C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+                    BlockPos(-1, -1, -1),
+                    EnumFacing.UP
                 )
-                if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                    MovementUtils.strafe(0.24f)
-                } else {
-                    MovementUtils.strafe(0.14f)
+            )
+            if (!mc.thePlayer.onGround) {
+                if (mc.thePlayer.moveForward != 0f) {
+                    if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                        MovementUtils.strafe(0.11f)
+                    } else {
+                        MovementUtils.strafe(0.04f)
+                    }
+                    mc.thePlayer.jumpMovementFactor = 0.2f
                 }
-                mc.thePlayer.jumpMovementFactor = 0.12f
+                if (mc.thePlayer.moveForward == 0f) {
+                    if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                        MovementUtils.strafe(0.05f)
+                    } else {
+                        MovementUtils.strafe(0.01f)
+                    }
+                    mc.thePlayer.jumpMovementFactor = 0.2f
+                }
             }
             groundTick++
             if (mc.thePlayer.onGround) {
                 if (groundTick >= 0) {
                     mc.thePlayer.motionY = 0.41999998688698
-                }
-                if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                    MovementUtils.strafe(0.578f)
-                } else {
-                    MovementUtils.strafe(0.428f)
                 }
             }
         } else {

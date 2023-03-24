@@ -8,7 +8,6 @@ class MatrixHop : SpeedMode("MatrixHop") {
     override fun onDisable() {
         mc.timer.timerSpeed = 1f
     }
-
     override fun onTick() {}
     override fun onMotion() {}
     override fun onUpdate() {

@@ -7,6 +7,8 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.modules.movement.speeds.SpeedMode
 import net.aspw.client.features.module.modules.movement.speeds.aac.*
+import net.aspw.client.features.module.modules.movement.speeds.matrix.Matrix670
+import net.aspw.client.features.module.modules.movement.speeds.matrix.Matrix692
 import net.aspw.client.features.module.modules.movement.speeds.matrix.MatrixHop
 import net.aspw.client.features.module.modules.movement.speeds.matrix.MatrixShotBow
 import net.aspw.client.features.module.modules.movement.speeds.ncp.*
@@ -16,6 +18,7 @@ import net.aspw.client.features.module.modules.movement.speeds.spectre.SpectreBH
 import net.aspw.client.features.module.modules.movement.speeds.spectre.SpectreLowHop
 import net.aspw.client.features.module.modules.movement.speeds.spectre.SpectreOnGround
 import net.aspw.client.features.module.modules.movement.speeds.vanillabhop.VanillaBhop
+import net.aspw.client.features.module.modules.movement.speeds.verus.VerusFloat
 import net.aspw.client.features.module.modules.movement.speeds.verus.VerusHard
 import net.aspw.client.features.module.modules.movement.speeds.verus.VerusHop
 import net.aspw.client.features.module.modules.movement.speeds.verus.VerusLowHop
@@ -91,12 +94,15 @@ class Speed : Module() {
         VerusHop(),
         VerusLowHop(),
         VerusHard(),
+        VerusFloat(),
         VulcanHop1(),
         VulcanHop2(),
         VulcanYPort(),
         VulcanGround(),
         MatrixShotBow(),
-        MatrixHop()
+        MatrixHop(),
+        Matrix670(),
+        Matrix692()
     )
     val typeValue: ListValue = object : ListValue(
         "Type",
@@ -339,7 +345,7 @@ class Speed : Module() {
         }
     val verusModeValue: ListValue = object : ListValue(
         "Verus-Mode",
-        arrayOf("Hop", "LowHop", "Hard"),
+        arrayOf("Hop", "LowHop", "Hard", "Float"),
         "LowHop",
         { typeValue.get().equals("verus", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
@@ -366,6 +372,8 @@ class Speed : Module() {
     }
     val matrixModeValue: ListValue = object : ListValue("Matrix-Mode", arrayOf(
         "Hop",
+        "6.7.0",
+        "6.9.2",
         "ShotBow"
     ), "Hop", { typeValue.get().equals("matrix", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
