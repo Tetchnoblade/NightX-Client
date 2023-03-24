@@ -41,7 +41,12 @@ class WatchdogSemiStrafe : SpeedMode("WatchdogSemiStrafe") {
                     EnumFacing.UP
                 )
             )
-            if (!mc.thePlayer.onGround) {
+            groundTick++
+            if (mc.thePlayer.onGround) {
+                if (groundTick >= 0) {
+                    mc.thePlayer.motionY = 0.41999998688698
+                }
+            } else {
                 if (mc.thePlayer.moveForward != 0f) {
                     if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
                         MovementUtils.strafe(0.11f)
@@ -57,12 +62,6 @@ class WatchdogSemiStrafe : SpeedMode("WatchdogSemiStrafe") {
                         MovementUtils.strafe(0.01f)
                     }
                     mc.thePlayer.jumpMovementFactor = 0.2f
-                }
-            }
-            groundTick++
-            if (mc.thePlayer.onGround) {
-                if (groundTick >= 0) {
-                    mc.thePlayer.motionY = 0.41999998688698
                 }
             }
         } else {

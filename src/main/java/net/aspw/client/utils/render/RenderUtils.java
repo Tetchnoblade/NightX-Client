@@ -106,10 +106,6 @@ public final class RenderUtils extends MinecraftInstance {
         return frustrum.isBoundingBoxInFrustum(bb);
     }
 
-    public static float interpolate(float current, float old, float scale) {
-        return old + (current - old) * scale;
-    }
-
     public static double interpolate(double current, double old, double scale) {
         return old + (current - old) * scale;
     }
@@ -136,27 +132,9 @@ public final class RenderUtils extends MinecraftInstance {
         return Color.getHSBColor((float) (rainbowState / 360.0f), sat, brg).getRGB();
     }
 
-    public static void startSmooth() {
-        glEnable(2848);
-        glEnable(2881);
-        glEnable(2832);
-        glEnable(3042);
-        glBlendFunc(770, 771);
-        glHint(3154, 4354);
-        glHint(3155, 4354);
-        glHint(3153, 4354);
-    }
-
-    public static void endSmooth() {
-        glDisable(2848);
-        glDisable(2881);
-        glEnable(2832);
-    }
-
     public static void drawExhiRect(float x, float y, float x2, float y2) {
         drawRect(x - 3.5F, y - 3.5F, x2 + 3.5F, y2 + 3.5F, Color.black.getRGB());
         drawRect(x - 3F, y - 3F, x2 + 3F, y2 + 3F, new Color(50, 50, 50).getRGB());
-        //drawBorder(x - 1.5F, y - 1.5F, x2 + 1.5F, y2 + 1.5F, 2.5F, new Color(26, 26, 26).getRGB());
         drawRect(x - 2.5F, y - 2.5F, x2 + 2.5F, y2 + 2.5F, new Color(26, 26, 26).getRGB());
         drawRect(x - 0.5F, y - 0.5F, x2 + 0.5F, y2 + 0.5F, new Color(50, 50, 50).getRGB());
         drawRect(x, y, x2, y2, new Color(18, 18, 18).getRGB());
@@ -704,33 +682,6 @@ public final class RenderUtils extends MinecraftInstance {
         glDisable(GL_BLEND);
     }
 
-    public static void drawPlatform(final double y, final Color color, final double size) {
-        final RenderManager renderManager = mc.getRenderManager();
-        final double renderY = y - renderManager.renderPosY;
-
-        drawAxisAlignedBB(new AxisAlignedBB(size, renderY + 0.02D, size, -size, renderY, -size), color);
-    }
-
-    public static void drawPlatform(final Entity entity, final Color color) {
-        final RenderManager renderManager = mc.getRenderManager();
-        final Timer timer = mc.timer;
-
-        final double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * timer.renderPartialTicks
-                - renderManager.renderPosX;
-        final double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * timer.renderPartialTicks
-                - renderManager.renderPosY;
-        final double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * timer.renderPartialTicks
-                - renderManager.renderPosZ;
-
-        final AxisAlignedBB axisAlignedBB = entity.getEntityBoundingBox()
-                .offset(-entity.posX, -entity.posY, -entity.posZ);
-
-        drawAxisAlignedBB(
-                new AxisAlignedBB(axisAlignedBB.minX, axisAlignedBB.maxY + 0.2, axisAlignedBB.minZ, axisAlignedBB.maxX, axisAlignedBB.maxY + 0.26, axisAlignedBB.maxZ),
-                color
-        );
-    }
-
     public static void drawFilledBox(final AxisAlignedBB axisAlignedBB) {
         final Tessellator tessellator = Tessellator.getInstance();
         final WorldRenderer worldRenderer = tessellator.getWorldRenderer();
@@ -943,36 +894,6 @@ public final class RenderUtils extends MinecraftInstance {
         drawRect(x + width / 2F, y2 - width / 2F, x2 - width / 2F, y2 + width / 2F, color1);
     }
 
-    public static void drawRectBasedBorder(double x, double y, double x2, double y2, double width, int color1) {
-        newDrawRect(x - width / 2F, y - width / 2F, x2 + width / 2F, y + width / 2F, color1);
-        newDrawRect(x - width / 2F, y + width / 2F, x + width / 2F, y2 + width / 2F, color1);
-        newDrawRect(x2 - width / 2F, y + width / 2F, x2 + width / 2F, y2 + width / 2F, color1);
-        newDrawRect(x + width / 2F, y2 - width / 2F, x2 - width / 2F, y2 + width / 2F, color1);
-    }
-
-    public static void quickDrawBorderedRect(final float x, final float y, final float x2, final float y2, final float width, final int color1, final int color2) {
-        quickDrawRect(x, y, x2, y2, color2);
-
-        glColor(color1);
-        glLineWidth(width);
-
-        glBegin(GL_LINE_LOOP);
-
-        glVertex2d(x2, y);
-        glVertex2d(x, y);
-        glVertex2d(x, y2);
-        glVertex2d(x2, y2);
-
-        glEnd();
-    }
-
-    public static void drawLoadingCircle(float x, float y) {
-        for (int i = 0; i < 4; i++) {
-            int rot = (int) ((System.nanoTime() / 5000000 * i) % 360);
-            drawCircle(x, y, i * 10, rot - 180, rot);
-        }
-    }
-
     public static void drawCircle(float x, float y, float radius, float lineWidth, int start, int end, Color color) {
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
@@ -990,72 +911,6 @@ public final class RenderUtils extends MinecraftInstance {
 
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
-    }
-
-    public static void drawCircle(float x, float y, float radius, float lineWidth, int start, int end) {
-        GlStateManager.enableBlend();
-        GlStateManager.disableTexture2D();
-        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
-        glColor(Color.WHITE);
-
-        glEnable(GL_LINE_SMOOTH);
-        glLineWidth(lineWidth);
-        glBegin(GL_LINE_STRIP);
-        for (float i = end; i >= start; i -= (360 / 90.0f)) {
-            glVertex2f((float) (x + (cos(i * PI / 180) * (radius * 1.001F))), (float) (y + (sin(i * PI / 180) * (radius * 1.001F))));
-        }
-        glEnd();
-        glDisable(GL_LINE_SMOOTH);
-
-        GlStateManager.enableTexture2D();
-        GlStateManager.disableBlend();
-    }
-
-    public static void drawCircle(float x, float y, float radius, int start, int end) {
-        GlStateManager.enableBlend();
-        GlStateManager.disableTexture2D();
-        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
-        glColor(Color.WHITE);
-
-        glEnable(GL_LINE_SMOOTH);
-        glLineWidth(2F);
-        glBegin(GL_LINE_STRIP);
-        for (float i = end; i >= start; i -= (360 / 90.0f)) {
-            glVertex2f((float) (x + (cos(i * PI / 180) * (radius * 1.001F))), (float) (y + (sin(i * PI / 180) * (radius * 1.001F))));
-        }
-        glEnd();
-        glDisable(GL_LINE_SMOOTH);
-
-        GlStateManager.enableTexture2D();
-        GlStateManager.disableBlend();
-    }
-
-    public static void drawFilledCircle(final int xx, final int yy, final float radius, final Color color) {
-        int sections = 50;
-        double dAngle = 2 * Math.PI / sections;
-        float x, y;
-
-        glPushAttrib(GL_ENABLE_BIT);
-
-        glEnable(GL_BLEND);
-        glDisable(GL_TEXTURE_2D);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable(GL_LINE_SMOOTH);
-        glBegin(GL_TRIANGLE_FAN);
-
-        for (int i = 0; i < sections; i++) {
-            x = (float) (radius * Math.sin((i * dAngle)));
-            y = (float) (radius * Math.cos((i * dAngle)));
-
-            glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
-            glVertex2f(xx + x, yy + y);
-        }
-
-        GlStateManager.color(0, 0, 0);
-
-        glEnd();
-
-        glPopAttrib();
     }
 
     public static void drawFilledCircle(final float xx, final float yy, final float radius, final Color color) {
@@ -1092,19 +947,6 @@ public final class RenderUtils extends MinecraftInstance {
         glDepthMask(false);
         OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        mc.getTextureManager().bindTexture(image);
-        Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, width, height, width, height);
-        glDepthMask(true);
-        glDisable(GL_BLEND);
-        glEnable(GL_DEPTH_TEST);
-    }
-
-    public static void drawImage(ResourceLocation image, int x, int y, int width, int height, float alpha) {
-        glDisable(GL_DEPTH_TEST);
-        glEnable(GL_BLEND);
-        glDepthMask(false);
-        OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
-        glColor4f(1.0F, 1.0F, 1.0F, alpha);
         mc.getTextureManager().bindTexture(image);
         Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, width, height, width, height);
         glDepthMask(true);
@@ -1263,43 +1105,6 @@ public final class RenderUtils extends MinecraftInstance {
         GlStateManager.color(red, green, blue, alpha);
     }
 
-    public static void draw2D(final EntityLivingBase entity, final double posX, final double posY, final double posZ, final int color, final int backgroundColor) {
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(posX, posY, posZ);
-        GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0F, 1F, 0F);
-        GlStateManager.scale(-0.1D, -0.1D, 0.1D);
-
-        glDisable(GL_DEPTH_TEST);
-        glEnable(GL_BLEND);
-        glDisable(GL_TEXTURE_2D);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-        GlStateManager.depthMask(true);
-
-        glColor(color);
-
-        glCallList(DISPLAY_LISTS_2D[0]);
-
-        glColor(backgroundColor);
-
-        glCallList(DISPLAY_LISTS_2D[1]);
-
-        GlStateManager.translate(0, 21 + -(entity.getEntityBoundingBox().maxY - entity.getEntityBoundingBox().minY) * 12, 0);
-
-        glColor(color);
-        glCallList(DISPLAY_LISTS_2D[2]);
-
-        glColor(backgroundColor);
-        glCallList(DISPLAY_LISTS_2D[3]);
-
-        // Stop render
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_TEXTURE_2D);
-        glDisable(GL_BLEND);
-
-        GlStateManager.popMatrix();
-    }
-
     public static void draw2D(final BlockPos blockPos, final int color, final int backgroundColor) {
         final RenderManager renderManager = mc.getRenderManager();
 
@@ -1345,30 +1150,6 @@ public final class RenderUtils extends MinecraftInstance {
         GlStateManager.popMatrix();
     }
 
-    public static void renderNameTag(final String string, final double x, final double y, final double z) {
-        final RenderManager renderManager = mc.getRenderManager();
-
-        glPushMatrix();
-        glTranslated(x - renderManager.renderPosX, y - renderManager.renderPosY, z - renderManager.renderPosZ);
-        glNormal3f(0F, 1F, 0F);
-        glRotatef(-mc.getRenderManager().playerViewY, 0F, 1F, 0F);
-        glRotatef(mc.getRenderManager().playerViewX, 1F, 0F, 0F);
-        glScalef(-0.05F, -0.05F, 0.05F);
-        setGlCap(GL_LIGHTING, false);
-        setGlCap(GL_DEPTH_TEST, false);
-        setGlCap(GL_BLEND, true);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-        final int width = Fonts.font35.getStringWidth(string) / 2;
-
-        Gui.drawRect(-width - 1, -1, width + 1, Fonts.font35.FONT_HEIGHT, Integer.MIN_VALUE);
-        Fonts.font35.drawString(string, -width, 1.5F, Color.WHITE.getRGB(), true);
-
-        resetCaps();
-        glColor4f(1F, 1F, 1F, 1F);
-        glPopMatrix();
-    }
-
     public static void drawLine(final float x, final float y, final float x1, final float y1, final float width) {
         glDisable(GL_TEXTURE_2D);
         glLineWidth(width);
@@ -1406,10 +1187,6 @@ public final class RenderUtils extends MinecraftInstance {
     public static void enableGlCap(final int... caps) {
         for (final int cap : caps)
             setGlCap(cap, true);
-    }
-
-    public static void disableGlCap(final int cap) {
-        setGlCap(cap, true);
     }
 
     public static void disableGlCap(final int... caps) {

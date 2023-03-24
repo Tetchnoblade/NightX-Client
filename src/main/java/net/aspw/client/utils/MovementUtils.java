@@ -43,10 +43,6 @@ public final class MovementUtils extends MinecraftInstance {
         return false;
     }
 
-    public static void accelerate() {
-        accelerate(getSpeed());
-    }
-
     public static void accelerate(final float speed) {
         if (!isMoving())
             return;
@@ -73,15 +69,6 @@ public final class MovementUtils extends MinecraftInstance {
             return;
 
         final double yaw = getDirection();
-        mc.thePlayer.motionX = -Math.sin(yaw) * speed;
-        mc.thePlayer.motionZ = Math.cos(yaw) * speed;
-    }
-
-    public static void strafeCustom(final float speed, final float cYaw, final float strafe, final float forward) {
-        if (!isMoving())
-            return;
-
-        final double yaw = getDirectionRotation(cYaw, strafe, forward);
         mc.thePlayer.motionX = -Math.sin(yaw) * speed;
         mc.thePlayer.motionZ = Math.cos(yaw) * speed;
     }
@@ -203,10 +190,6 @@ public final class MovementUtils extends MinecraftInstance {
         return rotationYaw;
     }
 
-    public static int getJumpEffect() {
-        return mc.thePlayer.isPotionActive(Potion.jump) ? mc.thePlayer.getActivePotionEffect(Potion.jump).getAmplifier() + 1 : 0;
-    }
-
     public static int getSpeedEffect() {
         return mc.thePlayer.isPotionActive(Potion.moveSpeed) ? mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier() + 1 : 0;
     }
@@ -300,10 +283,6 @@ public final class MovementUtils extends MinecraftInstance {
             mc.thePlayer.motionX = forward * speed * (-Math.sin(Math.toRadians(yaw))) + strafe * speed * Math.cos(Math.toRadians(yaw));
             mc.thePlayer.motionZ = forward * speed * Math.cos(Math.toRadians(yaw)) - strafe * speed * (-Math.sin(Math.toRadians(yaw)));
         }
-    }
-
-    public static void setSpeed(MoveEvent moveEvent, double moveSpeed) {
-        setSpeed(moveEvent, moveSpeed, mc.thePlayer.rotationYaw, mc.thePlayer.movementInput.moveStrafe, mc.thePlayer.movementInput.moveForward);
     }
 
     public static void setSpeed(final MoveEvent moveEvent, final double moveSpeed, final float pseudoYaw, final double pseudoStrafe, final double pseudoForward) {

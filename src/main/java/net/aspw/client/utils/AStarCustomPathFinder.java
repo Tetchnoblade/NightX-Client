@@ -198,10 +198,6 @@ public class AStarCustomPathFinder {
             this.loc = loc;
         }
 
-        public Hub getParent() {
-            return parent;
-        }
-
         public void setParent(Hub parent) {
             this.parent = parent;
         }

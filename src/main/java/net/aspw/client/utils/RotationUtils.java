@@ -28,50 +28,6 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
     private static double z = random.nextDouble();
 
     /**
-     * @author aquavit
-     * <p>
-     * epic skid moment
-     */
-    public static Rotation OtherRotation(final AxisAlignedBB bb, final Vec3 vec, final boolean predict, final boolean throughWalls, final float distance) {
-        final Vec3 eyesPos = new Vec3(mc.thePlayer.posX, mc.thePlayer.getEntityBoundingBox().minY +
-                mc.thePlayer.getEyeHeight(), mc.thePlayer.posZ);
-        final Vec3 eyes = mc.thePlayer.getPositionEyes(1F);
-        VecRotation.VecRotation vecRotation = null;
-        for (double xSearch = 0.15D; xSearch < 0.85D; xSearch += 0.1D) {
-            for (double ySearch = 0.15D; ySearch < 1D; ySearch += 0.1D) {
-                for (double zSearch = 0.15D; zSearch < 0.85D; zSearch += 0.1D) {
-                    final Vec3 vec3 = new Vec3(bb.minX + (bb.maxX - bb.minX) * xSearch,
-                            bb.minY + (bb.maxY - bb.minY) * ySearch, bb.minZ + (bb.maxZ - bb.minZ) * zSearch);
-                    final Rotation rotation = toRotation(vec3, predict);
-                    final double vecDist = eyes.distanceTo(vec3);
-
-                    if (vecDist > distance)
-                        continue;
-
-                    if (throughWalls || isVisible(vec3)) {
-                        final VecRotation.VecRotation currentVec = new VecRotation.VecRotation(vec3, rotation);
-
-                        if (vecRotation == null)
-                            vecRotation = currentVec;
-                    }
-                }
-            }
-        }
-
-        if (predict) eyesPos.addVector(mc.thePlayer.motionX, mc.thePlayer.motionY, mc.thePlayer.motionZ);
-
-        final double diffX = vec.xCoord - eyesPos.xCoord;
-        final double diffY = vec.yCoord - eyesPos.yCoord;
-        final double diffZ = vec.zCoord - eyesPos.zCoord;
-
-        return new Rotation(MathHelper.wrapAngleTo180_float(
-                (float) Math.toDegrees(Math.atan2(diffZ, diffX)) - 90F
-        ), MathHelper.wrapAngleTo180_float(
-                (float) (-Math.toDegrees(Math.atan2(diffY, Math.sqrt(diffX * diffX + diffZ * diffZ))))
-        ));
-    }
-
-    /**
      * Face block
      *
      * @param blockPos target block

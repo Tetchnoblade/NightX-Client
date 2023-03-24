@@ -155,7 +155,7 @@ class Scaffold : Module() {
     private val greenValue = IntegerValue("Green", 255, 0, 255) { markValue.get() }
     private val blueValue = IntegerValue("Blue", 255, 0, 255) { markValue.get() }
     private val alphaValue = IntegerValue("Alpha", 120, 0, 255) { markValue.get() }
-    private val swingValue = BoolValue("Swing", true)
+    private val swingValue = BoolValue("Swing", false)
     private val downValue = BoolValue("Down", true)
     private val sameYValue = BoolValue("KeepY", false)
     private val autoJumpValue = BoolValue("AutoJump", false)

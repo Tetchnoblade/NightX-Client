@@ -17,15 +17,15 @@ public final class Rotation {
         this.pitch = pitch;
     }
 
-    public final float getYaw() {
+    public float getYaw() {
         return this.yaw;
     }
 
-    public final float getPitch() {
+    public float getPitch() {
         return this.pitch;
     }
 
-    public final void toPlayer(@NotNull final EntityPlayer player) {
+    public void toPlayer(@NotNull final EntityPlayer player) {
         Intrinsics.checkNotNullParameter(player, "player");
         if (Float.isNaN(this.yaw) || Float.isNaN(this.pitch)) {
             return;
@@ -35,14 +35,14 @@ public final class Rotation {
         player.rotationPitch = this.pitch;
     }
 
-    public final void fixedSensitivity(final float sensitivity) {
+    public void fixedSensitivity(final float sensitivity) {
         final float f = sensitivity * 0.6f + 0.2f;
         final float gcd = f * f * f * 1.2f;
         this.yaw -= this.yaw % gcd;
         this.pitch -= this.pitch % gcd;
     }
 
-    public final void applyStrafeToPlayer(@NotNull final StrafeEvent event) {
+    public void applyStrafeToPlayer(@NotNull final StrafeEvent event) {
         Intrinsics.checkNotNullParameter(event, "event");
         final EntityPlayerSP player = MinecraftInstance.mc.thePlayer;
         final int dif = (int) ((MathHelper.wrapAngleTo180_float(player.rotationYaw - this.yaw - 23.5f - 135) + 180) / 45);
@@ -130,16 +130,16 @@ public final class Rotation {
         return "Rotation(yaw=" + this.yaw + ", pitch=" + this.pitch + ')';
     }
 
-    public final float component1() {
+    public float component1() {
         return this.yaw;
     }
 
-    public final float component2() {
+    public float component2() {
         return this.pitch;
     }
 
     @NotNull
-    public final Rotation copy(final float yaw, final float pitch) {
+    public Rotation copy(final float yaw, final float pitch) {
         return new Rotation(yaw, pitch);
     }
 
