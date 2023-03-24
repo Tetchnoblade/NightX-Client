@@ -8,7 +8,7 @@ import com.thealtening.AltService
 import com.thealtening.api.TheAltening
 import net.aspw.client.Client
 import net.aspw.client.event.SessionEvent
-import net.aspw.client.features.module.modules.client.Hud
+import net.aspw.client.features.module.modules.visual.Hud
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.misc.MiscUtils
 import net.aspw.client.utils.render.RenderUtils

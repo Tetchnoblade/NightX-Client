@@ -1,8 +1,8 @@
 package net.aspw.client.visual.client.clickgui;
 
 import net.aspw.client.features.module.ModuleCategory;
-import net.aspw.client.features.module.modules.client.Fix;
-import net.aspw.client.features.module.modules.client.Gui;
+import net.aspw.client.features.module.modules.visual.Gui;
+import net.aspw.client.features.special.GuiFastRender;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.MouseUtils;
 import net.aspw.client.utils.render.RenderUtils;
@@ -110,8 +110,8 @@ public class NewUi extends GuiScreen {
         for (CategoryElement ce : categoryElements) {
             ce.drawLabel(mouseX, mouseY, 30F, startY, 200F, elementHeight);
             if (ce.getFocused()) {
-                startYAnim = Fix.fixValue.get() ? startY + 6F : AnimationUtils.animate(startY + 6F, startYAnim, (startYAnim - (startY + 5F) > 0 ? 0.65F : 0.55F) * RenderUtils.deltaTime * 0.025F);
-                endYAnim = Fix.fixValue.get() ? startY + elementHeight - 6F : AnimationUtils.animate(startY + elementHeight - 6F, endYAnim, (endYAnim - (startY + elementHeight - 5F) < 0 ? 0.65F : 0.55F) * RenderUtils.deltaTime * 0.025F);
+                startYAnim = GuiFastRender.fixValue.get() ? startY + 6F : AnimationUtils.animate(startY + 6F, startYAnim, (startYAnim - (startY + 5F) > 0 ? 0.65F : 0.55F) * RenderUtils.deltaTime * 0.025F);
+                endYAnim = GuiFastRender.fixValue.get() ? startY + elementHeight - 6F : AnimationUtils.animate(startY + elementHeight - 6F, endYAnim, (endYAnim - (startY + elementHeight - 5F) < 0 ? 0.65F : 0.55F) * RenderUtils.deltaTime * 0.025F);
 
                 ce.drawPanel(mouseX, mouseY, 230, 0, width - 260, height - 40, Mouse.getDWheel(), accentColor);
                 ce.drawPanel(mouseX, mouseY, 230, 0, width - 260, height - 40, Mouse.getDWheel(), accentColor);

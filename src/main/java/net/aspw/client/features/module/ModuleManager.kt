@@ -4,16 +4,14 @@ import net.aspw.client.Client
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.KeyEvent
 import net.aspw.client.event.Listenable
-import net.aspw.client.features.module.modules.client.*
 import net.aspw.client.features.module.modules.combat.*
 import net.aspw.client.features.module.modules.exploit.*
-import net.aspw.client.features.module.modules.misc.*
 import net.aspw.client.features.module.modules.movement.*
+import net.aspw.client.features.module.modules.other.*
 import net.aspw.client.features.module.modules.player.*
-import net.aspw.client.features.module.modules.render.*
+import net.aspw.client.features.module.modules.player.Timer
 import net.aspw.client.features.module.modules.targets.*
-import net.aspw.client.features.module.modules.world.*
-import net.aspw.client.features.module.modules.world.Timer
+import net.aspw.client.features.module.modules.visual.*
 import net.aspw.client.utils.ClientUtils
 import java.util.*
 
@@ -40,7 +38,7 @@ class ModuleManager : Listenable {
         registerModules(
             BowAim::class.java,
             AimAssist::class.java,
-            AutoBow::class.java,
+            AutoProjectile::class.java,
             AutoSoup::class.java,
             FastBow::class.java,
             Criticals::class.java,
@@ -62,7 +60,7 @@ class ModuleManager : Listenable {
             Sneak::class.java,
             Speed::class.java,
             Tracers::class.java,
-            FastEat::class.java,
+            FastUse::class.java,
             Brightness::class.java,
             ItemESP::class.java,
             ChestESP::class.java,
@@ -90,10 +88,10 @@ class ModuleManager : Listenable {
             Phase::class.java,
             Crasher::class.java,
             Fov::class.java,
-            BlockAnimations::class.java,
+            Animations::class.java,
             InventoryManager::class.java,
             ShowInvis::class.java,
-            AntiNausea::class.java,
+            NoEffect::class.java,
             Trails::class.java,
             Reach::class.java,
             Hud::class.java,
@@ -102,7 +100,6 @@ class ModuleManager : Listenable {
             WorldTime::class.java,
             EnchantColor::class.java,
             Cape::class.java,
-            DamageParticle::class.java,
             AntiVanish::class.java,
             AutoLogin::class.java,
             AuthBypass::class.java,
@@ -147,7 +144,6 @@ class ModuleManager : Listenable {
             LiquidInteract::class.java,
             AutoMine::class.java,
             Nuker::class.java,
-            SuperheroFX::class.java,
             Gui::class.java,
             ResetVL::class.java,
             FastMine::class.java,
@@ -178,7 +174,7 @@ class ModuleManager : Listenable {
             Invisible::class.java,
             PotionSpoof::class.java,
             TickTimer::class.java,
-            HitParticles::class.java,
+            MoreParticles::class.java,
             CivBreak::class.java,
             PlayerEdit::class.java,
             ClientSpoof::class.java,
@@ -192,7 +188,9 @@ class ModuleManager : Listenable {
             ViewClip::class.java,
             CustomModel::class.java,
             AntiTabComplete::class.java,
-            InfiniteDurability::class.java
+            InfiniteDurability::class.java,
+            MultiCombo::class.java,
+            NoTitle::class.java
         )
 
         registerModule(Fucker)

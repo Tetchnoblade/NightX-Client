@@ -24,7 +24,6 @@ import net.aspw.client.features.module.modules.movement.speeds.vulcan.VulcanHop1
 import net.aspw.client.features.module.modules.movement.speeds.vulcan.VulcanHop2
 import net.aspw.client.features.module.modules.movement.speeds.vulcan.VulcanYPort
 import net.aspw.client.features.module.modules.movement.speeds.watchdog.*
-import net.aspw.client.features.module.modules.player.Inventory
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue

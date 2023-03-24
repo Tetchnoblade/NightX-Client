@@ -15,7 +15,7 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
     @EventTarget
     public void onPacket(PacketEvent event) {
         final Packet<?> packet = event.getPacket();
-        final net.aspw.client.features.module.modules.client.ClientSpoof clientSpoof = Client.moduleManager.getModule(net.aspw.client.features.module.modules.client.ClientSpoof.class);
+        final net.aspw.client.features.module.modules.exploit.ClientSpoof clientSpoof = Client.moduleManager.getModule(net.aspw.client.features.module.modules.exploit.ClientSpoof.class);
 
         if (!Minecraft.getMinecraft().isIntegratedServerRunning()) {
             try {

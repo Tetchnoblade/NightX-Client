@@ -18,7 +18,7 @@ import java.util.*
 @ModuleInfo(name = "BowAim", category = ModuleCategory.COMBAT)
 class BowAim : Module() {
 
-    private val silentValue = BoolValue("Silent", true)
+    val silentValue = BoolValue("Silent", true)
     private val predictValue = BoolValue("Predict", true)
     private val throughWallsValue = BoolValue("ThroughWalls", false)
     private val predictSizeValue = FloatValue("PredictSize", 5F, 0.1F, 5F, "m")

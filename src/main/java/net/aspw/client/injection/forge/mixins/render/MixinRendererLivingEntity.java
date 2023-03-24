@@ -1,12 +1,7 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.client.Chams;
-import net.aspw.client.features.module.modules.client.ColorMixer;
-import net.aspw.client.features.module.modules.client.ESP;
-import net.aspw.client.features.module.modules.client.SilentView;
-import net.aspw.client.features.module.modules.render.PlayerEdit;
-import net.aspw.client.features.module.modules.render.ShowInvis;
+import net.aspw.client.features.module.modules.visual.*;
 import net.aspw.client.utils.EntityUtils;
 import net.aspw.client.utils.RotationUtils;
 import net.aspw.client.utils.render.ColorUtils;

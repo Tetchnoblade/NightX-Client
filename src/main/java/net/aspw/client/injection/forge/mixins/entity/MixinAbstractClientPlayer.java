@@ -1,9 +1,9 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.client.Cape;
-import net.aspw.client.features.module.modules.client.SilentView;
-import net.aspw.client.features.module.modules.render.Fov;
+import net.aspw.client.features.module.modules.visual.Cape;
+import net.aspw.client.features.module.modules.visual.Fov;
+import net.aspw.client.features.module.modules.visual.SilentView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.init.Items;

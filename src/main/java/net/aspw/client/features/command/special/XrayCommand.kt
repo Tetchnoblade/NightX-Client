@@ -2,7 +2,7 @@ package net.aspw.client.features.command.special
 
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
-import net.aspw.client.features.module.modules.render.XRay
+import net.aspw.client.features.module.modules.visual.XRay
 import net.minecraft.block.Block
 import java.util.*
 

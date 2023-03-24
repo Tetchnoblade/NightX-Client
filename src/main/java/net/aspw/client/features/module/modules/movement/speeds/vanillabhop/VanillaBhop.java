@@ -6,7 +6,7 @@ import net.aspw.client.event.MotionEvent;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.modules.movement.Speed;
 import net.aspw.client.features.module.modules.movement.speeds.SpeedMode;
-import net.aspw.client.features.module.modules.world.Scaffold;
+import net.aspw.client.features.module.modules.player.Scaffold;
 import net.aspw.client.utils.MovementUtils;
 
 public class VanillaBhop extends SpeedMode {

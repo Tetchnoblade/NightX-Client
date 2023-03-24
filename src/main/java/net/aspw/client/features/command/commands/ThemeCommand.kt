@@ -2,7 +2,7 @@ package net.aspw.client.features.command.commands
 
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
-import net.aspw.client.features.module.modules.client.Hud
+import net.aspw.client.features.module.modules.visual.Hud
 import net.aspw.client.visual.hud.Config
 import net.aspw.client.visual.hud.element.elements.Notification
 import java.io.File

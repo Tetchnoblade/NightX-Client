@@ -1,8 +1,8 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.client.CustomModel;
-import net.aspw.client.features.module.modules.client.SilentView;
+import net.aspw.client.features.module.modules.visual.CustomModel;
+import net.aspw.client.features.module.modules.visual.SilentView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.entity.EntityLivingBase;

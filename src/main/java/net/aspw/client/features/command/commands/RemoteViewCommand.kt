@@ -4,7 +4,7 @@ import net.aspw.client.Client
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.features.command.Command
-import net.aspw.client.features.module.modules.client.Hud
+import net.aspw.client.features.module.modules.visual.Hud
 import net.minecraft.network.play.client.C0BPacketEntityAction
 
 class RemoteViewCommand : Command("remoteview", arrayOf("rv")) {

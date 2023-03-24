@@ -2,8 +2,8 @@ package net.aspw.client.features.command.commands
 
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
-import net.aspw.client.features.module.modules.client.Hud
 import net.aspw.client.features.module.modules.combat.AntiBot
+import net.aspw.client.features.module.modules.visual.Hud
 import net.aspw.client.utils.PacketUtils
 import net.aspw.client.utils.pathfinder.MainPathFinder
 import net.aspw.client.utils.pathfinder.Vec3

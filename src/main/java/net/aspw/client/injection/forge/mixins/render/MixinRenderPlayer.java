@@ -1,8 +1,8 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.client.CustomModel;
-import net.aspw.client.features.module.modules.render.PlayerEdit;
+import net.aspw.client.features.module.modules.visual.CustomModel;
+import net.aspw.client.features.module.modules.visual.PlayerEdit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;

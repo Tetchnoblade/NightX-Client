@@ -1,8 +1,10 @@
 package net.aspw.client.utils
 
 import net.aspw.client.Client
-import net.aspw.client.features.module.ModuleCategory
-import net.aspw.client.features.module.modules.client.*
+import net.aspw.client.features.module.modules.exploit.Plugins
+import net.aspw.client.features.module.modules.other.*
+import net.aspw.client.features.module.modules.player.Freecam
+import net.aspw.client.features.module.modules.visual.*
 import net.aspw.client.features.special.MacroManager
 import net.aspw.client.utils.misc.HttpUtils.get
 import net.aspw.client.utils.misc.StringUtils
@@ -147,7 +149,7 @@ object SettingsUtils {
         MacroManager.macroMapping.filter { it.key != 0 }
             .forEach { stringBuilder.append("macro ${it.key} ${it.value}").append("\n") }
 
-        Client.moduleManager.modules.filter { it.category !== ModuleCategory.RENDER && it !is Cape && it !is CustomModel && it !is FreeLook && it !is Plugins && it !is ThunderNotifier && it !is AntiVanish && it !is HackerDetector && it !is SilentView && it !is Hud && it !is NoInvClose && it !is HudEditor && it !is Gui && it !is BlockAnimations }
+        Client.moduleManager.modules.filter { it !is Cape && it !is NoTitle && it !is BlockOverlay && it !is ChestESP && it !is Crosshair && it !is CustomModel && it !is EnchantColor && it !is Fov && it !is MoreParticles && it !is ItemESP && it !is ItemPhysics && it !is JumpCircle && it !is NoBob && it !is PlayerEdit && it !is PointerESP && it !is RealBobbing && it !is Rotate && it !is Sensor && it !is ShowInvis && it !is StreamerMode && it !is TargetESP && it !is Tracers && it !is Trails && it !is Trajectories && it !is XRay && it !is Freecam && it !is FreeLook && it !is Plugins && it !is ThunderNotifier && it !is AntiVanish && it !is HackerDetector && it !is SilentView && it !is Hud && it !is NoInvClose && it !is HudEditor && it !is Gui && it !is Animations }
             .forEach {
                 if (values)
                     it.values.forEach { value ->

@@ -3,7 +3,7 @@ package net.aspw.client.features.module.modules.movement.speeds.ncp;
 import net.aspw.client.Client;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.modules.movement.speeds.SpeedMode;
-import net.aspw.client.features.module.modules.world.Scaffold;
+import net.aspw.client.features.module.modules.player.Scaffold;
 import net.aspw.client.utils.MovementUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;

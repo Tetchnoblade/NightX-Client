@@ -13,7 +13,7 @@ import me.liuli.elixir.account.MojangAccount
 import net.aspw.client.Client
 import net.aspw.client.Client.fileManager
 import net.aspw.client.event.SessionEvent
-import net.aspw.client.features.module.modules.client.Hud
+import net.aspw.client.features.module.modules.visual.Hud
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.login.LoginUtils
 import net.aspw.client.utils.login.UserUtils.isValidTokenOffline

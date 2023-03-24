@@ -7,10 +7,10 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.modules.exploit.Disabler
-import net.aspw.client.features.module.modules.misc.Teams
+import net.aspw.client.features.module.modules.other.Teams
+import net.aspw.client.features.module.modules.player.Freecam
+import net.aspw.client.features.module.modules.player.Scaffold
 import net.aspw.client.features.module.modules.player.TargetStrafe
-import net.aspw.client.features.module.modules.render.Freecam
-import net.aspw.client.features.module.modules.world.Scaffold
 import net.aspw.client.utils.*
 import net.aspw.client.utils.extensions.getDistanceToEntityBox
 import net.aspw.client.utils.misc.RandomUtils
@@ -33,6 +33,7 @@ import net.minecraft.item.ItemSword
 import net.minecraft.network.play.client.*
 import net.minecraft.potion.Potion
 import net.minecraft.util.*
+import net.minecraft.world.WorldSettings
 import org.lwjgl.opengl.GL11
 import java.util.*
 import kotlin.math.cos
@@ -865,7 +866,7 @@ class KillAura : Module() {
             tickTimer.reset()
         }
 
-        if (keepSprintValue.get()) {
+        if (keepSprintValue.get() && mc.playerController.currentGameType != WorldSettings.GameType.SPECTATOR) {
             mc.thePlayer.attackTargetEntityWithCurrentItem(entity)
         }
 

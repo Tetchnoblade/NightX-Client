@@ -1,9 +1,9 @@
 package net.aspw.client.visual.hud.element.elements
 
 import net.aspw.client.Client
-import net.aspw.client.features.module.modules.client.ColorMixer
 import net.aspw.client.features.module.modules.combat.KillAura
 import net.aspw.client.features.module.modules.combat.TPAura
+import net.aspw.client.features.module.modules.visual.ColorMixer
 import net.aspw.client.utils.render.*
 import net.aspw.client.value.*
 import net.aspw.client.visual.hud.designer.GuiHudDesigner

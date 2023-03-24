@@ -2,7 +2,7 @@ package net.aspw.client.injection.forge.mixins.block;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.modules.movement.NoSlow;
-import net.aspw.client.features.module.modules.world.LiquidInteract;
+import net.aspw.client.features.module.modules.other.LiquidInteract;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.util.Vec3;
 import org.spongepowered.asm.mixin.Mixin;

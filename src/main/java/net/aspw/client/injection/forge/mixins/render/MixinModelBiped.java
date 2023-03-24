@@ -1,8 +1,8 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.client.SilentView;
-import net.aspw.client.features.module.modules.render.Rotate;
+import net.aspw.client.features.module.modules.visual.Rotate;
+import net.aspw.client.features.module.modules.visual.SilentView;
 import net.aspw.client.utils.RotationUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;

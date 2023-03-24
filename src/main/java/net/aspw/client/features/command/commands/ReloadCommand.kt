@@ -3,7 +3,7 @@ package net.aspw.client.features.command.commands
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.command.CommandManager
-import net.aspw.client.features.module.modules.client.Hud
+import net.aspw.client.features.module.modules.visual.Hud
 import net.aspw.client.utils.misc.sound.TipSoundManager
 import net.aspw.client.visual.client.clickgui.NewUi
 import net.aspw.client.visual.font.Fonts
