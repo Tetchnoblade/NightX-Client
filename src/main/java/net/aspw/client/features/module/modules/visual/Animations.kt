@@ -1,13 +1,8 @@
 package net.aspw.client.features.module.modules.visual
 
-import net.aspw.client.Client
-import net.aspw.client.event.EventState
-import net.aspw.client.event.EventTarget
-import net.aspw.client.event.MotionEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.features.module.modules.combat.KillAura
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -111,11 +106,7 @@ class Animations : Module() {
         val SpeedSwing = IntegerValue("Swing-Speed", 0, -9, 5)
 
         @JvmField
-        val Equip = FloatValue("Equip-Motion", 1.8f, -5f, 5f)
-
-        @JvmField
-        val handPos = IntegerValue("Hand-Pos", 0, -500, 500)
-        val onlySwingValue = BoolValue("Only-Swing", false)
+        val Equip = FloatValue("Equip-Modifier", 1.8f, -5f, 5f)
 
         @JvmField
         val SpeedRotate = FloatValue("Spin-Speed", 10f, 0f, 10f) {
@@ -132,18 +123,5 @@ class Animations : Module() {
 
         @JvmField
         val oldAnimations = BoolValue("1.7-Animations", false)
-    }
-
-    @EventTarget
-    fun onMotion(event: MotionEvent) {
-        val killAura = Client.moduleManager.getModule(KillAura::class.java)
-
-        if (event.eventState === EventState.PRE && onlySwingValue.get() && mc.thePlayer.isSwingInProgress && !killAura?.ending!!) {
-            mc.thePlayer.renderArmPitch = handPos.get() + mc.thePlayer.rotationPitch
-        }
-
-        if (event.eventState === EventState.PRE && !onlySwingValue.get() && !killAura?.ending!!) {
-            mc.thePlayer.renderArmPitch = handPos.get() + mc.thePlayer.rotationPitch
-        }
     }
 }
