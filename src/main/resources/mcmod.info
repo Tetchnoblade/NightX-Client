@@ -1,7 +1,7 @@
 [
   {
     "modid": "nightx",
-    "name": "NightX",
+    "name": "NightX Client",
     "description": "A Minecraft Forge Hacked Client.",
     "mcversion": "1.8.9",
     "url": "https://github.com/Aspw-w/NightX-Client",

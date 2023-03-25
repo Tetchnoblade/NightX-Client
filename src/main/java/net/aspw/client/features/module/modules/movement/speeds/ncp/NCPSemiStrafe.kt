@@ -46,7 +46,7 @@ class NCPSemiStrafe : SpeedMode("NCPSemiStrafe") {
                 if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
                     MovementUtils.strafe(0.27f)
                 } else {
-                    MovementUtils.strafe(0.16f)
+                    MovementUtils.strafe(0.15f)
                 }
                 mc.thePlayer.jumpMovementFactor = 0.14f
             }

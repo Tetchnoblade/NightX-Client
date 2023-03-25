@@ -48,7 +48,8 @@ object Fucker : Module() {
     private var pos: BlockPos? = null
     private var oldPos: BlockPos? = null
     private var blockHitDelay = 0
-    var currentDamage = 0F
+    private var currentDamage = 0F
+    var breaking = false
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
@@ -211,12 +212,21 @@ object Fucker : Module() {
         }
     }
 
+    override fun onEnable() {
+        breaking = false
+    }
+
+    override fun onDisable() {
+        breaking = false
+    }
+
     @EventTarget
     fun onRender3D(event: Render3DEvent) {
         RenderUtils.drawBlockBox(pos ?: return, Color.WHITE, true)
     }
 
     private fun find(targetID: Int): BlockPos? {
+        breaking = false
         val radius = rangeValue.get().toInt() + 1
 
         var nearestBlockDistance = Double.MAX_VALUE
@@ -250,6 +260,7 @@ object Fucker : Module() {
      * Check if block is hitable (or allowed to hit through walls)
      */
     private fun isHitable(blockPos: BlockPos): Boolean {
+        breaking = true
         return when (throughWallsValue.get().lowercase(Locale.getDefault())) {
             "raycast" -> {
                 val eyesPos = Vec3(

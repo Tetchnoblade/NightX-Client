@@ -35,9 +35,9 @@
     "published_at": "2023-03-25T01:37:39Z",
     "assets": [
       {
-        "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/assets/100860804",
-        "id": 100860804,
-        "node_id": "RA_kwDOIG0dIs4GAwOE",
+        "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/assets/100886100",
+        "id": 100886100,
+        "node_id": "RA_kwDOIG0dIs4GA2ZU",
         "name": "nightx-release-b42.jar",
         "label": null,
         "uploader": {
@@ -62,16 +62,16 @@
         },
         "content_type": "application/octet-stream",
         "state": "uploaded",
-        "size": 18385015,
-        "download_count": 22,
-        "created_at": "2023-03-25T01:37:31Z",
-        "updated_at": "2023-03-25T01:37:36Z",
+        "size": 18386136,
+        "download_count": 4,
+        "created_at": "2023-03-25T08:09:06Z",
+        "updated_at": "2023-03-25T08:09:11Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B42/nightx-release-b42.jar"
       }
     ],
     "tarball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/tarball/B42",
     "zipball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/zipball/B42",
-    "body": "- Added SilentView mode ETB and BowAim, CivBreak Support\r\n- Added BlockAnimations mode Dash\r\n- Added Disabler mode Vulcan-AutoBlock, MushMC\r\n- Added Flight mode Matrix, BufferAbuse\r\n- Added Scaffold AutoBlock mode LiteSpoof\r\n- Added Speed mode Matrix (Hop, YPort, 6.7.0, 6.9.2), VerusFloat, SemiStrafe (in ncp)\r\n- Added .repeat Command (.repeat amount message)\r\n- Added .stuck Command\r\n- Added .clip command (normally vclip)\r\n- Added MultiCombo Module\r\n- Added NoTitle Module\r\n- Added Cape style Crosssine, Crave\r\n- Removed Watchdog Velocity (not bypassing)\r\n- Fixed Particles Color\r\n- Fixed Scaffold angle bugs\r\n- Fixed PlayerExtension\r\n- Fixed KillAura NoKeepSprint option not working\r\n- Fixed Wall Sprinting\r\n- Updated mcmod.info lol\r\n- Improved ClickGui Categories\r\n- Improved FreeLook performance\r\n- Improved ESP performance\r\n- Improved Scaffold performance\r\n- Improved any rotation performance\r\n- Improved SilentView pitch smooth\r\n- Improved .login Command\r\n- Improved Arraylist\r\n- Improved Spammer\r\n- Improved KillAura Rotations, Visuals\r\n- Improved WatchdogSpeed\r\n- Improved TheAltening Gui\r\n* I recommend to remove NightX folder in .minecraft\r\nUpdated every Configs\r\nhttps://nightx.api-minecraft.net/s/zf45j6uzog"
+    "body": "- Added SilentView mode ETB and BowAim, CivBreak, Fucker Support\r\n- Added Velocity mode Minemen\r\n- Added BlockAnimations mode Dash\r\n- Added Disabler mode Vulcan-AutoBlock, MushMC\r\n- Added Flight mode Matrix, BufferAbuse\r\n- Added Scaffold AutoBlock mode LiteSpoof\r\n- Added Speed mode Matrix (Hop, YPort, 6.7.0, 6.9.2), VerusFloat, SemiStrafe (in ncp)\r\n- Added .repeat Command (.repeat amount message)\r\n- Added .stuck Command\r\n- Added .clip command (normally vclip)\r\n- Added MultiCombo Module\r\n- Added NoTitle Module\r\n- Added Cape style Crosssine, Crave\r\n- Removed Watchdog Velocity (not bypassing)\r\n- Fixed Particles Color\r\n- Fixed Scaffold angle bugs\r\n- Fixed PlayerExtension\r\n- Fixed KillAura NoKeepSprint option not working\r\n- Fixed Wall Sprinting\r\n- Fixed KillAura Ending Visuals \r\n- Updated mcmod.info lol\r\n- Improved ClickGui Categories\r\n- Improved FreeLook performance\r\n- Improved ESP performance\r\n- Improved Scaffold performance\r\n- Improved any rotation performance\r\n- Improved SilentView pitch smooth\r\n- Improved .login Command\r\n- Improved Arraylist\r\n- Improved Spammer\r\n- Improved KillAura Rotations, Visuals\r\n- Improved WatchdogSpeed\r\n- Improved TheAltening Gui\r\n* I recommend to remove NightX folder in .minecraft\r\nUpdated every Configs\r\nhttps://nightx.api-minecraft.net/s/zf45j6uzog"
   },
   {
     "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/96325899",

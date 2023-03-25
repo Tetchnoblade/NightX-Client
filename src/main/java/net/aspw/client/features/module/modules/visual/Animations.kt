@@ -1,11 +1,13 @@
 package net.aspw.client.features.module.modules.visual
 
+import net.aspw.client.Client
 import net.aspw.client.event.EventState
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.MotionEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.modules.combat.KillAura
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -134,11 +136,13 @@ class Animations : Module() {
 
     @EventTarget
     fun onMotion(event: MotionEvent) {
-        if (event.eventState === EventState.PRE && onlySwingValue.get() && mc.thePlayer.isSwingInProgress) {
+        val killAura = Client.moduleManager.getModule(KillAura::class.java)
+
+        if (event.eventState === EventState.PRE && onlySwingValue.get() && mc.thePlayer.isSwingInProgress && !killAura?.ending!!) {
             mc.thePlayer.renderArmPitch = handPos.get() + mc.thePlayer.rotationPitch
         }
 
-        if (event.eventState === EventState.PRE && !onlySwingValue.get()) {
+        if (event.eventState === EventState.PRE && !onlySwingValue.get() && !killAura?.ending!!) {
             mc.thePlayer.renderArmPitch = handPos.get() + mc.thePlayer.rotationPitch
         }
     }

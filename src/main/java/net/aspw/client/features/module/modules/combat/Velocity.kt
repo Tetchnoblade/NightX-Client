@@ -6,6 +6,7 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.modules.movement.Speed
+import net.aspw.client.utils.BlinkUtils
 import net.aspw.client.utils.MovementUtils
 import net.aspw.client.utils.RotationUtils
 import net.aspw.client.utils.timer.MSTimer
@@ -47,6 +48,7 @@ class Velocity : Module() {
             "SmoothReverse",
             "Jump",
             "Phase",
+            "Minemen",
             "Vulcan",
             "MatrixReduce",
             "MatrixSimple",
@@ -102,6 +104,11 @@ class Velocity : Module() {
     // AACPush
     private var jump = false
 
+    // Minemen
+    private var ticks = 0
+    private var lastCancel = false
+    private var canCancel = false
+
     override fun onDisable() {
         mc.thePlayer?.speedInAir = 0.02F
     }
@@ -111,6 +118,23 @@ class Velocity : Module() {
         if (mc.thePlayer.hurtTime <= 0) shouldAffect = (Math.random().toFloat() < reduceChance.get() / 100F)
         if (mc.thePlayer.isInWater || mc.thePlayer.isInLava || mc.thePlayer.isInWeb || !shouldAffect)
             return
+
+        if (modeValue.get().equals("Minemen")) {
+            ticks++
+            if (ticks > 23) {
+                canCancel = true
+            }
+            if (ticks in 2..4 && !lastCancel) {
+                mc.thePlayer.motionX *= 0.98
+                mc.thePlayer.motionZ *= 0.98
+            } else if (ticks == 5 && !lastCancel) {
+                MovementUtils.strafe()
+            } else if (lastCancel && ticks == 3) {
+                BlinkUtils.setBlinkState(packetTransaction = true, packetKeepAlive = true)
+                BlinkUtils.releasePacket(onlySelected = true)
+                BlinkUtils.setBlinkState(off = true)
+            }
+        }
 
         when (modeValue.get().lowercase(Locale.getDefault())) {
             "jump" -> if (mc.thePlayer.hurtTime > 0 && mc.thePlayer.onGround) {
@@ -281,6 +305,24 @@ class Velocity : Module() {
         val killAura = Client.moduleManager[KillAura::class.java] as KillAura
 
         if (packet is S12PacketEntityVelocity) {
+            if (modeValue.get().equals("Minemen")) {
+                if (mc.thePlayer == null || (mc.theWorld?.getEntityByID(packet.entityID)
+                        ?: return) != mc.thePlayer
+                ) return
+                ticks = 0
+                if (canCancel) {
+                    event.cancelEvent()
+                    lastCancel = true
+                    canCancel = false
+                    BlinkUtils.setBlinkState(all = true)
+                } else {
+                    packet.motionX = (packet.getMotionX() * 0.98f).toInt()
+                    packet.motionZ = (packet.getMotionZ() * 0.98f).toInt()
+                    mc.thePlayer.jump()
+                    lastCancel = false
+                }
+            }
+
             if (packet is C0FPacketConfirmTransaction && modeValue.get().equals("Vulcan")) {
                 val transUID = (packet.uid).toInt()
                 if (transUID >= -31767 && transUID <= -30769) {

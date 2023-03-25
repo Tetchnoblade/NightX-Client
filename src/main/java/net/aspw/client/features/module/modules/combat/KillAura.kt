@@ -151,28 +151,28 @@ class KillAura : Module() {
     private val interactAutoBlockValue = BoolValue(
         "InteractAutoBlock",
         false
-    ) { !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true) }
     private val verusAutoBlockValue = BoolValue(
         "UnBlock-Exploit",
         false
-    ) { !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true) }
     private val abThruWallValue = BoolValue(
         "ThroughAutoBlock",
         true
-    ) { !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true) }
 
     private val smartAutoBlockValue = BoolValue(
         "SmartAutoBlock",
         false
     ) {
-        !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true)
+        !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true)
     }
     private val smartABItemValue = BoolValue(
         "SmartAutoBlock-ItemCheck",
         true
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) && smartAutoBlockValue.get() || !autoBlockModeValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get() && !autoBlockModeValue.get()
             .equals("None", true) && smartAutoBlockValue.get()
     }
     private val smartABFacingValue = BoolValue(
@@ -180,7 +180,7 @@ class KillAura : Module() {
         true
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) && smartAutoBlockValue.get() || !autoBlockModeValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get() && !autoBlockModeValue.get()
             .equals("None", true) && smartAutoBlockValue.get()
     }
     private val smartABRangeValue = FloatValue(
@@ -191,7 +191,7 @@ class KillAura : Module() {
         "m"
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) && smartAutoBlockValue.get() || !autoBlockModeValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get() && !autoBlockModeValue.get()
             .equals("None", true) && smartAutoBlockValue.get()
     }
     private val smartABTolerationValue = FloatValue(
@@ -201,7 +201,7 @@ class KillAura : Module() {
         2F
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) && smartAutoBlockValue.get() || !autoBlockModeValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get() && !autoBlockModeValue.get()
             .equals("None", true) && smartAutoBlockValue.get()
     }
 
@@ -215,7 +215,7 @@ class KillAura : Module() {
         1,
         100,
         "%"
-    ) { !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true) }
 
     // Bypass
     val silentRotationValue = BoolValue("SilentRotation", true, { !rotations.get().equals("none", true) })
@@ -304,6 +304,8 @@ class KillAura : Module() {
     private val attackTimer = MSTimer()
     private val tickTimer = TickTimer()
     private val endTimer = TickTimer()
+    private val endingTimer = TickTimer()
+    var ending = false
     private var attackDelay = 0L
     private var clicks = 0
 
@@ -814,6 +816,7 @@ class KillAura : Module() {
      */
     private fun attackEntity(entity: EntityLivingBase) {
         endTimer.update()
+        endingTimer.update()
 
         // Call attack event
         Client.eventManager.callEvent(AttackEvent(entity))
@@ -1100,7 +1103,6 @@ class KillAura : Module() {
         fakeBlock = false
         blockingStatus = false
         if (endTimer.hasTimePassed(2)) {
-            mc.thePlayer.swingItem()
             endTimer.reset()
             if (autoBlockModeValue.get().equals("interact", true)) {
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
@@ -1122,6 +1124,12 @@ class KillAura : Module() {
                     )
                 )
             }
+        }
+        if (endingTimer.hasTimePassed(4)) {
+            mc.thePlayer.swingItem()
+            ending = true
+            mc.thePlayer.renderArmPitch = -80 + mc.thePlayer.rotationPitch
+            endingTimer.reset()
         }
     }
 
