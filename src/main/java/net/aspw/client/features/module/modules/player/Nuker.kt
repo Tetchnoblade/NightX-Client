@@ -34,9 +34,9 @@ class Nuker : Module() {
     private val radiusValue = FloatValue("Radius", 4.2F, 1F, 6F)
     private val throughWallsValue = BoolValue("ThroughWalls", true)
     private val priorityValue = ListValue("Priority", arrayOf("Distance", "Hardness"), "Distance")
-    private val rotationsValue = BoolValue("Rotations", true)
+    val rotationsValue = BoolValue("Rotations", true)
     private val layerValue = BoolValue("Layer", false)
-    private val hitDelayValue = IntegerValue("HitDelay", 4, 0, 20)
+    private val hitDelayValue = IntegerValue("HitDelay", 2, 0, 20)
     private val nukeValue = IntegerValue("Nuke", 1, 1, 20)
     private val nukeDelay = IntegerValue("NukeDelay", 1, 1, 20)
 
@@ -50,6 +50,7 @@ class Nuker : Module() {
 
     private var nukeTimer = TickTimer()
     private var nuke = 0
+    var breaking = false
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
@@ -125,8 +126,9 @@ class Nuker : Module() {
                 } ?: return // well I guess there is no block to break :(
 
                 // Reset current damage in case of block switch
-                if (blockPos != currentBlock)
+                if (blockPos != currentBlock) {
                     currentDamage = 0F
+                }
 
                 // Change head rotations to next block
                 if (rotationsValue.get()) {
@@ -145,6 +147,7 @@ class Nuker : Module() {
 
                 // Start block breaking
                 if (currentDamage == 0F) {
+                    breaking = true
                     mc.netHandler.addToSendQueue(
                         C07PacketPlayerDigging(
                             C07PacketPlayerDigging.Action.START_DESTROY_BLOCK,
@@ -161,6 +164,8 @@ class Nuker : Module() {
                         nuke++
                         continue // Next break
                     }
+                } else {
+                    breaking = false
                 }
 
                 // Break block
@@ -169,6 +174,7 @@ class Nuker : Module() {
 
                 // End of breaking block
                 if (currentDamage >= 1F) {
+                    breaking = false
                     mc.netHandler.addToSendQueue(
                         C07PacketPlayerDigging(
                             C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
@@ -231,6 +237,14 @@ class Nuker : Module() {
                     attackedBlocks.add(pos)
                 }
         }
+    }
+
+    override fun onDisable() {
+        breaking = false
+    }
+
+    override fun onEnable() {
+        breaking = false
     }
 
     /**

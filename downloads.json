@@ -35,9 +35,9 @@
     "published_at": "2023-03-25T01:37:39Z",
     "assets": [
       {
-        "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/assets/100886978",
-        "id": 100886978,
-        "node_id": "RA_kwDOIG0dIs4GA2nC",
+        "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/assets/100887690",
+        "id": 100887690,
+        "node_id": "RA_kwDOIG0dIs4GA2yK",
         "name": "nightx-release-b42.jar",
         "label": null,
         "uploader": {
@@ -62,10 +62,10 @@
         },
         "content_type": "application/octet-stream",
         "state": "uploaded",
-        "size": 18386113,
-        "download_count": 7,
-        "created_at": "2023-03-25T08:28:40Z",
-        "updated_at": "2023-03-25T08:29:04Z",
+        "size": 18386121,
+        "download_count": 21,
+        "created_at": "2023-03-25T08:44:48Z",
+        "updated_at": "2023-03-25T08:44:53Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B42/nightx-release-b42.jar"
       }
     ],
@@ -1343,7 +1343,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 20710992,
-        "download_count": 272,
+        "download_count": 273,
         "created_at": "2022-12-17T23:39:25Z",
         "updated_at": "2022-12-17T23:39:31Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B27/nightx-release-b27.jar"
