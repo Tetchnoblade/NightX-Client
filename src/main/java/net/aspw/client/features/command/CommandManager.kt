@@ -44,6 +44,7 @@ class CommandManager {
         registerCommand(LoginCommand())
         registerCommand(ClipCommand())
         registerCommand(RepeatCommand())
+        registerCommand(StuckCommand())
     }
 
     /**

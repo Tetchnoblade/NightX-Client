@@ -124,7 +124,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             boolean sprinting = actionEvent.getSprinting();
             boolean sneaking = actionEvent.getSneaking();
 
-            if (sprinting != this.serverSprintState && !mc.thePlayer.isCollidedHorizontally) {
+            if (sprinting != this.serverSprintState) {
                 if (sprinting)
                     this.sendQueue.addToSendQueue(new C0BPacketEntityAction((EntityPlayerSP) (Object) this, C0BPacketEntityAction.Action.START_SPRINTING));
                 else
@@ -315,7 +315,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         if ((scaffold.getState() && scaffold.towerActivation() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || (scaffold.getState() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || !sprint.getAllDirectionsValue().get() && RotationUtils.targetRotation != null && RotationUtils.getRotationDifference(new Rotation(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch)) > 30)
             this.setSprinting(false);
 
-        if (this.isSprinting() && ((!(sprint.getState() && sprint.getAllDirectionsValue().get()) && this.movementInput.moveForward < f) || !flag3)) {
+        if (this.isSprinting() && ((!(sprint.getState() && sprint.getAllDirectionsValue().get()) && this.movementInput.moveForward < f) || mc.thePlayer.isCollidedHorizontally || !flag3)) {
             this.setSprinting(false);
         }
 

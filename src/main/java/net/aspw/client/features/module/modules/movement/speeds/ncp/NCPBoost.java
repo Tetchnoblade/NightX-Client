@@ -5,13 +5,13 @@ import net.aspw.client.features.module.modules.movement.speeds.SpeedMode;
 import net.aspw.client.utils.MovementUtils;
 import net.minecraft.util.AxisAlignedBB;
 
-public class Boost extends SpeedMode {
+public class NCPBoost extends SpeedMode {
 
     private int motionDelay;
     private float ground;
 
-    public Boost() {
-        super("Boost");
+    public NCPBoost() {
+        super("NCPBoost");
     }
 
     @Override

@@ -7,14 +7,14 @@ import net.aspw.client.features.module.modules.player.Scaffold;
 import net.aspw.client.utils.MovementUtils;
 import net.aspw.client.utils.timer.TickTimer;
 
-public class Frame extends SpeedMode {
+public class NCPFrame extends SpeedMode {
 
     private final TickTimer tickTimer = new TickTimer();
     private int motionTicks;
     private boolean move;
 
-    public Frame() {
-        super("Frame");
+    public NCPFrame() {
+        super("NCPFrame");
     }
 
     @Override

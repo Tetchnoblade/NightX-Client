@@ -6,10 +6,10 @@ import net.aspw.client.features.module.modules.movement.speeds.SpeedMode;
 import net.aspw.client.features.module.modules.player.Scaffold;
 import net.aspw.client.utils.MovementUtils;
 
-public class MiJump extends SpeedMode {
+public class NCPMiniJump extends SpeedMode {
 
-    public MiJump() {
-        super("MiJump");
+    public NCPMiniJump() {
+        super("NCPMiniJump");
     }
 
     @Override

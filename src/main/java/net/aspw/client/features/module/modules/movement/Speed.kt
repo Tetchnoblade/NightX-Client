@@ -83,11 +83,12 @@ class Speed : Module() {
         Jump(),
         Legit(),
         AEMine(),
+        NCPSemiStrafe(),
         GWEN(),
-        Boost(),
-        Frame(),
-        MiJump(),
-        OnGround(),
+        NCPBoost(),
+        NCPFrame(),
+        NCPMiniJump(),
+        NCPOnGround(),
         YPort(),
         YPort2(),
         HiveHop(),
@@ -142,7 +143,7 @@ class Speed : Module() {
 
     val ncpModeValue: ListValue = object : ListValue(
         "NCP-Mode",
-        arrayOf("BHop", "FHop", "SBHop", "Hop", "YPort"),
+        arrayOf("BHop", "FHop", "SBHop", "Hop", "SemiStrafe", "YPort", "Boost", "Frame", "MiniJump", "OnGround"),
         "BHop",
         { typeValue.get().equals("ncp", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
@@ -293,10 +294,6 @@ class Speed : Module() {
         arrayOf(
             "YPort",
             "YPort2",
-            "Boost",
-            "Frame",
-            "MiJump",
-            "OnGround",
             "SlowHop",
             "Jump",
             "Legit",
@@ -306,7 +303,7 @@ class Speed : Module() {
             "MineplexGround",
             "TeleportCubeCraft"
         ),
-        "Boost",
+        "YPort",
         { typeValue.get().equals("other", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()

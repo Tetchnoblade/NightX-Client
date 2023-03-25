@@ -6,10 +6,10 @@ import net.aspw.client.features.module.modules.movement.speeds.SpeedMode;
 import net.aspw.client.features.module.modules.player.Scaffold;
 import net.aspw.client.utils.MovementUtils;
 
-public class OnGround extends SpeedMode {
+public class NCPOnGround extends SpeedMode {
 
-    public OnGround() {
-        super("OnGround");
+    public NCPOnGround() {
+        super("NCPOnGround");
     }
 
     @Override

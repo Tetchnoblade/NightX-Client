@@ -6,6 +6,7 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.modules.combat.BowAim
 import net.aspw.client.features.module.modules.combat.KillAura
+import net.aspw.client.features.module.modules.exploit.CivBreak
 import net.aspw.client.features.module.modules.other.Annoy
 import net.aspw.client.features.module.modules.player.Scaffold
 import net.aspw.client.value.BoolValue
@@ -31,10 +32,13 @@ class SilentView : Module() {
         val killAura = Client.moduleManager.getModule(KillAura::class.java) as KillAura
         val scaffold = Client.moduleManager.getModule(Scaffold::class.java) as Scaffold
         val bowAim = Client.moduleManager.getModule(BowAim::class.java) as BowAim
+        val civBreak = Client.moduleManager.getModule(CivBreak::class.java) as CivBreak
         return (getState(KillAura::class.java) && killAura.target != null && killAura.silentRotationValue.get() && !killAura.rotations.get()
-            .equals("None") || (getState(Scaffold::class.java) && scaffold.rotationsValue.get() || (getState(BowAim::class.java) && bowAim.silentValue.get() && bowAim.hasTarget() || mc.thePlayer.ridingEntity != null || (getState(
+            .equals("None") || (getState(Scaffold::class.java) && scaffold.rotationsValue.get() || (getState(BowAim::class.java) && bowAim.silentValue.get() && bowAim.hasTarget() || (getState(
+            CivBreak::class.java
+        ) && civBreak.rotationsValue.get() && civBreak.isBreaking || mc.thePlayer.ridingEntity != null || (getState(
             Annoy::class.java
-        )))))
+        ))))))
     }
 
     init {

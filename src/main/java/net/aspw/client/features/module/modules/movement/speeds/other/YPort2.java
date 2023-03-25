@@ -1,4 +1,4 @@
-package net.aspw.client.features.module.modules.movement.speeds.ncp;
+package net.aspw.client.features.module.modules.movement.speeds.other;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.MoveEvent;

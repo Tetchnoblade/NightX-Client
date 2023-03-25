@@ -59,6 +59,7 @@ class Flight : Module() {
             "AAC3.3.13",
             "AAC5-Vanilla",
             "Exploit",
+            "BufferAbuse",
             "Zoom",
             "ShotBow",
             "Zonecraft",
@@ -106,11 +107,13 @@ class Flight : Module() {
             .equals("aac5-vanilla", ignoreCase = true) || modeValue.get()
             .equals("bugspartan", ignoreCase = true) || modeValue.get()
             .equals("keepalive", ignoreCase = true) || modeValue.get().equals("derp", ignoreCase = true)
+                || modeValue.get().equals("bufferabuse", ignoreCase = true)
     }
     private val vanillaVSpeedValue = FloatValue("V-Speed", 0.6f, 0f, 5f) {
         modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
             .equals("blockdrop", ignoreCase = true) || modeValue.get()
             .equals("desync", ignoreCase = true) || modeValue.get().equals("bugspartan", ignoreCase = true)
+                || modeValue.get().equals("bufferabuse", ignoreCase = true)
     }
     private val vanillaMotionYValue = FloatValue("Y-Motion", 0f, -1f, 1f) {
         modeValue.get().equals("motion", ignoreCase = true)
@@ -704,6 +707,18 @@ class Flight : Module() {
         if (mc.thePlayer == null) return
         noFlag = false
         val mode = modeValue.get()
+        if (mode.equals("BufferAbuse")) {
+            PacketUtils.sendPacketNoEvent(
+                C06PacketPlayerPosLook(
+                    mc.thePlayer.posX,
+                    mc.thePlayer.posY - WorldUtils.distanceToGround(),
+                    mc.thePlayer.posZ,
+                    -1f,
+                    0f,
+                    false
+                )
+            )
+        }
         if (mode.equals("Minemora")) {
             tick = 0
             try {
@@ -791,6 +806,12 @@ class Flight : Module() {
         val vanillaVSpeed = vanillaVSpeedValue.get()
         mc.thePlayer.noClip = false
         when (modeValue.get().lowercase(Locale.getDefault())) {
+            "bufferabuse" -> {
+                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                    mc.gameSettings.keyBindSneak.pressed = false
+                }
+            }
+
             "matrix" -> {
                 if (boostMotion == 0) {
                     val yaw = Math.toRadians(mc.thePlayer.rotationYaw.toDouble())
@@ -1697,6 +1718,15 @@ class Flight : Module() {
         if (bobbingValue.get()) {
             mc.thePlayer.cameraYaw = bobbingAmountValue.get()
         }
+        if (modeValue.get().equals("bufferabuse", ignoreCase = true)) {
+            if (WorldUtils.getBlockBellow() != BlockPos.ORIGIN && Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                mc.thePlayer.setPosition(mc.thePlayer.posX, WorldUtils.getBlockBellow().y.toDouble(), mc.thePlayer.posZ)
+            }
+            if (mc.thePlayer.movementInput.jump)
+                mc.thePlayer.motionY = vanillaVSpeedValue.get().toDouble()
+            else mc.thePlayer.motionY = 0.0
+            MovementUtils.strafe(vanillaSpeedValue.get())
+        }
         if (modeValue.get().equals("boosthypixel", ignoreCase = true)) {
             when (event.eventState) {
                 EventState.PRE -> {
@@ -2003,6 +2033,11 @@ class Flight : Module() {
         val packet = event.packet
         val mode = modeValue.get()
         if (noPacketModify) return
+        if (mode.equals("bufferabuse", ignoreCase = true)) {
+            if (packet is C03PacketPlayer) {
+                event.cancelEvent()
+            }
+        }
         if (mode.equals("matrix", ignoreCase = true)) {
             if (mc.currentScreen == null && packet is S08PacketPlayerPosLook) {
                 TransferUtils.noMotionSet = true
@@ -2193,10 +2228,10 @@ class Flight : Module() {
         if (packet is S08PacketPlayerPosLook && mode.equals("exploit", ignoreCase = true) && wdState == 3) {
             wdState = 4
             if (boostTimer.hasTimePassed(8000L)) {
-                Client.hud.addNotification(Notification("Exploit activated.", Notification.Type.SUCCESS))
+                Client.hud.addNotification(Notification("Exploit Activated!", Notification.Type.SUCCESS))
                 boostTimer.reset()
             } else {
-                Client.hud.addNotification(Notification("Exploit activated.", Notification.Type.SUCCESS))
+                Client.hud.addNotification(Notification("Exploit Activated!", Notification.Type.SUCCESS))
             }
             if (fakeDmgValue.get() && mc.thePlayer != null) mc.thePlayer.handleStatusUpdate(2.toByte())
         }
