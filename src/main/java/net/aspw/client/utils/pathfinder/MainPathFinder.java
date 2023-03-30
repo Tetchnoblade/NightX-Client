@@ -27,10 +27,6 @@ public class MainPathFinder {
         return this.path;
     }
 
-    public void compute() {
-        this.compute(1000, 4);
-    }
-
     public void compute(final int loops, final int depth) {
         this.path.clear();
         this.workingPathHubList.clear();

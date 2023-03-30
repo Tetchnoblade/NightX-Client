@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.client.Hud;
+import net.aspw.client.features.module.modules.visual.Hud;
 import net.aspw.client.injection.forge.mixins.gui.MixinGuiContainer;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
 import org.spongepowered.asm.mixin.Mixin;

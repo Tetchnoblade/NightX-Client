@@ -5,10 +5,7 @@ import net.aspw.client.event.ClientShutdownEvent
 import net.aspw.client.event.EventManager
 import net.aspw.client.features.command.CommandManager
 import net.aspw.client.features.module.ModuleManager
-import net.aspw.client.features.special.ClientSpoof
-import net.aspw.client.features.special.MacroManager
-import net.aspw.client.features.special.ModItems
-import net.aspw.client.features.special.StackItems
+import net.aspw.client.features.special.*
 import net.aspw.client.utils.*
 import net.aspw.client.utils.ClassUtils.hasForge
 import net.aspw.client.utils.misc.sound.TipSoundManager
@@ -23,7 +20,7 @@ object Client {
     const val CLIENT_BEST = "NightX"
     const val CLIENT_COLORED = "§lN§fightX"
     const val CLIENT_FOLDER = "NightX"
-    const val CLIENT_VERSION = "Beta B41"
+    const val CLIENT_VERSION = "Release B42"
     const val CLIENT_CREATOR = "CCBlueX, Exit-scammed, As_pw, Zywl"
     const val CLIENT_DISCORD = "https://nightx.api-minecraft.net/s/rgul30dkqw"
     const val CLIENT_FONTS = "https://nightx.api-minecraft.net/s/pe6o0ytkot"
@@ -37,6 +34,7 @@ object Client {
     lateinit var eventManager: EventManager
     lateinit var fileManager: FileManager
     lateinit var tipSoundManager: TipSoundManager
+    lateinit var combatManager: CombatManager
 
     // Hud
     lateinit var hud: HUD
@@ -62,6 +60,7 @@ object Client {
 
         // Crate event manager
         eventManager = EventManager()
+        combatManager = CombatManager()
 
         // Register listeners
         eventManager.registerListener(RotationUtils())
@@ -71,6 +70,7 @@ object Client {
         eventManager.registerListener(PacketUtils())
         eventManager.registerListener(SessionUtils())
         eventManager.registerListener(MacroManager)
+        eventManager.registerListener(combatManager)
 
         // Create command manager
         commandManager = CommandManager()

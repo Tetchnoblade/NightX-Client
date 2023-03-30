@@ -1,8 +1,8 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.client.SilentView;
-import net.aspw.client.features.module.modules.render.Rotate;
+import net.aspw.client.features.module.modules.visual.Rotate;
+import net.aspw.client.features.module.modules.visual.SilentView;
 import net.aspw.client.utils.RotationUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -41,11 +41,13 @@ public abstract class MixinModelBiped<T extends MixinRendererLivingEntity> {
         if (p_setRotationAngles_7_ instanceof EntityPlayer && p_setRotationAngles_7_.equals(Minecraft.getMinecraft().thePlayer)) {
             SilentView silentView = Client.moduleManager.getModule(SilentView.class);
             Rotate spinBot = Client.moduleManager.getModule(Rotate.class);
-            float pitch = RotationUtils.serverRotation.getPitch();
             if (spinBot.getState() && !spinBot.getPitchMode().get().equalsIgnoreCase("none"))
-                this.bipedHead.rotateAngleX = spinBot.getPitch() / (180 / (float) Math.PI);
+                this.bipedHead.rotateAngleX = spinBot.getPitch() / 57.295776f;
+            if (silentView.getState() && silentView.getMode().get().equals("ETB") && silentView.shouldRotate()) {
+                this.bipedHead.rotateAngleX = (int) RotationUtils.serverRotation.getPitch() / (140 / (int) Math.PI);
+            }
             if (silentView.getHeadPitch().get() && silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.shouldRotate()) {
-                this.bipedHead.rotateAngleX = pitch / (240 / (float) Math.PI);
+                this.bipedHead.rotateAngleX = RotationUtils.serverRotation.getPitch() / 57.295776f;
             }
         }
     }

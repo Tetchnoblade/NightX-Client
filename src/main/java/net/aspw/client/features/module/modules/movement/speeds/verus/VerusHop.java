@@ -3,7 +3,7 @@ package net.aspw.client.features.module.modules.movement.speeds.verus;
 import net.aspw.client.Client;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.modules.movement.speeds.SpeedMode;
-import net.aspw.client.features.module.modules.world.Scaffold;
+import net.aspw.client.features.module.modules.player.Scaffold;
 import net.aspw.client.utils.MovementUtils;
 
 public class VerusHop extends SpeedMode {

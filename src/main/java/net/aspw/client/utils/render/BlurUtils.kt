@@ -24,7 +24,6 @@ object BlurUtils : MinecraftInstance() {
     private var lastFactor = 0
     private var lastWidth = 0
     private var lastHeight = 0
-    private var lastWeight = 0
 
     private var lastX = 0F
     private var lastY = 0F

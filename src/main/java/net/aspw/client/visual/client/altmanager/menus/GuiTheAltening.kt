@@ -8,7 +8,7 @@ import com.thealtening.AltService
 import com.thealtening.api.TheAltening
 import net.aspw.client.Client
 import net.aspw.client.event.SessionEvent
-import net.aspw.client.features.module.modules.client.Hud
+import net.aspw.client.features.module.modules.visual.Hud
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.misc.MiscUtils
 import net.aspw.client.utils.render.RenderUtils
@@ -18,14 +18,11 @@ import net.aspw.client.visual.font.Fonts
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.GuiTextField
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.Session
 import org.lwjgl.input.Keyboard
 import java.net.Proxy.NO_PROXY
 
 class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
-
-    val alteningLogo = ResourceLocation("client/menu/altening.png")
 
     // Data Storage
     companion object {
@@ -82,8 +79,7 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
         drawBackground(0)
         RenderUtils.drawRect(30.0f, 30.0f, width - 30.0f, height - 30.0f, Integer.MIN_VALUE)
 
-        // Draw title and status and logo
-        RenderUtils.drawImage2(alteningLogo, width / 2F - 41F, height / 2F + 10, 80, 80)
+        // Draw title and status
         Fonts.fontLarge.drawCenteredString("The Altening", width / 2.0f, 12.0f, 0xffffff)
         Fonts.fontSFUI40.drawCenteredString(status, width / 2.0f, 30.0f, 0xffffff)
 

@@ -1,15 +1,16 @@
 package net.aspw.client.features.module.modules.combat
 
+import de.enzaxd.viaforge.ViaForge
 import net.aspw.client.Client
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.modules.exploit.Disabler
-import net.aspw.client.features.module.modules.misc.Teams
+import net.aspw.client.features.module.modules.other.Teams
+import net.aspw.client.features.module.modules.player.Freecam
+import net.aspw.client.features.module.modules.player.Scaffold
 import net.aspw.client.features.module.modules.player.TargetStrafe
-import net.aspw.client.features.module.modules.render.Freecam
-import net.aspw.client.features.module.modules.world.Scaffold
 import net.aspw.client.utils.*
 import net.aspw.client.utils.extensions.getDistanceToEntityBox
 import net.aspw.client.utils.misc.RandomUtils
@@ -115,14 +116,6 @@ class KillAura : Module() {
             }
         }
 
-    private val roundTurnAngle = BoolValue("RoundAngle", false, { !rotations.get().equals("none", true) })
-    private val roundAngleDirs = IntegerValue(
-        "RoundAngle-Directions",
-        15,
-        2,
-        100,
-        { !rotations.get().equals("none", true) && roundTurnAngle.get() })
-
     private val noHitCheck = BoolValue("NoHitCheck", false, { !rotations.get().equals("none", true) })
 
     private val priorityValue = ListValue(
@@ -158,28 +151,28 @@ class KillAura : Module() {
     private val interactAutoBlockValue = BoolValue(
         "InteractAutoBlock",
         false
-    ) { !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true) }
     private val verusAutoBlockValue = BoolValue(
         "UnBlock-Exploit",
         false
-    ) { !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true) }
     private val abThruWallValue = BoolValue(
         "ThroughAutoBlock",
         true
-    ) { !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true) }
 
     private val smartAutoBlockValue = BoolValue(
         "SmartAutoBlock",
         false
     ) {
-        !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true)
+        !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true)
     }
     private val smartABItemValue = BoolValue(
         "SmartAutoBlock-ItemCheck",
         true
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) && smartAutoBlockValue.get() || !autoBlockModeValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get() && !autoBlockModeValue.get()
             .equals("None", true) && smartAutoBlockValue.get()
     }
     private val smartABFacingValue = BoolValue(
@@ -187,7 +180,7 @@ class KillAura : Module() {
         true
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) && smartAutoBlockValue.get() || !autoBlockModeValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get() && !autoBlockModeValue.get()
             .equals("None", true) && smartAutoBlockValue.get()
     }
     private val smartABRangeValue = FloatValue(
@@ -198,7 +191,7 @@ class KillAura : Module() {
         "m"
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) && smartAutoBlockValue.get() || !autoBlockModeValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get() && !autoBlockModeValue.get()
             .equals("None", true) && smartAutoBlockValue.get()
     }
     private val smartABTolerationValue = FloatValue(
@@ -208,7 +201,7 @@ class KillAura : Module() {
         2F
     ) {
         !autoBlockModeValue.get()
-            .equals("Fake", true) && smartAutoBlockValue.get() || !autoBlockModeValue.get()
+            .equals("Fake", true) && smartAutoBlockValue.get() && !autoBlockModeValue.get()
             .equals("None", true) && smartAutoBlockValue.get()
     }
 
@@ -222,7 +215,7 @@ class KillAura : Module() {
         1,
         100,
         "%"
-    ) { !autoBlockModeValue.get().equals("Fake", true) || !autoBlockModeValue.get().equals("None", true) }
+    ) { !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true) }
 
     // Bypass
     val silentRotationValue = BoolValue("SilentRotation", true, { !rotations.get().equals("none", true) })
@@ -311,6 +304,8 @@ class KillAura : Module() {
     private val attackTimer = MSTimer()
     private val tickTimer = TickTimer()
     private val endTimer = TickTimer()
+    private val endingTimer = TickTimer()
+    var ending = false
     private var attackDelay = 0L
     private var clicks = 0
 
@@ -671,7 +666,7 @@ class KillAura : Module() {
         // Check is not hitable or check failrate
         if (!hitable || failHit) {
             if (swing || failHit)
-                mc.netHandler.addToSendQueue(C0APacketAnimation())
+                PacketUtils.sendPacketNoEvent(C0APacketAnimation())
         } else {
             if (!multi) {
                 attackEntity(currentTarget!!)
@@ -821,6 +816,7 @@ class KillAura : Module() {
      */
     private fun attackEntity(entity: EntityLivingBase) {
         endTimer.update()
+        endingTimer.update()
 
         // Call attack event
         Client.eventManager.callEvent(AttackEvent(entity))
@@ -839,7 +835,7 @@ class KillAura : Module() {
             )
 
             if (debugValue.get())
-                ClientUtils.displayChatMessage("[KillAura] Silent rotation change.")
+                ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "Silent rotation change.")
         }
 
         // Attack target
@@ -851,20 +847,28 @@ class KillAura : Module() {
             mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
         }
 
-        if (swingValue.get()) {
+        if (swingValue.get() && ViaForge.getInstance().version <= 47) {
             if (tickTimer.hasTimePassed(5)) {
                 mc.thePlayer.swingItem()
-                mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
                 tickTimer.reset()
             } else {
-                mc.netHandler.addToSendQueue(C0APacketAnimation())
-                mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
+                PacketUtils.sendPacketNoEvent(C0APacketAnimation())
             }
         }
 
-        if (keepSprintValue.get()) {
-            if (mc.playerController.currentGameType != WorldSettings.GameType.SPECTATOR)
-                mc.thePlayer.attackTargetEntityWithCurrentItem(entity)
+        mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
+
+        if (swingValue.get() && ViaForge.getInstance().version > 47) {
+            if (tickTimer.hasTimePassed(5)) {
+                mc.thePlayer.swingItem()
+                tickTimer.reset()
+            } else {
+                PacketUtils.sendPacketNoEvent(C0APacketAnimation())
+            }
+        }
+
+        if (keepSprintValue.get() && mc.playerController.currentGameType != WorldSettings.GameType.SPECTATOR) {
+            mc.thePlayer.attackTargetEntityWithCurrentItem(entity)
         }
 
         // Start blocking after attack
@@ -886,9 +890,6 @@ class KillAura : Module() {
         if (modify) return true // just ignore then
 
         val defRotation = getTargetRotation(entity) ?: return false
-
-        if (defRotation != RotationUtils.serverRotation && roundTurnAngle.get())
-            defRotation.yaw = RotationUtils.roundRotation(defRotation.yaw, roundAngleDirs.get())
 
         if (silentRotationValue.get()) {
             RotationUtils.setTargetRotation(
@@ -1102,7 +1103,6 @@ class KillAura : Module() {
         fakeBlock = false
         blockingStatus = false
         if (endTimer.hasTimePassed(2)) {
-            mc.thePlayer.swingItem()
             endTimer.reset()
             if (autoBlockModeValue.get().equals("interact", true)) {
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
@@ -1124,6 +1124,12 @@ class KillAura : Module() {
                     )
                 )
             }
+        }
+        if (endingTimer.hasTimePassed(4)) {
+            mc.thePlayer.swingItem()
+            ending = true
+            mc.thePlayer.renderArmPitch = -80 + mc.thePlayer.rotationPitch
+            endingTimer.reset()
         }
     }
 

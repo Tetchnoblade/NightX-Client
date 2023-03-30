@@ -1,6 +1,6 @@
 package net.aspw.client.visual.hud.element.elements
 
-import net.aspw.client.features.module.modules.client.ColorMixer
+import net.aspw.client.features.module.modules.visual.ColorMixer
 import net.aspw.client.utils.EntityUtils
 import net.aspw.client.utils.render.BlurUtils
 import net.aspw.client.utils.render.ColorUtils

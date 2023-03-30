@@ -1,14 +1,11 @@
 package net.aspw.client.features.module
 
 enum class ModuleCategory(val displayName: String) {
-
-    CLIENT("Client"),
-    TARGETS("Targets"),
-    RENDER("Render"),
     COMBAT("Combat"),
     MOVEMENT("Movement"),
     PLAYER("Player"),
-    WORLD("World"),
-    MISC("Misc"),
-    EXPLOIT("Exploit")
+    EXPLOIT("Exploit"),
+    OTHER("Other"),
+    VISUAL("Visual"),
+    TARGETS("Targets")
 }

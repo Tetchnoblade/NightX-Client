@@ -9,7 +9,6 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.network.play.server.*
 import kotlin.concurrent.thread
@@ -20,9 +19,6 @@ class AntiStaff : Module() {
     private var obStaffs = "_"
     private var detected = false
     private var totalCount = 0
-    private var finishedCheck = false
-
-    private var updater = MSTimer()
 
     override fun onInitialize() {
         thread {

@@ -105,19 +105,6 @@ public final class InventoryUtils extends MinecraftInstance implements Listenabl
                     return i;
             }
         }
-/*
-        for(int i = 36; i < 45; i++) {
-            final ItemStack itemStack = mc.thePlayer.inventoryContainer.getSlot(i).getStack();
-
-            if (itemStack != null && itemStack.getItem() instanceof ItemBlock && itemStack.stackSize > 0) {
-                final ItemBlock itemBlock = (ItemBlock) itemStack.getItem();
-                final Block block = itemBlock.getBlock();
-
-                if (!BLOCK_BLACKLIST.contains(block))
-                    return i;
-            }
-        }
-*/
         return -1;
     }
 
@@ -132,6 +119,10 @@ public final class InventoryUtils extends MinecraftInstance implements Listenabl
 
         if (packet instanceof C08PacketPlayerBlockPlacement)
             CLICK_TIMER.reset();
+    }
+
+    public static void swap(int slot, int hotBarNumber) {
+        mc.playerController.windowClick(mc.thePlayer.inventoryContainer.windowId, slot, hotBarNumber, 2, mc.thePlayer);
     }
 
     @Override

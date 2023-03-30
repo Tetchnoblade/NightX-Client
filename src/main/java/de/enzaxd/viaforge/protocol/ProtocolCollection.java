@@ -3,8 +3,8 @@ package de.enzaxd.viaforge.protocol;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 
 public enum ProtocolCollection {
-    R1_19_2(new ProtocolVersion(761, "1.19.3")),
-    R1_19_1(new ProtocolVersion(760, "1.19.1-1.19.2")),
+    R1_19_3(new ProtocolVersion(761, "1.19.3")),
+    R1_19_2(new ProtocolVersion(760, "1.19.1-1.19.2")),
     R1_19(new ProtocolVersion(759, "1.19")),
 
     R1_18_2(new ProtocolVersion(758, "1.18.2")),

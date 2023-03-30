@@ -5,10 +5,7 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.ClientUtils
-import net.aspw.client.utils.MovementUtils
-import net.aspw.client.utils.PacketUtils
-import net.aspw.client.utils.RotationUtils
+import net.aspw.client.utils.*
 import net.aspw.client.utils.misc.RandomUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.utils.timer.MSTimer
@@ -62,6 +59,7 @@ class Flight : Module() {
             "AAC3.3.13",
             "AAC5-Vanilla",
             "Exploit",
+            "BufferAbuse",
             "Zoom",
             "ShotBow",
             "Zonecraft",
@@ -76,6 +74,7 @@ class Flight : Module() {
             "Minesucht",
             "Verus",
             "VerusLowHop",
+            "Matrix",
             "Vulcan1",
             "Vulcan2",
             "Vulcan3",
@@ -108,17 +107,16 @@ class Flight : Module() {
             .equals("aac5-vanilla", ignoreCase = true) || modeValue.get()
             .equals("bugspartan", ignoreCase = true) || modeValue.get()
             .equals("keepalive", ignoreCase = true) || modeValue.get().equals("derp", ignoreCase = true)
+                || modeValue.get().equals("bufferabuse", ignoreCase = true)
     }
     private val vanillaVSpeedValue = FloatValue("V-Speed", 0.6f, 0f, 5f) {
         modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
             .equals("blockdrop", ignoreCase = true) || modeValue.get()
             .equals("desync", ignoreCase = true) || modeValue.get().equals("bugspartan", ignoreCase = true)
+                || modeValue.get().equals("bufferabuse", ignoreCase = true)
     }
     private val vanillaMotionYValue = FloatValue("Y-Motion", 0f, -1f, 1f) {
         modeValue.get().equals("motion", ignoreCase = true)
-    }
-    private val vanillaKickBypassValue = BoolValue("AntiKick", false) {
-        modeValue.get().equals("motion", ignoreCase = true) || modeValue.get().equals("creative", ignoreCase = true)
     }
     private val groundSpoofValue = BoolValue("SpoofGround", false) {
         modeValue.get().equals("motion", ignoreCase = true) || modeValue.get().equals("creative", ignoreCase = true)
@@ -159,6 +157,20 @@ class Flight : Module() {
     }
     private val verusSpoofGround =
         BoolValue("Verus-SpoofGround", true) { modeValue.get().equals("verus", ignoreCase = true) }
+
+    // Matrix
+    private val bypassMode = ListValue("BypassMode", arrayOf("New", "Stable", "High", "Custom"), "New") {
+        modeValue.get().equals("matrix", ignoreCase = true)
+    }
+    private val speed =
+        FloatValue("BoostSpeed", 2.0f, 1.0f, 3.0f) { modeValue.get().equals("matrix", ignoreCase = true) }
+    private val customYMotion = FloatValue("CustomJumpMotion", 0.6f, 0.2f, 5f) {
+        modeValue.get().equals("matrix", ignoreCase = true) && bypassMode.equals("Custom")
+    }
+    private val jumpTimer =
+        FloatValue("JumpTimer", 0.1f, 0.1f, 2f) { modeValue.get().equals("matrix", ignoreCase = true) }
+    private val speedTimer =
+        FloatValue("BoostTimer", 1f, 0.5f, 3f) { modeValue.get().equals("matrix", ignoreCase = true) }
 
     // AAC
     private val aac5NofallValue =
@@ -227,16 +239,13 @@ class Flight : Module() {
     private val bobbingValue = BoolValue("Bobbing", false)
     private val bobbingAmountValue = FloatValue("BobbingAmount", 0.07f, 0f, 1f) { bobbingValue.get() }
     private val flyTimer = MSTimer()
-    private val groundTimer = MSTimer()
     private val boostTimer = MSTimer()
     private val mineSecureVClipTimer = MSTimer()
     private val mineplexTimer = MSTimer()
     private val spartanTimer = TickTimer()
     private val verusTimer = TickTimer()
     private val hypixelTimer = TickTimer()
-    private val tickTimer = TickTimer()
     private val cubecraftTeleportTickTimer = TickTimer()
-    private val freeHypixelTimer = TickTimer()
     private var pog = false
     private var started = false
     private var lastSentX = 0.0
@@ -250,7 +259,6 @@ class Flight : Module() {
     private val packetBuffer = LinkedBlockingQueue<Packet<INetHandlerPlayServer>>()
     var wdState = 0
     var wdTick = 0
-    private val lastPosition: BlockPos? = null
     private val timer = MSTimer()
     private val packetLol = LinkedList<C0FPacketConfirmTransaction>()
     private var flag = false
@@ -260,6 +268,7 @@ class Flight : Module() {
     private var noPacketModify = false
     private var isBoostActive = false
     private var noFlag = false
+    private var boostMotion = 0
     private var startVec: Vec3? = null
     private var rotationVec: Vector2f? = null
     private var pearlState = 0
@@ -273,8 +282,6 @@ class Flight : Module() {
     private var lastYaw = 0f
     private var lastPitch = 0f
     private var moveSpeed = 0.0
-    private val lastValue = false
-    private val teleport = false
     private var waitFlag = false
     private var canGlide = false
     private var ticks = 0
@@ -286,8 +293,6 @@ class Flight : Module() {
     private var boostHypixelState = 1
     private var lastDistance = 0.0
     private var failedStart = false
-    private val freeHypixelYaw = 0f
-    private val freeHypixelPitch = 0f
     private fun doMove(h: Double, v: Double) {
         if (mc.thePlayer == null) return
         val x = mc.thePlayer.posX
@@ -328,6 +333,7 @@ class Flight : Module() {
         bypassValue = 0.0
         packetLol.clear()
         shouldFakeJump = false
+        boostMotion = 0
         shouldActive = true
         isBoostActive = false
         expectItemStack = -1
@@ -701,6 +707,18 @@ class Flight : Module() {
         if (mc.thePlayer == null) return
         noFlag = false
         val mode = modeValue.get()
+        if (mode.equals("BufferAbuse")) {
+            PacketUtils.sendPacketNoEvent(
+                C06PacketPlayerPosLook(
+                    mc.thePlayer.posX,
+                    mc.thePlayer.posY - WorldUtils.distanceToGround(),
+                    mc.thePlayer.posZ,
+                    -1f,
+                    0f,
+                    false
+                )
+            )
+        }
         if (mode.equals("Minemora")) {
             tick = 0
             try {
@@ -758,6 +776,9 @@ class Flight : Module() {
             ) && !mode.equals("derp", ignoreCase = true) && !mode.equals(
                 "water",
                 ignoreCase = true
+            ) && !mode.equals(
+                "matrix",
+                ignoreCase = true
             ) && !mode.equals("collide", ignoreCase = true)
         ) {
             MovementUtils.strafe(0.2f)
@@ -785,6 +806,70 @@ class Flight : Module() {
         val vanillaVSpeed = vanillaVSpeedValue.get()
         mc.thePlayer.noClip = false
         when (modeValue.get().lowercase(Locale.getDefault())) {
+            "bufferabuse" -> {
+                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                    mc.gameSettings.keyBindSneak.pressed = false
+                }
+            }
+
+            "matrix" -> {
+                if (boostMotion == 0) {
+                    val yaw = Math.toRadians(mc.thePlayer.rotationYaw.toDouble())
+                    mc.netHandler.addToSendQueue(
+                        C04PacketPlayerPosition(
+                            mc.thePlayer.posX,
+                            mc.thePlayer.posY,
+                            mc.thePlayer.posZ,
+                            true
+                        )
+                    )
+                    if (bypassMode.equals("High")) {
+                        MovementUtils.strafe(5f)
+                        mc.thePlayer.motionY = 2.0
+                    } else {
+                        mc.netHandler.addToSendQueue(
+                            C04PacketPlayerPosition(
+                                mc.thePlayer.posX + -sin(yaw) * 1.5,
+                                mc.thePlayer.posY + 1,
+                                mc.thePlayer.posZ + cos(yaw) * 1.5,
+                                false
+                            )
+                        )
+                    }
+                    boostMotion = 1
+                    mc.timer.timerSpeed = jumpTimer.get()
+                } else if (boostMotion == 1 && bypassMode.equals("High")) {
+                    MovementUtils.strafe(1.89f)
+                    mc.thePlayer.motionY = 2.0
+                } else if (boostMotion == 2) {
+                    MovementUtils.strafe(speed.get())
+                    when (bypassMode.get().lowercase()) {
+                        "stable" -> mc.thePlayer.motionY = 0.8
+                        "new" -> mc.thePlayer.motionY = 0.48
+                        "high" -> {
+                            val yaw = Math.toRadians(mc.thePlayer.rotationYaw.toDouble())
+                            mc.netHandler.addToSendQueue(
+                                C04PacketPlayerPosition(
+                                    mc.thePlayer.posX + -sin(yaw) * 2,
+                                    mc.thePlayer.posY + 2.0,
+                                    mc.thePlayer.posZ + cos(yaw) * 2,
+                                    true
+                                )
+                            )
+                            mc.thePlayer.motionY = 2.0
+                            MovementUtils.strafe(1.89f)
+                        }
+
+                        "custom" -> mc.thePlayer.motionY = customYMotion.get().toDouble()
+                    }
+                    boostMotion = 3
+                } else if (boostMotion < 5) {
+                    boostMotion++
+                } else if (boostMotion >= 5) {
+                    mc.timer.timerSpeed = speedTimer.get()
+                }
+            }
+
             "vulcan3" -> {
                 if (started && pog) {
                     mc.gameSettings.keyBindJump.pressed = false
@@ -816,7 +901,6 @@ class Flight : Module() {
                     mc.gameSettings.keyBindSneak.pressed = false
                 }
                 MovementUtils.strafe(vanillaSpeed)
-                handleVanillaKickBypass()
             }
 
             "newspartan" -> {
@@ -1202,7 +1286,6 @@ class Flight : Module() {
 
             "creative" -> {
                 mc.thePlayer.capabilities.isFlying = true
-                handleVanillaKickBypass()
             }
 
             "aac1.9.10" -> {
@@ -1635,6 +1718,15 @@ class Flight : Module() {
         if (bobbingValue.get()) {
             mc.thePlayer.cameraYaw = bobbingAmountValue.get()
         }
+        if (modeValue.get().equals("bufferabuse", ignoreCase = true)) {
+            if (WorldUtils.getBlockBellow() != BlockPos.ORIGIN && Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                mc.thePlayer.setPosition(mc.thePlayer.posX, WorldUtils.getBlockBellow().y.toDouble(), mc.thePlayer.posZ)
+            }
+            if (mc.thePlayer.movementInput.jump)
+                mc.thePlayer.motionY = vanillaVSpeedValue.get().toDouble()
+            else mc.thePlayer.motionY = 0.0
+            MovementUtils.strafe(vanillaSpeedValue.get())
+        }
         if (modeValue.get().equals("boosthypixel", ignoreCase = true)) {
             when (event.eventState) {
                 EventState.PRE -> {
@@ -1941,6 +2033,19 @@ class Flight : Module() {
         val packet = event.packet
         val mode = modeValue.get()
         if (noPacketModify) return
+        if (mode.equals("bufferabuse", ignoreCase = true)) {
+            if (packet is C03PacketPlayer) {
+                event.cancelEvent()
+            }
+        }
+        if (mode.equals("matrix", ignoreCase = true)) {
+            if (mc.currentScreen == null && packet is S08PacketPlayerPosLook) {
+                TransferUtils.noMotionSet = true
+                if (boostMotion == 1) {
+                    boostMotion = 2
+                }
+            }
+        }
         if (mode.equals("vulcan3", ignoreCase = true)) {
             if (packet is C03PacketPlayer && !pog) {
                 event.cancelEvent()
@@ -2123,10 +2228,10 @@ class Flight : Module() {
         if (packet is S08PacketPlayerPosLook && mode.equals("exploit", ignoreCase = true) && wdState == 3) {
             wdState = 4
             if (boostTimer.hasTimePassed(8000L)) {
-                Client.hud.addNotification(Notification("Exploit activated.", Notification.Type.SUCCESS))
+                Client.hud.addNotification(Notification("Exploit Activated!", Notification.Type.SUCCESS))
                 boostTimer.reset()
             } else {
-                Client.hud.addNotification(Notification("Exploit activated.", Notification.Type.SUCCESS))
+                Client.hud.addNotification(Notification("Exploit Activated!", Notification.Type.SUCCESS))
             }
             if (fakeDmgValue.get() && mc.thePlayer != null) mc.thePlayer.handleStatusUpdate(2.toByte())
         }
@@ -2468,35 +2573,6 @@ class Flight : Module() {
                 ignoreCase = true
             ) || mode.equals("exploit", ignoreCase = true) && wdState > 2 || mode.equals("slime", ignoreCase = true)
         ) e.stepHeight = 0f
-    }
-
-    private fun handleVanillaKickBypass() {
-        if (!vanillaKickBypassValue.get() || !groundTimer.hasTimePassed(1000)) return
-        val ground = calculateGround()
-        run {
-            var posY = mc.thePlayer.posY
-            while (posY > ground) {
-                mc.netHandler.addToSendQueue(C04PacketPlayerPosition(mc.thePlayer.posX, posY, mc.thePlayer.posZ, true))
-                if (posY - 8.0 < ground) break // Prevent next step
-                posY -= 8.0
-            }
-        }
-        mc.netHandler.addToSendQueue(C04PacketPlayerPosition(mc.thePlayer.posX, ground, mc.thePlayer.posZ, true))
-        var posY = ground
-        while (posY < mc.thePlayer.posY) {
-            mc.netHandler.addToSendQueue(C04PacketPlayerPosition(mc.thePlayer.posX, posY, mc.thePlayer.posZ, true))
-            if (posY + 8.0 > mc.thePlayer.posY) break // Prevent next step
-            posY += 8.0
-        }
-        mc.netHandler.addToSendQueue(
-            C04PacketPlayerPosition(
-                mc.thePlayer.posX,
-                mc.thePlayer.posY,
-                mc.thePlayer.posZ,
-                true
-            )
-        )
-        groundTimer.reset()
     }
 
     private fun calculateGround(): Double {

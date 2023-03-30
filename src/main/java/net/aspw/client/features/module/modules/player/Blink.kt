@@ -8,7 +8,7 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.features.module.modules.render.Trails
+import net.aspw.client.features.module.modules.visual.Trails
 import net.aspw.client.utils.render.ColorUtils.rainbow
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.utils.timer.MSTimer

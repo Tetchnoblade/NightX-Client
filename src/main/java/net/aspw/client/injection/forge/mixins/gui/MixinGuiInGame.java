@@ -2,9 +2,9 @@ package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.Render2DEvent;
-import net.aspw.client.features.module.modules.client.AntiNausea;
-import net.aspw.client.features.module.modules.client.Hud;
-import net.aspw.client.features.module.modules.render.Crosshair;
+import net.aspw.client.features.module.modules.visual.Crosshair;
+import net.aspw.client.features.module.modules.visual.Hud;
+import net.aspw.client.features.module.modules.visual.NoEffect;
 import net.aspw.client.utils.render.ColorUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.visual.font.AWTFontRenderer;
@@ -43,7 +43,7 @@ public abstract class MixinGuiInGame extends MixinGui {
     private void injectCrosshair(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         final Crosshair crossHair = Client.moduleManager.getModule(Crosshair.class);
         final Hud hud = Client.moduleManager.getModule(Hud.class);
-        if (crossHair.getState() && crossHair.noVanillaCH.get() || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && hud.getNof5Crosshair().get())
+        if (crossHair.getState() || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && hud.getNof5Crosshair().get())
             callbackInfoReturnable.setReturnValue(false);
     }
 
@@ -51,7 +51,7 @@ public abstract class MixinGuiInGame extends MixinGui {
     private void renderScoreboard(ScoreObjective scoreObjective, ScaledResolution scaledResolution, CallbackInfo callbackInfo) {
         if (scoreObjective != null) ColorUtils.stripColor(scoreObjective.getDisplayName());
 
-        final AntiNausea antiBlind = Client.moduleManager.getModule(AntiNausea.class);
+        final NoEffect antiBlind = Client.moduleManager.getModule(NoEffect.class);
         if ((antiBlind.getState() && antiBlind.getScoreBoard().get()) || Client.moduleManager.getModule(Hud.class).getState())
             callbackInfo.cancel();
     }
@@ -63,7 +63,7 @@ public abstract class MixinGuiInGame extends MixinGui {
 
     @Inject(method = "renderBossHealth", at = @At("HEAD"), cancellable = true)
     private void renderBossHealth(CallbackInfo callbackInfo) {
-        final AntiNausea antiBlind = Client.moduleManager.getModule(AntiNausea.class);
+        final NoEffect antiBlind = Client.moduleManager.getModule(NoEffect.class);
         if (antiBlind.getState() && antiBlind.getBossHealth().get())
             callbackInfo.cancel();
     }
@@ -127,7 +127,7 @@ public abstract class MixinGuiInGame extends MixinGui {
 
     @Inject(method = "renderPumpkinOverlay", at = @At("HEAD"), cancellable = true)
     private void renderPumpkinOverlay(final CallbackInfo callbackInfo) {
-        final AntiNausea antiBlind = Client.moduleManager.getModule(AntiNausea.class);
+        final NoEffect antiBlind = Client.moduleManager.getModule(NoEffect.class);
 
         if (antiBlind.getState() && antiBlind.getPumpkinEffect().get())
             callbackInfo.cancel();

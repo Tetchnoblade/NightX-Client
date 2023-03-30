@@ -1,11 +1,11 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.client.BlockAnimations;
-import net.aspw.client.features.module.modules.client.Hud;
 import net.aspw.client.features.module.modules.combat.KillAura;
 import net.aspw.client.features.module.modules.player.InventoryManager;
-import net.aspw.client.features.module.modules.world.Stealer;
+import net.aspw.client.features.module.modules.player.Stealer;
+import net.aspw.client.features.module.modules.visual.Animations;
+import net.aspw.client.features.module.modules.visual.Hud;
 import net.aspw.client.utils.render.EaseUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
@@ -67,7 +67,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
     @Inject(method = "drawScreen", at = @At("HEAD"), cancellable = true)
     private void drawScreenHead(CallbackInfo callbackInfo) {
-        final BlockAnimations animMod = Client.moduleManager.getModule(BlockAnimations.class);
+        final Animations animMod = Client.moduleManager.getModule(Animations.class);
         Stealer chestStealer = Client.moduleManager.getModule(Stealer.class);
         final Hud hud = Client.moduleManager.getModule(Hud.class);
         final Minecraft mc = Minecraft.getMinecraft();
@@ -88,7 +88,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
         if (animMod != null && animMod.getState() && !(mc.currentScreen instanceof GuiChest && checkFullSilence)) {
             GL11.glPushMatrix();
-            switch (BlockAnimations.guiAnimations.get()) {
+            switch (Animations.guiAnimations.get()) {
                 case "Zoom":
                     GL11.glTranslated((1 - trueAnim) * (width / 2D), (1 - trueAnim) * (height / 2D), 0D);
                     GL11.glScaled(trueAnim, trueAnim, trueAnim);
@@ -149,7 +149,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
     @Inject(method = "drawScreen", at = @At("RETURN"))
     public void drawScreenReturn(CallbackInfo callbackInfo) {
-        final BlockAnimations animMod = Client.moduleManager.getModule(BlockAnimations.class);
+        final Animations animMod = Client.moduleManager.getModule(Animations.class);
         Stealer chestStealer = Client.moduleManager.getModule(Stealer.class);
         final Minecraft mc = Minecraft.getMinecraft();
         boolean checkFullSilence = chestStealer.getState() && chestStealer.getSilenceValue().get() && !chestStealer.getStillDisplayValue().get();

@@ -3,9 +3,9 @@ package net.aspw.client.visual.hud.element.elements
 import com.google.common.collect.Iterables
 import com.google.common.collect.Lists
 import net.aspw.client.Client
-import net.aspw.client.features.module.modules.client.AntiNausea
-import net.aspw.client.features.module.modules.client.ColorMixer
-import net.aspw.client.features.module.modules.client.Hud
+import net.aspw.client.features.module.modules.visual.ColorMixer
+import net.aspw.client.features.module.modules.visual.Hud
+import net.aspw.client.features.module.modules.visual.NoEffect
 import net.aspw.client.utils.misc.StringUtils
 import net.aspw.client.utils.render.*
 import net.aspw.client.utils.timer.MSTimer
@@ -115,7 +115,7 @@ class ScoreboardElement(
      * Draw element
      */
     override fun drawElement(): Border? {
-        val antiBlind = Client.moduleManager.getModule(AntiNausea::class.java) as AntiNausea
+        val antiBlind = Client.moduleManager.getModule(NoEffect::class.java) as NoEffect
         if (antiBlind.state && antiBlind.scoreBoard.get())
             return null
 

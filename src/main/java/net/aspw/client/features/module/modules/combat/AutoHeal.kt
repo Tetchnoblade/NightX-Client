@@ -8,7 +8,7 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.features.module.modules.world.Scaffold
+import net.aspw.client.features.module.modules.player.Scaffold
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.InventoryHelper
 import net.aspw.client.utils.InventoryUtils

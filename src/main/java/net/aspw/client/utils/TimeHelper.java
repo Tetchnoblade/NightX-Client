@@ -3,10 +3,6 @@ package net.aspw.client.utils;
 public class TimeHelper {
     private long prevMS;
 
-    public boolean reach(double milliSeconds) {
-        return (float) (this.getTime() - this.prevMS) >= milliSeconds;
-    }
-
     public void reset() {
         this.prevMS = this.getTime();
     }

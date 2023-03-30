@@ -4,9 +4,9 @@ import de.enzaxd.viaforge.ViaForge;
 import de.enzaxd.viaforge.util.AttackOrder;
 import net.aspw.client.Client;
 import net.aspw.client.event.*;
-import net.aspw.client.features.module.modules.client.SilentView;
+import net.aspw.client.features.module.modules.other.FastPlace;
 import net.aspw.client.features.module.modules.player.TargetStrafe;
-import net.aspw.client.features.module.modules.world.FastPlace;
+import net.aspw.client.features.module.modules.visual.SilentView;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
 import net.aspw.client.utils.CPSCounter;
 import net.aspw.client.utils.RotationUtils;
@@ -247,38 +247,41 @@ public abstract class MixinMinecraft {
             SilentView silentView = Client.moduleManager.getModule(SilentView.class);
             TargetStrafe targetStrafe = Client.moduleManager.getModule(TargetStrafe.class);
             EntityLivingBase entityLivingBase = (EntityLivingBase) renderViewEntity;
-            float yaw = RotationUtils.serverRotation.getYaw();
+            if (silentView.getState() && silentView.getMode().get().equals("ETB") && silentView.getHeadNormalRotate().get() && silentView.shouldRotate()) {
+                entityLivingBase.rotationYawHead = (int) RotationUtils.serverRotation.getYaw();
+                entityLivingBase.renderYawOffset = (int) RotationUtils.serverRotation.getYaw();
+            }
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadNormalRotate().get() && silentView.shouldRotate()) {
-                entityLivingBase.rotationYawHead = yaw;
+                entityLivingBase.rotationYawHead = RotationUtils.serverRotation.getYaw();
             }
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && silentView.shouldRotate()) {
-                entityLivingBase.renderYawOffset = yaw + 40;
+                entityLivingBase.renderYawOffset = RotationUtils.serverRotation.getYaw() + 40;
                 if (!Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.renderYawOffset = yaw - 55;
+                    entityLivingBase.renderYawOffset = RotationUtils.serverRotation.getYaw() - 55;
                 }
                 if (targetStrafe.getDirection() < 0.5 && targetStrafe.getCanStrafe() && targetStrafe.getState() || Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.renderYawOffset = yaw + 40;
+                    entityLivingBase.renderYawOffset = RotationUtils.serverRotation.getYaw() + 40;
                 }
                 if (!Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.renderYawOffset = yaw + 55;
+                    entityLivingBase.renderYawOffset = RotationUtils.serverRotation.getYaw() + 55;
                 }
                 if (targetStrafe.getDirection() > 0.5 && targetStrafe.getCanStrafe() && targetStrafe.getState() || Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.renderYawOffset = yaw - 40;
+                    entityLivingBase.renderYawOffset = RotationUtils.serverRotation.getYaw() - 40;
                 }
             }
             if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && silentView.getBodyPrevRotate().get() && silentView.shouldRotate()) {
-                entityLivingBase.prevRenderYawOffset = yaw + 40;
+                entityLivingBase.prevRenderYawOffset = RotationUtils.serverRotation.getYaw() + 40;
                 if (!Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.prevRenderYawOffset = yaw - 55;
+                    entityLivingBase.prevRenderYawOffset = RotationUtils.serverRotation.getYaw() - 55;
                 }
                 if (targetStrafe.getDirection() < 0.5 && targetStrafe.getCanStrafe() && targetStrafe.getState() || Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.prevRenderYawOffset = yaw + 40;
+                    entityLivingBase.prevRenderYawOffset = RotationUtils.serverRotation.getYaw() + 40;
                 }
                 if (!Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.prevRenderYawOffset = yaw + 55;
+                    entityLivingBase.prevRenderYawOffset = RotationUtils.serverRotation.getYaw() + 55;
                 }
                 if (targetStrafe.getDirection() > 0.5 && targetStrafe.getCanStrafe() && targetStrafe.getState() || Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.prevRenderYawOffset = yaw - 40;
+                    entityLivingBase.prevRenderYawOffset = RotationUtils.serverRotation.getYaw() - 40;
                 }
             }
         }

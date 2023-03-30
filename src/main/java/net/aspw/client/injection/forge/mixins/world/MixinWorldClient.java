@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.world;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.render.ShowInvis;
+import net.aspw.client.features.module.modules.visual.ShowInvis;
 import net.minecraft.client.multiplayer.WorldClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

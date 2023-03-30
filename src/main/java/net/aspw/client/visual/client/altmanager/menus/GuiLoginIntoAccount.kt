@@ -5,7 +5,7 @@ import me.liuli.elixir.account.CrackedAccount
 import me.liuli.elixir.account.MicrosoftAccount
 import me.liuli.elixir.account.MojangAccount
 import net.aspw.client.Client
-import net.aspw.client.features.module.modules.client.Hud
+import net.aspw.client.features.module.modules.visual.Hud
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.TabUtils
 import net.aspw.client.utils.misc.MiscUtils

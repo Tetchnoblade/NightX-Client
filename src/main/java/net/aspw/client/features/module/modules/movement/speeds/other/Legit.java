@@ -2,8 +2,8 @@ package net.aspw.client.features.module.modules.movement.speeds.other;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.MoveEvent;
+import net.aspw.client.features.module.modules.movement.Inventory;
 import net.aspw.client.features.module.modules.movement.speeds.SpeedMode;
-import net.aspw.client.features.module.modules.player.Inventory;
 import net.aspw.client.utils.MovementUtils;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiIngameMenu;

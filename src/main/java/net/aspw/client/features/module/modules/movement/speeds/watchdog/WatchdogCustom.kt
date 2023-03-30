@@ -6,8 +6,8 @@ import net.aspw.client.event.MotionEvent
 import net.aspw.client.event.MoveEvent
 import net.aspw.client.features.module.modules.movement.Speed
 import net.aspw.client.features.module.modules.movement.speeds.SpeedMode
-import net.aspw.client.features.module.modules.world.Scaffold
-import net.aspw.client.features.module.modules.world.Timer
+import net.aspw.client.features.module.modules.player.Scaffold
+import net.aspw.client.features.module.modules.player.Timer
 import net.aspw.client.utils.MovementUtils.*
 import kotlin.math.max
 

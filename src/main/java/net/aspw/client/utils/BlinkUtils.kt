@@ -7,7 +7,6 @@ import java.util.*
 
 object BlinkUtils : MinecraftInstance() {
     private val playerBuffer = LinkedList<Packet<INetHandlerPlayServer>>()
-    const val Invalid_Type = -301
     const val MisMatch_Type = -302
     var movingPacketStat = false
     var transactionStat = false
@@ -123,25 +122,11 @@ object BlinkUtils : MinecraftInstance() {
         }
     }
 
-    fun pushPacket(packets: Packet<*>): Boolean {
-        val packetID = BigInteger(packets.javaClass.simpleName.substring(1..2), 16).toInt()
-        if (packetToggleStat[packetID] && !isBlacklisted(packets.javaClass.simpleName)) {
-            playerBuffer.add(packets as Packet<INetHandlerPlayServer>)
-            return true
-        }
-        return false
-    }
-
     private fun isBlacklisted(packetType: String = ""): Boolean {
         return when (packetType) {
             "C00Handshake", "C00PacketLoginStart", "C00PacketServerQuery", "C01PacketChatMessage", "C01PacketEncryptionResponse", "C01PacketPing" -> true
             else -> false
         }
-    }
-
-    fun setBlinkState() {
-        setBlinkState(off = true)
-        clearPacket()
     }
 
     fun setBlinkState(

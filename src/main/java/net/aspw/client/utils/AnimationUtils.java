@@ -54,28 +54,4 @@ public final class AnimationUtils {
 
         return current;
     }
-
-    public static double changer(double current, double add, double min, double max) {
-        current += add;
-        if (current > max) {
-            current = max;
-        }
-        if (current < min) {
-            current = min;
-        }
-
-        return current;
-    }
-
-    public static float changer(float current, float add, float min, float max) {
-        current += add;
-        if (current > max) {
-            current = max;
-        }
-        if (current < min) {
-            current = min;
-        }
-
-        return current;
-    }
 }

@@ -3,8 +3,8 @@ package net.aspw.client.visual.hud.element.elements
 import de.enzaxd.viaforge.ViaForge
 import de.enzaxd.viaforge.protocol.ProtocolCollection
 import net.aspw.client.Client
-import net.aspw.client.features.module.modules.client.ColorMixer
-import net.aspw.client.features.module.modules.misc.BanNotifier
+import net.aspw.client.features.module.modules.other.BanNotifier
+import net.aspw.client.features.module.modules.visual.ColorMixer
 import net.aspw.client.utils.*
 import net.aspw.client.utils.render.BlurUtils
 import net.aspw.client.utils.render.ColorUtils
@@ -51,7 +51,7 @@ class Text(
         fun defaultClient(): Text {
             val text = Text(x = 2.0, y = 5.0, scale = 1F)
 
-            text.displayString.set("%clientName% §7[§f%portalVersion%§7] [§f%fps% FPS§7] [§f%ping%ms§7]")
+            text.displayString.set("%clientName%")
             text.shadow.set(true)
             text.fontValue.set(Fonts.fontSFUI37)
             text.setColor(Color(255, 255, 255))
@@ -62,7 +62,7 @@ class Text(
     }
 
     private val displayString =
-        TextValue("DisplayText", "%clientName% §7[§f%portalVersion%§7] [§f%fps% FPS§7] [§f%ping%ms§7]")
+        TextValue("DisplayText", "%clientName%")
     private val backgroundValue = BoolValue("Background", false)
     private val skeetRectValue = BoolValue("SkeetRect", false)
     private val lineValue = BoolValue("Line", false)

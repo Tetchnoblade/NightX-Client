@@ -1,9 +1,9 @@
 package net.aspw.client.visual.hud.element.elements
 
 import net.aspw.client.Client
-import net.aspw.client.features.module.modules.client.ColorMixer
 import net.aspw.client.features.module.modules.combat.KillAura
 import net.aspw.client.features.module.modules.combat.TPAura
+import net.aspw.client.features.module.modules.visual.ColorMixer
 import net.aspw.client.utils.render.*
 import net.aspw.client.value.*
 import net.aspw.client.visual.hud.designer.GuiHudDesigner
@@ -48,7 +48,7 @@ class Target(
     val shadowColorBlueValue =
         IntegerValue("Shadow-Blue", 255, 0, 255, { shadowValue.get() && shadowColorMode.get().equals("custom", true) })
 
-    val fadeValue = BoolValue("FadeAnim", false)
+    val fadeValue = BoolValue("FadeAnim", true)
     val fadeSpeed = FloatValue("Fade-Speed", 1F, 0F, 5F, { fadeValue.get() })
 
     val noAnimValue = BoolValue("No-Animation", true)
@@ -86,9 +86,9 @@ class Target(
                 Exhibition(this),
                 Remix(this),
                 Slowly(this),
-                Simple(this),
-                NightX(this)
-            ).toTypedArray(), "NightX"
+                Blocky(this),
+                Simple(this)
+            ).toTypedArray(), "Simple"
         )
     }
 

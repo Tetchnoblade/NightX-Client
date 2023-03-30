@@ -10,6 +10,7 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.modules.combat.KillAura
 import net.aspw.client.features.module.modules.movement.Flight
+import net.aspw.client.features.module.modules.movement.LongJump
 import net.aspw.client.features.module.modules.movement.Speed
 import net.aspw.client.utils.MovementUtils
 import net.aspw.client.utils.RotationUtils

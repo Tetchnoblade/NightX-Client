@@ -2,7 +2,7 @@ package net.aspw.client.visual.hud.element.elements
 
 import net.aspw.client.Client
 import net.aspw.client.features.module.Module
-import net.aspw.client.features.module.modules.client.ColorMixer
+import net.aspw.client.features.module.modules.visual.ColorMixer
 import net.aspw.client.utils.render.*
 import net.aspw.client.value.*
 import net.aspw.client.visual.font.AWTFontRenderer
@@ -83,7 +83,7 @@ class Arraylist(
     private val backgroundColorBlueValue = IntegerValue("Background-B", 0, 0, 255)
     private val backgroundColorAlphaValue = IntegerValue("Background-Alpha", 100, 0, 255)
     private val rectRightValue =
-        ListValue("Rect-Right", arrayOf("None", "Left", "Right", "Outline", "Special", "Top"), "Outline")
+        ListValue("Rect-Right", arrayOf("None", "Left", "Right", "Outline", "Special"), "Right")
     private val rectLeftValue = ListValue("Rect-Left", arrayOf("None", "Left", "Right"), "None")
     private val caseValue = ListValue("Case", arrayOf("None", "Lower", "Upper"), "None")
     private val spaceValue = FloatValue("Space", 0F, 0F, 5F)
@@ -503,12 +503,6 @@ class Arraylist(
                                     )
                                 }
                             }
-
-                            rectRightValue.get().equals("top", true) -> {
-                                if (module == modules[0]) {
-                                    RenderUtils.drawRect(xPos - 2, module.arrayY, 0F, module.arrayY - 1, rectColor)
-                                }
-                            }
                         }
                     }
                 }
@@ -789,7 +783,7 @@ class Arraylist(
     private fun getModTag(m: Module): String {
         if (!tags.get() || m.tag == null) return ""
 
-        var returnTag = " ${if (tagsArrayColor.get()) "" else "§7"}"
+        var returnTag = " ${if (tagsArrayColor.get()) "" else "§f"}"
 
         // tag prefix, ignore default value
         if (!tagsStyleValue.get().equals("default", true))

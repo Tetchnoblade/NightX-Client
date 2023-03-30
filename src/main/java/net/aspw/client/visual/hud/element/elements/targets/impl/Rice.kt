@@ -1,6 +1,6 @@
 package net.aspw.client.visual.hud.element.elements.targets.impl
 
-import net.aspw.client.features.module.modules.client.ColorMixer
+import net.aspw.client.features.module.modules.visual.ColorMixer
 import net.aspw.client.utils.extensions.getDistanceToEntityBox
 import net.aspw.client.utils.misc.RandomUtils
 import net.aspw.client.utils.render.BlendUtils

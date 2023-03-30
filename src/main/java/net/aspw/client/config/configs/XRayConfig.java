@@ -6,7 +6,7 @@ import com.google.gson.JsonParser;
 import net.aspw.client.Client;
 import net.aspw.client.config.FileConfig;
 import net.aspw.client.config.FileManager;
-import net.aspw.client.features.module.modules.render.XRay;
+import net.aspw.client.features.module.modules.visual.XRay;
 import net.aspw.client.utils.ClientUtils;
 import net.minecraft.block.Block;
 

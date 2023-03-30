@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.model.ModelPlayer
 import net.minecraft.client.multiplayer.WorldClient
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.network.Packet
 import net.minecraft.util.AxisAlignedBB
@@ -17,6 +18,13 @@ import net.minecraft.util.EnumFacing
  * @param targetEntity Attacked entity
  */
 class AttackEvent(val targetEntity: Entity?) : Event()
+
+/**
+ * Called when player killed other entity
+ *
+ * @param targetEntity Attacked entity
+ */
+class EntityKilledEvent(val targetEntity: EntityLivingBase) : Event()
 
 /**
  * Called when minecraft get bounding box of block
