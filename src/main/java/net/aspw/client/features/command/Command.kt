@@ -26,7 +26,7 @@ abstract class Command(val command: String, val alias: Array<String>) : Minecraf
     /**
      * Print [msg] to chat
      */
-    protected fun chat(msg: String) = ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§3$msg")
+    public fun chat(msg: String) = ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§3$msg")
 
     /**
      * Print [syntax] of command to chat

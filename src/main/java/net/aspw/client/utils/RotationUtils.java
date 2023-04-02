@@ -5,7 +5,7 @@ import net.aspw.client.event.EventTarget;
 import net.aspw.client.event.Listenable;
 import net.aspw.client.event.PacketEvent;
 import net.aspw.client.event.TickEvent;
-import net.aspw.client.features.module.modules.combat.FastBow;
+import net.aspw.client.features.module.impl.combat.FastBow;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,7 +20,7 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
 
     private static final Random random = new Random();
     public static Rotation targetRotation;
-    public static Rotation serverRotation = new Rotation(90, 90);
+    public static Rotation serverRotation = new Rotation(90F, 90F);
     public static boolean keepCurrentRotation = false;
     private static int keepLength;
     private static double x = random.nextDouble();
@@ -28,15 +28,59 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
     private static double z = random.nextDouble();
 
     /**
+     * @author aquavit
+     * <p>
+     * epic skid moment
+     */
+    public static Rotation OtherRotation(final AxisAlignedBB bb, final Vec3 vec, final boolean predict, final boolean throughWalls, final float distance) {
+        final Vec3 eyesPos = new Vec3(mc.thePlayer.posX, mc.thePlayer.getEntityBoundingBox().minY +
+                mc.thePlayer.getEyeHeight(), mc.thePlayer.posZ);
+        final Vec3 eyes = mc.thePlayer.getPositionEyes(1F);
+        VecRotation vecRotation = null;
+        for (double xSearch = 0.15D; xSearch < 0.85D; xSearch += 0.1D) {
+            for (double ySearch = 0.15D; ySearch < 1D; ySearch += 0.1D) {
+                for (double zSearch = 0.15D; zSearch < 0.85D; zSearch += 0.1D) {
+                    final Vec3 vec3 = new Vec3(bb.minX + (bb.maxX - bb.minX) * xSearch,
+                            bb.minY + (bb.maxY - bb.minY) * ySearch, bb.minZ + (bb.maxZ - bb.minZ) * zSearch);
+                    final Rotation rotation = toRotation(vec3, predict);
+                    final double vecDist = eyes.distanceTo(vec3);
+
+                    if (vecDist > distance)
+                        continue;
+
+                    if (throughWalls || isVisible(vec3)) {
+                        final VecRotation currentVec = new VecRotation(vec3, rotation);
+
+                        if (vecRotation == null)
+                            vecRotation = currentVec;
+                    }
+                }
+            }
+        }
+
+        if (predict) eyesPos.addVector(mc.thePlayer.motionX, mc.thePlayer.motionY, mc.thePlayer.motionZ);
+
+        final double diffX = vec.xCoord - eyesPos.xCoord;
+        final double diffY = vec.yCoord - eyesPos.yCoord;
+        final double diffZ = vec.zCoord - eyesPos.zCoord;
+
+        return new Rotation(MathHelper.wrapAngleTo180_float(
+                (float) Math.toDegrees(Math.atan2(diffZ, diffX)) - 90F
+        ), MathHelper.wrapAngleTo180_float(
+                (float) (-Math.toDegrees(Math.atan2(diffY, Math.sqrt(diffX * diffX + diffZ * diffZ))))
+        ));
+    }
+
+    /**
      * Face block
      *
      * @param blockPos target block
      */
-    public static VecRotation.VecRotation faceBlock(final BlockPos blockPos) {
+    public static VecRotation faceBlock(final BlockPos blockPos) {
         if (blockPos == null)
             return null;
 
-        VecRotation.VecRotation vecRotation = null;
+        VecRotation vecRotation = null;
 
         for (double xSearch = 0.1D; xSearch < 0.9D; xSearch += 0.1D) {
             for (double ySearch = 0.1D; ySearch < 0.9D; ySearch += 0.1D) {
@@ -63,7 +107,7 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
                             false, true);
 
                     if (obj.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-                        final VecRotation.VecRotation currentVec = new VecRotation.VecRotation(posVec, rotation);
+                        final VecRotation currentVec = new VecRotation(posVec, rotation);
 
                         if (vecRotation == null || getRotationDifference(currentVec.getRotation()) < getRotationDifference(vecRotation.getRotation()))
                             vecRotation = currentVec;
@@ -142,8 +186,8 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
         return new Vec3(bb.minX + (bb.maxX - bb.minX) * 0.5, bb.minY + (bb.maxY - bb.minY) * 0.5, bb.minZ + (bb.maxZ - bb.minZ) * 0.5);
     }
 
-    public static VecRotation.VecRotation searchCenter(final AxisAlignedBB bb, final boolean outborder, final boolean random,
-                                                       final boolean predict, final boolean throughWalls, final float distance) {
+    public static VecRotation searchCenter(final AxisAlignedBB bb, final boolean outborder, final boolean random,
+                                           final boolean predict, final boolean throughWalls, final float distance) {
         return searchCenter(bb, outborder, random, predict, throughWalls, distance, 0F, false);
     }
 
@@ -161,11 +205,11 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
      * @param throughWalls throughWalls option
      * @return center
      */
-    public static VecRotation.VecRotation searchCenter(final AxisAlignedBB bb, final boolean outborder, final boolean random,
-                                                       final boolean predict, final boolean throughWalls, final float distance, final float randomMultiply, final boolean newRandom) {
+    public static VecRotation searchCenter(final AxisAlignedBB bb, final boolean outborder, final boolean random,
+                                           final boolean predict, final boolean throughWalls, final float distance, final float randomMultiply, final boolean newRandom) {
         if (outborder) {
             final Vec3 vec3 = new Vec3(bb.minX + (bb.maxX - bb.minX) * (x * 0.3 + 1.0), bb.minY + (bb.maxY - bb.minY) * (y * 0.3 + 1.0), bb.minZ + (bb.maxZ - bb.minZ) * (z * 0.3 + 1.0));
-            return new VecRotation.VecRotation(vec3, toRotation(vec3, predict));
+            return new VecRotation(vec3, toRotation(vec3, predict));
         }
 
         final Vec3 randomVec = new Vec3(bb.minX + (bb.maxX - bb.minX) * x * randomMultiply * (newRandom ? Math.random() : 1), bb.minY + (bb.maxY - bb.minY) * y * randomMultiply * (newRandom ? Math.random() : 1), bb.minZ + (bb.maxZ - bb.minZ) * z * randomMultiply * (newRandom ? Math.random() : 1));
@@ -173,7 +217,7 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
 
         final Vec3 eyes = mc.thePlayer.getPositionEyes(1F);
 
-        VecRotation.VecRotation vecRotation = null;
+        VecRotation vecRotation = null;
 
         for (double xSearch = 0.15D; xSearch < 0.85D; xSearch += 0.1D) {
             for (double ySearch = 0.15D; ySearch < 1D; ySearch += 0.1D) {
@@ -187,7 +231,7 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
                         continue;
 
                     if (throughWalls || isVisible(vec3)) {
-                        final VecRotation.VecRotation currentVec = new VecRotation.VecRotation(vec3, rotation);
+                        final VecRotation currentVec = new VecRotation(vec3, rotation);
 
                         if (vecRotation == null || (random ? getRotationDifference(currentVec.getRotation(), randomRotation) < getRotationDifference(vecRotation.getRotation(), randomRotation) : getRotationDifference(currentVec.getRotation()) < getRotationDifference(vecRotation.getRotation())))
                             vecRotation = currentVec;
@@ -327,6 +371,7 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
                 || rotation.getPitch() > 90 || rotation.getPitch() < -90)
             return;
 
+        rotation.fixedSensitivity(mc.gameSettings.mouseSensitivity);
         targetRotation = rotation;
         RotationUtils.keepLength = keepLength;
     }
@@ -349,8 +394,8 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
         double y = posY - (player.posY + (double) player.getEyeHeight());
         double z = posZ - player.posZ;
         double dist = MathHelper.sqrt_double(x * x + z * z);
-        float yaw = (float) (Math.atan2(z, x) * 180.0 / Math.PI) - 90.0f;
-        float pitch = (float) (-(Math.atan2(y, dist) * 180.0 / Math.PI));
+        float yaw = (float) (Math.atan2(z, x) * 180.0 / 3.141592653589793) - 90.0f;
+        float pitch = (float) (-(Math.atan2(y, dist) * 180.0 / 3.141592653589793));
         return new Rotation(yaw, pitch);
     }
 

@@ -18,11 +18,10 @@ public class MixinPlayerControllerMP {
 
     @Inject(method = "attackEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerControllerMP;syncCurrentPlayItem()V"))
     private void attackEntity(EntityPlayer entityPlayer, Entity targetEntity, CallbackInfo callbackInfo) {
-        Client.eventManager.callEvent(new AttackEvent(targetEntity));
-    }
+        if (targetEntity == null)
+            return;
 
-    @Inject(method = "getIsHittingBlock", at = @At("HEAD"), cancellable = true)
-    private void getIsHittingBlock(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+        Client.eventManager.callEvent(new AttackEvent(targetEntity));
     }
 
     @Inject(method = "windowClick", at = @At("HEAD"), cancellable = true)

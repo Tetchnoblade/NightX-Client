@@ -1,8 +1,8 @@
 package net.aspw.client.utils;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.combat.AntiBot;
-import net.aspw.client.features.module.modules.other.Teams;
+import net.aspw.client.features.module.impl.combat.AntiBot;
+import net.aspw.client.features.module.impl.other.Teams;
 import net.aspw.client.utils.render.ColorUtils;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.Entity;

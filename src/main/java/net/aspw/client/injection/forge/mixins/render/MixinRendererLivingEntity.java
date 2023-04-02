@@ -1,9 +1,8 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.visual.*;
+import net.aspw.client.features.module.impl.visual.*;
 import net.aspw.client.utils.EntityUtils;
-import net.aspw.client.utils.RotationUtils;
 import net.aspw.client.utils.render.ColorUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
@@ -29,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.awt.*;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
 
 @Mixin(RendererLivingEntity.class)
 public abstract class MixinRendererLivingEntity extends MixinRender {
@@ -124,146 +123,6 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
     private <T extends EntityLivingBase> void canRenderName(T entity, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (Client.moduleManager.getModule(ESP.class).getState() && Client.moduleManager.getModule(ESP.class).tagsValue.get()) {
             callbackInfoReturnable.setReturnValue(false);
-        }
-    }
-
-    @Inject(method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V", at = @At("HEAD"))
-    private <T extends EntityLivingBase> void injectFakeBody(T entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
-        GlStateManager.pushMatrix();
-        GlStateManager.disableCull();
-        this.mainModel.swingProgress = this.getSwingProgress(entity, partialTicks);
-        this.mainModel.isRiding = entity.isRiding();
-        this.mainModel.isChild = entity.isChild();
-
-        try {
-            float f = this.interpolateRotation(entity.prevRenderYawOffset, entity.renderYawOffset, partialTicks);
-            float f1 = this.interpolateRotation(entity.prevRotationYawHead, entity.rotationYawHead, partialTicks);
-            float f2 = f1 - f;
-
-            if (entity.isRiding() && entity.ridingEntity instanceof EntityLivingBase) {
-                EntityLivingBase entitylivingbase = (EntityLivingBase) entity.ridingEntity;
-                f = this.interpolateRotation(entitylivingbase.prevRenderYawOffset, entitylivingbase.renderYawOffset, partialTicks);
-                f2 = f1 - f;
-                float f3 = MathHelper.wrapAngleTo180_float(f2);
-
-                if (f3 < -85.0F) {
-                    f3 = -85.0F;
-                }
-
-                if (f3 >= 85.0F) {
-                    f3 = 85.0F;
-                }
-
-                f = f1 - f3;
-
-                if (f3 * f3 > 2500.0F) {
-                    f += f3 * 0.2F;
-                }
-            }
-
-            float f7 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
-            this.renderLivingAt(entity, x, y, z);
-            float f8 = this.handleRotationFloat(entity, partialTicks);
-            this.rotateCorpse(entity, f8, f, partialTicks);
-            GlStateManager.enableRescaleNormal();
-            GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-            this.preRenderCallback(entity, partialTicks);
-            float f4 = 0.0625F;
-            GlStateManager.translate(0.0F, -1.5078125F, 0.0F);
-            float f5 = entity.prevLimbSwingAmount + (entity.limbSwingAmount - entity.prevLimbSwingAmount) * partialTicks;
-            float f6 = entity.limbSwing - entity.limbSwingAmount * (1.0F - partialTicks);
-
-            if (entity.isChild()) {
-                f6 *= 3.0F;
-            }
-
-            if (f5 > 1.0F) {
-                f5 = 1.0F;
-            }
-
-            GlStateManager.enableAlpha();
-            this.mainModel.setLivingAnimations(entity, f6, f5, partialTicks);
-            this.mainModel.setRotationAngles(f6, f5, f8, f2, f7, 0.0625F, entity);
-
-            if (this.renderOutlines) {
-                boolean flag1 = this.setScoreTeamColor(entity);
-                this.renderModels(entity, f6, f5, f8, f2, f7, 0.0625F);
-
-                if (flag1) {
-                    this.unsetScoreTeamColor();
-                }
-            } else {
-
-                boolean flag = this.setDoRenderBrightness(entity, partialTicks);
-                this.renderModels(entity, f6, f5, f8, f2, f7, 0.0625F);
-
-                if (flag) {
-                    this.unsetBrightness();
-                }
-
-                GlStateManager.depthMask(true);
-
-                if (!(entity instanceof EntityPlayer) || !((EntityPlayer) entity).isSpectator()) {
-                    this.renderLayers(entity, f6, f5, partialTicks, f8, f2, f7, 0.0625F);
-                }
-            }
-
-
-            SilentView rotations = Client.moduleManager.getModule(SilentView.class);
-            final int blend = 3042;
-            final int depth = 2929;
-            final int srcAlpha = 770;
-            final int srcAlphaPlus1 = srcAlpha + 1;
-            final int polygonOffsetLine = 10754;
-            final int texture2D = 3553;
-            final int lighting = 2896;
-            float renderpitch = (Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && rotations.getState() && rotations.getMode().get().equals("CSGO") && entity == Minecraft.getMinecraft().thePlayer) ? (entity.prevRotationPitch + (((RotationUtils.serverRotation.getPitch() != 0.0f) ? RotationUtils.serverRotation.getPitch() : entity.rotationPitch) - entity.prevRotationPitch)) : (entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks);
-            float renderyaw = (Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && rotations.getState() && rotations.getMode().get().equals("CSGO") && entity == Minecraft.getMinecraft().thePlayer) ? (entity.prevRotationYaw + (((RotationUtils.serverRotation.getYaw() != 0.0f) ? RotationUtils.serverRotation.getYaw() : entity.rotationYaw) - entity.prevRotationYaw)) : (entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks);
-
-            if (entity == Minecraft.getMinecraft().thePlayer && rotations.getState() && rotations.getMode().get().equals("CSGO") && rotations.shouldRotate()) {
-                GlStateManager.pushMatrix();
-                GlStateManager.enableBlend();
-                GlStateManager.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                GlStateManager.color(250.36f / 255, 250.36f / 255, 250.36f / 255, 4.64f / 255);
-                GlStateManager.popMatrix();
-            }
-
-            if (rotations.getState() && rotations.getMode().get().equals("CSGO") && entity.equals(Minecraft.getMinecraft().thePlayer) && rotations.shouldRotate()) {
-                GL11.glPushMatrix();
-                GL11.glPushAttrib(1048575);
-                GL11.glDisable(2929);
-                GL11.glDisable(3553);
-                GL11.glDisable(3553);
-                GL11.glEnable(3042);
-                GL11.glBlendFunc(770, 771);
-                GL11.glDisable(2896);
-                GL11.glPolygonMode(1032, 6914);
-                GL11.glColor4f(rotations.getR().get() / 255, rotations.getG().get() / 255, rotations.getB().get() / 255, rotations.getAlpha().get() / 255);
-                GL11.glRotatef(renderyaw - f, 0, 0.001f, 0);
-                this.mainModel.render(Minecraft.getMinecraft().thePlayer, f6, f5, renderpitch, f2, renderpitch, 0.0625F);
-                GL11.glEnable(2896);
-                GL11.glDisable(3042);
-                GL11.glEnable(3553);
-                GL11.glEnable(2929);
-                GL11.glColor3d(1, 1, 1);
-                GL11.glPopAttrib();
-                GL11.glPopMatrix();
-            }
-
-            GlStateManager.disableRescaleNormal();
-
-        } catch (Exception exception) {
-            logger.error("Couldn't render entity", exception);
-        }
-
-        GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-        GlStateManager.enableTexture2D();
-        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
-        GlStateManager.enableCull();
-        GlStateManager.popMatrix();
-
-        if (!this.renderOutlines) {
-            super.doRenders(entity, x, y, z, entityYaw, partialTicks);
         }
     }
 

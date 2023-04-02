@@ -1,8 +1,8 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.visual.Chams;
-import net.aspw.client.features.module.modules.visual.ItemPhysics;
+import net.aspw.client.features.module.impl.visual.Chams;
+import net.aspw.client.features.module.impl.visual.ItemPhysics;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.Render;

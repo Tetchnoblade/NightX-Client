@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.visual.XRay;
+import net.aspw.client.features.module.impl.visual.XRay;
 import net.minecraft.client.renderer.chunk.VisGraph;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

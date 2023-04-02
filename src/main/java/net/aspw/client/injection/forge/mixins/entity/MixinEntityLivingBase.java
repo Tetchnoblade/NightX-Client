@@ -3,11 +3,12 @@ package net.aspw.client.injection.forge.mixins.entity;
 import de.enzaxd.viaforge.ViaForge;
 import net.aspw.client.Client;
 import net.aspw.client.event.JumpEvent;
-import net.aspw.client.features.module.modules.movement.DoubleJump;
-import net.aspw.client.features.module.modules.movement.Flight;
-import net.aspw.client.features.module.modules.movement.Jesus;
-import net.aspw.client.features.module.modules.visual.Animations;
-import net.aspw.client.features.module.modules.visual.NoEffect;
+import net.aspw.client.features.module.impl.movement.DoubleJump;
+import net.aspw.client.features.module.impl.movement.Flight;
+import net.aspw.client.features.module.impl.movement.Jesus;
+import net.aspw.client.features.module.impl.visual.Animations;
+import net.aspw.client.features.module.impl.visual.NoEffect;
+import net.aspw.client.features.module.impl.visual.SilentView;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
@@ -71,11 +72,61 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
     @Shadow
     protected abstract void updateAITick();
 
+    @Shadow
+    public float renderYawOffset;
+
+    @Shadow
+    protected double newRotationPitch;
+
     @Inject(method = "updatePotionEffects", at = @At(value = "INVOKE", target = "Lnet/minecraft/potion/PotionEffect;onUpdate(Lnet/minecraft/entity/EntityLivingBase;)Z"),
             locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
     private void checkPotionEffect(CallbackInfo ci, Iterator<Integer> iterator, Integer integer, PotionEffect potioneffect) {
         if (potioneffect == null)
             ci.cancel();
+    }
+
+    /**
+     * @author
+     * @reason
+     */
+    @Overwrite
+    protected float updateDistance(float p_1101461, float p_1101462) {
+        float rotationYaw = this.rotationYaw;
+        SilentView silentView = Client.moduleManager.getModule(SilentView.class);
+        if ((EntityLivingBase) (Object) this instanceof EntityPlayerSP) {
+            if (silentView.getState()) {
+                if (silentView.getPlayerYaw() != null) {
+                    rotationYaw = silentView.getPlayerYaw();
+                }
+            }
+        }
+        float f = MathHelper.wrapAngleTo180_float(p_1101461 - this.renderYawOffset);
+        this.renderYawOffset += f * 0.3F;
+        float f1 = MathHelper.wrapAngleTo180_float(rotationYaw - this.renderYawOffset);
+        boolean flag = f1 < 75.0F || f1 >= 75.0F;
+
+        if (silentView.getState() && silentView.getLockValue().get() && (EntityLivingBase) (Object) this instanceof EntityPlayerSP) {
+            f1 = 0.0F;
+        }
+
+        if (f1 < -75.0F) {
+            f1 = -75.0F;
+        }
+
+        if (f1 >= 75.0F) {
+            f1 = 75.0F;
+        }
+
+        this.renderYawOffset = rotationYaw - f1;
+        if (f1 * f1 > 2500.0F) {
+            this.renderYawOffset += f1 * 0.2F;
+        }
+
+        if (flag) {
+            p_1101462 *= -1.0F;
+        }
+
+        return p_1101462;
     }
 
     /**
@@ -146,8 +197,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
      */
     @Overwrite
     private int getArmSwingAnimationEnd() {
-        int speed = Client.moduleManager.getModule(Animations.class).getState() ? 2 + (20 - Animations.SpeedSwing.get() - 16) : 6;
+        int speed = (EntityLivingBase) (Object) this instanceof EntityPlayerSP ? 2 + (20 - Animations.SpeedSwing.get() - 16) : 6;
         return this.isPotionActive(Potion.digSpeed) ? speed - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) : (this.isPotionActive(Potion.digSlowdown) ? speed + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : speed);
     }
-
 }

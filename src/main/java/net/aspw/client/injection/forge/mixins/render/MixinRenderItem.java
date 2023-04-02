@@ -1,8 +1,8 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.visual.ColorMixer;
-import net.aspw.client.features.module.modules.visual.EnchantColor;
+import net.aspw.client.features.module.impl.visual.ColorMixer;
+import net.aspw.client.features.module.impl.visual.EnchantColor;
 import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

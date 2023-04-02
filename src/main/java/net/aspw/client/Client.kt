@@ -3,9 +3,12 @@ package net.aspw.client
 import net.aspw.client.config.FileManager
 import net.aspw.client.event.ClientShutdownEvent
 import net.aspw.client.event.EventManager
+import net.aspw.client.features.api.ClientSpoof
+import net.aspw.client.features.api.MacroManager
+import net.aspw.client.features.api.ModItems
+import net.aspw.client.features.api.StackItems
 import net.aspw.client.features.command.CommandManager
 import net.aspw.client.features.module.ModuleManager
-import net.aspw.client.features.special.*
 import net.aspw.client.utils.*
 import net.aspw.client.utils.ClassUtils.hasForge
 import net.aspw.client.utils.misc.sound.TipSoundManager
@@ -20,9 +23,12 @@ object Client {
     const val CLIENT_BEST = "NightX"
     const val CLIENT_COLORED = "§lN§fightX"
     const val CLIENT_FOLDER = "NightX"
-    const val CLIENT_VERSION = "Release B42"
+    const val CLIENT_VERSION = "Release B45"
     const val CLIENT_CREATOR = "CCBlueX, Exit-scammed, As_pw, Zywl"
+    const val CLIENT_CONFIGS = "https://nightx.api-minecraft.net/s/zf45j6uzog"
     const val CLIENT_DISCORD = "https://nightx.api-minecraft.net/s/rgul30dkqw"
+    const val CLIENT_YOUTUBE = "https://nightx.api-minecraft.net/s/xg3l0nmlo3"
+    const val CLIENT_GITHUB = "https://nightx.api-minecraft.net/s/qxb8132mu9"
     const val CLIENT_FONTS = "https://nightx.api-minecraft.net/s/pe6o0ytkot"
     const val CLIENT_CHAT = "§c§l>> "
 
@@ -34,7 +40,6 @@ object Client {
     lateinit var eventManager: EventManager
     lateinit var fileManager: FileManager
     lateinit var tipSoundManager: TipSoundManager
-    lateinit var combatManager: CombatManager
 
     // Hud
     lateinit var hud: HUD
@@ -60,7 +65,6 @@ object Client {
 
         // Crate event manager
         eventManager = EventManager()
-        combatManager = CombatManager()
 
         // Register listeners
         eventManager.registerListener(RotationUtils())
@@ -70,7 +74,6 @@ object Client {
         eventManager.registerListener(PacketUtils())
         eventManager.registerListener(SessionUtils())
         eventManager.registerListener(MacroManager)
-        eventManager.registerListener(combatManager)
 
         // Create command manager
         commandManager = CommandManager()

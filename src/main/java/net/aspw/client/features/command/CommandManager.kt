@@ -1,10 +1,10 @@
 package net.aspw.client.features.command
 
 import net.aspw.client.Client
-import net.aspw.client.features.command.commands.*
+import net.aspw.client.features.command.api.XrayCommand
+import net.aspw.client.features.command.impl.*
 import net.aspw.client.features.command.shortcuts.Shortcut
 import net.aspw.client.features.command.shortcuts.ShortcutParser
-import net.aspw.client.features.command.special.XrayCommand
 import net.aspw.client.utils.ClientUtils
 
 class CommandManager {
@@ -68,7 +68,7 @@ class CommandManager {
             }
         }
 
-        ClientUtils.displayChatMessage("§cUnknown command. Try ${prefix}help for a list of commands.")
+        ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§cUnknown command. Try ${prefix}help for a list of commands.")
     }
 
     /**
@@ -157,9 +157,4 @@ class CommandManager {
 
         return removed
     }
-
-    /**
-     * Unregister [command] by just removing it from the commands registry
-     */
-    fun unregisterCommand(command: Command?) = commands.remove(command)
 }

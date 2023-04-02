@@ -5,7 +5,7 @@ import me.liuli.elixir.account.CrackedAccount
 import me.liuli.elixir.account.MicrosoftAccount
 import me.liuli.elixir.account.MojangAccount
 import net.aspw.client.Client
-import net.aspw.client.features.module.modules.visual.Hud
+import net.aspw.client.features.module.impl.visual.Hud
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.TabUtils
 import net.aspw.client.utils.misc.MiscUtils
@@ -152,7 +152,7 @@ class GuiLoginIntoAccount(private val prevGui: GuiAltManager, val directLogin: B
                         Client.fileManager.accountsConfig.addAccount(account)
                         Client.fileManager.saveConfig(Client.fileManager.accountsConfig)
                         if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(90f)
+                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                         }
                         status = "§aThe account has been added."
                         prevGui.status = status
@@ -271,14 +271,14 @@ class GuiLoginIntoAccount(private val prevGui: GuiAltManager, val directLogin: B
                     minecraftAccount.session.uuid, minecraftAccount.session.token, "mojang"
                 )
                 if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(90f)
+                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
                 status = "§aLogged successfully to ${mc.session.username}."
             } else {
                 Client.fileManager.accountsConfig.addAccount(minecraftAccount)
                 Client.fileManager.saveConfig(Client.fileManager.accountsConfig)
                 if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(90f)
+                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
                 status = "§aThe account has been added."
             }

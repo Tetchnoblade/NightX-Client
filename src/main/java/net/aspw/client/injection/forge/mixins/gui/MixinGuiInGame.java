@@ -2,9 +2,9 @@ package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.Render2DEvent;
-import net.aspw.client.features.module.modules.visual.Crosshair;
-import net.aspw.client.features.module.modules.visual.Hud;
-import net.aspw.client.features.module.modules.visual.NoEffect;
+import net.aspw.client.features.module.impl.visual.Crosshair;
+import net.aspw.client.features.module.impl.visual.Hud;
+import net.aspw.client.features.module.impl.visual.NoEffect;
 import net.aspw.client.utils.render.ColorUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.visual.font.AWTFontRenderer;
@@ -42,8 +42,7 @@ public abstract class MixinGuiInGame extends MixinGui {
     @Inject(method = "showCrosshair", at = @At("HEAD"), cancellable = true)
     private void injectCrosshair(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         final Crosshair crossHair = Client.moduleManager.getModule(Crosshair.class);
-        final Hud hud = Client.moduleManager.getModule(Hud.class);
-        if (crossHair.getState() || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && hud.getNof5Crosshair().get())
+        if (crossHair.getState() || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0)
             callbackInfoReturnable.setReturnValue(false);
     }
 

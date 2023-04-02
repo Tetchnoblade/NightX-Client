@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.aspw.client.features.module.modules.visual.Animations;
+import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
@@ -80,7 +80,6 @@ public abstract class MixinGuiIngameForge extends MixinGuiInGame {
                 case "none":
                     break;
             }
-
             this.overlayPlayerList.renderPlayerlist(width, mc.theWorld.getScoreboard(), scoreobjective);
             GlStateManager.popMatrix();
             post(PLAYER_LIST);

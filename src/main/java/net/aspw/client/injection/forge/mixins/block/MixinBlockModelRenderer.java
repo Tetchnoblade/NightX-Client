@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.block;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.visual.XRay;
+import net.aspw.client.features.module.impl.visual.XRay;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.BlockModelRenderer;
 import net.minecraft.client.renderer.WorldRenderer;

@@ -1,8 +1,8 @@
 package net.aspw.client.visual.client.clickgui;
 
+import net.aspw.client.features.api.GuiFastRender;
 import net.aspw.client.features.module.ModuleCategory;
-import net.aspw.client.features.module.modules.visual.Gui;
-import net.aspw.client.features.special.GuiFastRender;
+import net.aspw.client.features.module.impl.visual.Gui;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.MouseUtils;
 import net.aspw.client.utils.render.RenderUtils;

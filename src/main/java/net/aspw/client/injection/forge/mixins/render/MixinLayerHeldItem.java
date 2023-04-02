@@ -1,8 +1,7 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.combat.KillAura;
-import net.aspw.client.features.module.modules.visual.Animations;
+import net.aspw.client.features.module.impl.combat.KillAura;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -54,7 +53,7 @@ public class MixinLayerHeldItem {
             final UUID uuid = entitylivingbaseIn.getUniqueID();
             final EntityPlayer entityplayer = Minecraft.getMinecraft().theWorld.getPlayerEntityByUUID(uuid);
 
-            if (entityplayer != null && entityplayer.isBlocking() || entityplayer != null && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") && Client.moduleManager.getModule(Animations.class).getState() && item instanceof ItemSword && Objects.equals(entityplayer.getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
+            if (entityplayer != null && entityplayer.isBlocking() || entityplayer != null && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") && item instanceof ItemSword && Objects.equals(entityplayer.getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
                 if (entitylivingbaseIn.isSneaking()) {
                     ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0325F);
                     GlStateManager.translate(-0.58F, 0.3F, -0.2F);

@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.client;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.movement.NoSlow;
+import net.aspw.client.features.module.impl.movement.NoSlow;
 import net.minecraft.util.MovementInputFromOptions;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;

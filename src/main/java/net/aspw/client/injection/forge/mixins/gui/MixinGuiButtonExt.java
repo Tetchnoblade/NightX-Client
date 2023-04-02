@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.visual.Hud;
+import net.aspw.client.features.module.impl.visual.Hud;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.visual.font.Fonts;

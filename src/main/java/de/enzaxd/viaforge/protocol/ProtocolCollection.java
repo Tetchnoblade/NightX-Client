@@ -4,16 +4,16 @@ import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 
 public enum ProtocolCollection {
     R1_19_3(new ProtocolVersion(761, "1.19.3")),
-    R1_19_2(new ProtocolVersion(760, "1.19.1-1.19.2")),
+    R1_19_2(new ProtocolVersion(760, "1.19.1/2")),
     R1_19(new ProtocolVersion(759, "1.19")),
 
     R1_18_2(new ProtocolVersion(758, "1.18.2")),
-    R1_18_1(new ProtocolVersion(757, "1.18-1.18.1")),
+    R1_18_1(new ProtocolVersion(757, "1.18/1")),
 
     R1_17_1(new ProtocolVersion(756, "1.17.1")),
     R1_17(new ProtocolVersion(755, "1.17")),
 
-    R1_16_5(new ProtocolVersion(754, "1.16.4-1.16.5")),
+    R1_16_5(new ProtocolVersion(754, "1.16.4/5")),
     R1_16_3(new ProtocolVersion(753, "1.16.3")),
     R1_16_2(new ProtocolVersion(751, "1.16.2")),
     R1_16_1(new ProtocolVersion(736, "1.16.1")),
@@ -37,12 +37,12 @@ public enum ProtocolCollection {
     R1_12_1(new ProtocolVersion(338, "1.12.1")),
     R1_12(new ProtocolVersion(335, "1.12")),
 
-    R1_11_1(new ProtocolVersion(316, "1.11.1-1.11.2")),
+    R1_11_1(new ProtocolVersion(316, "1.11.1/2")),
     R1_11(new ProtocolVersion(315, "1.11")),
 
     R1_10(new ProtocolVersion(210, "1.10.x")),
 
-    R1_9_4(new ProtocolVersion(110, "1.9.3-1.9.4")),
+    R1_9_4(new ProtocolVersion(110, "1.9.3/4")),
     R1_9_2(new ProtocolVersion(109, "1.9.2")),
     R1_9_1(new ProtocolVersion(108, "1.9.1")),
     R1_9(new ProtocolVersion(107, "1.9")),

@@ -13,7 +13,7 @@ import me.liuli.elixir.account.MojangAccount
 import net.aspw.client.Client
 import net.aspw.client.Client.fileManager
 import net.aspw.client.event.SessionEvent
-import net.aspw.client.features.module.modules.visual.Hud
+import net.aspw.client.features.module.impl.visual.Hud
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.login.LoginUtils
 import net.aspw.client.utils.login.UserUtils.isValidTokenOffline
@@ -126,7 +126,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     fileManager.accountsConfig.removeAccount(altsList.accounts[altsList.selectedSlot])
                     fileManager.saveConfig(fileManager.accountsConfig)
                     if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(90f)
+                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                     }
                     "§aThe account has been deleted."
                 } else {
@@ -145,12 +145,12 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
                     login(it, {
                         if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(90f)
+                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                         }
                         status = "§aLogged successfully to ${mc.session.username}."
                     }, { exception ->
                         if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(90f)
+                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                         }
                         status = "§cLogin failed to '${exception.message}'."
                     }, {
@@ -160,7 +160,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     })
 
                     if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(90f)
+                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                     }
                     "§aLogging in..."
                 } ?: "§cSelect an account."
@@ -177,7 +177,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
                     login(it, {
                         if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(90f)
+                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                         }
                         status = "§aLogged successfully to ${mc.session.username}."
                     }, { exception ->
@@ -189,7 +189,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     })
 
                     if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(90f)
+                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                     }
                     "§aLogging in..."
                 } ?: "§cYou do not have any accounts."
@@ -197,18 +197,18 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
             5 -> {
                 if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(90f)
+                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
                 val altening = TheAltening("api-qvo1-22iq-bt80")
                 val asynchronous = TheAltening.Asynchronous(altening)
                 asynchronous.accountData.thenAccept { account ->
                     if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(90f)
+                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                     }
                     try {
                         altService.switchService(AltService.EnumAltService.THEALTENING)
                         if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(90f)
+                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                         }
                         status = "§aLogged successfully to ${account.username}."
                         val yggdrasilUserAuthentication =
@@ -246,7 +246,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
                 login(rand, {
                     if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(90f)
+                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                     }
                     status = "§aLogged successfully to ${mc.session.username}."
                 }, { exception ->
@@ -320,7 +320,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 randomButton.enabled = false
                 randomCracked.enabled = false
                 if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(90f)
+                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
                 status = "§aLogging in..."
 
@@ -463,7 +463,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
                     login(it, {
                         if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(90f)
+                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                         }
                         status = "§aLogged successfully to ${mc.session.username}."
                     }, { exception ->
@@ -475,7 +475,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     })
 
                     if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(90f)
+                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                     }
                     "§aLogging in..."
                 } ?: "§cSelect an account."

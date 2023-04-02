@@ -13,7 +13,6 @@ import java.lang.reflect.Field;
 public class FileManager extends MinecraftInstance {
 
     public static final Gson PRETTY_GSON = new GsonBuilder().setPrettyPrinting().create();
-    public final File oldDir = new File(mc.mcDataDir, Client.CLIENT_FOLDER + "");
     public File dir = new File(mc.mcDataDir, Client.CLIENT_FOLDER);
     public final File fontsDir = new File(dir, "fonts");
     public final File settingsDir = new File(dir, "configs");
@@ -39,13 +38,8 @@ public class FileManager extends MinecraftInstance {
      * Setup folder
      */
     public void setupFolder() {
-        if (!dir.exists()) {
-            if (oldDir.exists()) {
-                if (!oldDir.renameTo(dir))
-                    dir = oldDir; // if renaming failed, continue to use the old folder.
-            } else
-                dir.mkdir();
-        }
+        if (!dir.exists())
+            dir.mkdir();
 
         if (!fontsDir.exists())
             fontsDir.mkdir();

@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.visual.Hud;
+import net.aspw.client.features.module.impl.visual.Hud;
 import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
@@ -47,8 +47,6 @@ public abstract class MixinGuiNewChat {
     @Shadow
     @Final
     private List<ChatLine> chatLines;
-    private String lastMessage;
-    private int sameMessageAmount;
     private int line;
     private Hud hud;
 

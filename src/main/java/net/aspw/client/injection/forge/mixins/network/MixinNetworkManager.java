@@ -7,7 +7,7 @@ import io.netty.channel.oio.OioEventLoopGroup;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import net.aspw.client.Client;
 import net.aspw.client.event.PacketEvent;
-import net.aspw.client.features.special.ProxyManager;
+import net.aspw.client.features.api.ProxyManager;
 import net.aspw.client.utils.PacketUtils;
 import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.NetworkManager;

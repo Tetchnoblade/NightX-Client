@@ -2,7 +2,7 @@ package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.UpdateModelEvent;
-import net.aspw.client.features.module.modules.visual.CustomModel;
+import net.aspw.client.features.module.impl.visual.CustomModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBox;

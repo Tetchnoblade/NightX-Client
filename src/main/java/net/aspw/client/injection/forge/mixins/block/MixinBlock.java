@@ -2,10 +2,10 @@ package net.aspw.client.injection.forge.mixins.block;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.BlockBBEvent;
-import net.aspw.client.features.module.modules.combat.Criticals;
-import net.aspw.client.features.module.modules.exploit.NoMouseIntersect;
-import net.aspw.client.features.module.modules.movement.NoFall;
-import net.aspw.client.features.module.modules.visual.XRay;
+import net.aspw.client.features.module.impl.combat.Criticals;
+import net.aspw.client.features.module.impl.exploit.NoMouseIntersect;
+import net.aspw.client.features.module.impl.movement.NoFall;
+import net.aspw.client.features.module.impl.visual.XRay;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;

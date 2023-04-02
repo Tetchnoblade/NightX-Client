@@ -8,7 +8,7 @@ import com.thealtening.AltService
 import com.thealtening.api.TheAltening
 import net.aspw.client.Client
 import net.aspw.client.event.SessionEvent
-import net.aspw.client.features.module.modules.visual.Hud
+import net.aspw.client.features.module.impl.visual.Hud
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.misc.MiscUtils
 import net.aspw.client.utils.render.RenderUtils
@@ -109,13 +109,13 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                 val altening = TheAltening(apiKey)
                 val asynchronous = TheAltening.Asynchronous(altening)
                 if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(90f)
+                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
                 status = "§cGenerating account..."
 
                 asynchronous.accountData.thenAccept { account ->
                     if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(90f)
+                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                     }
                     status = "§aGenerated account: §b§l${account.username}"
 
@@ -126,7 +126,7 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                         GuiAltManager.altService.switchService(AltService.EnumAltService.THEALTENING)
 
                         if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(90f)
+                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                         }
                         status = "§cLogging in..."
 
@@ -158,7 +158,7 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                         }
                     } catch (throwable: Throwable) {
                         if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(90f)
+                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                         }
                         status = "§cFailed to login. Unknown error."
                         ClientUtils.getLogger().error("Failed to login.", throwable)
@@ -186,7 +186,7 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                         // Change Alt Service
                         GuiAltManager.altService.switchService(AltService.EnumAltService.THEALTENING)
                         if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(90f)
+                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                         }
                         status = "§cLogging in..."
 
@@ -218,7 +218,7 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                         }
                     } catch (throwable: Throwable) {
                         if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(90f)
+                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                         }
                         ClientUtils.getLogger().error("Failed to login.", throwable)
                         status = "§cFailed to login. Unknown error."

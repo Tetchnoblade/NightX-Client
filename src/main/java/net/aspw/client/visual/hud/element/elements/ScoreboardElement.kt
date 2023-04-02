@@ -3,9 +3,9 @@ package net.aspw.client.visual.hud.element.elements
 import com.google.common.collect.Iterables
 import com.google.common.collect.Lists
 import net.aspw.client.Client
-import net.aspw.client.features.module.modules.visual.ColorMixer
-import net.aspw.client.features.module.modules.visual.Hud
-import net.aspw.client.features.module.modules.visual.NoEffect
+import net.aspw.client.features.module.impl.visual.ColorMixer
+import net.aspw.client.features.module.impl.visual.Hud
+import net.aspw.client.features.module.impl.visual.NoEffect
 import net.aspw.client.utils.misc.StringUtils
 import net.aspw.client.utils.render.*
 import net.aspw.client.utils.timer.MSTimer

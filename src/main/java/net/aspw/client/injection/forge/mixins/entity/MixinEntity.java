@@ -2,7 +2,7 @@ package net.aspw.client.injection.forge.mixins.entity;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.StrafeEvent;
-import net.aspw.client.features.module.modules.combat.Hitboxes;
+import net.aspw.client.features.module.impl.combat.Hitboxes;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;

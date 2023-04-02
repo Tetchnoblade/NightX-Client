@@ -3,8 +3,8 @@ package net.aspw.client.visual.hud.element.elements
 import de.enzaxd.viaforge.ViaForge
 import de.enzaxd.viaforge.protocol.ProtocolCollection
 import net.aspw.client.Client
-import net.aspw.client.features.module.modules.other.BanNotifier
-import net.aspw.client.features.module.modules.visual.ColorMixer
+import net.aspw.client.features.module.impl.other.BanNotifier
+import net.aspw.client.features.module.impl.visual.ColorMixer
 import net.aspw.client.utils.*
 import net.aspw.client.utils.render.BlurUtils
 import net.aspw.client.utils.render.ColorUtils

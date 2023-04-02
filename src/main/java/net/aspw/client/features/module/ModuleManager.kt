@@ -4,14 +4,14 @@ import net.aspw.client.Client
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.KeyEvent
 import net.aspw.client.event.Listenable
-import net.aspw.client.features.module.modules.combat.*
-import net.aspw.client.features.module.modules.exploit.*
-import net.aspw.client.features.module.modules.movement.*
-import net.aspw.client.features.module.modules.other.*
-import net.aspw.client.features.module.modules.player.*
-import net.aspw.client.features.module.modules.player.Timer
-import net.aspw.client.features.module.modules.targets.*
-import net.aspw.client.features.module.modules.visual.*
+import net.aspw.client.features.module.impl.combat.*
+import net.aspw.client.features.module.impl.exploit.*
+import net.aspw.client.features.module.impl.movement.*
+import net.aspw.client.features.module.impl.other.*
+import net.aspw.client.features.module.impl.player.*
+import net.aspw.client.features.module.impl.player.Timer
+import net.aspw.client.features.module.impl.targets.*
+import net.aspw.client.features.module.impl.visual.*
 import net.aspw.client.utils.ClientUtils
 import java.util.*
 
@@ -24,6 +24,7 @@ class ModuleManager : Listenable {
     var shouldNotify: Boolean = false
     var toggleSoundMode = 0
     var toggleVolume = 0F
+    var popSoundPower = 90F
 
     init {
         Client.eventManager.registerListener(this)
@@ -57,7 +58,7 @@ class ModuleManager : Listenable {
             Stealer::class.java,
             Scaffold::class.java,
             FastPlace::class.java,
-            Sneak::class.java,
+            SilentSneak::class.java,
             Speed::class.java,
             Tracers::class.java,
             FastUse::class.java,
@@ -106,7 +107,6 @@ class ModuleManager : Listenable {
             Gapple::class.java,
             Disabler::class.java,
             Crosshair::class.java,
-            Rotate::class.java,
             AntiFall::class.java,
             TargetESP::class.java,
             ESP::class.java,
@@ -131,7 +131,6 @@ class ModuleManager : Listenable {
             PacketFixer::class.java,
             AutoPlay::class.java,
             AntiStaff::class.java,
-            NoInvClose::class.java,
             TPAura::class.java,
             AutoHeal::class.java,
             AntiAFK::class.java,
@@ -190,11 +189,13 @@ class ModuleManager : Listenable {
             AntiTabComplete::class.java,
             InfiniteDurability::class.java,
             MultiCombo::class.java,
-            NoTitle::class.java
+            NoTitle::class.java,
+            EntityFlight::class.java,
+            Tickbase::class.java,
+            BedBreaker::class.java,
+            StealAura::class.java,
+            BedWalker::class.java
         )
-
-        registerModule(Fucker)
-        registerModule(StealAura)
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")
     }

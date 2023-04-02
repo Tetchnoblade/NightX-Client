@@ -1,6 +1,6 @@
 package net.aspw.client.visual.client.clickgui.extensions
 
-import net.aspw.client.features.special.GuiFastRender
+import net.aspw.client.features.api.GuiFastRender
 import net.aspw.client.utils.AnimationUtils
 import net.aspw.client.utils.render.RenderUtils
 

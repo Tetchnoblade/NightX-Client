@@ -1,6 +1,6 @@
 package net.aspw.client.visual.client
 
-import net.aspw.client.features.special.ProxyManager
+import net.aspw.client.features.api.ProxyManager
 import net.aspw.client.visual.font.Fonts
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen

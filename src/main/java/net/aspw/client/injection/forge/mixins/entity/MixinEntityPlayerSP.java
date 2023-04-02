@@ -2,11 +2,14 @@ package net.aspw.client.injection.forge.mixins.entity;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.*;
-import net.aspw.client.features.module.modules.exploit.AntiHunger;
-import net.aspw.client.features.module.modules.exploit.NoZeroZeroThrees;
-import net.aspw.client.features.module.modules.exploit.PortalMenu;
-import net.aspw.client.features.module.modules.movement.*;
-import net.aspw.client.features.module.modules.player.Scaffold;
+import net.aspw.client.features.module.impl.exploit.AntiHunger;
+import net.aspw.client.features.module.impl.exploit.NoZeroZeroThrees;
+import net.aspw.client.features.module.impl.exploit.PortalMenu;
+import net.aspw.client.features.module.impl.movement.Flight;
+import net.aspw.client.features.module.impl.movement.NoSlow;
+import net.aspw.client.features.module.impl.movement.SilentSneak;
+import net.aspw.client.features.module.impl.movement.Sprint;
+import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.utils.MovementUtils;
 import net.aspw.client.utils.Rotation;
 import net.aspw.client.utils.RotationUtils;
@@ -115,9 +118,8 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             MotionEvent event = new MotionEvent(this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround);
             Client.eventManager.callEvent(event);
 
-            final Inventory inventoryMove = Client.moduleManager.getModule(Inventory.class);
-            final Sneak sneak = Client.moduleManager.getModule(Sneak.class);
-            final boolean fakeSprint = (inventoryMove.getState() && inventoryMove.isAACAP()) || Client.moduleManager.getModule(AntiHunger.class).getState() || (sneak.getState() && (!MovementUtils.isMoving() || !sneak.stopMoveValue.get()) && sneak.modeValue.get().equalsIgnoreCase("MineSecure"));
+            final SilentSneak sneak = Client.moduleManager.getModule(SilentSneak.class);
+            final boolean fakeSprint = Client.moduleManager.getModule(AntiHunger.class).getState() || (sneak.getState() && (!MovementUtils.isMoving() || !sneak.stopMoveValue.get()) && sneak.modeValue.get().equalsIgnoreCase("MineSecure"));
 
             ActionEvent actionEvent = new ActionEvent(this.isSprinting() && !fakeSprint, this.isSneaking());
 
@@ -156,8 +158,8 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
                 double xDiff = event.getX() - this.lastReportedPosX;
                 double yDiff = event.getY() - this.lastReportedPosY;
                 double zDiff = event.getZ() - this.lastReportedPosZ;
-                double yawDiff = (double) (yaw - lastReportedYaw);
-                double pitchDiff = (double) (pitch - lastReportedPitch);
+                double yawDiff = yaw - lastReportedYaw;
+                double pitchDiff = pitch - lastReportedPitch;
                 boolean moved = xDiff * xDiff + yDiff * yDiff + zDiff * zDiff > (Client.moduleManager.getModule(NoZeroZeroThrees.class).getState() ? 0D : 9.0E-4D) || this.positionUpdateTicks >= 20;
                 boolean rotated = yawDiff != 0.0D || pitchDiff != 0.0D;
 
@@ -217,10 +219,6 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     @Overwrite
     public void onLivingUpdate() {
         Client.eventManager.callEvent(new UpdateEvent());
-
-        if (mc.thePlayer.ridingEntity != null) {
-            RotationUtils.setTargetRotation(new Rotation(mc.thePlayer.rotationYaw, 0));
-        }
 
         if (this.sprintingTicksLeft > 0) {
             --this.sprintingTicksLeft;

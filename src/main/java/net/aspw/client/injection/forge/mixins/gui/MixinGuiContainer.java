@@ -1,12 +1,11 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.modules.combat.KillAura;
-import net.aspw.client.features.module.modules.player.InventoryManager;
-import net.aspw.client.features.module.modules.player.Stealer;
-import net.aspw.client.features.module.modules.visual.Animations;
-import net.aspw.client.features.module.modules.visual.Hud;
-import net.aspw.client.utils.render.EaseUtils;
+import net.aspw.client.features.module.impl.combat.KillAura;
+import net.aspw.client.features.module.impl.player.InventoryManager;
+import net.aspw.client.features.module.impl.player.Stealer;
+import net.aspw.client.features.module.impl.visual.Animations;
+import net.aspw.client.features.module.impl.visual.Hud;
 import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -67,7 +66,6 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
     @Inject(method = "drawScreen", at = @At("HEAD"), cancellable = true)
     private void drawScreenHead(CallbackInfo callbackInfo) {
-        final Animations animMod = Client.moduleManager.getModule(Animations.class);
         Stealer chestStealer = Client.moduleManager.getModule(Stealer.class);
         final Hud hud = Client.moduleManager.getModule(Hud.class);
         final Minecraft mc = Minecraft.getMinecraft();
@@ -75,29 +73,12 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
         if (progress >= 1F) progress = 1F;
         else progress = (float) (System.currentTimeMillis() - lastMS) / (float) 200;
 
-        double trueAnim = EaseUtils.easeOutQuart(progress);
-
         if (hud.getContainerBackground().get()
                 && (!(mc.currentScreen instanceof GuiChest)
                 || !chestStealer.getState()
                 || !chestStealer.getSilenceValue().get()
                 || chestStealer.getStillDisplayValue().get()))
             RenderUtils.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
-
-        boolean checkFullSilence = chestStealer.getState() && chestStealer.getSilenceValue().get() && !chestStealer.getStillDisplayValue().get();
-
-        if (animMod != null && animMod.getState() && !(mc.currentScreen instanceof GuiChest && checkFullSilence)) {
-            GL11.glPushMatrix();
-            switch (Animations.guiAnimations.get()) {
-                case "Zoom":
-                    GL11.glTranslated((1 - trueAnim) * (width / 2D), (1 - trueAnim) * (height / 2D), 0D);
-                    GL11.glScaled(trueAnim, trueAnim, trueAnim);
-                    break;
-                case "Slide":
-                    GL11.glTranslated((1 - trueAnim) * width, 0D, 0D);
-                    break;
-            }
-        }
 
         try {
             GuiScreen guiScreen = mc.currentScreen;

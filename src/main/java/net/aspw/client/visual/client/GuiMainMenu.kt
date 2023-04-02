@@ -44,7 +44,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             lastAnimTick = System.currentTimeMillis()
             alrUpdate = true
         }
-        val playerInfo = "Welcome, §a${mc.session.username}"
         mc.textureManager.bindTexture(ResourceLocation("client/menu/background.png"))
         drawModalRectWithCustomSizedTexture(
             0,
@@ -60,17 +59,29 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         Fonts.fontSFUI40.drawStringWithShadow(
             Client.CLIENT_BEST + " Client!",
             8F,
+            height - 24F,
+            -1
+        )
+        Fonts.fontSFUI40.drawStringWithShadow(
+            "Current Build: §a" + Client.CLIENT_VERSION,
+            8F,
             height - 12F,
             -1
         )
         Fonts.fontSFUI40.drawStringWithShadow(
-            playerInfo,
-            width - 3F - Fonts.fontSFUI40.getStringWidth(playerInfo),
+            "Minecraft - §61.8 §rto §61.19.3",
+            width - 3F - Fonts.fontSFUI40.getStringWidth("Minecraft - §61.8 §rto §61.19.3"),
             height - 12F,
             -1
         )
-        RenderUtils.drawImage2(nightxLogo, width / 2F - 50F, height / 2F - 90F, 100, 100)
-        RenderUtils.drawImage2(kawaiiLogo, width / 1.04F - 49.04F, height / 1.02F - 89.02F, 80, 80)
+        Fonts.fontSFUI40.drawStringWithShadow(
+            "Welcome, §a${mc.session.username}",
+            width - 3F - Fonts.fontSFUI40.getStringWidth("Welcome, §a${mc.session.username}"),
+            height - 24F,
+            -1
+        )
+        RenderUtils.drawImage2(nightxLogo, width / 2F - 55F, height / 2F - 110F, 120, 120)
+        RenderUtils.drawImage2(kawaiiLogo, width - 90F, height - 110F, 80, 80)
         GlStateManager.enableAlpha()
         renderBar(mouseX, mouseY, partialTicks)
         GL11.glPopMatrix()
@@ -78,9 +89,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     }
 
     override fun mouseClicked(mouseX: Int, mouseY: Int, mouseButton: Int) {
-        if (isMouseHover(2F, height - 38F, 28F, height - 28F, mouseX, mouseY));
-
-        val staticX = width / 2F - 120F
+        val staticX = width / 2F - 155F
         val staticY = height / 2F + 20F
         for ((index, _) in ImageButton.values().withIndex()) {
             if (isMouseHover(
@@ -98,7 +107,9 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                     2 -> mc.displayGuiScreen(GuiAltManager(this))
                     3 -> mc.displayGuiScreen(GuiOptions(this, this.mc.gameSettings))
                     4 -> MiscUtils.showURL(Client.CLIENT_DISCORD)
-                    5 -> mc.shutdown()
+                    5 -> MiscUtils.showURL(Client.CLIENT_YOUTUBE)
+                    6 -> MiscUtils.showURL(Client.CLIENT_GITHUB)
+                    7 -> mc.shutdown()
                 }
 
         }
@@ -107,13 +118,13 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     }
 
     fun renderBar(mouseX: Int, mouseY: Int, partialTicks: Float) {
-        val staticX = width / 2F - 120F
+        val staticX = width / 2F - 155F
         val staticY = height / 2F + 20F
 
         RenderUtils.drawRoundedRect(
             staticX,
             staticY,
-            staticX + 240F,
+            staticX + 320F,
             staticY + 45F,
             0F,
             (Color(0, 0, 0, 120)).rgb
@@ -149,7 +160,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             slideX = if (fade == 0F)
                 moveX
             else
-                AnimationUtils.animate(moveX, slideX, 15F * (1F - partialTicks))
+                AnimationUtils.animate(moveX, slideX, 60F * (1F - partialTicks))
 
             lastXPos = moveX
 
@@ -159,7 +170,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             fade -= 10F
             if (fade <= 0F) fade = 0F
 
-            slideX = AnimationUtils.animate(lastXPos, slideX, 15F * (1F - partialTicks))
+            slideX = AnimationUtils.animate(lastXPos, slideX, 60F * (1F - partialTicks))
         }
 
         if (fade != 0F)
@@ -190,7 +201,9 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         Alts("Alt Manager", ResourceLocation("client/menu/alt.png")),
         Settings("Options", ResourceLocation("client/menu/settings.png")),
         Discord("Discord", ResourceLocation("client/menu/discord.png")),
-        Exit("Quit", ResourceLocation("client/menu/exit.png"))
+        YouTube("YouTube", ResourceLocation("client/menu/youtube.png")),
+        GitHub("GitHub", ResourceLocation("client/menu/github.png")),
+        Quit("Quit", ResourceLocation("client/menu/exit.png"))
     }
 
     override fun keyTyped(typedChar: Char, keyCode: Int) {}

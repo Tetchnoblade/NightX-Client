@@ -41,7 +41,7 @@ class Slowly(inst: Target) : TargetStyle("Slowly", inst, true) {
         RenderUtils.drawRect(
             0F,
             32F,
-            (easingHealth / entity.maxHealth.toFloat()).coerceIn(0F, entity.maxHealth.toFloat()) * (length + 32F),
+            (easingHealth / entity.maxHealth).coerceIn(0F, entity.maxHealth) * (length + 32F),
             36F,
             targetInstance.barColor.rgb
         )

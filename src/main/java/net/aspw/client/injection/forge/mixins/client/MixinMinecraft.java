@@ -1,15 +1,11 @@
 package net.aspw.client.injection.forge.mixins.client;
 
 import de.enzaxd.viaforge.ViaForge;
-import de.enzaxd.viaforge.util.AttackOrder;
 import net.aspw.client.Client;
 import net.aspw.client.event.*;
-import net.aspw.client.features.module.modules.other.FastPlace;
-import net.aspw.client.features.module.modules.player.TargetStrafe;
-import net.aspw.client.features.module.modules.visual.SilentView;
+import net.aspw.client.features.module.impl.other.FastPlace;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
 import net.aspw.client.utils.CPSCounter;
-import net.aspw.client.utils.RotationUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.visual.client.GuiMainMenu;
 import net.minecraft.block.material.Material;
@@ -27,7 +23,6 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.stream.IStream;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -39,11 +34,8 @@ import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft {
@@ -151,7 +143,7 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "displayGuiScreen", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/GuiScreen;", shift = At.Shift.AFTER))
     private void displayGuiScreen(CallbackInfo callbackInfo) {
-        if (currentScreen instanceof net.minecraft.client.gui.GuiMainMenu || (currentScreen != null && currentScreen.getClass().getName().startsWith("net.labymod") && currentScreen.getClass().getSimpleName().equals("ModGuiMainMenu"))) {
+        if (currentScreen instanceof net.minecraft.client.gui.GuiMainMenu || (currentScreen != null && currentScreen.getClass().getSimpleName().equals("ModGuiMainMenu"))) {
             currentScreen = new GuiMainMenu();
 
             ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
@@ -204,22 +196,6 @@ public abstract class MixinMinecraft {
         leftClickCounter = 0;
     }
 
-    @Redirect(
-            method = "clickMouse",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;swingItem()V")
-    )
-    private void fixAttackOrder_VanillaSwing() {
-        AttackOrder.sendConditionalSwing(this.objectMouseOver);
-    }
-
-    @Redirect(
-            method = "clickMouse",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerControllerMP;attackEntity(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/entity/Entity;)V")
-    )
-    private void fixAttackOrder_VanillaAttack() {
-        AttackOrder.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);
-    }
-
     @Inject(method = "middleClickMouse", at = @At("HEAD"))
     private void middleClickMouse(CallbackInfo ci) {
         CPSCounter.registerClick(CPSCounter.MouseButton.MIDDLE);
@@ -239,52 +215,6 @@ public abstract class MixinMinecraft {
     private void loadWorld(WorldClient p_loadWorld_1_, String p_loadWorld_2_, final CallbackInfo callbackInfo) {
         Client.eventManager.callEvent(new WorldEvent(p_loadWorld_1_));
         Runtime.getRuntime().gc();
-    }
-
-    @Inject(method = "getRenderViewEntity", at = @At("HEAD"))
-    public void getRenderViewEntity(CallbackInfoReturnable<Entity> cir) {
-        if (renderViewEntity instanceof EntityLivingBase && RotationUtils.serverRotation != null && thePlayer != null) {
-            SilentView silentView = Client.moduleManager.getModule(SilentView.class);
-            TargetStrafe targetStrafe = Client.moduleManager.getModule(TargetStrafe.class);
-            EntityLivingBase entityLivingBase = (EntityLivingBase) renderViewEntity;
-            if (silentView.getState() && silentView.getMode().get().equals("ETB") && silentView.getHeadNormalRotate().get() && silentView.shouldRotate()) {
-                entityLivingBase.rotationYawHead = (int) RotationUtils.serverRotation.getYaw();
-                entityLivingBase.renderYawOffset = (int) RotationUtils.serverRotation.getYaw();
-            }
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getHeadNormalRotate().get() && silentView.shouldRotate()) {
-                entityLivingBase.rotationYawHead = RotationUtils.serverRotation.getYaw();
-            }
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && silentView.shouldRotate()) {
-                entityLivingBase.renderYawOffset = RotationUtils.serverRotation.getYaw() + 40;
-                if (!Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.renderYawOffset = RotationUtils.serverRotation.getYaw() - 55;
-                }
-                if (targetStrafe.getDirection() < 0.5 && targetStrafe.getCanStrafe() && targetStrafe.getState() || Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.renderYawOffset = RotationUtils.serverRotation.getYaw() + 40;
-                }
-                if (!Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.renderYawOffset = RotationUtils.serverRotation.getYaw() + 55;
-                }
-                if (targetStrafe.getDirection() > 0.5 && targetStrafe.getCanStrafe() && targetStrafe.getState() || Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.renderYawOffset = RotationUtils.serverRotation.getYaw() - 40;
-                }
-            }
-            if (silentView.getState() && silentView.getMode().get().equals("Normal") && silentView.getBodyNormalRotate().get() && silentView.getBodyPrevRotate().get() && silentView.shouldRotate()) {
-                entityLivingBase.prevRenderYawOffset = RotationUtils.serverRotation.getYaw() + 40;
-                if (!Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.prevRenderYawOffset = RotationUtils.serverRotation.getYaw() - 55;
-                }
-                if (targetStrafe.getDirection() < 0.5 && targetStrafe.getCanStrafe() && targetStrafe.getState() || Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.prevRenderYawOffset = RotationUtils.serverRotation.getYaw() + 40;
-                }
-                if (!Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.prevRenderYawOffset = RotationUtils.serverRotation.getYaw() + 55;
-                }
-                if (targetStrafe.getDirection() > 0.5 && targetStrafe.getCanStrafe() && targetStrafe.getState() || Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown() || !Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown() && !Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown() && Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown()) {
-                    entityLivingBase.prevRenderYawOffset = RotationUtils.serverRotation.getYaw() - 40;
-                }
-            }
-        }
     }
 
     @Inject(method = "toggleFullscreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setFullscreen(Z)V", remap = false))
@@ -324,5 +254,10 @@ public abstract class MixinMinecraft {
                 this.playerController.resetBlockRemoving();
             }
         }
+    }
+
+    @ModifyConstant(method = "getLimitFramerate", constant = @Constant(intValue = 30))
+    public int getLimitFramerate(int constant) {
+        return 60;
     }
 }
