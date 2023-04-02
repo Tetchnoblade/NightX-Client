@@ -1,12 +1,11 @@
 package net.aspw.client.features.module.impl.movement
 
-import net.aspw.client.event.EventTarget
-import net.aspw.client.event.JumpEvent
-import net.aspw.client.event.PacketEvent
-import net.aspw.client.event.UpdateEvent
+import net.aspw.client.Client
+import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.utils.MovementUtils
 import net.aspw.client.utils.Rotation
 import net.aspw.client.utils.RotationUtils
@@ -18,8 +17,20 @@ class Sprint : Module() {
 
     val allDirectionsValue = BoolValue("Multi", true)
     val noPacketPatchValue = BoolValue("Silent", false)
+    val rot = BoolValue("Rotations", false)
 
     private var modified = false
+
+    @EventTarget
+    fun onMotion(event: MotionEvent) {
+        if (rot.get() && event.eventState == EventState.PRE && MovementUtils.isMoving() && Client.moduleManager.getModule(
+                KillAura::class.java
+            )?.target == null
+        ) {
+            event.yaw = MovementUtils.getPredictionYaw(event.x, event.z) - 90F
+            RotationUtils.setTargetRotation(Rotation(event.yaw, event.pitch))
+        }
+    }
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
@@ -61,5 +72,4 @@ class Sprint : Module() {
         if (allDirectionsValue.get() || mc.thePlayer.movementInput.moveForward >= 0.8F)
             mc.thePlayer.isSprinting = true
     }
-
 }

@@ -28,15 +28,15 @@ class WatchdogNew : SpeedMode("WatchdogNew") {
         if (speed == null || eventMotion.eventState !== EventState.PRE || mc.thePlayer.isInWater) return
         if (MovementUtils.isMoving()) {
             if (mc.thePlayer.fallDistance > 0.16 && mc.gameSettings.keyBindLeft.isKeyDown()) {
-                MovementUtils.strafe(0.16f);
+                MovementUtils.strafe(0.12f);
             }
             if (mc.thePlayer.fallDistance > 0.16 && mc.gameSettings.keyBindRight.isKeyDown()) {
-                MovementUtils.strafe(0.16f);
+                MovementUtils.strafe(0.12f);
             }
             groundTick++
             if (mc.thePlayer.onGround) {
                 if (groundTick >= 0) {
-                    mc.thePlayer.motionY = 0.41999998688698
+                    mc.thePlayer.jump()
                 }
                 if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
                     MovementUtils.strafe(0.578f)

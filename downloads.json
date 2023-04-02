@@ -63,7 +63,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15374172,
-        "download_count": 43,
+        "download_count": 226,
         "created_at": "2023-04-02T10:40:47Z",
         "updated_at": "2023-04-02T10:40:53Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B45-Release/nightx-release-b45.jar"
@@ -137,7 +137,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15374515,
-        "download_count": 557,
+        "download_count": 560,
         "created_at": "2023-04-01T00:46:36Z",
         "updated_at": "2023-04-01T00:47:09Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B45-Beta/nightx-beta-b45.jar"
@@ -383,7 +383,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 17952257,
-        "download_count": 274,
+        "download_count": 275,
         "created_at": "2023-03-28T09:43:54Z",
         "updated_at": "2023-03-28T09:45:51Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B44-Beta/nightx-beta-b44.jar"
@@ -477,7 +477,7 @@
     ],
     "tarball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/tarball/B43",
     "zipball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/zipball/B43",
-    "body": "* NO MORE SRC UPDATES! (ANTI SKIDDER) (C00LC0D35)\r\n- Recoded SilentView and Added Lock option (Thanks shxp3_V3)\r\n- Added New Hypixel Speed (Thanks fantia) (Semi Strafe Bypass)\r\n- Added Cape Style NoneClient\r\n- Added Disabler mode Universocraft\r\n- Added KillAura AutoBlock mode OldIntave\r\n- Added Stealer Instant option\r\n- Added Flight mode ZonecraftVanilla\r\n- Removed Scaffold AutoBlock mode LiteSpoof (a lot of bugs)\r\n- Improved WatchdogNew Speed\r\n- Improved Funcraft Flight\r\n- Improved Mainmenu\r\n- Fixed Scaffold sometimes detectable\r\n- Fixed TargetHud OpenGL Errors\r\n- Fixed Freezing when joining world, servers\r\n- Fixed KillAura Bypasses (Rotations, CPS)\r\nUpdated Hypixel Configs (1HOUR BYPASSING?)\r\nhttps://nightx.api-minecraft.net/s/zf45j6uzog",
+    "body": "- Recoded SilentView and Added Lock option (Thanks shxp3_V3)\r\n- Added New Hypixel Speed (Thanks fantia) (Semi Strafe Bypass)\r\n- Added Cape Style NoneClient\r\n- Added Disabler mode Universocraft\r\n- Added KillAura AutoBlock mode OldIntave\r\n- Added Stealer Instant option\r\n- Added Flight mode ZonecraftVanilla\r\n- Removed Scaffold AutoBlock mode LiteSpoof (a lot of bugs)\r\n- Improved WatchdogNew Speed\r\n- Improved Funcraft Flight\r\n- Improved Mainmenu\r\n- Fixed Scaffold sometimes detectable\r\n- Fixed TargetHud OpenGL Errors\r\n- Fixed Freezing when joining world, servers\r\n- Fixed KillAura Bypasses (Rotations, CPS)\r\nUpdated Hypixel Configs (1HOUR BYPASSING?)\r\nhttps://nightx.api-minecraft.net/s/zf45j6uzog",
     "reactions": {
       "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/97003753/reactions",
       "total_count": 4,
@@ -1047,7 +1047,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 16023490,
-        "download_count": 641,
+        "download_count": 642,
         "created_at": "2023-02-23T05:06:31Z",
         "updated_at": "2023-02-23T05:06:37Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B36/nightx-release-b36.jar"
@@ -1195,7 +1195,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15923158,
-        "download_count": 829,
+        "download_count": 830,
         "created_at": "2023-02-11T09:22:25Z",
         "updated_at": "2023-02-11T09:22:30Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B35/nightx-beta-b35.jar"
@@ -1281,7 +1281,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15641020,
-        "download_count": 2122,
+        "download_count": 2123,
         "created_at": "2023-01-26T14:24:05Z",
         "updated_at": "2023-01-26T14:24:10Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B34/nightx-release-b34.jar"
@@ -1367,7 +1367,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15553329,
-        "download_count": 1371,
+        "download_count": 1372,
         "created_at": "2023-01-19T14:07:00Z",
         "updated_at": "2023-01-19T14:07:05Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B33/nightx-release-b33.jar"
