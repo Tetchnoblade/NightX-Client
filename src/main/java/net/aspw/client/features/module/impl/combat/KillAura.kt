@@ -1020,7 +1020,7 @@ class KillAura : Module() {
         }
 
         if (autoBlockModeValue.get().equals("watchdog", true)) {
-            if (mc.thePlayer.hurtTime > 10) {
+            if (mc.thePlayer.hurtTime > 2) {
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, true)
             } else {
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)

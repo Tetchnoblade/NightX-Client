@@ -36,7 +36,7 @@ class WatchdogNew : SpeedMode("WatchdogNew") {
             groundTick++
             if (mc.thePlayer.onGround) {
                 if (groundTick >= 0) {
-                    mc.thePlayer.jump()
+                    mc.thePlayer.motionY = 0.41999998688698
                 }
                 if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
                     MovementUtils.strafe(0.578f)

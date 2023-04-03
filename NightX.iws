@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/downloads.json" beforeDir="false" afterPath="$PROJECT_DIR$/downloads.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/KillAura.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/KillAura.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Sprint.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Sprint.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/watchdog/WatchdogNew.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/watchdog/WatchdogNew.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
