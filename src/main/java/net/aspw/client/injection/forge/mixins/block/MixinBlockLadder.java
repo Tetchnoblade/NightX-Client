@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(BlockLadder.class)
-public abstract class MixinBlockLadder extends MixinBlock {
+public class MixinBlockLadder {
 
     @ModifyConstant(method = "setBlockBoundsBasedOnState", constant = @Constant(floatValue = 0.125F))
     private float ViaVersion_LadderBB(float constant) {

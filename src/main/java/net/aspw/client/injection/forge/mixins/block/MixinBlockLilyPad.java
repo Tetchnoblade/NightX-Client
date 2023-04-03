@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin(BlockLilyPad.class)
-public abstract class MixinBlockLilyPad extends MixinBlock {
+public class MixinBlockLilyPad {
 
     /**
      * @author

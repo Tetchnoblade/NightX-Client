@@ -35,9 +35,9 @@
     "published_at": "2023-04-02T10:41:15Z",
     "assets": [
       {
-        "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/assets/102043333",
-        "id": 102043333,
-        "node_id": "RA_kwDOIG0dIs4GFQ7F",
+        "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/assets/102091179",
+        "id": 102091179,
+        "node_id": "RA_kwDOIG0dIs4GFcmr",
         "name": "nightx-release-b45.jar",
         "label": null,
         "uploader": {
@@ -62,16 +62,16 @@
         },
         "content_type": "application/octet-stream",
         "state": "uploaded",
-        "size": 15374707,
-        "download_count": 59,
-        "created_at": "2023-04-02T22:56:47Z",
-        "updated_at": "2023-04-02T22:56:51Z",
+        "size": 15374716,
+        "download_count": 26,
+        "created_at": "2023-04-03T08:19:10Z",
+        "updated_at": "2023-04-03T08:20:09Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B45-Release/nightx-release-b45.jar"
       }
     ],
     "tarball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/tarball/B45-Release",
     "zipball_url": "https://api.github.com/repos/Aspw-w/NightX-Client/zipball/B45-Release",
-    "body": "- Added CivBreak Mode option (Instant, Legit)\r\n- Added Scaffold Tower mode Watchdog (only moving)\r\n- Added Tickbase Module (Thanks Wevez!)\r\n- Added BedWalker Module\r\n- Added KillAura Angle-Tick option (bypass most anticheats)\r\n- Added Criticals mode NewNCP\r\n- Added .config download Command\r\n- Added Disabler mode Payload, Inventory-Spoof\r\n- Added Crasher mode FAWE\r\n- Added Animations mode Dortware, DortwarePush, Double1, Double2\r\n- Added Scaffold PlaceTiming mode Tick (bypassing watchdog sprint scaffold XD)\r\n- Removed Velocity mode Minemen (doesn't bypass)\r\n- Improved MainMenu, Multiplayer, Disconnected Screen\r\n- Improved Animations mode Jigsaw, Sigma3, Avatar (Equip-Modify support)\r\n- Improved Animations Module\r\n- Improved AntiStaff Module\r\n- Improved Tickbase Module\r\n- Improved Chat anything\r\n- Improved SilentView\r\n- Improved Protocol Switcher\r\n- Improved Inventory Module\r\n- Improved Config System\r\n- Improved Scaffold XZ-Multiplier, blockplace packet, performance\r\n- Improved SilentView when swing hand\r\n- Improved KillAura (good at HvH?)\r\n- Improved Creative Inventory Performance\r\n- Fixed ClientSpoof mode Lunar not working and Recoded (Thanks Zywl!)\r\n- Fixed Crasher mode Rotation not working\r\n- Fixed B44's shit codes\r\n- Fixed Watchdog AutoBlock Bypasses\r\n- Fixed WatchdogNew Speed Bypasses\r\n- Fixed Animations Swing-Speed option effects every players\r\n- Fixed Sending weird packets (when hitting people) (no more autobanning on minemen)\r\n- Fixed Scaffold NullPointerException\r\n- Fixed KillAura packet flags\r\n- Fixed Reconnect with Alt button not working\r\n- Fixed Performance and OpenGL errors\r\n- Renamed Flight mode PurplePrison -> VulcanGlide\r\n- Renamed NoSlow mode WatchdogSword -> LatestWatchdog\r\n- Renamed Fucker -> BedBreaker\r\nUpdated Configs\r\n\r\n04/03 Semi-Updated\r\n- Added Sprint Rotations option\r\n- Fixed WatchdogNew Speed Bypasses\r\n- Fixed Watchdog AutoBlock Bypasses"
+    "body": "- Added CivBreak Mode option (Instant, Legit)\r\n- Added Scaffold Tower mode Watchdog (only moving)\r\n- Added Tickbase Module (Thanks Wevez!)\r\n- Added BedWalker Module\r\n- Added KillAura Angle-Tick option (bypass most anticheats)\r\n- Added Criticals mode NewNCP\r\n- Added .config download Command\r\n- Added Disabler mode Payload, Inventory-Spoof\r\n- Added Crasher mode FAWE\r\n- Added Animations mode Dortware, DortwarePush, Double1, Double2\r\n- Added Scaffold PlaceTiming mode Tick (bypassing watchdog sprint scaffold XD)\r\n- Removed Velocity mode Minemen (doesn't bypass)\r\n- Improved MainMenu, Multiplayer, Disconnected Screen\r\n- Improved Animations mode Jigsaw, Sigma3, Avatar (Equip-Modify support)\r\n- Improved Animations Module\r\n- Improved AntiStaff Module\r\n- Improved Tickbase Module\r\n- Improved Chat anything\r\n- Improved SilentView\r\n- Improved Protocol Switcher\r\n- Improved Inventory Module\r\n- Improved Config System\r\n- Improved Scaffold XZ-Multiplier, blockplace packet, performance\r\n- Improved SilentView when swing hand\r\n- Improved KillAura (good at HvH?)\r\n- Improved Creative Inventory Performance\r\n- Fixed ClientSpoof mode Lunar not working and Recoded (Thanks Zywl!)\r\n- Fixed Crasher mode Rotation not working\r\n- Fixed B44's shit codes\r\n- Fixed Watchdog AutoBlock Bypasses\r\n- Fixed WatchdogNew Speed Bypasses\r\n- Fixed Animations Swing-Speed option effects every players\r\n- Fixed Sending weird packets (when hitting people) (no more autobanning on minemen)\r\n- Fixed Scaffold NullPointerException\r\n- Fixed KillAura packet flags\r\n- Fixed Reconnect with Alt button not working\r\n- Fixed Performance and OpenGL errors\r\n- Renamed Flight mode PurplePrison -> VulcanGlide\r\n- Renamed NoSlow mode WatchdogSword -> LatestWatchdog\r\n- Renamed Fucker -> BedBreaker\r\nUpdated Configs\r\n\r\n04/03 9:20 Semi-Updated\r\n- Added Sprint Rotations option\r\n- Fixed WatchdogNew Speed Bypasses\r\n- Fixed Watchdog AutoBlock Bypasses\r\n\r\n04/03 5:20 Semi-Updated (xd?)\r\n- Fixed Watchdog AutoBlock Bypasses\r\n- Fixed WatchdogNew Speed not working"
   },
   {
     "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/97707338",
