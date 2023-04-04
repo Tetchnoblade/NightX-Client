@@ -24,6 +24,8 @@ public class ClientSpoof extends MinecraftInstance implements Listenable {
                 final C17PacketCustomPayload customPayload = (C17PacketCustomPayload) packet;
                 if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("Vanilla"))
                     customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("vanilla"));
+                if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("Forge"))
+                    customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("FML"));
                 if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("LabyMod"))
                     customPayload.data = (new PacketBuffer(Unpooled.buffer()).writeString("LMC"));
                 if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("CheatBreaker"))

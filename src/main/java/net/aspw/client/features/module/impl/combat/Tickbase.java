@@ -63,12 +63,12 @@ public final class Tickbase extends Module {
     private void sleep() {
         if (skippedTick > 0) {
             try {
-                Thread.sleep(2 * skippedTick);
+                Thread.sleep(2L * skippedTick);
                 skippedTick = 0;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            mc.timer.timerSpeed = 0.055f + skippedTick;
+            mc.timer.timerSpeed = 0.054f + skippedTick;
         }
     }
 

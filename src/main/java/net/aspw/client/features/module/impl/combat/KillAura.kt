@@ -1057,7 +1057,7 @@ class KillAura : Module() {
         }
 
         if (autoBlockModeValue.get().equals("watchdog", true)) {
-            if (mc.thePlayer.hurtTime > 2) {
+            if (mc.thePlayer.hurtTime > 6) {
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, true)
             } else {
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
@@ -1123,7 +1123,7 @@ class KillAura : Module() {
         fakeBlock = false
         blockingStatus = false
         tickTimer.reset()
-        if (endTimer.hasTimePassed(1)) {
+        if (endTimer.hasTimePassed(2)) {
             if (autoBlockModeValue.get().equals("interact", true) || autoBlockModeValue.get()
                     .equals("watchdog", true)
             ) {
