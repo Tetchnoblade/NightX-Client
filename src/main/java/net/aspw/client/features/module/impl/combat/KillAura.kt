@@ -1027,12 +1027,10 @@ class KillAura : Module() {
 
         if (autoBlockModeValue.get().equals("none", true)) {
             fakeBlock = false
-            return
         }
 
         if (autoBlockModeValue.get().equals("fake", true)) {
             fakeBlock = true
-            return
         }
 
         if (autoBlockModeValue.get().equals("ncp", true)) {
@@ -1047,18 +1045,15 @@ class KillAura : Module() {
                 )
             )
             blockingStatus = true
-            return
         }
 
         if (autoBlockModeValue.get().equals("interact", true)) {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, true)
-            return
         }
 
         if (autoBlockModeValue.get().equals("oldintave", true)) {
             mc.netHandler.addToSendQueue(C09PacketHeldItemChange((mc.thePlayer.inventory.currentItem + 1) % 9))
             mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
-            return
         }
 
         if (autoBlockModeValue.get().equals("watchdog", true)) {
@@ -1067,7 +1062,6 @@ class KillAura : Module() {
             } else {
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
             }
-            return
         }
 
         if (autoBlockModeValue.get().equals("oldhypixel", true)) {
@@ -1082,7 +1076,6 @@ class KillAura : Module() {
                 )
             )
             blockingStatus = true
-            return
         }
 
         if (interact) {
@@ -1128,7 +1121,7 @@ class KillAura : Module() {
         fakeBlock = false
         blockingStatus = false
         tickTimer.reset()
-        if (endTimer.hasTimePassed(2)) {
+        if (endTimer.hasTimePassed(1)) {
             if (autoBlockModeValue.get().equals("interact", true) || autoBlockModeValue.get()
                     .equals("watchdog", true)
             ) {

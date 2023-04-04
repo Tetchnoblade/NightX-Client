@@ -397,7 +397,7 @@ public abstract class MixinItemRenderer {
                         }
 
                         if (Client.moduleManager.getModule(Animations.class).Sword.get().equalsIgnoreCase("spin")) {
-                            GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.21, Animations.blockPosY.get().doubleValue() + 0.42, Animations.blockPosZ.get().doubleValue() + 0.16);
+                            GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.21, Animations.blockPosY.get().doubleValue() + 0.42, Animations.blockPosZ.get().doubleValue() + 0.66);
                             this.transformFirstPersonItem(f / Animations.Equip.getValue(), 0.0f);
                             Random();
                             this.doBlockTransformations();

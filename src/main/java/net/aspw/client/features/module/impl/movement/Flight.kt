@@ -2024,6 +2024,29 @@ class Flight : Module() {
                 event.cancelEvent()
             }
         }
+        if (mode.equals("shotbow", ignoreCase = true)) {
+            if (packet is S08PacketPlayerPosLook) {
+                if (mc.thePlayer == null || mc.thePlayer.ticksExisted <= 0) return
+
+                val x = packet.getX() - mc.thePlayer.posX
+                val y = packet.getY() - mc.thePlayer.posY
+                val z = packet.getZ() - mc.thePlayer.posZ
+                val diff = sqrt(x * x + y * y + z * z)
+                if (diff <= 20) {
+                    event.cancelEvent()
+                    PacketUtils.sendPacketNoEvent(
+                        C06PacketPlayerPosLook(
+                            packet.getX(),
+                            packet.getY(),
+                            packet.getZ(),
+                            packet.getYaw(),
+                            packet.getPitch(),
+                            false
+                        )
+                    )
+                }
+            }
+        }
         if (mode.equals("matrix", ignoreCase = true)) {
             if (mc.currentScreen == null && packet is S08PacketPlayerPosLook) {
                 TransferUtils.noMotionSet = true

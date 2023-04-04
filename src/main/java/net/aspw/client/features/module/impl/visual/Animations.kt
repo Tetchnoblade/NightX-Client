@@ -103,14 +103,14 @@ class Animations : Module() {
         val Equip = FloatValue("Equip-Modify", 2f, -5f, 5f)
 
         @JvmField
+        val SpeedSwing = IntegerValue("Swing-Speed", 0, -9, 5)
+
+        @JvmField
         val SpeedRotate = FloatValue("Spin-Speed", 10f, 0f, 10f) {
             Sword.get().equals("spinny", ignoreCase = true) || Sword.get()
                 .equals("rotate", ignoreCase = true) || Sword.get()
                 .equals("spin", ignoreCase = true)
         }
-
-        @JvmField
-        val SpeedSwing = IntegerValue("Swing-Speed", 0, -9, 5)
 
         @JvmField
         val tabAnimations = ListValue("Tab-Animation", arrayOf("None", "Zoom", "Slide"), "None")
