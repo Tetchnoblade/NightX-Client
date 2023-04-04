@@ -1064,6 +1064,11 @@ class KillAura : Module() {
             }
         }
 
+        if (autoBlockModeValue.get().equals("packet", true)) {
+            mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
+            blockingStatus = true
+        }
+
         if (autoBlockModeValue.get().equals("oldhypixel", true)) {
             PacketUtils.sendPacketNoEvent(
                 C08PacketPlayerBlockPlacement(
@@ -1109,9 +1114,6 @@ class KillAura : Module() {
             )
             mc.netHandler.addToSendQueue(C02PacketUseEntity(interactEntity, C02PacketUseEntity.Action.INTERACT))
         }
-
-        mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
-        blockingStatus = true
     }
 
     /**
