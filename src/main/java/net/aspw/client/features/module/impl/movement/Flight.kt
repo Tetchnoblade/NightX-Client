@@ -125,6 +125,11 @@ class Flight : Module() {
     private val ncpMotionValue =
         FloatValue("NCPMotion", 0.04f, 0f, 1f) { modeValue.get().equals("ncp", ignoreCase = true) }
 
+    // ShotBow
+    private val shotBowSyncValue = IntegerValue("Sync-Delay", 20, 0, 300) {
+        modeValue.get().equals("shotbow", ignoreCase = true)
+    }
+
     // Verus
     private val verusDmgModeValue =
         ListValue("Verus-DamageMode", arrayOf("None", "Instant", "InstantC06", "Jump"), "Instant") {
@@ -939,39 +944,22 @@ class Flight : Module() {
             }
 
             "shotbow" -> {
-                if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
-                    mc.thePlayer.motionX = 0.0
-                    mc.thePlayer.motionY = 0.0
-                    mc.thePlayer.motionZ = 0.0
-                    mc.thePlayer.onGround = true
-                    mc.timer.timerSpeed = 1.3f
-                    mc.netHandler.addToSendQueue(
-                        C04PacketPlayerPosition(
-                            mc.thePlayer.posX,
-                            mc.thePlayer.posY,
-                            mc.thePlayer.posZ,
-                            false
-                        )
-                    )
-                    mc.netHandler.addToSendQueue(
-                        C04PacketPlayerPosition(
-                            mc.thePlayer.posX,
-                            mc.thePlayer.posY + 20,
-                            mc.thePlayer.posZ,
-                            true
-                        )
-                    )
+                mc.thePlayer.noClip = true
+                mc.thePlayer.onGround = false
+                if (MovementUtils.isMoving()) {
+                    MovementUtils.strafe(1.6f)
                 } else {
-                    mc.thePlayer.noClip = true
-                    mc.thePlayer.onGround = false
-                    mc.timer.timerSpeed = 1.8f
-                    MovementUtils.strafe(0.6f)
+                    mc.thePlayer.motionX = 0.0
+                    mc.thePlayer.motionZ = 0.0
                 }
                 if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                     mc.gameSettings.keyBindSneak.pressed = false
                     mc.thePlayer.motionY = -0.3
                 } else {
                     mc.thePlayer.motionY = 0.0
+                }
+                if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+                    mc.thePlayer.motionY = 0.3
                 }
             }
 
@@ -2032,7 +2020,7 @@ class Flight : Module() {
                 val y = packet.getY() - mc.thePlayer.posY
                 val z = packet.getZ() - mc.thePlayer.posZ
                 val diff = sqrt(x * x + y * y + z * z)
-                if (diff <= 20) {
+                if (diff <= shotBowSyncValue.value) {
                     event.cancelEvent()
                     PacketUtils.sendPacketNoEvent(
                         C06PacketPlayerPosLook(
@@ -2042,6 +2030,22 @@ class Flight : Module() {
                             packet.getYaw(),
                             packet.getPitch(),
                             false
+                        )
+                    )
+                    PacketUtils.sendPacketNoEvent(
+                        C04PacketPlayerPosition(
+                            mc.thePlayer.posX,
+                            mc.thePlayer.posY,
+                            mc.thePlayer.posZ,
+                            false
+                        )
+                    )
+                    PacketUtils.sendPacketNoEvent(
+                        C04PacketPlayerPosition(
+                            mc.thePlayer.posX,
+                            mc.thePlayer.posY + 3,
+                            mc.thePlayer.posZ,
+                            true
                         )
                     )
                 }
