@@ -74,7 +74,7 @@ class Flight : Module() {
             "Minesucht",
             "Verus",
             "Matrix",
-            "Vulcan1",
+            "VulcanClip",
             "VulcanGlide",
             "NewSpartan",
             "Spartan1",
@@ -355,7 +355,7 @@ class Flight : Module() {
                 mc.gameSettings.keyBindSneak.pressed = false
             }
 
-            "vulcan1" -> {
+            "vulcanclip" -> {
                 if (mc.thePlayer.onGround) {
                     clip(0f, -0.1f)
                     waitFlag = true
@@ -1611,7 +1611,7 @@ class Flight : Module() {
                 }
             }
         }
-        if (event.eventState == EventState.PRE && modeValue.get().equals("vulcan1", ignoreCase = true)) {
+        if (event.eventState == EventState.PRE && modeValue.get().equals("vulcanclip", ignoreCase = true)) {
             mc.timer.timerSpeed = 1f
             mc.thePlayer.motionY = -if (ticks % 2 == 0) {
                 0.17
@@ -2041,7 +2041,7 @@ class Flight : Module() {
                 packetBuffer.add(packet as Packet<INetHandlerPlayServer>)
             }
         }
-        if (mode.equals("vulcan1", ignoreCase = true)) {
+        if (mode.equals("vulcanclip", ignoreCase = true)) {
             if (packet is S08PacketPlayerPosLook && waitFlag) {
                 waitFlag = false
                 mc.thePlayer.setPosition(packet.x, packet.y, packet.z)
