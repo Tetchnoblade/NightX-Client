@@ -615,11 +615,11 @@ class Flight : Module() {
         startY = mc.thePlayer.posY
         noPacketModify = false
         aacJump = -3.8
-        if (!mode.equals("slime", ignoreCase = true) && !mode.equals("exploit", ignoreCase = true)
+        if (fakeDmgValue.get() && (!mode.equals("slime", ignoreCase = true) && !mode.equals("exploit", ignoreCase = true)
             && !mode.equals("bugspartan", ignoreCase = true) && !mode.equals(
                 "verus",
                 ignoreCase = true
-            )
+            ))
         ) {
             mc.thePlayer.handleStatusUpdate(2.toByte())
         }
