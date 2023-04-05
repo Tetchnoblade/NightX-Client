@@ -62,27 +62,24 @@ class Flight : Module() {
             "BufferAbuse",
             "Zoom",
             "ShotBow",
+            "BlockPlacement",
             "ZonecraftVanilla",
             "Zonecraft",
             "BlockDrop",
             "Minemora",
-            "Cubecraft",
+            "Sentinel",
             "TeleportRewinside",
             "Funcraft",
-            "Mineplex",
             "NeruxVace",
             "Minesucht",
             "Verus",
-            "VerusLowHop",
             "Matrix",
             "Vulcan1",
-            "Vulcan2",
             "VulcanGlide",
             "NewSpartan",
             "Spartan1",
             "Spartan2",
             "BugSpartan",
-            "Hypixel",
             "BoostHypixel",
             "MineSecure",
             "HawkEye",
@@ -94,9 +91,7 @@ class Flight : Module() {
             "KeepAlive",
             "Flag",
             "Clip",
-            "Jump",
-            "Derp",
-            "Collide"
+            "Derp"
         ), "Motion"
     )
     private val vanillaSpeedValue = FloatValue("Speed", 1f, 0f, 5f) {
@@ -108,7 +103,8 @@ class Flight : Module() {
             .equals("bugspartan", ignoreCase = true) || modeValue.get()
             .equals("keepalive", ignoreCase = true) || modeValue.get().equals("derp", ignoreCase = true)
                 || modeValue.get().equals("bufferabuse", ignoreCase = true) || modeValue.get()
-            .equals("zonecraftvanilla", ignoreCase = true)
+            .equals("zonecraftvanilla", ignoreCase = true) || modeValue.get()
+            .equals("shotbow", ignoreCase = true)
     }
     private val vanillaVSpeedValue = FloatValue("V-Speed", 0.6f, 0f, 5f) {
         modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
@@ -224,15 +220,6 @@ class Flight : Module() {
     private val hypixelC04 =
         BoolValue("BoostHypixel-MoreC04s", false) { modeValue.get().equals("boosthypixel", ignoreCase = true) }
 
-    // Hypixel
-    private val hypixelBoost =
-        BoolValue("Hypixel-Boost", false) { modeValue.get().equals("hypixel", ignoreCase = true) }
-    private val hypixelBoostDelay =
-        IntegerValue("Hypixel-BoostDelay", 1200, 0, 2000) { modeValue.get().equals("hypixel", ignoreCase = true) }
-    private val hypixelBoostTimer =
-        FloatValue("Hypixel-BoostTimer", 1f, 0f, 5f) { modeValue.get().equals("hypixel", ignoreCase = true) }
-    private val mineplexSpeedValue =
-        FloatValue("MineplexSpeed", 1f, 0.5f, 10f) { modeValue.get().equals("mineplex", ignoreCase = true) }
     private val neruxVaceTicks =
         IntegerValue("NeruxVace-Ticks", 6, 0, 20) { modeValue.get().equals("neruxvace", ignoreCase = true) }
     private val fakeSprintingValue =
@@ -247,16 +234,10 @@ class Flight : Module() {
     private val flyTimer = MSTimer()
     private val boostTimer = MSTimer()
     private val mineSecureVClipTimer = MSTimer()
-    private val mineplexTimer = MSTimer()
     private val spartanTimer = TickTimer()
     private val verusTimer = TickTimer()
     private val hypixelTimer = TickTimer()
     private val cubecraftTeleportTickTimer = TickTimer()
-    private var pog = false
-    private var started = false
-    private var lastSentX = 0.0
-    private var lastSentY = 0.0
-    private var lastSentZ = 0.0
     private val aac5C03List = ArrayList<C03PacketPlayer>()
     private var tick = 0
     private var boost = false
@@ -360,46 +341,6 @@ class Flight : Module() {
         wdState = 0
         wdTick = 0
         when (mode.lowercase(Locale.getDefault())) {
-            "vulcan2" -> {
-                pog = false
-                lastSentX = mc.thePlayer.posX
-                lastSentY = mc.thePlayer.posY
-                lastSentZ = mc.thePlayer.posZ
-                started = false
-                mc.thePlayer.motionX = 0.0
-                mc.thePlayer.motionZ = 0.0
-                mc.thePlayer.jumpMovementFactor = 0.00f
-                if (mc.thePlayer.onGround) {
-                    mc.thePlayer.onGround = false
-                    mc.timer.timerSpeed = 0.1f
-                    started = true
-                    PacketUtils.sendPacketNoEvent(
-                        C04PacketPlayerPosition(
-                            mc.thePlayer.posX,
-                            mc.thePlayer.posY,
-                            mc.thePlayer.posZ,
-                            true
-                        )
-                    )
-                    PacketUtils.sendPacketNoEvent(
-                        C04PacketPlayerPosition(
-                            mc.thePlayer.posX,
-                            mc.thePlayer.posY - 2.8 + Math.random() / 50,
-                            mc.thePlayer.posZ,
-                            false
-                        )
-                    )
-                    PacketUtils.sendPacketNoEvent(
-                        C04PacketPlayerPosition(
-                            mc.thePlayer.posX,
-                            mc.thePlayer.posY,
-                            mc.thePlayer.posZ,
-                            true
-                        )
-                    )
-                }
-            }
-
             "ncp" -> {
                 mc.thePlayer.motionY = -ncpMotionValue.get().toDouble()
                 if (mc.gameSettings.keyBindSneak.isKeyDown) mc.thePlayer.motionY = -0.5
@@ -678,10 +619,7 @@ class Flight : Module() {
             && !mode.equals("bugspartan", ignoreCase = true) && !mode.equals(
                 "verus",
                 ignoreCase = true
-            ) && !mode.lowercase(
-                Locale.getDefault()
-            ).contains("hypixel")
-            && fakeDmgValue.get()
+            )
         ) {
             mc.thePlayer.handleStatusUpdate(2.toByte())
         }
@@ -731,7 +669,7 @@ class Flight : Module() {
             ) && !mode.equals("vanilla", ignoreCase = true) && !mode.equals(
                 "newspartan",
                 ignoreCase = true
-            ) && !mode.equals("veruslowhop", ignoreCase = true) && !mode.equals(
+            ) && !mode.equals(
                 "aac1.9.10",
                 ignoreCase = true
             ) && !mode.equals(
@@ -750,9 +688,9 @@ class Flight : Module() {
                 "spartan1",
                 ignoreCase = true
             ) && !mode.equals("spartan2", ignoreCase = true) && !mode.equals(
-                "hypixel",
+                "hawkeye",
                 ignoreCase = true
-            ) && !mode.equals("hawkeye", ignoreCase = true) && !mode.equals(
+            ) && !mode.equals(
                 "hac",
                 ignoreCase = true
             ) && !mode.equals("watchcat", ignoreCase = true) && !mode.equals(
@@ -762,15 +700,15 @@ class Flight : Module() {
                 "clip",
                 ignoreCase = true
             ) && !mode.equals("vulcanglide", ignoreCase = true) && !mode.equals(
-                "jump",
+                "derp",
                 ignoreCase = true
-            ) && !mode.equals("derp", ignoreCase = true) && !mode.equals(
+            ) && !mode.equals(
                 "water",
                 ignoreCase = true
             ) && !mode.equals(
                 "matrix",
                 ignoreCase = true
-            ) && !mode.equals("collide", ignoreCase = true)
+            )
         ) {
             MovementUtils.strafe(0.2f)
         }
@@ -866,24 +804,6 @@ class Flight : Module() {
                 }
             }
 
-            "vulcan2" -> {
-                if (started && pog) {
-                    mc.gameSettings.keyBindJump.pressed = false
-                    mc.gameSettings.keyBindSneak.pressed = false
-                    MovementUtils.strafe((1.96 + Math.random() / 50).toFloat())
-                    if (mc.thePlayer.onGround) {
-                        mc.thePlayer.motionX = 0.0
-                        mc.thePlayer.motionZ = 0.0
-                        mc.thePlayer.motionY = 0.2
-                    }
-                    if (!MovementUtils.isMoving()) {
-                        mc.thePlayer.motionX = 0.0
-                        mc.thePlayer.motionZ = 0.0
-                    }
-                    mc.thePlayer.jumpMovementFactor = 0.00f
-                }
-            }
-
             "motion" -> {
                 mc.thePlayer.capabilities.isFlying = false
                 mc.thePlayer.motionY = vanillaMotionYValue.get().toDouble()
@@ -897,6 +817,28 @@ class Flight : Module() {
                     mc.gameSettings.keyBindSneak.pressed = false
                 }
                 MovementUtils.strafe(vanillaSpeed)
+            }
+
+            "blockplacement" -> {
+                mc.thePlayer.onGround = true
+                mc.thePlayer.motionY = 0.0
+                PacketUtils.sendPacketNoEvent(
+                    C08PacketPlayerBlockPlacement(
+                        BlockPos.ORIGIN,
+                        255,
+                        mc.thePlayer.heldItem,
+                        0F,
+                        0F,
+                        0F
+                    )
+                )
+                RotationUtils.setTargetRotation(
+                    RotationUtils.limitAngleChange(
+                        RotationUtils.serverRotation!!,
+                        Rotation(mc.thePlayer.rotationYaw - 180, 90F),
+                        RandomUtils.nextFloat(120F, 160F)
+                    )
+                )
             }
 
             "newspartan" -> {
@@ -947,7 +889,7 @@ class Flight : Module() {
                 mc.thePlayer.noClip = true
                 mc.thePlayer.onGround = false
                 if (MovementUtils.isMoving()) {
-                    MovementUtils.strafe(1.6f)
+                    MovementUtils.strafe(vanillaSpeedValue.get())
                 } else {
                     mc.thePlayer.motionX = 0.0
                     mc.thePlayer.motionZ = 0.0
@@ -1074,7 +1016,7 @@ class Flight : Module() {
                 MovementUtils.strafe(vanillaSpeed)
             }
 
-            "cubecraft" -> {
+            "sentinel" -> {
                 mc.thePlayer.motionY = 0.0
                 if (MovementUtils.isMoving()) {
                     mc.timer.timerSpeed = 0.6f
@@ -1472,34 +1414,6 @@ class Flight : Module() {
                 )
             }
 
-            "mineplex" -> if (mc.thePlayer.inventory.getCurrentItem() == null) {
-                if (mc.gameSettings.keyBindJump.isKeyDown && mineplexTimer.hasTimePassed(100)) {
-                    mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + 1, mc.thePlayer.posZ)
-                    mineplexTimer.reset()
-                }
-                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && mineplexTimer.hasTimePassed(100)) {
-                    mc.gameSettings.keyBindSneak.pressed = false
-                    mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY - 0.6, mc.thePlayer.posZ)
-                    mineplexTimer.reset()
-                }
-                val blockPos = BlockPos(mc.thePlayer.posX, mc.thePlayer.entityBoundingBox.minY - 1, mc.thePlayer.posZ)
-                val vec = Vec3(blockPos).addVector(0.4, 0.4, 0.4).add(Vec3(EnumFacing.UP.directionVec))
-                mc.playerController.onPlayerRightClick(
-                    mc.thePlayer,
-                    mc.theWorld,
-                    mc.thePlayer.inventory.getCurrentItem(),
-                    blockPos,
-                    EnumFacing.UP,
-                    Vec3(vec.xCoord * 0.4f, vec.yCoord * 0.4f, vec.zCoord * 0.4f)
-                )
-                MovementUtils.strafe(0.27f)
-                mc.timer.timerSpeed = 1 + mineplexSpeedValue.get()
-            } else {
-                mc.timer.timerSpeed = 1f
-                state = false
-                ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§aSelect an empty slot to fly.")
-            }
-
             "aac3.3.12" -> {
                 if (mc.thePlayer.posY < -70) mc.thePlayer.motionY = aacMotion.get().toDouble()
                 mc.timer.timerSpeed = 1f
@@ -1637,7 +1551,6 @@ class Flight : Module() {
                 }
             }
 
-            "jump" -> if (mc.thePlayer.onGround) mc.thePlayer.jump()
             "exploit" -> {
                 if (wdState == 0) {
                     mc.thePlayer.motionY = 0.1
@@ -1660,19 +1573,6 @@ class Flight : Module() {
                 if (aac3glideDelay >= neruxVaceTicks.get() && !mc.thePlayer.onGround) {
                     aac3glideDelay = 0
                     mc.thePlayer.motionY = .015
-                }
-            }
-
-            "hypixel" -> {
-                val boostDelay = hypixelBoostDelay.get()
-                if (hypixelBoost.get() && !flyTimer.hasTimePassed(boostDelay.toLong())) {
-                    mc.timer.timerSpeed = 1f + hypixelBoostTimer.get() * (flyTimer.hasTimeLeft(boostDelay.toLong())
-                        .toFloat() / boostDelay.toFloat())
-                }
-                hypixelTimer.update()
-                if (hypixelTimer.hasTimePassed(2)) {
-                    mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + 1.0E-5, mc.thePlayer.posZ)
-                    hypixelTimer.reset()
                 }
             }
         }
@@ -2012,6 +1912,11 @@ class Flight : Module() {
                 event.cancelEvent()
             }
         }
+        if (mode.equals("blockplacement", ignoreCase = true)) {
+            if (packet is C03PacketPlayer) {
+                packet.onGround = true
+            }
+        }
         if (mode.equals("shotbow", ignoreCase = true)) {
             if (packet is S08PacketPlayerPosLook) {
                 if (mc.thePlayer == null || mc.thePlayer.ticksExisted <= 0) return
@@ -2056,35 +1961,6 @@ class Flight : Module() {
                 TransferUtils.noMotionSet = true
                 if (boostMotion == 1) {
                     boostMotion = 2
-                }
-            }
-        }
-        if (mode.equals("vulcan2", ignoreCase = true)) {
-            if (packet is C03PacketPlayer && !pog) {
-                event.cancelEvent()
-            } else if (packet is C03PacketPlayer && (packet is C04PacketPlayerPosition || packet is C06PacketPlayerPosLook)) {
-                val deltaX = packet.x - lastSentX
-                val deltaY = packet.y - lastSentY
-                val deltaZ = packet.z - lastSentZ
-
-                if (sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) > 9.3) {
-                    lastSentX = packet.x
-                    lastSentY = packet.y
-                    lastSentZ = packet.z
-                    return
-                }
-                event.cancelEvent()
-            } else if (packet is C03PacketPlayer) {
-                event.cancelEvent()
-            }
-            if (packet is S08PacketPlayerPosLook) {
-                if (!pog) {
-                    lastSentX = packet.x
-                    lastSentY = packet.y
-                    lastSentZ = packet.z
-                    pog = true
-                    mc.timer.timerSpeed = 1.0f
-                    event.cancelEvent()
                 }
             }
         }
@@ -2242,14 +2118,11 @@ class Flight : Module() {
         if (packet is C03PacketPlayer) {
             val packetPlayer = packet
             if (mode.equals("NCP", ignoreCase = true) || mode.equals(
-                    "Mineplex",
-                    ignoreCase = true
-                ) && mc.thePlayer.inventory.getCurrentItem() == null || mode.equals(
                     "Verus",
                     ignoreCase = true
                 ) && verusSpoofGround.get() && verusDmged
             ) packetPlayer.onGround = true
-            if (mode.equals("Hypixel", ignoreCase = true) || mode.equals(
+            if (mode.equals(
                     "BoostHypixel",
                     ignoreCase = true
                 )
@@ -2417,21 +2290,10 @@ class Flight : Module() {
             ) event.zeroXZ() else event.cancelEvent()
 
             "clip" -> if (clipNoMove.get()) event.zeroXZ()
-            "veruslowhop" -> if (!mc.gameSettings.keyBindSneak.isKeyDown && !mc.thePlayer.isInWeb && !mc.thePlayer.isInLava && !mc.thePlayer.isInWater && !mc.thePlayer.isOnLadder && !mc.gameSettings.keyBindJump.isKeyDown && mc.thePlayer.ridingEntity == null) {
-                if (!mc.gameSettings.keyBindSneak.isKeyDown && MovementUtils.isMoving()) {
-                    mc.gameSettings.keyBindJump.pressed = false
-                    if (!mc.gameSettings.keyBindSneak.isKeyDown && mc.thePlayer.onGround) {
-                        mc.thePlayer.jump()
-                        mc.thePlayer.motionY = 0.0
-                        MovementUtils.strafe(0.61f)
-                        event.y = 0.41999998688698
-                    }
-                    MovementUtils.strafe()
-                }
-            }
 
             "slime" -> if (wdState < 4) event.zeroXZ()
-            "cubecraft" -> {
+
+            "sentinel" -> {
                 val yaw = Math.toRadians(mc.thePlayer.rotationYaw.toDouble())
                 if (MovementUtils.isMoving()) {
                     if (cubecraftTeleportTickTimer.hasTimePassed(2)) {
@@ -2484,40 +2346,9 @@ class Flight : Module() {
     }
 
     @EventTarget
-    fun onBB(event: BlockBBEvent) {
+    fun onBlockBB(event: BlockBBEvent) {
         if (mc.thePlayer == null) return
         val mode = modeValue.get()
-        if ((mode.equals("Jump", ignoreCase = true) || mode.equals(
-                "vulcan2",
-                ignoreCase = true
-            )) && event.y < startY
-        ) event.boundingBox =
-            AxisAlignedBB.fromBounds(
-                event.x.toDouble(),
-                event.y.toDouble(),
-                event.z.toDouble(),
-                (event.x + 1).toDouble(),
-                startY,
-                (event.z + 1).toDouble()
-            )
-        if ((mode.equals(
-                "collide",
-                ignoreCase = true
-            ) && !mc.thePlayer.isSneaking || mode.equals(
-                "mineplex",
-                ignoreCase = true
-            ) && mc.thePlayer.inventory.getCurrentItem() == null || mode.equals(
-                "Hypixel",
-                ignoreCase = true
-            ) || mode.equals(
-                "veruslowhop",
-                ignoreCase = true
-            ) && !mc.gameSettings.keyBindSneak.isKeyDown)
-        ) event.boundingBox = AxisAlignedBB(-2.0, -1.0, -2.0, 2.0, 1.0, 2.0).offset(
-            event.x.toDouble(),
-            event.y.toDouble(),
-            event.z.toDouble()
-        )
         if (event.block is BlockAir && (mode.equals("BoostHypixel", ignoreCase = true) || mode.equals(
                 "Verus",
                 ignoreCase = true
@@ -2536,10 +2367,7 @@ class Flight : Module() {
     @EventTarget
     fun onJump(e: JumpEvent) {
         val mode = modeValue.get()
-        if (mode.equals("Hypixel", ignoreCase = true) || mode.equals("BoostHypixel", ignoreCase = true) || mode.equals(
-                "Mineplex",
-                ignoreCase = true
-            ) && mc.thePlayer.inventory.getCurrentItem() == null || mode.equals(
+        if (mode.equals("BoostHypixel", ignoreCase = true) || mode.equals(
                 "funcraft",
                 ignoreCase = true
             ) && moveSpeed > 0 || mode.equals("exploit", ignoreCase = true) && wdState >= 1 || mode.equals(
@@ -2552,10 +2380,7 @@ class Flight : Module() {
     @EventTarget
     fun onStep(e: StepEvent) {
         val mode = modeValue.get()
-        if (mode.equals("Hypixel", ignoreCase = true) || mode.equals("BoostHypixel", ignoreCase = true) || mode.equals(
-                "Mineplex",
-                ignoreCase = true
-            ) && mc.thePlayer.inventory.getCurrentItem() == null || mode.equals(
+        if (mode.equals("BoostHypixel", ignoreCase = true) || mode.equals(
                 "funcraft",
                 ignoreCase = true
             ) || mode.equals("exploit", ignoreCase = true) && wdState > 2 || mode.equals("slime", ignoreCase = true)

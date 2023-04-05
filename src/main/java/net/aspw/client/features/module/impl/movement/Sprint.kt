@@ -18,6 +18,7 @@ class Sprint : Module() {
     val allDirectionsValue = BoolValue("Multi", true)
     val noPacketPatchValue = BoolValue("Silent", false)
     val rot = BoolValue("Rotations", false)
+    val wallValue = BoolValue("No-WallsCheck", false)
 
     private var modified = false
 

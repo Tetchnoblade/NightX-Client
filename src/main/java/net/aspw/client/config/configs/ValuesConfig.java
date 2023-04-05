@@ -6,7 +6,6 @@ import net.aspw.client.config.FileConfig;
 import net.aspw.client.config.FileManager;
 import net.aspw.client.features.api.MacroManager;
 import net.aspw.client.features.module.Module;
-import net.aspw.client.utils.EntityUtils;
 import net.aspw.client.value.Value;
 import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening;
 
@@ -45,19 +44,6 @@ public class ValuesConfig extends FileConfig {
 
             if (entry.getKey().equalsIgnoreCase("CommandPrefix")) {
                 Client.commandManager.setPrefix(entry.getValue().getAsCharacter());
-            } else if (entry.getKey().equalsIgnoreCase("targets")) {
-                JsonObject jsonValue = (JsonObject) entry.getValue();
-
-                if (jsonValue.has("TargetPlayer"))
-                    EntityUtils.targetPlayer = jsonValue.get("TargetPlayer").getAsBoolean();
-                if (jsonValue.has("TargetMobs"))
-                    EntityUtils.targetMobs = jsonValue.get("TargetMobs").getAsBoolean();
-                if (jsonValue.has("TargetAnimals"))
-                    EntityUtils.targetAnimals = jsonValue.get("TargetAnimals").getAsBoolean();
-                if (jsonValue.has("TargetInvisible"))
-                    EntityUtils.targetInvisible = jsonValue.get("TargetInvisible").getAsBoolean();
-                if (jsonValue.has("TargetDead"))
-                    EntityUtils.targetDead = jsonValue.get("TargetDead").getAsBoolean();
             } else if (entry.getKey().equalsIgnoreCase("macros")) {
                 JsonArray jsonValue = entry.getValue().getAsJsonArray();
                 for (final JsonElement macroElement : jsonValue) {
@@ -100,14 +86,6 @@ public class ValuesConfig extends FileConfig {
         final JsonObject jsonObject = new JsonObject();
 
         jsonObject.addProperty("CommandPrefix", Client.commandManager.getPrefix());
-
-        final JsonObject jsonTargets = new JsonObject();
-        jsonTargets.addProperty("TargetPlayer", EntityUtils.targetPlayer);
-        jsonTargets.addProperty("TargetMobs", EntityUtils.targetMobs);
-        jsonTargets.addProperty("TargetAnimals", EntityUtils.targetAnimals);
-        jsonTargets.addProperty("TargetInvisible", EntityUtils.targetInvisible);
-        jsonTargets.addProperty("TargetDead", EntityUtils.targetDead);
-        jsonObject.add("targets", jsonTargets);
 
         final JsonArray jsonMacros = new JsonArray();
         MacroManager.INSTANCE.getMacroMapping().forEach((k, v) -> {

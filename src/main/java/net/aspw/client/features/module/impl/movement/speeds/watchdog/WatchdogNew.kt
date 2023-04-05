@@ -28,10 +28,10 @@ class WatchdogNew : SpeedMode("WatchdogNew") {
         if (speed == null || eventMotion.eventState !== EventState.PRE || mc.thePlayer.isInWater) return
         if (MovementUtils.isMoving()) {
             if (mc.thePlayer.fallDistance > 0.16 && mc.gameSettings.keyBindLeft.isKeyDown()) {
-                MovementUtils.strafe(0.12f);
+                MovementUtils.strafe(0.185f);
             }
             if (mc.thePlayer.fallDistance > 0.16 && mc.gameSettings.keyBindRight.isKeyDown()) {
-                MovementUtils.strafe(0.12f);
+                MovementUtils.strafe(0.185f);
             }
             groundTick++
             if (mc.thePlayer.onGround) {
