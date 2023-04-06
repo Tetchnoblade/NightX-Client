@@ -11,7 +11,10 @@ import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
+import net.minecraft.init.Blocks
+import net.minecraft.item.ItemStack
 import net.minecraft.network.play.client.C03PacketPlayer
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
 import net.minecraft.stats.StatList
 import net.minecraft.util.MathHelper
 import kotlin.math.ceil
@@ -34,6 +37,7 @@ class Step : Module() {
             "NCP",
             "MotionNCP",
             "OldNCP",
+            "BlocksMC",
             "Verus",
             "Vulcan",
             "Matrix",
@@ -335,6 +339,43 @@ class Step : Module() {
                             mc.thePlayer.motionZ = 0.0
                         }
                     }
+                }
+
+                mode.equals("BlocksMC", true) -> {
+                    fakeJump()
+
+                    val pos = mc.thePlayer.position.add(0.0, -1.5, 0.0)
+
+                    mc.netHandler.addToSendQueue(
+                        C08PacketPlayerBlockPlacement(
+                            pos,
+                            1,
+                            ItemStack(Blocks.stone.getItem(mc.theWorld, pos)),
+                            0.0F,
+                            0.5F + Math.random().toFloat() * 0.44.toFloat(),
+                            0.0F
+                        )
+                    )
+
+                    mc.netHandler.addToSendQueue(
+                        C03PacketPlayer.C04PacketPlayerPosition(
+                            stepX,
+                            stepY + 0.41999998688698, stepZ, false
+                        )
+                    )
+                    mc.netHandler.addToSendQueue(
+                        C03PacketPlayer.C04PacketPlayerPosition(
+                            stepX,
+                            stepY + 0.7531999805212, stepZ, false
+                        )
+                    )
+                    mc.netHandler.addToSendQueue(
+                        C03PacketPlayer.C04PacketPlayerPosition(
+                            stepX,
+                            stepY + 1, stepZ, true
+                        )
+                    )
+                    timer.reset()
                 }
 
                 mode.equals("NCP", true) || mode.equals("AAC", true) -> {

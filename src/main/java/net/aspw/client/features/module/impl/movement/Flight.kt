@@ -63,7 +63,6 @@ class Flight : Module() {
             "Zoom",
             "ShotBow",
             "BlockPlacement",
-            "ZonecraftVanilla",
             "Zonecraft",
             "BlockDrop",
             "Minemora",
@@ -103,7 +102,6 @@ class Flight : Module() {
             .equals("bugspartan", ignoreCase = true) || modeValue.get()
             .equals("keepalive", ignoreCase = true) || modeValue.get().equals("derp", ignoreCase = true)
                 || modeValue.get().equals("bufferabuse", ignoreCase = true) || modeValue.get()
-            .equals("zonecraftvanilla", ignoreCase = true) || modeValue.get()
             .equals("shotbow", ignoreCase = true)
     }
     private val vanillaVSpeedValue = FloatValue("V-Speed", 0.6f, 0f, 5f) {
@@ -238,6 +236,8 @@ class Flight : Module() {
     private val verusTimer = TickTimer()
     private val hypixelTimer = TickTimer()
     private val cubecraftTeleportTickTimer = TickTimer()
+    private val cubecraftTeleportYTickTimer = TickTimer()
+    private val cubecraftTeleportYDownTickTimer = TickTimer()
     private val aac5C03List = ArrayList<C03PacketPlayer>()
     private var tick = 0
     private var boost = false
@@ -635,6 +635,8 @@ class Flight : Module() {
         mc.thePlayer?.noClip = false
         if (mc.thePlayer == null) return
         noFlag = false
+        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+            mc.gameSettings.keyBindSneak.pressed = true
         val mode = modeValue.get()
         if (mode.equals("BufferAbuse")) {
             PacketUtils.sendPacketNoEvent(
@@ -739,11 +741,6 @@ class Flight : Module() {
                 if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                     mc.gameSettings.keyBindSneak.pressed = false
                 }
-            }
-
-            "zonecraftvanilla" -> {
-                MovementUtils.strafe(vanillaSpeed)
-                mc.thePlayer.motionY = 0.0
             }
 
             "matrix" -> {
@@ -1018,10 +1015,10 @@ class Flight : Module() {
 
             "sentinel" -> {
                 mc.thePlayer.motionY = 0.0
-                if (MovementUtils.isMoving()) {
-                    mc.timer.timerSpeed = 0.6f
-                    cubecraftTeleportTickTimer.update()
-                }
+                cubecraftTeleportTickTimer.update()
+                cubecraftTeleportYTickTimer.update()
+                cubecraftTeleportYDownTickTimer.update()
+                mc.timer.timerSpeed = 0.6f
             }
 
             "ncp" -> {
@@ -1729,12 +1726,6 @@ class Flight : Module() {
             }
         }
         when (modeValue.get().lowercase(Locale.getDefault())) {
-            "shotbow" -> {
-                if (!GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
-                    event.onGround = false
-                }
-            }
-
             "funcraft" -> {
                 if (mc.thePlayer.onGround) {
                     mc.timer.timerSpeed = 1f
@@ -1899,14 +1890,6 @@ class Flight : Module() {
         val packet = event.packet
         val mode = modeValue.get()
         if (noPacketModify) return
-        if (mode.equals("zonecraftvanilla", ignoreCase = true)) {
-            if (packet !is C00PacketKeepAlive) {
-                event.cancelEvent()
-                if (mc.thePlayer.ticksExisted % 3 == 0 && packet is C03PacketPlayer) {
-                    PacketUtils.sendPacketNoEvent(C03PacketPlayer(true))
-                }
-            }
-        }
         if (mode.equals("bufferabuse", ignoreCase = true)) {
             if (packet is C03PacketPlayer) {
                 event.cancelEvent()
@@ -1918,6 +1901,8 @@ class Flight : Module() {
             }
         }
         if (mode.equals("shotbow", ignoreCase = true)) {
+            if (packet is C03PacketPlayer)
+                packet.onGround = true
             if (packet is S08PacketPlayerPosLook) {
                 if (mc.thePlayer == null || mc.thePlayer.ticksExisted <= 0) return
 
@@ -2294,17 +2279,21 @@ class Flight : Module() {
             "slime" -> if (wdState < 4) event.zeroXZ()
 
             "sentinel" -> {
-                val yaw = Math.toRadians(mc.thePlayer.rotationYaw.toDouble())
-                if (MovementUtils.isMoving()) {
-                    if (cubecraftTeleportTickTimer.hasTimePassed(2)) {
-                        event.x = -Math.sin(yaw) * 2.4
-                        event.z = Math.cos(yaw) * 2.4
-                        cubecraftTeleportTickTimer.reset()
-                    } else {
-                        event.x = -Math.sin(yaw) * 0.2
-                        event.z = Math.cos(yaw) * 0.2
-                    }
+                if (MovementUtils.isMoving() && cubecraftTeleportTickTimer.hasTimePassed(2)) {
+                    event.x = -Math.sin(Math.toRadians(mc.thePlayer.rotationYaw.toDouble())) * 2.4
+                    event.z = Math.cos(Math.toRadians(mc.thePlayer.rotationYaw.toDouble())) * 2.4
+                    cubecraftTeleportTickTimer.reset()
                 }
+                if (mc.gameSettings.keyBindJump.isKeyDown && cubecraftTeleportYTickTimer.hasTimePassed(2)) {
+                    event.y = 1.6
+                    cubecraftTeleportYTickTimer.reset()
+                }
+                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && cubecraftTeleportYDownTickTimer.hasTimePassed(2)) {
+                    event.y = -1.6
+                    cubecraftTeleportYDownTickTimer.reset()
+                }
+                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+                    mc.gameSettings.keyBindSneak.pressed = false
             }
 
             "boosthypixel" -> {
