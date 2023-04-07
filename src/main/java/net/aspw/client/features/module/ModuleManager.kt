@@ -88,7 +88,6 @@ class ModuleManager : Listenable {
             Chams::class.java,
             Phase::class.java,
             Crasher::class.java,
-            Fov::class.java,
             Animations::class.java,
             InventoryManager::class.java,
             ShowInvis::class.java,
@@ -194,7 +193,8 @@ class ModuleManager : Listenable {
             Tickbase::class.java,
             BedBreaker::class.java,
             StealAura::class.java,
-            BedWalker::class.java
+            BedWalker::class.java,
+            Wings::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")

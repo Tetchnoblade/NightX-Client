@@ -41,8 +41,7 @@ public abstract class MixinGuiInGame extends MixinGui {
 
     @Inject(method = "showCrosshair", at = @At("HEAD"), cancellable = true)
     private void injectCrosshair(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        final Crosshair crossHair = Client.moduleManager.getModule(Crosshair.class);
-        if (crossHair.getState() || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0)
+        if (Client.moduleManager.getModule(Crosshair.class).getState() || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && Client.moduleManager.getModule(Hud.class).getNof5crossHair().get())
             callbackInfoReturnable.setReturnValue(false);
     }
 

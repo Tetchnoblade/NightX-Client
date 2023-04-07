@@ -43,7 +43,7 @@ class BanNotifier : Module() {
                                     )
                                 ) else Client.hud.addNotification(
                                     Notification(
-                                        "Didn't got banned any player in the last minute.",
+                                        "No players got banned in the last minute.",
                                         Notification.Type.SUCCESS,
                                         alertTimeValue.get() * 1000L
                                     )
@@ -53,7 +53,7 @@ class BanNotifier : Module() {
                             e.printStackTrace()
                             if (Client.moduleManager.getModule(BanNotifier::class.java)!!.state && alertValue.get() && mc.thePlayer != null && (!serverCheckValue.get() || isOnHypixel)) Client.hud.addNotification(
                                 Notification(
-                                    "Didn't get banned any player in the last minute.",
+                                    "No players got banned in the last minute.",
                                     Notification.Type.ERROR,
                                     1000L
                                 )
