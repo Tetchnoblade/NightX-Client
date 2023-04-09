@@ -95,9 +95,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
         SilentView silentView = Client.moduleManager.getModule(SilentView.class);
         if ((EntityLivingBase) (Object) this instanceof EntityPlayerSP) {
             if (silentView.getState()) {
-                if (silentView.getPlayerYaw() != null) {
-                    rotationYaw = silentView.getPlayerYaw();
-                }
+                rotationYaw = silentView.getPlayerYaw();
             }
         }
         float f = MathHelper.wrapAngleTo180_float(p_1101461 - this.renderYawOffset);

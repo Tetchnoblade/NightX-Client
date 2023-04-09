@@ -3,7 +3,7 @@ package net.aspw.client.injection.forge.mixins.entity;
 import net.aspw.client.Client;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.exploit.AntiHunger;
-import net.aspw.client.features.module.impl.exploit.NoZeroZeroThrees;
+import net.aspw.client.features.module.impl.exploit.NoZeroZeroThree;
 import net.aspw.client.features.module.impl.exploit.PortalMenu;
 import net.aspw.client.features.module.impl.movement.Flight;
 import net.aspw.client.features.module.impl.movement.NoSlow;
@@ -160,7 +160,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
                 double zDiff = event.getZ() - this.lastReportedPosZ;
                 double yawDiff = yaw - lastReportedYaw;
                 double pitchDiff = pitch - lastReportedPitch;
-                boolean moved = xDiff * xDiff + yDiff * yDiff + zDiff * zDiff > (Client.moduleManager.getModule(NoZeroZeroThrees.class).getState() ? 0D : 9.0E-4D) || this.positionUpdateTicks >= 20;
+                boolean moved = xDiff * xDiff + yDiff * yDiff + zDiff * zDiff > (Client.moduleManager.getModule(NoZeroZeroThree.class).getState() ? 0D : 9.0E-4D) || this.positionUpdateTicks >= 20;
                 boolean rotated = yawDiff != 0.0D || pitchDiff != 0.0D;
 
                 if (this.ridingEntity == null) {

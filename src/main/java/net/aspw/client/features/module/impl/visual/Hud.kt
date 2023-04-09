@@ -17,7 +17,7 @@ import net.aspw.client.visual.hud.designer.GuiHudDesigner
 @ModuleInfo(name = "Hud", category = ModuleCategory.VISUAL, array = false)
 class Hud : Module() {
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
-    val f5Animation = BoolValue("F5-Animation", true)
+    val f5Animation = BoolValue("F5-Animation", false)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)
     val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F, { animHotbarValue.get() })
     val blackHotbarValue = BoolValue("Black-Hotbar", false)

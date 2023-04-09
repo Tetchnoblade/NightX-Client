@@ -548,6 +548,10 @@ class Speed : Module() {
         FloatValue("AACGround-Timer", 3f, 1.1f, 10f) { typeValue.get().equals("aac", ignoreCase = true) }
 
     @JvmField
+    val vanillaBhopSpeed =
+        FloatValue("Hop-Speed", 0.9f, 0.0f, 5f) { typeValue.get().equals("vanillabhop", ignoreCase = true) }
+
+    @JvmField
     val cubecraftPortLengthValue =
         FloatValue("CubeCraft-PortLength", 1f, 0.1f, 2f) { modeName.equals("teleportcubecraft", ignoreCase = true) }
 

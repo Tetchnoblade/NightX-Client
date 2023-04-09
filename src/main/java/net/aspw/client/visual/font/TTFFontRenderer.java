@@ -52,7 +52,7 @@ public class TTFFontRenderer {
     /**
      * If fractional metrics should be used in the font renderer.
      */
-    private boolean fractionalMetrics = false;
+    private final boolean fractionalMetrics;
 
     public TTFFontRenderer(Font font) {
         this(font, 256);
@@ -60,10 +60,6 @@ public class TTFFontRenderer {
 
     public TTFFontRenderer(Font font, int characterCount) {
         this(font, characterCount, true);
-    }
-
-    public TTFFontRenderer(Font font, boolean fractionalMetrics) {
-        this(font, 256, fractionalMetrics);
     }
 
     public TTFFontRenderer(Font font, int characterCount, boolean fractionalMetrics) {
@@ -134,8 +130,8 @@ public class TTFFontRenderer {
             graphics.setColor(Color.WHITE);
 
             // Enables anti-aliasing so the font doesn't have aliasing.
-            //graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            //graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, this.fractionalMetrics ? RenderingHints.VALUE_FRACTIONALMETRICS_ON : RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
 
