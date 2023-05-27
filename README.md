@@ -1,4 +1,4 @@
-# NightX Client (LiquidBounce Custom Build) (Discontinued)
+# NightX Client (LiquidBounce Custom Build)
 
 # Moved To https://sites.google.com/view/nightx-plus
 # You can download B50+ versions on this web site!
