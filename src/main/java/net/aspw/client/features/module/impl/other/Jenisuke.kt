@@ -30,7 +30,7 @@ class Jenisuke : Module() {
                 jenisukeCount++
                 chat(
                     packetAmount.get()
-                        .toString() + "になるほどブロックを置いたらjenisukeがコーラがぶ飲み！現在のカウント:  " + jenisukeCount.toString()
+                        .toString() + "になるほどブロックを置いたらjenisukeがコーラがぶ飲み！現在のカウント:    " + jenisukeCount.toString()
                 )
             } else {
                 chat("ふっざけんな！シングル非対応！")
@@ -45,12 +45,6 @@ class Jenisuke : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        if (!LoginID.isPremium) {
-            chat("You are not using NightX Premium Account!")
-            this.state = false
-            return
-        }
-
         if (!mc.isIntegratedServerRunning) {
             if (jenisukeCount >= packetAmount.get()) {
                 chat("まずは、KillAura!")

@@ -25,7 +25,7 @@ object Client {
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Max"
-    const val CLIENT_VERSION = "Release B61"
+    const val CLIENT_VERSION = "Release B61 V2"
     const val CLIENT_CREATOR = "As_pw, outaokura"
     const val CLIENT_BASE = "https://nightx.skidded.host/s/"
     const val CLIENT_WEBSITE = "i4vvayd263"

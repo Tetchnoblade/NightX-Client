@@ -11,7 +11,7 @@ import net.aspw.client.features.module.impl.movement.*
 import net.aspw.client.features.module.impl.other.*
 import net.aspw.client.features.module.impl.player.*
 import net.aspw.client.features.module.impl.player.Timer
-import net.aspw.client.features.module.impl.premium.TestModule
+import net.aspw.client.features.module.impl.beta.TestModule
 import net.aspw.client.features.module.impl.targets.*
 import net.aspw.client.features.module.impl.visual.*
 import net.aspw.client.util.ClientUtils
