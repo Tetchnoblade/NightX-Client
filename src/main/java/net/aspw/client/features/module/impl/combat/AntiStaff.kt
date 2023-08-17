@@ -13,7 +13,7 @@ import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.network.play.server.*
 import kotlin.concurrent.thread
 
-@ModuleInfo(name = "AntiStaff", spacedName = "Anti Staff", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AntiStaff", spacedName = "Anti Staff", description = "", category = ModuleCategory.COMBAT)
 class AntiStaff : Module() {
 
     private var obStaffs = "_"

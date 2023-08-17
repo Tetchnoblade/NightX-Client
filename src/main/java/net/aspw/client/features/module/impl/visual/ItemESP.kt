@@ -6,10 +6,10 @@ import net.aspw.client.event.Render3DEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.ClientUtils
-import net.aspw.client.utils.render.ColorUtils.rainbow
-import net.aspw.client.utils.render.RenderUtils
-import net.aspw.client.utils.render.shader.shaders.OutlineShader
+import net.aspw.client.util.ClientUtils
+import net.aspw.client.util.render.ColorUtils.rainbow
+import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.util.render.shader.shaders.OutlineShader
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
@@ -17,7 +17,12 @@ import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.projectile.EntityArrow
 import java.awt.Color
 
-@ModuleInfo(name = "ItemESP", spacedName = "Item ESP", category = ModuleCategory.VISUAL, array = false)
+@ModuleInfo(
+    name = "ItemESP",
+    spacedName = "Item ESP",
+    description = "",
+    category = ModuleCategory.VISUAL
+)
 class ItemESP : Module() {
     private val modeValue = ListValue("Mode", arrayOf("Box", "ShaderOutline"), "Box")
     private val colorRedValue = IntegerValue("R", 255, 0, 255)

@@ -8,7 +8,7 @@ import java.net.Socket
 
 object ProxyManager {
     var isEnable = false
-    var proxy = "0.0.0.0:25565"
+    var proxy = ""
     var proxyType = Proxy.Type.SOCKS
 
     val proxyInstance: Proxy

@@ -7,7 +7,7 @@ import net.minecraft.block.Block
 import net.minecraft.init.Blocks
 import org.lwjgl.input.Keyboard
 
-@ModuleInfo(name = "XRay", category = ModuleCategory.VISUAL, keyBind = Keyboard.KEY_F7)
+@ModuleInfo(name = "XRay", description = "", category = ModuleCategory.VISUAL, keyBind = Keyboard.KEY_F7)
 class XRay : Module() {
     val xrayBlocks = mutableListOf<Block>(
         Blocks.coal_ore,

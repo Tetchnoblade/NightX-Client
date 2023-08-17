@@ -7,10 +7,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * The type Mixin gui game over.
+ */
 @Mixin(GuiGameOver.class)
 public class MixinGuiGameOver {
     @Shadow
-    private int enableButtonsTimer;
+    public int enableButtonsTimer;
 
     @Inject(method = "initGui", at = @At("HEAD"))
     private void allowClickable(CallbackInfo ci) {

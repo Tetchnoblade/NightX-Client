@@ -2,7 +2,7 @@ package net.aspw.client.features.command.impl
 
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
-import net.aspw.client.utils.ClientUtils
+import net.aspw.client.util.ClientUtils
 import org.lwjgl.input.Keyboard
 
 class BindsCommand : Command("binds", emptyArray()) {

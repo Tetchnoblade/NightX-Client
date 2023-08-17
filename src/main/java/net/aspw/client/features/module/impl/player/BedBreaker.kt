@@ -7,25 +7,26 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.RotationUtils
-import net.aspw.client.utils.block.BlockUtils.getBlock
-import net.aspw.client.utils.block.BlockUtils.getCenterDistance
-import net.aspw.client.utils.block.BlockUtils.isFullBlock
-import net.aspw.client.utils.extensions.getBlock
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.RotationUtils
+import net.aspw.client.util.block.BlockUtils.getBlock
+import net.aspw.client.util.block.BlockUtils.getCenterDistance
+import net.aspw.client.util.block.BlockUtils.isFullBlock
+import net.aspw.client.util.extensions.getBlock
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
 import net.minecraft.block.Block
 import net.minecraft.block.BlockAir
 import net.minecraft.network.play.client.C07PacketPlayerDigging
+import net.minecraft.network.play.client.C0APacketAnimation
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.Vec3
 import java.awt.Color
 import java.util.*
 
-@ModuleInfo(name = "BedBreaker", spacedName = "Bed Breaker", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "BedBreaker", spacedName = "Bed Breaker", description = "", category = ModuleCategory.PLAYER)
 class BedBreaker : Module() {
 
     /**
@@ -36,7 +37,7 @@ class BedBreaker : Module() {
     private val rangeValue = FloatValue("Range", 5F, 1F, 7F, "m")
     private val actionValue = ListValue("Action", arrayOf("Destroy", "Use"), "Destroy")
     private val instantValue = BoolValue("Instant", false)
-    private val swingValue = BoolValue("VisualSwing", false)
+    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Packet")
     private val rotationsValue = BoolValue("Rotations", true)
     private val surroundingsValue = BoolValue("Surroundings", false)
     private val hypixelValue = BoolValue("Hypixel", false)
@@ -50,6 +51,9 @@ class BedBreaker : Module() {
     private var blockHitDelay = 0
     private var currentDamage = 0F
     var breaking = false
+
+    override val tag: String
+        get() = if (hypixelValue.get()) "Watchdog" else "Normal"
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
@@ -111,6 +115,10 @@ class BedBreaker : Module() {
 
         oldPos = currentPos
 
+        if (blockHitDelay < 1) {
+            breaking = true
+        }
+
         // Block hit delay
         if (blockHitDelay > 0) {
             blockHitDelay--
@@ -122,7 +130,7 @@ class BedBreaker : Module() {
             RotationUtils.setTargetRotation(rotations.rotation)
 
         when {
-            // Destory block
+            // Destroy block
             actionValue.get().equals("destroy", true) || surroundings -> {
                 // Auto Tool
                 val autoTool = Client.moduleManager[AutoTool::class.java] as AutoTool
@@ -139,8 +147,10 @@ class BedBreaker : Module() {
                         )
                     )
 
-                    if (swingValue.get())
-                        mc.thePlayer.swingItem()
+                    when (swingValue.get().lowercase(Locale.getDefault())) {
+                        "normal" -> mc.thePlayer.swingItem()
+                        "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
+                    }
 
                     mc.netHandler.addToSendQueue(
                         C07PacketPlayerDigging(
@@ -166,8 +176,10 @@ class BedBreaker : Module() {
                     if (mc.thePlayer.capabilities.isCreativeMode ||
                         block.getPlayerRelativeBlockHardness(mc.thePlayer, mc.theWorld, pos) >= 1.0F
                     ) {
-                        if (swingValue.get())
-                            mc.thePlayer.swingItem()
+                        when (swingValue.get().lowercase(Locale.getDefault())) {
+                            "normal" -> mc.thePlayer.swingItem()
+                            "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
+                        }
                         mc.playerController.onPlayerDestroyBlock(pos, EnumFacing.DOWN)
 
                         currentDamage = 0F
@@ -176,8 +188,10 @@ class BedBreaker : Module() {
                     }
                 }
 
-                if (swingValue.get())
-                    mc.thePlayer.swingItem()
+                when (swingValue.get().lowercase(Locale.getDefault())) {
+                    "normal" -> mc.thePlayer.swingItem()
+                    "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
+                }
 
                 currentDamage += block.getPlayerRelativeBlockHardness(mc.thePlayer, mc.theWorld, currentPos)
                 mc.theWorld.sendBlockBreakProgress(mc.thePlayer.entityId, currentPos, (currentDamage * 10F).toInt() - 1)
@@ -202,8 +216,10 @@ class BedBreaker : Module() {
                     Vec3(currentPos.x.toDouble(), currentPos.y.toDouble(), currentPos.z.toDouble())
                 )
             ) {
-                if (swingValue.get())
-                    mc.thePlayer.swingItem()
+                when (swingValue.get().lowercase(Locale.getDefault())) {
+                    "normal" -> mc.thePlayer.swingItem()
+                    "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
+                }
 
                 blockHitDelay = 4
                 currentDamage = 0F

@@ -4,10 +4,17 @@ import net.aspw.client.Client;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
 import net.aspw.client.features.module.impl.player.Scaffold;
-import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.util.MovementUtils;
+import net.minecraft.potion.Potion;
 
+/**
+ * The type Verus hop.
+ */
 public class VerusHop extends SpeedMode {
 
+    /**
+     * Instantiates a new Verus hop.
+     */
     public VerusHop() {
         super("VerusHop");
     }
@@ -23,7 +30,11 @@ public class VerusHop extends SpeedMode {
                 mc.gameSettings.keyBindJump.pressed = false;
                 if (mc.thePlayer.onGround) {
                     mc.thePlayer.jump();
-                    MovementUtils.strafe(0.48F);
+                    if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                        MovementUtils.strafe(0.57f);
+                    } else {
+                        MovementUtils.strafe(0.48f);
+                    }
                 }
                 MovementUtils.strafe();
             }
@@ -34,8 +45,10 @@ public class VerusHop extends SpeedMode {
     public void onDisable() {
         final Scaffold scaffold = Client.moduleManager.getModule(Scaffold.class);
 
-        if (!mc.thePlayer.isSneaking() && !scaffold.getState())
-            MovementUtils.strafe(0.2f);
+        if (!mc.thePlayer.isSneaking() && !scaffold.getState()) {
+            mc.thePlayer.motionX = 0.0;
+            mc.thePlayer.motionZ = 0.0;
+        }
     }
 
     @Override

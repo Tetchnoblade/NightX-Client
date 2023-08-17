@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.aspw.client.utils.ServerUtils;
+import net.aspw.client.util.ServerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;
@@ -26,6 +26,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * The type Mixin gui connecting.
+ */
 @Mixin(GuiConnecting.class)
 public abstract class MixinGuiConnecting extends GuiScreen {
 
@@ -49,8 +52,8 @@ public abstract class MixinGuiConnecting extends GuiScreen {
     }
 
     /**
-     * @author
-     * @reason
+     * @author As_pw
+     * @reason Fix Connect
      */
     @Overwrite
     private void connect(final String ip, final int port) {
@@ -94,7 +97,8 @@ public abstract class MixinGuiConnecting extends GuiScreen {
     }
 
     /**
-     * @author CCBlueX
+     * @author As_pw
+     * @reason Logging in
      */
     @Overwrite
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -108,7 +112,7 @@ public abstract class MixinGuiConnecting extends GuiScreen {
         if (serverData != null)
             ip = serverData.serverIP;
 
-        drawCenteredString(fontRendererObj, "Logging in to", scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 4 + 105, 16777215);
+        drawCenteredString(fontRendererObj, "Logging in to", scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 4 + 102, 16777215);
         drawCenteredString(fontRendererObj, "§7" + ip, scaledResolution.getScaledWidth() / 2, scaledResolution.getScaledHeight() / 4 + 115, 16777215);
 
         super.drawScreen(mouseX, mouseY, partialTicks);

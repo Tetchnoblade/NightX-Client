@@ -5,9 +5,8 @@ import net.aspw.client.Client;
 import net.aspw.client.event.Render3DEvent;
 import net.aspw.client.features.module.impl.combat.Reach;
 import net.aspw.client.features.module.impl.other.FreeLook;
-import net.aspw.client.features.module.impl.visual.Brightness;
-import net.aspw.client.features.module.impl.visual.NoHurt;
-import net.aspw.client.features.module.impl.visual.ViewClip;
+import net.aspw.client.features.module.impl.visual.CameraNoClip;
+import net.aspw.client.features.module.impl.visual.FullBright;
 import net.aspw.client.features.module.impl.visual.XRay;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -23,9 +22,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -34,13 +31,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Objects;
 
 import static org.objectweb.asm.Opcodes.GETFIELD;
 
+/**
+ * The type Mixin entity renderer.
+ */
 @Mixin(EntityRenderer.class)
 public abstract class MixinEntityRenderer {
+    @Mutable
+    @Final
     @Shadow
     private final int[] lightmapColors;
+    @Mutable
+    @Final
     @Shadow
     private final DynamicTexture lightmapTexture;
     @Shadow
@@ -54,14 +59,26 @@ public abstract class MixinEntityRenderer {
     @Shadow
     private Minecraft mc;
     @Shadow
-    private float thirdPersonDistanceTemp;
+    public float thirdPersonDistanceTemp;
     @Shadow
-    private float thirdPersonDistance;
+    public float thirdPersonDistance;
     @Shadow
     private boolean cloudFog;
     @Shadow
     private boolean lightmapUpdateNeeded;
 
+    /**
+     * Instantiates a new Mixin entity renderer.
+     *
+     * @param lightmapColors          the lightmap colors
+     * @param lightmapTexture         the lightmap texture
+     * @param torchFlickerX           the torch flicker x
+     * @param bossColorModifier       the boss color modifier
+     * @param bossColorModifierPrev   the boss color modifier prev
+     * @param mc                      the mc
+     * @param thirdPersonDistanceTemp the third person distance temp
+     * @param thirdPersonDistance     the third person distance
+     */
     protected MixinEntityRenderer(int[] lightmapColors, DynamicTexture lightmapTexture, float torchFlickerX, float bossColorModifier, float bossColorModifierPrev, Minecraft mc, float thirdPersonDistanceTemp, float thirdPersonDistance) {
         this.lightmapColors = lightmapColors;
         this.lightmapTexture = lightmapTexture;
@@ -73,9 +90,20 @@ public abstract class MixinEntityRenderer {
         this.thirdPersonDistance = thirdPersonDistance;
     }
 
+    /**
+     * Load shader.
+     *
+     * @param resourceLocationIn the resource location in
+     */
     @Shadow
     public abstract void loadShader(ResourceLocation resourceLocationIn);
 
+    /**
+     * Sets camera transform.
+     *
+     * @param partialTicks the partial ticks
+     * @param pass         the pass
+     */
     @Shadow
     public abstract void setupCameraTransform(float partialTicks, int pass);
 
@@ -120,15 +148,12 @@ public abstract class MixinEntityRenderer {
         Client.eventManager.callEvent(new Render3DEvent(partialTicks));
     }
 
-    @Inject(method = "hurtCameraEffect", at = @At("HEAD"), cancellable = true)
-    private void injectHurtCameraEffect(CallbackInfo callbackInfo) {
-        if (Client.moduleManager.getModule(NoHurt.class).getState())
-            callbackInfo.cancel();
-    }
-
     @Inject(method = "orientCamera", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Vec3;distanceTo(Lnet/minecraft/util/Vec3;)D"), cancellable = true)
     private void cameraClip(float partialTicks, CallbackInfo callbackInfo) {
-        if (Client.moduleManager.getModule(ViewClip.class).getState() && !Client.moduleManager.getModule(FreeLook.class).getState()) {
+        final CameraNoClip cameraNoClip = Objects.requireNonNull(Client.moduleManager.getModule(CameraNoClip.class));
+        final FreeLook freeLook = Objects.requireNonNull(Client.moduleManager.getModule(FreeLook.class));
+
+        if (cameraNoClip.getState() && !freeLook.getState()) {
             callbackInfo.cancel();
 
             Entity entity = this.mc.getRenderViewEntity();
@@ -195,9 +220,6 @@ public abstract class MixinEntityRenderer {
         }
     }
 
-    /**
-     * @author CCBlueX
-     */
     @Inject(method = "getMouseOver", at = @At("HEAD"), cancellable = true)
     private void getMouseOver(float p_getMouseOver_1_, CallbackInfo ci) {
         Entity entity = this.mc.getRenderViewEntity();
@@ -205,7 +227,7 @@ public abstract class MixinEntityRenderer {
             this.mc.mcProfiler.startSection("pick");
             this.mc.pointedEntity = null;
 
-            final Reach reach = Client.moduleManager.getModule(Reach.class);
+            final Reach reach = Objects.requireNonNull(Client.moduleManager.getModule(Reach.class));
 
             double d0 = reach.getState() ? reach.getMaxRange() : (double) this.mc.playerController.getBlockReachDistance();
             this.mc.objectMouseOver = entity.rayTrace(reach.getState() ? reach.getBuildReachValue().get() : d0, p_getMouseOver_1_);
@@ -224,10 +246,7 @@ public abstract class MixinEntityRenderer {
             }
 
             if (reach.getState()) {
-                d1 = reach.getCombatReachValue().get();
-
-                final MovingObjectPosition movingObjectPosition = entity.rayTrace(d1, p_getMouseOver_1_);
-
+                final MovingObjectPosition movingObjectPosition = entity.rayTrace(reach.getBuildReachValue().get(), p_getMouseOver_1_);
                 if (movingObjectPosition != null) d1 = movingObjectPosition.hitVec.distanceTo(vec3);
             }
 
@@ -236,11 +255,10 @@ public abstract class MixinEntityRenderer {
             this.pointedEntity = null;
             Vec3 vec33 = null;
             float f = 1.0F;
-            List<Entity> list = this.mc.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0).expand(f, f, f), Predicates.and(EntitySelectors.NOT_SPECTATING, p_apply_1_ -> p_apply_1_.canBeCollidedWith()));
+            List<Entity> list = this.mc.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0).expand(f, f, f), Predicates.and(EntitySelectors.NOT_SPECTATING, Entity::canBeCollidedWith));
             double d2 = d1;
 
-            for (int j = 0; j < list.size(); ++j) {
-                Entity entity1 = list.get(j);
+            for (Entity entity1 : list) {
                 float f1 = entity1.getCollisionBorderSize();
                 AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f1, f1, f1);
                 MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
@@ -269,7 +287,7 @@ public abstract class MixinEntityRenderer {
 
             if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > (reach.getState() ? reach.getCombatReachValue().get() : 3.0D)) {
                 this.pointedEntity = null;
-                this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33, null, new BlockPos(vec33));
+                this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, Objects.requireNonNull(vec33), null, new BlockPos(vec33));
             }
 
             if (this.pointedEntity != null && (d2 < d1 || this.mc.objectMouseOver == null)) {
@@ -285,39 +303,69 @@ public abstract class MixinEntityRenderer {
         ci.cancel();
     }
 
+    /**
+     * Update camera and render boolean.
+     *
+     * @param minecraft the minecraft
+     * @return the boolean
+     */
     @Redirect(method = "updateCameraAndRender", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;inGameHasFocus:Z", opcode = GETFIELD))
     public boolean updateCameraAndRender(Minecraft minecraft) {
         return FreeLook.overrideMouse();
     }
 
+    /**
+     * Gets rotation yaw.
+     *
+     * @param entity the entity
+     * @return the rotation yaw
+     */
     @Redirect(method = "orientCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;rotationYaw:F", opcode = GETFIELD))
     public float getRotationYaw(Entity entity) {
         return FreeLook.perspectiveToggled ? FreeLook.cameraYaw : entity.rotationYaw;
     }
 
+    /**
+     * Gets prev rotation yaw.
+     *
+     * @param entity the entity
+     * @return the prev rotation yaw
+     */
     @Redirect(method = "orientCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;prevRotationYaw:F", opcode = GETFIELD))
     public float getPrevRotationYaw(Entity entity) {
         return FreeLook.perspectiveToggled ? FreeLook.cameraYaw : entity.prevRotationYaw;
     }
 
+    /**
+     * Gets rotation pitch.
+     *
+     * @param entity the entity
+     * @return the rotation pitch
+     */
     @Redirect(method = "orientCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;rotationPitch:F", opcode = GETFIELD))
     public float getRotationPitch(Entity entity) {
         return FreeLook.perspectiveToggled ? FreeLook.cameraPitch : entity.rotationPitch;
     }
 
+    /**
+     * Gets prev rotation pitch.
+     *
+     * @param entity the entity
+     * @return the prev rotation pitch
+     */
     @Redirect(method = "orientCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;prevRotationPitch:F"))
     public float getPrevRotationPitch(Entity entity) {
         return FreeLook.perspectiveToggled ? FreeLook.cameraPitch : entity.prevRotationPitch;
     }
 
     /**
-     * @author
-     * @reason
+     * @author As_pw
+     * @reason LightMap
      */
     @Overwrite
     private void updateLightmap(float f2) {
-        Brightness brightness = Client.moduleManager.getModule(Brightness.class);
-        XRay xray = Client.moduleManager.getModule(XRay.class);
+        FullBright brightness = Objects.requireNonNull(Client.moduleManager.getModule(FullBright.class));
+        XRay xray = Objects.requireNonNull(Client.moduleManager.getModule(XRay.class));
         if (this.lightmapUpdateNeeded) {
             this.mc.mcProfiler.startSection("lightTex");
             World world = this.mc.theWorld;
@@ -409,7 +457,7 @@ public abstract class MixinEntityRenderer {
                     int n2 = (int) (f13 * 255.0f);
                     int n3 = (int) (f14 * 255.0f);
                     int n4 = (int) (f15 * 255.0f);
-                    this.lightmapColors[i2] = brightness.getState() || xray.getState() ? new Color(255, 255, 255).getRGB() : 0xFF000000 | n2 << 16 | n3 << 8 | n4;
+                    this.lightmapColors[i2] = (xray.getState() || brightness.getState()) ? new Color(220, 220, 220).getRGB() : 0xFF000000 | n2 << 16 | n3 << 8 | n4;
                 }
                 this.lightmapTexture.updateDynamicTexture();
                 this.lightmapUpdateNeeded = false;

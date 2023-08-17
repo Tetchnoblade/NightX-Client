@@ -1,8 +1,8 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.utils.AnimationUtils;
-import net.aspw.client.utils.render.RenderUtils;
+import net.aspw.client.util.AnimationUtils;
+import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.renderer.GlStateManager;
@@ -19,16 +19,33 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.PLAYER_LIST;
 
+/**
+ * The type Mixin gui ingame forge.
+ */
 @Mixin(GuiIngameForge.class)
 public abstract class MixinGuiIngameForge extends MixinGuiInGame {
 
+    /**
+     * The X scale.
+     */
     public float xScale = 0F;
 
+    /**
+     * Pre boolean.
+     *
+     * @param type the type
+     * @return the boolean
+     */
     @Shadow(remap = false)
-    abstract boolean pre(ElementType type);
+    protected abstract boolean pre(ElementType type);
 
+    /**
+     * Post.
+     *
+     * @param type the type
+     */
     @Shadow(remap = false)
-    abstract void post(ElementType type);
+    protected abstract void post(ElementType type);
 
     @Inject(
             method = "renderChat",
@@ -53,8 +70,12 @@ public abstract class MixinGuiIngameForge extends MixinGuiInGame {
     }
 
     /**
-     * @author
-     * @reason
+     * Render player list.
+     *
+     * @param width  the width
+     * @param height the height
+     * @author As_pw
+     * @reason PlayerList
      */
     @Overwrite(remap = false)
     protected void renderPlayerList(int width, int height) {

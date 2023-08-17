@@ -9,8 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+/**
+ * The type Mixin block RedStone torch.
+ */
 @Mixin(BlockRedstoneTorch.class)
-public class MixinBlockRedstoneTorch {
+public class MixinBlockRedStoneTorch {
     @Shadow
     private static final Map<World, List<BlockRedstoneTorch.Toggle>> toggles = new WeakHashMap<>();
 }

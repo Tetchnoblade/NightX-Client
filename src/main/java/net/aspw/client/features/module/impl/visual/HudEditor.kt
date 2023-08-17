@@ -8,6 +8,7 @@ import net.aspw.client.visual.hud.designer.GuiHudDesigner
 @ModuleInfo(
     name = "HudEditor",
     category = ModuleCategory.VISUAL,
+    description = "",
     forceNoSound = true,
     onlyEnable = true,
     array = false

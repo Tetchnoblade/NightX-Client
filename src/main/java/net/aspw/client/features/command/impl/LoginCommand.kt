@@ -13,11 +13,10 @@ class LoginCommand : Command("login", arrayOf("l")) {
         if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
             Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
         }
-        mc.thePlayer.sendChatMessage("/register rrrr rrrr")
-        mc.thePlayer.sendChatMessage("/login rrrr")
+        mc.thePlayer.sendChatMessage("/login rrrrr")
         Client.hud.addNotification(
             Notification(
-                "Logging in...",
+                "Logging in with <rrrrrr>...",
                 Notification.Type.INFO
             )
         )

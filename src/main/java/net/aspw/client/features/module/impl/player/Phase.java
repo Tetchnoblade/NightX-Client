@@ -4,9 +4,9 @@ import net.aspw.client.event.*;
 import net.aspw.client.features.module.Module;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.ModuleInfo;
-import net.aspw.client.utils.MovementUtils;
-import net.aspw.client.utils.block.BlockUtils;
-import net.aspw.client.utils.timer.TickTimer;
+import net.aspw.client.util.MovementUtils;
+import net.aspw.client.util.block.BlockUtils;
+import net.aspw.client.util.timer.TickTimer;
 import net.aspw.client.value.ListValue;
 import net.minecraft.block.BlockAir;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -18,9 +18,15 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 
-@ModuleInfo(name = "Phase", category = ModuleCategory.PLAYER)
+/**
+ * The type Phase.
+ */
+@ModuleInfo(name = "Phase", description = "", category = ModuleCategory.PLAYER)
 public class Phase extends Module {
 
+    /**
+     * The Mode value.
+     */
     public final ListValue modeValue = new ListValue("Mode", new String[]{
             "Vanilla",
             "Skip",
@@ -28,6 +34,7 @@ public class Phase extends Module {
             "Clip",
             "AAC3.5.0",
             "AACv4",
+            "Vulcan",
             "Packetless",
             "Redesky",
             "SmartVClip"
@@ -51,6 +58,11 @@ public class Phase extends Module {
             mc.timer.timerSpeed = 1F;
     }
 
+    /**
+     * On update.
+     *
+     * @param event the event
+     */
     @EventTarget
     public void onUpdate(final UpdateEvent event) {
         if (modeValue.get().equalsIgnoreCase("aacv4")) {
@@ -184,6 +196,21 @@ public class Phase extends Module {
                 tickTimer.reset();
                 break;
             }
+            case "vulcan": {
+                if (!tickTimer.hasTimePassed(2) || !mc.thePlayer.isCollidedHorizontally || isInsideBlock)
+                    break;
+
+                final double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
+                final double oldX = mc.thePlayer.posX;
+                final double oldZ = mc.thePlayer.posZ;
+                final double x = -Math.sin(yaw);
+                final double z = Math.cos(yaw);
+
+                mc.thePlayer.setPosition(oldX + x, mc.thePlayer.posY, oldZ + z);
+                mc.thePlayer.noClip = true;
+                tickTimer.reset();
+                break;
+            }
             case "smartvclip": {
                 boolean cageCollision = (mc.theWorld.getBlockState(new BlockPos(mc.thePlayer).up(3)).getBlock() != Blocks.air
                         && mc.theWorld.getBlockState(new BlockPos(mc.thePlayer).down()).getBlock() != Blocks.air);
@@ -207,6 +234,11 @@ public class Phase extends Module {
         tickTimer.update();
     }
 
+    /**
+     * On block bb.
+     *
+     * @param event the event
+     */
     @EventTarget
     public void onBlockBB(final BlockBBEvent event) {
         if (mc.thePlayer != null && BlockUtils.collideBlockIntersects(mc.thePlayer.getEntityBoundingBox(), block -> !(block instanceof BlockAir)) && event.getBoundingBox() != null && event.getBoundingBox().maxY > mc.thePlayer.getEntityBoundingBox().minY && !modeValue.get().equalsIgnoreCase("Packetless") && !modeValue.get().equalsIgnoreCase("SmartVClip")) {
@@ -216,6 +248,11 @@ public class Phase extends Module {
         }
     }
 
+    /**
+     * On packet.
+     *
+     * @param event the event
+     */
     @EventTarget
     public void onPacket(final PacketEvent event) {
         final Packet<?> packet = event.getPacket();
@@ -228,6 +265,13 @@ public class Phase extends Module {
 
                 packetPlayer.x = packetPlayer.x - MathHelper.sin(yaw) * 0.00000001D;
                 packetPlayer.z = packetPlayer.z + MathHelper.cos(yaw) * 0.00000001D;
+            }
+
+            if (modeValue.get().equalsIgnoreCase("Vulcan")) {
+                final float yaw = (float) MovementUtils.getDirection();
+
+                packetPlayer.x = packetPlayer.x - MathHelper.sin(yaw) * 0.00000008D;
+                packetPlayer.z = packetPlayer.z + MathHelper.cos(yaw) * 0.00000008D;
             }
 
             if (modeValue.get().equalsIgnoreCase("SmartVClip") && noRot && packetPlayer.rotating)
@@ -265,11 +309,21 @@ public class Phase extends Module {
             event.zeroXZ();
     }
 
+    /**
+     * On push out.
+     *
+     * @param event the event
+     */
     @EventTarget
     public void onPushOut(PushOutEvent event) {
         event.cancelEvent();
     }
 
+    /**
+     * On jump.
+     *
+     * @param event the event
+     */
     @EventTarget
     public void onJump(JumpEvent event) {
         if (modeValue.get().equalsIgnoreCase("SmartVClip") && noRot) event.cancelEvent();

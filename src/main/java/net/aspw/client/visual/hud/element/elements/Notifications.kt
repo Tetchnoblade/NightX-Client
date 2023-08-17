@@ -1,12 +1,15 @@
 package net.aspw.client.visual.hud.element.elements
 
 import net.aspw.client.Client.hud
-import net.aspw.client.utils.render.AnimationUtils
-import net.aspw.client.utils.render.BlurUtils
-import net.aspw.client.utils.render.RenderUtils
-import net.aspw.client.utils.render.Stencil
-import net.aspw.client.utils.timer.MSTimer
-import net.aspw.client.value.*
+import net.aspw.client.util.render.AnimationUtils
+import net.aspw.client.util.render.BlurUtils
+import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.util.render.Stencil
+import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.value.BoolValue
+import net.aspw.client.value.FloatValue
+import net.aspw.client.value.IntegerValue
+import net.aspw.client.value.ListValue
 import net.aspw.client.visual.font.Fonts
 import net.aspw.client.visual.hud.designer.GuiHudDesigner
 import net.aspw.client.visual.hud.element.Border
@@ -27,7 +30,7 @@ class Notifications(
 
     val styleValue = ListValue("Style", arrayOf("Full", "Compact", "Material"), "Full")
     val barValue = BoolValue("Bar", true, { styleValue.get().equals("material", true) })
-    val bgAlphaValue = IntegerValue("Background-Alpha", 120, 0, 255, { !styleValue.get().equals("material", true) })
+    val bgAlphaValue = IntegerValue("Background-Alpha", 100, 0, 255, { !styleValue.get().equals("material", true) })
 
     val blurValue = BoolValue("Blur", false, { !styleValue.get().equals("material", true) })
     val blurStrength =
@@ -41,7 +44,6 @@ class Notifications(
         0.01F,
         10F,
         { hAnimModeValue.get().equals("smooth", true) || vAnimModeValue.get().equals("smooth", true) })
-    private val fontValue = FontValue("Font", Fonts.fontSFUI40)
 
     /**
      * Example notification for CustomHUD designer
@@ -58,7 +60,7 @@ class Notifications(
         for (i in hud.notifications)
             notifications.add(i)
 
-        if (mc.currentScreen !is GuiHudDesigner || !notifications.isEmpty()) {
+        if (mc.currentScreen !is GuiHudDesigner || notifications.isNotEmpty()) {
             var indexz = 0
             for (i in notifications) {
                 if (indexz == 0 && styleValue.get()
@@ -108,11 +110,6 @@ class Notification(message: String, type: Type, displayLength: Long) {
     private val imgError = ResourceLocation("${notifyDir}error.png")
     private val imgWarning = ResourceLocation("${notifyDir}warning.png")
     private val imgInfo = ResourceLocation("${notifyDir}info.png")
-
-    private val newSuccess = ResourceLocation("${notifyDir}checkmark.png")
-    private val newError = ResourceLocation("${notifyDir}error.png")
-    private val newWarning = ResourceLocation("${notifyDir}warning.png")
-    private val newInfo = ResourceLocation("${notifyDir}info.png")
 
     var x = 0F
     var textLength = 0
@@ -183,7 +180,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
             if (firstY == 19190.0F)
                 firstY = animationY
             else
-                firstY = net.aspw.client.utils.AnimationUtils.animate(animationY, firstY, 0.02F * delta)
+                firstY = net.aspw.client.util.AnimationUtils.animate(animationY, firstY, 0.02F * delta)
         } else {
             firstY = animationY
         }
@@ -230,7 +227,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
                 )
 
                 GlStateManager.resetColor()
-                Fonts.fontSFUI40.drawString(message, -x + 3, -13F - y, -1)
+                Fonts.fontSFUI40.drawString(message, (-x + 3), (-13F - y), -1)
             }
 
             "full" -> {
@@ -281,7 +278,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
                     RenderUtils.drawRect(kek, -y, kek + dist, -1F - y, enumColor)
 
                 GlStateManager.resetColor()
-                Fonts.fontSFUI40.drawString(message, (-x + 2).toInt(), (-18F - y).toInt(), -1)
+                Fonts.fontSFUI40.drawString(message, (-x + 2), (-18F - y), -1)
             }
 
             "material" -> {
@@ -350,7 +347,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
 
                 var yHeight = 7F
                 for (s in messageList) {
-                    Fonts.fontSFUI40.drawString(s, 30, yHeight.toInt(), if (type == Type.ERROR) -1 else 0)
+                    Fonts.fontSFUI40.drawStringWithShadow(s, 30f, yHeight, if (type == Type.ERROR) -1 else 0)
                     yHeight += Fonts.fontSFUI40.FONT_HEIGHT.toFloat() + 2F
                 }
 
@@ -358,10 +355,10 @@ class Notification(message: String, type: Type, displayLength: Long) {
                 GlStateManager.disableAlpha()
                 RenderUtils.drawImage3(
                     when (type) {
-                        Type.SUCCESS -> newSuccess
-                        Type.ERROR -> newError
-                        Type.WARNING -> newWarning
-                        Type.INFO -> newInfo
+                        Type.SUCCESS -> imgSuccess
+                        Type.ERROR -> imgError
+                        Type.WARNING -> imgWarning
+                        Type.INFO -> imgInfo
                     }, 9F, notifHeight / 2F - 6F, 12, 12,
                     if (type == Type.ERROR) 1F else 0F,
                     if (type == Type.ERROR) 1F else 0F,
@@ -380,7 +377,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
             FadeState.IN -> {
                 if (x < width) {
                     if (hAnimMode.equals("smooth", true))
-                        x = net.aspw.client.utils.AnimationUtils.animate(width, x, animSpeed * 0.025F * delta)
+                        x = net.aspw.client.util.AnimationUtils.animate(width, x, animSpeed * 0.025F * delta)
                     else
                         x = AnimationUtils.easeOut(fadeStep, width) * width
                     fadeStep += delta / 4F
@@ -406,7 +403,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
 
             FadeState.OUT -> if (x > 0) {
                 if (hAnimMode.equals("smooth", true))
-                    x = net.aspw.client.utils.AnimationUtils.animate(
+                    x = net.aspw.client.util.AnimationUtils.animate(
                         -width / 2F,
                         x,
                         animSpeed * 0.025F * delta

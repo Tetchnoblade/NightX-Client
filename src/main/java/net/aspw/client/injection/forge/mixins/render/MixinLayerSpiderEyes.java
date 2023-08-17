@@ -7,6 +7,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * The type Mixin layer spider eyes.
+ */
 @Mixin(LayerSpiderEyes.class)
 public class MixinLayerSpiderEyes {
     @Inject(method = "doRenderLayer(Lnet/minecraft/entity/monster/EntitySpider;FFFFFFF)V", at = @At("TAIL"))

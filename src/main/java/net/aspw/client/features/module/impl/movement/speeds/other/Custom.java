@@ -6,12 +6,18 @@ import net.aspw.client.event.MotionEvent;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.util.MovementUtils;
 
+/**
+ * The type Custom.
+ */
 public class Custom extends SpeedMode {
 
     private int groundTick = 0;
 
+    /**
+     * Instantiates a new Custom.
+     */
     public Custom() {
         super("Custom");
     }

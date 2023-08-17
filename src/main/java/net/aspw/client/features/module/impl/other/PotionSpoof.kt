@@ -10,7 +10,7 @@ import net.aspw.client.value.BoolValue
 import net.minecraft.potion.Potion
 import net.minecraft.potion.PotionEffect
 
-@ModuleInfo(name = "PotionSpoof", spacedName = "Potion Spoof", category = ModuleCategory.OTHER)
+@ModuleInfo(name = "PotionSpoof", spacedName = "Potion Spoof", description = "", category = ModuleCategory.OTHER)
 class PotionSpoof : Module() {
     private val speedValue = BoolValue("Speed", false)
     private val moveSlowDownValue = BoolValue("Slowness", false)

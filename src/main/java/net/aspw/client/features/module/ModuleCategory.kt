@@ -7,5 +7,6 @@ enum class ModuleCategory(val displayName: String) {
     EXPLOIT("Exploit"),
     OTHER("Other"),
     VISUAL("Visual"),
-    TARGETS("Targets")
+    TARGETS("Targets"),
+    BETA("Beta")
 }

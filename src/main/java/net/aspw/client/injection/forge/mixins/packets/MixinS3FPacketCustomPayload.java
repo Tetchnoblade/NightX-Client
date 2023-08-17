@@ -9,6 +9,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * The type Mixin s 3 f packet custom payload.
+ */
 @Mixin(S3FPacketCustomPayload.class)
 public class MixinS3FPacketCustomPayload {
     @Shadow

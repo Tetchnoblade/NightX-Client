@@ -8,12 +8,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Objects;
+
+/**
+ * The type Mixin block soul sand.
+ */
 @Mixin(BlockSoulSand.class)
 public class MixinBlockSoulSand {
 
     @Inject(method = "onEntityCollidedWithBlock", at = @At("HEAD"), cancellable = true)
     private void onEntityCollidedWithBlock(CallbackInfo callbackInfo) {
-        final NoSlow noSlow = Client.moduleManager.getModule(NoSlow.class);
+        final NoSlow noSlow = Objects.requireNonNull(Client.moduleManager.getModule(NoSlow.class));
 
         if (noSlow.getState() && noSlow.getSoulsandValue().get())
             callbackInfo.cancel();

@@ -5,10 +5,10 @@ import net.aspw.client.event.Render3DEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.EntityUtils
-import net.aspw.client.utils.RotationUtils
-import net.aspw.client.utils.render.ColorUtils
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.EntityUtils
+import net.aspw.client.util.RotationUtils
+import net.aspw.client.util.render.ColorUtils
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.util.*
 
-@ModuleInfo(name = "Tracers", category = ModuleCategory.VISUAL, array = false)
+@ModuleInfo(name = "Tracers", description = "", category = ModuleCategory.VISUAL, array = false)
 class Tracers : Module() {
 
     private val colorMode = ListValue("Color", arrayOf("Custom", "DistanceColor", "Rainbow"), "Custom")
@@ -102,7 +102,11 @@ class Tracers : Module() {
 
         RenderUtils.glColor(color)
 
-        GL11.glVertex3d(eyeVector.xCoord, mc.thePlayer.getEyeHeight().toDouble() + eyeVector.yCoord, eyeVector.zCoord)
+        GL11.glVertex3d(
+            eyeVector.xCoord,
+            mc.thePlayer.getEyeHeight().toDouble() + eyeVector.yCoord - 2,
+            eyeVector.zCoord
+        )
         if (drawHeight) {
             GL11.glVertex3d(x, y, z)
             GL11.glVertex3d(x, y, z)

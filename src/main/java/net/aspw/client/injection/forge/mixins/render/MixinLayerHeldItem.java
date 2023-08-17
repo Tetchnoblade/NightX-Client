@@ -1,7 +1,5 @@
 package net.aspw.client.injection.forge.mixins.render;
 
-import net.aspw.client.Client;
-import net.aspw.client.features.module.impl.combat.KillAura;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -15,15 +13,14 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import java.util.Objects;
-import java.util.UUID;
-
+/**
+ * The type Mixin layer held item.
+ */
 @Mixin(LayerHeldItem.class)
 public class MixinLayerHeldItem {
 
@@ -32,11 +29,21 @@ public class MixinLayerHeldItem {
     private RendererLivingEntity<?> livingEntityRenderer;
 
     /**
-     * @author CCBlueX
+     * Do render layer.
+     *
+     * @param entitylivingbaseIn the entitylivingbase in
+     * @param p_177141_2_        the p 177141 2
+     * @param p_177141_3_        the p 177141 3
+     * @param partialTicks       the partial ticks
+     * @param p_177141_5_        the p 177141 5
+     * @param p_177141_6_        the p 177141 6
+     * @param p_177141_7_        the p 177141 7
+     * @param scale              the scale
+     * @author As_pw
+     * @reason doLayer
      */
     @Overwrite
     public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale) {
-        final KillAura killAura = Client.moduleManager.getModule(KillAura.class);
         ItemStack itemstack = entitylivingbaseIn.getHeldItem();
 
         if (itemstack != null) {
@@ -50,22 +57,8 @@ public class MixinLayerHeldItem {
             }
 
             Item item = itemstack.getItem();
-            final UUID uuid = entitylivingbaseIn.getUniqueID();
-            final EntityPlayer entityplayer = Minecraft.getMinecraft().theWorld.getPlayerEntityByUUID(uuid);
 
-            if (entityplayer != null && entityplayer.isBlocking() || entityplayer != null && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") && item instanceof ItemSword && Objects.equals(entityplayer.getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
-                if (entitylivingbaseIn.isSneaking()) {
-                    ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0325F);
-                    GlStateManager.translate(-0.58F, 0.3F, -0.2F);
-                    GlStateManager.rotate(-24390.0F, 137290.0F, -2009900.0F, -2054900.0F);
-                } else {
-                    ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0325F);
-                    GlStateManager.translate(-0.48F, 0.2F, -0.2F);
-                    GlStateManager.rotate(-24390.0F, 137290.0F, -2009900.0F, -2054900.0F);
-                }
-            } else {
-                ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0625F);
-            }
+            ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0625F);
 
             GlStateManager.translate(-0.0625F, 0.4375F, 0.0625F);
 

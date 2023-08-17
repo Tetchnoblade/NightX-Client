@@ -10,12 +10,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
 
+/**
+ * The type Mixin skin manager.
+ */
 @Mixin(SkinManager.class)
 public class MixinSkinManager {
 
-    @Inject(method = "loadSkinFromCache", cancellable = true, at = @At("HEAD"))
+    @Inject(method = "loadSkinFromCache", at = @At("HEAD"))
     private void injectSkinProtect(GameProfile gameProfile, CallbackInfoReturnable<Map<MinecraftProfileTexture.Type, MinecraftProfileTexture>> cir) {
-        if (gameProfile == null) {
-        }
     }
 }

@@ -13,12 +13,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Objects;
+
+/**
+ * The type Mixin block model renderer.
+ */
 @Mixin(BlockModelRenderer.class)
 public class MixinBlockModelRenderer {
 
     @Inject(method = "renderModelAmbientOcclusion", at = @At("HEAD"), cancellable = true)
     private void renderModelAmbientOcclusion(IBlockAccess blockAccessIn, IBakedModel modelIn, Block blockIn, BlockPos blockPosIn, WorldRenderer worldRendererIn, boolean checkSide, final CallbackInfoReturnable<Boolean> booleanCallbackInfoReturnable) {
-        final XRay xray = Client.moduleManager.getModule(XRay.class);
+        final XRay xray = Objects.requireNonNull(Client.moduleManager.getModule(XRay.class));
 
         if (xray.getState() && xray.getXrayBlocks().contains(this))
             booleanCallbackInfoReturnable.setReturnValue(false);
@@ -26,7 +31,7 @@ public class MixinBlockModelRenderer {
 
     @Inject(method = "renderModelStandard", at = @At("HEAD"), cancellable = true)
     private void renderModelStandard(IBlockAccess blockAccessIn, IBakedModel modelIn, Block blockIn, BlockPos blockPosIn, WorldRenderer worldRendererIn, boolean checkSides, final CallbackInfoReturnable<Boolean> booleanCallbackInfoReturnable) {
-        final XRay xray = Client.moduleManager.getModule(XRay.class);
+        final XRay xray = Objects.requireNonNull(Client.moduleManager.getModule(XRay.class));
 
         if (xray.getState() && !xray.getXrayBlocks().contains(this))
             booleanCallbackInfoReturnable.setReturnValue(false);

@@ -12,20 +12,20 @@ import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.features.module.impl.movement.Flight
 import net.aspw.client.features.module.impl.movement.LongJump
 import net.aspw.client.features.module.impl.movement.Speed
-import net.aspw.client.utils.MovementUtils
-import net.aspw.client.utils.RotationUtils
+import net.aspw.client.util.MovementUtils
+import net.aspw.client.util.RotationUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
+import net.minecraft.client.settings.GameSettings
 import net.minecraft.entity.Entity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.MathHelper
-import org.lwjgl.input.Keyboard
 import java.util.*
 
-@ModuleInfo(name = "TargetStrafe", spacedName = "Target Strafe", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "TargetStrafe", spacedName = "Target Strafe", description = "", category = ModuleCategory.PLAYER)
 class TargetStrafe : Module() {
-    val range = FloatValue("Range", 2.0f, 0.1f, 4.0f, "m", { !behind.get() })
+    val range = FloatValue("Range", 2.5f, 0.1f, 4.0f, "m", { !behind.get() })
     private val modeValue = ListValue("KeyMode", arrayOf("Jump", "None"), "Jump")
     private val safewalk = BoolValue("SafeWalk", true)
     val behind = BoolValue("Behind", false)
@@ -43,6 +43,9 @@ class TargetStrafe : Module() {
         hasChangedThirdPerson = true
         lastView = mc.gameSettings.thirdPersonView
     }
+
+    override val tag: String
+        get() = if (behind.get()) "Behind" else "Adaptive"
 
     @EventTarget
     fun onMotion(event: MotionEvent) {
@@ -107,7 +110,7 @@ class TargetStrafe : Module() {
 
     val keyMode: Boolean
         get() = when (modeValue.get().lowercase(Locale.getDefault())) {
-            "jump" -> Keyboard.isKeyDown(Keyboard.KEY_SPACE)
+            "jump" -> GameSettings.isKeyDown(mc.gameSettings.keyBindJump)
             "none" -> mc.thePlayer.movementInput.moveStrafe != 0f || mc.thePlayer.movementInput.moveForward != 0f
             else -> false
         }

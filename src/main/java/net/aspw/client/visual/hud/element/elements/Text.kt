@@ -1,14 +1,12 @@
 package net.aspw.client.visual.hud.element.elements
 
-import de.enzaxd.viaforge.ViaForge
-import de.enzaxd.viaforge.protocol.ProtocolCollection
 import net.aspw.client.Client
-import net.aspw.client.features.module.impl.other.BanNotifier
 import net.aspw.client.features.module.impl.visual.ColorMixer
-import net.aspw.client.utils.*
-import net.aspw.client.utils.render.BlurUtils
-import net.aspw.client.utils.render.ColorUtils
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.features.module.impl.visual.Hud
+import net.aspw.client.util.*
+import net.aspw.client.util.render.BlurUtils
+import net.aspw.client.util.render.ColorUtils
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.*
 import net.aspw.client.visual.font.Fonts
 import net.aspw.client.visual.hud.designer.GuiHudDesigner
@@ -33,7 +31,7 @@ import kotlin.math.sqrt
  */
 @ElementInfo(name = "Text")
 class Text(
-    x: Double = 2.0, y: Double = 5.0, scale: Float = 1F,
+    x: Double = 2.0, y: Double = 3.0, scale: Float = 1F,
     side: Side = Side.default()
 ) : Element(x, y, scale, side) {
 
@@ -49,11 +47,11 @@ class Text(
          * Create default element
          */
         fun defaultClient(): Text {
-            val text = Text(x = 2.0, y = 5.0, scale = 1F)
+            val text = Text(x = 2.0, y = 3.0, scale = 1F)
 
             text.displayString.set("%clientName%")
             text.shadow.set(true)
-            text.fontValue.set(Fonts.fontSFUI40)
+            text.fontValue.set(Fonts.fontSFUI35)
             text.setColor(Color(255, 255, 255))
 
             return text
@@ -78,13 +76,13 @@ class Text(
     private val bgalphaValue = IntegerValue("Background-Alpha", 80, 0, 255)
     private val rainbowList =
         ListValue("Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Sky")
-    private val saturationValue = FloatValue("Saturation", 0.4f, 0f, 1f)
+    private val saturationValue = FloatValue("Saturation", 0.5f, 0f, 1f)
     private val brightnessValue = FloatValue("Brightness", 1f, 0f, 1f)
     private val cRainbowSecValue = IntegerValue("Seconds", 2, 1, 10)
     private val distanceValue = IntegerValue("Line-Distance", 0, 0, 400)
     private val gradientAmountValue = IntegerValue("Gradient-Amount", 25, 1, 50)
     private val shadow = BoolValue("Shadow", true)
-    private var fontValue = FontValue("Font", Fonts.fontSFUI40)
+    private var fontValue = FontValue("Font", Fonts.fontSFUI35)
 
     private var editMode = false
     private var editTicks = 0
@@ -143,7 +141,10 @@ class Text(
 
         return when (str) {
             "userName" -> mc.session.username
-            "clientName" -> Client.CLIENT_COLORED
+            "clientName" -> Client.moduleManager.getModule(Hud::class.java)?.rainbow + "§f" + Client.moduleManager.getModule(
+                Hud::class.java
+            )?.white
+
             "clientVersion" -> Client.CLIENT_VERSION
             "clientCreator" -> Client.CLIENT_CREATOR
             "fps" -> Minecraft.getDebugFPS().toString()
@@ -153,9 +154,6 @@ class Text(
             "cps" -> return CPSCounter.getCPS(CPSCounter.MouseButton.LEFT).toString()
             "mcps" -> return CPSCounter.getCPS(CPSCounter.MouseButton.MIDDLE).toString()
             "rcps" -> return CPSCounter.getCPS(CPSCounter.MouseButton.RIGHT).toString()
-            "portalVersion" -> ProtocolCollection.getProtocolById(ViaForge.getInstance().version).name
-            "watchdogLastMin" -> BanNotifier.WATCHDOG_BAN_LAST_MIN.toString()
-            "staffLastMin" -> BanNotifier.STAFF_BAN_LAST_MIN.toString()
             "wdStatus" -> return if (PacketUtils.isWatchdogActive()) "Active" else "Inactive"
             "sessionTime" -> return SessionUtils.getFormatSessionTime()
             "worldTime" -> return SessionUtils.getFormatWorldTime()
@@ -521,7 +519,6 @@ class Text(
             "cps", "lcps",
             "mcps",
             "rcps",
-            "portalVersion",
             "watchdogLastMin",
             "staffLastMin",
             "wdStatus",

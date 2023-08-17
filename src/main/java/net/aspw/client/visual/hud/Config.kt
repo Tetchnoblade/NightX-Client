@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import net.aspw.client.utils.ClientUtils
+import net.aspw.client.util.ClientUtils
 import net.aspw.client.value.FontValue
 import net.aspw.client.visual.hud.HUD.Companion.createDefault
 import net.aspw.client.visual.hud.HUD.Companion.elements

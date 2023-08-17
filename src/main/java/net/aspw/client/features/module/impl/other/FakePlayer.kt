@@ -5,7 +5,7 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.minecraft.client.entity.EntityOtherPlayerMP
 
-@ModuleInfo(name = "FakePlayer", spacedName = "Fake Player", category = ModuleCategory.OTHER)
+@ModuleInfo(name = "FakePlayer", spacedName = "Fake Player", description = "", category = ModuleCategory.OTHER)
 class FakePlayer : Module() {
     private var fakePlayer: EntityOtherPlayerMP? = null
 

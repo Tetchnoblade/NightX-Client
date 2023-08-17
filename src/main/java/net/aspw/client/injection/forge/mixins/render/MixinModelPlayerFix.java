@@ -3,6 +3,7 @@ package net.aspw.client.injection.forge.mixins.render;
 import net.aspw.client.Client;
 import net.aspw.client.event.UpdateModelEvent;
 import net.aspw.client.features.module.impl.visual.CustomModel;
+import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBox;
@@ -11,6 +12,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,76 +22,223 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.awt.*;
+import java.util.Objects;
+
+/**
+ * The type Mixin model player fix.
+ */
 @Mixin(ModelPlayer.class)
 public class MixinModelPlayerFix extends ModelBiped {
 
+    /**
+     * The Left leg.
+     */
     public ModelRenderer left_leg;
+    /**
+     * The Right leg.
+     */
     public ModelRenderer right_leg;
+    /**
+     * The Body.
+     */
     public ModelRenderer body;
+    /**
+     * The Eye.
+     */
     public ModelRenderer eye;
+    /**
+     * The Rabbit bone.
+     */
     public ModelRenderer rabbitBone;
+    /**
+     * The Rabbit rleg.
+     */
     public ModelRenderer rabbitRleg;
+    /**
+     * The Rabbit larm.
+     */
     public ModelRenderer rabbitLarm;
+    /**
+     * The Rabbit rarm.
+     */
     public ModelRenderer rabbitRarm;
+    /**
+     * The Rabbit lleg.
+     */
     public ModelRenderer rabbitLleg;
+    /**
+     * The Rabbit head.
+     */
     public ModelRenderer rabbitHead;
+    /**
+     * The Fredhead.
+     */
     public ModelRenderer fredhead;
+    /**
+     * The Arm left.
+     */
     public ModelRenderer armLeft;
+    /**
+     * The Leg right.
+     */
     public ModelRenderer legRight;
+    /**
+     * The Leg left.
+     */
     public ModelRenderer legLeft;
+    /**
+     * The Arm right.
+     */
     public ModelRenderer armRight;
+    /**
+     * The Fredbody.
+     */
     public ModelRenderer fredbody;
+    /**
+     * The Arm leftpad 2.
+     */
     public ModelRenderer armLeftpad2;
+    /**
+     * The Torso.
+     */
     public ModelRenderer torso;
+    /**
+     * The Ear rightpad 1.
+     */
     public ModelRenderer earRightpad_1;
+    /**
+     * The Arm rightpad 2.
+     */
     public ModelRenderer armRightpad2;
+    /**
+     * The Leg leftpad.
+     */
     public ModelRenderer legLeftpad;
+    /**
+     * The Hat.
+     */
     public ModelRenderer hat;
+    /**
+     * The Leg leftpad 2.
+     */
     public ModelRenderer legLeftpad2;
+    /**
+     * The Arm right 2.
+     */
     public ModelRenderer armRight2;
+    /**
+     * The Leg right 2.
+     */
     public ModelRenderer legRight2;
+    /**
+     * The Ear rightpad.
+     */
     public ModelRenderer earRightpad;
+    /**
+     * The Arm left 2.
+     */
     public ModelRenderer armLeft2;
+    /**
+     * The Frednose.
+     */
     public ModelRenderer frednose;
+    /**
+     * The Ear left.
+     */
     public ModelRenderer earLeft;
+    /**
+     * The Foot right.
+     */
     public ModelRenderer footRight;
+    /**
+     * The Leg rightpad 2.
+     */
     public ModelRenderer legRightpad2;
+    /**
+     * The Leg rightpad.
+     */
     public ModelRenderer legRightpad;
+    /**
+     * The Arm leftpad.
+     */
     public ModelRenderer armLeftpad;
+    /**
+     * The Leg left 2.
+     */
     public ModelRenderer legLeft2;
+    /**
+     * The Foot left.
+     */
     public ModelRenderer footLeft;
+    /**
+     * The Hat 2.
+     */
     public ModelRenderer hat2;
+    /**
+     * The Arm rightpad.
+     */
     public ModelRenderer armRightpad;
+    /**
+     * The Ear right.
+     */
     public ModelRenderer earRight;
+    /**
+     * The Crotch.
+     */
     public ModelRenderer crotch;
+    /**
+     * The Jaw.
+     */
     public ModelRenderer jaw;
+    /**
+     * The Hand right.
+     */
     public ModelRenderer handRight;
+    /**
+     * The Hand left.
+     */
     public ModelRenderer handLeft;
     @Shadow
     private boolean smallArms;
+    /**
+     * The Biped left armwear.
+     */
     @Shadow
     public ModelRenderer bipedLeftArmwear;
 
+    /**
+     * The Biped right armwear.
+     */
     @Shadow
     public ModelRenderer bipedRightArmwear;
 
+    /**
+     * The Biped left legwear.
+     */
     @Shadow
     public ModelRenderer bipedLeftLegwear;
 
+    /**
+     * The Biped right legwear.
+     */
     @Shadow
     public ModelRenderer bipedRightLegwear;
 
+    /**
+     * The Biped body wear.
+     */
     @Shadow
     public ModelRenderer bipedBodyWear;
 
     @ModifyConstant(method = "<init>", constant = @Constant(floatValue = 2.5F))
     private float fixAlexArmHeight(float original) {
-        return 2.0F;
+        return 2F;
     }
 
     /**
-     * @author asbyth
-     * @reason Resolve item positions being incorrect on Alex models (MC-72397)
+     * @author As_pw
+     * @reason PostRender
      */
     @Overwrite
     public void postRenderArm(float scale) {
@@ -102,21 +251,44 @@ public class MixinModelPlayerFix extends ModelBiped {
         }
     }
 
+    /**
+     * Render hook.
+     *
+     * @param entityIn        the entity in
+     * @param limbSwing       the limb swing
+     * @param limbSwingAmount the limb swing amount
+     * @param ageInTicks      the age in ticks
+     * @param netHeadYaw      the net head yaw
+     * @param headPitch       the head pitch
+     * @param scale           the scale
+     * @param ci              the ci
+     */
     @Inject(method = {"render"}, at = {@At("HEAD")}, cancellable = true)
     public void renderHook(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale, CallbackInfo ci) {
-        CustomModel customModel = Client.moduleManager.getModule(CustomModel.class);
+        CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
         if (customModel.getState()) {
             ci.cancel();
             renderCustom(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
         }
     }
 
+    /**
+     * Sets rotation angle.
+     *
+     * @param modelRenderer the model renderer
+     * @param x             the x
+     * @param y             the y
+     * @param z             the z
+     */
     public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
     }
 
+    /**
+     * Generatemodel.
+     */
     public void generatemodel() {
         body = new ModelRenderer(this);
         body.setRotationPoint(0.0F, 0.0F, 0.0F);
@@ -334,13 +506,24 @@ public class MixinModelPlayerFix extends ModelBiped {
         this.fredhead.addChild(this.earLeft);
     }
 
+    /**
+     * Render custom.
+     *
+     * @param entityIn        the entity in
+     * @param limbSwing       the limb swing
+     * @param limbSwingAmount the limb swing amount
+     * @param ageInTicks      the age in ticks
+     * @param netHeadYaw      the net head yaw
+     * @param headPitch       the head pitch
+     * @param scale           the scale
+     */
     public void renderCustom(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         if (left_leg == null) {
             generatemodel();
         }
 
 
-        CustomModel customModel = Client.moduleManager.getModule(CustomModel.class);
+        CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
         GlStateManager.pushMatrix();
         if ((!customModel.getOnlySelf().getValue() || entityIn == (Minecraft.getMinecraft()).thePlayer)) {
             if (customModel.getState() && customModel.getMode().get().contains("Rabbit")) {
@@ -385,6 +568,42 @@ public class MixinModelPlayerFix extends ModelBiped {
                 GlStateManager.translate(0.0, 0.85, 0.0);
                 this.fredbody.render(scale);
                 GlStateManager.popMatrix();
+            } else if (customModel.getState() && customModel.getMode().get().contains("Amongus")) {
+                this.bipedHead.rotateAngleY = netHeadYaw * 0.017453292F;
+                this.bipedHead.rotateAngleX = headPitch * 0.017453292F;
+                this.bipedBody.rotateAngleY = 0.0F;
+                float f = 1.0F;
+                if (f < 1.0F)
+                    f = 1.0F;
+                this.right_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount / f;
+                this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 1.4F * limbSwingAmount / f;
+                this.right_leg.rotateAngleY = 0.0F;
+                this.left_leg.rotateAngleY = 0.0F;
+                this.right_leg.rotateAngleZ = 0.0F;
+                this.left_leg.rotateAngleZ = 0.0F;
+                int bodyCustomColor = new Color(197, 16, 17).getRGB();
+                int eyeCustomColor = new Color(254, 254, 254).getRGB();
+                int legsCustomColor = new Color(122, 7, 56).getRGB();
+                if (this.isChild) {
+                    GlStateManager.scale(0.5F, 0.5F, 0.5F);
+                    GlStateManager.translate(0.0F, 24.0F * scale, 0.0F);
+                    this.body.render(scale);
+                    this.left_leg.render(scale);
+                    this.right_leg.render(scale);
+                } else {
+                    GlStateManager.translate(0.0D, -0.8D, 0.0D);
+                    GlStateManager.scale(1.8D, 1.6D, 1.6D);
+                    RenderUtils.color(bodyCustomColor);
+                    GlStateManager.translate(0.0D, 0.15D, 0.0D);
+                    this.body.render(scale);
+                    RenderUtils.color(eyeCustomColor);
+                    this.eye.render(scale);
+                    RenderUtils.color(legsCustomColor);
+                    GlStateManager.translate(0.0D, -0.15D, 0.0D);
+                    this.left_leg.render(scale);
+                    this.right_leg.render(scale);
+                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                }
             }
         } else {
             super.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);

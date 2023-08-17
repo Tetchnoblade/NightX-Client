@@ -5,17 +5,18 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.RotationUtils
-import net.aspw.client.utils.misc.RandomUtils
-import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.util.RotationUtils
+import net.aspw.client.util.misc.RandomUtils
+import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
 import net.minecraft.entity.projectile.EntityFireball
 import net.minecraft.network.play.client.C02PacketUseEntity
 import net.minecraft.network.play.client.C0APacketAnimation
+import java.util.*
 
-@ModuleInfo(name = "AntiFireBall", spacedName = "Anti Fire Ball", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AntiFireBall", spacedName = "Anti Fire Ball", description = "", category = ModuleCategory.COMBAT)
 class AntiFireBall : Module() {
     private val timer = MSTimer()
 
@@ -50,13 +51,12 @@ class AntiFireBall : Module() {
                     )
                 }
 
-                mc.thePlayer.sendQueue.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
-
-                if (swingValue.get().equals("Normal")) {
-                    mc.thePlayer.swingItem()
-                } else if (swingValue.get().equals("Packet")) {
-                    mc.netHandler.addToSendQueue(C0APacketAnimation())
+                when (swingValue.get().lowercase(Locale.getDefault())) {
+                    "normal" -> mc.thePlayer.swingItem()
+                    "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
                 }
+
+                mc.thePlayer.sendQueue.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
                 timer.reset()
                 break

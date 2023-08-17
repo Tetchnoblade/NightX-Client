@@ -5,42 +5,77 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.AnimationUtils
-import net.aspw.client.utils.render.RenderUtils
-import net.aspw.client.value.BoolValue
-import net.aspw.client.value.FloatValue
-import net.aspw.client.value.FontValue
-import net.aspw.client.value.ListValue
+import net.aspw.client.util.AnimationUtils
+import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.value.*
+import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
+import net.aspw.client.visual.client.clickgui.tab.NewUi
 import net.aspw.client.visual.font.Fonts
-import net.aspw.client.visual.hud.designer.GuiHudDesigner
+import net.minecraft.client.gui.GuiChat
+import net.minecraft.client.gui.inventory.GuiInventory
+import net.minecraft.network.play.client.C14PacketTabComplete
+import net.minecraft.network.play.server.S2EPacketCloseWindow
+import net.minecraft.network.play.server.S3APacketTabComplete
+import net.minecraft.network.play.server.S45PacketTitle
 
-@ModuleInfo(name = "Hud", category = ModuleCategory.VISUAL, array = false)
+@ModuleInfo(name = "Hud", description = "", category = ModuleCategory.VISUAL, array = false)
 class Hud : Module() {
+    val clientNameValue = TextValue("ClientName", "N:ightX")
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
-    val f5Animation = BoolValue("F5-Animation", false)
+    val f5nameTag = BoolValue("F5-NameTag", false)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)
     val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F, { animHotbarValue.get() })
     val blackHotbarValue = BoolValue("Black-Hotbar", false)
+    val noInvClose = BoolValue("NoInvClose", true)
+    val noTitle = BoolValue("NoTitle", false)
+    val antiTabComplete = BoolValue("AntiTabComplete", false)
+    val customFov = BoolValue("CustomFov", false)
+    val customFovModifier = FloatValue("Fov", 1.3F, 0.8F, 1.5F, { customFov.get() })
     val fontChatValue = BoolValue("FontChat", false)
     val fontType = FontValue("Font", Fonts.fontSFUI37, { fontChatValue.get() })
     val chatRectValue = BoolValue("ChatRect", true)
-    val chatAnimationValue = BoolValue("Chat-Animation", false)
+    val chatAnimationValue = BoolValue("Chat-Animation", true)
     val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.06F, 0.01F, 0.5F, { chatAnimationValue.get() })
     private val toggleMessageValue = BoolValue("Toggle-Notification", false)
     private val toggleSoundValue = ListValue("Toggle-Sound", arrayOf("None", "Default", "Custom"), "None")
     val flagSoundValue = BoolValue("Pop-Sound", true)
-    val guiButtonStyle =
-        ListValue("Button-Style", arrayOf("Minecraft", "LiquidBounce", "Rounded", "LiquidBounce+"), "Minecraft")
-
+    val swingSoundValue = BoolValue("Swing-Sound", false)
     val containerBackground = BoolValue("Gui-Background", true)
     val invEffectOffset = BoolValue("InventoryEffect-Moveable", false)
 
     private var hotBarX = 0F
 
+    var rainbow = ""
+    var white = ""
+
+    private fun slashName() {
+        val input = clientNameValue.get()
+        val splitInput = input.split(":")
+
+        rainbow = splitInput[0]
+        white = splitInput[1]
+    }
+
     @EventTarget
     fun onRender2D(event: Render2DEvent) {
-        if (mc.currentScreen is GuiHudDesigner) return
         Client.hud.render(false)
+        slashName()
+    }
+
+    @EventTarget
+    fun onPacket(event: PacketEvent) {
+        if (noTitle.get() && event.packet is S45PacketTitle) {
+            event.cancelEvent()
+        }
+
+        if (antiTabComplete.get() && (event.packet is C14PacketTabComplete || event.packet is S3APacketTabComplete)) {
+            event.cancelEvent()
+        }
+
+        if (mc.theWorld == null || mc.thePlayer == null) return
+        if (noInvClose.get() && event.packet is S2EPacketCloseWindow && (mc.currentScreen is GuiInventory || mc.currentScreen is NewUi || mc.currentScreen is ClickGui || mc.currentScreen is GuiChat)) {
+            event.cancelEvent()
+        }
     }
 
     @EventTarget(ignoreCondition = true)

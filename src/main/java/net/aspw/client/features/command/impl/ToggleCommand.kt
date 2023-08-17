@@ -37,19 +37,4 @@ class ToggleCommand : Command("toggle", arrayOf("t")) {
         chatSyntax("toggle <module> [on/off]")
     }
 
-    override fun tabComplete(args: Array<String>): List<String> {
-        if (args.isEmpty()) return emptyList()
-
-        val moduleName = args[0]
-
-        return when (args.size) {
-            1 -> Client.moduleManager.modules
-                .map { it.name }
-                .filter { it.startsWith(moduleName, true) }
-                .toList()
-
-            else -> emptyList()
-        }
-    }
-
 }

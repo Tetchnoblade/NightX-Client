@@ -4,7 +4,7 @@ import net.aspw.client.Client
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.KeyEvent
 import net.aspw.client.event.Listenable
-import net.aspw.client.utils.MinecraftInstance
+import net.aspw.client.util.MinecraftInstance
 
 object MacroManager : MinecraftInstance(), Listenable {
 
@@ -15,7 +15,7 @@ object MacroManager : MinecraftInstance(), Listenable {
         mc.thePlayer ?: return
         Client.commandManager
         macroMapping.filter { it.key == event.key }.forEach {
-            if (it.value.startsWith(Client.commandManager.prefix))
+            if (it.value.startsWith("."))
                 Client.commandManager.executeCommands(it.value)
             else
                 mc.thePlayer.sendChatMessage(it.value)

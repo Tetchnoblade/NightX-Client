@@ -4,13 +4,19 @@ import net.aspw.client.Client;
 import net.aspw.client.event.JumpEvent;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.utils.MovementUtils;
-import net.aspw.client.utils.block.BlockUtils;
+import net.aspw.client.util.MovementUtils;
+import net.aspw.client.util.block.BlockUtils;
 import net.minecraft.block.BlockCarpet;
 import net.minecraft.util.MathHelper;
 
+/**
+ * The type Aac hop 3313.
+ */
 public class AACHop3313 extends SpeedMode {
 
+    /**
+     * Instantiates a new Aac hop 3313.
+     */
     public AACHop3313() {
         super("AACHop3.3.13");
     }

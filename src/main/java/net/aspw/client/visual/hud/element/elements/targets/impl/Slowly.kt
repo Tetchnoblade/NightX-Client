@@ -1,14 +1,14 @@
 package net.aspw.client.visual.hud.element.elements.targets.impl
 
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.font.Fonts
 import net.aspw.client.visual.hud.element.Border
-import net.aspw.client.visual.hud.element.elements.Target
+import net.aspw.client.visual.hud.element.elements.TargetHud
 import net.aspw.client.visual.hud.element.elements.targets.TargetStyle
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.player.EntityPlayer
 
-class Slowly(inst: Target) : TargetStyle("Slowly", inst, true) {
+class Slowly(inst: TargetHud) : TargetStyle("Slowly", inst, true) {
 
     override fun drawTarget(entity: EntityPlayer) {
         val font = Fonts.minecraftFont
@@ -18,7 +18,7 @@ class Slowly(inst: Target) : TargetStyle("Slowly", inst, true) {
 
         updateAnim(entity.health)
 
-        RenderUtils.drawRect(0F, 0F, 32F + length, 36F, targetInstance.bgColor.rgb)
+        RenderUtils.drawRect(0F, 0F, 32F + length, 36F, targetHudInstance.bgColor.rgb)
 
         if (mc.netHandler.getPlayerInfo(entity.uniqueID) != null)
             drawHead(
@@ -27,7 +27,7 @@ class Slowly(inst: Target) : TargetStyle("Slowly", inst, true) {
                 1,
                 30,
                 30,
-                1F - targetInstance.getFadeProgress()
+                1F - targetHudInstance.getFadeProgress()
             )
 
         font.drawStringWithShadow(entity.name, 33F, 2F, getColor(-1).rgb)
@@ -35,7 +35,7 @@ class Slowly(inst: Target) : TargetStyle("Slowly", inst, true) {
             healthString,
             length + 31F - font.getStringWidth(healthString).toFloat(),
             22F,
-            targetInstance.barColor.rgb
+            targetHudInstance.barColor.rgb
         )
 
         RenderUtils.drawRect(
@@ -43,7 +43,7 @@ class Slowly(inst: Target) : TargetStyle("Slowly", inst, true) {
             32F,
             (easingHealth / entity.maxHealth).coerceIn(0F, entity.maxHealth) * (length + 32F),
             36F,
-            targetInstance.barColor.rgb
+            targetHudInstance.barColor.rgb
         )
     }
 

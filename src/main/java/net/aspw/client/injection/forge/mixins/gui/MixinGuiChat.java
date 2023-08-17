@@ -1,8 +1,9 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
-import net.aspw.client.utils.AnimationUtils;
-import net.aspw.client.utils.render.RenderUtils;
+import net.aspw.client.features.module.impl.other.InfiniteChat;
+import net.aspw.client.util.AnimationUtils;
+import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.IChatComponent;
@@ -13,13 +14,21 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import scala.Int;
 
 import java.awt.*;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
+/**
+ * The type Mixin gui chat.
+ */
 @Mixin(GuiChat.class)
 public abstract class MixinGuiChat extends MixinGuiScreen {
+    /**
+     * The Input field.
+     */
     @Shadow
     protected GuiTextField inputField;
 
@@ -30,6 +39,11 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
     private float yPosOfInputField;
     private float fade = 0;
 
+    /**
+     * On autocomplete response.
+     *
+     * @param p_onAutocompleteResponse_1_ the p on autocomplete response 1
+     */
     @Shadow
     public abstract void onAutocompleteResponse(String[] p_onAutocompleteResponse_1_);
 
@@ -41,13 +55,11 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
 
     @Inject(method = "keyTyped", at = @At("RETURN"))
     private void updateLength(CallbackInfo callbackInfo) {
-        if (!inputField.getText().startsWith(String.valueOf(Client.commandManager.getPrefix()))) return;
-        Client.commandManager.autoComplete(inputField.getText());
-
-        if (!inputField.getText().startsWith(Client.commandManager.getPrefix() + "lc"))
-            inputField.setMaxStringLength(10000);
-        else
-            inputField.setMaxStringLength(100);
+        if (Objects.requireNonNull(Client.moduleManager.getModule(InfiniteChat.class)).getState())
+            inputField.setMaxStringLength(Int.MaxValue());
+        if (!inputField.getText().startsWith((".")) || Objects.requireNonNull(Client.moduleManager.getModule(InfiniteChat.class)).getState())
+            return;
+        inputField.setMaxStringLength(100);
     }
 
     @Inject(method = "updateScreen", at = @At("HEAD"))
@@ -71,46 +83,21 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
     }
 
     /**
-     * Adds client command auto completion and cancels sending an auto completion request packet
-     * to the server if the message contains a client command.
+     * Draw screen.
      *
-     * @author NurMarvin
-     */
-    @Inject(method = "sendAutocompleteRequest", at = @At("HEAD"), cancellable = true)
-    private void handleClientCommandCompletion(String full, final String ignored, CallbackInfo callbackInfo) {
-        if (Client.commandManager.autoComplete(full)) {
-            waitingOnAutocomplete = true;
-
-            String[] latestAutoComplete = Client.commandManager.getLatestAutoComplete();
-
-            if (full.toLowerCase().endsWith(latestAutoComplete[latestAutoComplete.length - 1].toLowerCase()))
-                return;
-
-            this.onAutocompleteResponse(latestAutoComplete);
-
-            callbackInfo.cancel();
-        }
-    }
-
-    @Inject(method = "onAutocompleteResponse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiChat;autocompletePlayerNames(F)V", shift = At.Shift.BEFORE), cancellable = true)
-    private void onAutocompleteResponse(String[] autoCompleteResponse, CallbackInfo callbackInfo) {
-        if (Client.commandManager.getLatestAutoComplete().length != 0) callbackInfo.cancel();
-    }
-
-    /**
-     * @author
-     * @reason
+     * @param mouseX       the mouse x
+     * @param mouseY       the mouse y
+     * @param partialTicks the partial ticks
+     * @author As_pw
+     * @reason Draw
      */
     @Overwrite
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         RenderUtils.drawRect(2F, this.height - fade, this.width - 2, this.height - fade + 12, Integer.MIN_VALUE);
         this.inputField.drawTextBox();
-        if (Client.commandManager.getLatestAutoComplete().length > 0 && !inputField.getText().isEmpty() && inputField.getText().startsWith(String.valueOf(Client.commandManager.getPrefix()))) {
-            String[] latestAutoComplete = Client.commandManager.getLatestAutoComplete();
-            String[] textArray = inputField.getText().split(" ");
-            String trimmedString = latestAutoComplete[0].replaceFirst("(?i)" + textArray[textArray.length - 1], "");
+        if (!inputField.getText().isEmpty() && inputField.getText().startsWith(".")) {
 
-            mc.fontRendererObj.drawStringWithShadow(trimmedString, inputField.xPosition + mc.fontRendererObj.getStringWidth(inputField.getText()), inputField.yPosition, new Color(165, 165, 165).getRGB());
+            mc.fontRendererObj.drawStringWithShadow("", inputField.xPosition + mc.fontRendererObj.getStringWidth(inputField.getText()), inputField.yPosition, new Color(165, 165, 165).getRGB());
         }
 
         IChatComponent ichatcomponent =

@@ -1,12 +1,12 @@
 package net.aspw.client.visual.hud.element.elements.targets.impl
 
-import net.aspw.client.utils.extensions.darker
-import net.aspw.client.utils.extensions.getDistanceToEntityBox
-import net.aspw.client.utils.render.BlendUtils
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.extensions.darker
+import net.aspw.client.util.extensions.getDistanceToEntityBox
+import net.aspw.client.util.render.BlendUtils
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.font.Fonts
 import net.aspw.client.visual.hud.element.Border
-import net.aspw.client.visual.hud.element.elements.Target
+import net.aspw.client.visual.hud.element.elements.TargetHud
 import net.aspw.client.visual.hud.element.elements.targets.TargetStyle
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.RenderHelper
@@ -14,18 +14,18 @@ import net.minecraft.entity.player.EntityPlayer
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
-class Exhibition(inst: Target) : TargetStyle("Exhibition", inst, false) {
+class Exhibition(inst: TargetHud) : TargetStyle("Exhibition", inst, false) {
 
     override fun drawTarget(entity: EntityPlayer) {
         val font = Fonts.fontTahoma
         val minWidth = 126F.coerceAtLeast(47F + font.getStringWidth(entity.name))
 
-        RenderUtils.drawExhiRect(0F, 0F, minWidth, 45F, 1F - targetInstance.getFadeProgress())
+        RenderUtils.drawExhiRect(0F, 0F, minWidth, 45F, 1F - targetHudInstance.getFadeProgress())
 
         RenderUtils.drawRect(2.5F, 2.5F, 42.5F, 42.5F, getColor(Color(59, 59, 59)).rgb)
         RenderUtils.drawRect(3F, 3F, 42F, 42F, getColor(Color(19, 19, 19)).rgb)
 
-        GL11.glColor4f(1f, 1f, 1f, 1f - targetInstance.getFadeProgress())
+        GL11.glColor4f(1f, 1f, 1f, 1f - targetHudInstance.getFadeProgress())
         RenderUtils.drawEntityOnScreen(22, 40, 16, entity)
 
         font.drawString(entity.name, 46, 5, getColor(-1).rgb)
@@ -59,7 +59,7 @@ class Exhibition(inst: Target) : TargetStyle("Exhibition", inst, false) {
 
         GlStateManager.resetColor()
         GL11.glPushMatrix()
-        GL11.glColor4f(1f, 1f, 1f, 1f - targetInstance.getFadeProgress())
+        GL11.glColor4f(1f, 1f, 1f, 1f - targetHudInstance.getFadeProgress())
         GlStateManager.enableRescaleNormal()
         GlStateManager.enableBlend()
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0)

@@ -4,7 +4,7 @@ import net.aspw.client.Client;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
 import net.aspw.client.features.module.impl.player.Scaffold;
-import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.util.MovementUtils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.MovementInput;
@@ -12,33 +12,38 @@ import net.minecraft.util.MovementInput;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * The type Ncpb hop.
+ */
 public class NCPBHop extends SpeedMode {
 
     private int level = 1;
     private double moveSpeed = 0.2873;
     private double lastDist;
-    private int timerDelay;
 
+    /**
+     * Instantiates a new Ncpb hop.
+     */
     public NCPBHop() {
         super("NCPBHop");
     }
 
     @Override
     public void onEnable() {
-        mc.timer.timerSpeed = 1F;
         level = mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0.0, mc.thePlayer.motionY, 0.0)).size() > 0 || mc.thePlayer.isCollidedVertically ? 1 : 4;
     }
 
     @Override
     public void onDisable() {
-        mc.timer.timerSpeed = 1F;
         moveSpeed = getBaseMoveSpeed();
         level = 0;
 
         final Scaffold scaffold = Client.moduleManager.getModule(Scaffold.class);
 
-        if (!mc.thePlayer.isSneaking() && !scaffold.getState())
-            MovementUtils.strafe(0.2f);
+        if (!mc.thePlayer.isSneaking() && !scaffold.getState()) {
+            mc.thePlayer.motionX = 0.0;
+            mc.thePlayer.motionZ = 0.0;
+        }
     }
 
     @Override
@@ -54,19 +59,9 @@ public class NCPBHop extends SpeedMode {
 
     @Override
     public void onMove(MoveEvent event) {
-        ++timerDelay;
-        timerDelay %= 5;
-        if (timerDelay != 0) {
-            mc.timer.timerSpeed = 1F;
-        } else {
-            if (MovementUtils.isMoving())
-                mc.timer.timerSpeed = 32767F;
-
-            if (MovementUtils.isMoving()) {
-                mc.timer.timerSpeed = 1.3F;
-                mc.thePlayer.motionX *= 1.0199999809265137;
-                mc.thePlayer.motionZ *= 1.0199999809265137;
-            }
+        if (MovementUtils.isMoving()) {
+            mc.thePlayer.motionX *= 1.0199999809265137;
+            mc.thePlayer.motionZ *= 1.0199999809265137;
         }
 
         if (mc.thePlayer.onGround && MovementUtils.isMoving())

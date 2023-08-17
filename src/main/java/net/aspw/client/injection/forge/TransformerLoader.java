@@ -7,9 +7,15 @@ import org.spongepowered.asm.mixin.Mixins;
 
 import java.util.Map;
 
+/**
+ * The type Transformer loader.
+ */
 @IFMLLoadingPlugin.MCVersion("1.8.9")
 public class TransformerLoader implements IFMLLoadingPlugin {
 
+    /**
+     * Instantiates a new Transformer loader.
+     */
     public TransformerLoader() {
         MixinBootstrap.init();
         Mixins.addConfiguration("client.forge.mixins.json");

@@ -6,10 +6,10 @@ import net.aspw.client.event.Render3DEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.block.BlockUtils.canBeClicked
-import net.aspw.client.utils.block.BlockUtils.getBlock
-import net.aspw.client.utils.render.ColorUtils.rainbow
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.block.BlockUtils.canBeClicked
+import net.aspw.client.util.block.BlockUtils.getBlock
+import net.aspw.client.util.render.ColorUtils.rainbow
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.visual.font.Fonts
@@ -20,7 +20,7 @@ import net.minecraft.util.BlockPos
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
-@ModuleInfo(name = "BlockOverlay", spacedName = "Block Overlay", category = ModuleCategory.VISUAL)
+@ModuleInfo(name = "BlockOverlay", spacedName = "Block Overlay", description = "", category = ModuleCategory.VISUAL)
 class BlockOverlay : Module() {
     private val colorRedValue = IntegerValue("R", 154, 0, 255)
     private val colorGreenValue = IntegerValue("G", 115, 0, 255)

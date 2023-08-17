@@ -6,19 +6,18 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.combat.KillAura
-import net.aspw.client.utils.MovementUtils
-import net.aspw.client.utils.Rotation
-import net.aspw.client.utils.RotationUtils
+import net.aspw.client.util.MovementUtils
+import net.aspw.client.util.Rotation
+import net.aspw.client.util.RotationUtils
 import net.aspw.client.value.BoolValue
 import net.minecraft.network.play.client.C0BPacketEntityAction
 
-@ModuleInfo(name = "Sprint", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Sprint", description = "", category = ModuleCategory.MOVEMENT)
 class Sprint : Module() {
 
     val allDirectionsValue = BoolValue("Multi", true)
     val noPacketPatchValue = BoolValue("Silent", false)
     val rot = BoolValue("Rotations", false)
-    val wallValue = BoolValue("No-WallsCheck", false)
 
     private var modified = false
 

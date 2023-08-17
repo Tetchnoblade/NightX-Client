@@ -5,17 +5,17 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.ClientUtils
-import net.aspw.client.utils.MovementUtils
-import net.aspw.client.utils.PacketUtils
-import net.aspw.client.utils.PosLookInstance
-import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.util.ClientUtils
+import net.aspw.client.util.MovementUtils
+import net.aspw.client.util.PacketUtils
+import net.aspw.client.util.PosLookInstance
+import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 import net.aspw.client.visual.hud.element.elements.Notification
-import net.minecraft.client.settings.KeyBinding
+import net.minecraft.client.settings.GameSettings
 import net.minecraft.item.ItemEnderPearl
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C03PacketPlayer.*
@@ -26,13 +26,12 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import java.util.*
 
-@ModuleInfo(name = "LongJump", spacedName = "Long Jump", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "LongJump", spacedName = "Long Jump", description = "", category = ModuleCategory.MOVEMENT)
 class LongJump : Module() {
     private val modeValue = ListValue(
         "Mode",
         arrayOf(
             "NCP",
-            "Damage",
             "AACv1",
             "AACv2",
             "AACv3",
@@ -49,7 +48,8 @@ class LongJump : Module() {
         ),
         "NCP"
     )
-    private val ncpBoostValue = FloatValue("NCPBoost", 3f, 1f, 10f) { modeValue.get().equals("ncp", ignoreCase = true) }
+    private val ncpBoostValue =
+        FloatValue("NCP-Boost", 20f, 10f, 40f) { modeValue.get().equals("ncp", ignoreCase = true) }
     private val matrixBoostValue =
         FloatValue("MatrixFlag-Boost", 2f, 0f, 3f) { modeValue.get().equals("matrixflag", ignoreCase = true) }
     private val matrixHeightValue =
@@ -96,20 +96,11 @@ class LongJump : Module() {
         FloatValue("Pearl-Height", 0.42f, 0f, 10f) { modeValue.get().equals("pearl", ignoreCase = true) }
     private val pearlTimerValue =
         FloatValue("Pearl-Timer", 1f, 0.05f, 10f) { modeValue.get().equals("pearl", ignoreCase = true) }
-    private val damageBoostValue =
-        FloatValue("Damage-Boost", 4.25f, 0f, 10f) { modeValue.get().equals("damage", ignoreCase = true) }
-    private val damageHeightValue =
-        FloatValue("Damage-Height", 0.42f, 0f, 10f) { modeValue.get().equals("damage", ignoreCase = true) }
-    private val damageTimerValue =
-        FloatValue("Damage-Timer", 1f, 0.05f, 10f) { modeValue.get().equals("damage", ignoreCase = true) }
-    private val damageNoMoveValue =
-        BoolValue("Damage-NoMove", false) { modeValue.get().equals("damage", ignoreCase = true) }
-    private val damageARValue =
-        BoolValue("Damage-AutoReset", false) { modeValue.get().equals("damage", ignoreCase = true) }
     private val autoDisableValue = BoolValue("AutoDisable", true)
     private val fakeDmgValue = BoolValue("FakeDamage", false)
-    private val bobbingValue = BoolValue("Bobbing", false)
-    private val bobbingAmountValue = FloatValue("BobbingAmount", 0.07f, 0f, 1f) { bobbingValue.get() }
+    val fakeYValue = BoolValue("FakeY", false)
+    private val viewBobbingValue = BoolValue("ViewBobbing", false)
+    private val bobbingAmountValue = FloatValue("BobbingAmount", 0.1f, 0f, 0.1f) { viewBobbingValue.get() }
     private val dmgTimer = MSTimer()
     private val posLookInstance = PosLookInstance()
     private var hasJumped = false
@@ -120,7 +111,6 @@ class LongJump : Module() {
     private var teleported = false
     private var canMineplexBoost = false
     private var ticks = 0
-    var rendery = 0.0
     private var currentTimer = 1f
     private var verusDmged = false
     private var hpxDamage = false
@@ -130,6 +120,7 @@ class LongJump : Module() {
     private var lastMotX = 0.0
     private var lastMotY = 0.0
     private var lastMotZ = 0.0
+    var y = 0.0
     private var flagged = false
     private var hasFell = false
     private fun debug(message: String) {
@@ -138,16 +129,17 @@ class LongJump : Module() {
 
     @EventTarget
     fun onMotion(event: MotionEvent?) {
-        if (bobbingValue.get()) {
+        if (MovementUtils.isMoving() && viewBobbingValue.get())
             mc.thePlayer.cameraYaw = bobbingAmountValue.get()
-        }
+        if (fakeYValue.get())
+            mc.thePlayer.cameraPitch = 0f
     }
 
     override fun onEnable() {
         if (fakeDmgValue.get()) {
             mc.thePlayer.handleStatusUpdate(2.toByte())
         }
-        if (mc.thePlayer == null) return
+        y = mc.thePlayer.posY
         if (modeValue.get().equals("redesky", ignoreCase = true) && redeskyTimerBoostValue.get()) currentTimer =
             redeskyTimerBoostStartValue.get()
         jumped = false
@@ -164,7 +156,6 @@ class LongJump : Module() {
         verusJumpTimes = 0
         dmgTimer.reset()
         posLookInstance.reset()
-        rendery = mc.thePlayer.posY
         val x = mc.thePlayer.posX
         val y = mc.thePlayer.posY
         val z = mc.thePlayer.posZ
@@ -269,6 +260,9 @@ class LongJump : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent?) {
+        if (modeValue.get().equals("ncp", ignoreCase = true)) {
+            mc.gameSettings.keyBindJump.pressed = false
+        }
         if (!no && mc.thePlayer.onGround) {
             jumped = true
             if (hasJumped && autoDisableValue.get()) {
@@ -276,11 +270,8 @@ class LongJump : Module() {
                 state = false
                 return
             }
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.keyCode, true)
+            mc.thePlayer.jump()
             hasJumped = true
-        }
-        if (!mc.thePlayer.onGround) {
-            KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.keyCode, false)
         }
         if (modeValue.get().equals("matrixflag", ignoreCase = true)) {
             if (hasFell) {
@@ -325,17 +316,9 @@ class LongJump : Module() {
             }
             return
         }
-        if (modeValue.get().equals("damage", ignoreCase = true)) {
-            if (mc.thePlayer.hurtTime > 0 && !damaged) {
-                damaged = true
-                MovementUtils.strafe(damageBoostValue.get())
-                mc.thePlayer.motionY = damageHeightValue.get().toDouble()
-            }
-            if (damaged) {
-                mc.timer.timerSpeed = damageTimerValue.get()
-                if (damageARValue.get() && mc.thePlayer.hurtTime <= 0) damaged = false
-            }
-            return
+        if (modeValue.get().equals("ncp", ignoreCase = true)) {
+            if (mc.thePlayer.onGround)
+                canBoost = true
         }
         if (modeValue.get().equals("pearl", ignoreCase = true)) {
             val enderPearlSlot = pearlSlot
@@ -384,107 +367,105 @@ class LongJump : Module() {
             if (pearlState == 2) mc.timer.timerSpeed = pearlTimerValue.get()
             return
         }
-        if (jumped) {
-            val mode = modeValue.get()
-            if (mc.thePlayer.onGround || mc.thePlayer.capabilities.isFlying) {
-                jumped = false
-                canMineplexBoost = false
-                if (mode.equals("NCP", ignoreCase = true)) {
-                    mc.thePlayer.motionX = 0.0
-                    mc.thePlayer.motionZ = 0.0
-                }
-                return
+        val mode = modeValue.get()
+        if (mc.thePlayer.onGround || mc.thePlayer.capabilities.isFlying) {
+            jumped = false
+            canMineplexBoost = false
+            if (mode.equals("NCP", ignoreCase = true)) {
+                mc.thePlayer.motionX = 0.0
+                mc.thePlayer.motionZ = 0.0
             }
-            when (mode.lowercase(Locale.getDefault())) {
-                "ncp" -> {
-                    MovementUtils.strafe(MovementUtils.getSpeed() * if (canBoost) ncpBoostValue.get() else 1f)
-                    canBoost = false
-                }
+            return
+        }
+        when (mode.lowercase(Locale.getDefault())) {
+            "ncp" -> {
+                MovementUtils.strafe(MovementUtils.getSpeed() * if (canBoost) ncpBoostValue.get() else 1f)
+                canBoost = false
+            }
 
-                "aacv1" -> {
-                    mc.thePlayer.motionY += 0.05999
-                    MovementUtils.strafe(MovementUtils.getSpeed() * 1.08f)
-                }
+            "aacv1" -> {
+                mc.thePlayer.motionY += 0.05999
+                MovementUtils.strafe(MovementUtils.getSpeed() * 1.08f)
+            }
 
-                "aacv2", "mineplex3" -> {
-                    mc.thePlayer.jumpMovementFactor = 0.09f
-                    mc.thePlayer.motionY += 0.0132099999999999999999999999999
-                    mc.thePlayer.jumpMovementFactor = 0.08f
+            "aacv2", "mineplex3" -> {
+                mc.thePlayer.jumpMovementFactor = 0.09f
+                mc.thePlayer.motionY += 0.0132099999999999999999999999999
+                mc.thePlayer.jumpMovementFactor = 0.08f
+                MovementUtils.strafe()
+            }
+
+            "aacv3" -> {
+                val player = mc.thePlayer
+                if (player.fallDistance > 0.5f && !teleported) {
+                    val value = 3.0
+                    val horizontalFacing = player.horizontalFacing
+                    var x = 0.0
+                    var z = 0.0
+                    when (horizontalFacing) {
+                        EnumFacing.NORTH -> z = -value
+                        EnumFacing.EAST -> x = +value
+                        EnumFacing.SOUTH -> z = +value
+                        EnumFacing.WEST -> x = -value
+                    }
+                    player.setPosition(player.posX + x, player.posY, player.posZ + z)
+                    teleported = true
+                }
+            }
+
+            "mineplex1" -> {
+                mc.thePlayer.motionY += 0.0132099999999999999999999999999
+                mc.thePlayer.jumpMovementFactor = 0.08f
+                MovementUtils.strafe()
+            }
+
+            "mineplex2" -> {
+                if (!canMineplexBoost) {
+                    mc.thePlayer.jumpMovementFactor = 0.1f
+                    if (mc.thePlayer.fallDistance > 1.5f) {
+                        mc.thePlayer.jumpMovementFactor = 0f
+                        mc.thePlayer.motionY = -10.0
+                    }
                     MovementUtils.strafe()
                 }
+            }
 
-                "aacv3" -> {
-                    val player = mc.thePlayer
-                    if (player.fallDistance > 0.5f && !teleported) {
-                        val value = 3.0
-                        val horizontalFacing = player.horizontalFacing
-                        var x = 0.0
-                        var z = 0.0
-                        when (horizontalFacing) {
-                            EnumFacing.NORTH -> z = -value
-                            EnumFacing.EAST -> x = +value
-                            EnumFacing.SOUTH -> z = +value
-                            EnumFacing.WEST -> x = -value
-                        }
-                        player.setPosition(player.posX + x, player.posY, player.posZ + z)
-                        teleported = true
+            "aacv4" -> {
+                mc.thePlayer.jumpMovementFactor = 0.05837456f
+                mc.timer.timerSpeed = 0.5f
+            }
+
+            "redeskymaki" -> {
+                mc.thePlayer.jumpMovementFactor = 0.15f
+                mc.thePlayer.motionY += 0.05
+            }
+
+            "redesky" -> {
+                if (redeskyTimerBoostValue.get()) {
+                    mc.timer.timerSpeed = currentTimer
+                }
+                if (ticks < redeskyTickValue.get()) {
+                    mc.thePlayer.jump()
+                    mc.thePlayer.motionY *= redeskyYMultiplier.get().toDouble()
+                    mc.thePlayer.motionX *= redeskyXZMultiplier.get().toDouble()
+                    mc.thePlayer.motionZ *= redeskyXZMultiplier.get().toDouble()
+                } else {
+                    if (redeskyGlideAfterTicksValue.get()) {
+                        mc.thePlayer.motionY += 0.03
+                    }
+                    if (redeskyTimerBoostValue.get() && currentTimer > redeskyTimerBoostEndValue.get()) {
+                        currentTimer = Math.max(
+                            0.08f,
+                            currentTimer - 0.05f * redeskyTimerBoostSlowDownSpeedValue.get()
+                        ) // zero-timer protection
                     }
                 }
+                ticks++
+            }
 
-                "mineplex1" -> {
-                    mc.thePlayer.motionY += 0.0132099999999999999999999999999
-                    mc.thePlayer.jumpMovementFactor = 0.08f
-                    MovementUtils.strafe()
-                }
-
-                "mineplex2" -> {
-                    if (!canMineplexBoost) {
-                        mc.thePlayer.jumpMovementFactor = 0.1f
-                        if (mc.thePlayer.fallDistance > 1.5f) {
-                            mc.thePlayer.jumpMovementFactor = 0f
-                            mc.thePlayer.motionY = -10.0
-                        }
-                        MovementUtils.strafe()
-                    }
-                }
-
-                "aacv4" -> {
-                    mc.thePlayer.jumpMovementFactor = 0.05837456f
-                    mc.timer.timerSpeed = 0.5f
-                }
-
-                "redeskymaki" -> {
-                    mc.thePlayer.jumpMovementFactor = 0.15f
-                    mc.thePlayer.motionY += 0.05
-                }
-
-                "redesky" -> {
-                    if (redeskyTimerBoostValue.get()) {
-                        mc.timer.timerSpeed = currentTimer
-                    }
-                    if (ticks < redeskyTickValue.get()) {
-                        mc.thePlayer.jump()
-                        mc.thePlayer.motionY *= redeskyYMultiplier.get().toDouble()
-                        mc.thePlayer.motionX *= redeskyXZMultiplier.get().toDouble()
-                        mc.thePlayer.motionZ *= redeskyXZMultiplier.get().toDouble()
-                    } else {
-                        if (redeskyGlideAfterTicksValue.get()) {
-                            mc.thePlayer.motionY += 0.03
-                        }
-                        if (redeskyTimerBoostValue.get() && currentTimer > redeskyTimerBoostEndValue.get()) {
-                            currentTimer = Math.max(
-                                0.08f,
-                                currentTimer - 0.05f * redeskyTimerBoostSlowDownSpeedValue.get()
-                            ) // zero-timer protection
-                        }
-                    }
-                    ticks++
-                }
-
-                "infiniteredesky" -> {
-                    if (mc.thePlayer.fallDistance > 0.6f) mc.thePlayer.motionY += 0.02
-                    MovementUtils.strafe(Math.min(0.85, Math.max(0.25, MovementUtils.getSpeed() * 1.05878)).toFloat())
-                }
+            "infiniteredesky" -> {
+                if (mc.thePlayer.fallDistance > 0.6f) mc.thePlayer.motionY += 0.02
+                MovementUtils.strafe(Math.min(0.85, Math.max(0.25, MovementUtils.getSpeed() * 1.05878)).toFloat())
             }
         }
     }
@@ -499,7 +480,7 @@ class LongJump : Module() {
             mc.thePlayer.motionZ = 0.0
             event.zeroXZ()
         }
-        if (mode.equals("damage", ignoreCase = true) && damageNoMoveValue.get() && !damaged || mode.equals(
+        if (mode.equals(
                 "verusdmg",
                 ignoreCase = true
             ) && !verusDmged
@@ -561,7 +542,6 @@ class LongJump : Module() {
     @EventTarget(ignoreCondition = true)
     fun onJump(event: JumpEvent) {
         jumped = true
-        canBoost = true
         teleported = false
         if (state) {
             when (modeValue.get().lowercase(Locale.getDefault())) {
@@ -589,11 +569,15 @@ class LongJump : Module() {
         }
 
     override fun onDisable() {
-        KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.keyCode, false)
+        if (modeValue.get().equals("ncp", ignoreCase = true)) {
+            if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
+                mc.gameSettings.keyBindJump.pressed = true
+        }
+        mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
         mc.timer.timerSpeed = 1.0f
-        mc.thePlayer.speedInAir = 0.02f
         if (!mc.thePlayer.isSneaking) {
-            MovementUtils.strafe(0.2f)
+            mc.thePlayer.motionX = 0.0
+            mc.thePlayer.motionZ = 0.0
         }
     }
 

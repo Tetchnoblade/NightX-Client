@@ -10,6 +10,9 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.Objects;
 
+/**
+ * The type Mixin inventory effect renderer.
+ */
 @Mixin(InventoryEffectRenderer.class)
 public abstract class MixinInventoryEffectRenderer extends MixinGuiContainer {
 
@@ -17,8 +20,10 @@ public abstract class MixinInventoryEffectRenderer extends MixinGuiContainer {
     private boolean hasActivePotionEffects;
 
     /**
-     * @author
-     * @reason
+     * Update active potion effects.
+     *
+     * @author As_pw
+     * @reason Effects
      */
     @Overwrite
     public void updateActivePotionEffects() {

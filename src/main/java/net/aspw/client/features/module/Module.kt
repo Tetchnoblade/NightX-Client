@@ -2,8 +2,8 @@ package net.aspw.client.features.module
 
 import net.aspw.client.Client
 import net.aspw.client.event.Listenable
-import net.aspw.client.utils.ClientUtils
-import net.aspw.client.utils.MinecraftInstance
+import net.aspw.client.util.ClientUtils
+import net.aspw.client.util.MinecraftInstance
 import net.aspw.client.value.Value
 import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.client.audio.PositionedSoundRecord
@@ -15,6 +15,7 @@ abstract class Module : MinecraftInstance(), Listenable {
     // Module information
     var name: String
     var spacedName: String
+    var description: String
     var category: ModuleCategory
     var keyBind = Keyboard.CHAR_NONE
         set(keyBind) {
@@ -41,6 +42,7 @@ abstract class Module : MinecraftInstance(), Listenable {
 
         name = moduleInfo.name
         spacedName = if (moduleInfo.spacedName == "") name else moduleInfo.spacedName
+        description = moduleInfo.description
         category = moduleInfo.category
         keyBind = moduleInfo.keyBind
         array = moduleInfo.array
@@ -74,7 +76,7 @@ abstract class Module : MinecraftInstance(), Listenable {
                 if (Client.moduleManager.shouldNotify)
                     Client.hud.addNotification(
                         Notification(
-                            "${if (value) "Enabled" else "Disabled"} §r$name.",
+                            "${if (value) "Enabled" else "Disabled"} §r$name!",
                             if (value) Notification.Type.SUCCESS else Notification.Type.ERROR,
                             1000L
                         )
@@ -115,7 +117,7 @@ abstract class Module : MinecraftInstance(), Listenable {
     /**
      * Print [msg] to chat
      */
-    protected fun chat(msg: String) = ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§3$msg")
+    protected fun chat(msg: String) = ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§c$msg")
 
     /**
      * Called when module toggled

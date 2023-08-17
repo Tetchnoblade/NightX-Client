@@ -3,7 +3,7 @@ package net.aspw.client.features.command.impl
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.visual.Hud
-import net.aspw.client.utils.misc.StringUtils
+import net.aspw.client.util.misc.StringUtils
 import net.aspw.client.visual.hud.element.elements.Notification
 
 class RepeatCommand : Command("repeat", arrayOf("rp")) {

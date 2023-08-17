@@ -5,9 +5,9 @@ import net.aspw.client.event.Render2DEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.EntityUtils
-import net.aspw.client.utils.render.RenderUtils.drawTriAngle
-import net.aspw.client.utils.render.RenderUtils.isInViewFrustrum
+import net.aspw.client.util.EntityUtils
+import net.aspw.client.util.render.RenderUtils.drawTriAngle
+import net.aspw.client.util.render.RenderUtils.isInViewFrustrum
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -20,7 +20,12 @@ import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
-@ModuleInfo(name = "PointerESP", spacedName = "Pointer ESP", category = ModuleCategory.VISUAL, array = false)
+@ModuleInfo(
+    name = "PointerESP",
+    spacedName = "Pointer ESP",
+    description = "",
+    category = ModuleCategory.VISUAL
+)
 class PointerESP : Module() {
     private val modeValue = ListValue("Mode", arrayOf("Solid", "Line"), "Line")
     private val redValue = IntegerValue("Red", 255, 0, 255)

@@ -7,18 +7,18 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.MovementUtils
+import net.aspw.client.util.MovementUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.minecraft.client.entity.EntityOtherPlayerMP
+import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C0BPacketEntityAction
 import org.lwjgl.input.Keyboard
 
-@ModuleInfo(name = "Freecam", category = ModuleCategory.PLAYER, keyBind = Keyboard.KEY_F8)
+@ModuleInfo(name = "Freecam", description = "", category = ModuleCategory.PLAYER, keyBind = Keyboard.KEY_F8)
 class Freecam : Module() {
     private val speedValue = FloatValue("Speed", 1f, 0.1f, 2f, "m")
-    private val flyValue = BoolValue("Fly", true)
     private val noClipValue = BoolValue("NoClip", true)
     private var fakePlayer: EntityOtherPlayerMP? = null
     private var oldX = 0.0
@@ -51,18 +51,16 @@ class Freecam : Module() {
     fun onUpdate(event: UpdateEvent?) {
         if (noClipValue.get()) mc.thePlayer.noClip = true
         mc.thePlayer.fallDistance = 0f
-        if (flyValue.get()) {
-            val value = speedValue.get()
-            mc.thePlayer.motionY = 0.0
-            mc.thePlayer.motionX = 0.0
-            mc.thePlayer.motionZ = 0.0
-            if (mc.gameSettings.keyBindJump.isKeyDown) mc.thePlayer.motionY += value.toDouble()
-            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-                mc.thePlayer.motionY -= value.toDouble()
-                mc.gameSettings.keyBindSneak.pressed = false
-            }
-            MovementUtils.strafe(value)
+        val value = speedValue.get()
+        mc.thePlayer.motionY = 0.0
+        mc.thePlayer.motionX = 0.0
+        mc.thePlayer.motionZ = 0.0
+        if (mc.gameSettings.keyBindJump.isKeyDown) mc.thePlayer.motionY += value.toDouble()
+        if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
+            mc.thePlayer.motionY -= value.toDouble()
+            mc.gameSettings.keyBindSneak.pressed = false
         }
+        MovementUtils.strafe(value)
     }
 
     @EventTarget
@@ -75,9 +73,6 @@ class Freecam : Module() {
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
         if (packet is C03PacketPlayer || packet is C0BPacketEntityAction) {
-            event.cancelEvent()
-        }
-        if (packet is C0BPacketEntityAction && (packet.action == C0BPacketEntityAction.Action.STOP_SPRINTING || packet.action == C0BPacketEntityAction.Action.START_SPRINTING)) {
             event.cancelEvent()
         }
     }

@@ -1,8 +1,8 @@
 package net.aspw.client.visual.hud.element.elements.targets.utils
 
-import net.aspw.client.utils.AnimationUtils
-import net.aspw.client.utils.MinecraftInstance
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.AnimationUtils
+import net.aspw.client.util.MinecraftInstance
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.font.Fonts
 import net.minecraft.client.gui.ScaledResolution
 import org.lwjgl.opengl.GL11

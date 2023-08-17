@@ -10,18 +10,28 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * The type Mixin effect renderer.
+ */
 @Mixin(EffectRenderer.class)
 public abstract class MixinEffectRenderer {
 
     @Shadow
     private List<EntityParticleEmitter> particleEmitters;
 
+    /**
+     * Update effect layer.
+     *
+     * @param layer the layer
+     */
     @Shadow
     protected abstract void updateEffectLayer(int layer);
 
     /**
-     * @author Mojang
-     * @author Marco
+     * Update effects.
+     *
+     * @author As_pw
+     * @reason Effects
      */
     @Overwrite
     public void updateEffects() {

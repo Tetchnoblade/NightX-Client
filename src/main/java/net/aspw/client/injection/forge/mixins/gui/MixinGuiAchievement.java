@@ -6,6 +6,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * The type Mixin gui achievement.
+ */
 @Mixin(GuiAchievement.class)
 public class MixinGuiAchievement {
     @Inject(method = "updateAchievementWindow", at = @At("HEAD"), cancellable = true)

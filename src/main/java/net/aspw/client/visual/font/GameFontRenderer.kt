@@ -2,9 +2,9 @@ package net.aspw.client.visual.font
 
 import net.aspw.client.Client
 import net.aspw.client.event.TextEvent
-import net.aspw.client.utils.ClassUtils
-import net.aspw.client.utils.render.ColorUtils
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.ClassUtils
+import net.aspw.client.util.render.ColorUtils
+import net.aspw.client.util.render.RenderUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.renderer.GlStateManager

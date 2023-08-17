@@ -5,9 +5,9 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.MovementUtils
-import net.aspw.client.utils.PacketUtils
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.MovementUtils
+import net.aspw.client.util.PacketUtils
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -25,21 +25,24 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import java.awt.Color
 
-@ModuleInfo(name = "BowLongJump", spacedName = "Bow Long Jump", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "BowLongJump", spacedName = "Bow Long Jump", description = "", category = ModuleCategory.PLAYER)
 class BowLongJump : Module() {
     private val boostValue = FloatValue("Boost", 0.96f, 0f, 10f, "x")
     private val heightValue = FloatValue("Height", 0.58f, 0f, 10f, "m")
     private val timerValue = FloatValue("Timer", 1f, 0.1f, 10f, "x")
     private val delayBeforeLaunch = IntegerValue("DelayBeforeArrowLaunch", 1, 1, 20, " tick")
     private val autoDisable = BoolValue("AutoDisable", true)
-    private val bobbingValue = BoolValue("Bobbing", false)
-    private val bobbingAmountValue = FloatValue("BobbingAmount", 0.07f, 0f, 1f) { bobbingValue.get() }
+    val fakeYValue = BoolValue("FakeY", false)
+    private val viewBobbingValue = BoolValue("ViewBobbing", false)
+    private val bobbingAmountValue = FloatValue("BobbingAmount", 0.1f, 0f, 0.1f) { viewBobbingValue.get() }
     private val renderValue = BoolValue("RenderStatus", false)
     private var bowState = 0
+    var y = 0.0
     private var lastPlayerTick: Long = 0
     private var lastSlot = -1
     override fun onEnable() {
         if (mc.thePlayer == null) return
+        y = mc.thePlayer.posY
         bowState = 0
         lastPlayerTick = -1
         lastSlot = mc.thePlayer.inventory.currentItem
@@ -48,9 +51,10 @@ class BowLongJump : Module() {
 
     @EventTarget
     fun onMotion(event: MotionEvent?) {
-        if (bobbingValue.get()) {
+        if (MovementUtils.isMoving() && viewBobbingValue.get())
             mc.thePlayer.cameraYaw = bobbingAmountValue.get()
-        }
+        if (fakeYValue.get())
+            mc.thePlayer.cameraPitch = 0f
     }
 
     @EventTarget
@@ -151,10 +155,11 @@ class BowLongJump : Module() {
     }
 
     override fun onDisable() {
+        mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
         mc.timer.timerSpeed = 1.0f
-        mc.thePlayer.speedInAir = 0.02f
         if (!mc.thePlayer.isSneaking) {
-            MovementUtils.strafe(0.2f)
+            mc.thePlayer.motionX = 0.0
+            mc.thePlayer.motionZ = 0.0
         }
     }
 

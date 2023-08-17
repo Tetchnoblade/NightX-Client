@@ -9,6 +9,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * The type Mixin gui screen resource packs.
+ */
 @Mixin(GuiScreenResourcePacks.class)
 public class MixinGuiScreenResourcePacks {
     @Inject(method = "actionPerformed", at = @At(value = "INVOKE", target = "Ljava/util/Collections;reverse(Ljava/util/List;)V", remap = false))

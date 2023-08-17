@@ -4,6 +4,9 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelSkeleton;
 import org.spongepowered.asm.mixin.Mixin;
 
+/**
+ * The type Mixin model skeleton.
+ */
 @Mixin(ModelSkeleton.class)
 public class MixinModelSkeleton extends ModelBiped {
 

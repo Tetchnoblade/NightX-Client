@@ -9,9 +9,9 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.visual.Trails
-import net.aspw.client.utils.render.ColorUtils.rainbow
-import net.aspw.client.utils.render.RenderUtils
-import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.util.render.ColorUtils.rainbow
+import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.IntegerValue
 import net.minecraft.client.entity.EntityOtherPlayerMP
@@ -24,7 +24,7 @@ import java.awt.Color
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 
-@ModuleInfo(name = "Blink", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "Blink", description = "", category = ModuleCategory.PLAYER)
 class Blink : Module() {
     val pulseValue = BoolValue("Pulse", true)
     private val packets = LinkedBlockingQueue<Packet<*>>()

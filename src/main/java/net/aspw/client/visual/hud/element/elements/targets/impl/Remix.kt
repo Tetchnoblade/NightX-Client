@@ -1,9 +1,9 @@
 package net.aspw.client.visual.hud.element.elements.targets.impl
 
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.font.Fonts
 import net.aspw.client.visual.hud.element.Border
-import net.aspw.client.visual.hud.element.elements.Target
+import net.aspw.client.visual.hud.element.elements.TargetHud
 import net.aspw.client.visual.hud.element.elements.targets.TargetStyle
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.GlStateManager
@@ -12,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayer
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
-class Remix(inst: Target) : TargetStyle("Remix", inst, false) {
+class Remix(inst: TargetHud) : TargetStyle("Remix", inst, false) {
 
     override fun drawTarget(entity: EntityPlayer) {
         updateAnim(entity.health)
@@ -28,7 +28,7 @@ class Remix(inst: Target) : TargetStyle("Remix", inst, false) {
             40F,
             4F + (easingHealth / entity.maxHealth).coerceIn(0F, 1F) * 138F,
             45F,
-            targetInstance.barColor.rgb
+            targetHudInstance.barColor.rgb
         )
 
         // head
@@ -70,7 +70,7 @@ class Remix(inst: Target) : TargetStyle("Remix", inst, false) {
                 5,
                 32,
                 32,
-                1F - targetInstance.getFadeProgress()
+                1F - targetHudInstance.getFadeProgress()
             )
 
             val responseTime = mc.netHandler.getPlayerInfo(entity.uniqueID).responseTime.toInt()
@@ -103,7 +103,7 @@ class Remix(inst: Target) : TargetStyle("Remix", inst, false) {
 
         // armor items
         GL11.glPushMatrix()
-        GL11.glColor4f(1f, 1f, 1f, 1f - targetInstance.getFadeProgress())
+        GL11.glColor4f(1f, 1f, 1f, 1f - targetHudInstance.getFadeProgress())
         RenderHelper.enableGUIStandardItemLighting()
 
         val renderItem = mc.renderItem

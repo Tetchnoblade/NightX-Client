@@ -2,7 +2,6 @@ package net.aspw.client.features.command.impl
 
 import net.aspw.client.features.command.Command
 import net.minecraft.enchantment.Enchantment
-import java.util.*
 
 class EnchantCommand : Command("enchant", emptyArray()) {
     /**
@@ -53,19 +52,5 @@ class EnchantCommand : Command("enchant", emptyArray()) {
             return
         }
         chatSyntax("enchant <type> [level]")
-    }
-
-    override fun tabComplete(args: Array<String>): List<String> {
-        if (args.isEmpty()) return emptyList()
-
-        return when (args.size) {
-            1 -> {
-                return Enchantment.func_181077_c()
-                    .map { it.resourcePath.lowercase(Locale.getDefault()) }
-                    .filter { it.startsWith(args[0], true) }
-            }
-
-            else -> emptyList()
-        }
     }
 }

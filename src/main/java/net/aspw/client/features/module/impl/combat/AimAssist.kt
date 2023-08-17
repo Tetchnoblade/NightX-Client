@@ -5,17 +5,17 @@ import net.aspw.client.event.StrafeEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.EntityUtils
-import net.aspw.client.utils.RotationUtils
-import net.aspw.client.utils.extensions.getDistanceToEntityBox
-import net.aspw.client.utils.extensions.rotation
-import net.aspw.client.utils.misc.RandomUtils
-import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.util.EntityUtils
+import net.aspw.client.util.RotationUtils
+import net.aspw.client.util.extensions.getDistanceToEntityBox
+import net.aspw.client.util.extensions.rotation
+import net.aspw.client.util.misc.RandomUtils
+import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import kotlin.random.Random
 
-@ModuleInfo(name = "AimAssist", spacedName = "Aim Assist", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AimAssist", spacedName = "Aim Assist", description = "", category = ModuleCategory.COMBAT)
 class AimAssist : Module() {
 
     private val rangeValue = FloatValue("Range", 1000F, 1F, 1000F, "m")
@@ -49,7 +49,7 @@ class AimAssist : Module() {
         if (!lockValue.get() && RotationUtils.isFaced(entity, range.toDouble()))
             return
 
-        val boundingBox = entity.entityBoundingBox ?: return
+        val boundingBox = entity.entityBoundingBox
 
         val destinationRotation = if (centerValue.get()) {
             RotationUtils.toRotation(RotationUtils.getCenter(boundingBox) ?: return, true)

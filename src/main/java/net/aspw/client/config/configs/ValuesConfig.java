@@ -13,22 +13,20 @@ import java.io.*;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * The type Values config.
+ */
 public class ValuesConfig extends FileConfig {
 
     /**
-     * Constructor of config
+     * Instantiates a new Values config.
      *
-     * @param file of config
+     * @param file the file
      */
     public ValuesConfig(final File file) {
         super(file);
     }
 
-    /**
-     * Load config from file
-     *
-     * @throws IOException
-     */
     @Override
     protected void loadConfig() throws IOException {
         final JsonElement jsonElement = new JsonParser().parse(new BufferedReader(new FileReader(getFile())));
@@ -42,9 +40,7 @@ public class ValuesConfig extends FileConfig {
         while (iterator.hasNext()) {
             final Map.Entry<String, JsonElement> entry = iterator.next();
 
-            if (entry.getKey().equalsIgnoreCase("CommandPrefix")) {
-                Client.commandManager.setPrefix(entry.getValue().getAsCharacter());
-            } else if (entry.getKey().equalsIgnoreCase("macros")) {
+            if (entry.getKey().equalsIgnoreCase("macros")) {
                 JsonArray jsonValue = entry.getValue().getAsJsonArray();
                 for (final JsonElement macroElement : jsonValue) {
                     JsonObject macroObject = macroElement.getAsJsonObject();
@@ -76,16 +72,9 @@ public class ValuesConfig extends FileConfig {
         }
     }
 
-    /**
-     * Save config to file
-     *
-     * @throws IOException
-     */
     @Override
     protected void saveConfig() throws IOException {
         final JsonObject jsonObject = new JsonObject();
-
-        jsonObject.addProperty("CommandPrefix", Client.commandManager.getPrefix());
 
         final JsonArray jsonMacros = new JsonArray();
         MacroManager.INSTANCE.getMacroMapping().forEach((k, v) -> {

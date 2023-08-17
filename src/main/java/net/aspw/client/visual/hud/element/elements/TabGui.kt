@@ -3,10 +3,10 @@ package net.aspw.client.visual.hud.element.elements
 import net.aspw.client.Client
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
-import net.aspw.client.utils.render.BlurUtils
-import net.aspw.client.utils.render.ColorUtils
-import net.aspw.client.utils.render.RenderUtils
-import net.aspw.client.utils.render.shader.shaders.RainbowShader
+import net.aspw.client.util.render.BlurUtils
+import net.aspw.client.util.render.ColorUtils
+import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.util.render.shader.shaders.RainbowShader
 import net.aspw.client.value.*
 import net.aspw.client.visual.font.AWTFontRenderer
 import net.aspw.client.visual.font.Fonts
@@ -22,7 +22,7 @@ import java.awt.Color
 import java.util.*
 
 @ElementInfo(name = "TabGui")
-class TabGui(x: Double = -1.0, y: Double = 17.0) : Element(x = x, y = y) {
+class TabGui(x: Double = 0.0, y: Double = 17.0) : Element(x = x, y = y) {
 
     private val blurValue = BoolValue("Blur", false)
     private val blurStrength = FloatValue("BlurStrength", 5F, 0F, 30F)
@@ -57,7 +57,7 @@ class TabGui(x: Double = -1.0, y: Double = 17.0) : Element(x = x, y = y) {
     private val fontValue = FontValue("Font", Fonts.fontSFUI37)
     private val textShadow = BoolValue("TextShadow", true)
     private val textFade = BoolValue("TextFade", true)
-    private val textPositionY = FloatValue("TextPosition-Y", 2F, 0F, 5F)
+    private val textPositionY = FloatValue("TextPosition-Y", 1.4F, 0F, 5F)
     private val width = FloatValue("Width", 60F, 55F, 100F)
     private val tabHeight = FloatValue("TabHeight", 12F, 10F, 15F)
     private val lowerCaseValue = BoolValue("LowerCase", false)

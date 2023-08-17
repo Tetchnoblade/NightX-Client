@@ -6,16 +6,19 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.MovementUtils
+import net.aspw.client.util.MovementUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 
-@ModuleInfo(name = "Timer", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "Timer", description = "", category = ModuleCategory.PLAYER)
 class Timer : Module() {
 
     private val speedValue = FloatValue("Speed", 2F, 0.1F, 10F, "x")
     private val onMoveValue = BoolValue("OnMove", false)
     private val autoDisableValue = BoolValue("AutoDisable", false)
+
+    override val tag: String
+        get() = speedValue.get().toString() + "x"
 
     override fun onDisable() {
         mc.timer.timerSpeed = 1F

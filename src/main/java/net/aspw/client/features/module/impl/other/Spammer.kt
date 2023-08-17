@@ -5,13 +5,13 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.misc.RandomUtils
-import net.aspw.client.utils.timer.MSTimer
-import net.aspw.client.utils.timer.TimeUtils
+import net.aspw.client.util.misc.RandomUtils
+import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.util.timer.TimeUtils
 import net.aspw.client.value.IntegerValue
 import java.util.*
 
-@ModuleInfo(name = "Spammer", category = ModuleCategory.OTHER)
+@ModuleInfo(name = "Spammer", description = "", category = ModuleCategory.OTHER)
 class Spammer : Module() {
     private val maxDelayValue: IntegerValue = object : IntegerValue("MaxDelay", 1500, 0, 5000, "ms") {
         override fun onChanged(oldValue: Int, newValue: Int) {
@@ -33,7 +33,7 @@ class Spammer : Module() {
     fun onUpdate(event: UpdateEvent?) {
         if (msTimer.hasTimePassed(delay)) {
             mc.thePlayer.sendChatMessage(
-                "!N.i.g.h.t.X. .C.l.i.e.n.t!" + " >" + RandomUtils.randomString(5 + Random().nextInt(5)) + "<"
+                "!NightX Client!" + " >" + RandomUtils.randomString(5 + Random().nextInt(5)) + "<"
             )
             msTimer.reset()
             delay = TimeUtils.randomDelay(minDelayValue.get(), maxDelayValue.get())

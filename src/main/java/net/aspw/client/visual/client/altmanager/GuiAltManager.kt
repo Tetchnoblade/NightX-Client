@@ -14,12 +14,14 @@ import net.aspw.client.Client
 import net.aspw.client.Client.fileManager
 import net.aspw.client.event.SessionEvent
 import net.aspw.client.features.module.impl.visual.Hud
-import net.aspw.client.utils.ClientUtils
-import net.aspw.client.utils.login.LoginUtils
-import net.aspw.client.utils.login.UserUtils.isValidTokenOffline
-import net.aspw.client.utils.misc.MiscUtils
-import net.aspw.client.utils.misc.RandomUtils
-import net.aspw.client.visual.client.altmanager.menus.GuiLoginIntoAccount
+import net.aspw.client.util.ClientUtils
+import net.aspw.client.util.connection.CheckConnection
+import net.aspw.client.util.connection.LoginID
+import net.aspw.client.util.login.LoginUtils
+import net.aspw.client.util.login.UserUtils.isValidTokenOffline
+import net.aspw.client.util.misc.RandomUtils
+import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.visual.client.altmanager.menus.GuiAddAccount
 import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening
 import net.aspw.client.visual.font.Fonts
 import net.minecraft.client.Minecraft
@@ -27,6 +29,7 @@ import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.GuiSlot
 import net.minecraft.client.gui.GuiTextField
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.Session
 import org.lwjgl.input.Keyboard
 import java.awt.Color
@@ -49,7 +52,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
     override fun initGui() {
         val textFieldWidth = (width / 8).coerceAtLeast(70)
-        searchField = GuiTextField(2, Fonts.fontSFUI40, width - textFieldWidth - 10, 10, textFieldWidth, 20)
+        searchField = GuiTextField(2, mc.fontRendererObj, width - textFieldWidth - 10, 10, textFieldWidth, 20)
         searchField.maxStringLength = Int.MAX_VALUE
 
         altsList = GuiList(this)
@@ -60,56 +63,65 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         altsList.elementClicked(mightBeTheCurrentAccount, false, 0, 0)
         altsList.scrollBy(mightBeTheCurrentAccount * altsList.getSlotHeight())
 
-        // Setup buttons
-
         val startPositionY = 22
         buttonList.add(GuiButton(1, width - 80, startPositionY + 24, 70, 20, "Add"))
         buttonList.add(GuiButton(2, width - 80, startPositionY + 24 * 2, 70, 20, "Delete"))
-        buttonList.add(GuiButton(7, width - 80, startPositionY + 24 * 3, 70, 20, "Import"))
-        buttonList.add(GuiButton(12, width - 80, startPositionY + 24 * 4, 70, 20, "Export"))
-        buttonList.add(GuiButton(5, width - 80, startPositionY + 24 * 5, 70, 20, "Free Alt"))
         buttonList.add(GuiButton(0, width - 80, height - 65, 70, 20, "Done"))
         buttonList.add(GuiButton(3, 5, startPositionY + 24, 90, 20, "Login").also { loginButton = it })
         buttonList.add(GuiButton(4, 5, startPositionY + 24 * 2, 90, 20, "Random Alt").also { randomButton = it })
         buttonList.add(GuiButton(99, 5, startPositionY + 24 * 3, 90, 20, "Random Cracked").also { randomCracked = it })
-        buttonList.add(GuiButton(6, 5, startPositionY + 24 * 4, 90, 20, "Direct Login"))
 
         if (activeGenerators.getOrDefault("thealtening", true))
-            buttonList.add(GuiButton(9, 5, startPositionY + 24 * 5, 90, 20, "The Altening"))
+            buttonList.add(GuiButton(9, 5, startPositionY + 24 * 4, 90, 20, "The Altening"))
+
+        // Old Auth System
+        //this.buttonList.add(
+        //    GuiButton(
+        //        13,
+        //        width - 80, startPositionY + 24 * 3, 70, 20,
+        //        "Premium Gen"
+        //    )
+        //)
     }
 
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
         drawBackground(0)
+        RenderUtils.drawImage(
+            ResourceLocation("client/background/portal.png"), 0, 0,
+            width, height
+        )
         altsList.drawScreen(mouseX, mouseY, partialTicks)
-        Fonts.fontSFUI40.drawCenteredString("Alt Manager", width / 2.0f, 6f, 0xffffff)
-        Fonts.fontSFUI35.drawCenteredString(
-            if (searchField.text.isEmpty()) "${fileManager.accountsConfig.accounts.size} Alts" else altsList.accounts.size.toString() + " Search Results",
-            width / 2.0f,
-            18f,
+        this.drawCenteredString(mc.fontRendererObj, "Alt Manager", width / 2, 12, 0xffffff)
+        this.drawCenteredString(mc.fontRendererObj, "§7Status: §a$status", width / 2, 25, 0xffffff)
+        this.drawString(
+            mc.fontRendererObj,
+            if (searchField.text.isEmpty()) "§7Alts: §a${fileManager.accountsConfig.accounts.size}" else "§7Search Results: §a" + altsList.accounts.size.toString(),
+            6,
+            26,
             0xffffff
         )
-        Fonts.fontSFUI35.drawCenteredString(status, width / 2.0f, 32f, 0xffffff)
-        Fonts.fontSFUI35.drawStringWithShadow(
-            "§7Ign: §a${mc.getSession().username}",
-            6f,
-            6f,
+        this.drawString(
+            mc.fontRendererObj, "§7Ign: §a${mc.getSession().username}",
+            6,
+            6,
             0xffffff
         )
-        Fonts.fontSFUI35.drawStringWithShadow(
-            "§7Type: §a${
+        this.drawString(
+            mc.fontRendererObj, "§7Type: §a${
                 if (altService.currentService == AltService.EnumAltService.THEALTENING) "TheAltening" else if (isValidTokenOffline(
                         mc.getSession().token
                     )
                 ) "Microsoft" else "Cracked"
-            }", 6f, 15f, 0xffffff
+            }", 6, 16, 0xffffff
         )
         searchField.drawTextBox()
-        if (searchField.text.isEmpty() && !searchField.isFocused) Fonts.fontSFUI40.drawStringWithShadow(
-            "§7Search",
-            (searchField.xPosition + 4).toFloat(),
-            17f,
-            0xffffff
-        )
+        if (searchField.text.isEmpty() && !searchField.isFocused)
+            this.drawString(
+                mc.fontRendererObj, "§7Search...",
+                (searchField.xPosition + 3),
+                16,
+                0xffffff
+            )
         super.drawScreen(mouseX, mouseY, partialTicks)
     }
 
@@ -120,7 +132,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
         when (button.id) {
             0 -> mc.displayGuiScreen(prevGui)
-            1 -> mc.displayGuiScreen(GuiLoginIntoAccount(this))
+            1 -> mc.displayGuiScreen(GuiAddAccount(this))
             2 -> {
                 status = if (altsList.selectedSlot != -1 && altsList.selectedSlot < altsList.size) {
                     fileManager.accountsConfig.removeAccount(altsList.accounts[altsList.selectedSlot])
@@ -131,6 +143,64 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     "§aThe account has been deleted."
                 } else {
                     "§cSelect an account."
+                }
+            }
+
+            13 -> {
+                if (LoginID.isPremium) {
+                    val altening = TheAltening(CheckConnection.apiKey)
+                    val asynchronous = TheAltening.Asynchronous(altening)
+                    if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                    }
+                    asynchronous.accountData.thenAccept { account ->
+                        if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                        }
+                        try {
+                            // Change Alt Service
+                            altService.switchService(AltService.EnumAltService.THEALTENING)
+
+                            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                                Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                            }
+
+                            // Set token as username
+                            val yggdrasilUserAuthentication =
+                                YggdrasilUserAuthentication(
+                                    YggdrasilAuthenticationService(Proxy.NO_PROXY, ""),
+                                    Agent.MINECRAFT
+                                )
+                            yggdrasilUserAuthentication.setUsername(account.token)
+                            yggdrasilUserAuthentication.setPassword(RandomUtils.randomString(6))
+
+                            try {
+                                yggdrasilUserAuthentication.logIn()
+
+                                mc.session = Session(
+                                    yggdrasilUserAuthentication.selectedProfile.name, yggdrasilUserAuthentication
+                                        .selectedProfile.id.toString(),
+                                    yggdrasilUserAuthentication.authenticatedToken, "mojang"
+                                )
+                                Client.eventManager.callEvent(SessionEvent())
+                            } catch (e: AuthenticationException) {
+                                altService.switchService(AltService.EnumAltService.MOJANG)
+
+                                ClientUtils.getLogger().error("Failed to login.", e)
+                                "§cFailed to login: ${e.message}"
+                            }
+                        } catch (throwable: Throwable) {
+                            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                                Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                            }
+                            ClientUtils.getLogger().error("Failed to login.", throwable)
+                        }
+                    }.whenComplete { _, _ ->
+                        status = "§aLogged successfully to ${mc.session.username}."
+                    }
+                } else {
+                    status = "§dPremium Gen is only for Premium NightX Users!"
+                    ClientUtils.getLogger().info("You are not using Premium Account!")
                 }
             }
 
@@ -195,42 +265,6 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 } ?: "§cYou do not have any accounts."
             }
 
-            5 -> {
-                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
-                }
-                val altening = TheAltening("api-qvo1-22iq-bt80")
-                val asynchronous = TheAltening.Asynchronous(altening)
-                asynchronous.accountData.thenAccept { account ->
-                    if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
-                    }
-                    try {
-                        altService.switchService(AltService.EnumAltService.THEALTENING)
-                        if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
-                        }
-                        status = "§aLogged successfully to ${account.username}."
-                        val yggdrasilUserAuthentication =
-                            YggdrasilUserAuthentication(
-                                YggdrasilAuthenticationService(Proxy.NO_PROXY, ""),
-                                Agent.MINECRAFT
-                            )
-                        yggdrasilUserAuthentication.setUsername(account.token)
-                        yggdrasilUserAuthentication.setPassword(Client.CLIENT_BEST)
-                        yggdrasilUserAuthentication.logIn()
-                        mc.session = Session(
-                            yggdrasilUserAuthentication.selectedProfile.name, yggdrasilUserAuthentication
-                                .selectedProfile.id.toString(),
-                            yggdrasilUserAuthentication.authenticatedToken, "mojang"
-                        )
-                        Client.eventManager.callEvent(SessionEvent())
-                    } catch (e: AuthenticationException) {
-                        altService.switchService(AltService.EnumAltService.MOJANG)
-                    }
-                }
-            }
-
             99 -> {
                 if (lastSessionToken == null)
                     lastSessionToken = mc.session.token
@@ -256,59 +290,6 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     randomButton.enabled = true
                     randomCracked.enabled = true
                 })
-            }
-
-            6 -> { // Direct login button
-                mc.displayGuiScreen(GuiLoginIntoAccount(this, directLogin = true))
-            }
-
-            7 -> { // Import button
-                val file = MiscUtils.openFileChooser() ?: return
-
-                file.readLines().forEach {
-                    val accountData = it.split(":".toRegex(), limit = 2)
-                    if (accountData.size > 1) {
-                        // Most likely mojang account
-                        fileManager.accountsConfig.addMojangAccount(accountData[0], accountData[1])
-                    } else if (accountData[0].length < 16) {
-                        // Might be cracked account
-                        fileManager.accountsConfig.addCrackedAccount(accountData[0])
-                    } // skip account
-                }
-
-                fileManager.saveConfig(fileManager.accountsConfig)
-                status = "§aThe accounts were imported successfully."
-            }
-
-            12 -> { // Export button
-                if (fileManager.accountsConfig.accounts.isEmpty()) {
-                    status = "§cYou do not have any accounts to export."
-                    return
-                }
-
-                val file = MiscUtils.saveFileChooser()
-                if (file == null || file.isDirectory) {
-                    return
-                }
-
-                try {
-                    if (!file.exists()) {
-                        file.createNewFile()
-                    }
-
-                    val accounts = fileManager.accountsConfig.accounts.joinToString(separator = "\n") { account ->
-                        when (account) {
-                            is MojangAccount -> "${account.email}:${account.password}" // EMAIL:PASSWORD
-                            is MicrosoftAccount -> "${account.name}:${account.session.token}" // NAME:SESSION
-                            else -> account.name
-                        }
-                    }
-                    file.writeText(accounts)
-
-                    status = "§aExported successfully!"
-                } catch (e: Exception) {
-                    status = "§cUnable to export due to error: ${e.message}"
-                }
             }
 
             9 -> { // Altening Button
@@ -346,7 +327,6 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
                         LoginUtils.LoginResult.FAILED_PARSE_TOKEN -> "§cFailed to parse Session ID!"
                         LoginUtils.LoginResult.INVALID_ACCOUNT_DATA -> "§cInvalid Session ID!"
-                        else -> ""
                     }
 
                     loginButton.enabled = true
@@ -490,13 +470,12 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 minecraftAccount.name
             }
 
-            Fonts.fontSFUI40.drawCenteredString(accountName, width / 2f, y + 2f, Color.WHITE.rgb, true)
-            Fonts.fontSFUI40.drawCenteredString(
+            Fonts.minecraftFont.drawStringWithShadow(accountName, width / 2f - 40, y + 2f, Color.WHITE.rgb)
+            Fonts.minecraftFont.drawStringWithShadow(
                 if (minecraftAccount is CrackedAccount) "Cracked" else if (minecraftAccount is MicrosoftAccount) "Microsoft" else if (minecraftAccount is MojangAccount) "Mojang" else "Something else",
-                width / 2f,
+                width / 2f - 40,
                 y + 15f,
-                if (minecraftAccount is CrackedAccount) Color.GRAY.rgb else Color(118, 255, 95).rgb,
-                true
+                if (minecraftAccount is CrackedAccount) Color.GRAY.rgb else Color(118, 255, 95).rgb
             )
         }
 

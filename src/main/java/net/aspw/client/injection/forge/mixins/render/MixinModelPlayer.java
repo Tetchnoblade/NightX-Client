@@ -3,7 +3,7 @@ package net.aspw.client.injection.forge.mixins.render;
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.visual.ColorMixer;
 import net.aspw.client.features.module.impl.visual.EnchantColor;
-import net.aspw.client.utils.render.RenderUtils;
+import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -19,7 +19,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
+import java.util.Objects;
 
+/**
+ * The type Mixin model player.
+ */
 @Mixin(RenderItem.class)
 
 public abstract class MixinModelPlayer {
@@ -30,12 +34,18 @@ public abstract class MixinModelPlayer {
     @Shadow
     private TextureManager textureManager;
 
+    /**
+     * Render model.
+     *
+     * @param model the model
+     * @param color the color
+     */
     @Shadow
-    public abstract void renderModel(IBakedModel model, int color);
+    protected abstract void renderModel(IBakedModel model, int color);
 
     @Inject(method = "renderEffect", at = @At("HEAD"), cancellable = true)
     private void renderEffect(IBakedModel model, CallbackInfo callbackInfo) {
-        final EnchantColor enchantEffect = Client.moduleManager.getModule(EnchantColor.class);
+        final EnchantColor enchantEffect = Objects.requireNonNull(Client.moduleManager.getModule(EnchantColor.class));
         if (enchantEffect.getState()) {
             int rainbowColour = RenderUtils.getRainbowOpaque(enchantEffect.rainbowSpeedValue.get(), enchantEffect.rainbowSatValue.get(), enchantEffect.rainbowBrgValue.get(), ((int) Minecraft.getSystemTime() % 2) * (enchantEffect.rainbowDelayValue.get() * 10));
             int skyColor = RenderUtils.SkyRainbow(0, enchantEffect.rainbowSatValue.get(), enchantEffect.rainbowBrgValue.get());

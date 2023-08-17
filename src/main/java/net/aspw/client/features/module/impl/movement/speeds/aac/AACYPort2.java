@@ -2,10 +2,16 @@ package net.aspw.client.features.module.impl.movement.speeds.aac;
 
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.util.MovementUtils;
 
+/**
+ * The type Aacy port 2.
+ */
 public class AACYPort2 extends SpeedMode {
 
+    /**
+     * Instantiates a new Aacy port 2.
+     */
     public AACYPort2() {
         super("AACYPort2");
     }

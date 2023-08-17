@@ -8,6 +8,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * The type Mixin tile entity mob spawner renderer.
+ */
 @Mixin(net.minecraft.client.renderer.tileentity.TileEntityMobSpawnerRenderer.class)
 public class MixinTileEntityMobSpawnerRenderer {
 

@@ -2,6 +2,7 @@ package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.visual.CustomModel;
+import net.aspw.client.features.module.impl.visual.SilentView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,13 +11,37 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Objects;
+
+/**
+ * The type Mixin layer armor base.
+ */
 @Mixin({LayerArmorBase.class})
 public class MixinLayerArmorBase {
+    /**
+     * Do render layer.
+     *
+     * @param entitylivingbaseIn the entitylivingbase in
+     * @param limbSwing          the limb swing
+     * @param limbSwingAmount    the limb swing amount
+     * @param partialTicks       the partial ticks
+     * @param ageInTicks         the age in ticks
+     * @param netHeadYaw         the net head yaw
+     * @param headPitch          the head pitch
+     * @param scale              the scale
+     * @param ci                 the ci
+     */
     @Inject(method = {"doRenderLayer"}, at = {@At("HEAD")}, cancellable = true)
     public void doRenderLayer(final EntityLivingBase entitylivingbaseIn, final float limbSwing, final float limbSwingAmount, final float partialTicks, final float ageInTicks, final float netHeadYaw, final float headPitch, final float scale, final CallbackInfo ci) {
-        if (Client.moduleManager.getModule(CustomModel.class).getState() && Client.moduleManager.getModule(CustomModel.class).getOnlySelf().get() && entitylivingbaseIn == Minecraft.getMinecraft().thePlayer) {
+        final CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
+        final SilentView silentView = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
+
+        if (customModel.getState() && customModel.getOnlySelf().get() && entitylivingbaseIn == Minecraft.getMinecraft().thePlayer) {
             ci.cancel();
-        } else if (Client.moduleManager.getModule(CustomModel.class).getState() && !Client.moduleManager.getModule(CustomModel.class).getOnlySelf().get()) {
+        } else if (customModel.getState() && !customModel.getOnlySelf().get()) {
+            ci.cancel();
+        }
+        if (silentView.getState() && silentView.getSilentValue().get() && silentView.shouldRotate() && entitylivingbaseIn == Minecraft.getMinecraft().thePlayer) {
             ci.cancel();
         }
     }

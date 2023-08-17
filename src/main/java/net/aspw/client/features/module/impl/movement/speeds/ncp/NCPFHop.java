@@ -4,10 +4,16 @@ import net.aspw.client.Client;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
 import net.aspw.client.features.module.impl.player.Scaffold;
-import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.util.MovementUtils;
 
+/**
+ * The type Ncpf hop.
+ */
 public class NCPFHop extends SpeedMode {
 
+    /**
+     * Instantiates a new Ncpf hop.
+     */
     public NCPFHop() {
         super("NCPFHop");
     }
@@ -20,14 +26,15 @@ public class NCPFHop extends SpeedMode {
 
     @Override
     public void onDisable() {
-        mc.thePlayer.speedInAir = 0.02F;
         mc.timer.timerSpeed = 1F;
         super.onDisable();
 
         final Scaffold scaffold = Client.moduleManager.getModule(Scaffold.class);
 
-        if (!mc.thePlayer.isSneaking() && !scaffold.getState())
-            MovementUtils.strafe(0.2f);
+        if (!mc.thePlayer.isSneaking() && !scaffold.getState()) {
+            mc.thePlayer.motionX = 0.0;
+            mc.thePlayer.motionZ = 0.0;
+        }
     }
 
     @Override

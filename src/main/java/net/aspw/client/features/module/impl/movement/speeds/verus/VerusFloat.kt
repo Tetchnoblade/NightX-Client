@@ -4,7 +4,7 @@ import net.aspw.client.event.JumpEvent
 import net.aspw.client.event.MotionEvent
 import net.aspw.client.event.MoveEvent
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode
-import net.aspw.client.utils.MovementUtils
+import net.aspw.client.util.MovementUtils
 
 class VerusFloat : SpeedMode("VerusFloat") {
     private var ticks = 0

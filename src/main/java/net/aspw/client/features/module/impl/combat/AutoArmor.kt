@@ -6,11 +6,11 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.injection.implementations.IItemStack
-import net.aspw.client.utils.InventoryUtils
-import net.aspw.client.utils.MovementUtils
-import net.aspw.client.utils.item.ArmorComparator
-import net.aspw.client.utils.item.ArmorPiece
-import net.aspw.client.utils.timer.TimeUtils
+import net.aspw.client.util.InventoryUtils
+import net.aspw.client.util.MovementUtils
+import net.aspw.client.util.item.ArmorComparator
+import net.aspw.client.util.item.ArmorPiece
+import net.aspw.client.util.timer.TimeUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.IntegerValue
 import net.minecraft.client.gui.inventory.GuiInventory
@@ -23,7 +23,7 @@ import java.util.function.Function
 import java.util.stream.Collectors
 import java.util.stream.IntStream
 
-@ModuleInfo(name = "AutoArmor", spacedName = "Auto Armor", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AutoArmor", spacedName = "Auto Armor", description = "", category = ModuleCategory.COMBAT)
 class AutoArmor : Module() {
     private val invOpenValue = BoolValue("InvOpen", false)
     private val simulateInventory = BoolValue("SimulateInventory", false)
@@ -33,14 +33,14 @@ class AutoArmor : Module() {
             if (minDelay > newValue) set(minDelay)
         }
     }
-    private val noMoveValue = BoolValue("NoMove", false)
-    private val itemDelayValue = IntegerValue("ItemDelay", 300, 0, 5000)
     private val minDelayValue: IntegerValue = object : IntegerValue("MinDelay", 10, 0, 1000) {
         override fun onChanged(oldValue: Int, newValue: Int) {
             val maxDelay = maxDelayValue.get()
             if (maxDelay < newValue) set(maxDelay)
         }
     }
+    private val animationValue = BoolValue("Animation", false)
+    private val noMoveValue = BoolValue("NoMove", false)
     private val hotbarValue = BoolValue("Hotbar", false)
     private var delay: Long = 0
 
@@ -53,7 +53,7 @@ class AutoArmor : Module() {
             .filter { i: Int ->
                 val itemStack = mc.thePlayer.inventory.getStackInSlot(i)
                 (itemStack != null && itemStack.item is ItemArmor
-                        && (i < 9 || System.currentTimeMillis() - (itemStack as IItemStack).itemDelay >= itemDelayValue.get()))
+                        && (i < 9 || System.currentTimeMillis() - (itemStack as IItemStack).itemDelay >= 200))
             }
             .mapToObj { i: Int -> ArmorPiece(mc.thePlayer.inventory.getStackInSlot(i), i) }
             .collect(
@@ -94,6 +94,8 @@ class AutoArmor : Module() {
             mc.netHandler.addToSendQueue(C09PacketHeldItemChange(item))
             mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventoryContainer.getSlot(item).stack))
             mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
+            if (animationValue.get())
+                mc.itemRenderer.resetEquippedProgress2()
             delay = TimeUtils.randomDelay(minDelayValue.get(), maxDelayValue.get())
             return true
         } else if (!(noMoveValue.get() && MovementUtils.isMoving()) && (!invOpenValue.get() || mc.currentScreen is GuiInventory) && item != -1) {
@@ -106,6 +108,8 @@ class AutoArmor : Module() {
                 1,
                 mc.thePlayer
             )
+            if (animationValue.get())
+                mc.itemRenderer.resetEquippedProgress2()
             delay = TimeUtils.randomDelay(minDelayValue.get(), maxDelayValue.get())
             if (openInventory) mc.netHandler.addToSendQueue(C0DPacketCloseWindow())
             return true

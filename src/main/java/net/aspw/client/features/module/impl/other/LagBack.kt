@@ -8,24 +8,26 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.combat.KillAura
+import net.aspw.client.features.module.impl.combat.TPAura
 import net.aspw.client.features.module.impl.movement.Flight
 import net.aspw.client.features.module.impl.movement.LongJump
 import net.aspw.client.features.module.impl.movement.Speed
 import net.aspw.client.features.module.impl.player.BowLongJump
-import net.aspw.client.features.module.impl.player.InventoryManager
-import net.aspw.client.features.module.impl.player.Stealer
+import net.aspw.client.features.module.impl.player.ChestStealer
+import net.aspw.client.features.module.impl.player.InvManager
 import net.aspw.client.features.module.impl.visual.Hud
 import net.aspw.client.value.BoolValue
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 
-@ModuleInfo(name = "LagBack", spacedName = "Lag Back", category = ModuleCategory.OTHER, array = false)
+@ModuleInfo(name = "LagBack", spacedName = "Lag Back", description = "", category = ModuleCategory.OTHER, array = false)
 class LagBack : Module() {
+    private val invManagerValue = BoolValue("InvManager-WorldChange", value = false)
+    private val stealerValue = BoolValue("ChestStealer-WorldChange", value = false)
+    private val flightValue = BoolValue("Flight-LagBack", value = false)
     private val killAuraValue = BoolValue("KillAura-WorldChange", value = true)
+    private val tpAuraValue = BoolValue("TPAura-WorldChange", value = true)
     private val flightwValue = BoolValue("Flight-WorldChange", value = true)
     private val speedwValue = BoolValue("Speed-WorldChange", value = true)
-    private val invManagerValue = BoolValue("InventoryManager-WorldChange", value = false)
-    private val stealerValue = BoolValue("Stealer-WorldChange", value = false)
-    private val flightValue = BoolValue("Flight-LagBack", value = false)
     private val speedValue = BoolValue("Speed-LagBack", value = true)
     private val longJumpValue = BoolValue("LongJump-LagBack", value = true)
     private val bowLongJumpValue = BoolValue("BowLongJump-LagBack", value = true)
@@ -35,9 +37,19 @@ class LagBack : Module() {
         val killAura = Client.moduleManager.getModule(KillAura::class.java)
         val flight = Client.moduleManager.getModule(Flight::class.java)
         val speed = Client.moduleManager.getModule(Speed::class.java)
-        val invManager = Client.moduleManager.getModule(InventoryManager::class.java)
-        val stealer = Client.moduleManager.getModule(Stealer::class.java)
+        val invManager = Client.moduleManager.getModule(InvManager::class.java)
+        val chestStealer = Client.moduleManager.getModule(ChestStealer::class.java)
+        val tpAura = Client.moduleManager.getModule(TPAura::class.java)
 
+        if (tpAura!!.state && tpAuraValue.get()) {
+            tpAura.state = false
+            Client.hud.addNotification(
+                net.aspw.client.visual.hud.element.elements.Notification(
+                    "TPAura was disabled",
+                    net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
+                )
+            )
+        }
         if (killAura!!.state && killAuraValue.get()) {
             killAura.state = false
             Client.hud.addNotification(
@@ -46,21 +58,15 @@ class LagBack : Module() {
                     net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                 )
             )
-            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
-            }
         }
         if (flight!!.state && flightwValue.get()) {
             flight.state = false
             Client.hud.addNotification(
                 net.aspw.client.visual.hud.element.elements.Notification(
-                    "Flight was disabled",
+                    "Fly was disabled",
                     net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                 )
             )
-            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
-            }
         }
         if (speed!!.state && speedwValue.get()) {
             speed.state = false
@@ -70,33 +76,24 @@ class LagBack : Module() {
                     net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                 )
             )
-            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
-            }
         }
         if (invManager!!.state && invManagerValue.get()) {
             invManager.state = false
             Client.hud.addNotification(
                 net.aspw.client.visual.hud.element.elements.Notification(
-                    "InventoryManager was disabled",
+                    "InvManager was disabled",
                     net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                 )
             )
-            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
-            }
         }
-        if (stealer!!.state && stealerValue.get()) {
-            stealer.state = false
+        if (chestStealer!!.state && stealerValue.get()) {
+            chestStealer.state = false
             Client.hud.addNotification(
                 net.aspw.client.visual.hud.element.elements.Notification(
-                    "Stealer was disabled",
+                    "ChestStealer was disabled",
                     net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                 )
             )
-            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
-            }
         }
     }
 
@@ -148,7 +145,7 @@ class LagBack : Module() {
                 flight.state = false
                 Client.hud.addNotification(
                     net.aspw.client.visual.hud.element.elements.Notification(
-                        "Disabling Flight due to lag back",
+                        "Disabling Fly due to lag back",
                         net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                     )
                 )

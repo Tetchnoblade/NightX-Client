@@ -6,10 +6,10 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.combat.KillAura
-import net.aspw.client.utils.ClientUtils
-import net.aspw.client.utils.MovementUtils
-import net.aspw.client.utils.PacketUtils
-import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.util.ClientUtils
+import net.aspw.client.util.MovementUtils
+import net.aspw.client.util.PacketUtils
+import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -24,7 +24,7 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import java.util.*
 
-@ModuleInfo(name = "NoSlow", spacedName = "No Slow", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "NoSlow", spacedName = "No Slow", description = "", category = ModuleCategory.MOVEMENT)
 class NoSlow : Module() {
     private val msTimer = MSTimer()
     private val modeValue = ListValue(
@@ -32,10 +32,10 @@ class NoSlow : Module() {
         arrayOf(
             "Vanilla",
             "Watchdog",
-            "LatestWatchdog",
             "OldHypixel",
             "Blink",
             "Experimental",
+            "ValidSpoof",
             "NCP",
             "NewNCP",
             "AAC",
@@ -222,8 +222,8 @@ class NoSlow : Module() {
         val killAura = Client.moduleManager[KillAura::class.java]!!
 
         when (modeValue.get().lowercase(Locale.getDefault())) {
-            "latestwatchdog" -> {
-                if (!mc.thePlayer.isUsingItem || mc.thePlayer.heldItem.item !is ItemSword) return
+            "validspoof" -> {
+                if (!mc.thePlayer.isUsingItem) return
                 if (event.eventState == EventState.PRE) {
                     PacketUtils.sendPacketNoEvent(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem % 8 + 1))
                     PacketUtils.sendPacketNoEvent(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))

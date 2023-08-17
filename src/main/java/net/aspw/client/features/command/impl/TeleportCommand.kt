@@ -2,11 +2,11 @@ package net.aspw.client.features.command.impl
 
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
-import net.aspw.client.features.module.impl.combat.AntiBot
+import net.aspw.client.features.module.impl.targets.AntiBots
 import net.aspw.client.features.module.impl.visual.Hud
-import net.aspw.client.utils.PacketUtils
-import net.aspw.client.utils.pathfinder.MainPathFinder
-import net.aspw.client.utils.pathfinder.Vec3
+import net.aspw.client.util.PacketUtils
+import net.aspw.client.util.pathfinder.MainPathFinder
+import net.aspw.client.util.pathfinder.Vec3
 import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 
@@ -21,7 +21,7 @@ class TeleportCommand : Command("tp", arrayOf("teleport")) {
 
             // Get target player data
             val targetPlayer = mc.theWorld.playerEntities
-                .filter { !AntiBot.isBot(it) && it.name.equals(theName, true) }
+                .filter { !AntiBots.isBot(it) && it.name.equals(theName, true) }
                 .firstOrNull()
 
             // Attempt to teleport to player's position.
@@ -110,21 +110,6 @@ class TeleportCommand : Command("tp", arrayOf("teleport")) {
         }
 
         chatSyntax("tp <player name/x y z>")
-    }
-
-    override fun tabComplete(args: Array<String>): List<String> {
-        if (args.isEmpty()) return emptyList()
-
-        val pref = args[0]
-
-        return when (args.size) {
-            1 -> mc.theWorld.playerEntities
-                .filter { !AntiBot.isBot(it) && it.name.startsWith(pref, true) }
-                .map { it.name }
-                .toList()
-
-            else -> emptyList()
-        }
     }
 
 }

@@ -2,11 +2,17 @@ package net.aspw.client.features.module.impl.movement.speeds.aac;
 
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.util.MovementUtils;
 
+/**
+ * The type Aac 6 b hop.
+ */
 public class AAC6BHop extends SpeedMode {
     private boolean legitJump;
 
+    /**
+     * Instantiates a new Aac 6 b hop.
+     */
     public AAC6BHop() {
         super("AAC6BHop");
     }
@@ -59,7 +65,6 @@ public class AAC6BHop extends SpeedMode {
     @Override
     public void onDisable() {
         mc.timer.timerSpeed = 1F;
-        mc.thePlayer.speedInAir = 0.02F;
     }
 
 }

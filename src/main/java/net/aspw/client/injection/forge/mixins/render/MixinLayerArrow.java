@@ -5,6 +5,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+/**
+ * The type Mixin layer arrow.
+ */
 @Mixin(LayerArrow.class)
 public class MixinLayerArrow {
 

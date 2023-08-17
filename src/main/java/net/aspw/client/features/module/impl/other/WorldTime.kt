@@ -11,7 +11,7 @@ import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 import net.minecraft.network.play.server.S03PacketTimeUpdate
 
-@ModuleInfo(name = "WorldTime", spacedName = "World Time", category = ModuleCategory.OTHER)
+@ModuleInfo(name = "WorldTime", spacedName = "World Time", description = "", category = ModuleCategory.OTHER)
 class WorldTime : Module() {
     val timeModeValue = ListValue("Time", arrayOf("Static", "Cycle"), "Static")
     val cycleSpeedValue = IntegerValue("CycleSpeed", 30, -30, 100, { timeModeValue.get().equals("cycle", true) })

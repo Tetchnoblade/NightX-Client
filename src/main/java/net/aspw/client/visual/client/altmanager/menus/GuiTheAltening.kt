@@ -9,15 +9,16 @@ import com.thealtening.api.TheAltening
 import net.aspw.client.Client
 import net.aspw.client.event.SessionEvent
 import net.aspw.client.features.module.impl.visual.Hud
-import net.aspw.client.utils.ClientUtils
-import net.aspw.client.utils.misc.MiscUtils
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.ClientUtils
+import net.aspw.client.util.misc.MiscUtils
+import net.aspw.client.util.misc.RandomUtils
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.aspw.client.visual.elements.GuiPasswordField
-import net.aspw.client.visual.font.Fonts
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.GuiTextField
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.Session
 import org.lwjgl.input.Keyboard
 import java.net.Proxy.NO_PROXY
@@ -57,15 +58,16 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
 
         // Buy & Back buttons
         buttonList.add(GuiButton(3, width / 2 - 100, height - 54, 98, 20, "Website"))
-        buttonList.add(GuiButton(0, width / 2 + 2, height - 54, 98, 20, "Back"))
+        buttonList.add(GuiButton(0, width / 2 + 2, height - 54, 98, 20, "Done"))
 
         // Token text field
-        tokenField = GuiTextField(666, Fonts.fontSFUI40, width / 2 - 100, 50, 200, 20)
-        tokenField.isFocused = true
+        tokenField = GuiTextField(666, mc.fontRendererObj, width / 2 - 100, 50, 200, 20)
+        tokenField.isFocused = false
         tokenField.maxStringLength = Integer.MAX_VALUE
 
         // Api key password field
-        apiKeyField = GuiPasswordField(1337, Fonts.fontSFUI40, width / 2 - 100, 115, 200, 20)
+        apiKeyField = GuiPasswordField(1337, mc.fontRendererObj, width / 2 - 100, 115, 200, 20)
+        apiKeyField.isFocused = false
         apiKeyField.maxStringLength = 18
         apiKeyField.text = apiKey
         super.initGui()
@@ -77,19 +79,25 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
         // Draw background to screen
         drawBackground(0)
-        RenderUtils.drawRect(30.0f, 30.0f, width - 30.0f, height - 30.0f, Integer.MIN_VALUE)
+        RenderUtils.drawImage(
+            ResourceLocation("client/background/portal.png"), 0, 0,
+            width, height
+        )
+        RenderUtils.drawRect(30.0f, 8.0f, width - 30.0f, height - 30.0f, Integer.MIN_VALUE)
 
         // Draw title and status
-        Fonts.fontLarge.drawCenteredString("The Altening", width / 2.0f, 12.0f, 0xffffff)
-        Fonts.fontSFUI40.drawCenteredString(status, width / 2.0f, 30.0f, 0xffffff)
+        this.drawCenteredString(mc.fontRendererObj, "The Altening", width / 2, 12, 0xffffff)
+        this.drawCenteredString(mc.fontRendererObj, status, width / 2, 25, 0xffffff)
 
         // Draw fields
         apiKeyField.drawTextBox()
         tokenField.drawTextBox()
 
         // Draw text
-        Fonts.fontSFUI40.drawCenteredString("§7Token:", width / 2.0f - 84, 38.0f, 0xffffff)
-        Fonts.fontSFUI40.drawCenteredString("§7API-Key:", width / 2.0f - 78, 103.0f, 0xffffff)
+        if (tokenField.text.isEmpty() && !tokenField.isFocused)
+            this.drawCenteredString(mc.fontRendererObj, "§7Token", width / 2 - 82, 56, 0xffffff)
+        if (apiKeyField.text.isEmpty() && !apiKeyField.isFocused)
+            this.drawCenteredString(mc.fontRendererObj, "§7API-Key", width / 2 - 76, 121, 0xffffff)
         super.drawScreen(mouseX, mouseY, partialTicks)
     }
 
@@ -134,7 +142,7 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                         val yggdrasilUserAuthentication =
                             YggdrasilUserAuthentication(YggdrasilAuthenticationService(NO_PROXY, ""), MINECRAFT)
                         yggdrasilUserAuthentication.setUsername(account.token)
-                        yggdrasilUserAuthentication.setPassword(Client.CLIENT_BEST)
+                        yggdrasilUserAuthentication.setPassword(RandomUtils.randomString(6))
 
                         status = try {
                             yggdrasilUserAuthentication.logIn()

@@ -4,10 +4,15 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.minecraft.client.Minecraft
-import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.Display
 
-@ModuleInfo(name = "FreeLook", spacedName = "Free Look", category = ModuleCategory.OTHER, keyBind = Keyboard.KEY_F9)
+@ModuleInfo(
+    name = "FreeLook",
+    spacedName = "Free Look",
+    description = "",
+    category = ModuleCategory.OTHER,
+    array = false
+)
 class FreeLook : Module() {
     override fun onEnable() {
         perspectiveToggled = !perspectiveToggled
@@ -15,7 +20,6 @@ class FreeLook : Module() {
         cameraPitch = mc.thePlayer.rotationPitch
         if (perspectiveToggled) {
             previousPerspective = mc.gameSettings.thirdPersonView
-            mc.gameSettings.thirdPersonView = 1
         } else {
             mc.gameSettings.thirdPersonView = previousPerspective
         }
@@ -50,7 +54,7 @@ class FreeLook : Module() {
                 val f3 = mc.mouseHelper.deltaX.toFloat() * f2
                 val f4 = mc.mouseHelper.deltaY.toFloat() * f2
                 cameraYaw += f3 * 0.15f
-                cameraPitch += f4 * 0.15f
+                cameraPitch -= f4 * 0.15f
                 if (cameraPitch > 90) cameraPitch = 90f
                 if (cameraPitch < -90) cameraPitch = -90f
             }

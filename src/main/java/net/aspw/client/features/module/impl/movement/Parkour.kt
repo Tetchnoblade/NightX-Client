@@ -5,9 +5,9 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.MovementUtils
+import net.aspw.client.util.MovementUtils
 
-@ModuleInfo(name = "Parkour", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Parkour", description = "", category = ModuleCategory.MOVEMENT)
 class Parkour : Module() {
 
     @EventTarget

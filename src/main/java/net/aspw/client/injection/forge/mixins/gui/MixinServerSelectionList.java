@@ -15,6 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
+/**
+ * The type Mixin server selection list.
+ */
 @Mixin(ServerSelectionList.class)
 public abstract class MixinServerSelectionList extends GuiSlot {
 
@@ -25,12 +28,23 @@ public abstract class MixinServerSelectionList extends GuiSlot {
     @Final
     private GuiListExtended.IGuiListEntry lanScanEntry;
 
+    /**
+     * Instantiates a new Mixin server selection list.
+     *
+     * @param mcIn         the mc in
+     * @param width        the width
+     * @param height       the height
+     * @param topIn        the top in
+     * @param bottomIn     the bottom in
+     * @param slotHeightIn the slot height in
+     */
     public MixinServerSelectionList(Minecraft mcIn, int width, int height, int topIn, int bottomIn, int slotHeightIn) {
         super(mcIn, width, height, topIn, bottomIn, slotHeightIn);
     }
 
     /**
-     * @author CCBlueX
+     * @author As_pw
+     * @reason ScrollBar
      */
     @Overwrite
     protected int getScrollBarX() {

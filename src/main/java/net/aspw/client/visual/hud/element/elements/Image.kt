@@ -1,9 +1,9 @@
 package net.aspw.client.visual.hud.element.elements
 
 import com.google.gson.JsonElement
-import net.aspw.client.utils.misc.MiscUtils
-import net.aspw.client.utils.misc.RandomUtils
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.misc.MiscUtils
+import net.aspw.client.util.misc.RandomUtils
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.TextValue
 import net.aspw.client.visual.hud.element.Border
 import net.aspw.client.visual.hud.element.Element

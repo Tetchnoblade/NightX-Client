@@ -5,8 +5,8 @@ import net.aspw.client.event.EventTarget
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.EntityUtils
-import net.aspw.client.utils.misc.RandomUtils
+import net.aspw.client.util.EntityUtils
+import net.aspw.client.util.misc.RandomUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
@@ -19,7 +19,7 @@ import net.minecraft.network.play.server.S2CPacketSpawnGlobalEntity
 import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.ResourceLocation
 
-@ModuleInfo(name = "MoreParticles", spacedName = "More Particles", category = ModuleCategory.VISUAL)
+@ModuleInfo(name = "MoreParticles", spacedName = "More Particles", description = "", category = ModuleCategory.VISUAL)
 class MoreParticles : Module() {
     private val modeValue = ListValue("Mode", arrayOf("Thunder", "Blood", "Fire", "Criticals", "Sharpness"), "Blood")
     private val timesValue = IntegerValue("Multi", 1, 1, 10)

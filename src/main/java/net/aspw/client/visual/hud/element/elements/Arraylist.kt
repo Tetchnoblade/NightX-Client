@@ -3,7 +3,7 @@ package net.aspw.client.visual.hud.element.elements
 import net.aspw.client.Client
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.impl.visual.ColorMixer
-import net.aspw.client.utils.render.*
+import net.aspw.client.util.render.*
 import net.aspw.client.value.*
 import net.aspw.client.visual.font.AWTFontRenderer
 import net.aspw.client.visual.font.Fonts
@@ -30,7 +30,7 @@ class Arraylist(
     side: Side = Side(Horizontal.RIGHT, Vertical.UP)
 ) : Element(x, y, scale, side) {
     private val colorModeValue =
-        ListValue("Color", arrayOf("Custom", "Random", "Sky", "CRainbow", "LiquidSlowly", "Fade", "Mixer"), "Sky")
+        ListValue("Color", arrayOf("Custom", "Random", "Sky", "CRainbow", "LiquidSlowly", "Fade", "Mixer"), "Fade")
     private val blurValue = BoolValue("Blur", false)
     private val blurStrength = FloatValue("Blur-Strength", 5F, 0F, 30F, { blurValue.get() })
     private val shadowShaderValue = BoolValue("Shadow", false)
@@ -68,11 +68,11 @@ class Arraylist(
     private val mixerSecValue = IntegerValue("Mixer-Seconds", 2, 1, 10)
     private val mixerDistValue = IntegerValue("Mixer-Distance", 2, 0, 10)
     private val liquidSlowlyDistanceValue = IntegerValue("LiquidSlowly-Distance", 90, 1, 90)
-    private val fadeDistanceValue = IntegerValue("Fade-Distance", 95, 1, 100)
+    private val fadeDistanceValue = IntegerValue("Fade-Distance", 90, 1, 100)
     private val hAnimation = ListValue("HorizontalAnimation", arrayOf("Default", "None", "Slide", "Astolfo"), "Astolfo")
     private val vAnimation =
         ListValue("VerticalAnimation", arrayOf("None", "LiquidSense", "Slide", "Rise", "Astolfo"), "Astolfo")
-    private val animationSpeed = FloatValue("Animation-Speed", 0.2F, 0.01F, 1F)
+    private val animationSpeed = FloatValue("Animation-Speed", 0.3F, 0.01F, 1F)
     private val nameBreak = BoolValue("NameBreak", true)
     private val abcOrder = BoolValue("Alphabetical-Order", false)
     private val tags = BoolValue("Tags", true)
@@ -83,14 +83,12 @@ class Arraylist(
     private val backgroundColorBlueValue = IntegerValue("Background-B", 0, 0, 255)
     private val backgroundColorAlphaValue = IntegerValue("Background-Alpha", 100, 0, 255)
     private val rectRightValue =
-        ListValue("Rect-Right", arrayOf("None", "Left", "Right", "Outline", "Special"), "Right")
+        ListValue("Rect-Right", arrayOf("None", "Left", "Right", "Outline", "Special"), "Outline")
     private val rectLeftValue = ListValue("Rect-Left", arrayOf("None", "Left", "Right"), "None")
     private val caseValue = ListValue("Case", arrayOf("None", "Lower", "Upper"), "None")
     private val spaceValue = FloatValue("Space", 0F, 0F, 5F)
-    private val textHeightValue = FloatValue("TextHeight", 10F, 1F, 20F)
-    private val textYValue = FloatValue("TextY", 1.5F, 0F, 20F)
     private val tagsArrayColor = BoolValue("TagsArrayColor", false)
-    private val fontValue = FontValue("Font", Fonts.fontSFUI37)
+    private val fontValue = FontValue("Font", Fonts.fontSFUI35)
 
     private var x2 = 0
     private var y2 = 0F
@@ -115,8 +113,8 @@ class Arraylist(
         val rectCustomColor =
             Color(colorRedValue.get(), colorGreenValue.get(), colorBlueValue.get(), colorAlphaValue.get()).rgb
         val space = spaceValue.get()
-        val textHeight = textHeightValue.get()
-        val textY = textYValue.get()
+        val textHeight = 10.24f
+        val textY = 2.2f
         val backgroundCustomColor = Color(
             backgroundColorRedValue.get(), backgroundColorGreenValue.get(),
             backgroundColorBlueValue.get(), backgroundColorAlphaValue.get()
@@ -139,18 +137,18 @@ class Arraylist(
                         if (module.state) {
                             if (module.slide < width) {
                                 module.slide += animationSpeed.get() * delta
-                                module.slideStep = delta / 0.6F
+                                module.slideStep = delta / 1.2F
                             }
                         } else if (module.slide > 0) {
                             module.slide -= animationSpeed.get() * delta
-                            module.slideStep = delta / 0.6F
+                            module.slideStep = delta / 1.2F
                         }
                     }
 
                     "Slide" -> {
                         if (module.state) {
                             if (module.slide < width) {
-                                module.slide = net.aspw.client.utils.AnimationUtils.animate(
+                                module.slide = net.aspw.client.util.AnimationUtils.animate(
                                     width.toDouble(),
                                     module.slide.toDouble(),
                                     animationSpeed.get().toDouble() * 0.025 * delta.toDouble()
@@ -158,7 +156,7 @@ class Arraylist(
                                 module.slideStep = delta / 1F
                             }
                         } else if (module.slide > 0) {
-                            module.slide = net.aspw.client.utils.AnimationUtils.animate(
+                            module.slide = net.aspw.client.util.AnimationUtils.animate(
                                 -width.toDouble(),
                                 module.slide.toDouble(),
                                 animationSpeed.get().toDouble() * 0.025 * delta.toDouble()
@@ -218,10 +216,10 @@ class Arraylist(
                         }
                     }
 
-                    "Slide", "Rise" -> module.arrayY = net.aspw.client.utils.AnimationUtils.animate(
+                    "Slide", "Rise" -> module.arrayY = net.aspw.client.util.AnimationUtils.animate(
                         yPos.toDouble(),
                         module.arrayY.toDouble(),
-                        animationSpeed.get().toDouble() * 0.025 * delta.toDouble()
+                        animationSpeed.get().toDouble() * 0.02 * delta.toDouble()
                     ).toFloat()
 
                     "Astolfo" -> {
@@ -783,7 +781,7 @@ class Arraylist(
     private fun getModTag(m: Module): String {
         if (!tags.get() || m.tag == null) return ""
 
-        var returnTag = " ${if (tagsArrayColor.get()) "" else "§f"}"
+        var returnTag = " ${if (tagsArrayColor.get()) "" else "§7"}"
 
         // tag prefix, ignore default value
         if (!tagsStyleValue.get().equals("default", true))

@@ -1,7 +1,7 @@
 package net.aspw.client.visual.hud.element.elements.targets.utils
 
-import net.aspw.client.utils.render.EaseUtils
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.render.EaseUtils
+import net.aspw.client.util.render.RenderUtils
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 

@@ -2,8 +2,8 @@ package net.aspw.client.visual.font;
 
 import com.google.gson.*;
 import net.aspw.client.Client;
-import net.aspw.client.utils.ClientUtils;
-import net.aspw.client.utils.misc.HttpUtils;
+import net.aspw.client.util.ClientUtils;
+import net.aspw.client.util.misc.HttpUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 
@@ -59,11 +59,15 @@ public class Fonts {
     public static GameFontRenderer mojanglesBold;
     @FontDetails(fontName = "NiSans", fontSize = 60)
     public static GameFontRenderer niSans;
+    @FontDetails(fontName = "Icons", fontSize = 52)
+    public static GameFontRenderer icons;
+    @FontDetails(fontName = "Marks", fontSize = 52)
+    public static GameFontRenderer marks;
 
     public static void loadFonts() {
         long l = System.currentTimeMillis();
 
-        ClientUtils.getLogger().info("Loading Fonts.");
+        ClientUtils.getLogger().info("Loading Fonts...");
 
         downloadFonts();
 
@@ -87,6 +91,8 @@ public class Fonts {
         mojangles = new GameFontRenderer(getFont("Mojangles.ttf", 60));
         mojanglesBold = new GameFontRenderer(getFont("MojanglesBold.ttf", 60));
         niSans = new GameFontRenderer(getFont("NiSans.ttf", 60));
+        icons = new GameFontRenderer(getFont("Icons.ttf", 52));
+        marks = new GameFontRenderer(getFont("marks.ttf", 52));
 
         try {
             CUSTOM_FONT_RENDERERS.clear();
@@ -137,7 +143,7 @@ public class Fonts {
 
             if (!outputFile.exists() || !sfuiFile.exists() || !jelloFile.exists() || !prodSansFile.exists() || !prodBoldFile.exists() || !tahomaFile.exists() || !tahomaReFile.exists() || !bangersFile.exists() || !pixelFile.exists()) {
                 ClientUtils.getLogger().info("Downloading fonts...");
-                HttpUtils.download(Client.CLIENT_FONTS, outputFile);
+                HttpUtils.download(Client.CLIENT_BASE + Client.CLIENT_FONTS, outputFile);
                 ClientUtils.getLogger().info("Extract fonts...");
                 extractZip(outputFile.getPath(), Client.fileManager.fontsDir.getPath());
             }

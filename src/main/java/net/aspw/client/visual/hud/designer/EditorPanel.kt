@@ -1,8 +1,8 @@
 package net.aspw.client.visual.hud.designer
 
 import net.aspw.client.Client
-import net.aspw.client.utils.MinecraftInstance
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.MinecraftInstance
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.*
 import net.aspw.client.visual.font.Fonts
 import net.aspw.client.visual.font.GameFontRenderer

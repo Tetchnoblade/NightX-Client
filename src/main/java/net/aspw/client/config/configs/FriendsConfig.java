@@ -3,30 +3,28 @@ package net.aspw.client.config.configs;
 import com.google.gson.*;
 import net.aspw.client.config.FileConfig;
 import net.aspw.client.config.FileManager;
-import net.aspw.client.utils.ClientUtils;
+import net.aspw.client.util.ClientUtils;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Friends config.
+ */
 public class FriendsConfig extends FileConfig {
 
     private final List<Friend> friends = new ArrayList<>();
 
     /**
-     * Constructor of config
+     * Instantiates a new Friends config.
      *
-     * @param file of config
+     * @param file the file
      */
     public FriendsConfig(final File file) {
         super(file);
     }
 
-    /**
-     * Load config from file
-     *
-     * @throws IOException
-     */
     @Override
     protected void loadConfig() throws IOException {
         clearFriends();
@@ -68,11 +66,6 @@ public class FriendsConfig extends FileConfig {
         }
     }
 
-    /**
-     * Save config to file
-     *
-     * @throws IOException
-     */
     @Override
     protected void saveConfig() throws IOException {
         final JsonArray jsonArray = new JsonArray();
@@ -90,21 +83,21 @@ public class FriendsConfig extends FileConfig {
     }
 
     /**
-     * Add friend to config
+     * Add friend boolean.
      *
-     * @param playerName of friend
-     * @return of successfully added friend
+     * @param playerName the player name
+     * @return the boolean
      */
     public boolean addFriend(final String playerName) {
         return addFriend(playerName, playerName);
     }
 
     /**
-     * Add friend to config
+     * Add friend boolean.
      *
-     * @param playerName of friend
-     * @param alias      of friend
-     * @return of successfully added friend
+     * @param playerName the player name
+     * @param alias      the alias
+     * @return the boolean
      */
     public boolean addFriend(final String playerName, final String alias) {
         if (isFriend(playerName))
@@ -115,9 +108,10 @@ public class FriendsConfig extends FileConfig {
     }
 
     /**
-     * Remove friend from config
+     * Remove friend boolean.
      *
-     * @param playerName of friend
+     * @param playerName the player name
+     * @return the boolean
      */
     public boolean removeFriend(final String playerName) {
         if (!isFriend(playerName))
@@ -128,10 +122,10 @@ public class FriendsConfig extends FileConfig {
     }
 
     /**
-     * Check is friend
+     * Is friend boolean.
      *
-     * @param playerName of friend
-     * @return is friend
+     * @param playerName the player name
+     * @return the boolean
      */
     public boolean isFriend(final String playerName) {
         for (final Friend friend : friends)
@@ -141,29 +135,34 @@ public class FriendsConfig extends FileConfig {
     }
 
     /**
-     * Clear all friends from config
+     * Clear friends.
      */
     public void clearFriends() {
         friends.clear();
     }
 
     /**
-     * Get friends
+     * Gets friends.
      *
-     * @return list of friends
+     * @return the friends
      */
     public List<Friend> getFriends() {
         return friends;
     }
 
+    /**
+     * The type Friend.
+     */
     public class Friend {
 
         private final String playerName;
         private final String alias;
 
         /**
-         * @param playerName of friend
-         * @param alias      of friend
+         * Instantiates a new Friend.
+         *
+         * @param playerName the player name
+         * @param alias      the alias
          */
         Friend(final String playerName, final String alias) {
             this.playerName = playerName;
@@ -171,14 +170,18 @@ public class FriendsConfig extends FileConfig {
         }
 
         /**
-         * @return name of friend
+         * Gets player name.
+         *
+         * @return the player name
          */
         public String getPlayerName() {
             return playerName;
         }
 
         /**
-         * @return alias of friend
+         * Gets alias.
+         *
+         * @return the alias
          */
         public String getAlias() {
             return alias;

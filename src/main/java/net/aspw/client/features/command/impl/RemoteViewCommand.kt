@@ -30,7 +30,7 @@ class RemoteViewCommand : Command("remoteview", arrayOf("rv")) {
                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
                 chat("Now viewing perspective of §8${entity.name}§3.")
-                chat("Execute §8${Client.commandManager.prefix}remoteview §3again to go back to yours.")
+                chat("Execute §8.remoteview §3again to go back to yours.")
                 break
             }
         }
@@ -41,18 +41,6 @@ class RemoteViewCommand : Command("remoteview", arrayOf("rv")) {
         val packet = event.packet
         if (packet is C0BPacketEntityAction && (packet.action == C0BPacketEntityAction.Action.STOP_SPRINTING || packet.action == C0BPacketEntityAction.Action.START_SPRINTING)) {
             event.cancelEvent()
-        }
-    }
-
-    override fun tabComplete(args: Array<String>): List<String> {
-        if (args.isEmpty()) return emptyList()
-
-        return when (args.size) {
-            1 -> return mc.theWorld.playerEntities
-                .map { it.name }
-                .filter { it.startsWith(args[0], true) }
-
-            else -> emptyList()
         }
     }
 }

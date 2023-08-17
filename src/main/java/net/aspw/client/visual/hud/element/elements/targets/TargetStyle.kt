@@ -1,11 +1,11 @@
 package net.aspw.client.visual.hud.element.elements.targets
 
-import net.aspw.client.utils.MinecraftInstance
-import net.aspw.client.utils.render.ColorUtils
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.MinecraftInstance
+import net.aspw.client.util.render.ColorUtils
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.Value
 import net.aspw.client.visual.hud.element.Border
-import net.aspw.client.visual.hud.element.elements.Target
+import net.aspw.client.visual.hud.element.elements.TargetHud
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.entity.player.EntityPlayer
@@ -17,7 +17,7 @@ import java.text.DecimalFormatSymbols
 import java.util.*
 import kotlin.math.pow
 
-abstract class TargetStyle(val name: String, val targetInstance: Target, val shaderSupport: Boolean) :
+abstract class TargetStyle(val name: String, val targetHudInstance: TargetHud, val shaderSupport: Boolean) :
     MinecraftInstance() {
 
     var easingHealth = 0F
@@ -27,26 +27,26 @@ abstract class TargetStyle(val name: String, val targetInstance: Target, val sha
 
     val shadowOpaque: Color
         get() = ColorUtils.reAlpha(
-            when (targetInstance.shadowColorMode.get().lowercase(Locale.getDefault())) {
-                "background" -> targetInstance.bgColor
+            when (targetHudInstance.shadowColorMode.get().lowercase(Locale.getDefault())) {
+                "background" -> targetHudInstance.bgColor
                 "custom" -> Color(
-                    targetInstance.shadowColorRedValue.get(),
-                    targetInstance.shadowColorGreenValue.get(),
-                    targetInstance.shadowColorBlueValue.get()
+                    targetHudInstance.shadowColorRedValue.get(),
+                    targetHudInstance.shadowColorGreenValue.get(),
+                    targetHudInstance.shadowColorBlueValue.get()
                 )
 
-                else -> targetInstance.barColor
-            }, 1F - targetInstance.animProgress
+                else -> targetHudInstance.barColor
+            }, 1F - targetHudInstance.animProgress
         )
 
     abstract fun drawTarget(entity: EntityPlayer)
     abstract fun getBorder(entity: EntityPlayer?): Border?
 
     open fun updateAnim(targetHealth: Float) {
-        if (targetInstance.noAnimValue.get())
+        if (targetHudInstance.noAnimValue.get())
             easingHealth = targetHealth
         else
-            easingHealth += ((targetHealth - easingHealth) / 2.0F.pow(10.0F - targetInstance.globalAnimSpeed.get())) * RenderUtils.deltaTime
+            easingHealth += ((targetHealth - easingHealth) / 2.0F.pow(10.0F - targetHudInstance.globalAnimSpeed.get())) * RenderUtils.deltaTime
     }
 
     open fun handleDamage(player: EntityPlayer) {}
@@ -65,7 +65,9 @@ abstract class TargetStyle(val name: String, val targetInstance: Target, val sha
             valueField[this]
         }.filterIsInstance<Value<*>>()
 
-    fun getColor(color: Color) = ColorUtils.reAlpha(color, color.alpha / 255F * (1F - targetInstance.getFadeProgress()))
+    fun getColor(color: Color) =
+        ColorUtils.reAlpha(color, color.alpha / 255F * (1F - targetHudInstance.getFadeProgress()))
+
     fun getColor(color: Int) = getColor(Color(color))
 
     fun drawHead(skin: ResourceLocation, x: Int = 2, y: Int = 2, width: Int, height: Int, alpha: Float = 1F) {

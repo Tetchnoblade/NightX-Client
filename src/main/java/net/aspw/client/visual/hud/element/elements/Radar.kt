@@ -1,10 +1,10 @@
 package net.aspw.client.visual.hud.element.elements
 
 import net.aspw.client.features.module.impl.visual.ColorMixer
-import net.aspw.client.utils.EntityUtils
-import net.aspw.client.utils.render.BlurUtils
-import net.aspw.client.utils.render.ColorUtils
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.EntityUtils
+import net.aspw.client.util.render.BlurUtils
+import net.aspw.client.util.render.ColorUtils
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue

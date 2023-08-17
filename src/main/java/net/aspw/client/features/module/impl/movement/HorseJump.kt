@@ -6,7 +6,7 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 
-@ModuleInfo(name = "HorseJump", "Horse Jump", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "HorseJump", "Horse Jump", description = "", category = ModuleCategory.MOVEMENT)
 class HorseJump : Module() {
 
     @EventTarget

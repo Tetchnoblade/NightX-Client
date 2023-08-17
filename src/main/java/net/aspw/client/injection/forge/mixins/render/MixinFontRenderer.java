@@ -10,9 +10,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+/**
+ * The type Mixin font renderer.
+ */
 @Mixin(FontRenderer.class)
 public abstract class MixinFontRenderer {
 
+    /**
+     * Reset styles.
+     */
     @Shadow
     protected abstract void resetStyles();
 
@@ -26,7 +32,7 @@ public abstract class MixinFontRenderer {
         this.resetStyles();
     }
 
-    @ModifyVariable(method = "renderString", at = @At("HEAD"), require = 1, ordinal = 0)
+    @ModifyVariable(method = "renderString", at = @At("HEAD"), require = 1, ordinal = 0, argsOnly = true)
     private String renderString(final String string) {
         if (string == null)
             return null;
@@ -35,10 +41,11 @@ public abstract class MixinFontRenderer {
 
         final TextEvent textEvent = new TextEvent(string);
         Client.eventManager.callEvent(textEvent);
+
         return textEvent.getText();
     }
 
-    @ModifyVariable(method = "getStringWidth", at = @At("HEAD"), require = 1, ordinal = 0)
+    @ModifyVariable(method = "getStringWidth", at = @At("HEAD"), require = 1, ordinal = 0, argsOnly = true)
     private String getStringWidth(final String string) {
         if (string == null)
             return null;

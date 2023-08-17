@@ -1,19 +1,19 @@
 package net.aspw.client.visual.hud.element.elements.targets.impl
 
 import net.aspw.client.features.module.impl.visual.ColorMixer
-import net.aspw.client.utils.extensions.getDistanceToEntityBox
-import net.aspw.client.utils.misc.RandomUtils
-import net.aspw.client.utils.render.BlendUtils
-import net.aspw.client.utils.render.ColorUtils
-import net.aspw.client.utils.render.RenderUtils
-import net.aspw.client.utils.render.Stencil
+import net.aspw.client.util.extensions.getDistanceToEntityBox
+import net.aspw.client.util.misc.RandomUtils
+import net.aspw.client.util.render.BlendUtils
+import net.aspw.client.util.render.ColorUtils
+import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.util.render.Stencil
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 import net.aspw.client.visual.font.Fonts
 import net.aspw.client.visual.hud.element.Border
-import net.aspw.client.visual.hud.element.elements.Target
+import net.aspw.client.visual.hud.element.elements.TargetHud
 import net.aspw.client.visual.hud.element.elements.targets.TargetStyle
 import net.aspw.client.visual.hud.element.elements.targets.utils.Particle
 import net.aspw.client.visual.hud.element.elements.targets.utils.ShapeType
@@ -23,72 +23,72 @@ import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.util.*
 
-class Rice(inst: Target) : TargetStyle("Rice", inst, true) {
+class Rice(inst: TargetHud) : TargetStyle("Rice", inst, true) {
 
     // Bar gradient
     val gradientLoopValue =
-        IntegerValue("GradientLoop", 4, 1, 40, { targetInstance.styleValue.get().equals("Rice", true) })
+        IntegerValue("GradientLoop", 4, 1, 40, { targetHudInstance.styleValue.get().equals("Rice", true) })
     val gradientDistanceValue =
-        IntegerValue("GradientDistance", 50, 1, 200, { targetInstance.styleValue.get().equals("Rice", true) })
+        IntegerValue("GradientDistance", 50, 1, 200, { targetHudInstance.styleValue.get().equals("Rice", true) })
     val gradientRoundedBarValue =
-        BoolValue("GradientRoundedBar", true, { targetInstance.styleValue.get().equals("Rice", true) })
+        BoolValue("GradientRoundedBar", true, { targetHudInstance.styleValue.get().equals("Rice", true) })
 
-    val riceParticle = BoolValue("Rice-Particle", true, { targetInstance.styleValue.get().equals("Rice", true) })
+    val riceParticle = BoolValue("Rice-Particle", true, { targetHudInstance.styleValue.get().equals("Rice", true) })
     val riceParticleSpin = BoolValue(
         "Rice-ParticleSpin",
         true,
-        { targetInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
+        { targetHudInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
     val generateAmountValue = IntegerValue(
         "GenerateAmount",
         10,
         1,
         40,
-        { targetInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
+        { targetHudInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
     val riceParticleCircle = ListValue(
         "Circle-Particles",
         arrayOf("Outline", "Solid", "None"),
         "Solid",
-        { targetInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
+        { targetHudInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
     val riceParticleRect = ListValue(
         "Rect-Particles",
         arrayOf("Outline", "Solid", "None"),
         "Outline",
-        { targetInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
+        { targetHudInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
     val riceParticleTriangle = ListValue(
         "Triangle-Particles",
         arrayOf("Outline", "Solid", "None"),
         "Outline",
-        { targetInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
+        { targetHudInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
 
     val riceParticleSpeed = FloatValue(
         "Rice-ParticleSpeed",
         0.05F,
         0.01F,
         0.2F,
-        { targetInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
+        { targetHudInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
     val riceParticleFade = BoolValue(
         "Rice-ParticleFade",
         true,
-        { targetInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
+        { targetHudInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
     val riceParticleFadingSpeed = FloatValue(
         "ParticleFadingSpeed",
         0.05F,
         0.01F,
         0.2F,
-        { targetInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
+        { targetHudInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
 
     val particleRange = FloatValue(
         "Rice-ParticleRange",
         50f,
         0f,
         50f,
-        { targetInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
+        { targetHudInstance.styleValue.get().equals("Rice", true) && riceParticle.get() })
     val minParticleSize: FloatValue = object : FloatValue(
         "MinParticleSize",
         0.5f,
         0f,
         5f,
-        { targetInstance.styleValue.get().equals("Rice", true) && riceParticle.get() }) {
+        { targetHudInstance.styleValue.get().equals("Rice", true) && riceParticle.get() }) {
         override fun onChanged(oldValue: Float, newValue: Float) {
             val v = maxParticleSize.get()
             if (v < newValue) set(v)
@@ -99,7 +99,7 @@ class Rice(inst: Target) : TargetStyle("Rice", inst, true) {
         2.5f,
         0f,
         5f,
-        { targetInstance.styleValue.get().equals("Rice", true) && riceParticle.get() }) {
+        { targetHudInstance.styleValue.get().equals("Rice", true) && riceParticle.get() }) {
         override fun onChanged(oldValue: Float, newValue: Float) {
             val v = minParticleSize.get()
             if (v > newValue) set(v)
@@ -122,7 +122,7 @@ class Rice(inst: Target) : TargetStyle("Rice", inst, true) {
         val maxHealthLength = font.getStringWidth(decimalFormat2.format(entity.maxHealth)).toFloat()
 
         // background
-        RenderUtils.drawRoundedRect(0F, 0F, 10F + length, 55F, 8F, targetInstance.bgColor.rgb)
+        RenderUtils.drawRoundedRect(0F, 0F, 10F + length, 55F, 8F, targetHudInstance.bgColor.rgb)
 
         // particle engine
         if (riceParticle.get()) {
@@ -150,7 +150,7 @@ class Rice(inst: Target) : TargetStyle("Rice", inst, true) {
                         Particle(
                             BlendUtils.blendColors(
                                 floatArrayOf(0F, 1F),
-                                arrayOf<Color>(Color.white, targetInstance.barColor),
+                                arrayOf<Color>(Color.white, targetHudInstance.barColor),
                                 if (RandomUtils.nextBoolean()) RandomUtils.nextFloat(0.5F, 1.0F) else 0F
                             ),
                             parDistX, parDistY, parSize, drawType
@@ -190,7 +190,7 @@ class Rice(inst: Target) : TargetStyle("Rice", inst, true) {
                 1F - scaleHT * 0.2F,
                 30, 30,
                 1F, 0.4F + (1F - scaleHT) * 0.6F, 0.4F + (1F - scaleHT) * 0.6F,
-                1F - targetInstance.getFadeProgress()
+                1F - targetHudInstance.getFadeProgress()
             )
 
         // player's info
@@ -213,13 +213,13 @@ class Rice(inst: Target) : TargetStyle("Rice", inst, true) {
 
         GL11.glDisable(GL11.GL_BLEND)
         Stencil.erase(true)
-        when (targetInstance.colorModeValue.get().lowercase(Locale.getDefault())) {
+        when (targetHudInstance.colorModeValue.get().lowercase(Locale.getDefault())) {
             "custom", "health" -> RenderUtils.drawRect(
                 5F,
                 42F,
                 length - maxHealthLength,
                 48F,
-                targetInstance.barColor.rgb
+                targetHudInstance.barColor.rgb
             )
 
             else -> for (i in 0..(gradientLoopValue.get() - 1)) {
@@ -245,37 +245,37 @@ class Rice(inst: Target) : TargetStyle("Rice", inst, true) {
 
     private fun getColorAtIndex(i: Int): Int {
         return getColor(
-            when (targetInstance.colorModeValue.get()) {
+            when (targetHudInstance.colorModeValue.get()) {
                 "Rainbow" -> RenderUtils.getRainbowOpaque(
-                    targetInstance.waveSecondValue.get(),
-                    targetInstance.saturationValue.get(),
-                    targetInstance.brightnessValue.get(),
+                    targetHudInstance.waveSecondValue.get(),
+                    targetHudInstance.saturationValue.get(),
+                    targetHudInstance.brightnessValue.get(),
                     i * gradientDistanceValue.get()
                 )
 
                 "Sky" -> RenderUtils.SkyRainbow(
                     i * gradientDistanceValue.get(),
-                    targetInstance.saturationValue.get(),
-                    targetInstance.brightnessValue.get()
+                    targetHudInstance.saturationValue.get(),
+                    targetHudInstance.brightnessValue.get()
                 )
 
                 "Slowly" -> ColorUtils.LiquidSlowly(
                     System.nanoTime(),
                     i * gradientDistanceValue.get(),
-                    targetInstance.saturationValue.get(),
-                    targetInstance.brightnessValue.get()
+                    targetHudInstance.saturationValue.get(),
+                    targetHudInstance.brightnessValue.get()
                 ).rgb
 
                 "Mixer" -> ColorMixer.getMixedColor(
                     i * gradientDistanceValue.get(),
-                    targetInstance.waveSecondValue.get()
+                    targetHudInstance.waveSecondValue.get()
                 ).rgb
 
                 "Fade" -> ColorUtils.fade(
                     Color(
-                        targetInstance.redValue.get(),
-                        targetInstance.greenValue.get(),
-                        targetInstance.blueValue.get()
+                        targetHudInstance.redValue.get(),
+                        targetHudInstance.greenValue.get(),
+                        targetHudInstance.blueValue.get()
                     ), i * gradientDistanceValue.get(), 100
                 ).rgb
 

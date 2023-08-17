@@ -4,10 +4,16 @@ import net.aspw.client.Client;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.util.MovementUtils;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
+/**
+ * The type Aac ground.
+ */
 public class AACGround extends SpeedMode {
+    /**
+     * Instantiates a new Aac ground.
+     */
     public AACGround() {
         super("AACGround");
     }

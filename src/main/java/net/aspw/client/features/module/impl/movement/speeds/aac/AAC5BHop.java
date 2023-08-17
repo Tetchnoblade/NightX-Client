@@ -2,11 +2,17 @@ package net.aspw.client.features.module.impl.movement.speeds.aac;
 
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.util.MovementUtils;
 
+/**
+ * The type Aac 5 b hop.
+ */
 public class AAC5BHop extends SpeedMode {
     private boolean legitJump;
 
+    /**
+     * Instantiates a new Aac 5 b hop.
+     */
     public AAC5BHop() {
         super("AAC5BHop");
     }

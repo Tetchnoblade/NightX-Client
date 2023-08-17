@@ -6,8 +6,8 @@ import net.aspw.client.event.MoveEvent
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.features.module.impl.movement.Speed
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode
-import net.aspw.client.utils.MovementUtils.isMoving
-import net.aspw.client.utils.MovementUtils.strafe
+import net.aspw.client.util.MovementUtils.isMoving
+import net.aspw.client.util.MovementUtils.strafe
 import net.minecraft.network.play.client.C03PacketPlayer
 
 class VulcanGround : SpeedMode("VulcanGround") {

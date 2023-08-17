@@ -1,6 +1,6 @@
 package net.aspw.client.features.api
 
-import net.aspw.client.utils.item.ItemUtils
+import net.aspw.client.util.item.ItemUtils
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.init.Items
 import net.minecraft.item.Item
@@ -73,6 +73,6 @@ class StackItems : CreativeTabs("Stack Items") {
         itemList.add(ItemUtils.createItem("record_wait 64 0"))
     }
 
-    override fun getTabIconItem(): Item = ItemStack(Items.golden_sword).item
+    override fun getTabIconItem(): Item = ItemStack(Items.diamond_sword).item
     override fun getTranslatedTabLabel() = "Stack Items"
 }

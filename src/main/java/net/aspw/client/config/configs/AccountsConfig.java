@@ -12,23 +12,21 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Accounts config.
+ */
 public class AccountsConfig extends FileConfig {
     private final List<MinecraftAccount> accounts = new ArrayList<>();
 
     /**
-     * Constructor of config
+     * Instantiates a new Accounts config.
      *
-     * @param file of config
+     * @param file the file
      */
     public AccountsConfig(final File file) {
         super(file);
     }
 
-    /**
-     * Load config from file
-     *
-     * @throws IOException
-     */
     @Override
     protected void loadConfig() throws IOException {
         clearAccounts();
@@ -71,11 +69,6 @@ public class AccountsConfig extends FileConfig {
         }
     }
 
-    /**
-     * Save config to file
-     *
-     * @throws IOException
-     */
     @Override
     protected void saveConfig() throws IOException {
         final JsonArray jsonArray = new JsonArray();
@@ -90,9 +83,9 @@ public class AccountsConfig extends FileConfig {
     }
 
     /**
-     * Add cracked account to config
+     * Add cracked account.
      *
-     * @param name of account
+     * @param name the name
      */
     public void addCrackedAccount(final String name) {
         final CrackedAccount crackedAccount = new CrackedAccount();
@@ -105,10 +98,10 @@ public class AccountsConfig extends FileConfig {
     }
 
     /**
-     * Add account to config
+     * Add mojang account.
      *
-     * @param name     of account
-     * @param password of password
+     * @param name     the name
+     * @param password the password
      */
     public void addMojangAccount(final String name, final String password) {
         final MojangAccount mojangAccount = new MojangAccount();
@@ -122,16 +115,18 @@ public class AccountsConfig extends FileConfig {
     }
 
     /**
-     * Add account to config
+     * Add account.
+     *
+     * @param account the account
      */
     public void addAccount(final MinecraftAccount account) {
         accounts.add(account);
     }
 
     /**
-     * Remove account from config
+     * Remove account.
      *
-     * @param selectedSlot of the account
+     * @param selectedSlot the selected slot
      */
     public void removeAccount(final int selectedSlot) {
         accounts.remove(selectedSlot);
@@ -139,7 +134,7 @@ public class AccountsConfig extends FileConfig {
 
 
     /**
-     * Removed an account from the config
+     * Remove account.
      *
      * @param account the account
      */
@@ -148,7 +143,10 @@ public class AccountsConfig extends FileConfig {
     }
 
     /**
-     * Check if the account is already added
+     * Account exists boolean.
+     *
+     * @param newAccount the new account
+     * @return the boolean
      */
     public boolean accountExists(final MinecraftAccount newAccount) {
         for (final MinecraftAccount minecraftAccount : accounts)
@@ -158,16 +156,16 @@ public class AccountsConfig extends FileConfig {
     }
 
     /**
-     * Clear all minecraft accounts from alt array
+     * Clear accounts.
      */
     public void clearAccounts() {
         accounts.clear();
     }
 
     /**
-     * Get Alts
+     * Gets accounts.
      *
-     * @return list of Alt Accounts
+     * @return the accounts
      */
     public List<MinecraftAccount> getAccounts() {
         return accounts;

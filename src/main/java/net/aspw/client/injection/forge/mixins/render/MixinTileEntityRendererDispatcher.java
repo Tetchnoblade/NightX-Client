@@ -10,12 +10,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Objects;
+
+/**
+ * The type Mixin tile entity renderer dispatcher.
+ */
 @Mixin(TileEntityRendererDispatcher.class)
 public class MixinTileEntityRendererDispatcher {
 
     @Inject(method = "renderTileEntity", at = @At("HEAD"), cancellable = true)
     private void renderTileEntity(TileEntity tileentityIn, float partialTicks, int destroyStage, final CallbackInfo callbackInfo) {
-        final XRay xray = Client.moduleManager.getModule(XRay.class);
+        final XRay xray = Objects.requireNonNull(Client.moduleManager.getModule(XRay.class));
 
         if (xray.getState() && !xray.getXrayBlocks().contains(tileentityIn.getBlockType()))
             callbackInfo.cancel();

@@ -4,13 +4,19 @@ import net.aspw.client.Client;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
 import net.aspw.client.features.module.impl.player.Scaffold;
-import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.util.MovementUtils;
 import net.minecraft.util.MathHelper;
 
+/**
+ * The type Spectre on ground.
+ */
 public class SpectreOnGround extends SpeedMode {
 
     private int speedUp;
 
+    /**
+     * Instantiates a new Spectre on ground.
+     */
     public SpectreOnGround() {
         super("SpectreOnGround");
     }
@@ -27,8 +33,10 @@ public class SpectreOnGround extends SpeedMode {
     public void onDisable() {
         final Scaffold scaffold = Client.moduleManager.getModule(Scaffold.class);
 
-        if (!mc.thePlayer.isSneaking() && !scaffold.getState())
-            MovementUtils.strafe(0.2f);
+        if (!mc.thePlayer.isSneaking() && !scaffold.getState()) {
+            mc.thePlayer.motionX = 0.0;
+            mc.thePlayer.motionZ = 0.0;
+        }
     }
 
     @Override

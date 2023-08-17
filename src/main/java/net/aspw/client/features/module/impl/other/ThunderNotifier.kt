@@ -6,13 +6,18 @@ import net.aspw.client.event.PacketEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.ClientUtils
+import net.aspw.client.util.ClientUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.network.play.server.S2CPacketSpawnGlobalEntity
 import kotlin.math.roundToInt
 
-@ModuleInfo(name = "ThunderNotifier", spacedName = "Thunder Notifier", category = ModuleCategory.OTHER)
+@ModuleInfo(
+    name = "ThunderNotifier",
+    spacedName = "Thunder Notifier",
+    description = "",
+    category = ModuleCategory.OTHER
+)
 class ThunderNotifier : Module() {
     private val chatValue = BoolValue("Chat", true)
     private val notifyValue = BoolValue("Notification", false)
@@ -27,11 +32,11 @@ class ThunderNotifier : Module() {
             val dist = mc.thePlayer.getDistance(x, mc.thePlayer.entityBoundingBox.minY, z).roundToInt()
 
             if (chatValue.get())
-                ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§fDetected thunder at [§7X: $x, Y: $y, Z: $z§f]")
+                ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§fDetected thunder at ${x.toInt()} ${y.toInt()} ${z.toInt()} ($dist blocks away)")
             if (notifyValue.get())
                 Client.hud.addNotification(
                     Notification(
-                        "Detected thunder at [X: $x, Y: $y, Z: $z]",
+                        "Detected thunder at ${x.toInt()} ${y.toInt()} ${z.toInt()} ($dist blocks away)",
                         Notification.Type.INFO,
                         3000L
                     )

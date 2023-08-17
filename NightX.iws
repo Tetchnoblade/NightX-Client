@@ -5,21 +5,576 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af093b99-5942-419c-869b-8b2d7cb4dd2a" name="変更" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NightX.api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.api.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NightX.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NightX.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NightX.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/downloads.json" beforeDir="false" afterPath="$PROJECT_DIR$/downloads.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/ViaBackwards-4.2.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/ViaRewind-2.0.3-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/ViaVersion-4.2.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/ViaForge.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/handler/CommonTransformer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/handler/DecodeHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/handler/EncodeHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/loader/BackwardsLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/loader/RewindLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/platform/Injector.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/platform/Platform.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/platform/ProviderLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/platform/ViaAPI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/platform/ViaConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/protocol/ProtocolCollection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/util/FutureTaskId.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/enzaxd/viaforge/util/JLoggerToLog4j.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/Client.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/Client.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/FileConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/FileConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/configs/AccountsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/configs/AccountsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/configs/FriendsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/configs/FriendsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/configs/HudConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/configs/HudConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/configs/ModulesConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/configs/ModulesConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/configs/ShortcutsConfig.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/configs/ValuesConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/configs/ValuesConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/config/configs/XRayConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/event/Event.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/event/Event.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/event/EventManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/event/EventManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/event/Events.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/event/Events.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/event/Listenable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/event/Listenable.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/api/ClientSpoof.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/api/ColorElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/api/ColorElement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/api/GuiFastRender.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/api/GuiFastRender.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/api/MacroManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/api/MacroManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/api/ModItems.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/api/ModItems.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/api/ProxyManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/api/ProxyManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/api/StackItems.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/api/StackItems.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/Command.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/Command.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/CommandManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/CommandManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/api/XrayCommand.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/BindCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/BindCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/BindsCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/BindsCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/ClipCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/ClipCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/ConfigCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/ConfigCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/EnchantCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/EnchantCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/FriendCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/FriendCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/GiveCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/GiveCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/HelpCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/HelpCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/HideCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/HideCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/HurtCommand.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/IgnCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/IgnCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/LoginCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/LoginCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/MacroCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/MacroCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/PingCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/PingCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/PrefixCommand.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/ReloadCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/ReloadCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/RemoteViewCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/RemoteViewCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/RenameCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/RenameCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/RepeatCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/RepeatCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/SayCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/SayCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/ShortcutCommand.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/StuckCommand.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/TacoCommand.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/TeleportCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/TeleportCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/ThemeCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/ThemeCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/ToggleCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/ToggleCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/VClipCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/VClipCommand.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/shortcuts/Shortcut.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/shortcuts/ShortcutParser.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/shortcuts/Tokens.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/Module.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/Module.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/ModuleCategory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/ModuleCategory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/ModuleCommand.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/ModuleInfo.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/ModuleInfo.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/ModuleManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/ModuleManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AimAssist.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AimAssist.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AntiBot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AntiFireBall.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AntiFireBall.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AntiStaff.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AntiStaff.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AutoArmor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AutoArmor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AutoClicker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AutoClicker.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AutoHeal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AutoHeal.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AutoProjectile.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AutoProjectile.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AutoSoup.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/BowAim.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/Criticals.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/Criticals.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/FastBow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/FastBow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/Hitboxes.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/KeepSprint.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/KeepSprint.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/KillAura.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/KillAura.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/Knockback.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/Reach.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/Reach.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/TPAura.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/TPAura.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/Tickbase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/TriggerBot.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/TriggerBot.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/Velocity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/AntiHunger.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/AntiHunger.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/AntiTabComplete.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/BedWalker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/BedWalker.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/Bypass.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/CivBreak.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/CivBreak.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/ClientSpoof.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/ConsoleSpammer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/ConsoleSpammer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/Crasher.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/Disabler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/Disabler.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/NoZeroZeroThrees.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/NoZeroZeroThree.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/Disabler2.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/EntityDesync.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/EntityDesync.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/FakeLag.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/FakeLag.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/GodMode.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/InfiniteDurability.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/InfiniteDurability.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/LookTP.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/MultiCombo.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/NoMouseIntersect.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/NoMouseIntersect.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/NoZeroZeroThree.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/PacketFixer.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/Plugins.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/Plugins.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/PortalMenu.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/PortalMenu.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/Regen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/Regen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/ResetVL.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/exploit/ResetVL.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/AntiAFK.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/AntiAFK.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/AntiFall.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/AntiWeb.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/AutoBackstab.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/AutoJump.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/AutoWalk.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/DoubleJump.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/EntityFlight.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/EntityFlight.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Flight.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Flight.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/HorseJump.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/HorseJump.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/IceSpeed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Inventory.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Jesus.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Jesus.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/LongJump.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/LongJump.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/NoClip.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/NoFall.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/NoFall.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/NoSlow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/NoSlow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Parkour.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Parkour.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/SafeWalk.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/SafeWalk.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/SilentSneak.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/SilentSneak.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Speed.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Speed.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Sprint.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Sprint.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Strafe.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/Terrain.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/SpeedMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/SpeedMode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC2BHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC2BHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC3BHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC3BHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC4BHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC4BHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC4Hop.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC4Hop.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC4SlowHop.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC4SlowHop.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC5BHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC5BHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC6BHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC6BHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC7BHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AAC7BHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACBHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACBHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACGround.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACGround.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACGround2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACGround2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACHop3313.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACHop3313.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACHop350.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACHop350.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACHop438.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACHop438.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACLowHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACLowHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACLowHop2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACLowHop2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACLowHop3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACLowHop3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACYPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACYPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACYPort2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACYPort2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACv4BHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/AACv4BHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/OldAACBHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/aac/OldAACBHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/matrix/Matrix670.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/matrix/Matrix670.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/matrix/Matrix692.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/matrix/Matrix692.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/matrix/MatrixHop.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/matrix/MatrixHop.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/matrix/MatrixYPort.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/matrix/MatrixYPort.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPBHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPBHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPBoost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPBoost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPFHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPFHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPMiniJump.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPMiniJump.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPOnGround.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPOnGround.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPSemiStrafe.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPSemiStrafe.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPYPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/NCPYPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/SNCPBHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/ncp/SNCPBHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/AEMine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/AEMine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/Custom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/Custom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/GWEN.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/GWEN.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/HiveHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/HiveHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/Jump.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/Jump.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/Legit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/MineplexGround.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/MineplexGround.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/SlowHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/SlowHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/TeleportCubeCraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/TeleportCubeCraft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/YPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/YPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/YPort2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/other/YPort2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/spartan/SpartanYPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/spartan/SpartanYPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/spectre/SpectreBHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/spectre/SpectreBHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/spectre/SpectreLowHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/spectre/SpectreLowHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/spectre/SpectreOnGround.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/spectre/SpectreOnGround.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/vanillabhop/VanillaBhop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/vanillabhop/VanillaBhop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/AuthBypass.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/verus/VerusFloat.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/verus/VerusFloat.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/verus/VerusHard.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/verus/VerusHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/verus/VerusHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/verus/VerusLowHop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/verus/VerusLowHop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/vulcan/VulcanGround.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/vulcan/VulcanGround.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/vulcan/VulcanHop1.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/vulcan/VulcanHop1.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/vulcan/VulcanHop2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/vulcan/VulcanHop2.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/vulcan/VulcanYPort.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/vulcan/VulcanYPort.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/watchdog/WatchdogBoost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/watchdog/WatchdogBoost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/watchdog/WatchdogCustom.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/watchdog/WatchdogCustom.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/watchdog/WatchdogNew.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/watchdog/WatchdogStable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/movement/speeds/watchdog/WatchdogStable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/Annoy.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/Annoy.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/AntiObsidian.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/AntiVanish.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/AutoLogin.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/AutoMine.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/AutoPlay.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/BanNotifier.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/FakePlayer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/FakePlayer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/FastPlace.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/FastPlace.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/FreeLook.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/FreeLook.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/HackerDetector.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/LagBack.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/LagBack.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/LiquidInteract.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/PackSpoofer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/PackSpoofer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/PotionSpoof.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/PotionSpoof.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/Spammer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/Spammer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/Teams.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/ThunderNotifier.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/ThunderNotifier.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/Tweaks.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/Tweaks.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/WorldTime.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/WorldTime.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/AntiCactus.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/AutoFish.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/AutoFish.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/AutoRespawn.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/AutoRespawn.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/AutoTool.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/AutoTool.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/BedBreaker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/BedBreaker.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Blink.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Blink.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/BowLongJump.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/BowLongJump.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/FastBridge.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/FastBridge.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/FastMine.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/FastUse.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Freecam.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Freecam.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Gapple.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/HighJump.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/HighJump.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/InventoryManager.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/NoRotate.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Nuker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Nuker.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Phase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Phase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Scaffold.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Scaffold.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Spider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Spider.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/StealAura.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Stealer.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Step.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Step.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/TargetStrafe.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/TargetStrafe.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/TickTimer.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Timer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/Timer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/targets/Animals.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/targets/Animals.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/targets/Dead.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/targets/Dead.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/targets/Invisible.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/targets/Invisible.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/targets/Mobs.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/targets/Mobs.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/targets/Players.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/targets/Players.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Animations.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Animations.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/BlockOverlay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/BlockOverlay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Brightness.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Cape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Cape.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Chams.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/ChestESP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/ChestESP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/ColorMixer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/ColorMixer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Crosshair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Crosshair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/CustomModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/CustomModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/ESP.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/EnchantColor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/EnchantColor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Gui.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Gui.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Hud.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Hud.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/HudEditor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/HudEditor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/ItemESP.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/ItemESP.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/ItemPhysics.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/ItemPhysics.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/JumpCircle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/JumpCircle.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/MoreParticles.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/MoreParticles.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/NoBob.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/NoEffect.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/NoHurt.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/NoTitle.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/PlayerEdit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/PointerESP.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/PointerESP.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/RealBobbing.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Sensor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/ShowInvis.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/SilentView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/SilentView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/StreamerMode.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/TargetESP.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Tracers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Tracers.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Trails.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Trails.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Trajectories.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/ViewClip.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Wings.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Wings.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/XRay.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/XRay.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/TransformerLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/TransformerLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/accessors/MinecraftForgeClientAccessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/accessors/MinecraftForgeClientAccessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlockLadder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlockLadder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlockLilyPad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlockLilyPad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlockLiquid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlockLiquid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlockModelRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlockModelRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlockRedstoneTorch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlockRedstoneTorch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlockSoulSand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlockSoulSand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/client/MixinGameSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/client/MixinGameSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/client/MixinMinecraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/client/MixinMinecraft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/client/MixinMovementInputFromOptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/client/MixinMovementInputFromOptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/client/MixinResourcePackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/client/MixinResourcePackRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinAbstractClientPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinAbstractClientPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityLivingBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityLivingBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityOtherPlayerMP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityOtherPlayerMP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityPlayerSP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityPlayerSP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityXPOrb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityXPOrb.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinPlayerControllerMP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinPlayerControllerMP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiAchievement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiAchievement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiButtonExt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiButtonExt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiConnecting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiConnecting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiDisconnected.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiDisconnected.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiGameOver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiGameOver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiInGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiInGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiIngameForge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiIngameForge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiIngameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiIngameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiKeyBindingList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiKeyBindingList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiLanguage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiLanguage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiMultiplayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiMultiplayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiNewChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiNewChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiOptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiOptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiScreenOptionsSounds.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiScreenOptionsSounds.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiScreenResourcePacks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiScreenResourcePacks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiSlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiSlot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiSpectator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiSpectator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinServerSelectionList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinServerSelectionList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/item/MixinItemRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/item/MixinItemRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/item/MixinItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/item/MixinItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/item/MixinNBTTagCompound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/item/MixinNBTTagCompound.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/network/MixinNetHandlerPlayClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/network/MixinNetHandlerPlayClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/network/MixinNetworkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/network/MixinNetworkManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/network/MixinNetworkManagerChInit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/network/MixinNetworkPlayerInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/network/MixinNetworkPlayerInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/packets/MixinC00Handshake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/packets/MixinC00Handshake.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/packets/MixinC17PacketCustomPayload.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/packets/MixinC17PacketCustomPayload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/packets/MixinS3FPacketCustomPayload.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/packets/MixinS3FPacketCustomPayload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinEffectRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinEffectRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinEntityRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinEntityRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinFontRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinFontRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinInventoryEffectRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinInventoryEffectRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinLayerArmorBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinLayerArmorBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinLayerArrow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinLayerArrow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinLayerCreeperCharge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinLayerCreeperCharge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinLayerHeldItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinLayerHeldItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinLayerSpiderEyes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinLayerSpiderEyes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinLayerWitherAura.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinLayerWitherAura.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinModelBiped.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinModelBiped.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinModelPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinModelPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinModelPlayerFix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinModelPlayerFix.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinModelSkeleton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinModelSkeleton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinModelVillager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinModelVillager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRenderEntityItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRenderEntityItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRenderItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRenderItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRenderPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRenderPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRendererLivingEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRendererLivingEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinTileEntityBannerRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinTileEntityBannerRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinTileEntityChestRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinTileEntityItemStackRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinTileEntityItemStackRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinTileEntityMobSpawnerRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinTileEntityMobSpawnerRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinTileEntityRendererDispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinTileEntityRendererDispatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinTileEntitySkullRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinTileEntitySkullRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinVisGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinVisGraph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/resources/MixinDefaultResourcePack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/resources/MixinDefaultResourcePack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/resources/MixinSkinManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/resources/MixinSkinManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/implementations/IItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/implementations/IItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/implementations/IMixinGuiSlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/implementations/IMixinGuiSlot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/AStarCustomPathFinder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/AnimationUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/BlinkUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/CPSCounter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/ClassUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/ClientUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/EntityUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/FileUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/InventoryHelper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/InventoryUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/MinecraftInstance.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/MouseUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/MovementUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/MovementUtilsFix.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/PacketUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/PathUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/PosLookInstance.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/RaycastUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/RegexUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/RenderWings.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/RollingArrayLongBuffer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/Rotation.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/RotationUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/ServerUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/SessionUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/SettingsUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/TabUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/TimeHelper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/Timer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/TransferUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/WorldUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/block/BlockUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/block/PlaceInfo.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/extensions/BlockExtension.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/extensions/ColorExtension.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/extensions/PlayerExtension.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/item/ArmorComparator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/item/ArmorPart.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/item/ArmorPiece.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/item/ItemCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/item/ItemHelper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/item/ItemUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/login/LoginUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/login/UserUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/misc/FallingPlayer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/misc/HttpUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/misc/MiscUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/misc/NewFallingPlayer.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/misc/RandomUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/misc/StringUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/misc/sound/TipSoundManager.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/misc/sound/TipSoundPlayer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/pathfinder/MainPathFinder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/pathfinder/PathFinder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/pathfinder/PathHub.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/pathfinder/Vec3.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/AnimationUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/BlendUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/BlurUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/ColorUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/EaseUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/Render.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/RenderUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/ShadowUtils.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/Stencil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/shader/FramebufferShader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/shader/Shader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/shader/shaders/GlowShader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/shader/shaders/OutlineShader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/render/shader/shaders/RainbowShader.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/timer/MSTimer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/timer/TickTimer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/utils/timer/TimeUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/value/Value.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/value/Value.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/GuiMainMenu.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/GuiMainMenu.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/GuiProxy.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/altmanager/GuiAltManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/altmanager/GuiAltManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/altmanager/menus/GuiLoginIntoAccount.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/altmanager/menus/GuiLoginProgress.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/altmanager/menus/GuiLoginProgress.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/altmanager/menus/GuiTheAltening.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/altmanager/menus/GuiTheAltening.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/ColorManager.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/IconManager.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/NewUi.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/CategoryElement.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/SearchBox.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/SearchElement.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/components/Checkbox.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/components/Slider.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/components/ToggleSwitch.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/module/ModuleElement.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/module/value/ValueElement.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/module/value/impl/BooleanElement.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/module/value/impl/FloatElement.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/module/value/impl/IntElement.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/element/module/value/impl/ListElement.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/extensions/AnimHelper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/elements/GuiPasswordField.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/elements/GuiPasswordField.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/AWTFontRenderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/AWTFontRenderer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/CachedFont.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/CachedFont.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/FontDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/FontDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/Fonts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/Fonts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/GameFontRenderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/GameFontRenderer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/TTFFontRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/TTFFontRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/Config.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/Config.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/HUD.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/HUD.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/designer/EditorPanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/designer/EditorPanel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/designer/GuiHudDesigner.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/designer/GuiHudDesigner.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/Element.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/Element.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Armor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Armor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Arraylist.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Arraylist.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Effects.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Effects.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Image.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Image.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Notifications.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Notifications.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Radar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Radar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/ScoreboardElement.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/SessionInformation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/SessionInformation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/TabGui.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/TabGui.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Target.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Text.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Text.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/br_items.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/TargetStyle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/TargetStyle.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Blocky.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Blocky.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Chill.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Chill.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Exhibition.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Exhibition.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/LiquidBounce.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/LiquidBounce.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Remix.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Remix.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Rice.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Rice.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Simple.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Slowly.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Slowly.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/utils/CharRenderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/utils/CharRenderer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/utils/Particle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/utils/Particle.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/vitox/Particle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/vitox/ParticleGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/vitox/particle/util/RenderUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/crave.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/defoko1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/defoko2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/defoko3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/defoko4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/exhibition.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/exhibition.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/nightx.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/nightx.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/noneclient.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/nuta.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/rise1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/rise2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/rise3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/vanilla.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/cape/vanilla.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/menu/alt.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/menu/alt.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/menu/background.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/menu/defo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/menu/expand.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/menu/github.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/menu/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/menu/youtube.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/notification/checkmark.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/notification/checkmark.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/notification/error.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/notification/error.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/notification/info.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/notification/info.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/notification/warning.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/notification/warning.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/shader/fragment/background.frag" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/shader/fragment/background.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/shader/fragment/glow.frag" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/shader/fragment/glow.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/shader/fragment/outline.frag" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/shader/fragment/outline.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/shader/fragment/rainbow_shader.frag" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/shader/fragment/rainbow_shader.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/shader/shadow.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/shader/shadow.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/shader/vertex.vert" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/shader/vertex.vert" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/taco/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/shaders/post/blurArea.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/shaders/post/blurArea.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/shaders/program/blurArea.fsh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/shaders/program/blurArea.fsh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/shaders/program/blurArea.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/shaders/program/blurArea.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/shaders/program/blurTest.fsh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/shaders/program/blurTest.fsh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/shaders/program/blurTest.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/shaders/program/blurTest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/client.forge.mixins.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/client.forge.mixins.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/client_at.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/client_at.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mcmod.info" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mcmod.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,9 +592,17 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="NightX" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -50,8 +613,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Kotlin Class" />
         <option value="Class" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -82,38 +645,313 @@
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/0kcab/Documents/GitHub/NightX-Client/NightX.ipr&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;ファセット&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.5505747&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="de.enzaxd.viaforge.platform" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\0kcab\Documents\GitHub\NightX-master\src\main\java\net\aspw\client\viamcp" />
+      <recent name="C:\Users\0kcab\Documents\GitHub\NightX-master\src\main\java\net\aspw\client\visual\client\clickgui\tab" />
+    </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
-      <recent name="net.aspw.client.features.module.modules.movement.speeds.ncp" />
-      <recent name="net.aspw.client.features.module.modules.player" />
-      <recent name="net.aspw.client.features.module.modules.other" />
-      <recent name="net.aspw.client.features.module.modules.combat" />
-      <recent name="net.aspw.client.features.module.modules.visual" />
+      <recent name="net.aspw.client.features.module.impl.other" />
+      <recent name="net.aspw.client.features.module.impl.movement" />
+      <recent name="net.aspw.client.features.module.impl.visual" />
+      <recent name="net.aspw.client.visual.client" />
+      <recent name="net.aspw.client.util.connection" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="de.enzaxd.viaforge.platform" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
-      <recent name="net.aspw.client.features.command.commands" />
-      <recent name="net.aspw.client.features.module.modules.combat" />
-      <recent name="net.aspw.client.features.module.modules.movement.speeds.other" />
-      <recent name="net.aspw.client.features.module.modules.movement.speeds.matrix" />
-      <recent name="net.aspw.client.features.module.modules.visual" />
+      <recent name="net.aspw.client.features.module.impl.exploit" />
+      <recent name="net.aspw.client.features.module.impl.premium" />
+      <recent name="net.aspw.client.visual.client" />
+      <recent name="net.aspw.client.protocol" />
+      <recent name="net.aspw.client.util.connection" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="net.aspw.client.features.module.impl.exploit" />
+      <recent name="net.aspw.client.injection.forge.mixins.client" />
+      <recent name="net.aspw.client.features.api" />
+      <recent name="net.aspw.client.features.module.impl.other" />
       <recent name="net.aspw.client.injection.forge.mixins.gui" />
-      <recent name="net.aspw.client.injection.forge.mixins.world" />
-      <recent name="net.aspw.client.features.module.modules.client" />
+      <recent name="net.aspw.client.visual.client.clickgui.old.style.styles" />
     </key>
   </component>
   <component name="RunManager" selected="アプリケーション.Minecraft Client">
+    <configuration name="Minecraft Client" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8 (3)" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <module name="NightX-Client.NightX.main" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration name="Minecraft Server" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8 (3)" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <module name="NightX-Client.NightX.main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
     <list>
       <item itemvalue="アプリケーション.Minecraft Client" />
       <item itemvalue="アプリケーション.Minecraft Server" />
@@ -137,6 +975,8 @@
     <watches-manager>
       <configuration name="Application">
         <watch expression="d" language="JAVA" />
+        <watch expression="f" language="JAVA" />
+        <watch expression="\" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>

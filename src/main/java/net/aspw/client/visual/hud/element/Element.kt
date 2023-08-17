@@ -1,7 +1,7 @@
 package net.aspw.client.visual.hud.element
 
-import net.aspw.client.utils.MinecraftInstance
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.MinecraftInstance
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.Value
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.player.EntityPlayer

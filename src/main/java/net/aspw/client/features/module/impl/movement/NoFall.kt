@@ -6,11 +6,11 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.player.Freecam
-import net.aspw.client.utils.MovementUtils
-import net.aspw.client.utils.PacketUtils
-import net.aspw.client.utils.block.BlockUtils
-import net.aspw.client.utils.timer.MSTimer
-import net.aspw.client.utils.timer.TickTimer
+import net.aspw.client.util.MovementUtils
+import net.aspw.client.util.PacketUtils
+import net.aspw.client.util.block.BlockUtils
+import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.util.timer.TickTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
@@ -23,7 +23,7 @@ import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
 import java.util.*
 
-@ModuleInfo(name = "NoFall", spacedName = "No Fall", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "NoFall", spacedName = "No Fall", description = "", category = ModuleCategory.MOVEMENT)
 class NoFall : Module() {
     val typeValue = ListValue(
         "Type",
@@ -33,13 +33,11 @@ class NoFall : Module() {
             "NoPacket",
             "AAC",
             "Spartan",
-            "CubeCraft",
             "Hypixel",
             "Verus",
             "Medusa",
             "Motion",
-            "Matrix",
-            "Vulcan"
+            "Matrix"
         ),
         "Packet"
     )
@@ -95,8 +93,6 @@ class NoFall : Module() {
     private var needSpoof = false
     private var doSpoof = false
     private var nextSpoof = false
-    private var vulcantNoFall = true
-    private var vulcanNoFall = false
     private var lastFallDistRounded = 0
 
     override fun onEnable() {
@@ -141,12 +137,6 @@ class NoFall : Module() {
         matrixFlagWait = 0
         aac4FlagCooldown.reset()
         mc.timer.timerSpeed = 1.0f
-    }
-
-    @EventTarget
-    fun onWorld(event: WorldEvent) {
-        vulcantNoFall = true
-        vulcanNoFall = false
     }
 
     @EventTarget(ignoreCondition = true)
@@ -198,13 +188,6 @@ class NoFall : Module() {
                         mc.netHandler.addToSendQueue(C03PacketPlayer(true))
                         mc.thePlayer.fallDistance = 0f
                     }
-                }
-            }
-
-            "cubecraft" -> {
-                if (mc.thePlayer.fallDistance > 2F) {
-                    mc.thePlayer.onGround = true
-                    mc.netHandler.addToSendQueue(C03PacketPlayer(true))
                 }
             }
 
@@ -414,25 +397,6 @@ class NoFall : Module() {
                     matrixFallTicks++
                 } else if (mc.thePlayer.onGround)
                     matrixFallTicks = 1
-            }
-
-            "vulcan" -> {
-                if (!vulcanNoFall && mc.thePlayer.fallDistance > 3.25)
-                    vulcanNoFall = true
-                if (vulcanNoFall && vulcantNoFall && mc.thePlayer.onGround)
-                    vulcantNoFall = false
-                if (vulcantNoFall) return // Possible flag
-                if (nextSpoof) {
-                    mc.thePlayer.motionY = -0.1
-                    mc.thePlayer.fallDistance = -0.1F
-                    MovementUtils.strafe(0.3F)
-                    nextSpoof = false
-                }
-                if (mc.thePlayer.fallDistance > 3.5625F) {
-                    mc.thePlayer.fallDistance = 0F
-                    doSpoof = true
-                    nextSpoof = true
-                }
             }
         }
     }

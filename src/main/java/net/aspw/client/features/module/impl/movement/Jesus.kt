@@ -4,10 +4,9 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.MovementUtils
-import net.aspw.client.utils.block.BlockUtils.collideBlock
-import net.aspw.client.utils.block.BlockUtils.getBlock
-import net.aspw.client.value.BoolValue
+import net.aspw.client.util.MovementUtils
+import net.aspw.client.util.block.BlockUtils.collideBlock
+import net.aspw.client.util.block.BlockUtils.getBlock
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
 import net.minecraft.block.Block
@@ -19,7 +18,7 @@ import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
 import java.util.*
 
-@ModuleInfo(name = "Jesus", spacedName = "Jesus", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Jesus", spacedName = "Jesus", description = "", category = ModuleCategory.MOVEMENT)
 class Jesus : Module() {
     @JvmField
     val modeValue = ListValue(
@@ -27,6 +26,7 @@ class Jesus : Module() {
         arrayOf(
             "Vanilla",
             "NCP",
+            "Bounce",
             "AAC",
             "AACFly",
             "AAC3.3.11",
@@ -40,8 +40,7 @@ class Jesus : Module() {
         ),
         "NCP"
     )
-    private val aacFlyValue = FloatValue("AACFlyMotion", 0.5f, 0.1f, 1f)
-    private val noJumpValue = BoolValue("NoJump", false)
+    private val aacFlyValue = FloatValue("Motion", 0.5f, 0.1f, 1f, { modeValue.get().equals("AACFly") })
     private var nextTick = false
 
     @EventTarget
@@ -51,6 +50,11 @@ class Jesus : Module() {
             "ncp", "vanilla" -> if (collideBlock(mc.thePlayer.entityBoundingBox) { block: Block? -> block is BlockLiquid } && mc.thePlayer.isInsideOfMaterial(
                     Material.air
                 ) && !mc.thePlayer.isSneaking) mc.thePlayer.motionY = 0.08
+
+            "bounce" -> {
+                if (mc.thePlayer.isInWater)
+                    mc.thePlayer.motionY += 0.7
+            }
 
             "aac" -> {
                 val blockPos = mc.thePlayer.position.down()
@@ -124,7 +128,8 @@ class Jesus : Module() {
 
     override fun onDisable() {
         if (mc.thePlayer.isInWater) {
-            MovementUtils.strafe(0.2f)
+            mc.thePlayer.motionX = 0.0
+            mc.thePlayer.motionZ = 0.0
         }
     }
 
@@ -176,14 +181,6 @@ class Jesus : Module() {
                 if (nextTick) event.packet.y -= 0.001
             }
         }
-    }
-
-
-    @EventTarget
-    fun onJump(event: JumpEvent) {
-        if (mc.thePlayer == null) return
-        val block = getBlock(BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 0.01, mc.thePlayer.posZ))
-        if (noJumpValue.get() && block is BlockLiquid) event.cancelEvent()
     }
 
     override val tag: String

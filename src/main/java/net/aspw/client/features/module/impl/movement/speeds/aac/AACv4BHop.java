@@ -3,7 +3,13 @@ package net.aspw.client.features.module.impl.movement.speeds.aac;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
 
+/**
+ * The type Aa cv 4 b hop.
+ */
 public class AACv4BHop extends SpeedMode {
+    /**
+     * Instantiates a new Aa cv 4 b hop.
+     */
     public AACv4BHop() {
         super("AACv4BHop");
     }

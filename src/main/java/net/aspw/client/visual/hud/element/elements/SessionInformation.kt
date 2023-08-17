@@ -1,7 +1,7 @@
 package net.aspw.client.visual.hud.element.elements
 
 import net.aspw.client.Client
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.FontValue
@@ -32,7 +32,7 @@ class SessionInformation(
     private val colorGreenValue2 = IntegerValue("Line-Green-2", 111, 0, 255)
     private val colorBlueValue2 = IntegerValue("Line-Blue-2", 255, 0, 255)
 
-    private val fontValue = FontValue("Font", Fonts.fontSFUI40)
+    private val fontValue = FontValue("Font", Fonts.fontSFUI37)
 
     override fun drawElement(): Border {
         val fontRenderer = fontValue.get()

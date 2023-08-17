@@ -8,7 +8,7 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.movement.Flight
-import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -19,7 +19,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C07PacketPlayerDigging
 import java.util.*
 
-@ModuleInfo(name = "Criticals", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "Criticals", description = "", category = ModuleCategory.COMBAT)
 class Criticals : Module() {
 
     val modeValue = ListValue(

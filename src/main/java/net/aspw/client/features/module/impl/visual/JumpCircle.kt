@@ -8,10 +8,10 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.render.ColorUtils.LiquidSlowly
-import net.aspw.client.utils.render.ColorUtils.fade
-import net.aspw.client.utils.render.Render
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.render.ColorUtils.LiquidSlowly
+import net.aspw.client.util.render.ColorUtils.fade
+import net.aspw.client.util.render.Render
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
@@ -22,11 +22,11 @@ import java.awt.Color
 import kotlin.math.cos
 import kotlin.math.sin
 
-@ModuleInfo(name = "JumpCircle", spacedName = "Jump Circle", category = ModuleCategory.VISUAL)
+@ModuleInfo(name = "JumpCircle", spacedName = "Jump Circle", description = "", category = ModuleCategory.VISUAL)
 class JumpCircle : Module() {
     val radius = FloatValue("Radius", 1f, 1f, 5f, "m")
     private val colorModeValue =
-        ListValue("Color", arrayOf("Custom", "Rainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "Fade")
+        ListValue("Color", arrayOf("Custom", "Rainbow", "Sky", "LiquidSlowly", "Fade", "Mixer"), "LiquidSlowly")
     private val colorRedValue = IntegerValue("Red", 200, 0, 255)
     private val colorGreenValue = IntegerValue("Green", 150, 0, 255)
     private val colorBlueValue = IntegerValue("Blue", 200, 0, 255)

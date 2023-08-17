@@ -3,9 +3,15 @@ package net.aspw.client.features.module.impl.movement.speeds.aac;
 import net.aspw.client.Client;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.util.MovementUtils;
 
+/**
+ * The type Aac hop 350.
+ */
 public class AACHop350 extends SpeedMode implements Listenable {
+    /**
+     * Instantiates a new Aac hop 350.
+     */
     public AACHop350() {
         super("AACHop3.5.0");
 

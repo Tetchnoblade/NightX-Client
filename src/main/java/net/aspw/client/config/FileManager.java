@@ -4,38 +4,71 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.aspw.client.Client;
 import net.aspw.client.config.configs.*;
-import net.aspw.client.utils.ClientUtils;
-import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.util.ClientUtils;
+import net.aspw.client.util.MinecraftInstance;
 
 import java.io.File;
 import java.lang.reflect.Field;
 
+/**
+ * The type File manager.
+ */
 public class FileManager extends MinecraftInstance {
 
+    /**
+     * The constant PRETTY_GSON.
+     */
     public static final Gson PRETTY_GSON = new GsonBuilder().setPrettyPrinting().create();
+    /**
+     * The Dir.
+     */
     public File dir = new File(mc.mcDataDir, Client.CLIENT_FOLDER);
+    /**
+     * The Fonts dir.
+     */
     public final File fontsDir = new File(dir, "fonts");
+    /**
+     * The Settings dir.
+     */
     public final File settingsDir = new File(dir, "configs");
+    /**
+     * The Sounds dir.
+     */
     public final File soundsDir = new File(dir, "sounds");
+    /**
+     * The Themes dir.
+     */
     public final File themesDir = new File(dir, "themes");
+    /**
+     * The Modules config.
+     */
     public final FileConfig modulesConfig = new ModulesConfig(new File(dir, "toggled.json"));
+    /**
+     * The Values config.
+     */
     public final FileConfig valuesConfig = new ValuesConfig(new File(dir, "value.json"));
+    /**
+     * The Accounts config.
+     */
     public final AccountsConfig accountsConfig = new AccountsConfig(new File(dir, "alts.json"));
+    /**
+     * The Friends config.
+     */
     public final FriendsConfig friendsConfig = new FriendsConfig(new File(dir, "friends.json"));
-    public final FileConfig xrayConfig = new XRayConfig(new File(dir, "xray.json"));
+    /**
+     * The Hud config.
+     */
     public final FileConfig hudConfig = new HudConfig(new File(dir, "hud.json"));
-    public final FileConfig shortcutsConfig = new ShortcutsConfig(new File(dir, "shortcuts.json"));
 
     /**
-     * Constructor of file manager
-     * Setup everything important
+     * Instantiates a new File manager.
      */
     public FileManager() {
         setupFolder();
     }
 
     /**
-     * Setup folder
+     * Sets folder.
      */
     public void setupFolder() {
         if (!dir.exists())
@@ -55,28 +88,9 @@ public class FileManager extends MinecraftInstance {
     }
 
     /**
-     * Load all configs in file manager
-     */
-    public void loadAllConfigs() {
-        for (final Field field : getClass().getDeclaredFields()) {
-            if (field.getType() == FileConfig.class) {
-                try {
-                    if (!field.isAccessible())
-                        field.setAccessible(true);
-
-                    final FileConfig fileConfig = (FileConfig) field.get(this);
-                    loadConfig(fileConfig);
-                } catch (final IllegalAccessException e) {
-                    ClientUtils.getLogger().error("Failed to load config file of field " + field.getName() + ".", e);
-                }
-            }
-        }
-    }
-
-    /**
-     * Load a list of configs
+     * Load configs.
      *
-     * @param configs list
+     * @param configs the configs
      */
     public void loadConfigs(final FileConfig... configs) {
         for (final FileConfig fileConfig : configs)
@@ -84,9 +98,9 @@ public class FileManager extends MinecraftInstance {
     }
 
     /**
-     * Load one config
+     * Load config.
      *
-     * @param config to load
+     * @param config the config
      */
     public void loadConfig(final FileConfig config) {
         if (!config.hasConfig()) {
@@ -105,7 +119,7 @@ public class FileManager extends MinecraftInstance {
     }
 
     /**
-     * Save all configs in file manager
+     * Save all configs.
      */
     public void saveAllConfigs() {
         for (final Field field : getClass().getDeclaredFields()) {
@@ -125,30 +139,14 @@ public class FileManager extends MinecraftInstance {
     }
 
     /**
-     * Save a list of configs
+     * Save config.
      *
-     * @param configs list
-     */
-    public void saveConfigs(final FileConfig... configs) {
-        for (final FileConfig fileConfig : configs)
-            saveConfig(fileConfig);
-    }
-
-    /**
-     * Save one config
-     *
-     * @param config to save
+     * @param config the config
      */
     public void saveConfig(final FileConfig config) {
         saveConfig(config, false);
     }
 
-    /**
-     * Save one config
-     *
-     * @param config         to save
-     * @param ignoreStarting check starting
-     */
     private void saveConfig(final FileConfig config, final boolean ignoreStarting) {
         if (!ignoreStarting && Client.INSTANCE.isStarting())
             return;

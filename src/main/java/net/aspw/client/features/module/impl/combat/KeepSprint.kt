@@ -6,7 +6,7 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.minecraft.network.play.client.C0BPacketEntityAction
 
-@ModuleInfo(name = "KeepSprint", spacedName = "Keep Sprint", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "KeepSprint", spacedName = "Keep Sprint", description = "", category = ModuleCategory.COMBAT)
 class KeepSprint : Module() {
     fun onPacket(event: PacketEvent) {
         val packet = event.packet

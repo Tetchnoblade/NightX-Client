@@ -7,6 +7,8 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode
 import net.aspw.client.features.module.impl.movement.speeds.aac.*
+import net.aspw.client.features.module.impl.movement.speeds.intave.IntaveHop
+import net.aspw.client.features.module.impl.movement.speeds.kauri.KauriLowHop
 import net.aspw.client.features.module.impl.movement.speeds.matrix.Matrix670
 import net.aspw.client.features.module.impl.movement.speeds.matrix.Matrix692
 import net.aspw.client.features.module.impl.movement.speeds.matrix.MatrixHop
@@ -19,7 +21,6 @@ import net.aspw.client.features.module.impl.movement.speeds.spectre.SpectreLowHo
 import net.aspw.client.features.module.impl.movement.speeds.spectre.SpectreOnGround
 import net.aspw.client.features.module.impl.movement.speeds.vanillabhop.VanillaBhop
 import net.aspw.client.features.module.impl.movement.speeds.verus.VerusFloat
-import net.aspw.client.features.module.impl.movement.speeds.verus.VerusHard
 import net.aspw.client.features.module.impl.movement.speeds.verus.VerusHop
 import net.aspw.client.features.module.impl.movement.speeds.verus.VerusLowHop
 import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanGround
@@ -28,7 +29,7 @@ import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanHop2
 import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanYPort
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogBoost
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogCustom
-import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogNew
+import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogOnGround
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogStable
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -38,7 +39,7 @@ import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.GuiIngameMenu
 import net.minecraft.client.settings.GameSettings
 
-@ModuleInfo(name = "Speed", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Speed", description = "", category = ModuleCategory.MOVEMENT)
 class Speed : Module() {
     private var wasDown: Boolean = false
     val speedModes = arrayOf(
@@ -69,7 +70,7 @@ class Speed : Module() {
         AACHop438(),
         AACYPort(),
         AACYPort2(),
-        WatchdogNew(),
+        WatchdogOnGround(),
         WatchdogBoost(),
         WatchdogStable(),
         WatchdogCustom(),
@@ -81,7 +82,6 @@ class Speed : Module() {
         SlowHop(),
         Custom(),
         Jump(),
-        Legit(),
         AEMine(),
         NCPSemiStrafe(),
         GWEN(),
@@ -93,10 +93,10 @@ class Speed : Module() {
         YPort2(),
         HiveHop(),
         MineplexGround(),
+        RedeskyHop(),
         TeleportCubeCraft(),
         VerusHop(),
         VerusLowHop(),
-        VerusHard(),
         VerusFloat(),
         VulcanHop1(),
         VulcanHop2(),
@@ -105,7 +105,9 @@ class Speed : Module() {
         MatrixHop(),
         MatrixYPort(),
         Matrix670(),
-        Matrix692()
+        Matrix692(),
+        KauriLowHop(),
+        IntaveHop()
     )
     val typeValue: ListValue = object : ListValue(
         "Type",
@@ -118,6 +120,8 @@ class Speed : Module() {
             "Verus",
             "Vulcan",
             "Matrix",
+            "Kauri",
+            "Intave",
             "Custom",
             "VanillaBhop",
             "Other"
@@ -132,6 +136,8 @@ class Speed : Module() {
             if (state) onEnable()
         }
     }
+
+    var y = 0.0
 
     @EventTarget
     fun onUpdate(event: UpdateEvent?) {
@@ -161,6 +167,8 @@ class Speed : Module() {
             mc.thePlayer.cameraPitch = 0f
             mc.thePlayer.cameraYaw = 0f
         }
+        if (fakeYValue.get())
+            mc.thePlayer.cameraPitch = 0f
         if (mc.thePlayer.isSneaking || event.eventState !== EventState.PRE) return
         val speedMode = mode
         if (speedMode != null) {
@@ -224,9 +232,37 @@ class Speed : Module() {
 
     val hypixelModeValue: ListValue = object : ListValue(
         "Watchdog-Mode",
-        arrayOf("New", "Boost", "Stable", "Custom"),
-        "New",
+        arrayOf("OnGround", "Boost", "Stable", "Custom"),
+        "OnGround",
         { typeValue.get().equals("watchdog", ignoreCase = true) }) {
+        override fun onChange(oldValue: String, newValue: String) {
+            if (state) onDisable()
+        }
+
+        override fun onChanged(oldValue: String, newValue: String) {
+            if (state) onEnable()
+        }
+    }
+
+    val kauriModeValue: ListValue = object : ListValue(
+        "Kauri-Mode",
+        arrayOf("LowHop"),
+        "LowHop",
+        { typeValue.get().equals("kauri", ignoreCase = true) }) {
+        override fun onChange(oldValue: String, newValue: String) {
+            if (state) onDisable()
+        }
+
+        override fun onChanged(oldValue: String, newValue: String) {
+            if (state) onEnable()
+        }
+    }
+
+    val intaveModeValue: ListValue = object : ListValue(
+        "Intave-Mode",
+        arrayOf("Hop"),
+        "Hop",
+        { typeValue.get().equals("intave", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
         }
@@ -240,16 +276,18 @@ class Speed : Module() {
         wasDown = false
         if (mc.thePlayer == null) return
         mc.timer.timerSpeed = 1f
+        y = mc.thePlayer.posY
         val speedMode = mode
         speedMode?.onEnable()
     }
 
     override fun onDisable() {
+        mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
         if (mc.thePlayer == null) return
         mc.timer.timerSpeed = 1f
         mc.gameSettings.keyBindJump.pressed =
             mc.thePlayer != null && (mc.inGameHasFocus || Client.moduleManager.getModule(
-                Inventory::class.java
+                InvMove::class.java
             )!!.state) && !(mc.currentScreen is GuiIngameMenu || mc.currentScreen is GuiChat) && GameSettings.isKeyDown(
                 mc.gameSettings.keyBindJump
             )
@@ -274,21 +312,6 @@ class Speed : Module() {
     override val tag: String
         get() = typeValue.get()
 
-    private val onlySingleName: String
-        private get() {
-            var mode = ""
-            when (typeValue.get()) {
-                "NCP" -> mode = ncpModeValue.get()
-                "AAC" -> mode = aacModeValue.get()
-                "Spartan" -> mode = "Spartan"
-                "Spectre" -> mode = spectreModeValue.get()
-                "Watchdog" -> mode = hypixelModeValue.get()
-                "Verus" -> mode = verusModeValue.get()
-                "Vulcan" -> mode = vulcanModeValue.get()
-                "Matrix" -> mode = matrixModeValue.get()
-            }
-            return mode
-        }
     val otherModeValue: ListValue = object : ListValue(
         "Other-Mode",
         arrayOf(
@@ -296,11 +319,11 @@ class Speed : Module() {
             "YPort2",
             "SlowHop",
             "Jump",
-            "Legit",
             "AEMine",
             "GWEN",
             "HiveHop",
             "MineplexGround",
+            "RedeskyHop",
             "TeleportCubeCraft"
         ),
         "YPort",
@@ -331,6 +354,8 @@ class Speed : Module() {
                 "Verus" -> mode = "Verus" + verusModeValue.get()
                 "Vulcan" -> mode = "Vulcan" + vulcanModeValue.get()
                 "Matrix" -> mode = "Matrix" + matrixModeValue.get()
+                "Kauri" -> mode = "Kauri" + kauriModeValue.get()
+                "Intave" -> mode = "Intave" + intaveModeValue.get()
                 "VanillaBhop" -> mode = "VanillaBhop"
                 "Custom" -> mode = "Custom"
                 "Other" -> mode = otherModeValue.get()
@@ -344,8 +369,8 @@ class Speed : Module() {
         }
     val verusModeValue: ListValue = object : ListValue(
         "Verus-Mode",
-        arrayOf("Hop", "LowHop", "Hard", "Float"),
-        "LowHop",
+        arrayOf("Hop", "LowHop", "Float"),
+        "Hop",
         { typeValue.get().equals("verus", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
@@ -387,29 +412,23 @@ class Speed : Module() {
         modeName.equals(
             "watchdogcustom",
             ignoreCase = true
-        ) && !modeName.equals("watchdognew", ignoreCase = true) || modeName.equals(
-            "watchdogcustom",
-            ignoreCase = true
         )
     }
     val smoothStrafe = BoolValue("SmoothStrafe", true) {
         modeName.equals(
             "watchdogcustom",
             ignoreCase = true
-        ) && !modeName.equals("watchdognew", ignoreCase = true)
+        )
     }
     val customSpeedValue =
         FloatValue("StrSpeed", 0.42f, 0.2f, 2f) {
             modeName.equals(
                 "watchdogcustom",
                 ignoreCase = true
-            ) && !modeName.equals("watchdognew", ignoreCase = true)
+            )
         }
     val motionYValue = FloatValue("MotionY", 0.42f, 0f, 2f) {
-        modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
-            "watchdognew",
-            ignoreCase = true
-        )
+        modeName.equals("watchdogcustom", ignoreCase = true)
     }
 
     @JvmField
@@ -417,9 +436,6 @@ class Speed : Module() {
 
     @JvmField
     val boostDelayValue = IntegerValue("Boost-Delay", 8, 2, 15) { modeName.equals("vulcanground", ignoreCase = true) }
-
-    @JvmField
-    val verusTimer = FloatValue("Verus-Timer", 1f, 0.1f, 10f) { modeName.equals("verushard", ignoreCase = true) }
 
     @JvmField
     val speedValue = FloatValue("CustomSpeed", 1.0f, 0.2f, 2f) { typeValue.get().equals("custom", ignoreCase = true) }
@@ -475,6 +491,9 @@ class Speed : Module() {
             "watchdognew",
             ignoreCase = true
         ) && !modeName.equals(
+            "watchdogonground",
+            ignoreCase = true
+        ) && !modeName.equals(
             "watchdogcustom",
             ignoreCase = true
         )
@@ -488,6 +507,9 @@ class Speed : Module() {
         ) && !modeName.equals(
             "watchdognew",
             ignoreCase = true
+        ) && !modeName.equals(
+            "watchdogonground",
+            ignoreCase = true
         )
     }
 
@@ -496,7 +518,10 @@ class Speed : Module() {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
             "watchdognew",
             ignoreCase = true
-        ) && !modeName.equals("watchdogcustom", ignoreCase = true)
+        ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
+            "watchdogonground",
+            ignoreCase = true
+        )
     }
 
     @JvmField
@@ -504,7 +529,10 @@ class Speed : Module() {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
             "watchdognew",
             ignoreCase = true
-        ) && !modeName.equals("watchdogcustom", ignoreCase = true)
+        ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
+            "watchdogonground",
+            ignoreCase = true
+        )
     }
 
     @JvmField
@@ -512,7 +540,10 @@ class Speed : Module() {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
             "watchdognew",
             ignoreCase = true
-        ) && !modeName.equals("watchdogcustom", ignoreCase = true)
+        ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
+            "watchdogonground",
+            ignoreCase = true
+        )
     }
 
     @JvmField
@@ -520,14 +551,17 @@ class Speed : Module() {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
             "watchdognew",
             ignoreCase = true
-        ) && !modeName.equals("watchdogcustom", ignoreCase = true)
+        ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
+            "watchdogonground",
+            ignoreCase = true
+        )
     }
 
     @JvmField
     val baseTimerValue = FloatValue("BaseTimer", 1.5f, 1f, 3f) {
         modeName.equals(
             "watchdogboost",
-            ignoreCase = true && !modeName.equals("watchdognew", ignoreCase = true)
+            ignoreCase = true
         )
     }
 
@@ -536,7 +570,7 @@ class Speed : Module() {
         FloatValue("BaseMultiplierTimer", 1f, 0f, 3f) {
             modeName.equals(
                 "watchdogboost",
-                ignoreCase = true && !modeName.equals("watchdognew", ignoreCase = true)
+                ignoreCase = true
             )
         }
 
@@ -561,4 +595,5 @@ class Speed : Module() {
 
     @JvmField
     val noBob = BoolValue("NoBob", false)
+    val fakeYValue = BoolValue("FakeY", false)
 }

@@ -5,8 +5,8 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.MovementUtils
-import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.util.MovementUtils
+import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -21,7 +21,7 @@ import kotlin.math.ceil
 import kotlin.math.cos
 import kotlin.math.sin
 
-@ModuleInfo(name = "Step", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "Step", description = "", category = ModuleCategory.PLAYER)
 class Step : Module() {
 
     /**
@@ -32,12 +32,12 @@ class Step : Module() {
         "Mode", arrayOf(
             "Vanilla",
             "Jump",
-            "NewNCP",
+            "NewNCP1",
+            "NewNCP2",
             "NCPPacket",
             "NCP",
             "MotionNCP",
             "OldNCP",
-            "BlocksMC",
             "Verus",
             "Vulcan",
             "Matrix",
@@ -45,15 +45,14 @@ class Step : Module() {
             "LAAC",
             "AAC3.3.4",
             "Spartan",
-            "Rewinside",
-            "1.5Twillight"
+            "Rewinside"
         ), "Vanilla"
     )
 
     private val heightValue = FloatValue("Height", 1.5F, 0.6F, 10F)
 
     private val jumpHeightValue = FloatValue("JumpHeight", 0.42F, 0.37F, 0.42F)
-    private val delayValue = IntegerValue("Delay", 150, 0, 500, "ms")
+    private val delayValue = IntegerValue("Delay", 150, 150, 500, "ms")
     private val useTimer = BoolValue("UseTimer", true)
 
     /**
@@ -68,7 +67,6 @@ class Step : Module() {
     private var ncpNextStep = 0
     private var spartanSwitch = false
     private var isAACStep = false
-    private var ticks = 0
 
     private val timer = MSTimer()
     private var usedTimer = false
@@ -82,7 +80,6 @@ class Step : Module() {
         // Change step height back to default (0.5 is default)
         mc.thePlayer.stepHeight = 0.5F
         mc.timer.timerSpeed = 1.0F
-        mc.thePlayer.speedInAir = 0.02F
     }
 
     @EventTarget
@@ -137,17 +134,6 @@ class Step : Module() {
                 }
             } else
                 isAACStep = false
-
-            mode.equals("1.5Twillight", true) -> if (MovementUtils.isMoving() &&
-                mc.thePlayer.isCollidedHorizontally
-            ) {
-                ticks++
-                if (ticks == 1) mc.thePlayer.motionY = 0.4399
-                if (ticks == 12) mc.thePlayer.motionY = 0.4399
-                if (ticks >= 40) ticks = 0
-            } else if (mc.thePlayer.onGround) {
-                ticks = 0
-            }
         }
     }
 
@@ -198,7 +184,7 @@ class Step : Module() {
         if (!mc.thePlayer.onGround || !timer.hasTimePassed(delayValue.get().toLong()) ||
             mode.equals("Jump", true) || mode.equals("MotionNCP", true)
             || mode.equals("LAAC", true) || mode.equals("AAC3.3.4", true)
-            || mode.equals("AACv4", true) || mode.equals("1.5Twillight", true)
+            || mode.equals("AACv4", true)
         ) {
             mc.thePlayer.stepHeight = 0.5F
             event.stepHeight = 0.5F
@@ -229,7 +215,7 @@ class Step : Module() {
             if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && !modeValue.get()
                     .equals("Matrix")
             ) {
-                mc.timer.timerSpeed = 0.52f
+                mc.timer.timerSpeed = 0.7f
             }
             if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && modeValue.get()
                     .equals("Matrix")
@@ -341,7 +327,7 @@ class Step : Module() {
                     }
                 }
 
-                mode.equals("BlocksMC", true) -> {
+                mode.equals("NewNCP1", true) -> {
                     fakeJump()
 
                     val pos = mc.thePlayer.position.add(0.0, -1.5, 0.0)
@@ -509,7 +495,7 @@ class Step : Module() {
                     timer.reset()
                 }
 
-                mode.equals("NewNCP", true) -> {
+                mode.equals("NewNCP2", true) -> {
                     fakeJump()
                     mc.netHandler.addToSendQueue(
                         C03PacketPlayer.C04PacketPlayerPosition(

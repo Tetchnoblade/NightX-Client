@@ -10,22 +10,20 @@ import java.io.*;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * The type Modules config.
+ */
 public class ModulesConfig extends FileConfig {
 
     /**
-     * Constructor of config
+     * Instantiates a new Modules config.
      *
-     * @param file of config
+     * @param file the file
      */
     public ModulesConfig(final File file) {
         super(file);
     }
 
-    /**
-     * Load config from file
-     *
-     * @throws IOException
-     */
     @Override
     protected void loadConfig() throws IOException {
         final JsonElement jsonElement = new JsonParser().parse(new BufferedReader(new FileReader(getFile())));
@@ -50,11 +48,6 @@ public class ModulesConfig extends FileConfig {
         }
     }
 
-    /**
-     * Save config to file
-     *
-     * @throws IOException
-     */
     @Override
     protected void saveConfig() throws IOException {
         final JsonObject jsonObject = new JsonObject();

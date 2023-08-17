@@ -4,14 +4,20 @@ import net.aspw.client.Client;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.utils.MovementUtils;
-import net.aspw.client.utils.block.BlockUtils;
+import net.aspw.client.util.MovementUtils;
+import net.aspw.client.util.block.BlockUtils;
 import net.minecraft.block.BlockAir;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 
+/**
+ * The type Aac port.
+ */
 public class AACPort extends SpeedMode {
+    /**
+     * Instantiates a new Aac port.
+     */
     public AACPort() {
         super("AACPort");
     }

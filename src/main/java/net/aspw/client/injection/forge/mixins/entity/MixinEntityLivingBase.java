@@ -1,14 +1,16 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
-import de.enzaxd.viaforge.ViaForge;
 import net.aspw.client.Client;
 import net.aspw.client.event.JumpEvent;
-import net.aspw.client.features.module.impl.movement.DoubleJump;
-import net.aspw.client.features.module.impl.movement.Flight;
+import net.aspw.client.features.module.impl.combat.KillAura;
+import net.aspw.client.features.module.impl.movement.AirJump;
 import net.aspw.client.features.module.impl.movement.Jesus;
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.features.module.impl.visual.NoEffect;
+import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.features.module.impl.visual.SilentView;
+import net.aspw.client.protocol.Protocol;
+import net.aspw.client.protocol.ViaPatcher;
+import net.aspw.client.util.RotationUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,7 +19,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -32,48 +33,122 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.Iterator;
 import java.util.Objects;
 
+/**
+ * The type Mixin entity living base.
+ */
 @Mixin(EntityLivingBase.class)
 public abstract class MixinEntityLivingBase extends MixinEntity {
 
 
+    /**
+     * The Swing progress int.
+     */
     @Shadow
     public int swingProgressInt;
+    /**
+     * The Is swing in progress.
+     */
     @Shadow
     public boolean isSwingInProgress;
+    /**
+     * The Swing progress.
+     */
     @Shadow
     public float swingProgress;
+    /**
+     * The Is jumping.
+     */
     @Shadow
     protected boolean isJumping;
+    /**
+     * The Jump ticks.
+     */
     @Shadow
-    private int jumpTicks;
+    public int jumpTicks;
 
+    /**
+     * Gets jump upwards motion.
+     *
+     * @return the jump upwards motion
+     */
     @Shadow
     protected abstract float getJumpUpwardsMotion();
 
+    /**
+     * Gets active potion effect.
+     *
+     * @param potionIn the potion in
+     * @return the active potion effect
+     */
     @Shadow
     public abstract PotionEffect getActivePotionEffect(Potion potionIn);
 
+    /**
+     * Is potion active boolean.
+     *
+     * @param potionIn the potion in
+     * @return the boolean
+     */
     @Shadow
     public abstract boolean isPotionActive(Potion potionIn);
 
+    /**
+     * On living update.
+     */
     @Shadow
     public void onLivingUpdate() {
     }
 
+    /**
+     * Update fall state.
+     *
+     * @param y          the y
+     * @param onGroundIn the on ground in
+     * @param blockIn    the block in
+     * @param pos        the pos
+     */
     @Shadow
     protected abstract void updateFallState(double y, boolean onGroundIn, Block blockIn, BlockPos pos);
 
+    /**
+     * Gets health.
+     *
+     * @return the health
+     */
     @Shadow
     public abstract float getHealth();
 
+    /**
+     * Gets held item.
+     *
+     * @return the held item
+     */
     @Shadow
     public abstract ItemStack getHeldItem();
 
+    /**
+     * Update ai tick.
+     */
     @Shadow
     protected abstract void updateAITick();
 
+    /**
+     * The Render yaw offset.
+     */
     @Shadow
     public float renderYawOffset;
+
+    /**
+     * The Rotation yaw head.
+     */
+    @Shadow
+    public float rotationYawHead;
+
+    @Shadow
+    public float prevRotationYawHead;
+
+    @Shadow
+    public float prevRenderYawOffset;
 
     @Shadow
     protected double newRotationPitch;
@@ -86,51 +161,60 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
     }
 
     /**
-     * @author
-     * @reason
+     * Update distance float.
+     *
+     * @param p_1101461 the p 1101461
+     * @param p_1101462 the p 1101462
+     * @return the float
+     * @author As_pw
+     * @reason SilentView
      */
     @Overwrite
     protected float updateDistance(float p_1101461, float p_1101462) {
         float rotationYaw = this.rotationYaw;
-        SilentView silentView = Client.moduleManager.getModule(SilentView.class);
-        if ((EntityLivingBase) (Object) this instanceof EntityPlayerSP) {
-            if (silentView.getState()) {
-                if (silentView.getPlayerYaw() != null) {
-                    rotationYaw = silentView.getPlayerYaw();
-                }
+        final SilentView silentView = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
+        if (silentView.getNormalRotationsValue().get() && !silentView.getSilentValue().get() && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP && (silentView.getModuleCheckValue().get() && silentView.shouldRotate() || !silentView.getModuleCheckValue().get())) {
+            if (this.swingProgress > 0F && !silentView.getBodyLockValue().get()) {
+                p_1101461 = silentView.getPlayerYaw();
             }
+            rotationYaw = silentView.getPlayerYaw();
+            rotationYawHead = silentView.getPlayerYaw();
         }
         float f = MathHelper.wrapAngleTo180_float(p_1101461 - this.renderYawOffset);
-        this.renderYawOffset += f * 0.3F;
+        this.renderYawOffset += f * 0.24F;
         float f1 = MathHelper.wrapAngleTo180_float(rotationYaw - this.renderYawOffset);
-        boolean flag = f1 < 75.0F || f1 >= 75.0F;
+        boolean flag = f1 < 90.0F || f1 >= 90.0F;
 
-        if (silentView.getState() && silentView.getLockValue().get() && (EntityLivingBase) (Object) this instanceof EntityPlayerSP) {
+        if (!silentView.getSilentValue().get() && silentView.getBodyLockValue().get() && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP && (silentView.getModuleCheckValue().get() && silentView.shouldRotate() || !silentView.getModuleCheckValue().get())) {
             f1 = 0.0F;
         }
 
-        if (f1 < -75.0F) {
-            f1 = -75.0F;
+        if (f1 < -78.0F) {
+            f1 = -78.0F;
         }
 
-        if (f1 >= 75.0F) {
-            f1 = 75.0F;
+        if (f1 >= 78.0F) {
+            f1 = 78.0F;
         }
 
         this.renderYawOffset = rotationYaw - f1;
+
         if (f1 * f1 > 2500.0F) {
-            this.renderYawOffset += f1 * 0.2F;
+            this.renderYawOffset += f1 * 0.16F;
         }
 
         if (flag) {
-            p_1101462 *= -1.0F;
+            p_1101462 *= -1.2F;
         }
 
         return p_1101462;
     }
 
     /**
-     * @author CCBlueX
+     * Jump.
+     *
+     * @author As_pw
+     * @reason Jump
      */
     @Overwrite
     protected void jump() {
@@ -145,7 +229,11 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
             this.motionY += (float) (this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F;
 
         if (this.isSprinting()) {
-            float f = this.rotationYaw * 0.017453292F;
+            final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
+            float yaw = this.rotationYaw;
+            if (killAura.getState() && killAura.getMovementFix().get() && killAura.getTarget() != null)
+                yaw = RotationUtils.targetRotation != null ? RotationUtils.targetRotation.getYaw() : (RotationUtils.serverRotation != null ? RotationUtils.serverRotation.getYaw() : yaw);
+            float f = yaw * 0.017453292F;
             this.motionX -= MathHelper.sin(f) * 0.2F;
             this.motionZ += MathHelper.cos(f) * 0.2F;
         }
@@ -153,47 +241,41 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
         this.isAirBorne = true;
     }
 
-    @ModifyConstant(method = "onLivingUpdate", constant = @Constant(doubleValue = 0.005D))
-    private double ViaVersion_MovementThreshold(double constant) {
-        if (ViaForge.getInstance().getVersion() > 47)
-            return 0.003D;
-        return 0.005D;
-    }
-
     @Inject(method = "onLivingUpdate", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/EntityLivingBase;isJumping:Z", ordinal = 1))
     private void onJumpSection(CallbackInfo callbackInfo) {
-        if (Client.moduleManager.getModule(DoubleJump.class).getState() && isJumping && this.jumpTicks == 0) {
+        final AirJump airJump = Objects.requireNonNull(Client.moduleManager.getModule(AirJump.class));
+
+        if (airJump.getState() && isJumping && this.jumpTicks == 0) {
             this.jump();
             this.jumpTicks = 10;
         }
 
-        final Jesus liquidWalk = Client.moduleManager.getModule(Jesus.class);
+        final Jesus jesus = Objects.requireNonNull(Client.moduleManager.getModule(Jesus.class));
 
-        if (liquidWalk.getState() && !isJumping && !isSneaking() && isInWater() &&
-                liquidWalk.modeValue.get().equalsIgnoreCase("Swim") || Objects.requireNonNull(Client.moduleManager.getModule(Flight.class)).modeValue.get().equals("Water") && Objects.requireNonNull(Client.moduleManager.getModule(Flight.class)).getState()) {
+        if (jesus.getState() && !isJumping && !isSneaking() && isInWater() &&
+                jesus.modeValue.get().equalsIgnoreCase("Swim")) {
             this.updateAITick();
         }
     }
 
-    @Inject(method = "getLook", at = @At("HEAD"), cancellable = true)
-    private void getLook(CallbackInfoReturnable<Vec3> callbackInfoReturnable) {
-        if (((EntityLivingBase) (Object) this) instanceof EntityPlayerSP)
-            callbackInfoReturnable.setReturnValue(getVectorForRotation(this.rotationPitch, this.rotationYaw));
-    }
-
     @Inject(method = "isPotionActive(Lnet/minecraft/potion/Potion;)Z", at = @At("HEAD"), cancellable = true)
     private void isPotionActive(Potion p_isPotionActive_1_, final CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        final NoEffect antiBlind = Client.moduleManager.getModule(NoEffect.class);
+        final AntiBlind antiBlind = Objects.requireNonNull(Client.moduleManager.getModule(AntiBlind.class));
 
         if ((p_isPotionActive_1_ == Potion.confusion || p_isPotionActive_1_ == Potion.blindness) && antiBlind.getState() && antiBlind.getConfusionEffect().get())
             callbackInfoReturnable.setReturnValue(false);
     }
 
-    //visionfx sucks
+    @ModifyConstant(method = "onLivingUpdate", constant = @Constant(doubleValue = 0.005D))
+    private double ViaVersion_MovementThreshold(double constant) {
+        if (ViaPatcher.INSTANCE.getLivingBaseFix() && !Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x"))
+            return 0.003D;
+        return 0.005D;
+    }
 
     /**
-     * @author
-     * @reason
+     * @author As_pw
+     * @reason VisionFX
      */
     @Overwrite
     private int getArmSwingAnimationEnd() {

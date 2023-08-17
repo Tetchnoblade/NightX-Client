@@ -1,6 +1,7 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
+import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -10,6 +11,7 @@ import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,28 +23,69 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The type Mixin gui screen.
+ */
 @Mixin(GuiScreen.class)
 public abstract class MixinGuiScreen {
+    /**
+     * The Mc.
+     */
     @Shadow
     public Minecraft mc;
+    /**
+     * The Width.
+     */
     @Shadow
     public int width;
+    /**
+     * The Height.
+     */
     @Shadow
     public int height;
+    /**
+     * The Button list.
+     */
     @Shadow
     protected List<GuiButton> buttonList;
+    /**
+     * The Font renderer obj.
+     */
     @Shadow
     protected FontRenderer fontRendererObj;
 
+    /**
+     * Update screen.
+     */
     @Shadow
     public void updateScreen() {
     }
 
+    /**
+     * Handle component hover.
+     *
+     * @param component the component
+     * @param x         the x
+     * @param y         the y
+     */
     @Shadow
     public abstract void handleComponentHover(IChatComponent component, int x, int y);
 
+    /**
+     * Draw hovering text.
+     *
+     * @param textLines the text lines
+     * @param x         the x
+     * @param y         the y
+     */
     @Shadow
     protected abstract void drawHoveringText(List<String> textLines, int x, int y);
+
+    @Shadow
+    public abstract void drawDefaultBackground();
+
+    @Shadow
+    public abstract void drawBackground(int p_drawBackground_1_);
 
     @Redirect(method = "handleKeyboardInput", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKeyState()Z", remap = false))
     private boolean checkCharacter() {
@@ -57,18 +100,22 @@ public abstract class MixinGuiScreen {
     }
 
 
-    /**
-     * @author CCBlueX
-     */
     @Inject(method = "drawBackground", at = @At("HEAD"), cancellable = true)
     private void drawClientBackground(final CallbackInfo callbackInfo) {
         GlStateManager.disableLighting();
         GlStateManager.disableFog();
+
+        RenderUtils.drawImage(
+                new ResourceLocation("client/background/portal.png"), 0, 0,
+                width, height
+        );
+
+        callbackInfo.cancel();
     }
 
     @Inject(method = "sendChatMessage(Ljava/lang/String;Z)V", at = @At("HEAD"), cancellable = true)
     private void messageSend(String msg, boolean addToChat, final CallbackInfo callbackInfo) {
-        if (msg.startsWith(String.valueOf(Client.commandManager.getPrefix())) && addToChat) {
+        if (msg.startsWith(".") && addToChat) {
             this.mc.ingameGUI.getChatGUI().addToSentMessages(msg);
 
             Client.commandManager.executeCommands(msg);
@@ -90,18 +137,30 @@ public abstract class MixinGuiScreen {
     }
 
     /**
-     * @author CCBlueX (superblaubeere27)
-     * @reason Making it possible for other mixins to receive actions
+     * Inject action performed.
+     *
+     * @param button       the button
+     * @param callbackInfo the callback info
      */
     @Inject(method = "actionPerformed", at = @At("RETURN"))
     protected void injectActionPerformed(GuiButton button, CallbackInfo callbackInfo) {
         this.injectedActionPerformed(button);
     }
 
+    /**
+     * Should render background boolean.
+     *
+     * @return the boolean
+     */
     protected boolean shouldRenderBackground() {
         return true;
     }
 
+    /**
+     * Injected action performed.
+     *
+     * @param button the button
+     */
     protected void injectedActionPerformed(GuiButton button) {
 
     }

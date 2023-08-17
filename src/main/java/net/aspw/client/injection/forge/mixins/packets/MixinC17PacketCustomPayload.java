@@ -9,10 +9,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * The type Mixin c 17 packet custom payload.
+ */
 @Mixin(C17PacketCustomPayload.class)
 public class MixinC17PacketCustomPayload {
     @Shadow
-    private PacketBuffer data;
+    public PacketBuffer data;
 
     @Inject(method = "processPacket(Lnet/minecraft/network/play/INetHandlerPlayServer;)V", at = @At("TAIL"))
     private void releaseData(INetHandlerPlayServer handler, CallbackInfo ci) {

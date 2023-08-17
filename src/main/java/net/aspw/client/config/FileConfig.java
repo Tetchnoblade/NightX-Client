@@ -3,51 +3,58 @@ package net.aspw.client.config;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * The type File config.
+ */
 public abstract class FileConfig {
 
     private final File file;
 
     /**
-     * Constructor of config
+     * Instantiates a new File config.
      *
-     * @param file of config
+     * @param file the file
      */
     public FileConfig(final File file) {
         this.file = file;
     }
 
     /**
-     * Load config from file
+     * Load config.
      *
-     * @throws IOException
+     * @throws IOException the io exception
      */
     protected abstract void loadConfig() throws IOException;
 
     /**
-     * Save config to file
+     * Save config.
      *
-     * @throws IOException
+     * @throws IOException the io exception
      */
     protected abstract void saveConfig() throws IOException;
 
     /**
-     * Create config
+     * Create config.
      *
-     * @throws IOException
+     * @throws IOException the io exception
      */
     public void createConfig() throws IOException {
         file.createNewFile();
     }
 
     /**
-     * @return config file exist
+     * Has config boolean.
+     *
+     * @return the boolean
      */
     public boolean hasConfig() {
         return file.exists();
     }
 
     /**
-     * @return file of config
+     * Gets file.
+     *
+     * @return the file
      */
     public File getFile() {
         return file;

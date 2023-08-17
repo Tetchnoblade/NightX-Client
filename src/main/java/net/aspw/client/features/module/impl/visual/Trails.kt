@@ -6,9 +6,9 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.render.ColorUtils.rainbow
-import net.aspw.client.utils.render.ColorUtils.reAlpha
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.render.ColorUtils.rainbow
+import net.aspw.client.util.render.ColorUtils.reAlpha
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.util.*
 
-@ModuleInfo(name = "Trails", category = ModuleCategory.VISUAL)
+@ModuleInfo(name = "Trails", description = "", category = ModuleCategory.VISUAL)
 class Trails : Module() {
     val unlimitedValue = BoolValue("Unlimited", false)
     val lineWidth = FloatValue("LineWidth", 4f, 1f, 10f)

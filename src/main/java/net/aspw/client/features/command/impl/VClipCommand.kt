@@ -3,9 +3,9 @@ package net.aspw.client.features.command.impl
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.visual.Hud
-import net.aspw.client.utils.PacketUtils
-import net.aspw.client.utils.pathfinder.MainPathFinder
-import net.aspw.client.utils.pathfinder.Vec3
+import net.aspw.client.util.PacketUtils
+import net.aspw.client.util.pathfinder.MainPathFinder
+import net.aspw.client.util.pathfinder.Vec3
 import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.network.play.client.C03PacketPlayer
 

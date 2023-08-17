@@ -2,11 +2,11 @@ package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.combat.KillAura;
-import net.aspw.client.features.module.impl.player.InventoryManager;
-import net.aspw.client.features.module.impl.player.Stealer;
+import net.aspw.client.features.module.impl.player.ChestStealer;
+import net.aspw.client.features.module.impl.player.InvManager;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.Hud;
-import net.aspw.client.utils.render.RenderUtils;
+import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -19,14 +19,31 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Objects;
+
+/**
+ * The type Mixin gui container.
+ */
 @Mixin(GuiContainer.class)
 public abstract class MixinGuiContainer extends MixinGuiScreen {
+    /**
+     * The X size.
+     */
     @Shadow
     protected int xSize;
+    /**
+     * The Y size.
+     */
     @Shadow
     protected int ySize;
+    /**
+     * The Gui left.
+     */
     @Shadow
     protected int guiLeft;
+    /**
+     * The Gui top.
+     */
     @Shadow
     protected int guiTop;
     @Shadow
@@ -37,17 +54,28 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
     private float progress = 0F;
     private long lastMS = 0L;
 
+    /**
+     * Check hotbar keys boolean.
+     *
+     * @param keyCode the key code
+     * @return the boolean
+     */
     @Shadow
     protected abstract boolean checkHotbarKeys(int keyCode);
 
-    @Inject(method = "initGui", at = @At("HEAD"), cancellable = true)
+    /**
+     * Inject init gui.
+     *
+     * @param callbackInfo the callback info
+     */
+    @Inject(method = "initGui", at = @At("HEAD"))
     public void injectInitGui(CallbackInfo callbackInfo) {
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
 
         if (guiScreen instanceof GuiChest) {
             buttonList.add(killAuraButton = new GuiButton(1024576, 5, 5, 150, 20, "Disable KillAura"));
-            buttonList.add(invManagerButton = new GuiButton(321123, 5, 27, 150, 20, "Disable InventoryManager"));
-            buttonList.add(chestStealerButton = new GuiButton(727, 5, 49, 150, 20, "Disable Stealer"));
+            buttonList.add(invManagerButton = new GuiButton(321123, 5, 27, 150, 20, "Disable InvManager"));
+            buttonList.add(chestStealerButton = new GuiButton(727, 5, 49, 150, 20, "Disable ChestStealer"));
         }
 
         lastMS = System.currentTimeMillis();
@@ -56,18 +84,23 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
     @Override
     protected void injectedActionPerformed(GuiButton button) {
+        final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
+        final InvManager invManager = Objects.requireNonNull(Client.moduleManager.getModule(InvManager.class));
+        final ChestStealer chestStealer = Objects.requireNonNull(Client.moduleManager.getModule(ChestStealer.class));
         if (button.id == 1024576)
-            Client.moduleManager.getModule(KillAura.class).setState(false);
+            killAura.setState(false);
         if (button.id == 321123)
-            Client.moduleManager.getModule(InventoryManager.class).setState(false);
+            invManager.setState(false);
         if (button.id == 727)
-            Client.moduleManager.getModule(Stealer.class).setState(false);
+            chestStealer.setState(false);
     }
 
     @Inject(method = "drawScreen", at = @At("HEAD"), cancellable = true)
     private void drawScreenHead(CallbackInfo callbackInfo) {
-        Stealer chestStealer = Client.moduleManager.getModule(Stealer.class);
-        final Hud hud = Client.moduleManager.getModule(Hud.class);
+        ChestStealer chestStealer = Objects.requireNonNull(Client.moduleManager.getModule(ChestStealer.class));
+        KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
+        InvManager invManager = Objects.requireNonNull(Client.moduleManager.getModule(InvManager.class));
+        final Hud hud = Objects.requireNonNull(Client.moduleManager.getModule(Hud.class));
         final Minecraft mc = Minecraft.getMinecraft();
 
         if (progress >= 1F) progress = 1F;
@@ -85,10 +118,10 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
             if (stealButton != null) stealButton.enabled = !chestStealer.getState();
             if (killAuraButton != null)
-                killAuraButton.enabled = Client.moduleManager.getModule(KillAura.class).getState();
+                killAuraButton.enabled = killAura.getState();
             if (chestStealerButton != null) chestStealerButton.enabled = chestStealer.getState();
             if (invManagerButton != null)
-                invManagerButton.enabled = Client.moduleManager.getModule(InventoryManager.class).getState();
+                invManagerButton.enabled = invManager.getState();
 
             if (chestStealer.getState() && chestStealer.getSilenceValue().get() && guiScreen instanceof GuiChest) {
                 mc.setIngameFocus();
@@ -128,10 +161,15 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
         return false;
     }
 
+    /**
+     * Draw screen return.
+     *
+     * @param callbackInfo the callback info
+     */
     @Inject(method = "drawScreen", at = @At("RETURN"))
     public void drawScreenReturn(CallbackInfo callbackInfo) {
-        final Animations animMod = Client.moduleManager.getModule(Animations.class);
-        Stealer chestStealer = Client.moduleManager.getModule(Stealer.class);
+        final Animations animMod = Objects.requireNonNull(Client.moduleManager.getModule(Animations.class));
+        ChestStealer chestStealer = Objects.requireNonNull(Client.moduleManager.getModule(ChestStealer.class));
         final Minecraft mc = Minecraft.getMinecraft();
         boolean checkFullSilence = chestStealer.getState() && chestStealer.getSilenceValue().get() && !chestStealer.getStillDisplayValue().get();
 

@@ -1,11 +1,10 @@
 package net.aspw.client.visual.hud
 
-import net.aspw.client.utils.ClientUtils
-import net.aspw.client.utils.MinecraftInstance
+import net.aspw.client.util.ClientUtils
+import net.aspw.client.util.MinecraftInstance
 import net.aspw.client.visual.hud.designer.GuiHudDesigner
 import net.aspw.client.visual.hud.element.Element
 import net.aspw.client.visual.hud.element.elements.*
-import net.aspw.client.visual.hud.element.elements.Target
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.player.EntityPlayer
 import org.lwjgl.opengl.GL11
@@ -25,12 +24,14 @@ open class HUD : MinecraftInstance() {
             Effects::class.java,
             Notifications::class.java,
             Text::class.java,
-            ScoreboardElement::class.java,
-            Target::class.java,
+            TargetHud::class.java,
             Radar::class.java,
             Image::class.java,
             SessionInformation::class.java,
-            TabGui::class.java
+            TabGui::class.java,
+            Position::class.java,
+            FPS::class.java,
+            Build::class.java
         )
 
         /**
@@ -39,12 +40,14 @@ open class HUD : MinecraftInstance() {
         @JvmStatic
         fun createDefault() = HUD()
             .addElement(Text.defaultClient())
+            .addElement(Position())
             .addElement(Arraylist())
-            .addElement(ScoreboardElement())
             .addElement(Effects())
             .addElement(Armor())
             .addElement(Notifications())
-            .addElement(Target())
+            .addElement(TargetHud())
+            .addElement(FPS())
+            .addElement(Build())
     }
 
     /**

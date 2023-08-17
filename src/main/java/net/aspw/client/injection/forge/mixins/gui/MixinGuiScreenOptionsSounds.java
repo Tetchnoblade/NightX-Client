@@ -8,6 +8,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * The type Mixin gui screen options sounds.
+ */
 @Mixin(targets = "net.minecraft.client.gui.GuiScreenOptionsSounds$Button")
 public class MixinGuiScreenOptionsSounds {
 

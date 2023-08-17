@@ -5,14 +5,14 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.timer.TickTimer
+import net.aspw.client.util.timer.TickTimer
 import net.aspw.client.value.IntegerValue
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.init.Blocks
 import net.minecraft.util.BlockPos
 
-@ModuleInfo(name = "FastBridge", spacedName = "Fast Bridge", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "FastBridge", spacedName = "Fast Bridge", description = "", category = ModuleCategory.PLAYER)
 class FastBridge : Module() {
     private val speedValue = IntegerValue("Place-Speed", 0, 0, 20)
     private val tickTimer = TickTimer()

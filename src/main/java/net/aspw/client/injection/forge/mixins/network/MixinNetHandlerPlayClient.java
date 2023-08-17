@@ -4,7 +4,8 @@ import io.netty.buffer.Unpooled;
 import net.aspw.client.Client;
 import net.aspw.client.event.EntityDamageEvent;
 import net.aspw.client.event.EntityMovementEvent;
-import net.aspw.client.visual.hud.designer.GuiHudDesigner;
+import net.aspw.client.util.PacketUtils;
+import net.aspw.client.visual.client.clickgui.tab.NewUi;
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
@@ -22,6 +23,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.PacketThreadUtil;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
@@ -41,9 +43,15 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * The type Mixin net handler play client.
+ */
 @Mixin(NetHandlerPlayClient.class)
 public abstract class MixinNetHandlerPlayClient {
 
+    /**
+     * The Current server max players.
+     */
     @Shadow
     public int currentServerMaxPlayers;
     @Shadow
@@ -54,6 +62,12 @@ public abstract class MixinNetHandlerPlayClient {
     @Shadow
     private WorldClient clientWorldController;
 
+    /**
+     * Gets player info.
+     *
+     * @param p_175102_1_ the p 175102 1
+     * @return the player info
+     */
     @Shadow
     public abstract NetworkPlayerInfo getPlayerInfo(UUID p_175102_1_);
 
@@ -93,8 +107,7 @@ public abstract class MixinNetHandlerPlayClient {
 
     @Inject(method = "handleCloseWindow", at = @At("HEAD"), cancellable = true)
     private void handleCloseWindow(final S2EPacketCloseWindow packetIn, final CallbackInfo callbackInfo) {
-        if (this.gameController.currentScreen instanceof GuiHudDesigner
-                || this.gameController.currentScreen instanceof GuiChat)
+        if (this.gameController.currentScreen instanceof GuiChat || this.gameController.currentScreen instanceof NewUi)
             callbackInfo.cancel();
     }
 
@@ -127,6 +140,12 @@ public abstract class MixinNetHandlerPlayClient {
             Client.eventManager.callEvent(new EntityMovementEvent(entity));
     }
 
+    /**
+     * Handle damage packet.
+     *
+     * @param packetIn     the packet in
+     * @param callbackInfo the callback info
+     */
     @Inject(method = "handleEntityStatus", at = @At("HEAD"))
     public void handleDamagePacket(S19PacketEntityStatus packetIn, CallbackInfo callbackInfo) {
         if (packetIn.getOpCode() == 2) {
@@ -206,6 +225,11 @@ public abstract class MixinNetHandlerPlayClient {
     @Inject(method = {"handleTimeUpdate"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/network/PacketThreadUtil;checkThreadAndEnqueue(Lnet/minecraft/network/Packet;Lnet/minecraft/network/INetHandler;Lnet/minecraft/util/IThreadListener;)V")}, cancellable = true)
     private void handleTimeUpdate(S03PacketTimeUpdate s03PacketTimeUpdate, CallbackInfo callbackInfo) {
         this.cancelIfNull(this.gameController.theWorld, callbackInfo);
+    }
+
+    @Redirect(method = "handlePlayerPosLook", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/NetworkManager;sendPacket(Lnet/minecraft/network/Packet;)V"))
+    private void hookAntiCustomRotationOverride(NetworkManager instance, Packet p_sendPacket_1_) {
+        PacketUtils.sendPacketNoEvent(p_sendPacket_1_);
     }
 
     private <T> void cancelIfNull(T t, CallbackInfo callbackInfo) {

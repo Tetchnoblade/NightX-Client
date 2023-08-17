@@ -8,7 +8,7 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 import net.aspw.client.Client;
 import net.aspw.client.event.PacketEvent;
 import net.aspw.client.features.api.ProxyManager;
-import net.aspw.client.utils.PacketUtils;
+import net.aspw.client.util.PacketUtils;
 import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -16,7 +16,9 @@ import net.minecraft.util.MessageDeserializer;
 import net.minecraft.util.MessageDeserializer2;
 import net.minecraft.util.MessageSerializer;
 import net.minecraft.util.MessageSerializer2;
+import net.raphimc.vialoader.netty.CompressionReorderEvent;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -25,8 +27,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.net.InetAddress;
 import java.net.Proxy;
 
+/**
+ * The type Mixin network manager.
+ */
 @Mixin(NetworkManager.class)
 public class MixinNetworkManager {
+
+    @Shadow
+    private Channel channel;
+
+    @Inject(method = "setCompressionTreshold", at = @At("RETURN"))
+    public void reOrderPipeline(int p_setCompressionTreshold_1_, CallbackInfo ci) {
+        channel.pipeline().fireUserEventTriggered(CompressionReorderEvent.INSTANCE);
+    }
 
     @Inject(method = "createNetworkManagerAndConnect", at = @At("HEAD"), cancellable = true)
     private static void createNetworkManagerAndConnect(InetAddress address, int serverPort, boolean useNativeTransport, CallbackInfoReturnable<NetworkManager> cir) {
@@ -76,15 +89,5 @@ public class MixinNetworkManager {
 
         if (event.isCancelled())
             callback.cancel();
-    }
-
-    /**
-     * show player head in tab bar
-     *
-     * @author Liulihaocai, FDPClient
-     */
-    @Inject(method = "getIsencrypted", at = @At("HEAD"), cancellable = true)
-    private void injectEncryption(CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(true);
     }
 }

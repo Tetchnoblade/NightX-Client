@@ -2,7 +2,7 @@ package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.visual.Hud;
-import net.aspw.client.utils.render.RenderUtils;
+import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
 import net.minecraft.client.gui.GuiNewChat;
@@ -25,15 +25,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
+/**
+ * The type Mixin gui new chat.
+ */
 @Mixin(GuiNewChat.class)
 public abstract class MixinGuiNewChat {
 
     private final HashMap<String, String> stringCache = new HashMap<>();
-    private float displayPercent, animationPercent = 0F;
-    private int lineBeingDrawn, newLines;
+    private float displayPercent;
+    private int newLines;
     @Shadow
     @Final
     private Minecraft mc;
@@ -50,24 +52,60 @@ public abstract class MixinGuiNewChat {
     private int line;
     private Hud hud;
 
+    /**
+     * Gets line count.
+     *
+     * @return the line count
+     */
     @Shadow
     public abstract int getLineCount();
 
+    /**
+     * Gets chat open.
+     *
+     * @return the chat open
+     */
     @Shadow
     public abstract boolean getChatOpen();
 
+    /**
+     * Gets chat scale.
+     *
+     * @return the chat scale
+     */
     @Shadow
     public abstract float getChatScale();
 
+    /**
+     * Gets chat width.
+     *
+     * @return the chat width
+     */
     @Shadow
     public abstract int getChatWidth();
 
+    /**
+     * Delete chat line.
+     *
+     * @param p_deleteChatLine_1_ the p delete chat line 1
+     */
     @Shadow
     public abstract void deleteChatLine(int p_deleteChatLine_1_);
 
+    /**
+     * Scroll.
+     *
+     * @param p_scroll_1_ the p scroll 1
+     */
     @Shadow
     public abstract void scroll(int p_scroll_1_);
 
+    /**
+     * Print chat message with optional deletion.
+     *
+     * @param chatComponent the chat component
+     * @param chatLineId    the chat line id
+     */
     @Shadow
     public abstract void printChatMessageWithOptionalDeletion(IChatComponent chatComponent, int chatLineId);
 
@@ -83,8 +121,11 @@ public abstract class MixinGuiNewChat {
     }
 
     /**
-     * @author
-     * @reason
+     * Print chat message.
+     *
+     * @param chatComponent the chat component
+     * @author As_pw
+     * @reason Print
      */
     @Overwrite
     public void printChatMessage(IChatComponent chatComponent) {
@@ -98,8 +139,11 @@ public abstract class MixinGuiNewChat {
     }
 
     /**
-     * @author
-     * @reason
+     * Draw chat.
+     *
+     * @param updateCounter the update counter
+     * @author As_pw
+     * @reason Draw
      */
     @Overwrite
     public void drawChat(int updateCounter) {
@@ -131,7 +175,7 @@ public abstract class MixinGuiNewChat {
                 }
 
                 float t = displayPercent;
-                animationPercent = MathHelper.clamp_float(1F - (--t) * t * t * t, 0F, 1F);
+                float animationPercent = MathHelper.clamp_float(1F - (--t) * t * t * t, 0F, 1F);
 
                 float f1 = this.getChatScale();
                 int l = MathHelper.ceiling_float_int((float) this.getChatWidth() / f1);
@@ -146,7 +190,7 @@ public abstract class MixinGuiNewChat {
                 int l1;
                 for (i1 = 0; i1 + this.scrollPos < this.drawnChatLines.size() && i1 < i; ++i1) {
                     ChatLine chatline = this.drawnChatLines.get(i1 + this.scrollPos);
-                    lineBeingDrawn = i1 + this.scrollPos;
+                    int lineBeingDrawn = i1 + this.scrollPos;
                     if (chatline != null) {
                         j1 = updateCounter - chatline.getUpdatedCounter();
                         if (j1 < 200 || flag) {
@@ -168,7 +212,7 @@ public abstract class MixinGuiNewChat {
                                 int i2 = 0;
                                 int j2 = -i1 * 9;
 
-                                if (hud.getState() && hud.getChatRectValue().get()) {
+                                if (hud.getState() && hud.getChatRectValue().get() || !hud.getState()) {
                                     if (lineBeingDrawn <= newLines && !flag)
                                         RenderUtils.drawRect(i2, j2 - 9, i2 + l + 4, j2, new Color(0F, 0F, 0F, animationPercent * ((float) d0 / 2F)).getRGB());
                                     else
@@ -239,8 +283,13 @@ public abstract class MixinGuiNewChat {
     }
 
     /**
-     * @author
-     * @reason
+     * Gets chat component.
+     *
+     * @param p_146236_1_ the p 146236 1
+     * @param p_146236_2_ the p 146236 2
+     * @return the chat component
+     * @author As_pw
+     * @reason ChatComponent
      */
     @Overwrite
     public IChatComponent getChatComponent(int p_146236_1_, int p_146236_2_) {
@@ -264,10 +313,8 @@ public abstract class MixinGuiNewChat {
                     if (line >= 0 && line < this.drawnChatLines.size()) {
                         ChatLine chatLine = this.drawnChatLines.get(line);
                         int maxWidth = 0;
-                        Iterator iter = chatLine.getChatComponent().iterator();
 
-                        while (iter.hasNext()) {
-                            IChatComponent iterator = (IChatComponent) iter.next();
+                        for (IChatComponent iterator : chatLine.getChatComponent()) {
                             if (iterator instanceof ChatComponentText) {
                                 maxWidth += (flagFont ? hud.getFontType().get() : this.mc.fontRendererObj).getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText) iterator).getChatComponentText_TextValue(), false));
                                 if (maxWidth > mX) {
@@ -277,13 +324,9 @@ public abstract class MixinGuiNewChat {
                         }
                     }
 
-                    return null;
-                } else {
-                    return null;
                 }
-            } else {
-                return null;
             }
+            return null;
         }
     }
 }

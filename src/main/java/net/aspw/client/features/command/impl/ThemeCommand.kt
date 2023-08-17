@@ -7,7 +7,6 @@ import net.aspw.client.visual.hud.Config
 import net.aspw.client.visual.hud.element.elements.Notification
 import java.io.File
 import java.io.IOException
-import java.util.*
 
 class ThemeCommand : Command("theme", emptyArray()) {
     /**
@@ -22,10 +21,8 @@ class ThemeCommand : Command("theme", emptyArray()) {
 
                         if (themeFile.exists()) {
                             try {
-                                val theme = themeFile.readText()
                                 Client.isStarting = true
                                 Client.hud.clearElements()
-                                Client.hud = Config(theme).toHUD()
                                 Client.isStarting = false
                                 if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
                                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
@@ -37,7 +34,6 @@ class ThemeCommand : Command("theme", emptyArray()) {
                                         Notification.Type.SUCCESS
                                     )
                                 )
-                                playEdit()
                             } catch (e: IOException) {
                                 e.printStackTrace()
                             }
@@ -116,28 +112,6 @@ class ThemeCommand : Command("theme", emptyArray()) {
             }
         }
         chatSyntax("theme <load/save/list/delete>")
-    }
-
-    override fun tabComplete(args: Array<String>): List<String> {
-        if (args.isEmpty()) return emptyList()
-
-        return when (args.size) {
-            1 -> listOf("delete", "list", "load", "save").filter { it.startsWith(args[0], true) }
-            2 -> {
-                when (args[0].lowercase(Locale.getDefault())) {
-                    "delete", "load" -> {
-                        val settings = this.getLocalThemes() ?: return emptyList()
-
-                        return settings
-                            .map { it.name }
-                            .filter { it.startsWith(args[1], true) }
-                    }
-                }
-                return emptyList()
-            }
-
-            else -> emptyList()
-        }
     }
 
     private fun getLocalThemes(): Array<File>? = Client.fileManager.themesDir.listFiles()

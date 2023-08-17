@@ -4,18 +4,24 @@ import net.aspw.client.Client;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.util.MovementUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
 
+/**
+ * The type Mineplex ground.
+ */
 public class MineplexGround extends SpeedMode {
 
     private boolean spoofSlot;
     private float speed = 0F;
 
+    /**
+     * Instantiates a new Mineplex ground.
+     */
     public MineplexGround() {
         super("MineplexGround");
     }

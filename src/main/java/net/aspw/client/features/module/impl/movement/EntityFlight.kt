@@ -5,16 +5,19 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.MovementUtilsFix
+import net.aspw.client.util.MovementUtilsFix
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
 import kotlin.math.cos
 import kotlin.math.sin
 
-@ModuleInfo(name = "EntityFlight", "Entity Flight", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "EntityFlight", "Entity Flight", description = "", category = ModuleCategory.MOVEMENT)
 class EntityFlight : Module() {
     private val modeValue = ListValue("Mode", arrayOf("Motion", "Clip", "Velocity"), "Motion")
     private val speedValue = FloatValue("Speed", 0.3f, 0.0f, 1.0f)
+
+    override val tag: String
+        get() = modeValue.get()
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {

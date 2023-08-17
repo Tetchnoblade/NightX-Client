@@ -1,12 +1,14 @@
 package net.aspw.client.injection.forge.mixins.client;
 
-import de.enzaxd.viaforge.ViaForge;
 import net.aspw.client.Client;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.other.FastPlace;
+import net.aspw.client.features.module.impl.visual.Animations;
+import net.aspw.client.features.module.impl.visual.OptiFinePlus;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
-import net.aspw.client.utils.CPSCounter;
-import net.aspw.client.utils.render.RenderUtils;
+import net.aspw.client.protocol.Protocol;
+import net.aspw.client.util.CPSCounter;
+import net.aspw.client.util.render.RenderUtils;
 import net.aspw.client.visual.client.GuiMainMenu;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -34,10 +36,11 @@ import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import scala.Int;
+
+import java.util.Objects;
 
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft {
@@ -71,7 +74,7 @@ public abstract class MixinMinecraft {
     @Shadow
     private boolean fullscreen;
     @Shadow
-    private int leftClickCounter;
+    public int leftClickCounter;
     private long lastFrame = getTime();
 
     @Shadow
@@ -79,15 +82,6 @@ public abstract class MixinMinecraft {
 
     @Shadow
     public abstract RenderManager getRenderManager();
-
-    @Inject(method = "<init>", at = @At("RETURN"))
-    public void injectConstructor(GameConfiguration p_i45547_1_, CallbackInfo ci) {
-        try {
-            ViaForge.getInstance().start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Inject(method = "run", at = @At("HEAD"))
     private void init(CallbackInfo callbackInfo) {
@@ -103,9 +97,9 @@ public abstract class MixinMinecraft {
         Client.INSTANCE.startClient();
     }
 
-    @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER))
-    private void createDisplay(CallbackInfo callbackInfo) {
-        Display.setTitle(Client.CLIENT_BEST + " - " + Client.CLIENT_VERSION);
+    @Inject(method = "<init>", at = @At("RETURN"))
+    public void startVia(GameConfiguration p_i45547_1_, CallbackInfo ci) {
+        Protocol.start();
     }
 
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
@@ -113,6 +107,11 @@ public abstract class MixinMinecraft {
         if (worldClientIn != this.theWorld) {
             this.entityRenderer.getMapItemRenderer().clearLoadedMaps();
         }
+    }
+
+    @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER))
+    private void createDisplay(CallbackInfo callbackInfo) {
+        Display.setTitle("Launching...");
     }
 
     @SuppressWarnings("UnstableApiUsage")
@@ -195,7 +194,9 @@ public abstract class MixinMinecraft {
     @Inject(method = "clickMouse", at = @At("HEAD"))
     private void clickMouse(CallbackInfo callbackInfo) {
         CPSCounter.registerClick(CPSCounter.MouseButton.LEFT);
-        leftClickCounter = 0;
+        if (Objects.requireNonNull(Client.moduleManager.getModule(OptiFinePlus.class)).getState() && Objects.requireNonNull(Client.moduleManager.getModule(OptiFinePlus.class)).noHitDelay.get())
+            leftClickCounter = 0;
+        else if (this.leftClickCounter <= 10 && this.objectMouseOver == null) leftClickCounter = 10;
     }
 
     @Inject(method = "middleClickMouse", at = @At("HEAD"))
@@ -207,7 +208,7 @@ public abstract class MixinMinecraft {
     private void rightClickMouse(final CallbackInfo callbackInfo) {
         CPSCounter.registerClick(CPSCounter.MouseButton.RIGHT);
 
-        final FastPlace fastPlace = Client.moduleManager.getModule(FastPlace.class);
+        final FastPlace fastPlace = Objects.requireNonNull(Client.moduleManager.getModule(FastPlace.class));
 
         if (fastPlace.getState())
             rightClickDelayTimer = fastPlace.getSpeedValue().get();
@@ -216,7 +217,8 @@ public abstract class MixinMinecraft {
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
     private void loadWorld(WorldClient p_loadWorld_1_, String p_loadWorld_2_, final CallbackInfo callbackInfo) {
         Client.eventManager.callEvent(new WorldEvent(p_loadWorld_1_));
-        Runtime.getRuntime().gc();
+        if (Objects.requireNonNull(Client.moduleManager.getModule(OptiFinePlus.class)).getState() && Objects.requireNonNull(Client.moduleManager.getModule(OptiFinePlus.class)).fixMemoryLeaks.get())
+            Runtime.getRuntime().gc();
     }
 
     @Inject(method = "toggleFullscreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setFullscreen(Z)V", remap = false))
@@ -233,20 +235,27 @@ public abstract class MixinMinecraft {
     }
 
     /**
-     * @author CCBlueX
+     * @author As_pw
+     * @reason Fix ClickDelay
      */
     @Overwrite
     private void sendClickBlockToController(boolean leftClick) {
         if (!leftClick)
             this.leftClickCounter = 0;
 
-        if (this.leftClickCounter <= 0 && (!this.thePlayer.isUsingItem())) {
+        if (this.leftClickCounter <= 0) {
             if (leftClick && this.objectMouseOver != null && this.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
                 BlockPos blockPos = this.objectMouseOver.getBlockPos();
 
+                if (!Animations.oldAnimations.get() && this.thePlayer.isUsingItem())
+                    return;
+                else if (Animations.oldAnimations.get() && this.thePlayer.isUsingItem()) {
+                    this.thePlayer.swingItem();
+                    return;
+                }
+
                 if (this.leftClickCounter == 0)
                     Client.eventManager.callEvent(new ClickBlockEvent(blockPos, this.objectMouseOver.sideHit));
-
 
                 if (this.theWorld.getBlockState(blockPos).getBlock().getMaterial() != Material.air && this.playerController.onPlayerDamageBlock(blockPos, this.objectMouseOver.sideHit)) {
                     this.effectRenderer.addBlockHitEffects(blockPos, this.objectMouseOver.sideHit);
@@ -256,5 +265,10 @@ public abstract class MixinMinecraft {
                 this.playerController.resetBlockRemoving();
             }
         }
+    }
+
+    @ModifyConstant(method = "getLimitFramerate", constant = @Constant(intValue = 30))
+    public int getLimitFramerate(int constant) {
+        return Int.MaxValue();
     }
 }

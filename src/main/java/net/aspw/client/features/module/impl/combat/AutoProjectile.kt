@@ -13,14 +13,14 @@ import net.minecraft.network.play.client.C07PacketPlayerDigging.Action
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 
-@ModuleInfo(name = "AutoProjectile", spacedName = "Auto Projectile", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AutoProjectile", spacedName = "Auto Projectile", description = "", category = ModuleCategory.COMBAT)
 class AutoProjectile : Module() {
 
-    private val waitForBowAimbot = BoolValue("WaitForBowAim", true)
+    private val waitForBowAimbot = BoolValue("WaitForBowAimAssist", true)
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        val bowAimbot = Client.moduleManager[BowAim::class.java] as BowAim
+        val bowAimbot = Client.moduleManager[BowAura::class.java] as BowAura
 
         if (mc.thePlayer.isUsingItem && mc.thePlayer.heldItem?.item == Items.bow &&
             mc.thePlayer.itemInUseDuration > 20 && (!waitForBowAimbot.get() || !bowAimbot.state || bowAimbot.hasTarget())

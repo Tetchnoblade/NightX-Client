@@ -8,11 +8,20 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
+/**
+ * The type Mixin c 00 handshake.
+ */
 @Mixin(C00Handshake.class)
 public class MixinC00Handshake {
 
+    /**
+     * The Port.
+     */
     @Shadow
     public int port;
+    /**
+     * The Ip.
+     */
     @Shadow
     public String ip;
     @Shadow
@@ -20,9 +29,6 @@ public class MixinC00Handshake {
     @Shadow
     private EnumConnectionState requestedState;
 
-    /**
-     * @author CCBlueX
-     */
     @ModifyConstant(method = "writePacketData", constant = @Constant(stringValue = "\u0000FML\u0000"))
     private String injectAntiForge(String constant) {
         return !Minecraft.getMinecraft().isIntegratedServerRunning() ? "" : "\u0000FML\u0000";

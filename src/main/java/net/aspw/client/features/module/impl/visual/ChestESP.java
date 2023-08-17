@@ -7,12 +7,12 @@ import net.aspw.client.event.Render3DEvent;
 import net.aspw.client.features.module.Module;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.ModuleInfo;
-import net.aspw.client.features.module.impl.player.StealAura;
-import net.aspw.client.utils.ClientUtils;
-import net.aspw.client.utils.render.RenderUtils;
-import net.aspw.client.utils.render.shader.FramebufferShader;
-import net.aspw.client.utils.render.shader.shaders.GlowShader;
-import net.aspw.client.utils.render.shader.shaders.OutlineShader;
+import net.aspw.client.features.module.impl.player.ChestAura;
+import net.aspw.client.util.ClientUtils;
+import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.util.render.shader.FramebufferShader;
+import net.aspw.client.util.render.shader.shaders.GlowShader;
+import net.aspw.client.util.render.shader.shaders.OutlineShader;
 import net.aspw.client.value.BoolValue;
 import net.aspw.client.value.ListValue;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -25,7 +25,10 @@ import java.awt.*;
 
 import static org.lwjgl.opengl.GL11.*;
 
-@ModuleInfo(name = "ChestESP", spacedName = "Chest ESP", category = ModuleCategory.VISUAL, array = false)
+/**
+ * The type Chest esp.
+ */
+@ModuleInfo(name = "ChestESP", spacedName = "Chest ESP", description = "", category = ModuleCategory.VISUAL)
 public class ChestESP extends Module {
     private final ListValue modeValue = new ListValue("Mode", new String[]{"Box", "OtherBox", "ShaderOutline", "ShaderGlow", "2D", "WireFrame"}, "OtherBox");
 
@@ -35,6 +38,11 @@ public class ChestESP extends Module {
     private final BoolValue dispenserValue = new BoolValue("Dispenser", true);
     private final BoolValue hopperValue = new BoolValue("Hopper", true);
 
+    /**
+     * On render 3 d.
+     *
+     * @param event the event
+     */
     @EventTarget
     public void onRender3D(Render3DEvent event) {
         try {
@@ -46,10 +54,10 @@ public class ChestESP extends Module {
             for (final TileEntity tileEntity : mc.theWorld.loadedTileEntityList) {
                 Color color = null;
 
-                if (chestValue.get() && tileEntity instanceof TileEntityChest && !Client.moduleManager.getModule(StealAura.class).getClickedBlocks().contains(tileEntity.getPos()))
+                if (chestValue.get() && tileEntity instanceof TileEntityChest && !Client.moduleManager.getModule(ChestAura.class).getClickedBlocks().contains(tileEntity.getPos()))
                     color = new Color(0, 66, 255);
 
-                if (enderChestValue.get() && tileEntity instanceof TileEntityEnderChest && !Client.moduleManager.getModule(StealAura.class).getClickedBlocks().contains(tileEntity.getPos()))
+                if (enderChestValue.get() && tileEntity instanceof TileEntityEnderChest && !Client.moduleManager.getModule(ChestAura.class).getClickedBlocks().contains(tileEntity.getPos()))
                     color = Color.MAGENTA;
 
                 if (furnaceValue.get() && tileEntity instanceof TileEntityFurnace)
@@ -140,6 +148,11 @@ public class ChestESP extends Module {
         }
     }
 
+    /**
+     * On render 2 d.
+     *
+     * @param event the event
+     */
     @EventTarget
     public void onRender2D(final Render2DEvent event) {
         final String mode = modeValue.get();
@@ -158,7 +171,7 @@ public class ChestESP extends Module {
             for (final TileEntity entity : mc.theWorld.loadedTileEntityList) {
                 if (!(entity instanceof TileEntityChest))
                     continue;
-                if (Client.moduleManager.getModule(StealAura.class).getClickedBlocks().contains(entity.getPos()))
+                if (Client.moduleManager.getModule(ChestAura.class).getClickedBlocks().contains(entity.getPos()))
                     continue;
 
                 TileEntityRendererDispatcher.instance.renderTileEntityAt(

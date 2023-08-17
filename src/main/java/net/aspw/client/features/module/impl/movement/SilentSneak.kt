@@ -6,14 +6,14 @@ import net.aspw.client.event.MotionEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.MovementUtils
+import net.aspw.client.util.MovementUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.ListValue
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.play.client.C0BPacketEntityAction
 import java.util.*
 
-@ModuleInfo(name = "SilentSneak", spacedName = "Silent Sneak", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "SilentSneak", spacedName = "Silent Sneak", description = "", category = ModuleCategory.MOVEMENT)
 class SilentSneak : Module() {
     @JvmField
     val modeValue = ListValue("Mode", arrayOf("Normal", "Legit", "Vanilla", "Switch", "AAC3.6.4"), "Normal")
@@ -32,6 +32,9 @@ class SilentSneak : Module() {
             )
         }
     }
+
+    override val tag: String
+        get() = modeValue.get()
 
     @EventTarget
     fun onMotion(event: MotionEvent) {

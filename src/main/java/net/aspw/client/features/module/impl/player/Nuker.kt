@@ -6,10 +6,10 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.RotationUtils
-import net.aspw.client.utils.block.BlockUtils.getCenterDistance
-import net.aspw.client.utils.block.BlockUtils.searchBlocks
-import net.aspw.client.utils.timer.TickTimer
+import net.aspw.client.util.RotationUtils
+import net.aspw.client.util.block.BlockUtils.getCenterDistance
+import net.aspw.client.util.block.BlockUtils.searchBlocks
+import net.aspw.client.util.timer.TickTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -24,7 +24,7 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.Vec3
 import kotlin.math.roundToInt
 
-@ModuleInfo(name = "Nuker", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "Nuker", description = "", category = ModuleCategory.PLAYER)
 class Nuker : Module() {
 
     /**
@@ -36,7 +36,7 @@ class Nuker : Module() {
     private val priorityValue = ListValue("Priority", arrayOf("Distance", "Hardness"), "Distance")
     val rotationsValue = BoolValue("Rotations", true)
     private val layerValue = BoolValue("Layer", false)
-    private val hitDelayValue = IntegerValue("HitDelay", 2, 0, 20)
+    private val hitDelayValue = IntegerValue("HitDelay", 0, 0, 20)
     private val nukeValue = IntegerValue("Nuke", 1, 1, 20)
     private val nukeDelay = IntegerValue("NukeDelay", 1, 1, 20)
 
@@ -47,14 +47,21 @@ class Nuker : Module() {
     private val attackedBlocks = arrayListOf<BlockPos>()
     private var currentBlock: BlockPos? = null
     private var blockHitDelay = 0
+    var isBreaking = false
 
     private var nukeTimer = TickTimer()
     private var nuke = 0
-    var breaking = false
+
+    override fun onDisable() {
+        isBreaking = false
+    }
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         // Block hit delay
+        if (blockHitDelay <= 0)
+            isBreaking = false
+
         if (blockHitDelay > 0) {
             blockHitDelay--
             return
@@ -74,7 +81,6 @@ class Nuker : Module() {
 
         if (!mc.playerController.isInCreativeMode) {
             // Default nuker
-
             val validBlocks = searchBlocks(radiusValue.get().roundToInt() + 1)
                 .filter { (pos, block) ->
                     if (getCenterDistance(pos) <= radiusValue.get() && validBlock(block)) {
@@ -134,6 +140,7 @@ class Nuker : Module() {
                 if (rotationsValue.get()) {
                     val rotation = RotationUtils.faceBlock(blockPos) ?: return // In case of a mistake. Prevent flag.
                     RotationUtils.setTargetRotation(rotation.rotation)
+                    isBreaking = true
                 }
 
                 // Set next target block
@@ -147,7 +154,6 @@ class Nuker : Module() {
 
                 // Start block breaking
                 if (currentDamage == 0F) {
-                    breaking = true
                     mc.netHandler.addToSendQueue(
                         C07PacketPlayerDigging(
                             C07PacketPlayerDigging.Action.START_DESTROY_BLOCK,
@@ -164,8 +170,6 @@ class Nuker : Module() {
                         nuke++
                         continue // Next break
                     }
-                } else {
-                    breaking = false
                 }
 
                 // Break block
@@ -174,7 +178,6 @@ class Nuker : Module() {
 
                 // End of breaking block
                 if (currentDamage >= 1F) {
-                    breaking = false
                     mc.netHandler.addToSendQueue(
                         C07PacketPlayerDigging(
                             C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
@@ -237,14 +240,6 @@ class Nuker : Module() {
                     attackedBlocks.add(pos)
                 }
         }
-    }
-
-    override fun onDisable() {
-        breaking = false
-    }
-
-    override fun onEnable() {
-        breaking = false
     }
 
     /**

@@ -9,8 +9,16 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
+/**
+ * The interface Minecraft forge client accessor.
+ */
 @Mixin(MinecraftForgeClient.class)
 public interface MinecraftForgeClientAccessor {
+    /**
+     * Gets region cache.
+     *
+     * @return the region cache
+     */
     @SuppressWarnings("UnstableApiUsage")
     @Accessor(remap = false)
     static LoadingCache<Pair<World, BlockPos>, RegionRenderCache> getRegionCache() {

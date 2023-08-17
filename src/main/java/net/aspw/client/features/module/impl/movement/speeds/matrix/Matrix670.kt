@@ -3,7 +3,7 @@ package net.aspw.client.features.module.impl.movement.speeds.matrix
 import net.aspw.client.event.MoveEvent
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode
-import net.aspw.client.utils.MovementUtils
+import net.aspw.client.util.MovementUtils
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.play.server.S12PacketEntityVelocity
 import kotlin.math.abs

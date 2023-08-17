@@ -2,12 +2,18 @@ package net.aspw.client.features.module.impl.movement.speeds.aac;
 
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.util.MovementUtils;
 
+/**
+ * The type Aac low hop 3.
+ */
 public class AACLowHop3 extends SpeedMode {
     private boolean firstJump;
     private boolean waitForGround;
 
+    /**
+     * Instantiates a new Aac low hop 3.
+     */
     public AACLowHop3() {
         super("AACLowHop3");
     }

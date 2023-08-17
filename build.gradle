@@ -7,11 +7,17 @@ plugins {
     id "org.spongepowered.mixin"
 }
 
+apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: "org.spongepowered.mixin"
+apply plugin: "com.github.johnrengelman.shadow"
+apply plugin: "java"
+
 repositories {
     mavenLocal()
     mavenCentral()
     maven { url = "https://maven.minecraftforge.net/" }
     maven { url = "https://repo.spongepowered.org/repository/maven-public/" }
+    maven { url = "https://repo.viaversion.com" }
     maven { url = "https://jitpack.io/" }
 }
 
@@ -41,6 +47,16 @@ configurations {
     implementation.extendsFrom(include)
 }
 
+def viaLibs = [
+        "com.viaversion:viaversion:4.7.0",
+        "com.viaversion:viabackwards:4.7.0",
+        "com.viaversion:viarewind-core:2.0.4-SNAPSHOT",
+        "org.yaml:snakeyaml:2.0",
+
+        "net.raphimc:ViaLoader:2.2.5-SNAPSHOT",
+        "org.slf4j:slf4j-api:2.0.7"
+]
+
 dependencies {
     include("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
         transitive = false
@@ -52,7 +68,9 @@ dependencies {
         exclude module: "slf4j-api"
     }
 
-    include "org.yaml:snakeyaml:1.29"
+    for (final def via in viaLibs) {
+        include(via)
+    }
 
     include('com.github.half-cambodian-hacker-man:Koffee:d8cee73') {
         exclude module: 'asm-commons'
@@ -74,8 +92,6 @@ dependencies {
     include 'com.github.TheAltening:TheAlteningAuth4j:-SNAPSHOT'
 
     include 'com.github.ben-manes.caffeine:caffeine:2.9.0'
-
-    include fileTree(include: ["*.jar"], dir: "libs")
 }
 
 shadowJar {
@@ -147,3 +163,5 @@ configurations {
 tasks.reobfShadowJar.mustRunAfter shadowJar
 
 tasks.reobfJar.dependsOn(shadowJar)
+
+jar.dependsOn("shadowJar")

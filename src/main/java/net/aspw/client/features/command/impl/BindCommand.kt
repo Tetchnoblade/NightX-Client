@@ -31,25 +31,9 @@ class BindCommand : Command("bind", emptyArray()) {
                     Notification.Type.SUCCESS
                 )
             )
-            playEdit()
             return
         }
 
         chatSyntax(arrayOf("<module> <key>", "<module> none"))
-    }
-
-    override fun tabComplete(args: Array<String>): List<String> {
-        if (args.isEmpty()) return emptyList()
-
-        val moduleName = args[0]
-
-        return when (args.size) {
-            1 -> Client.moduleManager.modules
-                .map { it.name }
-                .filter { it.startsWith(moduleName, true) }
-                .toList()
-
-            else -> emptyList()
-        }
     }
 }

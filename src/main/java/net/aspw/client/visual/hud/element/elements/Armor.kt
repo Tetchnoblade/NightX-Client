@@ -1,6 +1,6 @@
 package net.aspw.client.visual.hud.element.elements
 
-import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.ListValue
 import net.aspw.client.visual.hud.element.Border
 import net.aspw.client.visual.hud.element.Element

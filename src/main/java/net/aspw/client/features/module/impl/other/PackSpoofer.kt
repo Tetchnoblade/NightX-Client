@@ -5,14 +5,14 @@ import net.aspw.client.event.PacketEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.ClientUtils
+import net.aspw.client.util.ClientUtils
 import net.minecraft.network.play.client.C19PacketResourcePackStatus
 import net.minecraft.network.play.server.S48PacketResourcePackSend
 import java.io.File
 import java.net.URI
 import java.net.URISyntaxException
 
-@ModuleInfo(name = "PackSpoofer", spacedName = "Pack Spoofer", category = ModuleCategory.OTHER)
+@ModuleInfo(name = "PackSpoofer", spacedName = "Pack Spoofer", description = "", category = ModuleCategory.OTHER)
 class PackSpoofer : Module() {
 
     @EventTarget

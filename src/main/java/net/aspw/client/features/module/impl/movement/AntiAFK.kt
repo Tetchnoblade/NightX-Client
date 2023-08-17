@@ -5,8 +5,8 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.misc.RandomUtils
-import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.util.misc.RandomUtils
+import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -15,7 +15,7 @@ import net.minecraft.client.settings.GameSettings
 import net.minecraft.client.settings.KeyBinding
 import java.util.*
 
-@ModuleInfo(name = "AntiAFK", spacedName = "Anti AFK", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "AntiAFK", spacedName = "Anti AFK", description = "", category = ModuleCategory.MOVEMENT)
 class AntiAFK : Module() {
 
     private val swingDelayTimer = MSTimer()

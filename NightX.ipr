@@ -20,7 +20,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar" />
         </processorPath>
-        <module name="net.aspw.NightX.main" />
+        <module name="NightX-Client.NightX.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8" />
@@ -34,13 +34,14 @@
     <option name="description" value="" />
   </component>
   <component name="EntryPointsManager">
-    <list size="6">
+    <list size="7">
       <item index="0" class="java.lang.String" itemvalue="net.aspw.nightx.event.EventTarget" />
       <item index="1" class="java.lang.String" itemvalue="net.minecraftforge.eventbus.api.SubscribeEvent" />
       <item index="2" class="java.lang.String" itemvalue="net.minecraftforge.fml.common.Mod" />
       <item index="3" class="java.lang.String" itemvalue="net.minecraftforge.fml.common.Mod.EventHandler" />
       <item index="4" class="java.lang.String" itemvalue="net.minecraftforge.fml.common.eventhandler.SubscribeEvent" />
       <item index="5" class="java.lang.String" itemvalue="org.spongepowered.asm.mixin.Shadow" />
+      <item index="6" class="java.lang.String" itemvalue="org.spongepowered.asm.mixin.Unique" />
     </list>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
@@ -72,6 +73,19 @@
   <component name="InspectionProjectProfileManager">
     <profile version="1.0">
       <option name="myName" value="Project Default" />
+      <inspection_tool class="AutoCloseableResource" enabled="true" level="WARNING" enabled_by_default="true">
+        <option name="METHOD_MATCHER_CONFIG" value="java.util.Formatter,format,java.io.Writer,append,com.google.common.base.Preconditions,checkNotNull,org.hibernate.Session,close,java.io.PrintWriter,printf,java.io.PrintStream,printf,org.apache.http.impl.client.HttpClients,createDefault" />
+      </inspection_tool>
+      <inspection_tool class="FieldCanBeLocal" enabled="true" level="WARNING" enabled_by_default="true">
+        <option name="EXCLUDE_ANNOS">
+          <value>
+            <list size="1">
+              <item index="0" class="java.lang.String" itemvalue="org.spongepowered.asm.mixin.Unique" />
+            </list>
+          </value>
+        </option>
+        <option name="IGNORE_FIELDS_USED_IN_MULTIPLE_METHODS" value="true" />
+      </inspection_tool>
     </profile>
     <version value="1.0" />
   </component>
@@ -360,6 +374,10 @@
       <module fileurl="file://$PROJECT_DIR$/AvoidWare.main.iml" filepath="$PROJECT_DIR$/AvoidWare.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/AvoidWare.test.iml" filepath="$PROJECT_DIR$/AvoidWare.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.iml" filepath="$PROJECT_DIR$/NightX.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NightX-Client.NightX.api.iml" filepath="$PROJECT_DIR$/NightX-Client.NightX.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NightX-Client.NightX.main.iml" filepath="$PROJECT_DIR$/NightX-Client.NightX.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NightX-Client.NightX.test.iml" filepath="$PROJECT_DIR$/NightX-Client.NightX.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NightX-master.NightX.iml" filepath="$PROJECT_DIR$/NightX-master.NightX.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.api.iml" filepath="$PROJECT_DIR$/NightX.api.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.main.iml" filepath="$PROJECT_DIR$/NightX.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.test.iml" filepath="$PROJECT_DIR$/NightX.test.iml" />
@@ -374,10 +392,10 @@
   </component>
   <component name="ProjectRunConfigurationManager">
     <configuration default="false" name="Minecraft Client" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../../../../../Program Files/Java/jdk1.8.0_181" />
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8 (3)" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="GradleStart" />
-      <module name="net.aspw.NightX.main" />
+      <module name="NightX-master.NightX.main" />
       <option name="PROGRAM_PARAMETERS" value="-Xmx8G -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M -Djavax.net.ssl.trustStoreType=Windows-ROOT" />
       <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
@@ -388,8 +406,10 @@
       </method>
     </configuration>
     <configuration default="false" name="Minecraft Server" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8 (3)" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
-      <module name="net.aspw.NightX.main" />
+      <module name="NightX-master.NightX.main" />
       <option name="PROGRAM_PARAMETERS" value="-Xmx8G -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M -Djavax.net.ssl.trustStoreType=Windows-ROOT" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
       <RunnerSettings RunnerId="Run" />
@@ -449,6 +469,16 @@
       <option name="id" value="deobfDeps" />
       <option name="name" value="deobfDeps" />
       <option name="url" value="file:/$USER_HOME$/.gradle/caches/minecraft/deobfedDeps/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven3" />
+      <option name="name" value="maven3" />
+      <option name="url" value="https://repo.viaversion.com" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="BintrayJCenter" />
+      <option name="name" value="BintrayJCenter" />
+      <option name="url" value="https://jcenter.bintray.com/" />
     </remote-repository>
   </component>
   <component name="SvnBranchConfigurationManager">
@@ -688,6 +718,31 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.typesafe/config/1.2.1/bdacf4f82ce9b29cd474bfde2e91eeb0ca623d28/config-1.2.1-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Gradle: com.viaversion:viabackwards:4.7.0">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.7.0/e728d251ca465e71a2d9727b8fc7422020ae5d1b/viabackwards-4.7.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.7.0/235e7717dd4b1aa6b1b2a98c1a69006391669fc/viabackwards-4.7.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: com.viaversion:viarewind-core:2.0.4-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viarewind-core/2.0.4-SNAPSHOT/6f8f49cd9f996ca439c23d67eab7048452941702/viarewind-core-2.0.4-SNAPSHOT.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="Gradle: com.viaversion:viaversion:4.7.0">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.7.0/a881866da980c9ca657d39eff0dd6cb89c669629/viaversion-4.7.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.7.0/dc3d4c24592bc08966e13a283745e662bb4e0399/viaversion-4.7.0-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Gradle: commons-codec:commons-codec:1.9">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.9/9ce04e34240f674bc72680f8b843b1457383161a/commons-codec-1.9.jar!/" />
@@ -850,6 +905,17 @@
       </CLASSES>
       <JAVADOC />
       <SOURCES />
+    </library>
+    <library name="Gradle: net.raphimc:ViaLoader:2.2.5-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaLoader/2.2.5-SNAPSHOT/cbfc2cf2ff19017f5588a273a43a89f90f1679e/ViaLoader-2.2.5-SNAPSHOT.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaLoader/2.2.5-SNAPSHOT/5880ef915024f79815afe466c15f0cef1b87b475/ViaLoader-2.2.5-SNAPSHOT-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaLoader/2.2.5-SNAPSHOT/7a3316d25c9e7047b9c2944a786a8a51c1ec1c27/ViaLoader-2.2.5-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
     </library>
     <library name="Gradle: net.sf.jopt-simple:jopt-simple:4.6">
       <CLASSES>
@@ -1202,15 +1268,15 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scijava/native-lib-loader/2.0.2/b1e0fa440cac2b1ba8ee6694f5a70cd4d79ff85b/native-lib-loader-2.0.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.slf4j:slf4j-api:1.7.25">
+    <library name="Gradle: org.slf4j:slf4j-api:2.0.7">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.25/da76ca59f6a57ee3102f8f9bd9cee742973efa8a/slf4j-api-1.7.25.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.7/41eb7184ea9d556f23e18b5cb99cad1f8581fc00/slf4j-api-2.0.7.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.25/f003e89ddebdbaca5cf3fc7cc0c67c88c2ca1a3c/slf4j-api-1.7.25-javadoc.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.7/20dc281d86b894bc9ff32905832e6599626da03c/slf4j-api-2.0.7-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.25/962153db4a9ea71b79d047dfd1b2a0d80d8f4739/slf4j-api-1.7.25-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.7/f887f95694cd20d51a062446b6e3d09dd02d98ff/slf4j-api-2.0.7-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.spongepowered:mixin:0.7.11-SNAPSHOT">
@@ -1224,15 +1290,15 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.7.11-SNAPSHOT/2f1c5d7d49889d506dac93e7c3ee7707dc072e4d/mixin-0.7.11-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.yaml:snakeyaml:1.29">
+    <library name="Gradle: org.yaml:snakeyaml:2.0">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/1.29/6d0cdafb2010f1297e574656551d7145240f6e25/snakeyaml-1.29.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/2.0/3aab2116756442bf0d4cd1c089b24d34c3baa253/snakeyaml-2.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/1.29/d3dac693ef4e5dd162d5b7b7dace49675249be67/snakeyaml-1.29-javadoc.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/2.0/5d3db9365672a59baaf0e21362ee9010c4693029/snakeyaml-2.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/1.29/3c1e0863032828174271eb0b6a6db726e177db/snakeyaml-1.29-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/2.0/b29e84cfffae4be26d4a4c9443d9f246ad4ec63e/snakeyaml-2.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: oshi-project:oshi-core:1.1">
@@ -1282,13 +1348,6 @@
     <library name="Gradle: tv.twitch:twitch:6.5">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/tv.twitch/twitch/6.5/320a2dfd18513a5f41b4e75729df684488cbd925/twitch-6.5.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
-    <library name="lombok">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/libs/lombok.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

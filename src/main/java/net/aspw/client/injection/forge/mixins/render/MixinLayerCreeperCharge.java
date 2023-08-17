@@ -6,6 +6,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Slice;
 
+/**
+ * The type Mixin layer creeper charge.
+ */
 @Mixin(LayerCreeperCharge.class)
 public class MixinLayerCreeperCharge {
     @ModifyArg(

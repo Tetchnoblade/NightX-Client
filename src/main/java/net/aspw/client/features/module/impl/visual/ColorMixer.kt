@@ -5,10 +5,10 @@ import net.aspw.client.features.api.ColorElement
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.render.BlendUtils
+import net.aspw.client.util.render.BlendUtils
 import java.awt.Color
 
-@ModuleInfo(name = "ColorMixer", category = ModuleCategory.VISUAL, canEnable = false)
+@ModuleInfo(name = "ColorMixer", description = "", category = ModuleCategory.VISUAL, canEnable = false)
 class ColorMixer : Module() {
     companion object {
         @JvmField

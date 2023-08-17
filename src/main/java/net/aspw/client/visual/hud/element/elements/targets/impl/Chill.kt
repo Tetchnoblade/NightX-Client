@@ -1,24 +1,25 @@
 package net.aspw.client.visual.hud.element.elements.targets.impl
 
-import net.aspw.client.utils.extensions.darker
-import net.aspw.client.utils.render.RenderUtils
-import net.aspw.client.utils.render.Stencil
+import net.aspw.client.util.extensions.darker
+import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.util.render.Stencil
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.visual.font.Fonts
 import net.aspw.client.visual.hud.element.Border
-import net.aspw.client.visual.hud.element.elements.Target
+import net.aspw.client.visual.hud.element.elements.TargetHud
 import net.aspw.client.visual.hud.element.elements.targets.TargetStyle
 import net.aspw.client.visual.hud.element.elements.targets.utils.CharRenderer
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.player.EntityPlayer
 import org.lwjgl.opengl.GL11
 
-class Chill(inst: Target) : TargetStyle("Chill", inst, true) {
+class Chill(inst: TargetHud) : TargetStyle("Chill", inst, true) {
 
     val chillFontSpeed =
-        FloatValue("Chill-FontSpeed", 0.5F, 0.01F, 1F, { targetInstance.styleValue.get().equals("chill", true) })
-    val chillRoundValue = BoolValue("Chill-RoundedBar", true, { targetInstance.styleValue.get().equals("chill", true) })
+        FloatValue("Chill-FontSpeed", 0.5F, 0.01F, 1F, { targetHudInstance.styleValue.get().equals("chill", true) })
+    val chillRoundValue =
+        BoolValue("Chill-RoundedBar", true, { targetHudInstance.styleValue.get().equals("chill", true) })
 
     private val numberRenderer = CharRenderer(false)
 
@@ -44,7 +45,7 @@ class Chill(inst: Target) : TargetStyle("Chill", inst, true) {
         val playerInfo = mc.netHandler.getPlayerInfo(entity.uniqueID)
 
         // background
-        RenderUtils.drawRoundedRect(0F, 0F, tWidth, 48F, 7F, targetInstance.bgColor.rgb)
+        RenderUtils.drawRoundedRect(0F, 0F, tWidth, 48F, 7F, targetHudInstance.bgColor.rgb)
         GlStateManager.resetColor()
         GL11.glColor4f(1F, 1F, 1F, 1F)
 
@@ -58,7 +59,7 @@ class Chill(inst: Target) : TargetStyle("Chill", inst, true) {
             GL11.glDisable(GL11.GL_BLEND)
             GL11.glEnable(GL11.GL_TEXTURE_2D)
             Stencil.erase(true)
-            drawHead(playerInfo.locationSkin, 4, 4, 30, 30, 1F - targetInstance.getFadeProgress())
+            drawHead(playerInfo.locationSkin, 4, 4, 30, 30, 1F - targetHudInstance.getFadeProgress())
             Stencil.dispose()
         }
 
@@ -81,7 +82,7 @@ class Chill(inst: Target) : TargetStyle("Chill", inst, true) {
         )
 
         // health bar
-        RenderUtils.drawRoundedRect(4F, 38F, tWidth - 4F, 44F, 3F, targetInstance.barColor.darker(0.5F).rgb)
+        RenderUtils.drawRoundedRect(4F, 38F, tWidth - 4F, 44F, 3F, targetHudInstance.barColor.darker(0.5F).rgb)
 
         Stencil.write(false)
         GL11.glDisable(GL11.GL_TEXTURE_2D)
@@ -100,7 +101,7 @@ class Chill(inst: Target) : TargetStyle("Chill", inst, true) {
                 3F,
                 3F,
                 0F,
-                targetInstance.barColor.rgb
+                targetHudInstance.barColor.rgb
             )
         else
             RenderUtils.drawRect(
@@ -108,7 +109,7 @@ class Chill(inst: Target) : TargetStyle("Chill", inst, true) {
                 38F,
                 4F + (easingHealth / entity.maxHealth) * (tWidth - 8F),
                 44F,
-                targetInstance.barColor.rgb
+                targetHudInstance.barColor.rgb
             )
         Stencil.dispose()
     }

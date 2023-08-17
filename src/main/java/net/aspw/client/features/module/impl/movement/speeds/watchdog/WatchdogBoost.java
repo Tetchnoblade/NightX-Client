@@ -4,10 +4,16 @@ import net.aspw.client.Client;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.util.MovementUtils;
 
+/**
+ * The type Watchdog boost.
+ */
 public class WatchdogBoost extends SpeedMode {
 
+    /**
+     * Instantiates a new Watchdog boost.
+     */
     public WatchdogBoost() {
         super("WatchdogBoost");
     }

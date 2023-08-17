@@ -16,6 +16,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Mixin tile entity banner renderer.
+ */
 @Mixin(TileEntityBannerRenderer.class)
 public class MixinTileEntityBannerRenderer {
     @Shadow
@@ -27,8 +30,8 @@ public class MixinTileEntityBannerRenderer {
     private static ResourceLocation BANNERTEXTURES;
 
     /**
-     * @author asbyth
-     * @reason Resolve banners in chests not displaying once cache is full
+     * @author As_pw
+     * @reason Banner
      */
     @Overwrite
     private ResourceLocation func_178463_a(TileEntityBanner banner) {

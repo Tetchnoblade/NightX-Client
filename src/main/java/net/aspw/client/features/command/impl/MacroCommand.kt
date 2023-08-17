@@ -3,8 +3,8 @@ package net.aspw.client.features.command.impl
 import net.aspw.client.Client
 import net.aspw.client.features.api.MacroManager
 import net.aspw.client.features.command.Command
-import net.aspw.client.utils.ClientUtils
-import net.aspw.client.utils.misc.StringUtils
+import net.aspw.client.util.ClientUtils
+import net.aspw.client.util.misc.StringUtils
 import org.lwjgl.input.Keyboard
 import java.util.*
 
@@ -34,7 +34,6 @@ class MacroCommand : Command("macro", emptyArray()) {
                         chat("§a§lSuccessfully changed macro in key §7${Keyboard.getKeyName(key)} to §r$message.")
                     else
                         chat("§a§lSuccessfully added §r$message §a§lto key §7${Keyboard.getKeyName(key)}.")
-                    playEdit()
                     return
                 }
 
@@ -44,7 +43,6 @@ class MacroCommand : Command("macro", emptyArray()) {
                         MacroManager.removeMacro(key)
                         Client.fileManager.saveConfig(Client.fileManager.valuesConfig)
                         chat("§a§lSuccessfully removed the macro §r$lastMessage §a§lfrom §7${Keyboard.getKeyName(key)}.")
-                        playEdit()
                         return
                     }
                     chat("§c§lThere's no macro bound to this key.")
@@ -65,7 +63,6 @@ class MacroCommand : Command("macro", emptyArray()) {
 
                 "clear" -> {
                     MacroManager.macroMapping.clear()
-                    playEdit()
                     Client.fileManager.saveConfig(Client.fileManager.valuesConfig)
                     chat("§a§lSuccessfully cleared macro list.")
                     return
@@ -84,16 +81,5 @@ class MacroCommand : Command("macro", emptyArray()) {
         }
 
         chatSyntax("macro <list/clear/add/remove>")
-    }
-
-    override fun tabComplete(args: Array<String>): List<String> {
-        if (args.isEmpty()) return emptyList()
-
-        return when (args.size) {
-            1 -> listOf("add", "remove", "list", "clear")
-                .filter { it.startsWith(args[0], true) }
-
-            else -> emptyList()
-        }
     }
 }

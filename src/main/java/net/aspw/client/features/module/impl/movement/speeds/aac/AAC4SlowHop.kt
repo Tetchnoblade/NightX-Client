@@ -2,7 +2,7 @@ package net.aspw.client.features.module.impl.movement.speeds.aac
 
 import net.aspw.client.event.MoveEvent
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode
-import net.aspw.client.utils.MovementUtils.isMoving
+import net.aspw.client.util.MovementUtils.isMoving
 
 class AAC4SlowHop : SpeedMode("AAC4SlowHop") {
     override fun onDisable() {
