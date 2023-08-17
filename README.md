@@ -1,12 +1,7 @@
 # NightX Client
 
-# Back to Opensource
-
-Join discord server to get support! ↓
+Join discord server to get more support! ↓
 > https://discord.gg/SGBccUXFK
-
-More Informations
-> https://sites.google.com/view/nightx-plus
 
 Configs Download
 > https://sites.google.com/view/nightx-plus/configs
@@ -14,7 +9,8 @@ Configs Download
 Official YouTube Channel
 > https://www.youtube.com/@as_pw
 
-# How to Install (Only Supported Official Minecraft Launcher)
+# How to Install
+(Only Supported Official Minecraft Launcher)
 
 1. Install minecraft forge 1.8.9
 
