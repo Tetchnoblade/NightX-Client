@@ -193,7 +193,8 @@ class ModuleManager : Listenable {
             AirPlace::class.java,
             AntiSuffocation::class.java,
             AttackFreeze::class.java,
-            FakeGhostBlock::class.java
+            FakeGhostBlock::class.java,
+            NoHurtCam::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")

@@ -7,6 +7,7 @@ import net.aspw.client.features.module.impl.combat.Reach;
 import net.aspw.client.features.module.impl.other.FreeLook;
 import net.aspw.client.features.module.impl.visual.CameraNoClip;
 import net.aspw.client.features.module.impl.visual.FullBright;
+import net.aspw.client.features.module.impl.visual.NoHurtCam;
 import net.aspw.client.features.module.impl.visual.XRay;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -146,6 +147,12 @@ public abstract class MixinEntityRenderer {
     @Inject(method = "renderWorldPass", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/EntityRenderer;renderHand:Z", shift = At.Shift.BEFORE))
     private void renderWorldPass(int pass, float partialTicks, long finishTimeNano, CallbackInfo callbackInfo) {
         Client.eventManager.callEvent(new Render3DEvent(partialTicks));
+    }
+
+    @Inject(method = "hurtCameraEffect", at = @At("HEAD"), cancellable = true)
+    private void injectHurtCameraEffect(CallbackInfo callbackInfo) {
+        if (Objects.requireNonNull(Client.moduleManager.getModule(NoHurtCam.class)).getState())
+            callbackInfo.cancel();
     }
 
     @Inject(method = "orientCamera", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Vec3;distanceTo(Lnet/minecraft/util/Vec3;)D"), cancellable = true)

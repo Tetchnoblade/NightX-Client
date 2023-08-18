@@ -16,8 +16,11 @@ public class Minemen extends SpeedMode {
 
     @Override
     public void onMotion() {
-        if (mc.thePlayer.onGround && MovementUtils.isMoving())
-            mc.thePlayer.jump();
+        if (MovementUtils.isMoving()) {
+            mc.gameSettings.keyBindJump.pressed = false;
+            if (mc.thePlayer.onGround)
+                mc.thePlayer.jump();
+        }
     }
 
     @Override

@@ -60,6 +60,7 @@ class AntiVelocity : Module() {
             "SmoothReverse",
             "Jump",
             "Phase",
+            "Minemen",
             "YMotion",
             "Vulcan",
             "Grim",
@@ -108,6 +109,7 @@ class AntiVelocity : Module() {
      */
     private var velocityTimer = MSTimer()
     private var velocityInput = false
+    private var velocity = 0
 
     // Legit
     private var pos: BlockPos? = null
@@ -126,6 +128,12 @@ class AntiVelocity : Module() {
 
     override fun onDisable() {
         grimTCancel = 0
+    }
+
+    @EventTarget
+    fun onMotion(event: MotionEvent) {
+        if (event.eventState != EventState.PRE)
+            velocity++
     }
 
     @EventTarget
@@ -351,6 +359,15 @@ class AntiVelocity : Module() {
                     packet.motionX = (packet.getMotionX() * horizontal).toInt()
                     packet.motionY = (packet.getMotionY() * vertical).toInt()
                     packet.motionZ = (packet.getMotionZ() * horizontal).toInt()
+                }
+
+                "minemen" -> {
+                    if (velocity > 20) {
+                        if (packet.entityID == mc.thePlayer.entityId) {
+                            event.cancelEvent()
+                            velocity = 0
+                        }
+                    }
                 }
 
                 "ymotion" -> {
