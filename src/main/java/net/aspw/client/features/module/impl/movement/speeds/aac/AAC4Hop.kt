@@ -7,7 +7,6 @@ import net.aspw.client.util.MovementUtils.isMoving
 class AAC4Hop : SpeedMode("AAC4Hop") {
     override fun onDisable() {
         mc.timer.timerSpeed = 1f
-        mc.thePlayer!!.speedInAir = 0.02f
     }
 
     override fun onTick() {}
@@ -18,16 +17,16 @@ class AAC4Hop : SpeedMode("AAC4Hop") {
         if (isMoving()) {
             if (mc.thePlayer!!.onGround) {
                 mc.thePlayer!!.jump()
-                mc.thePlayer!!.speedInAir = 0.0201f
+                mc.thePlayer!!.jumpMovementFactor = 0.0201f
                 mc.timer.timerSpeed = 0.94f
             }
             if (mc.thePlayer!!.fallDistance > 0.7 && mc.thePlayer!!.fallDistance < 1.3) {
-                mc.thePlayer!!.speedInAir = 0.02f
+                mc.thePlayer!!.jumpMovementFactor = 0.02f
                 mc.timer.timerSpeed = 1.8f
             }
             if (mc.thePlayer!!.fallDistance >= 1.3) {
                 mc.timer.timerSpeed = 1f
-                mc.thePlayer!!.speedInAir = 0.02f
+                mc.thePlayer!!.jumpMovementFactor = 0.02f
             }
         }
     }

@@ -25,7 +25,7 @@ class Sprint : Module() {
                 KillAura::class.java
             )?.target == null
         ) {
-            event.yaw = MovementUtils.getPredictionYaw(event.x, event.z) - 90F
+            event.yaw = MovementUtils.getRawDirection()
             RotationUtils.setTargetRotation(Rotation(event.yaw, event.pitch))
         }
     }

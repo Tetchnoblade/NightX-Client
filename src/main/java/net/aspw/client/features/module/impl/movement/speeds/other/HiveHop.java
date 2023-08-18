@@ -18,7 +18,7 @@ public class HiveHop extends SpeedMode {
 
     @Override
     public void onEnable() {
-        mc.thePlayer.speedInAir = 0.0425F;
+        mc.thePlayer.jumpMovementFactor = 0.0425F;
         mc.timer.timerSpeed = 1.04F;
     }
 
@@ -37,12 +37,12 @@ public class HiveHop extends SpeedMode {
             if (mc.thePlayer.onGround)
                 mc.thePlayer.motionY = 0.3;
 
-            mc.thePlayer.speedInAir = 0.0425F;
+            mc.thePlayer.jumpMovementFactor = 0.0425F;
             mc.timer.timerSpeed = 1.04F;
             MovementUtils.strafe();
         } else {
             mc.thePlayer.motionX = mc.thePlayer.motionZ = 0D;
-            mc.thePlayer.speedInAir = 0.02F;
+            mc.thePlayer.jumpMovementFactor = 0.02F;
             mc.timer.timerSpeed = 1F;
         }
     }

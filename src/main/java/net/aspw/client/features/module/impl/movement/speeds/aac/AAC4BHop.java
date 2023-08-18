@@ -59,7 +59,7 @@ public class AAC4BHop extends SpeedMode {
                 mc.thePlayer.jump();
                 mc.thePlayer.motionY = 0.41;
             } else
-                mc.thePlayer.speedInAir = 0.0211F;
+                mc.thePlayer.jumpMovementFactor = 0.0211F;
         } else {
             legitHop = true;
         }

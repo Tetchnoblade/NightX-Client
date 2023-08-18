@@ -731,78 +731,15 @@ class Scaffold : Module() {
                 speenRotation = Rotation(spinYaw, speenPitchValue.get())
                 RotationUtils.setTargetRotation(speenRotation!!)
             } else if (rotationModeValue.get().equals("watchdog", ignoreCase = true)) {
-                val yaw = mc.thePlayer.rotationYaw
+                val yaw = MovementUtils.getRawDirection() - 180f
                 val pitch = 84f
                 RotationUtils.setTargetRotation(
                     RotationUtils.limitAngleChange(
                         RotationUtils.serverRotation!!,
-                        Rotation(yaw - 180, pitch),
+                        Rotation(yaw, pitch),
                         RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
                     )
                 )
-                if (!mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && mc.gameSettings.keyBindBack.isKeyDown) {
-                    RotationUtils.setTargetRotation(
-                        RotationUtils.limitAngleChange(
-                            RotationUtils.serverRotation!!,
-                            Rotation(yaw, pitch),
-                            RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                        )
-                    )
-                }
-                if (mc.gameSettings.keyBindForward.isKeyDown && mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown) {
-                    RotationUtils.setTargetRotation(
-                        RotationUtils.limitAngleChange(
-                            RotationUtils.serverRotation!!,
-                            Rotation(yaw - 135, pitch),
-                            RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                        )
-                    )
-                }
-                if (!mc.gameSettings.keyBindForward.isKeyDown && mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown) {
-                    RotationUtils.setTargetRotation(
-                        RotationUtils.limitAngleChange(
-                            RotationUtils.serverRotation!!,
-                            Rotation(yaw - 90, pitch),
-                            RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                        )
-                    )
-                }
-                if (!mc.gameSettings.keyBindForward.isKeyDown && mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && mc.gameSettings.keyBindBack.isKeyDown) {
-                    RotationUtils.setTargetRotation(
-                        RotationUtils.limitAngleChange(
-                            RotationUtils.serverRotation!!,
-                            Rotation(yaw - 45, pitch),
-                            RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                        )
-                    )
-                }
-                if (mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown) {
-                    RotationUtils.setTargetRotation(
-                        RotationUtils.limitAngleChange(
-                            RotationUtils.serverRotation!!,
-                            Rotation(yaw - 225, pitch),
-                            RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                        )
-                    )
-                }
-                if (!mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown) {
-                    RotationUtils.setTargetRotation(
-                        RotationUtils.limitAngleChange(
-                            RotationUtils.serverRotation!!,
-                            Rotation(yaw - 270, pitch),
-                            RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                        )
-                    )
-                }
-                if (!mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && mc.gameSettings.keyBindLeft.isKeyDown && mc.gameSettings.keyBindBack.isKeyDown) {
-                    RotationUtils.setTargetRotation(
-                        RotationUtils.limitAngleChange(
-                            RotationUtils.serverRotation!!,
-                            Rotation(yaw - 315, pitch),
-                            RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                        )
-                    )
-                }
                 if (noHitCheckValue.get())
                     faceBlock = true
             } else if (lockRotation != null) {
@@ -829,77 +766,15 @@ class Scaffold : Module() {
                     }
 
                     "normal" -> {
+                        val yaw = MovementUtils.getRawDirection() - 180f
                         val pitch = 84f
                         RotationUtils.setTargetRotation(
                             RotationUtils.limitAngleChange(
                                 RotationUtils.serverRotation!!,
-                                Rotation(mc.thePlayer.rotationYaw - 180, pitch),
+                                Rotation(yaw, pitch),
                                 RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
                             )
                         )
-                        if (!mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && mc.gameSettings.keyBindBack.isKeyDown) {
-                            RotationUtils.setTargetRotation(
-                                RotationUtils.limitAngleChange(
-                                    RotationUtils.serverRotation!!,
-                                    Rotation(mc.thePlayer.rotationYaw, pitch),
-                                    RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                )
-                            )
-                        }
-                        if (mc.gameSettings.keyBindForward.isKeyDown && mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown) {
-                            RotationUtils.setTargetRotation(
-                                RotationUtils.limitAngleChange(
-                                    RotationUtils.serverRotation!!,
-                                    Rotation(mc.thePlayer.rotationYaw - 135, pitch),
-                                    RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                )
-                            )
-                        }
-                        if (!mc.gameSettings.keyBindForward.isKeyDown && mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown) {
-                            RotationUtils.setTargetRotation(
-                                RotationUtils.limitAngleChange(
-                                    RotationUtils.serverRotation!!,
-                                    Rotation(mc.thePlayer.rotationYaw - 90, pitch),
-                                    RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                )
-                            )
-                        }
-                        if (!mc.gameSettings.keyBindForward.isKeyDown && mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && mc.gameSettings.keyBindBack.isKeyDown) {
-                            RotationUtils.setTargetRotation(
-                                RotationUtils.limitAngleChange(
-                                    RotationUtils.serverRotation!!,
-                                    Rotation(mc.thePlayer.rotationYaw - 45, pitch),
-                                    RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                )
-                            )
-                        }
-                        if (mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown) {
-                            RotationUtils.setTargetRotation(
-                                RotationUtils.limitAngleChange(
-                                    RotationUtils.serverRotation!!,
-                                    Rotation(mc.thePlayer.rotationYaw - 225, pitch),
-                                    RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                )
-                            )
-                        }
-                        if (!mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown) {
-                            RotationUtils.setTargetRotation(
-                                RotationUtils.limitAngleChange(
-                                    RotationUtils.serverRotation!!,
-                                    Rotation(mc.thePlayer.rotationYaw - 270, pitch),
-                                    RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                )
-                            )
-                        }
-                        if (!mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && mc.gameSettings.keyBindLeft.isKeyDown && mc.gameSettings.keyBindBack.isKeyDown) {
-                            RotationUtils.setTargetRotation(
-                                RotationUtils.limitAngleChange(
-                                    RotationUtils.serverRotation!!,
-                                    Rotation(mc.thePlayer.rotationYaw - 315, pitch),
-                                    RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                )
-                            )
-                        }
                     }
                 }
             }
@@ -1205,62 +1080,13 @@ class Scaffold : Module() {
                                     ignoreCase = true
                                 ) && (keepRotOnJumpValue.get() || !mc.gameSettings.keyBindJump.isKeyDown)
                             ) {
-                                val yaw = mc.thePlayer.rotationYaw
+                                val yaw = MovementUtils.getRawDirection() - 180f
                                 val pitch = 84f
                                 rotation = (RotationUtils.limitAngleChange(
                                     RotationUtils.serverRotation!!,
-                                    Rotation(yaw - 180, pitch),
+                                    Rotation(yaw, pitch),
                                     RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
                                 ))
-                                if (!mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && mc.gameSettings.keyBindBack.isKeyDown) {
-                                    rotation = (RotationUtils.limitAngleChange(
-                                        RotationUtils.serverRotation!!,
-                                        Rotation(yaw, pitch),
-                                        RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                    ))
-                                }
-                                if (mc.gameSettings.keyBindForward.isKeyDown && mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown) {
-                                    rotation = (RotationUtils.limitAngleChange(
-                                        RotationUtils.serverRotation!!,
-                                        Rotation(yaw - 135, pitch),
-                                        RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                    ))
-                                }
-                                if (!mc.gameSettings.keyBindForward.isKeyDown && mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown) {
-                                    rotation = (RotationUtils.limitAngleChange(
-                                        RotationUtils.serverRotation!!,
-                                        Rotation(yaw - 90, pitch),
-                                        RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                    ))
-                                }
-                                if (!mc.gameSettings.keyBindForward.isKeyDown && mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && mc.gameSettings.keyBindBack.isKeyDown) {
-                                    rotation = (RotationUtils.limitAngleChange(
-                                        RotationUtils.serverRotation!!,
-                                        Rotation(yaw - 45, pitch),
-                                        RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                    ))
-                                }
-                                if (mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown) {
-                                    rotation = (RotationUtils.limitAngleChange(
-                                        RotationUtils.serverRotation!!,
-                                        Rotation(yaw - 225, pitch),
-                                        RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                    ))
-                                }
-                                if (!mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown) {
-                                    rotation = (RotationUtils.limitAngleChange(
-                                        RotationUtils.serverRotation!!,
-                                        Rotation(yaw - 270, pitch),
-                                        RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                    ))
-                                }
-                                if (!mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && mc.gameSettings.keyBindLeft.isKeyDown && mc.gameSettings.keyBindBack.isKeyDown) {
-                                    rotation = (RotationUtils.limitAngleChange(
-                                        RotationUtils.serverRotation!!,
-                                        Rotation(yaw - 315, pitch),
-                                        RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
-                                    ))
-                                }
                             }
                             if (rotationModeValue.get().equals(
                                     "spin",

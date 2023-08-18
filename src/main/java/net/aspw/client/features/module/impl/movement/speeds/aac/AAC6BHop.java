@@ -46,7 +46,7 @@ public class AAC6BHop extends SpeedMode {
             if (mc.thePlayer.motionY < 0 && mc.thePlayer.motionY > -0.2)
                 mc.timer.timerSpeed = ((float) (1.2 + mc.thePlayer.motionY));
 
-            mc.thePlayer.speedInAir = 0.022151F;
+            mc.thePlayer.jumpMovementFactor = 0.022151F;
         } else {
             legitJump = true;
         }

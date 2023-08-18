@@ -2,6 +2,7 @@ package net.aspw.client.injection.forge.mixins.entity;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.*;
+import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.exploit.AntiDesync;
@@ -199,6 +200,8 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         try {
             MotionEvent event = new MotionEvent(this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround);
             Client.eventManager.callEvent(event);
+
+            PacketManager.update();
 
             final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
             final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));

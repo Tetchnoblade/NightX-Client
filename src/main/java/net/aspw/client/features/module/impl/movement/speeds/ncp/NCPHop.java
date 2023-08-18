@@ -46,7 +46,7 @@ public class NCPHop extends SpeedMode {
         if (MovementUtils.isMoving()) {
             if (mc.thePlayer.onGround) {
                 mc.thePlayer.jump();
-                mc.thePlayer.speedInAir = 0.0223F;
+                mc.thePlayer.jumpMovementFactor = 0.0223F;
             }
 
             MovementUtils.strafe();

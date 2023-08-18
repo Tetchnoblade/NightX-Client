@@ -6,9 +6,9 @@ import net.aspw.client.event.EventTarget;
 import net.aspw.client.event.Listenable;
 import net.aspw.client.event.PacketEvent;
 import net.aspw.client.features.module.impl.combat.KillAura;
-import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.other.ClientSpoof;
 import net.aspw.client.features.module.impl.visual.Animations;
+import net.aspw.client.features.module.impl.visual.Cape;
 import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.PacketUtils;
 import net.aspw.client.util.misc.RandomUtils;
@@ -21,21 +21,38 @@ import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 
 import java.util.Objects;
 
-/**
- * The type Client spoof.
- */
 public class PacketManager extends MinecraftInstance implements Listenable {
-    /**
-     * On packet.
-     *
-     * @param event the event
-     */
+
+    public static int ticks;
+    public static String selectedCape;
+
+    public static void update() {
+        int maxFrames = 40;
+
+        switch (Objects.requireNonNull(Client.moduleManager.getModule(Cape.class)).getStyleValue().get()) {
+            case "Rise5":
+                selectedCape = "rise5";
+                maxFrames = 14;
+                break;
+            case "NightX":
+                selectedCape = "nightx";
+                maxFrames = 14;
+                break;
+        }
+
+        if (mc.thePlayer.ticksExisted % 3 == 0)
+            ticks++;
+
+        if (ticks > maxFrames) {
+            ticks = 1;
+        }
+    }
+
     @EventTarget
     public void onPacket(PacketEvent event) {
         final Packet<?> packet = event.getPacket();
         final ClientSpoof clientSpoof = Client.moduleManager.getModule(ClientSpoof.class);
         final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
-        final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
 
         if (!Minecraft.getMinecraft().isIntegratedServerRunning()) {
             if (Objects.requireNonNull(clientSpoof).blockModsCheck.get() && packet instanceof FMLProxyPacket)

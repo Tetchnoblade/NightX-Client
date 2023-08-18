@@ -51,7 +51,7 @@ public class AAC5BHop extends SpeedMode {
                 mc.thePlayer.onGround = false;
                 MovementUtils.strafe(0.374F);
             } else if (mc.thePlayer.motionY < 0D) {
-                mc.thePlayer.speedInAir = 0.0201F;
+                mc.thePlayer.jumpMovementFactor = 0.0201F;
                 mc.timer.timerSpeed = 1.02F;
             } else
                 mc.timer.timerSpeed = 1.01F;

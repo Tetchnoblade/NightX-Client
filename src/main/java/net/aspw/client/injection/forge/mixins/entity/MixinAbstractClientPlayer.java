@@ -1,6 +1,7 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
 import net.aspw.client.Client;
+import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.visual.Cape;
 import net.aspw.client.features.module.impl.visual.CustomModel;
 import net.aspw.client.features.module.impl.visual.Hud;
@@ -35,7 +36,10 @@ public abstract class MixinAbstractClientPlayer extends MixinEntityPlayer {
             return;
         }
         if (cape.getState() && Objects.equals(getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
-            callbackInfoReturnable.setReturnValue(cape.getCapeLocation(cape.getStyleValue().get()));
+            if (!cape.getStyleValue().get().equals("Rise5") && !cape.getStyleValue().get().equals("NightX"))
+                callbackInfoReturnable.setReturnValue(cape.getCapeLocation(cape.getStyleValue().get()));
+            if (cape.getStyleValue().get().equals("Rise5") || cape.getStyleValue().get().equals("NightX"))
+                callbackInfoReturnable.setReturnValue(new ResourceLocation("client/cape/animation/" + PacketManager.selectedCape + "/" + PacketManager.ticks + ".png"));
         }
     }
 

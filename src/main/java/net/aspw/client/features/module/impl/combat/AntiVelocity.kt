@@ -125,7 +125,6 @@ class AntiVelocity : Module() {
     private var updates = 0
 
     override fun onDisable() {
-        mc.thePlayer?.speedInAir = 0.02F
         grimTCancel = 0
     }
 
@@ -170,13 +169,13 @@ class AntiVelocity : Module() {
             "aacv4" -> {
                 if (!mc.thePlayer.onGround) {
                     if (velocityInput) {
-                        mc.thePlayer.speedInAir = 0.02f
+                        mc.thePlayer.jumpMovementFactor = 0.02f
                         mc.thePlayer.motionX *= 0.6
                         mc.thePlayer.motionZ *= 0.6
                     }
                 } else if (velocityTimer.hasTimePassed(80L)) {
                     velocityInput = false
-                    mc.thePlayer.speedInAir = 0.02f
+                    mc.thePlayer.jumpMovementFactor = 0.02f
                 }
             }
 
@@ -211,7 +210,7 @@ class AntiVelocity : Module() {
 
             "smoothreverse" -> {
                 if (!velocityInput) {
-                    mc.thePlayer.speedInAir = 0.02F
+                    mc.thePlayer.jumpMovementFactor = 0.02F
                     return
                 }
 
@@ -220,7 +219,7 @@ class AntiVelocity : Module() {
 
                 if (!mc.thePlayer.onGround) {
                     if (reverseHurt)
-                        mc.thePlayer.speedInAir = reverse2StrengthValue.get()
+                        mc.thePlayer.jumpMovementFactor = reverse2StrengthValue.get()
                 } else if (velocityTimer.hasTimePassed(80)) {
                     velocityInput = false
                     reverseHurt = false

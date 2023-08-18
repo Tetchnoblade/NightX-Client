@@ -49,7 +49,7 @@ public class NCPFHop extends SpeedMode {
                 mc.thePlayer.jump();
                 mc.thePlayer.motionX *= 1.01D;
                 mc.thePlayer.motionZ *= 1.01D;
-                mc.thePlayer.speedInAir = 0.0223F;
+                mc.thePlayer.jumpMovementFactor = 0.0223F;
             }
 
             mc.thePlayer.motionY -= 0.00099999D;
