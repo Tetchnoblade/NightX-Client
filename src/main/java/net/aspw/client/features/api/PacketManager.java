@@ -11,7 +11,6 @@ import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.Cape;
 import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.PacketUtils;
-import net.aspw.client.util.misc.RandomUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
@@ -74,7 +73,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                     if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("Geyser"))
                         PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("eyser")));
                     if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("Lunar"))
-                        PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("REGISTER", (new PacketBuffer(Unpooled.buffer())).writeString("lunarclient:" + RandomUtils.randomString(7))));
+                        PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("REGISTER", (new PacketBuffer(Unpooled.buffer())).writeString("Lunar-Client")));
                 }
                 event.cancelEvent();
             }

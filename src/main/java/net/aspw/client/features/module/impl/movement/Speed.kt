@@ -92,6 +92,7 @@ class Speed : Module() {
         YPort(),
         YPort2(),
         HiveHop(),
+        Minemen(),
         MineplexGround(),
         RedeskyHop(),
         TeleportCubeCraft(),
@@ -322,6 +323,7 @@ class Speed : Module() {
             "AEMine",
             "GWEN",
             "HiveHop",
+            "Minemen",
             "MineplexGround",
             "RedeskyHop",
             "TeleportCubeCraft"
