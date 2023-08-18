@@ -1,16 +1,11 @@
 package net.aspw.client.visual.client
 
 import net.aspw.client.Client
-import net.aspw.client.features.command.CommandManager
-import net.aspw.client.features.module.impl.visual.Hud
 import net.aspw.client.util.connection.CheckConnection
 import net.aspw.client.util.connection.LoginID
 import net.aspw.client.util.misc.MiscUtils
-import net.aspw.client.util.misc.sound.TipSoundManager
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
-import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
-import net.aspw.client.visual.client.clickgui.tab.NewUi
 import net.aspw.client.visual.font.Fonts
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.GlStateManager
@@ -88,26 +83,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                 buttonWidth - 60,
                 buttonHeight,
                 "Discord"
-            )
-        )
-        this.buttonList.add(
-            GuiButton(
-                7,
-                58,
-                this.height - 36,
-                buttonWidth - 30,
-                buttonHeight,
-                "Online Configs"
-            )
-        )
-        this.buttonList.add(
-            GuiButton(
-                8,
-                143,
-                this.height - 36,
-                buttonWidth - 40,
-                buttonHeight,
-                "Reload Files"
             )
         )
         super.initGui()
@@ -471,28 +446,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             3 -> mc.displayGuiScreen(GuiOptions(this, mc.gameSettings))
             4 -> mc.shutdown()
             6 -> MiscUtils.showURL(CheckConnection.discord)
-            7 -> MiscUtils.showURL(Client.CLIENT_BASE + Client.CLIENT_CONFIG)
-            8 -> {
-                Client.commandManager = CommandManager()
-                Client.commandManager.registerCommands()
-                Client.scriptManager.disableScripts()
-                Client.scriptManager.unloadScripts()
-                for (module in Client.moduleManager.modules)
-                    Client.moduleManager.generateCommand(module)
-                Client.scriptManager.loadScripts()
-                Client.scriptManager.enableScripts()
-                Fonts.loadFonts()
-                Client.tipSoundManager = TipSoundManager()
-                Client.fileManager.loadConfig(Client.fileManager.modulesConfig)
-                Client.fileManager.loadConfig(Client.fileManager.valuesConfig)
-                Client.fileManager.loadConfig(Client.fileManager.accountsConfig)
-                Client.fileManager.loadConfig(Client.fileManager.friendsConfig)
-                Client.clickGui = ClickGui()
-                NewUi.resetInstance()
-                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
-                }
-            }
         }
     }
 

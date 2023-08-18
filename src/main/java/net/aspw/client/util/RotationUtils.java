@@ -31,7 +31,7 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
     /**
      * The constant serverRotation.
      */
-    public static Rotation serverRotation = new Rotation(90F, 90F);
+    public static Rotation serverRotation = new Rotation(30F, 30F);
     /**
      * The constant keepCurrentRotation.
      */

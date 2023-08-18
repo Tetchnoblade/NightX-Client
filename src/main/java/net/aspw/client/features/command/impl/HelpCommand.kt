@@ -16,7 +16,7 @@ class HelpCommand : Command("help", emptyArray()) {
             chat("§a------------")
             chat(".clip <value>")
             chat("§a------------")
-            chat(".(config, c) <load/save/list/delete/fix/folder>")
+            chat(".(config, c) <load/save/list/delete/fix/folder/download>")
             chat("§a------------")
             chat(".enchant <type> [level]")
             chat("§a------------")

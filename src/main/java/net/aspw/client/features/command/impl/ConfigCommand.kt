@@ -4,6 +4,7 @@ import net.aspw.client.Client
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.visual.Hud
 import net.aspw.client.util.SettingsUtils
+import net.aspw.client.util.misc.MiscUtils
 import net.aspw.client.util.misc.StringUtils
 import net.aspw.client.visual.hud.element.elements.Notification
 import java.awt.Desktop
@@ -83,7 +84,6 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                         }
                         return
                     }
-
                     chatSyntax("config save <name>")
                     return
                 }
@@ -106,6 +106,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                             )
                             return
                         }
+                        chatSyntax("config delete <name>")
                         return
                     }
                     chatSyntax("config delete <name>")
@@ -171,9 +172,15 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                     chat("Successfully opened configs folder.")
                     return
                 }
+
+                args[1].equals("download", ignoreCase = true) || args[1].equals("dl", ignoreCase = true) -> {
+                    MiscUtils.showURL(Client.CLIENT_BASE + Client.CLIENT_CONFIG)
+                    chat("Successfully opened browser.")
+                    return
+                }
             }
         }
-        chatSyntax("config <load/save/list/delete/fix/folder>")
+        chatSyntax("config <load/save/list/delete/fix/folder/download>")
     }
 
     private fun getLocalSettings(): Array<File>? = Client.fileManager.settingsDir.listFiles()

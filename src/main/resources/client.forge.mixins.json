@@ -67,6 +67,7 @@
     "render.MixinInventoryEffectRenderer",
     "render.MixinLayerArmorBase",
     "render.MixinLayerArrow",
+    "render.MixinLayerCape",
     "render.MixinLayerCreeperCharge",
     "render.MixinLayerHeldItem",
     "render.MixinLayerSpiderEyes",

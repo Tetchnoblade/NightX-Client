@@ -16,10 +16,8 @@ import net.minecraft.network.play.client.C0BPacketEntityAction
 class Sprint : Module() {
 
     val allDirectionsValue = BoolValue("Multi", true)
-    val noPacketPatchValue = BoolValue("Silent", false)
+    private val noPacketPatchValue = BoolValue("Silent", false)
     val rot = BoolValue("Rotations", false)
-
-    private var modified = false
 
     @EventTarget
     fun onMotion(event: MotionEvent) {
@@ -39,19 +37,6 @@ class Sprint : Module() {
             if (packet is C0BPacketEntityAction && (packet.action == C0BPacketEntityAction.Action.STOP_SPRINTING || packet.action == C0BPacketEntityAction.Action.START_SPRINTING)) {
                 event.cancelEvent()
             }
-        }
-    }
-
-    @EventTarget
-    fun onJump(event: JumpEvent) {
-        if (allDirectionsValue.get() && !modified && !mc.isIntegratedServerRunning) {
-            event.cancelEvent()
-            val prevYaw = mc.thePlayer.rotationYaw
-            mc.thePlayer.rotationYaw = MovementUtils.getRawDirection()
-            modified = true
-            mc.thePlayer.jump()
-            mc.thePlayer.rotationYaw = prevYaw
-            modified = false
         }
     }
 

@@ -23,20 +23,20 @@ import kotlin.concurrent.thread
 object Client {
 
     // Client information
+    private const val isBeta = true
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Max"
-    const val CLIENT_VERSION = "Release B61 V2"
+    const val CLIENT_VERSION = "Beta B62"
     const val CLIENT_CREATOR = "As_pw, outaokura"
     const val CLIENT_BASE = "https://nightx.skidded.host/s/"
     const val CLIENT_WEBSITE = "i4vvayd263"
-    const val CLIENT_STATUS = "kbc8oumsjt"
     const val CLIENT_CONFIG = "jnx2umqrkh"
-
     // Old Auth System
     // const val CLIENT_USER = "Username:Password:HWID:UID"
     const val CLIENT_FONTS = "52e4wz1ovk"
     const val CLIENT_SRG = "6bl91v1egh"
     const val CLIENT_CHAT = "§c§l>> §r"
+    val CLIENT_STATUS = if (!isBeta) "kbc8oumsjt" else "ikpo3lxafq"
 
     var isStarting = false
 

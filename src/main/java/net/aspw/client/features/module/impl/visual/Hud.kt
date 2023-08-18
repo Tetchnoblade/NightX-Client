@@ -22,6 +22,7 @@ import net.minecraft.network.play.server.S45PacketTitle
 class Hud : Module() {
     val clientNameValue = TextValue("ClientName", "N:ightX")
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
+    val gcdfix = BoolValue("GCD-Fix", true)
     val f5nameTag = BoolValue("F5-NameTag", false)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)
     val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F, { animHotbarValue.get() })
