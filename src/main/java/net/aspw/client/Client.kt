@@ -23,10 +23,10 @@ import kotlin.concurrent.thread
 object Client {
 
     // Client information
-    private const val isBeta = true
+    private const val isBeta = false
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Max"
-    const val CLIENT_VERSION = "Beta B62"
+    const val CLIENT_VERSION = "Release B62"
     const val CLIENT_CREATOR = "As_pw, outaokura"
     const val CLIENT_BASE = "https://nightx.skidded.host/s/"
     const val CLIENT_WEBSITE = "i4vvayd263"
@@ -36,7 +36,8 @@ object Client {
     const val CLIENT_FONTS = "52e4wz1ovk"
     const val CLIENT_SRG = "6bl91v1egh"
     const val CLIENT_CHAT = "§c§l>> §r"
-    val CLIENT_STATUS = if (!isBeta) "kbc8oumsjt" else "ikpo3lxafq"
+    val CLIENT_STATUS =
+        if (!isBeta) "https://raw.githubusercontent.com/Aspw-w/NightX-Client/master/web/release.txt" else "https://raw.githubusercontent.com/Aspw-w/NightX-Client/master/web/beta.txt"
 
     var isStarting = false
 

@@ -67,7 +67,7 @@ object CheckConnection {
     var isAvailable = false
     fun checkStatus() {
         val httpClient: CloseableHttpClient = HttpClients.createDefault()
-        val request = HttpGet(Client.CLIENT_BASE + Client.CLIENT_STATUS)
+        val request = HttpGet(Client.CLIENT_STATUS)
         val response = httpClient.execute(request)
         val entity = response.entity
         val content = EntityUtils.toString(entity)
