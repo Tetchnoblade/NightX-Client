@@ -17,7 +17,6 @@ import net.aspw.client.protocol.ViaPatcher
 import net.aspw.client.util.*
 import net.aspw.client.util.extensions.getDistanceToEntityBox
 import net.aspw.client.util.extensions.getNearestPointBB
-import net.aspw.client.util.misc.RandomUtils
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.util.timer.TickTimer
@@ -453,8 +452,8 @@ class KillAura : Module() {
 
             for (i in 0..360 step 60 - 40) { // You can change circle accuracy  (60 - accuracy)
                 GL11.glVertex2f(
-                    Math.cos(i * Math.PI / 180.0).toFloat() * rangeValue.get() - 0.3f,
-                    (Math.sin(i * Math.PI / 180.0).toFloat() * rangeValue.get() - 0.3f)
+                    Math.cos(i * Math.PI / 180.0).toFloat() * rangeValue.get() - 0.5f,
+                    (Math.sin(i * Math.PI / 180.0).toFloat() * rangeValue.get() - 0.5f)
                 )
             }
 
@@ -634,7 +633,7 @@ class KillAura : Module() {
                 for (entity in mc.theWorld.loadedEntityList) {
                     val distance = mc.thePlayer.getDistanceToEntityBox(entity)
 
-                    if (entity is EntityLivingBase && isEnemy(entity) && distance <= rangeValue.get() - 0.3f) {
+                    if (entity is EntityLivingBase && isEnemy(entity) && distance <= rangeValue.get() - 0.5f) {
                         attackEntity(entity)
 
                         targets += 1
@@ -833,7 +832,7 @@ class KillAura : Module() {
                     it,
                     RotationUtils.OtherRotation(
                         boundingBox, RotationUtils.getCenter(entity.entityBoundingBox), false,
-                        mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.3f, maxRange
+                        mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.5f, maxRange
                     ), (Math.random() * (maxTurnSpeed.get() - minTurnSpeed.get()) + minTurnSpeed.get()).toFloat()
                 )
             }
@@ -849,9 +848,9 @@ class KillAura : Module() {
                 false,
                 true,
                 false,
-                mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.3f,
+                mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.5f,
                 maxRange,
-                if (randomValue.get()) RandomUtils.nextFloat(14F, 18F) else RandomUtils.nextFloat(0F, 0F),
+                if (randomValue.get()) 20F else 0F,
                 false
             ) ?: return null
 

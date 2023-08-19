@@ -32,7 +32,7 @@ public abstract class MixinAbstractClientPlayer extends MixinEntityPlayer {
         final SilentView silentView = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
         final CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
         if ((silentView.getState() && silentView.getSilentValue().get() && silentView.shouldRotate() || customModel.getState() && customModel.getHideCape().get()) && Objects.equals(getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
-            callbackInfoReturnable.cancel();
+            callbackInfoReturnable.setReturnValue(new ResourceLocation("client/cape/none.png"));
             return;
         }
         if (cape.getState() && Objects.equals(getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
