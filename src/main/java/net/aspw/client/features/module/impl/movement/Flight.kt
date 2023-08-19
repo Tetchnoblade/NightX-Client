@@ -49,6 +49,7 @@ class Flight : Module() {
             "Packet",
             "Desync",
             "LatestNCP",
+            "Cubecraft",
             "NCP",
             "AAC1.9.10",
             "AAC3.0.5",
@@ -887,6 +888,20 @@ class Flight : Module() {
                     mc.gameSettings.keyBindSneak.pressed = false
                 }
                 MovementUtils.strafe(vanillaSpeed)
+            }
+
+            "cubecraft" -> {
+                mc.thePlayer.motionY = -1E-10
+                mc.thePlayer.motionX = 0.0
+                mc.thePlayer.motionZ = 0.0
+                if (mc.gameSettings.keyBindJump.isKeyDown) {
+                    mc.thePlayer.motionY += 0.4f
+                }
+                if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
+                    mc.thePlayer.motionY -= 0.4f
+                    mc.gameSettings.keyBindSneak.pressed = false
+                }
+                MovementUtils.strafe(1f)
             }
 
             "veruslowhop" -> {

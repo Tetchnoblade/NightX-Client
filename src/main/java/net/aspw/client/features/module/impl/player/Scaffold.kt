@@ -157,6 +157,9 @@ class Scaffold : Module() {
             }
         }
 
+    private val watchdogYaw: IntegerValue = object : IntegerValue("WatchdogYaw", 180, 0, 360, { rotationModeValue.get().equals("watchdog", true) }) {}
+    private val watchdogPitch: IntegerValue = object : IntegerValue("WatchdogPitch", 84, 0, 90, { rotationModeValue.get().equals("watchdog", true) }) {}
+
     private val timerValue = FloatValue("Timer", 1f, 0.1f, 1.4f)
     private val placeSlowDownValue = BoolValue("Place-SlowDown", false)
     private val speedModifierValue = FloatValue("Speed-Multiplier", 0.8f, 0f, 1.4f, "x") { placeSlowDownValue.get() }
@@ -731,8 +734,8 @@ class Scaffold : Module() {
                 speenRotation = Rotation(spinYaw, speenPitchValue.get())
                 RotationUtils.setTargetRotation(speenRotation!!)
             } else if (rotationModeValue.get().equals("watchdog", ignoreCase = true)) {
-                val yaw = MovementUtils.getRawDirection() - 180f
-                val pitch = 84f
+                val yaw = MovementUtils.getRawDirection() - watchdogYaw.get()
+                val pitch = watchdogPitch.get().toFloat()
                 RotationUtils.setTargetRotation(
                     RotationUtils.limitAngleChange(
                         RotationUtils.serverRotation!!,
@@ -1080,8 +1083,8 @@ class Scaffold : Module() {
                                     ignoreCase = true
                                 ) && (keepRotOnJumpValue.get() || !mc.gameSettings.keyBindJump.isKeyDown)
                             ) {
-                                val yaw = MovementUtils.getRawDirection() - 180f
-                                val pitch = 84f
+                                val yaw = MovementUtils.getRawDirection() - watchdogYaw.get()
+                                val pitch = watchdogPitch.get().toFloat()
                                 rotation = (RotationUtils.limitAngleChange(
                                     RotationUtils.serverRotation!!,
                                     Rotation(yaw, pitch),
