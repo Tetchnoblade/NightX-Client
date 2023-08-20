@@ -56,7 +56,7 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
         buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 22, 200, 20, "Reconnect to §7" + ServerUtils.serverData.serverIP));
         buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 100, 20, "Reconnect with Alt"));
         buttonList.add(new GuiButton(4, this.width / 2 + 2, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 98, 20, "Random Cracked"));
-        buttonList.add(new GuiButton(999, width - 184, 5, 88, 20, "Protocol Fixer"));
+        buttonList.add(new GuiButton(998, width - 94, 5, 88, 20, "Alt Manager"));
         buttonList.add(new GuiButton(1000, 4, height - 24, 68, 20, "Proxy"));
         buttonList.add(Protocol.getAsyncVersionSlider());
     }
