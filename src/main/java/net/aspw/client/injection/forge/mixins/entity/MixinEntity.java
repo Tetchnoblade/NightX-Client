@@ -7,7 +7,6 @@ import net.aspw.client.features.module.impl.movement.AntiWaterPush;
 import net.aspw.client.features.module.impl.movement.Flight;
 import net.aspw.client.features.module.impl.other.InfinitePitch;
 import net.aspw.client.protocol.Protocol;
-import net.aspw.client.protocol.ViaPatcher;
 import net.aspw.client.util.EntityUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -364,12 +363,12 @@ public abstract class MixinEntity {
         final HitBox hitBoxes = Objects.requireNonNull(Client.moduleManager.getModule(HitBox.class));
 
         if (hitBoxes.getState() && EntityUtils.isSelected(((Entity) ((Object) this)), true)) {
-            if (ViaPatcher.INSTANCE.getEntityFix() && !Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x")) {
+            if (!Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x")) {
                 callbackInfoReturnable.setReturnValue(hitBoxes.getSizeValue().get());
             } else {
                 callbackInfoReturnable.setReturnValue(0.1F + hitBoxes.getSizeValue().get());
             }
-        } else if (ViaPatcher.INSTANCE.getEntityFix() && !Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x")) {
+        } else if (!Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x")) {
             callbackInfoReturnable.setReturnValue(0.0F);
         }
     }

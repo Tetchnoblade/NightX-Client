@@ -18,7 +18,6 @@ import net.aspw.client.util.ServerUtils;
 import net.aspw.client.util.SessionUtils;
 import net.aspw.client.util.misc.RandomUtils;
 import net.aspw.client.visual.client.GuiMainMenu;
-import net.aspw.client.visual.client.GuiProtocolFixer;
 import net.aspw.client.visual.client.GuiProxyManager;
 import net.aspw.client.visual.client.altmanager.GuiAltManager;
 import net.aspw.client.visual.client.altmanager.menus.GuiLoginProgress;
@@ -57,7 +56,6 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
         buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 22, 200, 20, "Reconnect to §7" + ServerUtils.serverData.serverIP));
         buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 100, 20, "Reconnect with Alt"));
         buttonList.add(new GuiButton(4, this.width / 2 + 2, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 98, 20, "Random Cracked"));
-        buttonList.add(new GuiButton(998, width - 94, 5, 88, 20, "Alt Manager"));
         buttonList.add(new GuiButton(999, width - 184, 5, 88, 20, "Protocol Fixer"));
         buttonList.add(new GuiButton(1000, 4, height - 24, 68, 20, "Proxy"));
         buttonList.add(Protocol.getAsyncVersionSlider());
@@ -128,9 +126,6 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
                 break;
             case 1000:
                 mc.displayGuiScreen(new GuiProxyManager((GuiScreen) (Object) this));
-                break;
-            case 999:
-                mc.displayGuiScreen(new GuiProtocolFixer((GuiScreen) (Object) this));
                 break;
             case 998:
                 mc.displayGuiScreen(new GuiAltManager((GuiScreen) (Object) this));

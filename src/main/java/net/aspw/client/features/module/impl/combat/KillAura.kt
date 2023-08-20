@@ -13,7 +13,6 @@ import net.aspw.client.features.module.impl.targets.AntiBots
 import net.aspw.client.features.module.impl.targets.AntiTeams
 import net.aspw.client.features.module.impl.visual.Tracers
 import net.aspw.client.protocol.Protocol
-import net.aspw.client.protocol.ViaPatcher
 import net.aspw.client.util.*
 import net.aspw.client.util.extensions.getDistanceToEntityBox
 import net.aspw.client.util.extensions.getNearestPointBB
@@ -768,7 +767,7 @@ class KillAura : Module() {
         markEntity = entity
 
         // Attack target
-        if (ViaPatcher.killAuraFix && Protocol.versionSlider.sliderVersion.getName() != "1.8.x")
+        if (Protocol.versionSlider.sliderVersion.getName() != "1.8.x")
             mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         when (swingValue.get().lowercase(Locale.getDefault())) {
@@ -782,7 +781,7 @@ class KillAura : Module() {
             "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
         }
 
-        if (ViaPatcher.killAuraFix && Protocol.versionSlider.sliderVersion.getName() == "1.8.x")
+        if (Protocol.versionSlider.sliderVersion.getName() == "1.8.x")
             mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         if (checkSprintValue.get())
