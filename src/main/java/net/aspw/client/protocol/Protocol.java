@@ -14,8 +14,6 @@ import net.raphimc.vialoader.netty.VLLegacyPipeline;
 import net.raphimc.vialoader.util.VersionEnum;
 
 public class Protocol {
-    public final static VersionEnum NATIVE_VERSION = VersionEnum.r1_8;
-
     public static VersionEnum targetVersion = VersionEnum.r1_8;
 
     public static void start() {

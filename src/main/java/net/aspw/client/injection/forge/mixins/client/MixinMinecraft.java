@@ -6,7 +6,6 @@ import net.aspw.client.features.module.impl.other.FastPlace;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.OptiFinePlus;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
-import net.aspw.client.protocol.AttackFix;
 import net.aspw.client.protocol.Protocol;
 import net.aspw.client.util.CPSCounter;
 import net.aspw.client.util.render.RenderUtils;
@@ -26,7 +25,6 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.stream.IStream;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -199,14 +197,6 @@ public abstract class MixinMinecraft {
         if (Objects.requireNonNull(Client.moduleManager.getModule(OptiFinePlus.class)).getState() && Objects.requireNonNull(Client.moduleManager.getModule(OptiFinePlus.class)).noHitDelay.get())
             leftClickCounter = 0;
         else if (this.leftClickCounter <= 10 && this.objectMouseOver == null) leftClickCounter = 10;
-    }
-
-    @Redirect(
-            method = "clickMouse",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerControllerMP;attackEntity(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/entity/Entity;)V")
-    )
-    private void fixAttackOrder_VanillaAttack(PlayerControllerMP instance, EntityPlayer p_attackEntity_1_, Entity p_attackEntity_2_) {
-        AttackFix.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);
     }
 
     @Inject(method = "middleClickMouse", at = @At("HEAD"))
