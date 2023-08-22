@@ -1449,13 +1449,13 @@ public final class RenderUtils extends MinecraftInstance {
     }
 
     private static float drawExhiOutlined(String text, float x, float y, float borderWidth, int borderColor, int mainColor, boolean drawText) {
-        FontLoaders.Tahoma9.drawString(text, x, y - borderWidth, borderColor);
-        FontLoaders.Tahoma9.drawString(text, x, y + borderWidth, borderColor);
-        FontLoaders.Tahoma9.drawString(text, x - borderWidth, y, borderColor);
-        FontLoaders.Tahoma9.drawString(text, x + borderWidth, y, borderColor);
+        FontLoaders.Tahoma11.drawString(text, x, y - borderWidth, borderColor);
+        FontLoaders.Tahoma11.drawString(text, x, y + borderWidth, borderColor);
+        FontLoaders.Tahoma11.drawString(text, x - borderWidth, y, borderColor);
+        FontLoaders.Tahoma11.drawString(text, x + borderWidth, y, borderColor);
         if (drawText)
-            FontLoaders.Tahoma9.drawString(text, x, y, mainColor);
-        return x + FontLoaders.Tahoma9.getStringWidth(text) - 2F;
+            FontLoaders.Tahoma11.drawString(text, x, y, mainColor);
+        return x + FontLoaders.Tahoma11.getStringWidth(text) - 2F;
     }
 
     private static int getMainColor(int level) {

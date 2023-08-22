@@ -1,7 +1,6 @@
 package net.aspw.client.visual.hud.element.elements
 
 import net.aspw.client.Client
-import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -33,10 +32,12 @@ class SessionInformation(
     private val colorGreenValue2 = IntegerValue("Line-Green-2", 111, 0, 255)
     private val colorBlueValue2 = IntegerValue("Line-Blue-2", 255, 0, 255)
 
-    override fun drawElement(): Border {
-        val fontRenderer = FontLoaders.SF18
+    private val fontValue = FontValue("Font", Fonts.fontSFUI37)
 
-        val y2 = fontRenderer.height * 3 + 11.0
+    override fun drawElement(): Border {
+        val fontRenderer = fontValue.get()
+
+        val y2 = fontRenderer.FONT_HEIGHT * 3 + 11.0
         val x2 = 140.0
 
         val durationInMillis: Long = System.currentTimeMillis() - Client.playTimeStart
@@ -57,20 +58,20 @@ class SessionInformation(
         if (lineValue.get()) {
             RenderUtils.drawGradientSideways(
                 2.44,
-                fontRenderer.height + 2.5 + 0.0,
+                fontRenderer.FONT_HEIGHT + 2.5 + 0.0,
                 138.0 + -2.44,
-                fontRenderer.height + 2.5 + 1.16,
+                fontRenderer.FONT_HEIGHT + 2.5 + 1.16,
                 Color(redValue.get(), greenValue.get(), blueValue.get()).rgb,
                 Color(colorRedValue2.get(), colorGreenValue2.get(), colorBlueValue2.get()).rgb
             )
         }
         val username = mc.thePlayer.name
-        fontRenderer.drawStringWithShadow("Session Information", x2.toFloat().toDouble() / 5f, 3f.toDouble(), Color.WHITE.rgb)
-        fontRenderer.drawStringWithShadow("Play Time: $time", 2f.toDouble(), fontRenderer.height.toDouble() + 8f, Color.WHITE.rgb)
+        fontRenderer.drawStringWithShadow("Session Information", x2.toFloat() / 5f, 3f, Color.WHITE.rgb)
+        fontRenderer.drawStringWithShadow("Play Time: $time", 2f, fontRenderer.FONT_HEIGHT + 8f, Color.WHITE.rgb)
         fontRenderer.drawStringWithShadow(
             "Current ID: $username",
-            2f.toDouble(),
-            fontRenderer.height * 2f.toDouble() + 8f,
+            2f,
+            fontRenderer.FONT_HEIGHT * 2 + 8f,
             Color.WHITE.rgb
         )
         return Border(-2f, -2f, x2.toFloat(), y2.toFloat())

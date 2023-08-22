@@ -142,7 +142,7 @@ public abstract class MixinGuiButton extends Gui {
             }
 
             if (mc.currentScreen instanceof GuiMainMenu)
-                FontLoaders.SF20.drawCenteredString(this.displayString, this.xPosition + this.width / 2F, this.yPosition + (this.height - 8) / 2F, j);
+                FontLoaders.SF21.drawCenteredString(this.displayString, this.xPosition + this.width / 2F, this.yPosition + (this.height - 8) / 2F, j);
             else {
                 mc.getTextureManager().bindTexture(buttonTextures);
                 mouseDragged(mc, mouseX, mouseY);

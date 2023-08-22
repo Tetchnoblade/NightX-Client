@@ -23,6 +23,10 @@ import kotlin.math.sqrt
 @ElementInfo(name = "Radar", disableScale = true, priority = 1)
 class Radar(x: Double = 7.0, y: Double = 72.0) : Element(x, y) {
 
+    companion object {
+        private val SQRT_OF_TWO = sqrt(2f)
+    }
+
     private val blurValue = BoolValue("Blur", false)
     private val blurStrength = FloatValue("Blur-Strength", 0F, 0F, 30F)
 

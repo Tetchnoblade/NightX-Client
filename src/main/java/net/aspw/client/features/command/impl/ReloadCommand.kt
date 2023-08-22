@@ -22,6 +22,7 @@ class ReloadCommand : Command("reload", emptyArray()) {
             Client.moduleManager.generateCommand(module)
         Client.scriptManager.loadScripts()
         Client.scriptManager.enableScripts()
+        Fonts.loadFonts()
         Client.tipSoundManager = TipSoundManager()
         Client.fileManager.loadConfig(Client.fileManager.modulesConfig)
         Client.fileManager.loadConfig(Client.fileManager.valuesConfig)

@@ -22,6 +22,9 @@ class GameFontRenderer(font: Font) : FontRenderer(
 ) {
 
     var defaultFont = AWTFontRenderer(font)
+    private var boldFont = AWTFontRenderer(font.deriveFont(Font.BOLD))
+    private var italicFont = AWTFontRenderer(font.deriveFont(Font.ITALIC))
+    private var boldItalicFont = AWTFontRenderer(font.deriveFont(Font.BOLD or Font.ITALIC))
 
     val height: Int
         get() = defaultFont.height / 2
@@ -131,7 +134,14 @@ class GameFontRenderer(font: Font) : FontRenderer(
                         }
                     }
 
-                    currentFont = defaultFont
+                    currentFont = if (bold && italic)
+                        boldItalicFont
+                    else if (bold)
+                        boldFont
+                    else if (italic)
+                        italicFont
+                    else
+                        defaultFont
 
                     currentFont.drawString(
                         if (randomCase) ColorUtils.randomMagicText(words) else words,
@@ -209,7 +219,14 @@ class GameFontRenderer(font: Font) : FontRenderer(
                         }
                     }
 
-                    currentFont = defaultFont
+                    currentFont = if (bold && italic)
+                        boldItalicFont
+                    else if (bold)
+                        boldFont
+                    else if (italic)
+                        italicFont
+                    else
+                        defaultFont
 
                     width += currentFont.getStringWidth(words)
                 }

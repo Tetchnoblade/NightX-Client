@@ -106,7 +106,7 @@ public abstract class FontLoaders {
         Font font;
         try {
             InputStream is = Minecraft.getMinecraft().getResourceManager()
-                    .getResource(new ResourceLocation("client/font/sfui.ttf")).getInputStream();
+                    .getResource(new ResourceLocation("client/font/insfui.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
         } catch (Exception ex) {
@@ -121,7 +121,7 @@ public abstract class FontLoaders {
         Font font;
         try {
             InputStream is = Minecraft.getMinecraft().getResourceManager()
-                    .getResource(new ResourceLocation("client/font/icons.ttf")).getInputStream();
+                    .getResource(new ResourceLocation("client/font/inicons.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
         } catch (Exception ex) {
@@ -137,7 +137,7 @@ public abstract class FontLoaders {
         Font font;
         try {
             InputStream is = Minecraft.getMinecraft().getResourceManager()
-                    .getResource(new ResourceLocation("client/font/tahoma.ttf")).getInputStream();
+                    .getResource(new ResourceLocation("client/font/intahoma.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
         } catch (Exception ex) {
@@ -152,7 +152,7 @@ public abstract class FontLoaders {
         Font font;
         try {
             InputStream is = Minecraft.getMinecraft().getResourceManager()
-                    .getResource(new ResourceLocation("client/font/tahomabold.ttf")).getInputStream();
+                    .getResource(new ResourceLocation("client/font/intahomabold.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
         } catch (Exception ex) {
@@ -167,7 +167,7 @@ public abstract class FontLoaders {
         Font font;
         try {
             InputStream is = Minecraft.getMinecraft().getResourceManager()
-                    .getResource(new ResourceLocation("client/font/check.ttf")).getInputStream();
+                    .getResource(new ResourceLocation("client/font/incheck.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
         } catch (Exception ex) {
@@ -182,7 +182,7 @@ public abstract class FontLoaders {
         Font font;
         try {
             InputStream is = Minecraft.getMinecraft().getResourceManager()
-                    .getResource(new ResourceLocation("client/font/novicon.ttf")).getInputStream();
+                    .getResource(new ResourceLocation("client/font/innovicon.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
         } catch (Exception ex) {
@@ -197,7 +197,7 @@ public abstract class FontLoaders {
         Font font;
         try {
             InputStream is = Minecraft.getMinecraft().getResourceManager()
-                    .getResource(new ResourceLocation("client/font/other.ttf")).getInputStream();
+                    .getResource(new ResourceLocation("client/font/inother.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
         } catch (Exception ex) {
@@ -212,7 +212,7 @@ public abstract class FontLoaders {
         Font font;
         try {
             InputStream is = Minecraft.getMinecraft().getResourceManager()
-                    .getResource(new ResourceLocation("client/font/latobold.ttf")).getInputStream();
+                    .getResource(new ResourceLocation("client/font/inlatobold.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
         } catch (Exception ex) {
@@ -227,7 +227,7 @@ public abstract class FontLoaders {
         Font font;
         try {
             InputStream is = Minecraft.getMinecraft().getResourceManager()
-                    .getResource(new ResourceLocation("client/font/raleway.ttf")).getInputStream();
+                    .getResource(new ResourceLocation("client/font/inraleway.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
         } catch (Exception ex) {

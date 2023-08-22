@@ -4,7 +4,6 @@ import net.aspw.client.Client
 import net.aspw.client.features.module.impl.visual.ColorMixer
 import net.aspw.client.features.module.impl.visual.Hud
 import net.aspw.client.util.*
-import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.BlurUtils
 import net.aspw.client.util.render.ColorUtils
 import net.aspw.client.util.render.RenderUtils
@@ -52,6 +51,7 @@ class Text(
 
             text.displayString.set("%clientName%")
             text.shadow.set(true)
+            text.fontValue.set(Fonts.fontSFUI35)
             text.setColor(Color(255, 255, 255))
 
             return text
@@ -82,6 +82,7 @@ class Text(
     private val distanceValue = IntegerValue("Line-Distance", 0, 0, 400)
     private val gradientAmountValue = IntegerValue("Gradient-Amount", 25, 1, 50)
     private val shadow = BoolValue("Shadow", true)
+    private var fontValue = FontValue("Font", Fonts.fontSFUI35)
 
     private var editMode = false
     private var editTicks = 0
@@ -196,7 +197,7 @@ class Text(
     override fun drawElement(): Border {
         val color = Color(redValue.get(), greenValue.get(), blueValue.get(), alphaValue.get()).rgb
 
-        val fontRenderer = FontLoaders.SF20
+        val fontRenderer = fontValue.get()
 
         val rainbowType = rainbowList.get()
 
@@ -226,7 +227,7 @@ class Text(
                 floatX * scale - 2F * scale,
                 floatY * scale - 2F * scale,
                 (floatX + fontRenderer.getStringWidth(displayText) + 2F) * scale,
-                (floatY + fontRenderer.height) * scale,
+                (floatY + fontRenderer.FONT_HEIGHT) * scale,
                 blurStrength.get()
             )
             GL11.glPopMatrix()
@@ -239,7 +240,7 @@ class Text(
                 -2F,
                 -2F,
                 fontRenderer.getStringWidth(displayText) + 2F,
-                fontRenderer.height + 0F,
+                fontRenderer.FONT_HEIGHT + 0F,
                 Color(bgredValue.get(), bggreenValue.get(), bgblueValue.get(), bgalphaValue.get())
             )
         }
@@ -249,7 +250,7 @@ class Text(
                 -4F,
                 if (lineValue.get()) -5F else -4F,
                 fontRenderer.getStringWidth(displayText) + 4F,
-                fontRenderer.height + 2F
+                fontRenderer.FONT_HEIGHT + 2F
             )
         }
 
@@ -262,11 +263,11 @@ class Text(
         val mixerColor = ColorMixer.getMixedColor(0, cRainbowSecValue.get()).rgb
 
         if (lineValue.get()) {
-            val barLength = (fontRenderer.getStringWidth(displayText).toDouble() + 4F)
+            val barLength = (fontRenderer.getStringWidth(displayText) + 4F).toDouble()
 
             for (i in 0..(gradientAmountValue.get() - 1)) {
-                val barStart = i.toDouble() / gradientAmountValue.get() * barLength
-                val barEnd = (i + 1).toDouble() / gradientAmountValue.get() * barLength
+                val barStart = i.toDouble() / gradientAmountValue.get().toDouble() * barLength
+                val barEnd = (i + 1).toDouble() / gradientAmountValue.get().toDouble() * barLength
                 RenderUtils.drawGradientSideways(
                     -2.0 + barStart, -3.0, -2.0 + barEnd, -2.0,
                     when (rainbowType) {
@@ -334,7 +335,7 @@ class Text(
         }
 
         fontRenderer.drawString(
-            displayText, 0F.toDouble(), 0F.toDouble(), when (rainbowType) {
+            displayText, 0F, 0F, when (rainbowType) {
                 "CRainbow" -> RenderUtils.getRainbowOpaque(
                     cRainbowSecValue.get(),
                     saturationValue.get(),
@@ -353,8 +354,8 @@ class Text(
         if (editMode && mc.currentScreen is GuiHudDesigner) {
             if (editTicks <= 40)
                 fontRenderer.drawString(
-                    "_", fontRenderer.getStringWidth(displayText).toDouble() + 2F,
-                    0F.toDouble(), when (rainbowType) {
+                    "_", fontRenderer.getStringWidth(displayText) + 2F,
+                    0F, when (rainbowType) {
                         "CRainbow" -> RenderUtils.getRainbowOpaque(
                             cRainbowSecValue.get(),
                             saturationValue.get(),
@@ -375,15 +376,15 @@ class Text(
                 suggestion.forEachIndexed { index, suggest ->
                     RenderUtils.drawRect(
                         fontRenderer.getStringWidth(displayText) + 2F,
-                        fontRenderer.height * index.toFloat() + 5F,
+                        fontRenderer.FONT_HEIGHT * index.toFloat() + 5F,
                         fontRenderer.getStringWidth(displayText) + 6F + totalLength,
-                        fontRenderer.height * index.toFloat() + 5F + fontRenderer.height,
+                        fontRenderer.FONT_HEIGHT * index.toFloat() + 5F + fontRenderer.FONT_HEIGHT,
                         if (index == pointer) Color(90, 90, 90, 120).rgb else Color(0, 0, 0, 120).rgb
                     )
                     fontRenderer.drawStringWithShadow(
                         suggest,
-                        fontRenderer.getStringWidth(displayText).toDouble() + 4F,
-                        fontRenderer.height.toDouble() * index.toFloat() + 5F,
+                        fontRenderer.getStringWidth(displayText) + 4F,
+                        fontRenderer.FONT_HEIGHT * index.toFloat() + 5F,
                         -1
                     )
                 }
@@ -415,21 +416,21 @@ class Text(
                 -2F,
                 -2F,
                 fontRenderer.getStringWidth(displayText) + 2F,
-                fontRenderer.height.toFloat()
+                fontRenderer.FONT_HEIGHT.toFloat()
             )
 
             Side.Horizontal.MIDDLE -> Border(
                 -fontRenderer.getStringWidth(displayText).toFloat() / 2F,
                 -2F,
                 fontRenderer.getStringWidth(displayText).toFloat() / 2F + 2F,
-                fontRenderer.height.toFloat()
+                fontRenderer.FONT_HEIGHT.toFloat()
             )
 
             Side.Horizontal.RIGHT -> Border(
                 2F,
                 -2F,
                 -fontRenderer.getStringWidth(displayText) - 2F,
-                fontRenderer.height.toFloat()
+                fontRenderer.FONT_HEIGHT.toFloat()
             )
         }
     }

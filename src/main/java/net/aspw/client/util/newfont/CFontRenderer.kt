@@ -16,7 +16,6 @@ class CFontRenderer(font: Font?, antiAlias: Boolean, fractionalMetrics: Boolean)
     protected var italicChars = arrayOfNulls<CharData>(256)
     protected var boldItalicChars = arrayOfNulls<CharData>(256)
     private val colorCode = IntArray(32)
-    private val colorcodeIdentifiers = "0123456789abcdefklmnor"
     protected var texBold: DynamicTexture? = null
     protected var texItalic: DynamicTexture? = null
     protected var texItalicBold: DynamicTexture? = null
@@ -26,7 +25,9 @@ class CFontRenderer(font: Font?, antiAlias: Boolean, fractionalMetrics: Boolean)
         setupBoldItalicIDs()
     }
 
-    fun drawString(text: String, x: Float, y: Float, color: Int) = this.drawString(text, x.toDouble(), y.toDouble(), color, false)
+    fun drawString(text: String, x: Float, y: Float, color: Int): Float {
+        return this.drawString(text, x.toDouble(), y.toDouble(), color, false)
+    }
 
     fun drawStringWithShadow(text: String?, x: Double, y: Double, color: Int): Float {
         val shadowWidth = drawString(text, x + 0.5, y + 0.5, color, true)

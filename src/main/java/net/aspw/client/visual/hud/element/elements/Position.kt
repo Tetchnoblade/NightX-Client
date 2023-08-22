@@ -1,7 +1,6 @@
 package net.aspw.client.visual.hud.element.elements
 
 import net.aspw.client.features.module.impl.visual.ColorMixer
-import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.ColorUtils
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.*
@@ -39,6 +38,7 @@ class Position(
     private val brightnessValue = FloatValue("Brightness", 1f, 0f, 1f)
     private val cRainbowSecValue = IntegerValue("Seconds", 2, 1, 10)
     private val shadow = BoolValue("Shadow", true)
+    private var fontValue = FontValue("Font", Fonts.fontSFUI35)
 
     private var editMode = false
     private var editTicks = 0
@@ -56,7 +56,7 @@ class Position(
     override fun drawElement(): Border {
         val color = Color(redValue.get(), greenValue.get(), blueValue.get(), alphaValue.get()).rgb
 
-        val fontRenderer = FontLoaders.SF20
+        val fontRenderer = fontValue.get()
 
         val rainbowType = rainbowList.get()
 
@@ -102,7 +102,7 @@ class Position(
         fontRenderer.drawString(
             "X: " + DECIMAL_FORMAT_INT.format(mc.thePlayer.posX) + ", Y: " + DECIMAL_FORMAT_INT.format(mc.thePlayer.posY) + ", Z: " + DECIMAL_FORMAT_INT.format(
                 mc.thePlayer.posZ
-            ), 0F.toDouble(), 0F.toDouble(), when (rainbowType) {
+            ), 0F, 0F, when (rainbowType) {
                 "CRainbow" -> RenderUtils.getRainbowOpaque(
                     cRainbowSecValue.get(),
                     saturationValue.get(),
@@ -126,8 +126,8 @@ class Position(
                         "X: " + DECIMAL_FORMAT_INT.format(mc.thePlayer.posX) + ", Y: " + DECIMAL_FORMAT_INT.format(mc.thePlayer.posY) + ", Z: " + DECIMAL_FORMAT_INT.format(
                             mc.thePlayer.posZ
                         )
-                    ).toDouble() + 2F,
-                    0F.toDouble(),
+                    ) + 2F,
+                    0F,
                     when (rainbowType) {
                         "CRainbow" -> RenderUtils.getRainbowOpaque(
                             cRainbowSecValue.get(),
@@ -154,13 +154,13 @@ class Position(
                                 mc.thePlayer.posY
                             ) + ", Z: " + DECIMAL_FORMAT_INT.format(mc.thePlayer.posZ)
                         ) + 2F,
-                        fontRenderer.height * index.toFloat() + 5F,
+                        fontRenderer.FONT_HEIGHT * index.toFloat() + 5F,
                         fontRenderer.getStringWidth(
                             "X: " + DECIMAL_FORMAT_INT.format(mc.thePlayer.posX) + ", Y: " + DECIMAL_FORMAT_INT.format(
                                 mc.thePlayer.posY
                             ) + ", Z: " + DECIMAL_FORMAT_INT.format(mc.thePlayer.posZ)
                         ) + 6F + totalLength,
-                        fontRenderer.height * index.toFloat() + 5F + fontRenderer.height,
+                        fontRenderer.FONT_HEIGHT * index.toFloat() + 5F + fontRenderer.FONT_HEIGHT,
                         if (index == pointer) Color(90, 90, 90, 120).rgb else Color(0, 0, 0, 120).rgb
                     )
                     fontRenderer.drawStringWithShadow(
@@ -169,8 +169,8 @@ class Position(
                             "X: " + DECIMAL_FORMAT_INT.format(mc.thePlayer.posX) + ", Y: " + DECIMAL_FORMAT_INT.format(
                                 mc.thePlayer.posY
                             ) + ", Z: " + DECIMAL_FORMAT_INT.format(mc.thePlayer.posZ)
-                        ).toDouble() + 4F,
-                        fontRenderer.height * index.toFloat().toDouble() + 5F,
+                        ) + 4F,
+                        fontRenderer.FONT_HEIGHT * index.toFloat() + 5F,
                         -1
                     )
                 }
@@ -222,7 +222,7 @@ class Position(
                         mc.thePlayer.posY
                     ) + ", Z: " + DECIMAL_FORMAT_INT.format(mc.thePlayer.posZ)
                 ) + 2F,
-                fontRenderer.height.toFloat()
+                fontRenderer.FONT_HEIGHT.toFloat()
             )
 
             Side.Horizontal.MIDDLE -> Border(
@@ -237,7 +237,7 @@ class Position(
                         mc.thePlayer.posY
                     ) + ", Z: " + DECIMAL_FORMAT_INT.format(mc.thePlayer.posZ)
                 ).toFloat() / 2F + 2F,
-                fontRenderer.height.toFloat()
+                fontRenderer.FONT_HEIGHT.toFloat()
             )
 
             Side.Horizontal.RIGHT -> Border(
@@ -248,7 +248,7 @@ class Position(
                         mc.thePlayer.posY
                     ) + ", Z: " + DECIMAL_FORMAT_INT.format(mc.thePlayer.posZ)
                 ) - 2F,
-                fontRenderer.height.toFloat()
+                fontRenderer.FONT_HEIGHT.toFloat()
             )
         }
     }

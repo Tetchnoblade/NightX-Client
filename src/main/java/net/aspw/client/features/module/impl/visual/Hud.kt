@@ -33,7 +33,7 @@ class Hud : Module() {
     val customFov = BoolValue("CustomFov", false)
     val customFovModifier = FloatValue("Fov", 1.3F, 0.8F, 1.5F, { customFov.get() })
     val fontChatValue = BoolValue("FontChat", false)
-    val fontType = FontValue("Font", Fonts.minecraftFont, { fontChatValue.get() })
+    val fontType = FontValue("Font", Fonts.fontSFUI37, { fontChatValue.get() })
     val chatRectValue = BoolValue("ChatRect", true)
     val chatAnimationValue = BoolValue("Chat-Animation", true)
     val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.06F, 0.01F, 0.5F, { chatAnimationValue.get() })

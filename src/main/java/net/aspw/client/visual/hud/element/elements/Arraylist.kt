@@ -3,7 +3,6 @@ package net.aspw.client.visual.hud.element.elements
 import net.aspw.client.Client
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.impl.visual.ColorMixer
-import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.*
 import net.aspw.client.value.*
 import net.aspw.client.visual.font.AWTFontRenderer
@@ -89,6 +88,7 @@ class Arraylist(
     private val caseValue = ListValue("Case", arrayOf("None", "Lower", "Upper"), "None")
     private val spaceValue = FloatValue("Space", 0F, 0F, 5F)
     private val tagsArrayColor = BoolValue("TagsArrayColor", false)
+    private val fontValue = FontValue("Font", Fonts.fontSFUI35)
 
     private var x2 = 0
     private var y2 = 0F
@@ -97,7 +97,7 @@ class Arraylist(
     private var sortedModules = emptyList<Module>()
 
     override fun drawElement(): Border? {
-        val fontRenderer = FontLoaders.SF20
+        val fontRenderer = fontValue.get()
         val counter = intArrayOf(0)
 
         AWTFontRenderer.assumeNonVolatile = true
@@ -193,7 +193,7 @@ class Arraylist(
 
             if (module.array && module.slide > 0F) {
                 if (vAnimation.get().equals("Rise", ignoreCase = true) && !module.state)
-                    yPos = -fontRenderer.height - textY
+                    yPos = -fontRenderer.FONT_HEIGHT - textY
 
                 val size = modules.size * 2.0E-2f
 
@@ -421,8 +421,8 @@ class Arraylist(
 
                     fontRenderer.drawString(
                         displayString,
-                        xPos.toDouble() - if (rectRightValue.get().equals("right", true)) 1 else 0,
-                        module.arrayY + textY.toDouble(),
+                        xPos - if (rectRightValue.get().equals("right", true)) 1 else 0,
+                        module.arrayY + textY,
                         when {
                             colorMode.equals("Random", ignoreCase = true) -> moduleColor
                             colorMode.equals("Sky", ignoreCase = true) -> Sky
@@ -694,7 +694,7 @@ class Arraylist(
                     )
 
                     fontRenderer.drawString(
-                        displayString, xPos.toDouble(), module.arrayY + textY.toDouble(), when {
+                        displayString, xPos, module.arrayY + textY, when {
                             colorMode.equals("Random", ignoreCase = true) -> moduleColor
                             colorMode.equals("Sky", ignoreCase = true) -> Sky
                             colorMode.equals("CRainbow", ignoreCase = true) -> CRainbow
@@ -773,9 +773,9 @@ class Arraylist(
             .filter { it.array && (if (hAnimation.get().equals("none", ignoreCase = true)) it.state else it.slide > 0) }
         else Client.moduleManager.modules
             .filter { it.array && (if (hAnimation.get().equals("none", ignoreCase = true)) it.state else it.slide > 0) }
-            .sortedBy { -FontLoaders.SF18.getStringWidth(getModName(it)) }
+            .sortedBy { -fontValue.get().getStringWidth(getModName(it)) }
         sortedModules = if (abcOrder.get()) Client.moduleManager.modules.toList()
-        else Client.moduleManager.modules.sortedBy { -FontLoaders.SF18.getStringWidth(getModName(it)) }.toList()
+        else Client.moduleManager.modules.sortedBy { -fontValue.get().getStringWidth(getModName(it)) }.toList()
     }
 
     private fun getModTag(m: Module): String {

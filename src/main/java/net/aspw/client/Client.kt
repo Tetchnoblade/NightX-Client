@@ -13,6 +13,7 @@ import net.aspw.client.util.ClassUtils.hasForge
 import net.aspw.client.util.connection.CheckConnection
 import net.aspw.client.util.misc.sound.TipSoundManager
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
+import net.aspw.client.visual.font.Fonts
 import net.aspw.client.visual.hud.HUD
 import net.aspw.client.visual.hud.HUD.Companion.createDefault
 import net.minecraft.util.ResourceLocation
@@ -155,6 +156,9 @@ object Client {
                 }
             }
         }
+
+        // Load client fonts
+        Fonts.loadFonts()
 
         ClientUtils.getLogger().info("Successfully loaded $CLIENT_BEST in ${System.currentTimeMillis() - lastTick}ms.")
 

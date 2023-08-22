@@ -2,7 +2,6 @@ package net.aspw.client.visual.client.clickgui.dropdown.style.styles
 
 import net.aspw.client.features.module.impl.visual.Gui.Companion.generateColor
 import net.aspw.client.util.block.BlockUtils.getBlockName
-import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.*
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
@@ -40,88 +39,88 @@ class DropDown : Style() {
                     panel.getY() + 18 + panel.fade).toFloat(), Color(26, 26, 26).rgb
         )
         GlStateManager.resetColor()
-        FontLoaders.SF19.drawStringWithShadow(
-            panel.name.lowercase(Locale.getDefault()),
-            (panel.getX() + 2).toFloat().toDouble(),
-            (panel.getY() + 6).toFloat().toDouble(),
+        Fonts.fontSFUI37.drawStringWithShadow(
+            "§l" + panel.name.lowercase(Locale.getDefault()),
+            (panel.getX() + 2).toFloat(),
+            (panel.getY() + 6).toFloat(),
             Color(255, 255, 255, 200).rgb
         )
         if (panel.open) {
-            FontLoaders.icon35.drawStringWithShadow(
+            Fonts.marks.drawStringWithShadow(
                 "d",
-                (panel.getX() + 85).toFloat().toDouble(),
-                (panel.getY() + 4).toFloat().toDouble(),
+                (panel.getX() + 85).toFloat(),
+                (panel.getY() + 4).toFloat(),
                 Color(255, 255, 255, 200).rgb
             )
         } else {
-            FontLoaders.icon35.drawStringWithShadow(
+            Fonts.marks.drawStringWithShadow(
                 "d",
-                (panel.getX() + 85).toFloat().toDouble(),
-                (panel.getY() + 4).toFloat().toDouble(),
+                (panel.getX() + 85).toFloat(),
+                (panel.getY() + 4).toFloat(),
                 Color(255, 255, 255, 80).rgb
             )
         }
         if (panel.name.equals("combat", true)) {
-            FontLoaders.icon35.drawStringWithShadow(
+            Fonts.icons.drawStringWithShadow(
                 "J",
-                (panel.getX() + 38).toFloat().toDouble(),
-                (panel.getY() + 4).toFloat().toDouble(),
+                (panel.getX() + 38).toFloat(),
+                (panel.getY() + 4).toFloat(),
                 Color(255, 255, 255, 200).rgb
             )
         }
         if (panel.name.equals("movement", true)) {
-            FontLoaders.icon35.drawStringWithShadow(
+            Fonts.icons.drawStringWithShadow(
                 "G",
-                (panel.getX() + 52).toFloat().toDouble(),
-                (panel.getY() + 4).toFloat().toDouble(),
+                (panel.getX() + 52).toFloat(),
+                (panel.getY() + 4).toFloat(),
                 Color(255, 255, 255, 200).rgb
             )
         }
         if (panel.name.equals("player", true)) {
-            FontLoaders.icon35.drawStringWithShadow(
+            Fonts.icons.drawStringWithShadow(
                 "F",
-                (panel.getX() + 34).toFloat().toDouble(),
-                (panel.getY() + 4).toFloat().toDouble(),
+                (panel.getX() + 34).toFloat(),
+                (panel.getY() + 4).toFloat(),
                 Color(255, 255, 255, 200).rgb
             )
         }
         if (panel.name.equals("exploit", true)) {
-            FontLoaders.icon35.drawStringWithShadow(
+            Fonts.icons.drawStringWithShadow(
                 "A",
-                (panel.getX() + 38).toFloat().toDouble(),
-                (panel.getY() + 4).toFloat().toDouble(),
+                (panel.getX() + 38).toFloat(),
+                (panel.getY() + 4).toFloat(),
                 Color(255, 255, 255, 200).rgb
             )
         }
         if (panel.name.equals("other", true)) {
-            FontLoaders.icon35.drawStringWithShadow(
+            Fonts.icons.drawStringWithShadow(
                 "B",
-                (panel.getX() + 31).toFloat().toDouble(),
-                (panel.getY() + 4).toFloat().toDouble(),
+                (panel.getX() + 31).toFloat(),
+                (panel.getY() + 4).toFloat(),
                 Color(255, 255, 255, 200).rgb
             )
         }
         if (panel.name.equals("visual", true)) {
-            FontLoaders.icon35.drawStringWithShadow(
+            Fonts.icons.drawStringWithShadow(
                 "H",
-                (panel.getX() + 33).toFloat().toDouble(),
-                (panel.getY() + 4).toFloat().toDouble(),
+                (panel.getX() + 33).toFloat(),
+                (panel.getY() + 4).toFloat(),
                 Color(255, 255, 255, 200).rgb
             )
         }
         if (panel.name.equals("targets", true)) {
-            FontLoaders.icon35.drawStringWithShadow(
+            Fonts.icons.drawStringWithShadow(
                 "I",
-                (panel.getX() + 37).toFloat().toDouble(),
-                (panel.getY() + 4).toFloat().toDouble(),
+                (panel.getX() + 37).toFloat(),
+                (panel.getY() + 4).toFloat(),
                 Color(255, 255, 255, 200).rgb
             )
         }
         if (panel.name.equals("beta", true)) {
-            FontLoaders.icon35.drawStringWithShadow(
+            Fonts.icons.drawStringWithShadow(
                 "C",
-                (panel.getX() + 30).toFloat().toDouble(),
-                (panel.getY() + 4).toFloat().toDouble(),
+                (panel.getX() + 30).toFloat(),
+                (panel.getY() + 4).toFloat(),
                 Color(255, 255, 255, 200).rgb
             )
         }
@@ -139,9 +138,9 @@ class DropDown : Style() {
             ).rgb
         )
         GlStateManager.resetColor()
-        FontLoaders.SF19.drawString(
-            buttonElement.displayName.lowercase(Locale.getDefault()), buttonElement.x + 3f,
-            buttonElement.y + 6f, Color.WHITE.rgb
+        Fonts.fontSFUI37.drawString(
+            buttonElement.displayName.lowercase(Locale.getDefault()), buttonElement.x + 3,
+            buttonElement.y + 6, Color.WHITE.rgb
         )
     }
 
@@ -163,23 +162,23 @@ class DropDown : Style() {
         )
         val guiColor = generateColor().rgb
         GlStateManager.resetColor()
-        FontLoaders.SF19.drawString(
-            moduleElement.displayName.lowercase(Locale.getDefault()), moduleElement.x + 3f,
-            moduleElement.y + 7f, Color(200, 200, 200, 255).rgb
+        Fonts.fontSFUI37.drawString(
+            moduleElement.displayName.lowercase(Locale.getDefault()), moduleElement.x + 3,
+            moduleElement.y + 7, Color(200, 200, 200, 255).rgb
         )
         val moduleValues = moduleElement.module.values
         if (!moduleValues.isEmpty()) {
             if (moduleElement.isShowSettings) {
-                FontLoaders.logog38.drawString(
-                    "-", moduleElement.x + moduleElement.width - 9f,
-                    moduleElement.y + moduleElement.height / 10f, Color(124, 252, 0, 255).rgb
+                Fonts.font72.drawString(
+                    "-", moduleElement.x + moduleElement.width - 9,
+                    moduleElement.y + moduleElement.height / 10, Color(124, 252, 0, 255).rgb
                 )
                 var yPos = 2
                 for (value in moduleValues) {
                     if (!value.canDisplay.invoke()) continue
                     if (value is BoolValue) {
                         val text = value.name
-                        val textWidth = FontLoaders.SF19.getStringWidth(text).toFloat()
+                        val textWidth = Fonts.fontSFUI37.getStringWidth(text).toFloat()
                         if (moduleElement.settingsWidth < textWidth + 8) moduleElement.settingsWidth = textWidth + 8
                         RenderUtils.drawRect(
                             (moduleElement.width + 4).toFloat(),
@@ -197,15 +196,15 @@ class DropDown : Style() {
                             }
                         }
                         GlStateManager.resetColor()
-                        FontLoaders.SF19.drawString(
-                            text, moduleElement.width + 6f,
-                            yPos + 4f, if (value.get()) guiColor else Int.MAX_VALUE
+                        Fonts.fontSFUI37.drawString(
+                            text, moduleElement.width + 6,
+                            yPos + 4, if (value.get()) guiColor else Int.MAX_VALUE
                         )
                         yPos += 12
                     } else if (value is ListValue) {
                         val listValue = value
                         val text = value.name
-                        val textWidth = FontLoaders.SF19.getStringWidth(text).toFloat()
+                        val textWidth = Fonts.fontSFUI37.getStringWidth(text).toFloat()
                         if (moduleElement.settingsWidth < textWidth + 16) moduleElement.settingsWidth = textWidth + 16
                         RenderUtils.drawRect(
                             (moduleElement.width + 4).toFloat(),
@@ -215,17 +214,17 @@ class DropDown : Style() {
                             Color(26, 26, 26).rgb
                         )
                         GlStateManager.resetColor()
-                        FontLoaders.SF19.drawString(
-                            "§c$text",
-                            moduleElement.width + 6f,
-                            yPos + 4f,
+                        Fonts.fontSFUI37.drawString(
+                            "§c" + text,
+                            moduleElement.width + 6,
+                            yPos + 4,
                             0xffffff
                         )
-                        FontLoaders.SF19.drawString(
+                        Fonts.fontSFUI37.drawString(
                             if (listValue.openList) "-" else "+",
                             (moduleElement.width +
-                                    moduleElement.settingsWidth - if (listValue.openList) 5 else 6).toFloat(),
-                            yPos + 4f,
+                                    moduleElement.settingsWidth - if (listValue.openList) 5 else 6).toInt(),
+                            yPos + 4,
                             0xffffff
                         )
                         if (mouseX >= moduleElement.width + 4 && mouseX <= moduleElement.width +
@@ -237,7 +236,7 @@ class DropDown : Style() {
                         }
                         yPos += 12
                         for (valueOfList in listValue.values) {
-                            val textWidth2 = FontLoaders.SF19.getStringWidth(">$valueOfList").toFloat()
+                            val textWidth2 = Fonts.fontSFUI37.getStringWidth(">$valueOfList").toFloat()
                             if (moduleElement.settingsWidth < textWidth2 + 12) moduleElement.settingsWidth =
                                 textWidth2 + 12
                             if (listValue.openList) {
@@ -256,12 +255,12 @@ class DropDown : Style() {
                                     }
                                 }
                                 GlStateManager.resetColor()
-                                FontLoaders.SF19.drawString(">", moduleElement.width + 6f, yPos + 4f, Int.MAX_VALUE)
-                                FontLoaders.SF19.drawString(
+                                Fonts.fontSFUI37.drawString(">", moduleElement.width + 6, yPos + 4, Int.MAX_VALUE)
+                                Fonts.fontSFUI37.drawString(
                                     valueOfList.uppercase(Locale.getDefault()),
-                                    moduleElement.width + 14f,
-                                    yPos + 4f,
-                                    if (listValue.get()
+                                    moduleElement.width + 14,
+                                    yPos + 4,
+                                    if (listValue.get() != null && listValue.get()
                                             .equals(valueOfList, ignoreCase = true)
                                     ) guiColor else Int.MAX_VALUE
                                 )
@@ -271,7 +270,7 @@ class DropDown : Style() {
                     } else if (value is FloatValue) {
                         val floatValue = value
                         val text = value.name + "§f: §c" + round(floatValue.get())
-                        val textWidth = FontLoaders.SF19.getStringWidth(text).toFloat()
+                        val textWidth = Fonts.fontSFUI37.getStringWidth(text).toFloat()
                         if (moduleElement.settingsWidth < textWidth + 8) moduleElement.settingsWidth = textWidth + 8
                         RenderUtils.drawRect(
                             (moduleElement.width + 4).toFloat(),
@@ -301,10 +300,10 @@ class DropDown : Style() {
                             }
                         }
                         GlStateManager.resetColor()
-                        FontLoaders.SF19.drawString(
+                        Fonts.fontSFUI37.drawString(
                             text,
-                            moduleElement.width + 6f,
-                            yPos + 4f,
+                            moduleElement.width + 6,
+                            yPos + 4,
                             0xffffff
                         )
                         yPos += 22
@@ -312,7 +311,7 @@ class DropDown : Style() {
                         val integerValue = value
                         val text =
                             value.name + "§f: §c" + if (value is BlockValue) getBlockName(integerValue.get()) + " (" + integerValue.get() + ")" else integerValue.get()
-                        val textWidth = FontLoaders.SF19.getStringWidth(text).toFloat()
+                        val textWidth = Fonts.fontSFUI37.getStringWidth(text).toFloat()
                         if (moduleElement.settingsWidth < textWidth + 8) moduleElement.settingsWidth = textWidth + 8
                         RenderUtils.drawRect(
                             (moduleElement.width + 4).toFloat(),
@@ -349,10 +348,10 @@ class DropDown : Style() {
                             }
                         }
                         GlStateManager.resetColor()
-                        FontLoaders.SF19.drawString(
+                        Fonts.fontSFUI37.drawString(
                             text,
-                            moduleElement.width + 6f,
-                            yPos + 4f,
+                            moduleElement.width + 6,
+                            yPos + 4,
                             0xffffff
                         )
                         yPos += 22
@@ -378,13 +377,13 @@ class DropDown : Style() {
                                     objects[0].toString() + if (objects[1] as Int != -1) " - " + objects[1] else ""
                             }
                         }
-                        FontLoaders.SF19.drawString(
+                        Fonts.fontSFUI37.drawString(
                             displayString,
-                            moduleElement.width + 6f,
-                            yPos + 4f,
+                            moduleElement.width + 6,
+                            yPos + 4,
                             Color.WHITE.rgb
                         )
-                        val stringWidth = FontLoaders.SF19.getStringWidth(displayString)
+                        val stringWidth = Fonts.fontSFUI37.getStringWidth(displayString)
                         if (moduleElement.settingsWidth < stringWidth + 8) moduleElement.settingsWidth =
                             (stringWidth + 8).toFloat()
                         if ((Mouse.isButtonDown(0) && !mouseDown || Mouse.isButtonDown(1) && !rightMouseDown) && mouseX >= moduleElement.width +
@@ -421,7 +420,7 @@ class DropDown : Style() {
                         yPos += 11
                     } else {
                         val text = value.name + "§f: §c" + value.get()
-                        val textWidth = FontLoaders.SF19.getStringWidth(text).toFloat()
+                        val textWidth = Fonts.fontSFUI37.getStringWidth(text).toFloat()
                         if (moduleElement.settingsWidth < textWidth + 8) moduleElement.settingsWidth = textWidth + 8
                         RenderUtils.drawRect(
                             (moduleElement.width + 4).toFloat(),
@@ -431,7 +430,7 @@ class DropDown : Style() {
                             Color(26, 26, 26).rgb
                         )
                         GlStateManager.resetColor()
-                        FontLoaders.SF19.drawString(text, moduleElement.width + 6f, yPos + 4f, 0xffffff)
+                        Fonts.fontSFUI37.drawString(text, moduleElement.width + 6, yPos + 4, 0xffffff)
                         yPos += 12
                     }
                 }
@@ -448,9 +447,9 @@ class DropDown : Style() {
                     0
                 )
             } else {
-                FontLoaders.logog38.drawString(
-                    "+", moduleElement.x + moduleElement.width - 10f,
-                    moduleElement.y + moduleElement.height / 10f, Color(160, 160, 160, 120).rgb
+                Fonts.font72.drawString(
+                    "+", moduleElement.x + moduleElement.width - 10,
+                    moduleElement.y + moduleElement.height / 10, Color(160, 160, 160, 120).rgb
                 )
             }
         }
