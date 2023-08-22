@@ -217,8 +217,6 @@ public abstract class MixinMinecraft {
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
     private void loadWorld(WorldClient p_loadWorld_1_, String p_loadWorld_2_, final CallbackInfo callbackInfo) {
         Client.eventManager.callEvent(new WorldEvent(p_loadWorld_1_));
-        if (Objects.requireNonNull(Client.moduleManager.getModule(OptiFinePlus.class)).getState() && Objects.requireNonNull(Client.moduleManager.getModule(OptiFinePlus.class)).fixMemoryLeaks.get())
-            Runtime.getRuntime().gc();
     }
 
     @Inject(method = "toggleFullscreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setFullscreen(Z)V", remap = false))

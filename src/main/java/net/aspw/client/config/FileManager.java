@@ -24,10 +24,6 @@ public class FileManager extends MinecraftInstance {
      */
     public File dir = new File(mc.mcDataDir, Client.CLIENT_FOLDER);
     /**
-     * The Fonts dir.
-     */
-    public final File fontsDir = new File(dir, "fonts");
-    /**
      * The Settings dir.
      */
     public final File settingsDir = new File(dir, "configs");
@@ -73,9 +69,6 @@ public class FileManager extends MinecraftInstance {
     public void setupFolder() {
         if (!dir.exists())
             dir.mkdir();
-
-        if (!fontsDir.exists())
-            fontsDir.mkdir();
 
         if (!settingsDir.exists())
             settingsDir.mkdir();

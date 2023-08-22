@@ -22,9 +22,6 @@ class OptiFinePlus : Module() {
     var entityOptimization = BoolValue("Entity-Optimization", true)
 
     @JvmField
-    var fixMemoryLeaks = BoolValue("Fix-MemoryLeaks", true)
-
-    @JvmField
     var noHitDelay = BoolValue("NoHitDelay", true)
 
     @JvmField

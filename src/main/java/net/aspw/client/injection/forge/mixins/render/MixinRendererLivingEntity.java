@@ -16,6 +16,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
+import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
@@ -34,7 +37,7 @@ import java.util.Objects;
  * The type Mixin renderer living entity.
  */
 @Mixin(RendererLivingEntity.class)
-public abstract class MixinRendererLivingEntity extends MixinRender {
+public abstract class MixinRendererLivingEntity<T extends EntityLivingBase> extends MixinRender {
     @Final
     @Shadow
     private static final Logger logger = LogManager.getLogger();
@@ -211,88 +214,87 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
             callbackInfoReturnable.setReturnValue(true);
     }
 
-    @Inject(method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V", at = @At("HEAD"))
-    private <T extends EntityLivingBase> void injectFakeBody(T entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
+    /**
+     * @author As_pw
+     * @reason Rotations
+     */
+    @Overwrite
+    public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
+        boolean shouldSit;
+        SilentView rotations = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
+        if (MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Pre(entity, (RendererLivingEntity) (Object) this, x, y, z))) {
+            return;
+        }
         GlStateManager.pushMatrix();
         GlStateManager.disableCull();
         this.mainModel.swingProgress = this.getSwingProgress(entity, partialTicks);
-        this.mainModel.isRiding = entity.isRiding();
+        this.mainModel.isRiding = shouldSit = entity.isRiding() && entity.ridingEntity != null
+                && entity.ridingEntity.shouldRiderSit();
         this.mainModel.isChild = entity.isChild();
 
         try {
             float f = this.interpolateRotation(entity.prevRenderYawOffset, entity.renderYawOffset, partialTicks);
             float f1 = this.interpolateRotation(entity.prevRotationYawHead, entity.rotationYawHead, partialTicks);
+            float f8 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
             float f2 = f1 - f;
-
-            if (entity.isRiding() && entity.ridingEntity instanceof EntityLivingBase) {
+            if (shouldSit && entity.ridingEntity instanceof EntityLivingBase) {
+                float f3;
                 EntityLivingBase entitylivingbase = (EntityLivingBase) entity.ridingEntity;
-                f = this.interpolateRotation(entitylivingbase.prevRenderYawOffset, entitylivingbase.renderYawOffset, partialTicks);
-                f2 = f1 - f;
-                float f3 = MathHelper.wrapAngleTo180_float(f2);
-
-                if (f3 < -85.0F) {
-                    f3 = -85.0F;
+                f = this.interpolateRotation(entitylivingbase.prevRenderYawOffset, entitylivingbase.renderYawOffset,
+                        partialTicks);
+                if ((f3 = MathHelper.wrapAngleTo180_float(f2 = f1 - f)) < -85.0f) {
+                    f3 = -85.0f;
                 }
-
-                if (f3 >= 85.0F) {
-                    f3 = 85.0F;
+                if (f3 >= 85.0f) {
+                    f3 = 85.0f;
                 }
-
                 f = f1 - f3;
-
-                if (f3 * f3 > 2500.0F) {
-                    f += f3 * 0.2F;
+                if (f3 * f3 > 2500.0f) {
+                    f += f3 * 0.2f;
                 }
             }
 
-            float f7 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
-            this.renderLivingAt(entity, x, y, z);
-            float f8 = this.handleRotationFloat(entity, partialTicks);
-            this.rotateCorpse(entity, f8, f, partialTicks);
+            renderLivingAt(entity, x, y, z);
+            float f7 = this.handleRotationFloat(entity, partialTicks);
+            float f5 = entity.prevLimbSwingAmount
+                    + (entity.limbSwingAmount - entity.prevLimbSwingAmount) * partialTicks;
+            float f6 = entity.limbSwing - entity.limbSwingAmount * (1.0F - partialTicks);
+            boolean flag = this.setDoRenderBrightness(entity, partialTicks);
+
+            rotateCorpse(entity, f7, f, partialTicks);
             GlStateManager.enableRescaleNormal();
             GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-            this.preRenderCallback(entity, partialTicks);
+            preRenderCallback(entity, partialTicks);
             GlStateManager.translate(0.0F, -1.5078125F, 0.0F);
-            float f5 = entity.prevLimbSwingAmount + (entity.limbSwingAmount - entity.prevLimbSwingAmount) * partialTicks;
-            float f6 = entity.limbSwing - entity.limbSwingAmount * (1.0F - partialTicks);
 
-            if (entity.isChild()) {
+            if (entity.isChild())
                 f6 *= 3.0F;
-            }
 
-            if (f5 > 1.0F) {
+            if (f5 > 1.0F)
                 f5 = 1.0F;
-            }
 
             GlStateManager.enableAlpha();
             this.mainModel.setLivingAnimations(entity, f6, f5, partialTicks);
-            this.mainModel.setRotationAngles(f6, f5, f8, f2, f7, 0.0625F, entity);
+            this.mainModel.setRotationAngles(f6, f5, f7, f2, f8, 0.0625F, entity);
 
             if (this.renderOutlines) {
-                boolean flag1 = this.setScoreTeamColor(entity);
-                this.renderModel(entity, f6, f5, f8, f2, f7, 0.0625F);
+                boolean flag1 = setScoreTeamColor(entity);
+                renderModel(entity, f6, f5, f7, f2, f8, 0.0625F);
 
-                if (flag1) {
-                    this.unsetScoreTeamColor();
-                }
+                if (flag1)
+                    unsetScoreTeamColor();
             } else {
-
-                boolean flag = this.setDoRenderBrightness(entity, partialTicks);
-                this.renderModel(entity, f6, f5, f8, f2, f7, 0.0625F);
-
-                if (flag) {
-                    this.unsetBrightness();
-                }
+                renderModel(entity, f6, f5, f7, f2, f8, 0.0625F);
+                if (flag)
+                    unsetBrightness();
 
                 GlStateManager.depthMask(true);
 
                 if (!(entity instanceof EntityPlayer) || !((EntityPlayer) entity).isSpectator()) {
-                    this.renderLayers(entity, f6, f5, partialTicks, f8, f2, f7, 0.0625F);
+                    renderLayers(entity, f6, f5, partialTicks, f7, f2, f8, 0.0625F);
                 }
             }
 
-
-            SilentView rotations = Client.moduleManager.getModule(SilentView.class);
             float renderpitch = (Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && rotations.getState() && rotations.getSilentValue().get() && entity == Minecraft.getMinecraft().thePlayer) ? (entity.prevRotationPitch + (((RotationUtils.serverRotation.getPitch() != 0.0f) ? RotationUtils.serverRotation.getPitch() : entity.rotationPitch) - entity.prevRotationPitch)) : (entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks);
             float renderyaw = (Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && rotations.getState() && rotations.getSilentValue().get() && entity == Minecraft.getMinecraft().thePlayer) ? (entity.prevRotationYaw + (((RotationUtils.serverRotation.getYaw() != 0.0f) ? RotationUtils.serverRotation.getYaw() : entity.rotationYaw) - entity.prevRotationYaw)) : (entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks);
 
@@ -333,8 +335,9 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
         GlStateManager.popMatrix();
 
         if (!this.renderOutlines) {
-            super.doRenders(entity, x, y, z, entityYaw, partialTicks);
+            super.doRender(entity, x, y, z, entityYaw, partialTicks);
         }
+        MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Post(entity, (RendererLivingEntity) (Object) this, x, y, z));
     }
 
     /**

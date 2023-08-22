@@ -1,21 +1,15 @@
 package net.aspw.client.visual.font;
 
-import com.google.gson.*;
-import net.aspw.client.Client;
 import net.aspw.client.util.ClientUtils;
-import net.aspw.client.util.connection.CheckConnection;
-import net.aspw.client.util.misc.HttpUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public class Fonts {
 
@@ -93,50 +87,6 @@ public class Fonts {
         niSans = new GameFontRenderer(getNiSans("NiSans.ttf", 60));
         icons = new GameFontRenderer(getIcons("Icons.ttf", 52));
         marks = new GameFontRenderer(getMarks("marks.ttf", 52));
-
-        try {
-            CUSTOM_FONT_RENDERERS.clear();
-
-            final File fontsFile = new File(Client.fileManager.fontsDir, "fonts.json");
-
-            if (fontsFile.exists()) {
-                final JsonElement jsonElement = new JsonParser().parse(new BufferedReader(new FileReader(fontsFile)));
-
-                if (jsonElement instanceof JsonNull)
-                    return;
-
-                final JsonArray jsonArray = (JsonArray) jsonElement;
-
-                for (final JsonElement element : jsonArray) {
-                    if (element instanceof JsonNull)
-                        return;
-
-                    final JsonObject fontObject = (JsonObject) element;
-
-                    CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getRobotoMedium(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
-                    CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getSFUI(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
-                    CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getJelloRegular(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
-                    CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getRobotoBold(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
-                    CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getTahomaBold(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
-                    CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getTahoma(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
-                    CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getBangersRegular(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
-                    CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getPixel(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
-                    CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getMojangles(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
-                    CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getMojanglesBold(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
-                    CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getNiSans(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
-                    CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getIcons(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
-                    CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getMarks(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
-                }
-            } else {
-                fontsFile.createNewFile();
-
-                final PrintWriter printWriter = new PrintWriter(new FileWriter(fontsFile));
-                printWriter.println(new GsonBuilder().setPrettyPrinting().create().toJson(new JsonArray()));
-                printWriter.close();
-            }
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
 
         ClientUtils.getLogger().info("Loaded Fonts. (" + (System.currentTimeMillis() - l) + "ms)");
     }
@@ -217,7 +167,7 @@ public class Fonts {
 
     private static Font getSFUI(final String fontName, final int size) {
         try {
-            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/fonts/sfui.ttf");
+            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/sfui.ttf");
 
             if (inputStream == null) {
                 throw new FileNotFoundException("Font file not found: " + fontName);
@@ -229,13 +179,13 @@ public class Fonts {
             return awtClientFont;
         } catch (final Exception e) {
             e.printStackTrace();
-            return new Font("default", Font.PLAIN, size);
+            return new Font("sfui", Font.PLAIN, size);
         }
     }
 
     private static Font getNiSans(final String fontName, final int size) {
         try {
-            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/fonts/NiSans.ttf");
+            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/NiSans.ttf");
 
             if (inputStream == null) {
                 throw new FileNotFoundException("Font file not found: " + fontName);
@@ -247,13 +197,13 @@ public class Fonts {
             return awtClientFont;
         } catch (final Exception e) {
             e.printStackTrace();
-            return new Font("default", Font.PLAIN, size);
+            return new Font("NiSans", Font.PLAIN, size);
         }
     }
 
     private static Font getRobotoMedium(final String fontName, final int size) {
         try {
-            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/fonts/Roboto-Medium.ttf");
+            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/Roboto-Medium.ttf");
 
             if (inputStream == null) {
                 throw new FileNotFoundException("Font file not found: " + fontName);
@@ -265,13 +215,13 @@ public class Fonts {
             return awtClientFont;
         } catch (final Exception e) {
             e.printStackTrace();
-            return new Font("default", Font.PLAIN, size);
+            return new Font("Roboto-Medium", Font.PLAIN, size);
         }
     }
 
     private static Font getJelloRegular(final String fontName, final int size) {
         try {
-            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/fonts/jelloregular.ttf");
+            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/jelloregular.ttf");
 
             if (inputStream == null) {
                 throw new FileNotFoundException("Font file not found: " + fontName);
@@ -283,13 +233,13 @@ public class Fonts {
             return awtClientFont;
         } catch (final Exception e) {
             e.printStackTrace();
-            return new Font("default", Font.PLAIN, size);
+            return new Font("jelloregular", Font.PLAIN, size);
         }
     }
 
     private static Font getRobotoBold(final String fontName, final int size) {
         try {
-            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/fonts/Roboto-Bold.ttf");
+            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/Roboto-Bold.ttf");
 
             if (inputStream == null) {
                 throw new FileNotFoundException("Font file not found: " + fontName);
@@ -301,13 +251,13 @@ public class Fonts {
             return awtClientFont;
         } catch (final Exception e) {
             e.printStackTrace();
-            return new Font("default", Font.PLAIN, size);
+            return new Font("Roboto-Bold", Font.PLAIN, size);
         }
     }
 
     private static Font getTahomaBold(final String fontName, final int size) {
         try {
-            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/fonts/TahomaBold.ttf");
+            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/TahomaBold.ttf");
 
             if (inputStream == null) {
                 throw new FileNotFoundException("Font file not found: " + fontName);
@@ -319,13 +269,13 @@ public class Fonts {
             return awtClientFont;
         } catch (final Exception e) {
             e.printStackTrace();
-            return new Font("default", Font.PLAIN, size);
+            return new Font("TahomaBold", Font.PLAIN, size);
         }
     }
 
     private static Font getTahoma(final String fontName, final int size) {
         try {
-            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/fonts/Tahoma.ttf");
+            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/Tahoma.ttf");
 
             if (inputStream == null) {
                 throw new FileNotFoundException("Font file not found: " + fontName);
@@ -337,13 +287,13 @@ public class Fonts {
             return awtClientFont;
         } catch (final Exception e) {
             e.printStackTrace();
-            return new Font("default", Font.PLAIN, size);
+            return new Font("Tahoma", Font.PLAIN, size);
         }
     }
 
     private static Font getBangersRegular(final String fontName, final int size) {
         try {
-            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/fonts/Bangers-Regular.ttf");
+            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/Bangers-Regular.ttf");
 
             if (inputStream == null) {
                 throw new FileNotFoundException("Font file not found: " + fontName);
@@ -355,13 +305,13 @@ public class Fonts {
             return awtClientFont;
         } catch (final Exception e) {
             e.printStackTrace();
-            return new Font("default", Font.PLAIN, size);
+            return new Font("Bangers-Regular", Font.PLAIN, size);
         }
     }
 
     private static Font getPixel(final String fontName, final int size) {
         try {
-            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/fonts/Pixel.ttf");
+            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/Pixel.ttf");
 
             if (inputStream == null) {
                 throw new FileNotFoundException("Font file not found: " + fontName);
@@ -373,13 +323,13 @@ public class Fonts {
             return awtClientFont;
         } catch (final Exception e) {
             e.printStackTrace();
-            return new Font("default", Font.PLAIN, size);
+            return new Font("Pixel", Font.PLAIN, size);
         }
     }
 
     private static Font getMojangles(final String fontName, final int size) {
         try {
-            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/fonts/Mojangles.ttf");
+            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/Mojangles.ttf");
 
             if (inputStream == null) {
                 throw new FileNotFoundException("Font file not found: " + fontName);
@@ -391,13 +341,13 @@ public class Fonts {
             return awtClientFont;
         } catch (final Exception e) {
             e.printStackTrace();
-            return new Font("default", Font.PLAIN, size);
+            return new Font("Mojangles", Font.PLAIN, size);
         }
     }
 
     private static Font getMojanglesBold(final String fontName, final int size) {
         try {
-            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/fonts/MojanglesBold.ttf");
+            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/MojanglesBold.ttf");
 
             if (inputStream == null) {
                 throw new FileNotFoundException("Font file not found: " + fontName);
@@ -409,13 +359,13 @@ public class Fonts {
             return awtClientFont;
         } catch (final Exception e) {
             e.printStackTrace();
-            return new Font("default", Font.PLAIN, size);
+            return new Font("MojanglesBold", Font.PLAIN, size);
         }
     }
 
     private static Font getIcons(final String fontName, final int size) {
         try {
-            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/fonts/Icons.ttf");
+            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/Icons.ttf");
 
             if (inputStream == null) {
                 throw new FileNotFoundException("Font file not found: " + fontName);
@@ -427,13 +377,13 @@ public class Fonts {
             return awtClientFont;
         } catch (final Exception e) {
             e.printStackTrace();
-            return new Font("default", Font.PLAIN, size);
+            return new Font("Icons", Font.PLAIN, size);
         }
     }
 
     private static Font getMarks(final String fontName, final int size) {
         try {
-            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/fonts/marks.ttf");
+            InputStream inputStream = Fonts.class.getResourceAsStream("/assets/minecraft/client/font/marks.ttf");
 
             if (inputStream == null) {
                 throw new FileNotFoundException("Font file not found: " + fontName);
@@ -445,7 +395,7 @@ public class Fonts {
             return awtClientFont;
         } catch (final Exception e) {
             e.printStackTrace();
-            return new Font("default", Font.PLAIN, size);
+            return new Font("marks", Font.PLAIN, size);
         }
     }
 }

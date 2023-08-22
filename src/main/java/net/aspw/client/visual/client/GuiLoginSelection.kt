@@ -19,8 +19,9 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
     override fun initGui() {
         if (CheckConnection.isAvailable) {
             if (CheckConnection.isLatest) {
-                buttonList.add(GuiButton(0, width / 2 - 100, height / 4 + 104, "Free Login"))
+                buttonList.add(GuiButton(10, width / 2 - 100, height / 4 + 104, "Enjoy!"))
                 // Old Auth System
+                // buttonList.add(GuiButton(0, width / 2 - 100, height / 4 + 104, "Free Login"))
                 //buttonList.add(GuiButton(1, width / 2 - 100, height / 4 + 144, "Premium Login"))
             } else {
                 buttonList.add(GuiButton(2, width / 2 - 100, height / 4 + 104, "Access Website"))
@@ -55,14 +56,14 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
             if (CheckConnection.isLatest)
                 this.drawCenteredString(
                     mc.fontRendererObj,
-                    "Select your authenticate type",
+                    "Your current build is §eLatest!",
                     width / 2,
                     height / 4 + 64,
                     0xffffff
                 )
             else this.drawCenteredString(
                 mc.fontRendererObj,
-                "Update is available!",
+                "Your current build is §cOutdated!",
                 width / 2,
                 height / 4 + 64,
                 0xffffff
@@ -70,7 +71,7 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
         } else {
             this.drawCenteredString(
                 mc.fontRendererObj,
-                "Temporary unavailable!",
+                "§cTemporary unavailable!",
                 width / 2,
                 height / 4 + 64,
                 0xffffff
@@ -95,6 +96,15 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
             //}
 
             0 -> {
+                loggedIn = true
+                id = "User"
+                LoginID.password = "Free"
+                LoginID.uid = "000"
+                mc.displayGuiScreen(GuiMainMenu())
+                ClientUtils.getLogger().info("Logged in with Free Account!")
+            }
+
+            10 -> {
                 loggedIn = true
                 id = "User"
                 LoginID.password = "Free"

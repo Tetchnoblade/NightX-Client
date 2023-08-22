@@ -40,7 +40,6 @@ import java.util.Objects;
 @Mixin(EntityLivingBase.class)
 public abstract class MixinEntityLivingBase extends MixinEntity {
 
-
     /**
      * The Swing progress int.
      */
@@ -150,9 +149,6 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @Shadow
     public float prevRenderYawOffset;
-
-    @Shadow
-    protected double newRotationPitch;
 
     @Inject(method = "updatePotionEffects", at = @At(value = "INVOKE", target = "Lnet/minecraft/potion/PotionEffect;onUpdate(Lnet/minecraft/entity/EntityLivingBase;)Z"),
             locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
