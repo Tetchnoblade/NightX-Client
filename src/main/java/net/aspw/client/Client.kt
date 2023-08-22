@@ -13,7 +13,6 @@ import net.aspw.client.util.ClassUtils.hasForge
 import net.aspw.client.util.connection.CheckConnection
 import net.aspw.client.util.misc.sound.TipSoundManager
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
-import net.aspw.client.visual.font.Fonts
 import net.aspw.client.visual.hud.HUD
 import net.aspw.client.visual.hud.HUD.Companion.createDefault
 import net.minecraft.util.ResourceLocation
@@ -33,7 +32,6 @@ object Client {
     const val CLIENT_CONFIG = "jnx2umqrkh"
     // Old Auth System
     // const val CLIENT_USER = "Username:Password:HWID:UID"
-    const val CLIENT_FONTS = "52e4wz1ovk"
     const val CLIENT_SRG = "6bl91v1egh"
     const val CLIENT_CHAT = "§c§l>> §r"
     val CLIENT_STATUS =
@@ -100,9 +98,6 @@ object Client {
 
         // Create command manager
         commandManager = CommandManager()
-
-        // Load client fonts
-        Fonts.loadFonts()
 
         // Init SoundManager
         tipSoundManager = TipSoundManager()

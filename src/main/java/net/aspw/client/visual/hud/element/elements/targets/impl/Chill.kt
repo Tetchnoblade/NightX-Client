@@ -1,6 +1,7 @@
 package net.aspw.client.visual.hud.element.elements.targets.impl
 
 import net.aspw.client.util.extensions.darker
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.util.render.Stencil
 import net.aspw.client.value.BoolValue
@@ -40,8 +41,8 @@ class Chill(inst: TargetHud) : TargetStyle("Chill", inst, true) {
 
         val name = entity.name
         val health = entity.health
-        val tWidth = (45F + Fonts.font40.getStringWidth(name)
-            .coerceAtLeast(Fonts.font72.getStringWidth(decimalFormat.format(health)))).coerceAtLeast(120F)
+        val tWidth = (45F + FontLoaders.SF20.getStringWidth(name)
+            .coerceAtLeast(FontLoaders.SF24.getStringWidth(decimalFormat.format(health)))).coerceAtLeast(120F)
         val playerInfo = mc.netHandler.getPlayerInfo(entity.uniqueID)
 
         // background
@@ -67,7 +68,7 @@ class Chill(inst: TargetHud) : TargetStyle("Chill", inst, true) {
         GL11.glColor4f(1F, 1F, 1F, 1F)
 
         // name + health
-        Fonts.font40.drawString(name, 38F, 6F, getColor(-1).rgb)
+        FontLoaders.SF20.drawString(name, 38F, 6F, getColor(-1).rgb)
         numberRenderer.renderChar(
             health,
             calcTranslateX,
@@ -115,8 +116,8 @@ class Chill(inst: TargetHud) : TargetStyle("Chill", inst, true) {
     }
 
     override fun handleBlur(entity: EntityPlayer) {
-        val tWidth = (45F + Fonts.fontSFUI40.getStringWidth(entity.name)
-            .coerceAtLeast(Fonts.font72.getStringWidth(decimalFormat.format(entity.health)))).coerceAtLeast(120F)
+        val tWidth = (45F + FontLoaders.SF20.getStringWidth(entity.name)
+            .coerceAtLeast(FontLoaders.SF24.getStringWidth(decimalFormat.format(entity.health)))).coerceAtLeast(120F)
         GlStateManager.enableBlend()
         GlStateManager.disableTexture2D()
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0)
@@ -128,15 +129,15 @@ class Chill(inst: TargetHud) : TargetStyle("Chill", inst, true) {
     override fun handleShadowCut(entity: EntityPlayer) = handleBlur(entity)
 
     override fun handleShadow(entity: EntityPlayer) {
-        val tWidth = (45F + Fonts.font40.getStringWidth(entity.name)
-            .coerceAtLeast(Fonts.font72.getStringWidth(decimalFormat.format(entity.health)))).coerceAtLeast(120F)
+        val tWidth = (45F + FontLoaders.SF20.getStringWidth(entity.name)
+            .coerceAtLeast(FontLoaders.SF24.getStringWidth(decimalFormat.format(entity.health)))).coerceAtLeast(120F)
         RenderUtils.originalRoundedRect(0F, 0F, tWidth, 48F, 7F, shadowOpaque.rgb)
     }
 
     override fun getBorder(entity: EntityPlayer?): Border {
         entity ?: return Border(0F, 0F, 120F, 48F)
-        val tWidth = (45F + Fonts.font40.getStringWidth(entity.name)
-            .coerceAtLeast(Fonts.font72.getStringWidth(decimalFormat.format(entity.health)))).coerceAtLeast(120F)
+        val tWidth = (45F + FontLoaders.SF20.getStringWidth(entity.name)
+            .coerceAtLeast(FontLoaders.SF24.getStringWidth(decimalFormat.format(entity.health)))).coerceAtLeast(120F)
         return Border(0F, 0F, tWidth, 48F)
     }
 

@@ -3,6 +3,7 @@ package net.aspw.client.visual.hud.element.elements.targets.impl
 import net.aspw.client.features.module.impl.visual.ColorMixer
 import net.aspw.client.util.extensions.getDistanceToEntityBox
 import net.aspw.client.util.misc.RandomUtils
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.BlendUtils
 import net.aspw.client.util.render.ColorUtils
 import net.aspw.client.util.render.RenderUtils
@@ -112,7 +113,7 @@ class Rice(inst: TargetHud) : TargetStyle("Rice", inst, true) {
     override fun drawTarget(entity: EntityPlayer) {
         updateAnim(entity.health)
 
-        val font = Fonts.fontSFUI40
+        val font = FontLoaders.SF20
         val name = "Name: ${entity.name}"
         val info = "Distance: ${decimalFormat2.format(mc.thePlayer.getDistanceToEntityBox(entity))}"
         val healthName = decimalFormat2.format(easingHealth)
@@ -289,7 +290,7 @@ class Rice(inst: TargetHud) : TargetStyle("Rice", inst, true) {
     }
 
     override fun handleBlur(entity: EntityPlayer) {
-        val font = Fonts.fontSFUI40
+        val font = FontLoaders.SF20
         val name = "Name: ${entity.name}"
         val info = "Distance: ${decimalFormat2.format(mc.thePlayer.getDistanceToEntityBox(entity))}"
         val length =
@@ -306,7 +307,7 @@ class Rice(inst: TargetHud) : TargetStyle("Rice", inst, true) {
     override fun handleShadowCut(entity: EntityPlayer) = handleBlur(entity)
 
     override fun handleShadow(entity: EntityPlayer) {
-        val font = Fonts.fontSFUI40
+        val font = FontLoaders.SF20
         val name = "Name: ${entity.name}"
         val info = "Distance: ${decimalFormat2.format(mc.thePlayer.getDistanceToEntityBox(entity))}"
         val length =
@@ -318,7 +319,7 @@ class Rice(inst: TargetHud) : TargetStyle("Rice", inst, true) {
     override fun getBorder(entity: EntityPlayer?): Border {
         entity ?: return Border(0F, 0F, 135F, 55F)
 
-        val font = Fonts.fontSFUI40
+        val font = FontLoaders.SF20
         val name = "Name: ${entity.name}"
         val info = "Distance: ${decimalFormat2.format(mc.thePlayer.getDistanceToEntityBox(entity))}"
         val length =

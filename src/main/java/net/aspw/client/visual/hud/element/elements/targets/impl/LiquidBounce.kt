@@ -1,6 +1,7 @@
 package net.aspw.client.visual.hud.element.elements.targets.impl
 
 import net.aspw.client.util.extensions.getDistanceToEntityBox
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -72,7 +73,7 @@ class LiquidBounce(inst: TargetHud) : TargetStyle("LiquidBounce", inst, true) {
             easingHealth = entity.health
         }
 
-        val width = (38 + Fonts.fontSFUI40.getStringWidth(entity.name))
+        val width = (38 + FontLoaders.SF20.getStringWidth(entity.name))
             .coerceAtLeast(118)
             .toFloat()
 
@@ -115,20 +116,20 @@ class LiquidBounce(inst: TargetHud) : TargetStyle("LiquidBounce", inst, true) {
 
         updateAnim(entity.health)
 
-        Fonts.fontSFUI40.drawString(entity.name, 36, 3, getColor(-1).rgb)
-        Fonts.fontSFUI35.drawString(
+        FontLoaders.SF20.drawString(entity.name, 36f, 3f, getColor(-1).rgb)
+        FontLoaders.SF18.drawString(
             "Distance: ${decimalFormat.format(mc.thePlayer.getDistanceToEntityBox(entity))}",
-            36,
-            15,
+            36f,
+            15f,
             getColor(-1).rgb
         )
 
         // Draw info
         val playerInfo = mc.netHandler.getPlayerInfo(entity.uniqueID)
         if (playerInfo != null) {
-            Fonts.fontSFUI35.drawString(
+            FontLoaders.SF18.drawString(
                 "Ping: ${playerInfo.responseTime.coerceAtLeast(0)}",
-                36, 24, getColor(-1).rgb
+                36f, 24f, getColor(-1).rgb
             )
 
             // Draw head
@@ -152,7 +153,7 @@ class LiquidBounce(inst: TargetHud) : TargetStyle("LiquidBounce", inst, true) {
     }
 
     override fun handleBlur(entity: EntityPlayer) {
-        val width = (38 + Fonts.fontSFUI40.getStringWidth(entity.name))
+        val width = (38 + FontLoaders.SF20.getStringWidth(entity.name))
             .coerceAtLeast(118)
             .toFloat()
 
@@ -167,7 +168,7 @@ class LiquidBounce(inst: TargetHud) : TargetStyle("LiquidBounce", inst, true) {
     override fun handleShadowCut(entity: EntityPlayer) = handleBlur(entity)
 
     override fun handleShadow(entity: EntityPlayer) {
-        val width = (38 + Fonts.fontSFUI40.getStringWidth(entity.name))
+        val width = (38 + FontLoaders.SF20.getStringWidth(entity.name))
             .coerceAtLeast(118)
             .toFloat()
 
@@ -176,7 +177,7 @@ class LiquidBounce(inst: TargetHud) : TargetStyle("LiquidBounce", inst, true) {
 
     override fun getBorder(entity: EntityPlayer?): Border {
         entity ?: return Border(0F, 0F, 118F, 36F)
-        val width = (38 + Fonts.fontSFUI40.getStringWidth(entity.name))
+        val width = (38 + FontLoaders.SF20.getStringWidth(entity.name))
             .coerceAtLeast(118)
             .toFloat()
         return Border(0F, 0F, width, 36F)

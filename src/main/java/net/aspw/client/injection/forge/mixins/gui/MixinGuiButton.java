@@ -2,6 +2,7 @@ package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.visual.Hud;
+import net.aspw.client.util.newfont.FontLoaders;
 import net.aspw.client.util.render.RenderUtils;
 import net.aspw.client.visual.client.GuiMainMenu;
 import net.aspw.client.visual.font.AWTFontRenderer;
@@ -141,7 +142,7 @@ public abstract class MixinGuiButton extends Gui {
             }
 
             if (mc.currentScreen instanceof GuiMainMenu)
-                Fonts.fontSFUI40.drawCenteredString(this.displayString, this.xPosition + this.width / 2F, this.yPosition + (this.height - 8) / 2F, j);
+                FontLoaders.SF20.drawCenteredString(this.displayString, this.xPosition + this.width / 2F, this.yPosition + (this.height - 8) / 2F, j);
             else {
                 mc.getTextureManager().bindTexture(buttonTextures);
                 mouseDragged(mc, mouseX, mouseY);

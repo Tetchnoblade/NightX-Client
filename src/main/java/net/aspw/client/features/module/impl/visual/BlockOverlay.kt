@@ -8,6 +8,7 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.block.BlockUtils.canBeClicked
 import net.aspw.client.util.block.BlockUtils.getBlock
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.ColorUtils.rainbow
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.BoolValue
@@ -83,7 +84,7 @@ class BlockOverlay : Module() {
             val scaledResolution = ScaledResolution(mc)
 
             GlStateManager.resetColor()
-            Fonts.fontSFUI40.drawCenteredString(
+            FontLoaders.SF20.drawCenteredString(
                 info,
                 scaledResolution.scaledWidth / 2F,
                 scaledResolution.scaledHeight / 2F + 6F,

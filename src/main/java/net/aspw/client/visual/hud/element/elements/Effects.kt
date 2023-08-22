@@ -1,5 +1,6 @@
 package net.aspw.client.visual.hud.element.elements
 
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FontValue
 import net.aspw.client.visual.font.AWTFontRenderer.Companion.assumeNonVolatile
@@ -23,14 +24,13 @@ class Effects(
 ) : Element(x, y, scale, side) {
 
     private val anotherStyle = BoolValue("New", true)
-    private val fontValue = FontValue("Font", Fonts.fontSFUI35)
     private val shadow = BoolValue("Shadow", true)
 
     /**
      * Draw element
      */
     override fun drawElement(): Border {
-        val fontRenderer = fontValue.get()
+        val fontRenderer = FontLoaders.SF20
 
         var y = 0F
         var width = 0F
@@ -39,7 +39,7 @@ class Effects(
 
         for (effect in mc.thePlayer.activePotionEffects) {
             if (side.vertical == Side.Vertical.DOWN)
-                y -= fontRenderer.FONT_HEIGHT + if (anotherStyle.get()) 1F else 0F
+                y -= fontRenderer.height + if (anotherStyle.get()) 1F else 0F
 
             val potion = Potion.potionTypes[effect.potionID]
 
@@ -79,23 +79,23 @@ class Effects(
             when (side.horizontal) {
                 Side.Horizontal.RIGHT -> fontRenderer.drawString(
                     name,
-                    -stringWidth,
-                    y + if (side.vertical == Side.Vertical.UP) -fontRenderer.FONT_HEIGHT.toFloat() else 0F,
+                    -stringWidth.toDouble(),
+                    y.toDouble() + if (side.vertical == Side.Vertical.UP) -fontRenderer.height.toFloat() else 0F,
                     potion.liquidColor,
                     shadow.get()
                 )
 
                 Side.Horizontal.LEFT, Side.Horizontal.MIDDLE -> fontRenderer.drawString(
                     name,
-                    0F,
-                    y + if (side.vertical == Side.Vertical.UP) -fontRenderer.FONT_HEIGHT.toFloat() else 0F,
+                    0F.toDouble(),
+                    y.toDouble() + if (side.vertical == Side.Vertical.UP) -fontRenderer.height.toFloat() else 0F,
                     potion.liquidColor,
                     shadow.get()
                 )
             }
 
             if (side.vertical == Side.Vertical.UP)
-                y += fontRenderer.FONT_HEIGHT + if (anotherStyle.get()) 1F else 0F
+                y += fontRenderer.height + if (anotherStyle.get()) 1F else 0F
         }
 
         assumeNonVolatile = false
@@ -105,7 +105,7 @@ class Effects(
 
         if (y == 0F) // alr checked above
             y =
-                if (side.vertical == Side.Vertical.UP) fontRenderer.FONT_HEIGHT.toFloat() else -fontRenderer.FONT_HEIGHT.toFloat()
+                if (side.vertical == Side.Vertical.UP) fontRenderer.height.toFloat() else -fontRenderer.height.toFloat()
 
         return Border(0F, 0F, width, y)
     }

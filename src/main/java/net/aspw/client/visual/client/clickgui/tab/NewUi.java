@@ -5,6 +5,7 @@ import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.impl.visual.Gui;
 import net.aspw.client.util.AnimationUtils;
 import net.aspw.client.util.MouseUtils;
+import net.aspw.client.util.newfont.FontLoaders;
 import net.aspw.client.util.render.RenderUtils;
 import net.aspw.client.util.render.Stencil;
 import net.aspw.client.visual.client.clickgui.tab.elements.CategoryElement;
@@ -85,17 +86,17 @@ public class NewUi extends GuiScreen {
         Stencil.dispose();
 
         if (searchElement.isTyping()) {
-            Fonts.fontSFUI40.drawStringWithShadow(
+            FontLoaders.SF20.drawStringWithShadow(
                     "Search",
                     242f,
-                    Fonts.fontSFUI35.FONT_HEIGHT + 30f,
+                    FontLoaders.SF18.getHeight() + 30f,
                     -1
             );
         } else {
-            Fonts.fontSFUI40.drawStringWithShadow(
+            FontLoaders.SF20.drawStringWithShadow(
                     "Modules",
                     242f,
-                    Fonts.fontSFUI35.FONT_HEIGHT + 30f,
+                    FontLoaders.SF18.getHeight() + 30f,
                     -1
             );
         }

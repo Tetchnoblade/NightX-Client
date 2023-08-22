@@ -1,6 +1,7 @@
 package net.aspw.client.visual.hud.element.elements
 
 import net.aspw.client.Client.hud
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.AnimationUtils
 import net.aspw.client.util.render.BlurUtils
 import net.aspw.client.util.render.RenderUtils
@@ -126,13 +127,13 @@ class Notification(message: String, type: Type, displayLength: Long) {
 
     init {
         this.message = message
-        this.messageList = Fonts.fontSFUI40.listFormattedStringToWidth(message, 105)
-        this.notifHeight = messageList.size.toFloat() * (Fonts.fontSFUI40.FONT_HEIGHT.toFloat() + 2F) + 8F
+        this.messageList = FontLoaders.SF20.formatString(message, 105.0)
+        this.notifHeight = messageList.size.toFloat() * (FontLoaders.SF20.height.toFloat() + 2F) + 8F
         this.type = type
         this.displayTime = displayLength
         this.firstY = 19190F
         this.stayTimer.reset()
-        this.textLength = Fonts.fontSFUI40.getStringWidth(message)
+        this.textLength = FontLoaders.SF20.getStringWidth(message)
     }
 
     constructor(message: String, type: Type) : this(message, type, 2000L)
@@ -227,7 +228,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
                 )
 
                 GlStateManager.resetColor()
-                Fonts.fontSFUI40.drawString(message, (-x + 3), (-13F - y), -1)
+                FontLoaders.SF20.drawString(message, (-x + 3), (-13F - y), -1)
             }
 
             "full" -> {
@@ -278,7 +279,7 @@ class Notification(message: String, type: Type, displayLength: Long) {
                     RenderUtils.drawRect(kek, -y, kek + dist, -1F - y, enumColor)
 
                 GlStateManager.resetColor()
-                Fonts.fontSFUI40.drawString(message, (-x + 2), (-18F - y), -1)
+                FontLoaders.SF20.drawString(message, (-x + 2), (-18F - y), -1)
             }
 
             "material" -> {
@@ -347,8 +348,8 @@ class Notification(message: String, type: Type, displayLength: Long) {
 
                 var yHeight = 7F
                 for (s in messageList) {
-                    Fonts.fontSFUI40.drawStringWithShadow(s, 30f, yHeight, if (type == Type.ERROR) -1 else 0)
-                    yHeight += Fonts.fontSFUI40.FONT_HEIGHT.toFloat() + 2F
+                    FontLoaders.SF20.drawStringWithShadow(s, 30f.toDouble(), yHeight.toDouble(), if (type == Type.ERROR) -1 else 0)
+                    yHeight += FontLoaders.SF20.height.toFloat() + 2F
                 }
 
                 GL11.glPushMatrix()

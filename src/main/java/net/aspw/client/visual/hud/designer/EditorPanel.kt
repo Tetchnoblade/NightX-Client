@@ -2,6 +2,7 @@ package net.aspw.client.visual.hud.designer
 
 import net.aspw.client.Client
 import net.aspw.client.util.MinecraftInstance
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.*
 import net.aspw.client.visual.font.Fonts
@@ -120,9 +121,9 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
                 continue
 
             val name = info.name
-            Fonts.fontSFUI35.drawString(name, x + 2, y + height, Color.WHITE.rgb)
+            FontLoaders.SF18.drawString(name, x + 2f, y + height.toFloat(), Color.WHITE.rgb)
 
-            val stringWidth = Fonts.fontSFUI35.getStringWidth(name)
+            val stringWidth = FontLoaders.SF18.getStringWidth(name)
             if (width < stringWidth + 8)
                 width = stringWidth + 8
 
@@ -147,7 +148,7 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
         }
 
         Gui.drawRect(x, y, x + width, y + 12, Color(0, 0, 0, 150).rgb)
-        Fonts.fontSFUI35.drawString("§lCreate element", x + 2F, y + 3.5F, Color.WHITE.rgb)
+        FontLoaders.SF18.drawString("Create element", x + 2F, y + 3.5F, Color.WHITE.rgb)
     }
 
     /**
@@ -158,7 +159,7 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
         realHeight = 15
         width = 120
 
-        Fonts.fontSFUI35.drawString("§lCreate element", x + 2, y + height, Color.WHITE.rgb)
+        FontLoaders.SF18.drawString("Create element", x + 2f, y + height.toFloat(), Color.WHITE.rgb)
         if (Mouse.isButtonDown(0) && !mouseDown && mouseX >= x && mouseX <= x + width && mouseY >= y + height
             && mouseY <= y + height + 10
         )
@@ -167,7 +168,7 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
         height += 10
         realHeight += 10
 
-        Fonts.fontSFUI35.drawString("§lReset", x + 2, y + height, Color.WHITE.rgb)
+        FontLoaders.SF18.drawString("Reset", x + 2f, y + height.toFloat(), Color.WHITE.rgb)
         if (Mouse.isButtonDown(0) && !mouseDown && mouseX >= x && mouseX <= x + width && mouseY >= y + height
             && mouseY <= y + height + 10
         )
@@ -176,14 +177,14 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
         height += 15
         realHeight += 15
 
-        Fonts.fontSFUI35.drawString("§lAvailable Elements", x + 2, y + height, Color.WHITE.rgb)
+        FontLoaders.SF18.drawString("Available Elements", x + 2f, y + height.toFloat(), Color.WHITE.rgb)
         height += 10
         realHeight += 10
 
         for (element in Client.hud.elements) {
-            Fonts.fontSFUI35.drawString(element.name, x + 2, y + height, Color.WHITE.rgb)
+            FontLoaders.SF18.drawString(element.name, x + 2f, y + height.toFloat(), Color.WHITE.rgb)
 
-            val stringWidth = Fonts.fontSFUI35.getStringWidth(element.name)
+            val stringWidth = FontLoaders.SF18.getStringWidth(element.name)
             if (width < stringWidth + 8)
                 width = stringWidth + 8
 
@@ -197,7 +198,7 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
         }
 
         Gui.drawRect(x, y, x + width, y + 12, Color(0, 0, 0, 150).rgb)
-        Fonts.fontSFUI35.drawString("§lEditor", x + 2F, y + 3.5f, Color.WHITE.rgb)
+        FontLoaders.SF18.drawString("Editor", x + 2F, y + 3.5f, Color.WHITE.rgb)
     }
 
     /**
@@ -213,35 +214,35 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
         val element = currentElement ?: return
 
         // X
-        Fonts.fontSFUI35.drawString(
+        FontLoaders.SF18.drawString(
             "X: ${"%.2f".format(element.renderX)} (${"%.2f".format(element.x)})",
-            x + 2,
-            y + height,
+            x + 2f,
+            y + height.toFloat(),
             Color.WHITE.rgb
         )
         height += 10
         realHeight += 10
 
         // Y
-        Fonts.fontSFUI35.drawString(
+        FontLoaders.SF18.drawString(
             "Y: ${"%.2f".format(element.renderY)} (${"%.2f".format(element.y)})",
-            x + 2,
-            y + height,
+            x + 2f,
+            y + height.toFloat(),
             Color.WHITE.rgb
         )
         height += 10
         realHeight += 10
 
         // Scale
-        Fonts.fontSFUI35.drawString("Scale: ${"%.2f".format(element.scale)}", x + 2, y + height, Color.WHITE.rgb)
+        FontLoaders.SF18.drawString("Scale: ${"%.2f".format(element.scale)}", x + 2f, y + height.toFloat(), Color.WHITE.rgb)
         height += 10
         realHeight += 10
 
         // Horizontal
-        Fonts.fontSFUI35.drawString("H:", x + 2, y + height, Color.WHITE.rgb)
-        Fonts.fontSFUI35.drawString(
+        FontLoaders.SF18.drawString("H:", x + 2f, y + height.toFloat(), Color.WHITE.rgb)
+        FontLoaders.SF18.drawString(
             element.side.horizontal.sideName,
-            x + 12, y + height, Color.GRAY.rgb
+            x + 12f, y + height.toFloat(), Color.GRAY.rgb
         )
 
         if (Mouse.isButtonDown(0) && !mouseDown && mouseX >= x && mouseX <= x + width && mouseY >= y + height
@@ -264,10 +265,10 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
         realHeight += 10
 
         // Vertical
-        Fonts.fontSFUI35.drawString("V:", x + 2, y + height, Color.WHITE.rgb)
-        Fonts.fontSFUI35.drawString(
+        FontLoaders.SF18.drawString("V:", x + 2f, y + height.toFloat(), Color.WHITE.rgb)
+        FontLoaders.SF18.drawString(
             element.side.vertical.sideName,
-            x + 12, y + height, Color.GRAY.rgb
+            x + 12f, y + height.toFloat(), Color.GRAY.rgb
         )
 
         if (Mouse.isButtonDown(0) && !mouseDown && mouseX >= x && mouseX <= x + width && mouseY >= y + height && mouseY <= y + height + 10) {
@@ -294,14 +295,14 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
             when (value) {
                 is BoolValue -> {
                     // Title
-                    Fonts.fontSFUI35.drawString(
+                    FontLoaders.SF18.drawString(
                         value.name,
-                        x + 2,
-                        y + height,
+                        x + 2f,
+                        y + height.toFloat(),
                         if (value.get()) Color.WHITE.rgb else Color.GRAY.rgb
                     )
 
-                    val stringWidth = Fonts.fontSFUI35.getStringWidth(value.name)
+                    val stringWidth = FontLoaders.SF18.getStringWidth(value.name)
                     if (width < stringWidth + 8)
                         width = stringWidth + 8
 
@@ -324,9 +325,9 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
                     // Title
                     val text = "${value.name}: §c${"%.2f".format(current)}"
 
-                    Fonts.fontSFUI35.drawString(text, x + 2, y + height, Color.WHITE.rgb)
+                    FontLoaders.SF18.drawString(text, x + 2f, y + height.toFloat(), Color.WHITE.rgb)
 
-                    val stringWidth = Fonts.fontSFUI35.getStringWidth(text)
+                    val stringWidth = FontLoaders.SF18.getStringWidth(text)
                     if (width < stringWidth + 8)
                         width = stringWidth + 8
 
@@ -362,9 +363,9 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
                     // Title
                     val text = "${value.name}: §c$current"
 
-                    Fonts.fontSFUI35.drawString(text, x + 2, y + height, Color.WHITE.rgb)
+                    FontLoaders.SF18.drawString(text, x + 2f, y + height.toFloat(), Color.WHITE.rgb)
 
-                    val stringWidth = Fonts.fontSFUI35.getStringWidth(text)
+                    val stringWidth = FontLoaders.SF18.getStringWidth(text)
                     if (width < stringWidth + 8)
                         width = stringWidth + 8
 
@@ -394,11 +395,11 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
 
                 is ListValue -> {
                     // Title
-                    Fonts.fontSFUI35.drawString(value.name, x + 2, y + height, Color.WHITE.rgb)
-                    Fonts.fontSFUI35.drawString(
-                        "${if (value.openList) "-" else "+"}",
-                        x + width - 10,
-                        y + height + 1,
+                    FontLoaders.SF18.drawString(value.name, x + 2f, y + height.toFloat(), Color.WHITE.rgb)
+                    FontLoaders.SF18.drawString(
+                        if (value.openList) "-" else "+",
+                        x + width - 10f,
+                        y + height + 1f,
                         Color.GRAY.rgb
                     )
 
@@ -412,14 +413,14 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
                     if (value.openList) for (s in value.values) {
                         // Value title
                         val text = "§c> §r$s"
-                        Fonts.fontSFUI35.drawString(
+                        FontLoaders.SF18.drawString(
                             text,
-                            x + 2,
-                            y + height,
+                            x + 2f,
+                            y + height.toFloat(),
                             if (s == value.get()) Color.WHITE.rgb else Color.GRAY.rgb
                         )
 
-                        val stringWidth = Fonts.fontSFUI35.getStringWidth(text)
+                        val stringWidth = FontLoaders.SF18.getStringWidth(text)
                         if (width < stringWidth + 8)
                             width = stringWidth + 8
 
@@ -445,9 +446,9 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
                         else -> "${value.name}: Unknown"
                     }
 
-                    Fonts.fontSFUI35.drawString(text, x + 2, y + height, Color.WHITE.rgb)
+                    FontLoaders.SF18.drawString(text, x + 2f, y + height.toFloat(), Color.WHITE.rgb)
 
-                    val stringWidth = Fonts.fontSFUI35.getStringWidth(text)
+                    val stringWidth = FontLoaders.SF18.getStringWidth(text)
                     if (width < stringWidth + 8)
                         width = stringWidth + 8
 
@@ -472,12 +473,12 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
 
         // Header
         Gui.drawRect(x, y, x + width, y + 12, Color(0, 0, 0, 150).rgb)
-        Fonts.fontSFUI35.drawString("§l${element.name}", x + 2F, y + 3.5F, Color.WHITE.rgb)
+        FontLoaders.SF18.drawString("${element.name}", x + 2F, y + 3.5F, Color.WHITE.rgb)
 
         // Delete button
         if (!element.info.force) {
-            val deleteWidth = x + width - Fonts.fontSFUI35.getStringWidth("§lDelete") - 2F
-            Fonts.fontSFUI35.drawString("§lDelete", deleteWidth, y + 3.5F, Color.WHITE.rgb)
+            val deleteWidth = x + width - FontLoaders.SF18.getStringWidth("Delete") - 2F
+            FontLoaders.SF18.drawString("Delete", deleteWidth, y + 3.5F, Color.WHITE.rgb)
             if (Mouse.isButtonDown(0) && !mouseDown && mouseX >= deleteWidth && mouseX <= x + width && mouseY >= y
                 && mouseY <= y + 10
             )

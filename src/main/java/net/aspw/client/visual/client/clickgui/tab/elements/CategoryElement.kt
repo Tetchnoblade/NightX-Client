@@ -4,6 +4,7 @@ import net.aspw.client.Client
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.util.MinecraftInstance
 import net.aspw.client.util.MouseUtils
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.client.clickgui.tab.ColorManager
 import net.aspw.client.visual.client.clickgui.tab.extensions.animSmooth
@@ -46,7 +47,7 @@ class CategoryElement(val category: ModuleCategory) : MinecraftInstance() {
                 3F,
                 ColorManager.border.rgb
             )
-        Fonts.fontSFUI40.drawString(name, x + 10F, y + height / 2F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F, -1)
+        FontLoaders.SF20.drawString(name, x + 10F, y + height / 2F - FontLoaders.SF20.height / 2F + 2F, -1)
     }
 
     fun drawPanel(mX: Int, mY: Int, x: Float, y: Float, width: Float, height: Float, wheel: Int, accentColor: Color) {

@@ -373,10 +373,6 @@
       <module fileurl="file://$PROJECT_DIR$/AvoidWare.api.iml" filepath="$PROJECT_DIR$/AvoidWare.api.iml" />
       <module fileurl="file://$PROJECT_DIR$/AvoidWare.main.iml" filepath="$PROJECT_DIR$/AvoidWare.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/AvoidWare.test.iml" filepath="$PROJECT_DIR$/AvoidWare.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/NightX.iml" filepath="$PROJECT_DIR$/NightX.iml" />
-      <module fileurl="file://$PROJECT_DIR$/NightX-Client.NightX.api.iml" filepath="$PROJECT_DIR$/NightX-Client.NightX.api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/NightX-Client.NightX.main.iml" filepath="$PROJECT_DIR$/NightX-Client.NightX.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/NightX-Client.NightX.test.iml" filepath="$PROJECT_DIR$/NightX-Client.NightX.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX-master.NightX.iml" filepath="$PROJECT_DIR$/NightX-master.NightX.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.api.iml" filepath="$PROJECT_DIR$/NightX.api.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.main.iml" filepath="$PROJECT_DIR$/NightX.main.iml" />

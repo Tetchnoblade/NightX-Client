@@ -1,6 +1,7 @@
 package net.aspw.client.visual.client.clickgui.tab.value.impl
 
 import net.aspw.client.util.MouseUtils
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.ListValue
 import net.aspw.client.visual.client.clickgui.tab.ColorManager
@@ -17,7 +18,7 @@ class ListElement(val saveValue: ListValue) : ValueElement<String>(saveValue) {
     private var expansion = false
 
     private val maxSubWidth =
-        -(saveValue.values.map { -Fonts.fontSFUI40.getStringWidth(it) }.sorted().firstOrNull() ?: 0F).toFloat() + 20F
+        -(saveValue.values.map { -FontLoaders.SF20.getStringWidth(it) }.sorted().firstOrNull() ?: 0F).toFloat() + 20F
 
     companion object {
         val expanding = ResourceLocation("client/clickgui/expand.png")
@@ -34,7 +35,7 @@ class ListElement(val saveValue: ListValue) : ValueElement<String>(saveValue) {
     ): Float {
         expandHeight = expandHeight.animSmooth(if (expansion) 16F * (saveValue.values.size - 1F) else 0F, 0.5F)
         val percent = expandHeight / (16F * (saveValue.values.size - 1F))
-        Fonts.fontSFUI40.drawString(value.name, x + 10F, y + 10F - Fonts.fontSFUI40.FONT_HEIGHT / 2F + 2F, -1)
+        FontLoaders.SF20.drawString(value.name, x + 10F, y + 10F - FontLoaders.SF20.height / 2F + 2F, -1)
         RenderUtils.originalRoundedRect(
             x + width - 18F - maxSubWidth,
             y + 2F,
@@ -52,13 +53,13 @@ class ListElement(val saveValue: ListValue) : ValueElement<String>(saveValue) {
         RenderUtils.drawImage(expanding, -4, -4, 8, 8)
         glPopMatrix()
         glPopMatrix()
-        Fonts.fontSFUI40.drawString(value.get(), x + width - 14F - maxSubWidth, y + 6F, -1)
+        FontLoaders.SF20.drawString(value.get(), x + width - 14F - maxSubWidth, y + 6F, -1)
         glPushMatrix()
         GlStateManager.translate(x + width - 14F - maxSubWidth, y + 7F, 0F)
         GlStateManager.scale(percent, percent, percent)
         var vertHeight = 0F
         if (percent > 0F) for (subV in unusedValues) {
-            Fonts.fontSFUI40.drawString(
+            FontLoaders.SF20.drawString(
                 subV,
                 0F,
                 (16F + vertHeight) * percent - 1F,

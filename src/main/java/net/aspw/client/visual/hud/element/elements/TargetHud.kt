@@ -86,7 +86,6 @@ class TargetHud(
                 Exhibition(this),
                 Remix(this),
                 Slowly(this),
-                Blocky(this),
                 Old(this),
                 New(this)
             ).toTypedArray(), "New"

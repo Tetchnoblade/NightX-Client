@@ -3,6 +3,7 @@ package net.aspw.client.visual.hud.element.elements
 import net.aspw.client.Client
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.BlurUtils
 import net.aspw.client.util.render.ColorUtils
 import net.aspw.client.util.render.RenderUtils
@@ -54,7 +55,6 @@ class TabGui(x: Double = 0.0, y: Double = 17.0) : Element(x = x, y = y) {
     private val oldRainbowSaturationValue = FloatValue("OldRainbow-Saturation", 0.9f, 0f, 1f)
     private val oldRainbowBrightnessValue = FloatValue("OldRainbow-Brightness", 1f, 0f, 1f)
     private val arrowsValue = BoolValue("Arrows", false)
-    private val fontValue = FontValue("Font", Fonts.fontSFUI37)
     private val textShadow = BoolValue("TextShadow", true)
     private val textFade = BoolValue("TextFade", true)
     private val textPositionY = FloatValue("TextPosition-Y", 1.4F, 0F, 5F)
@@ -88,7 +88,7 @@ class TabGui(x: Double = 0.0, y: Double = 17.0) : Element(x = x, y = y) {
 
         AWTFontRenderer.assumeNonVolatile = true
 
-        val fontRenderer = fontValue.get()
+        val fontRenderer = FontLoaders.SF18
 
         val rectangleRainbowEnabled = rectangleRainbow.get().equals("normal", ignoreCase = true)
 
@@ -208,18 +208,18 @@ class TabGui(x: Double = 0.0, y: Double = 17.0) : Element(x = x, y = y) {
 
             val textColor = if (selectedCategory == index) 0xffffff else Color(210, 210, 210).rgb
 
-            fontRenderer.drawString(tabName, textX, textY, textColor, textShadow.get())
+            fontRenderer.drawString(tabName, textX.toDouble(), textY.toDouble(), textColor, textShadow.get())
 
             if (arrowsValue.get()) {
                 if (side.horizontal == Side.Horizontal.RIGHT)
                     fontRenderer.drawString(
-                        if (!categoryMenu && selectedCategory == index) "+" else "-", 3F, y + 2F,
+                        if (!categoryMenu && selectedCategory == index) "+" else "-", 3F.toDouble(), y + 2F.toDouble(),
                         0xffffff, textShadow.get()
                     )
                 else
                     fontRenderer.drawString(
                         if (!categoryMenu && selectedCategory == index) "-" else "+",
-                        width.get() - 8F, y + 2F, 0xffffff, textShadow.get()
+                        width.get() - 8F.toDouble(), y + 2F.toDouble(), 0xffffff, textShadow.get()
                     )
             }
 
@@ -237,7 +237,7 @@ class TabGui(x: Double = 0.0, y: Double = 17.0) : Element(x = x, y = y) {
                     borderColor.rgb,
                     borderStrength.get(),
                     lowerCaseValue.get(),
-                    fontRenderer,
+                    mc.fontRendererObj,
                     borderRainbow.get().equals("Normal", ignoreCase = true),
                     rectangleRainbowEnabled,
                     blurValue.get(),

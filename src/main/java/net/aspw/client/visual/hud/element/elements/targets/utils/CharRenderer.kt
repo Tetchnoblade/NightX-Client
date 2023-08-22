@@ -2,6 +2,7 @@ package net.aspw.client.visual.hud.element.elements.targets.utils
 
 import net.aspw.client.util.AnimationUtils
 import net.aspw.client.util.MinecraftInstance
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.font.Fonts
 import net.minecraft.client.gui.ScaledResolution
@@ -38,7 +39,7 @@ class CharRenderer(val small: Boolean) : MinecraftInstance() {
         color: Int
     ): Float {
         val reFormat = deFormat.format(number.toDouble()) // string
-        val fontRend = if (small) Fonts.font40 else Fonts.font72
+        val fontRend = if (small) FontLoaders.SF16 else FontLoaders.SF24
         val delta = RenderUtils.deltaTime
         val scaledRes = ScaledResolution(mc)
 
@@ -46,7 +47,7 @@ class CharRenderer(val small: Boolean) : MinecraftInstance() {
         var indexY = 0
         var animX = 0F
 
-        val cutY = initY + fontRend.FONT_HEIGHT.toFloat() * (3F / 4F)
+        val cutY = initY + fontRend.height.toFloat() * (3F / 4F)
 
         GL11.glEnable(3089)
         RenderUtils.makeScissorBox(
@@ -60,20 +61,20 @@ class CharRenderer(val small: Boolean) : MinecraftInstance() {
             animX = moveX[indexX]
 
             val pos = numberList.indexOf("$char")
-            val expectAnim = (fontRend.FONT_HEIGHT.toFloat() + 2F) * pos
-            val expectAnimMin = (fontRend.FONT_HEIGHT.toFloat() + 2F) * (pos - 2)
-            val expectAnimMax = (fontRend.FONT_HEIGHT.toFloat() + 2F) * (pos + 2)
+            val expectAnim = (fontRend.height.toFloat() + 2F) * pos
+            val expectAnimMin = (fontRend.height.toFloat() + 2F) * (pos - 2)
+            val expectAnimMax = (fontRend.height.toFloat() + 2F) * (pos + 2)
 
             if (pos >= 0) {
                 moveY[indexY] = AnimationUtils.animate(expectAnim, moveY[indexY], fontSpeed * 0.02F * delta)
 
                 GL11.glTranslatef(0F, initY - moveY[indexY], 0F)
                 numberList.forEachIndexed { index, num ->
-                    if ((fontRend.FONT_HEIGHT.toFloat() + 2F) * index >= expectAnimMin && (fontRend.FONT_HEIGHT.toFloat() + 2F) * index <= expectAnimMax) {
+                    if ((fontRend.height.toFloat() + 2F) * index >= expectAnimMin && (fontRend.height.toFloat() + 2F) * index.toDouble() <= expectAnimMax) {
                         fontRend.drawString(
                             num,
-                            initX + moveX[indexX],
-                            (fontRend.FONT_HEIGHT.toFloat() + 2F) * index,
+                            initX.toDouble() + moveX[indexX],
+                            (fontRend.height.toFloat() + 2F) * index.toDouble(),
                             color,
                             shadow
                         )
@@ -82,7 +83,7 @@ class CharRenderer(val small: Boolean) : MinecraftInstance() {
                 GL11.glTranslatef(0F, -initY + moveY[indexY], 0F)
             } else {
                 moveY[indexY] = 0F
-                fontRend.drawString("$char", initX + moveX[indexX], initY, color, shadow)
+                fontRend.drawString("$char", initX + moveX[indexX].toDouble(), initY.toDouble(), color, shadow)
             }
 
             animX += fontRend.getStringWidth("$char")

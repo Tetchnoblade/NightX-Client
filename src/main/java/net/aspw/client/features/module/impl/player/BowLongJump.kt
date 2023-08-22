@@ -7,6 +7,7 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.MovementUtils
 import net.aspw.client.util.PacketUtils
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -179,12 +180,11 @@ class BowLongJump : Module() {
         if (!renderValue.get()) return
         val scaledRes = ScaledResolution(mc)
         val width = bowState.toFloat() / 5f * 60f
-        Fonts.fontSFUI40.drawCenteredString(
+        FontLoaders.SF20.drawCenteredStringWithShadow(
             bowStatus,
             scaledRes.scaledWidth / 2f,
             scaledRes.scaledHeight / 2f + 14f,
-            -1,
-            true
+            -1
         )
         RenderUtils.drawRect(
             scaledRes.scaledWidth / 2f - 31f,

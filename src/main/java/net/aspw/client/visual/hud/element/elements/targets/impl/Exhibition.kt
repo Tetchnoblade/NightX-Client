@@ -2,6 +2,7 @@ package net.aspw.client.visual.hud.element.elements.targets.impl
 
 import net.aspw.client.util.extensions.darker
 import net.aspw.client.util.extensions.getDistanceToEntityBox
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.BlendUtils
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.font.Fonts
@@ -17,7 +18,7 @@ import java.awt.Color
 class Exhibition(inst: TargetHud) : TargetStyle("Exhibition", inst, false) {
 
     override fun drawTarget(entity: EntityPlayer) {
-        val font = Fonts.fontTahoma
+        val font = FontLoaders.Tahoma11
         val minWidth = 126F.coerceAtLeast(47F + font.getStringWidth(entity.name))
 
         RenderUtils.drawExhiRect(0F, 0F, minWidth, 45F, 1F - targetHudInstance.getFadeProgress())
@@ -28,7 +29,7 @@ class Exhibition(inst: TargetHud) : TargetStyle("Exhibition", inst, false) {
         GL11.glColor4f(1f, 1f, 1f, 1f - targetHudInstance.getFadeProgress())
         RenderUtils.drawEntityOnScreen(22, 40, 16, entity)
 
-        font.drawString(entity.name, 46, 5, getColor(-1).rgb)
+        font.drawString(entity.name, 46f, 5f, getColor(-1).rgb)
 
         val barLength = 70F * (entity.health / entity.maxHealth).coerceIn(0F, 1F)
         RenderUtils.drawRect(
@@ -49,7 +50,7 @@ class Exhibition(inst: TargetHud) : TargetStyle("Exhibition", inst, false) {
         for (i in 0..9)
             RenderUtils.drawRectBasedBorder(45F + i * 7F, 14F, 45F + (i + 1) * 7F, 18F, 0.5F, getColor(Color.black).rgb)
 
-        Fonts.fontTahomaSmall.drawString(
+        FontLoaders.Tahoma9.drawString(
             "HP:${entity.health.toInt()} | Dist:${
                 mc.thePlayer.getDistanceToEntityBox(
                     entity
@@ -102,7 +103,7 @@ class Exhibition(inst: TargetHud) : TargetStyle("Exhibition", inst, false) {
     override fun getBorder(entity: EntityPlayer?): Border {
         entity ?: return Border(0F, 0F, 126F, 45F)
 
-        val font = Fonts.fontTahoma
+        val font = FontLoaders.Tahoma11
         val minWidth = 126F.coerceAtLeast(47F + font.getStringWidth(entity.name))
 
         return Border(0F, 0F, minWidth, 45F)

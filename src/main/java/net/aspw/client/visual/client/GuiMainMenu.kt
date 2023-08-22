@@ -102,18 +102,8 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         )
         RenderUtils.drawImage2(goodLogo, width / 2F - 50F, height / 2F - 120F, 100, 100)
         GlStateManager.enableAlpha()
-        Fonts.fontSFUI40.drawStringWithShadow(
-            "NightX Client §b" + Client.CLIENT_VERSION + "§r",
-            4F,
-            height - 12F,
-            -1
-        )
-        Fonts.fontSFUI40.drawStringWithShadow(
-            "Welcome, §a" + LoginID.id + "§r, UID: §6" + LoginID.uid,
-            width - 4F - Fonts.fontSFUI40.getStringWidth("Welcome, §a" + LoginID.id + ", UID: " + LoginID.uid),
-            height - 12F,
-            -1
-        )
+        FontLoaders.SF20.drawStringWithShadow("NightX Client §b" + Client.CLIENT_VERSION + "§r", 4F.toDouble(), height - 12F.toDouble(), -1)
+        FontLoaders.SF20.drawStringWithShadow("Welcome, §a" + LoginID.id + "§r, UID: §6" + LoginID.uid, width - 4F - FontLoaders.SF20.getStringWidth("Welcome, §a" + LoginID.id + ", UID: " + LoginID.uid).toDouble(), height - 12F.toDouble(), -1)
         Fonts.minecraftFont.drawString(
             "< §cAnnouncement §r>",
             width - 4 - Fonts.minecraftFont.getStringWidth("< §cAnnouncement §r>"),
@@ -426,9 +416,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             20 + 441,
             -1
         )
-
-        FontLoaders.kiona18.drawCenteredString("Hello World!!", width / 2f, 10f, -1)
-
         GlStateManager.scale(1.5f, 1.5f, 1.5f)
         Fonts.minecraftFont.drawString(
             "Changelog",
