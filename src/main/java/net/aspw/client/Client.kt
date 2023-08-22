@@ -100,6 +100,9 @@ object Client {
         // Create command manager
         commandManager = CommandManager()
 
+        // Load client fonts
+        Fonts.loadFonts()
+
         // Init SoundManager
         tipSoundManager = TipSoundManager()
 
@@ -156,9 +159,6 @@ object Client {
                 }
             }
         }
-
-        // Load client fonts
-        Fonts.loadFonts()
 
         ClientUtils.getLogger().info("Successfully loaded $CLIENT_BEST in ${System.currentTimeMillis() - lastTick}ms.")
 

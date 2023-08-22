@@ -5,57 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af093b99-5942-419c-869b-8b2d7cb4dd2a" name="変更" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Blocky.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/incheck.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/inicons.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/inlatobold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/innovicon.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/inother.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/inraleway.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/insfui.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/intahoma.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/intahomabold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/Bangers-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/Icons.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/Mojangles.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/MojanglesBold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/NiSans.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/Pixel.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/Roboto-Bold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/Roboto-Medium.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/Tahoma.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/TahomaBold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/jelloregular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/latobold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/marks.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/novicon.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/other.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/raleway.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/sfui.ttf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NightX.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/Client.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/Client.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/ReloadCommand.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/command/impl/ReloadCommand.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Hud.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/visual/Hud.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiButtonExt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiButtonExt.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/util/connection/CheckConnection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/util/connection/CheckConnection.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/util/newfont/CFontRenderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/util/newfont/CFontRenderer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/util/newfont/FontLoaders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/util/newfont/FontLoaders.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/util/render/RenderUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/util/render/RenderUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/dropdown/style/styles/DropDown.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/dropdown/style/styles/DropDown.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/tab/elements/SearchBox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/clickgui/tab/elements/SearchBox.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/Fonts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/Fonts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/GameFontRenderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/font/GameFontRenderer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Arraylist.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Arraylist.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Build.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Build.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Effects.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Effects.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/FPS.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/FPS.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Notifications.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Notifications.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Position.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Position.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Radar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Radar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/SessionInformation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/SessionInformation.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/TabGui.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/TabGui.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/TargetHud.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/TargetHud.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Text.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/Text.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Chill.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Chill.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Exhibition.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Exhibition.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/LiquidBounce.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/LiquidBounce.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Rice.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/impl/Rice.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/utils/CharRenderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/hud/element/elements/targets/utils/CharRenderer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/check.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/icons.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/latobold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/novicon.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/other.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/raleway.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/sfui.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/tahoma.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/tahomabold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/beta.txt" beforeDir="false" afterPath="$PROJECT_DIR$/web/beta.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/incheck.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/inicons.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/inlatobold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/innovicon.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/inother.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/inraleway.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/insfui.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/intahoma.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/font/intahomabold.ttf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,6 +149,7 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="GradleStart" />
       <module name="NightX-Client.NightX.main" />
+      <option name="PROGRAM_PARAMETERS" value="-Xmx8G -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M -Djavax.net.ssl.trustStoreType=Windows-ROOT" />
       <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
       <RunnerSettings RunnerId="Run" />
@@ -181,66 +163,6 @@
       <option name="MAIN_CLASS_NAME" value="GradleStart" />
       <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
       <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStart" />
-      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStart" />
-      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStart" />
-      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStart" />
-      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
-      <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -317,6 +239,66 @@
       <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
@@ -343,66 +325,6 @@
       <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -479,6 +401,66 @@
       <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
