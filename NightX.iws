@@ -5,14 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af093b99-5942-419c-869b-8b2d7cb4dd2a" name="変更" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/network/MixinBlockedServers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/util/newfont/CFont.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/util/newfont/CFontRenderer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/util/newfont/FontLoaders.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/client/MixinMinecraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/client/MixinMinecraft.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/network/MixinNetworkManager_5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/network/MixinNetworkManager_5.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/protocol/AttackFix.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/protocol/Protocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/protocol/Protocol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/client.forge.mixins.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/client.forge.mixins.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/beta.txt" beforeDir="false" afterPath="$PROJECT_DIR$/web/beta.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/downloads.json" beforeDir="false" afterPath="$PROJECT_DIR$/downloads.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/GuiMainMenu.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/GuiMainMenu.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,12 +33,7 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="NightX" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>

@@ -4,6 +4,7 @@ import net.aspw.client.Client
 import net.aspw.client.util.connection.CheckConnection
 import net.aspw.client.util.connection.LoginID
 import net.aspw.client.util.misc.MiscUtils
+import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.aspw.client.visual.font.Fonts
@@ -425,6 +426,9 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             20 + 441,
             -1
         )
+
+        FontLoaders.kiona18.drawCenteredString("Hello World!!", width / 2f, 10f, -1)
+
         GlStateManager.scale(1.5f, 1.5f, 1.5f)
         Fonts.minecraftFont.drawString(
             "Changelog",
