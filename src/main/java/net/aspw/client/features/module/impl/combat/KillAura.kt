@@ -362,13 +362,15 @@ class KillAura : Module() {
 
                     mc.thePlayer.motionX += strafe * yawCos - forward * yawSin
                     mc.thePlayer.motionZ += forward * yawCos + strafe * yawSin
+
+                    event.cancelEvent()
                 }
             }
             if (silentMovementFix.get()) {
                 update()
                 RotationUtils.targetRotation.applyStrafeToPlayer(event)
+                event.cancelEvent()
             }
-            event.cancelEvent()
         }
     }
 
