@@ -7,6 +7,7 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.movement.Speed
 import net.aspw.client.util.*
+import net.aspw.client.util.block.BlockUtils
 import net.aspw.client.util.block.BlockUtils.canBeClicked
 import net.aspw.client.util.block.BlockUtils.isReplaceable
 import net.aspw.client.util.block.PlaceInfo
@@ -26,14 +27,13 @@ import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemBlock
-import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
-import net.minecraft.network.play.client.C09PacketHeldItemChange
-import net.minecraft.network.play.client.C0APacketAnimation
-import net.minecraft.network.play.client.C0BPacketEntityAction
+import net.minecraft.network.Packet
+import net.minecraft.network.play.client.*
 import net.minecraft.potion.Potion
 import net.minecraft.stats.StatList
 import net.minecraft.util.*
 import java.util.*
+import java.util.concurrent.LinkedBlockingQueue
 
 
 @ModuleInfo(name = "Scaffold", description = "", category = ModuleCategory.PLAYER)
@@ -53,7 +53,8 @@ class Scaffold : Module() {
             "MotionTP",
             "Teleport",
             "AAC3.3.9",
-            "AAC3.6.4"
+            "AAC3.6.4",
+            "Float"
         ), "ConstantMotion"
     ) { allowTower.get() }
     private val towerTimerValue = FloatValue("TowerTimer", 1f, 0.1f, 1.4f) { allowTower.get() }
@@ -178,6 +179,8 @@ class Scaffold : Module() {
     private val safeWalkValue = BoolValue("SafeWalk", false)
     private val airSafeValue = BoolValue("AirSafe", false) { safeWalkValue.get() }
     private val autoDisableSpeedValue = BoolValue("AutoDisable-Speed", false)
+    private val desyncValue = BoolValue("Desync", false)
+    private val desyncDelayValue = IntegerValue("DesyncDelay", 400, 10, 810, "ms") { desyncValue.get() }
     private val keepRotationValue = BoolValue("KeepRotation", true)
     private val keepLengthValue =
         IntegerValue("KeepRotation-Length", 0, 0, 20) { !keepRotationValue.get() }
@@ -238,6 +241,12 @@ class Scaffold : Module() {
     private var targetPlace: PlaceInfo? = null
     private var towerPlace: PlaceInfo? = null
 
+    // Desync
+    private val packets = LinkedBlockingQueue<Packet<*>>()
+    private val positions = LinkedList<DoubleArray>()
+    private val pulseTimer = MSTimer()
+    private var disableLogger = false
+
     // Launch position
     private var launchY = 0
     private var faceBlock = false
@@ -257,6 +266,7 @@ class Scaffold : Module() {
 
     // Tower
     private var offGroundTicks: Int = 0
+    private var verusJumped = false
 
     // Eagle
     private var placedBlocksWithoutEagle = 0
@@ -292,6 +302,19 @@ class Scaffold : Module() {
         slot = mc.thePlayer.inventory.currentItem
         canTower = false
         lastMS = System.currentTimeMillis()
+        if (desyncValue.get()) {
+            synchronized(positions) {
+                positions.add(
+                    doubleArrayOf(
+                        mc.thePlayer.posX,
+                        mc.thePlayer.entityBoundingBox.minY + mc.thePlayer.getEyeHeight() / 2,
+                        mc.thePlayer.posZ
+                    )
+                )
+                positions.add(doubleArrayOf(mc.thePlayer.posX, mc.thePlayer.entityBoundingBox.minY, mc.thePlayer.posZ))
+            }
+            pulseTimer.reset()
+        }
     }
 
     //Send jump packets, bypasses Hypixel.
@@ -485,6 +508,22 @@ class Scaffold : Module() {
             offGroundTicks = 0
         } else offGroundTicks++
 
+        if (desyncValue.get()) {
+            synchronized(positions) {
+                positions.add(
+                    doubleArrayOf(
+                        mc.thePlayer.posX,
+                        mc.thePlayer.entityBoundingBox.minY,
+                        mc.thePlayer.posZ
+                    )
+                )
+            }
+            if (pulseTimer.hasTimePassed(desyncDelayValue.get().toLong())) {
+                blink()
+                pulseTimer.reset()
+            }
+        }
+
         // scaffold custom speed if enabled
         if (customSpeedValue.get()) MovementUtils.strafe(customMoveSpeedValue.get())
         if (mc.thePlayer.onGround) {
@@ -604,6 +643,20 @@ class Scaffold : Module() {
             packet.facingZ = packet.facingZ.coerceIn(-1.00000F, 1.00000F)
         }
 
+        if (desyncValue.get()) {
+            if (disableLogger) return
+            if (packet is C03PacketPlayer)
+                event.cancelEvent()
+            if (packet is C03PacketPlayer.C04PacketPlayerPosition || packet is C03PacketPlayer.C06PacketPlayerPosLook ||
+                packet is C08PacketPlayerBlockPlacement ||
+                packet is C0APacketAnimation ||
+                packet is C0BPacketEntityAction || packet is C02PacketUseEntity
+            ) {
+                event.cancelEvent()
+                packets.add(packet)
+            }
+        }
+
         // Sprint
         if (sprintModeValue.get().equals("silent", ignoreCase = true)) {
             if (packet is C0BPacketEntityAction &&
@@ -707,6 +760,20 @@ class Scaffold : Module() {
         return alwaysPlace || placeWhenAir && !mc.thePlayer.onGround || placeWhenFall && mc.thePlayer.fallDistance > 0 || placeWhenNegativeMotion && mc.thePlayer.motionY < 0
     }
 
+    private fun blink() {
+        try {
+            disableLogger = true
+            while (!packets.isEmpty()) {
+                mc.netHandler.networkManager.sendPacket(packets.take())
+            }
+            disableLogger = false
+        } catch (e: Exception) {
+            e.printStackTrace()
+            disableLogger = false
+        }
+        synchronized(positions) { positions.clear() }
+    }
+
     @EventTarget
     fun onMotion(event: MotionEvent) {
         if (canTower && event.eventState == EventState.POST && !towerMove.get()) {
@@ -803,9 +870,48 @@ class Scaffold : Module() {
             if (placeableDelay.get()) delayTimer.reset()
         }
         if (canTower) {
-            verusState = 0
             mc.timer.timerSpeed = towerTimerValue.get()
+            if (eventState === EventState.POST && towerModeValue.get().equals("float", true) && BlockUtils.getBlock(
+                    BlockPos(mc.thePlayer.posX, mc.thePlayer.posY + 2, mc.thePlayer.posZ)
+                ) is BlockAir
+            )
+                floatUP(event)
+        } else {
+            verusState = 0
         }
+    }
+
+    private fun floatUP(event: MotionEvent) {
+        if (!mc.theWorld.getCollidingBoundingBoxes(
+                mc.thePlayer,
+                mc.thePlayer.entityBoundingBox.offset(0.0, -0.01, 0.0)
+            ).isEmpty() && mc.thePlayer.onGround && mc.thePlayer.isCollidedVertically
+        ) {
+            verusState = 0
+            verusJumped = true
+        }
+        if (verusJumped) {
+            MovementUtils.strafe()
+            when (verusState) {
+                0 -> {
+                    fakeJump()
+                    mc.thePlayer.motionY = 0.41999998688697815
+                    ++verusState
+                }
+
+                1 -> ++verusState
+                2 -> ++verusState
+                3 -> {
+                    event.onGround = true
+                    mc.thePlayer.motionY = 0.0
+                    ++verusState
+                }
+
+                4 -> ++verusState
+            }
+            verusJumped = false
+        }
+        verusJumped = true
     }
 
     /**
@@ -914,6 +1020,7 @@ class Scaffold : Module() {
      */
     override fun onDisable() {
         if (mc.thePlayer == null) return
+        blink()
         faceBlock = false
         firstPitch = 0f
         firstRotate = 0f

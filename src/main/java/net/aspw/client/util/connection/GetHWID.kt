@@ -6,6 +6,7 @@ import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 import java.util.*
 
+// Old Auth System
 fun getCurrentHWID(): String {
     val process = ProcessBuilder("wmic", "csproduct", "get", "uuid").start()
     process.waitFor()

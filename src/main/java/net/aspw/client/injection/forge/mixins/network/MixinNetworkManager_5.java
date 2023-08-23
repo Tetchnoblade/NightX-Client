@@ -4,6 +4,7 @@ import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.connection.UserConnectionImpl;
 import com.viaversion.viaversion.protocol.ProtocolPipelineImpl;
 import io.netty.channel.Channel;
+import io.netty.channel.socket.SocketChannel;
 import net.aspw.client.protocol.Protocol;
 import net.aspw.client.protocol.ProtocolPipeline;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,9 +17,11 @@ public class MixinNetworkManager_5 {
 
     @Inject(method = "initChannel", at = @At(value = "TAIL"), remap = false)
     private void onInitChannel(Channel channel, CallbackInfo ci) {
-        final UserConnection user = new UserConnectionImpl(channel, true);
-        new ProtocolPipelineImpl(user);
+        if (channel instanceof SocketChannel && !Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x")) {
+            final UserConnection user = new UserConnectionImpl(channel, true);
+            new ProtocolPipelineImpl(user);
 
-        channel.pipeline().addLast(new ProtocolPipeline(user, Protocol.targetVersion));
+            channel.pipeline().addLast(new ProtocolPipeline(user, Protocol.targetVersion));
+        }
     }
 }

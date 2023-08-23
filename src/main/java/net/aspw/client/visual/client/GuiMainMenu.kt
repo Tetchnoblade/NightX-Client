@@ -255,8 +255,9 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         val yTrans = height / 2 - (translate!!.y / 2).toDouble()
         GlStateManager.translate(xTrans, yTrans, 0.0)
         GlStateManager.scale(translate!!.x / width, translate!!.y / height, 1f)
+        FontLoaders.logo18.drawStringWithShadow("a", 60.2F.toDouble(), height - 10.3F.toDouble(), -1)
         FontLoaders.SF20.drawStringWithShadow(
-            "NightX Client §b" + Client.CLIENT_VERSION + "§r",
+            "NightX Client",
             4F.toDouble(),
             height - 12F.toDouble(),
             -1
@@ -265,9 +266,26 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             "Welcome, §a" + LoginID.id + "§r, UID: §6" + LoginID.uid,
             width - 4F - FontLoaders.SF20.getStringWidth("Welcome, §a" + LoginID.id + ", UID: " + LoginID.uid)
                 .toDouble(),
-            height - 12F.toDouble(),
+            height - 23F.toDouble(),
             -1
         )
+        if (Client.isBeta) {
+            FontLoaders.SF20.drawStringWithShadow(
+                "Your current build is §eLatest Beta! §r(§b" + Client.CLIENT_VERSION + "§r)",
+                width - 4F - FontLoaders.SF20.getStringWidth("Your current build is §eLatest Beta! §r(§b" + Client.CLIENT_VERSION + "§r)")
+                    .toDouble(),
+                height - 12F.toDouble(),
+                -1
+            )
+        } else {
+            FontLoaders.SF20.drawStringWithShadow(
+                "Your current build is §eLatest Release! §r(§b" + Client.CLIENT_VERSION + "§r)",
+                width - 4F - FontLoaders.SF20.getStringWidth("Your current build is §eLatest Release! §r(§b" + Client.CLIENT_VERSION + "§r)")
+                    .toDouble(),
+                height - 12F.toDouble(),
+                -1
+            )
+        }
         Fonts.minecraftFont.drawString(
             "< §cAnnouncement §r>",
             width - 4 - Fonts.minecraftFont.getStringWidth("< §cAnnouncement §r>"),
