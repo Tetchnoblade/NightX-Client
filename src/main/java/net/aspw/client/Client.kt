@@ -109,7 +109,6 @@ object Client {
         // Setup module manager and register modules
         moduleManager = ModuleManager()
         moduleManager.registerModules()
-        moduleManager.registerBetaModules()
 
         // Remapper
         try {

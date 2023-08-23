@@ -25,10 +25,6 @@ public abstract class MixinRender {
     @Shadow
     protected abstract <T extends Entity> boolean bindEntityTexture(T entity);
 
-    @Shadow
-    public <T extends Entity> void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
-    }
-
     @Inject(method = "doRender", at = @At("HEAD"))
     private void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo callbackInfo) {
         Client.eventManager.callEvent(new RenderEntityEvent(entity, x, y, z, entityYaw, partialTicks));

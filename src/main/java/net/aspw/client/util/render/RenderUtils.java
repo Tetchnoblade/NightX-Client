@@ -2,7 +2,6 @@ package net.aspw.client.util.render;
 
 import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.block.BlockUtils;
-import net.aspw.client.util.newfont.FontLoaders;
 import net.aspw.client.visual.font.Fonts;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.Gui;
@@ -1449,13 +1448,13 @@ public final class RenderUtils extends MinecraftInstance {
     }
 
     private static float drawExhiOutlined(String text, float x, float y, float borderWidth, int borderColor, int mainColor, boolean drawText) {
-        FontLoaders.Tahoma11.drawString(text, x, y - borderWidth, borderColor);
-        FontLoaders.Tahoma11.drawString(text, x, y + borderWidth, borderColor);
-        FontLoaders.Tahoma11.drawString(text, x - borderWidth, y, borderColor);
-        FontLoaders.Tahoma11.drawString(text, x + borderWidth, y, borderColor);
+        Fonts.fontTahomaSmall.drawString(text, x, y - borderWidth, borderColor);
+        Fonts.fontTahomaSmall.drawString(text, x, y + borderWidth, borderColor);
+        Fonts.fontTahomaSmall.drawString(text, x - borderWidth, y, borderColor);
+        Fonts.fontTahomaSmall.drawString(text, x + borderWidth, y, borderColor);
         if (drawText)
-            FontLoaders.Tahoma11.drawString(text, x, y, mainColor);
-        return x + FontLoaders.Tahoma11.getStringWidth(text) - 2F;
+            Fonts.fontTahomaSmall.drawString(text, x, y, mainColor);
+        return x + Fonts.fontTahomaSmall.getWidth(text) - 2F;
     }
 
     private static int getMainColor(int level) {

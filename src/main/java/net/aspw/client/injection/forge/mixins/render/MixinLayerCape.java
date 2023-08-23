@@ -2,6 +2,7 @@ package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.visual.Cape;
+import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -9,7 +10,7 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerCape;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.util.MathHelper;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.util.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,9 +23,12 @@ import java.util.Objects;
 @Mixin(LayerCape.class)
 public class MixinLayerCape {
 
-    @Final
     @Shadow
-    private RenderPlayer playerRenderer;
+    private final RenderPlayer playerRenderer;
+
+    public MixinLayerCape(RenderPlayer playerRenderer) {
+        this.playerRenderer = playerRenderer;
+    }
 
     /**
      * @author As_pw
@@ -35,7 +39,9 @@ public class MixinLayerCape {
         final Cape cape = Objects.requireNonNull(Client.moduleManager.getModule(Cape.class));
         if (!entitylivingbaseIn.isInvisible() && entitylivingbaseIn == Minecraft.getMinecraft().thePlayer && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && (cape.getState() || !cape.getState() && entitylivingbaseIn.getLocationCape() != null)) {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            this.playerRenderer.bindTexture(entitylivingbaseIn.getLocationCape());
+            if (!cape.getStyleValue().get().equals("NightX"))
+                this.playerRenderer.bindTexture(entitylivingbaseIn.getLocationCape());
+            else this.playerRenderer.bindTexture(new ResourceLocation("client/cape/animation/nightx/base.png"));
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, 0.0F, 0.125F);
             final double d0 = entitylivingbaseIn.prevChasingPosX + (entitylivingbaseIn.chasingPosX - entitylivingbaseIn.prevChasingPosX) * (double) partialTicks - (entitylivingbaseIn.prevPosX + (entitylivingbaseIn.posX - entitylivingbaseIn.prevPosX) * (double) partialTicks);
@@ -74,6 +80,24 @@ public class MixinLayerCape {
             GlStateManager.rotate(-f3 / 2.0F, 0.0F, 1.0F, 0.0F);
             GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
             this.playerRenderer.getMainModel().renderCape(0.0625F);
+            if (cape.getState() && (cape.getStyleValue().get().equals("Exhibition") || cape.getStyleValue().get().equals("NightX"))) {
+                if (cape.getStyleValue().get().equals("Exhibition"))
+                    this.playerRenderer.bindTexture(new ResourceLocation("client/cape/animation/exhibition/overlay.png"));
+                if (cape.getStyleValue().get().equals("NightX"))
+                    this.playerRenderer.bindTexture(entitylivingbaseIn.getLocationCape());
+                float alpha;
+                float red;
+                int rgb;
+                float green;
+                rgb = RenderUtils.skyRainbow(0, 0.7f, 1).getRGB();
+                alpha = 0.3F;
+                red = (float) (rgb >> 16 & 255) / 255.0F;
+                green = (float) (rgb >> 8 & 255) / 255.0F;
+                float blue = (float) (rgb & 255) / 255.0F;
+                GlStateManager.color(red, green, blue, alpha);
+                this.playerRenderer.getMainModel().renderCape(0.0625F);
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            }
             GlStateManager.popMatrix();
         }
     }

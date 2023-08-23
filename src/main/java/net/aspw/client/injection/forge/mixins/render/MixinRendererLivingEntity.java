@@ -16,9 +16,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
@@ -37,7 +34,7 @@ import java.util.Objects;
  * The type Mixin renderer living entity.
  */
 @Mixin(RendererLivingEntity.class)
-public abstract class MixinRendererLivingEntity<T extends EntityLivingBase> extends MixinRender {
+public abstract class MixinRendererLivingEntity extends MixinRender {
     @Final
     @Shadow
     private static final Logger logger = LogManager.getLogger();
@@ -218,13 +215,10 @@ public abstract class MixinRendererLivingEntity<T extends EntityLivingBase> exte
      * @author As_pw
      * @reason Rotations
      */
-    @Overwrite
-    public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
+    @Inject(method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V", at = @At("HEAD"))
+    private <T extends EntityLivingBase> void injectFakeBody(T entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         boolean shouldSit;
         SilentView rotations = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
-        if (MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Pre(entity, (RendererLivingEntity) (Object) this, x, y, z))) {
-            return;
-        }
         GlStateManager.pushMatrix();
         GlStateManager.disableCull();
         this.mainModel.swingProgress = this.getSwingProgress(entity, partialTicks);
@@ -335,9 +329,8 @@ public abstract class MixinRendererLivingEntity<T extends EntityLivingBase> exte
         GlStateManager.popMatrix();
 
         if (!this.renderOutlines) {
-            super.doRender(entity, x, y, z, entityYaw, partialTicks);
+            super.doRenders(entity, x, y, z, entityYaw, partialTicks);
         }
-        MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Post(entity, (RendererLivingEntity) (Object) this, x, y, z));
     }
 
     /**

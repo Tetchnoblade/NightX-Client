@@ -108,18 +108,18 @@ class DropDown : Style() {
                 Color(255, 255, 255, 200).rgb
             )
         }
-        if (panel.name.equals("targets", true)) {
+        if (panel.name.equals("minigames", true)) {
             Fonts.icons.drawStringWithShadow(
-                "I",
-                (panel.getX() + 37).toFloat(),
+                "C",
+                (panel.getX() + 54).toFloat(),
                 (panel.getY() + 4).toFloat(),
                 Color(255, 255, 255, 200).rgb
             )
         }
-        if (panel.name.equals("beta", true)) {
+        if (panel.name.equals("targets", true)) {
             Fonts.icons.drawStringWithShadow(
-                "C",
-                (panel.getX() + 30).toFloat(),
+                "I",
+                (panel.getX() + 37).toFloat(),
                 (panel.getY() + 4).toFloat(),
                 Color(255, 255, 255, 200).rgb
             )

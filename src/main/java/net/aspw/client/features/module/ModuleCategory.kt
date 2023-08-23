@@ -8,5 +8,5 @@ enum class ModuleCategory(val displayName: String) {
     OTHER("Other"),
     VISUAL("Visual"),
     TARGETS("Targets"),
-    BETA("Beta")
+    MINIGAMES("MiniGames")
 }

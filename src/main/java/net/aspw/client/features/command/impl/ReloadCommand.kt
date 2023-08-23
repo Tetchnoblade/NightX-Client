@@ -7,7 +7,6 @@ import net.aspw.client.features.module.impl.visual.Hud
 import net.aspw.client.util.misc.sound.TipSoundManager
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.client.clickgui.tab.NewUi
-import net.aspw.client.visual.font.Fonts
 
 class ReloadCommand : Command("reload", emptyArray()) {
     /**
@@ -22,7 +21,6 @@ class ReloadCommand : Command("reload", emptyArray()) {
             Client.moduleManager.generateCommand(module)
         Client.scriptManager.loadScripts()
         Client.scriptManager.enableScripts()
-        Fonts.loadFonts()
         Client.tipSoundManager = TipSoundManager()
         Client.fileManager.loadConfig(Client.fileManager.modulesConfig)
         Client.fileManager.loadConfig(Client.fileManager.valuesConfig)

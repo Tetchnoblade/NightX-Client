@@ -17,7 +17,6 @@ class Cape : Module() {
             "None",
             "NightX",
             "Delta",
-            "Infinity",
             "Funny",
             "Astolfo",
             "Exhibition",
@@ -44,6 +43,7 @@ class Cape : Module() {
         "NightX"
     )
 
+
     private val capeCache = hashMapOf<String, CapeStyle>()
     fun getCapeLocation(value: String): ResourceLocation {
         if (capeCache[value.uppercase(Locale.getDefault())] == null) {
@@ -59,10 +59,11 @@ class Cape : Module() {
 
     enum class CapeStyle(val location: ResourceLocation) {
         NONE(ResourceLocation("client/cape/none.png")),
+        NIGHTX(ResourceLocation("client/cape/animation/nightx/base.png")),
         DELTA(ResourceLocation("client/cape/delta.png")),
         FUNNY(ResourceLocation("client/cape/funny.png")),
         ASTOLFO(ResourceLocation("client/cape/astolfo.png")),
-        EXHIBITION(ResourceLocation("client/cape/exhibition.png")),
+        EXHIBITION(ResourceLocation("client/cape/animation/exhibition/base.png")),
         NOVOLINE(ResourceLocation("client/cape/novoline.png")),
         DORTWARE(ResourceLocation("client/cape/dortware.png")),
         DIABLO(ResourceLocation("client/cape/diablo.png")),

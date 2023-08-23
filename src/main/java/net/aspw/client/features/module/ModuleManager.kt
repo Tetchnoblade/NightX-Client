@@ -7,11 +7,11 @@ import net.aspw.client.event.Listenable
 import net.aspw.client.features.command.impl.ModuleCommand
 import net.aspw.client.features.module.impl.combat.*
 import net.aspw.client.features.module.impl.exploit.*
+import net.aspw.client.features.module.impl.minigames.SnakeGame
 import net.aspw.client.features.module.impl.movement.*
 import net.aspw.client.features.module.impl.other.*
 import net.aspw.client.features.module.impl.player.*
 import net.aspw.client.features.module.impl.player.Timer
-import net.aspw.client.features.module.impl.beta.TestModule
 import net.aspw.client.features.module.impl.targets.*
 import net.aspw.client.features.module.impl.visual.*
 import net.aspw.client.util.ClientUtils
@@ -30,14 +30,6 @@ class ModuleManager : Listenable {
 
     init {
         Client.eventManager.registerListener(this)
-    }
-
-    fun registerBetaModules() {
-        ClientUtils.getLogger().info("Loading beta modules...")
-
-        registerModules(
-            TestModule::class.java
-        )
     }
 
     /**
@@ -194,7 +186,8 @@ class ModuleManager : Listenable {
             AntiSuffocation::class.java,
             AttackFreeze::class.java,
             FakeGhostBlock::class.java,
-            NoHurtCam::class.java
+            NoHurtCam::class.java,
+            SnakeGame::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")
