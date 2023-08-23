@@ -7,7 +7,6 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.connection.LoginID
 import net.aspw.client.util.misc.RandomUtils
 import net.aspw.client.value.IntegerValue
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement

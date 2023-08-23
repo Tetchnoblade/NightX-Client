@@ -56,7 +56,7 @@ public abstract class FontLoaders {
     public static CFontRenderer logog38 = new CFontRenderer(FontLoaders.getLoggo(38), true, true);
 
     // Tahoma2
-    public static CFontRenderer Tahoma9= new CFontRenderer(FontLoaders.getTahoma(9), true, true);
+    public static CFontRenderer Tahoma9 = new CFontRenderer(FontLoaders.getTahoma(9), true, true);
     public static CFontRenderer Tahoma11 = new CFontRenderer(FontLoaders.getTahoma(11), true, true);
     public static CFontRenderer Tahoma13 = new CFontRenderer(FontLoaders.getTahoma(13), true, true);
     public static CFontRenderer Tahoma14 = new CFontRenderer(FontLoaders.getTahoma(14), true, true);

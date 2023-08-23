@@ -7,7 +7,6 @@ import net.aspw.client.value.ListValue
 import net.aspw.client.visual.client.clickgui.tab.ColorManager
 import net.aspw.client.visual.client.clickgui.tab.extensions.animSmooth
 import net.aspw.client.visual.client.clickgui.tab.value.ValueElement
-import net.aspw.client.visual.font.Fonts
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*

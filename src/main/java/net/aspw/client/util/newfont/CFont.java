@@ -96,18 +96,18 @@ public class CFont {
         float renderSRCY = srcY / 512.0f;
         float renderSRCWidth = srcWidth / 512.0f;
         float renderSRCHeight = srcHeight / 512.0f;
-        GL11.glTexCoord2f((float) (renderSRCX + renderSRCWidth), (float) renderSRCY);
-        GL11.glVertex2d((double) (x + width), (double) y);
-        GL11.glTexCoord2f((float) renderSRCX, (float) renderSRCY);
-        GL11.glVertex2d((double) x, (double) y);
-        GL11.glTexCoord2f((float) renderSRCX, (float) (renderSRCY + renderSRCHeight));
-        GL11.glVertex2d((double) x, (double) (y + height));
-        GL11.glTexCoord2f((float) renderSRCX, (float) (renderSRCY + renderSRCHeight));
-        GL11.glVertex2d((double) x, (double) (y + height));
-        GL11.glTexCoord2f((float) (renderSRCX + renderSRCWidth), (float) (renderSRCY + renderSRCHeight));
-        GL11.glVertex2d((double) (x + width), (double) (y + height));
-        GL11.glTexCoord2f((float) (renderSRCX + renderSRCWidth), (float) renderSRCY);
-        GL11.glVertex2d((double) (x + width), (double) y);
+        GL11.glTexCoord2f(renderSRCX + renderSRCWidth, renderSRCY);
+        GL11.glVertex2d(x + width, y);
+        GL11.glTexCoord2f(renderSRCX, renderSRCY);
+        GL11.glVertex2d(x, y);
+        GL11.glTexCoord2f(renderSRCX, renderSRCY + renderSRCHeight);
+        GL11.glVertex2d(x, y + height);
+        GL11.glTexCoord2f(renderSRCX, renderSRCY + renderSRCHeight);
+        GL11.glVertex2d(x, y + height);
+        GL11.glTexCoord2f(renderSRCX + renderSRCWidth, renderSRCY + renderSRCHeight);
+        GL11.glVertex2d(x + width, y + height);
+        GL11.glTexCoord2f(renderSRCX + renderSRCWidth, renderSRCY);
+        GL11.glVertex2d(x + width, y);
     }
 
     public int getStringHeight(String text) {

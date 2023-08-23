@@ -234,7 +234,12 @@ class EditorPanel(private val hudDesigner: GuiHudDesigner, var x: Int, var y: In
         realHeight += 10
 
         // Scale
-        FontLoaders.SF18.drawString("Scale: ${"%.2f".format(element.scale)}", x + 2f, y + height.toFloat(), Color.WHITE.rgb)
+        FontLoaders.SF18.drawString(
+            "Scale: ${"%.2f".format(element.scale)}",
+            x + 2f,
+            y + height.toFloat(),
+            Color.WHITE.rgb
+        )
         height += 10
         realHeight += 10
 

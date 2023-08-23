@@ -1,11 +1,13 @@
 package net.aspw.client.features.module.impl.other
 
-import net.aspw.client.event.*
+import net.aspw.client.event.EventTarget
+import net.aspw.client.event.KeyEvent
+import net.aspw.client.event.PacketEvent
+import net.aspw.client.event.ScreenEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.PacketUtils
-import net.aspw.client.util.connection.LoginID
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.gui.inventory.GuiInventory
 import net.minecraft.network.play.client.C0DPacketCloseWindow

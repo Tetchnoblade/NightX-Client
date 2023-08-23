@@ -13,7 +13,6 @@ import net.aspw.client.util.render.ColorUtils.rainbow
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.IntegerValue
-import net.aspw.client.visual.font.Fonts
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager

@@ -11,7 +11,6 @@ import net.aspw.client.util.render.Stencil;
 import net.aspw.client.visual.client.clickgui.tab.elements.CategoryElement;
 import net.aspw.client.visual.client.clickgui.tab.elements.ModuleElement;
 import net.aspw.client.visual.client.clickgui.tab.elements.SearchElement;
-import net.aspw.client.visual.font.Fonts;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;

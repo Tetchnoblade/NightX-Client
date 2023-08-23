@@ -19,7 +19,6 @@ import net.aspw.client.visual.client.clickgui.tab.value.impl.BooleanElement
 import net.aspw.client.visual.client.clickgui.tab.value.impl.FloatElement
 import net.aspw.client.visual.client.clickgui.tab.value.impl.IntElement
 import net.aspw.client.visual.client.clickgui.tab.value.impl.ListElement
-import net.aspw.client.visual.font.Fonts
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.input.Keyboard

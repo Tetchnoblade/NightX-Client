@@ -158,8 +158,10 @@ class Scaffold : Module() {
             }
         }
 
-    private val watchdogYaw: IntegerValue = object : IntegerValue("WatchdogYaw", 180, 0, 360, { rotationModeValue.get().equals("watchdog", true) }) {}
-    private val watchdogPitch: IntegerValue = object : IntegerValue("WatchdogPitch", 84, 0, 90, { rotationModeValue.get().equals("watchdog", true) }) {}
+    private val watchdogYaw: IntegerValue =
+        object : IntegerValue("WatchdogYaw", 180, 0, 360, { rotationModeValue.get().equals("watchdog", true) }) {}
+    private val watchdogPitch: IntegerValue =
+        object : IntegerValue("WatchdogPitch", 84, 0, 90, { rotationModeValue.get().equals("watchdog", true) }) {}
 
     private val timerValue = FloatValue("Timer", 1f, 0.1f, 1.4f)
     private val placeSlowDownValue = BoolValue("Place-SlowDown", false)

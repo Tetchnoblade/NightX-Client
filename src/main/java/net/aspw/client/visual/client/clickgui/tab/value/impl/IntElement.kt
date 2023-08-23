@@ -7,7 +7,6 @@ import net.aspw.client.value.IntegerValue
 import net.aspw.client.visual.client.clickgui.tab.ColorManager
 import net.aspw.client.visual.client.clickgui.tab.components.Slider
 import net.aspw.client.visual.client.clickgui.tab.value.ValueElement
-import net.aspw.client.visual.font.Fonts
 import java.awt.Color
 
 class IntElement(val savedValue: IntegerValue) : ValueElement<Int>(savedValue) {
