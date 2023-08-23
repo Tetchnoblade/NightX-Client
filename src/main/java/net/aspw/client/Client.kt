@@ -30,13 +30,13 @@ object Client {
     const val CLIENT_CREATOR = "As_pw, outaokura"
     const val CLIENT_BASE = "https://nightx.skidded.host/s/"
     const val CLIENT_WEBSITE = "i4vvayd263"
-    const val CLIENT_CONFIG = "jnx2umqrkh"
+    const val CLIENT_CONFIG = "c7iqnyfsn0"
     // Old Auth System
     // const val CLIENT_USER = "Username:Password:HWID:UID"
     const val CLIENT_SRG = "6bl91v1egh"
     const val CLIENT_CHAT = "§c§l>> §r"
     val CLIENT_STATUS =
-        if (!isBeta) "https://raw.githubusercontent.com/Aspw-w/NightX-Client/master/web/release.txt" else "https://raw.githubusercontent.com/Aspw-w/NightX-Client/master/web/beta.txt"
+        if (!isBeta) "y34fvk1y3d" else "yw4o9ber48"
 
     var isStarting = false
 
