@@ -510,8 +510,8 @@ public abstract class MixinItemRenderer {
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
                                 else this.transformFirstPersonItem(f / 2.5f, 0.0f);
-                                GlStateManager.rotate(-var9 * 65.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
-                                GlStateManager.rotate(-var9 * 47.0F, 1.0F, var9 / 3.0F, -0.0F);
+                                GlStateManager.rotate(-var9 * 74.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
+                                GlStateManager.rotate(-var9 * 52.0F, 1.0F, var9 / 3.0F, -0.0F);
                                 this.func_178103_d(0.2F);
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
