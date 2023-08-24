@@ -86,8 +86,11 @@ public class MixinLayerCape {
                 GlStateManager.rotate(-f3 / 2.0F, 0.0F, 1.0F, 0.0F);
                 GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
                 this.playerRenderer.getMainModel().renderCape(0.0625F);
+                if ((silentView.getState() && silentView.getSilentValue().get() && silentView.shouldRotate() || customModel.getState() && customModel.getHideCape().get())) {
+                    GlStateManager.popMatrix();
+                    return;
+                }
                 if (cape.getCustomCape().get() && (cape.getStyleValue().get().equals("Exhibition") || cape.getStyleValue().get().equals("NightX"))) {
-                    if ((silentView.getState() && silentView.getSilentValue().get() && silentView.shouldRotate() || customModel.getState() && customModel.getHideCape().get()) && Objects.equals(entitylivingbaseIn.getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) return;
                     if (cape.getStyleValue().get().equals("Exhibition"))
                         this.playerRenderer.bindTexture(new ResourceLocation("client/cape/animation/exhibition/overlay.png"));
                     if (cape.getStyleValue().get().equals("NightX"))
@@ -150,8 +153,11 @@ public class MixinLayerCape {
                 GL11.glRotatef(-f3 / 2.0F, 0.0F, 1.0F, 0.0F);
                 GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
                 this.playerRenderer.getMainModel().renderCape(0.0625F);
+                if ((silentView.getState() && silentView.getSilentValue().get() && silentView.shouldRotate() || customModel.getState() && customModel.getHideCape().get())) {
+                    GL11.glPopMatrix();
+                    return;
+                }
                 if (cape.getCustomCape().get() && (cape.getStyleValue().get().equals("Exhibition") || cape.getStyleValue().get().equals("NightX"))) {
-                    if ((silentView.getState() && silentView.getSilentValue().get() && silentView.shouldRotate() || customModel.getState() && customModel.getHideCape().get()) && Objects.equals(entitylivingbaseIn.getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) return;
                     if (cape.getStyleValue().get().equals("Exhibition"))
                         this.playerRenderer.bindTexture(new ResourceLocation("client/cape/animation/exhibition/overlay.png"));
                     if (cape.getStyleValue().get().equals("NightX"))
