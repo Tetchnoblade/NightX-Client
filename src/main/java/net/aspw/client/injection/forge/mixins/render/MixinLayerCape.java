@@ -2,6 +2,8 @@ package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.visual.Cape;
+import net.aspw.client.features.module.impl.visual.CustomModel;
+import net.aspw.client.features.module.impl.visual.SilentView;
 import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -38,6 +40,8 @@ public class MixinLayerCape {
     @Overwrite
     public void doRenderLayer(final AbstractClientPlayer entitylivingbaseIn, final float p_177141_2_, final float p_177141_3_, final float partialTicks, final float p_177141_5_, final float p_177141_6_, final float p_177141_7_, final float scale) {
         final Cape cape = Objects.requireNonNull(Client.moduleManager.getModule(Cape.class));
+        final SilentView silentView = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
+        final CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
         if (!entitylivingbaseIn.isInvisible() && entitylivingbaseIn == Minecraft.getMinecraft().thePlayer && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && (cape.getCustomCape().get() || !cape.getCustomCape().get() && entitylivingbaseIn.getLocationCape() != null)) {
             if (cape.getMovingModeValue().get().equals("Smooth")) {
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -83,6 +87,7 @@ public class MixinLayerCape {
                 GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
                 this.playerRenderer.getMainModel().renderCape(0.0625F);
                 if (cape.getCustomCape().get() && (cape.getStyleValue().get().equals("Exhibition") || cape.getStyleValue().get().equals("NightX"))) {
+                    if ((silentView.getState() && silentView.getSilentValue().get() && silentView.shouldRotate() || customModel.getState() && customModel.getHideCape().get()) && Objects.equals(entitylivingbaseIn.getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) return;
                     if (cape.getStyleValue().get().equals("Exhibition"))
                         this.playerRenderer.bindTexture(new ResourceLocation("client/cape/animation/exhibition/overlay.png"));
                     if (cape.getStyleValue().get().equals("NightX"))
@@ -146,6 +151,7 @@ public class MixinLayerCape {
                 GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
                 this.playerRenderer.getMainModel().renderCape(0.0625F);
                 if (cape.getCustomCape().get() && (cape.getStyleValue().get().equals("Exhibition") || cape.getStyleValue().get().equals("NightX"))) {
+                    if ((silentView.getState() && silentView.getSilentValue().get() && silentView.shouldRotate() || customModel.getState() && customModel.getHideCape().get()) && Objects.equals(entitylivingbaseIn.getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) return;
                     if (cape.getStyleValue().get().equals("Exhibition"))
                         this.playerRenderer.bindTexture(new ResourceLocation("client/cape/animation/exhibition/overlay.png"));
                     if (cape.getStyleValue().get().equals("NightX"))
