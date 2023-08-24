@@ -35,7 +35,7 @@ public abstract class MixinAbstractClientPlayer extends MixinEntityPlayer {
             callbackInfoReturnable.setReturnValue(new ResourceLocation("client/cape/none.png"));
             return;
         }
-        if (cape.getState() && Objects.equals(getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
+        if (cape.getCustomCape().get() && Objects.equals(getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
             if (!cape.getStyleValue().get().equals("Rise5") && !cape.getStyleValue().get().equals("NightX"))
                 callbackInfoReturnable.setReturnValue(cape.getCapeLocation(cape.getStyleValue().get()));
             if (cape.getStyleValue().get().equals("Rise5") || cape.getStyleValue().get().equals("NightX"))

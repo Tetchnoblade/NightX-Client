@@ -3,13 +3,23 @@ package net.aspw.client.features.module.impl.visual
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.value.BoolValue
 import net.aspw.client.value.ListValue
 
 import net.minecraft.util.ResourceLocation
 import java.util.*
 
-@ModuleInfo(name = "Cape", category = ModuleCategory.VISUAL, description = "", array = false)
+@ModuleInfo(
+    name = "Cape",
+    category = ModuleCategory.VISUAL,
+    description = "",
+    forceNoSound = true,
+    onlyEnable = true,
+    array = false
+)
 class Cape : Module() {
+
+    val customCape = BoolValue("CustomCape", true)
 
     val styleValue = ListValue(
         "Mode",
@@ -41,6 +51,15 @@ class Cape : Module() {
             "Vanilla"
         ),
         "NightX"
+    ) { customCape.get() }
+
+    val movingModeValue = ListValue(
+        "MovingMode",
+        arrayOf(
+            "Smooth",
+            "Vanilla"
+        ),
+        "Smooth"
     )
 
 

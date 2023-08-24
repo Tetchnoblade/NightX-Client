@@ -573,10 +573,10 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Edit": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.03, Animations.blockPosY.get().doubleValue() + 0.11, Animations.blockPosZ.get().doubleValue());
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, f1);
-                                else transformFirstPersonItem(f / 2.0f, f1);
+                                else transformFirstPersonItem(f / 1.6f, f1);
                                 GL11.glTranslated(0.0D, 0.0D, 0.0D);
                                 float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                 GlStateManager.rotate(Swang * 16.0F / 2.0F, -Swang, -0.0F, 9.0F);
