@@ -2,7 +2,7 @@ package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.other.PlayerEdit;
-import net.aspw.client.features.module.impl.visual.Hud;
+import net.aspw.client.features.module.impl.visual.ESP;
 import net.aspw.client.features.module.impl.visual.OptiFinePlus;
 import net.aspw.client.features.module.impl.visual.SilentView;
 import net.aspw.client.util.RotationUtils;
@@ -207,8 +207,8 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
 
     @Inject(method = "canRenderName(Lnet/minecraft/entity/EntityLivingBase;)Z", at = @At("HEAD"), cancellable = true)
     private <T extends EntityLivingBase> void canRenderName(T entity, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        if (Objects.requireNonNull(Client.moduleManager.getModule(Hud.class)).getState() && Objects.requireNonNull(Client.moduleManager.getModule(Hud.class)).getF5nameTag().get())
-            callbackInfoReturnable.setReturnValue(true);
+        if (Objects.requireNonNull(Client.moduleManager.getModule(ESP.class)).getState() && Objects.requireNonNull(Client.moduleManager.getModule(ESP.class)).tagsValue.get())
+            callbackInfoReturnable.setReturnValue(false);
     }
 
     /**

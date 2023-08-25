@@ -26,7 +26,7 @@ object Client {
     const val isBeta = true
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Reloaded"
-    const val CLIENT_VERSION = "Beta B63 v2"
+    const val CLIENT_VERSION = "Beta B63 v3"
     const val CLIENT_CREATOR = "As_pw, outaokura"
     const val CLIENT_BASE = "https://nightx.skidded.host/s/"
     const val CLIENT_WEBSITE = "i4vvayd263"
