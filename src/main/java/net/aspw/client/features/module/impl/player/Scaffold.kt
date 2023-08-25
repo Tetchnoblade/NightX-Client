@@ -54,6 +54,7 @@ class Scaffold : Module() {
             "Teleport",
             "AAC3.3.9",
             "AAC3.6.4",
+            "BlocksMC",
             "Float"
         ), "ConstantMotion"
     ) { allowTower.get() }
@@ -465,6 +466,23 @@ class Scaffold : Module() {
                         )
                         mc.thePlayer.motionY = constantMotionValue.get().toDouble()
                         jumpGround = mc.thePlayer.posY
+                    }
+                }
+
+                "blocksmc" -> {
+                    if (mc.thePlayer.posY % 1 <= 0.00153598) {
+                        mc.thePlayer.setPosition(
+                            mc.thePlayer.posX,
+                            Math.floor(mc.thePlayer.posY),
+                            mc.thePlayer.posZ
+                        )
+                        mc.thePlayer.motionY = 0.42
+                    } else if (mc.thePlayer.posY % 1 < 0.1 && offGroundTicks != 0) {
+                        mc.thePlayer.setPosition(
+                            mc.thePlayer.posX,
+                            Math.floor(mc.thePlayer.posY),
+                            mc.thePlayer.posZ
+                        )
                     }
                 }
 
