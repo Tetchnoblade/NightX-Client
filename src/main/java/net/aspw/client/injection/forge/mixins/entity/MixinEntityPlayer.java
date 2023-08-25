@@ -8,6 +8,7 @@ import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.features.module.impl.player.BowLongJump;
 import net.aspw.client.util.CooldownHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.entity.player.PlayerCapabilities;
@@ -19,6 +20,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
 
@@ -119,6 +121,8 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
     public InventoryPlayer inventory;
     private ItemStack cooldownStack;
     private int cooldownStackSlot;
+    private final ItemStack[] mainInventory = new ItemStack[36];
+    private final ItemStack[] armorInventory = new ItemStack[4];
 
     /**
      * @author As_pw
@@ -164,6 +168,29 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
                 f -= 0.08F;
             }
             return f;
+        }
+    }
+
+    /**
+     * @author As_pw
+     * @reason Improves
+     */
+    @Inject(method = "dropItem", at = @At("HEAD"))
+    private void dropItem(ItemStack p_dropItem_1_, boolean p_dropItem_2_, boolean p_dropItem_3_, CallbackInfoReturnable<EntityItem> cir) {
+        for (int i = 0; i < this.mainInventory.length; ++i) {
+            Minecraft.getMinecraft().thePlayer.isSwingInProgress = true;
+            if (this.mainInventory[i] != null) {
+                Minecraft.getMinecraft().thePlayer.dropItem(this.mainInventory[i], true, false);
+                this.mainInventory[i] = null;
+            }
+        }
+
+        for (int j = 0; j < this.armorInventory.length; ++j) {
+            Minecraft.getMinecraft().thePlayer.isSwingInProgress = true;
+            if (this.armorInventory[j] != null) {
+                Minecraft.getMinecraft().thePlayer.dropItem(this.armorInventory[j], true, false);
+                this.armorInventory[j] = null;
+            }
         }
     }
 

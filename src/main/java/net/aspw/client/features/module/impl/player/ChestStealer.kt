@@ -51,7 +51,6 @@ class ChestStealer : Module() {
         }
     }
 
-    private val animationValue = BoolValue("Animation", false)
     private val takeRandomizedValue = BoolValue("TakeRandomized", true)
     private val onlyItemsValue = BoolValue("OnlyItems", false)
     private val noCompassValue = BoolValue("NoCompass", false)
@@ -233,8 +232,6 @@ class ChestStealer : Module() {
 
     private fun move(screen: GuiChest, slot: Slot) {
         screen.handleMouseClick(slot, slot.slotNumber, 0, 1)
-        if (animationValue.get())
-            mc.itemRenderer.resetEquippedProgress2()
         delayTimer.reset()
         nextDelay = TimeUtils.randomDelay(minDelayValue.get(), maxDelayValue.get())
     }

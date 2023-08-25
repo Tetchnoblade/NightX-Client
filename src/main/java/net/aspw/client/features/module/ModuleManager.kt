@@ -180,14 +180,14 @@ class ModuleManager : Listenable {
             OptiFinePlus::class.java,
             EntityJump::class.java,
             ConsoleSpammer::class.java,
-            ESP::class.java,
             GodBridge::class.java,
             AirPlace::class.java,
             AntiSuffocation::class.java,
             AttackFreeze::class.java,
             FakeGhostBlock::class.java,
             NoHurtCam::class.java,
-            SnakeGame::class.java
+            SnakeGame::class.java,
+            ESP::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")

@@ -39,7 +39,6 @@ class AutoArmor : Module() {
             if (maxDelay < newValue) set(maxDelay)
         }
     }
-    private val animationValue = BoolValue("Animation", false)
     private val noMoveValue = BoolValue("NoMove", false)
     private val hotbarValue = BoolValue("Hotbar", false)
     private var delay: Long = 0
@@ -94,8 +93,6 @@ class AutoArmor : Module() {
             mc.netHandler.addToSendQueue(C09PacketHeldItemChange(item))
             mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventoryContainer.getSlot(item).stack))
             mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
-            if (animationValue.get())
-                mc.itemRenderer.resetEquippedProgress2()
             delay = TimeUtils.randomDelay(minDelayValue.get(), maxDelayValue.get())
             return true
         } else if (!(noMoveValue.get() && MovementUtils.isMoving()) && (!invOpenValue.get() || mc.currentScreen is GuiInventory) && item != -1) {
@@ -108,8 +105,6 @@ class AutoArmor : Module() {
                 1,
                 mc.thePlayer
             )
-            if (animationValue.get())
-                mc.itemRenderer.resetEquippedProgress2()
             delay = TimeUtils.randomDelay(minDelayValue.get(), maxDelayValue.get())
             if (openInventory) mc.netHandler.addToSendQueue(C0DPacketCloseWindow())
             return true

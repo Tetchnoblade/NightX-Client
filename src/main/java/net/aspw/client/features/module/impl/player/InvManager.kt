@@ -62,7 +62,6 @@ class InvManager : Module() {
     private val invSpoofOld = BoolValue("InvSpoof-Old", false, { invSpoof.get() })
 
     // Others
-    private val animationValue = BoolValue("Animation", false)
     private val noMoveValue = BoolValue("NoMove", false)
     private val hotbarValue = BoolValue("Hotbar", false)
     private val randomSlotValue = BoolValue("RandomSlot", false)
@@ -211,8 +210,6 @@ class InvManager : Module() {
                 InventoryHelper.openPacket()
 
             mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, garbageItem, 1, 4, mc.thePlayer)
-            if (animationValue.get())
-                mc.itemRenderer.resetEquippedProgress2()
 
             if (openInventory)
                 InventoryHelper.closePacket()
