@@ -5,6 +5,7 @@ import net.aspw.client.event.Render2DEvent;
 import net.aspw.client.features.module.Module;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.ModuleInfo;
+import net.aspw.client.features.module.impl.targets.AntiBots;
 import net.aspw.client.util.render.BlendUtils;
 import net.aspw.client.util.render.RenderUtils;
 import net.aspw.client.value.BoolValue;
@@ -173,7 +174,7 @@ public final class ESP extends Module {
 
         for (int playerEntitiesSize = playerEntities.size(); i < playerEntitiesSize; ++i) {
             Entity entity = (Entity) playerEntities.get(i);
-            if (entity instanceof EntityPlayer && !(entity instanceof EntityPlayerSP) || (localPlayer.get() && entity instanceof EntityPlayerSP && mc.gameSettings.thirdPersonView != 0)) {
+            if (entity instanceof EntityPlayer && !(entity instanceof EntityPlayerSP) && !entity.isInvisible() && !((EntityPlayer) entity).isSpectator() && !AntiBots.isBot((EntityPlayer) entity) || (localPlayer.get() && entity instanceof EntityPlayerSP && mc.gameSettings.thirdPersonView != 0)) {
                 collectedEntities.add(entity);
             }
         }
