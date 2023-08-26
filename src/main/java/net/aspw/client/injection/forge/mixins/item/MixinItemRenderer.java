@@ -249,7 +249,7 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Leaked": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.08, Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.08, Animations.blockPosY.get().doubleValue() + 0.02, Animations.blockPosZ.get().doubleValue());
                                 final float var = MathHelper.sin((float) (MathHelper.sqrt_float(f1) * Math.PI));
                                 transformFirstPersonItem(0.0F, 0.0f);
                                 this.func_178103_d();
