@@ -249,14 +249,11 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Leaked": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.08, Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
                                 final float var = MathHelper.sin((float) (MathHelper.sqrt_float(f1) * Math.PI));
                                 transformFirstPersonItem(0.0F, 0.0f);
                                 this.func_178103_d();
-                                final float var16 = MathHelper.sin((float) (f1 * f1 * Math.PI));
-                                GlStateManager.rotate(-var16 * 0f, 0.0f, 1.0f, 0.0f);
-                                GlStateManager.rotate(-var * 0f, 0.0f, 0.0f, 1.0f);
-                                GlStateManager.rotate(-var * 25f, 1.5f, 0.0f, 0.0f);
+                                GlStateManager.rotate(-var * 33.0F, 1.0F, 0.8F, 0.0F);
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
@@ -430,7 +427,7 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Swonk": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.08, Animations.blockPosZ.get().doubleValue());
                                 float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
@@ -504,7 +501,7 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Swang": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.08, Animations.blockPosZ.get().doubleValue());
                                 float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
                                 GL11.glTranslated(0.0D, 0.0D, 0.0D);
                                 if (Animations.cancelEquip.get())
