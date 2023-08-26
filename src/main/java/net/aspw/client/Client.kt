@@ -23,10 +23,10 @@ import kotlin.concurrent.thread
 object Client {
 
     // Client information
-    const val isBeta = true
+    const val isBeta = false
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Reloaded"
-    const val CLIENT_VERSION = "Beta B63 v4"
+    const val CLIENT_VERSION = "Release B63"
     const val CLIENT_CREATOR = "As_pw, outaokura"
     const val CLIENT_BASE = "https://nightx.skidded.host/s/"
     const val CLIENT_WEBSITE = "i4vvayd263"

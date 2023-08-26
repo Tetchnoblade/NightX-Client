@@ -25,8 +25,8 @@ import net.aspw.client.value.BoolValue
 )
 class SilentView : Module() {
     val normalRotationsValue = BoolValue("NormalRotations", true, { !silentValue.get() })
-    val moduleCheckValue = BoolValue("ModuleCheck", true, { !silentValue.get() })
-    val bodyLockValue = BoolValue("BodyLock", true, { !silentValue.get() })
+    val moduleCheckValue = BoolValue("ModuleCheck", false, { !silentValue.get() })
+    val bodyLockValue = BoolValue("BodyLock", false, { !silentValue.get() })
     val silentValue = BoolValue("Silent", false)
 
     var playerYaw: Float? = null
