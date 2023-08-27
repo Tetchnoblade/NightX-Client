@@ -1,10 +1,10 @@
 # NightX Client
 
+Access official website to get more information & configs
+> https://aspw-w.github.io/NightX-Web
+
 Join discord server to get more support! ↓
 > https://discord.gg/SGBccUXFK
-
-Configs Download
-> https://sites.google.com/view/nightx-plus/configs
 
 Official YouTube Channel
 > https://www.youtube.com/@as_pw
