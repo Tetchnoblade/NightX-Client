@@ -183,7 +183,6 @@ class ModuleManager : Listenable {
             GodBridge::class.java,
             AirPlace::class.java,
             AntiSuffocation::class.java,
-            AttackFreeze::class.java,
             FakeGhostBlock::class.java,
             NoHurtCam::class.java,
             SnakeGame::class.java,

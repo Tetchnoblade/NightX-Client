@@ -91,6 +91,16 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                 "Discord"
             )
         )
+        this.buttonList.add(
+            GuiButton(
+                7,
+                58,
+                this.height - 36,
+                buttonWidth - 60,
+                buttonHeight,
+                "Website"
+            )
+        )
         translate = Translate(0f, 0f)
         super.initGui()
     }
@@ -619,6 +629,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             3 -> mc.displayGuiScreen(GuiOptions(this, mc.gameSettings))
             4 -> mc.shutdown()
             6 -> MiscUtils.showURL(CheckConnection.discord)
+            7 -> MiscUtils.showURL(Client.CLIENT_WEBSITE)
         }
     }
 

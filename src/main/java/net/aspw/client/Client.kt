@@ -29,7 +29,8 @@ object Client {
     const val CLIENT_VERSION = "Beta B64"
     const val CLIENT_CREATOR = "As_pw, outaokura"
     const val CLIENT_WEBSITE = "https://aspw-w.github.io/NightX-Web"
-    const val CLIENT_CONFIG = "$CLIENT_WEBSITE/data/config.txt"
+    const val CLIENT_CONFIG = "$CLIENT_WEBSITE/data/configs.txt"
+
     // Old Auth System
     // const val CLIENT_USER = "Username:Password:HWID:UID"
     const val CLIENT_SRG = "$CLIENT_WEBSITE/data/srg.txt"
