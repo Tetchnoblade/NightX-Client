@@ -23,20 +23,18 @@ import kotlin.concurrent.thread
 object Client {
 
     // Client information
-    const val isBeta = false
+    const val isBeta = true
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Reloaded"
-    const val CLIENT_VERSION = "Release B63"
+    const val CLIENT_VERSION = "Beta B64"
     const val CLIENT_CREATOR = "As_pw, outaokura"
-    const val CLIENT_BASE = "https://nightx.skidded.host/s/"
-    const val CLIENT_WEBSITE = "i4vvayd263"
-    const val CLIENT_CONFIG = "c7iqnyfsn0"
+    const val CLIENT_WEBSITE = "https://aspw-w.github.io/NightX-Web"
+    const val CLIENT_CONFIG = "$CLIENT_WEBSITE/data/config.txt"
     // Old Auth System
     // const val CLIENT_USER = "Username:Password:HWID:UID"
-    const val CLIENT_SRG = "6bl91v1egh"
+    const val CLIENT_SRG = "$CLIENT_WEBSITE/data/srg.txt"
     const val CLIENT_CHAT = "§c§l>> §r"
-    val CLIENT_STATUS =
-        if (!isBeta) "y34fvk1y3d" else "yw4o9ber48"
+    val CLIENT_STATUS = if (!isBeta) "$CLIENT_WEBSITE/data/release.txt" else "$CLIENT_WEBSITE/data/beta.txt"
 
     var isStarting = false
 
@@ -74,6 +72,9 @@ object Client {
 
         // Check update
         CheckConnection.checkStatus()
+
+        // Get srg file
+        CheckConnection.getSRG()
 
         // Old Auth System
         // Check HWID
@@ -164,7 +165,7 @@ object Client {
         if (CheckConnection.isAvailable) {
             if (CheckConnection.isLatest)
                 Display.setTitle("$CLIENT_BEST Client - $CLIENT_VERSION")
-            else Display.setTitle("Outdated! Please Update on $CLIENT_BASE$CLIENT_WEBSITE (your current version is $CLIENT_VERSION)")
+            else Display.setTitle("Outdated! Please Update on $CLIENT_WEBSITE (your current version is $CLIENT_VERSION)")
         } else {
             Display.setTitle("Temporary unavailable!")
         }

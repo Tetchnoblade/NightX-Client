@@ -87,7 +87,7 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
             }
 
             2 -> {
-                MiscUtils.showURL(Client.CLIENT_BASE + Client.CLIENT_WEBSITE)
+                MiscUtils.showURL(Client.CLIENT_WEBSITE)
             }
 
             // Old Auth System

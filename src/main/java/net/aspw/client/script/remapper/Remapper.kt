@@ -2,6 +2,7 @@ package net.aspw.client.script.remapper
 
 import net.aspw.client.Client
 import net.aspw.client.util.ClientUtils
+import net.aspw.client.util.connection.CheckConnection
 import net.aspw.client.util.misc.HttpUtils
 import java.io.File
 
@@ -28,7 +29,7 @@ object Remapper {
             srgFile.createNewFile()
 
             ClientUtils.getLogger().info("[Remapper] Downloading $srgName srg...")
-            HttpUtils.download(Client.CLIENT_BASE + Client.CLIENT_SRG, srgFile)
+            HttpUtils.download(CheckConnection.srgFile, srgFile)
             ClientUtils.getLogger().info("[Remapper] Downloaded $srgName.")
         }
 

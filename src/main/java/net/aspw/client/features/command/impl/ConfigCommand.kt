@@ -174,7 +174,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                 }
 
                 args[1].equals("download", ignoreCase = true) || args[1].equals("dl", ignoreCase = true) -> {
-                    MiscUtils.showURL(Client.CLIENT_BASE + Client.CLIENT_CONFIG)
+                    MiscUtils.showURL(Client.CLIENT_CONFIG)
                     chat("Successfully opened browser.")
                     return
                 }

@@ -13,6 +13,7 @@ object CheckConnection {
     var announcement = ""
     var discord = ""
     var apiKey = ""
+    var srgFile = ""
     var changeLog1 = ""
     var changeLog2 = ""
     var changeLog3 = ""
@@ -65,9 +66,22 @@ object CheckConnection {
     var changeLog50 = ""
     var isLatest = false
     var isAvailable = false
+
+    fun getSRG() {
+        val httpClient: CloseableHttpClient = HttpClients.createDefault()
+        val request = HttpGet(Client.CLIENT_SRG)
+        val response = httpClient.execute(request)
+        val entity = response.entity
+        val content = EntityUtils.toString(entity)
+        srgFile = content
+        EntityUtils.consume(entity)
+        response.close()
+        httpClient.close()
+    }
+
     fun checkStatus() {
         val httpClient: CloseableHttpClient = HttpClients.createDefault()
-        val request = HttpGet(Client.CLIENT_BASE + Client.CLIENT_STATUS)
+        val request = HttpGet(Client.CLIENT_STATUS)
         val response = httpClient.execute(request)
         val entity = response.entity
         val content = EntityUtils.toString(entity)
@@ -138,7 +152,7 @@ object CheckConnection {
     // Old Auth System
     //fun getUserList() {
     //    val httpClient: CloseableHttpClient = HttpClients.createDefault()
-    //    val request = HttpGet(Client.CLIENT_BASE + Client.CLIENT_USER)
+    //    val request = HttpGet(Client.CLIENT_USER)
     //    val response = httpClient.execute(request)
     //    val entity = response.entity
     //    val content = EntityUtils.toString(entity)
