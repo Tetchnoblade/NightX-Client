@@ -41,6 +41,7 @@ class Animations : Module() {
                 "Reverse",
                 "Leaked",
                 "Aqua",
+                "Invent",
                 "Fadeaway",
                 "Astolfo",
                 "Moon",

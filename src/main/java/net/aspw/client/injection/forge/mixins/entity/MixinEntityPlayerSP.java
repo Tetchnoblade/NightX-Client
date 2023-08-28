@@ -221,7 +221,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             final AntiHunger antiHunger = Objects.requireNonNull(Client.moduleManager.getModule(AntiHunger.class));
 
             final SilentSneak sneak = Objects.requireNonNull(Client.moduleManager.getModule(SilentSneak.class));
-            final boolean fakeSprint = antiHunger.getState() || (sneak.getState() && (!MovementUtils.isMoving() || !sneak.stopMoveValue.get()) && sneak.modeValue.get().equalsIgnoreCase("MineSecure"));
+            final boolean fakeSprint = antiHunger.getState() || (sneak.getState() && (!MovementUtils.isMoving()));
 
             ActionEvent actionEvent = new ActionEvent(this.isSprinting() && !fakeSprint, this.isSneaking());
 

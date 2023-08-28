@@ -581,6 +581,17 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
+                            case "Invent": {
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
+                                float table = MathHelper.sin((float) (MathHelper.sqrt_float(f1) * Math.PI));
+                                GlStateManager.rotate(-table * 30.0F, -8.0F, -0.2F, 9.0F);
+                                if (Animations.cancelEquip.get())
+                                    this.transformFirstPersonItem(0.0F, 0.0F);
+                                else this.transformFirstPersonItem(f / 1.8f, 0.0f);
+                                this.doBlockTransformations();
+                                GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
+                                break;
+                            }
                             case "Fadeaway": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
                                 final float var = MathHelper.sin((float) (MathHelper.sqrt_float(f1) * Math.PI));
