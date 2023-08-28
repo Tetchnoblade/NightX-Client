@@ -8,6 +8,7 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.AnimationUtils
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.*
+import net.aspw.client.visual.client.GuiTeleportation
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.client.clickgui.tab.NewUi
 import net.aspw.client.visual.font.Fonts
@@ -73,7 +74,7 @@ class Hud : Module() {
         }
 
         if (mc.theWorld == null || mc.thePlayer == null) return
-        if (noInvClose.get() && event.packet is S2EPacketCloseWindow && (mc.currentScreen is GuiInventory || mc.currentScreen is NewUi || mc.currentScreen is ClickGui || mc.currentScreen is GuiChat)) {
+        if (noInvClose.get() && event.packet is S2EPacketCloseWindow && (mc.currentScreen is GuiInventory || mc.currentScreen is NewUi || mc.currentScreen is ClickGui || mc.currentScreen is GuiChat || mc.currentScreen is GuiTeleportation)) {
             event.cancelEvent()
         }
     }

@@ -205,16 +205,6 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
             final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
 
-            float yaw = event.getYaw();
-            float pitch = event.getPitch();
-            float lastReportedYaw = RotationUtils.serverRotation.getYaw();
-            float lastReportedPitch = RotationUtils.serverRotation.getPitch();
-
-            if (RotationUtils.targetRotation != null) {
-                yaw = RotationUtils.targetRotation.getYaw();
-                pitch = RotationUtils.targetRotation.getPitch();
-            }
-
             if (mc.thePlayer.isSneaking() && (mc.thePlayer.isBlocking() || (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking())))
                 mc.thePlayer.renderArmYaw = mc.thePlayer.rotationYaw - 40F;
 
@@ -247,6 +237,16 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             }
 
             if (this.isCurrentViewEntity()) {
+                float yaw = event.getYaw();
+                float pitch = event.getPitch();
+                float lastReportedYaw = RotationUtils.serverRotation.getYaw();
+                float lastReportedPitch = RotationUtils.serverRotation.getPitch();
+
+                if (RotationUtils.targetRotation != null) {
+                    yaw = RotationUtils.targetRotation.getYaw();
+                    pitch = RotationUtils.targetRotation.getPitch();
+                }
+
                 final AntiDesync antiDesync = Objects.requireNonNull(Client.moduleManager.getModule(AntiDesync.class));
                 double xDiff = event.getX() - this.lastReportedPosX;
                 double yDiff = event.getY() - this.lastReportedPosY;

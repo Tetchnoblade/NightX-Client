@@ -84,7 +84,7 @@ class AutoHeal : Module() {
     }
 
     override fun onDisable() {
-        isRotating = false
+        resetAll()
     }
 
     override fun onEnable() {
@@ -108,9 +108,21 @@ class AutoHeal : Module() {
     @EventTarget(priority = 2)
     fun onMotion(event: MotionEvent) {
         if (autoPotValue.get()) {
-            if (mc.thePlayer.fallDistance < 0.8) return
             if (event.eventState == EventState.PRE) {
-                if (smartValue.get() && !throwQueue.isEmpty()) {
+                if (throwing && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
+                    if (mc.thePlayer.onGround) {
+                        mc.thePlayer.motionX = 0.0
+                        mc.thePlayer.motionZ = 0.0
+                        mc.thePlayer.jump()
+                        debug("jumped")
+                    }
+                    RotationUtils.reset() // reset all rotations
+                    event.pitch = if (customPitchValue.get()) customPitchAngle.get() else 90F
+                    debug("silent rotation")
+                    isRotating = true
+                }
+
+                if (smartValue.get() && throwQueue.isNotEmpty()) {
                     var foundPot = false
                     for (k in throwQueue.indices.reversed()) {
                         if (mc.thePlayer.isPotionActive(throwQueue[k])) {
@@ -166,21 +178,6 @@ class AutoHeal : Module() {
                         throwing = true
                         debug("found pot, queueing")
                     }
-                }
-
-                if (throwing && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
-                    if (mc.thePlayer.onGround) {
-                        mc.thePlayer.motionX = 0.0
-                        mc.thePlayer.motionZ = 0.0
-                        mc.thePlayer.jump()
-                        debug("jumped")
-                    }
-                    RotationUtils.reset() // reset all rotations
-                    event.pitch = if (customPitchValue.get()) customPitchAngle.get() else 90F
-                    debug("silent rotation")
-                    isRotating = true
-                } else {
-                    isRotating = false
                 }
             }
         }
@@ -281,7 +278,6 @@ class AutoHeal : Module() {
     @EventTarget(priority = -1)
     fun onMotionPost(event: MotionEvent) {
         if (autoPotValue.get()) {
-            if (mc.thePlayer.fallDistance < 0.8) return
             if (event.eventState == EventState.POST) {
                 if (throwing && mc.currentScreen !is GuiContainer
                     && !mc.thePlayer.onGround
@@ -306,9 +302,9 @@ class AutoHeal : Module() {
                         isRotating = false
                         debug("thrown")
                     } else {
-                        // refind
                         potIndex = -1
                         throwing = false
+                        isRotating = false
                         debug("failed to retrieve potion info, retrying...")
                     }
                 }
