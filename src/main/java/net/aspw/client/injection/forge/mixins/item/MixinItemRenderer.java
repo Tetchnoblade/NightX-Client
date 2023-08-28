@@ -636,7 +636,7 @@ public abstract class MixinItemRenderer {
                     else this.transformFirstPersonItem(f, f1);
                 }
                 if (Animations.swingAnimValue.get().equals("Smooth")) {
-                    if (Animations.cancelEquip.get())
+                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
                         this.transformFirstPersonItem(0.0F, f1);
                     else this.transformFirstPersonItem(f, f1);
                     func_178105_d(f1);
