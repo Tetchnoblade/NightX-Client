@@ -166,6 +166,14 @@ public abstract class MixinItemRenderer {
         GlStateManager.rotate(60.0F, 0.0F, 1.0F, 0.0F);
     }
 
+    @Unique
+    private void func_178105_d(float p_178105_1_) {
+        float f = -0.4F * MathHelper.sin(MathHelper.sqrt_float(p_178105_1_) * (float) Math.PI);
+        float f1 = 0.2F * MathHelper.sin(MathHelper.sqrt_float(p_178105_1_) * (float) Math.PI * 2.0F);
+        float f2 = -0.2F * MathHelper.sin(p_178105_1_ * (float) Math.PI);
+        GlStateManager.translate(f, f1, f2);
+    }
+
     /**
      * Render item in first person.
      *
@@ -197,7 +205,7 @@ public abstract class MixinItemRenderer {
                 GlStateManager.translate(0.08F, -0.027F, -0.33F);
                 GlStateManager.scale(0.93F, 1.0F, 1.0F);
             }
-            if (Animations.oldAnimations.getValue() && f1 != 0.0F && ((killAura.getTarget() != null && killAura.getAutoBlockModeValue().get().equals("None") || killAura.getTarget() == null) && !tpAura.isBlocking() && !mc.thePlayer.isBlocking() && !mc.thePlayer.isEating() && !mc.thePlayer.isUsingItem())) {
+            if (!Animations.swingAnimValue.get().equals("Smooth") && Animations.oldAnimations.getValue() && f1 != 0.0F && ((killAura.getTarget() != null && killAura.getAutoBlockModeValue().get().equals("None") || killAura.getTarget() == null) && !tpAura.isBlocking() && !mc.thePlayer.isBlocking() && !mc.thePlayer.isEating() && !mc.thePlayer.isUsingItem())) {
                 GlStateManager.scale(0.85F, 0.85F, 0.85F);
                 GlStateManager.translate(-0.06F, 0.003F, 0.05F);
             }
@@ -257,6 +265,18 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
+                            case "Spin": {
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
+                                if (Animations.cancelEquip.get())
+                                    transformFirstPersonItem(0.0f, 0.0f);
+                                else transformFirstPersonItem(f / 1.4F, 0.0F);
+                                Minecraft.getMinecraft().thePlayer.isSwingInProgress = false;
+                                GlStateManager.translate(0, 0.2F, -1);
+                                GlStateManager.rotate(-59, -1, 0, 3);
+                                GlStateManager.rotate(-(System.currentTimeMillis() / 2 % 360), 1, 0, 0.0F);
+                                GlStateManager.rotate(60.0F, 0.0F, 1.0F, 0.0F);
+                                GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
+                            }
                             case "Slash": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
                                 final float var = MathHelper.sin((float) (MathHelper.sqrt_float(f1) * Math.PI));
@@ -306,6 +326,12 @@ public abstract class MixinItemRenderer {
                                     if (Animations.cancelEquip.get())
                                         this.transformFirstPersonItem(0.0F, f1);
                                     else this.transformFirstPersonItem(f, f1);
+                                }
+                                if (Animations.swingAnimValue.get().equals("Smooth")) {
+                                    if (Animations.cancelEquip.get())
+                                        this.transformFirstPersonItem(0.0F, f1);
+                                    else this.transformFirstPersonItem(f, f1);
+                                    func_178105_d(f1);
                                 }
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
@@ -608,6 +634,12 @@ public abstract class MixinItemRenderer {
                     if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
                         this.transformFirstPersonItem(0.0F, f1);
                     else this.transformFirstPersonItem(f, f1);
+                }
+                if (Animations.swingAnimValue.get().equals("Smooth")) {
+                    if (Animations.cancelEquip.get())
+                        this.transformFirstPersonItem(0.0F, f1);
+                    else this.transformFirstPersonItem(f, f1);
+                    func_178105_d(f1);
                 }
                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
             }

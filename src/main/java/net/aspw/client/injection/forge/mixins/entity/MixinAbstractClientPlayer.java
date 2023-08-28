@@ -5,7 +5,6 @@ import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.visual.Cape;
 import net.aspw.client.features.module.impl.visual.CustomModel;
 import net.aspw.client.features.module.impl.visual.Hud;
-import net.aspw.client.features.module.impl.visual.SilentView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -29,9 +28,8 @@ public abstract class MixinAbstractClientPlayer extends MixinEntityPlayer {
     @Inject(method = "getLocationCape", at = @At("HEAD"), cancellable = true)
     private void getCape(CallbackInfoReturnable<ResourceLocation> callbackInfoReturnable) {
         final Cape cape = Objects.requireNonNull(Client.moduleManager.getModule(Cape.class));
-        final SilentView silentView = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
         final CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
-        if ((silentView.getState() && silentView.getSilentValue().get() && silentView.shouldRotate() || customModel.getState() && customModel.getHideCape().get()) && Objects.equals(getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
+        if (customModel.getState() && customModel.getHideCape().get() && Objects.equals(getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
             callbackInfoReturnable.setReturnValue(new ResourceLocation("client/cape/none.png"));
             return;
         }

@@ -13,7 +13,6 @@ import net.aspw.client.features.module.impl.movement.NoSlow;
 import net.aspw.client.features.module.impl.movement.SilentSneak;
 import net.aspw.client.features.module.impl.movement.Sprint;
 import net.aspw.client.features.module.impl.player.Scaffold;
-import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.Hud;
 import net.aspw.client.util.CooldownHelper;
 import net.aspw.client.util.MovementUtils;
@@ -218,14 +217,6 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
             if (mc.thePlayer.isSneaking() && (mc.thePlayer.isBlocking() || (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking())))
                 mc.thePlayer.renderArmYaw = mc.thePlayer.rotationYaw - 40F;
-
-            if (Animations.smoothSwing.get()) {
-                float f = mc.thePlayer.swingProgress;
-                if (mc.thePlayer.isSwingInProgress) {
-                    mc.thePlayer.renderArmPitch = mc.thePlayer.rotationPitch + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f + f;
-                    mc.thePlayer.renderArmYaw = mc.thePlayer.rotationYaw - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f - f;
-                }
-            }
 
             final AntiHunger antiHunger = Objects.requireNonNull(Client.moduleManager.getModule(AntiHunger.class));
 

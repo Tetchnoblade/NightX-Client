@@ -2,9 +2,7 @@ package net.aspw.client.features.api;
 
 import io.netty.buffer.Unpooled;
 import net.aspw.client.Client;
-import net.aspw.client.event.EventTarget;
-import net.aspw.client.event.Listenable;
-import net.aspw.client.event.PacketEvent;
+import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.other.ClientSpoof;
 import net.aspw.client.features.module.impl.visual.Animations;
@@ -24,6 +22,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
 
     public static int ticks;
     public static String selectedCape;
+    public static int swing;
 
     public static void update() {
         int maxFrames = 40;
@@ -44,6 +43,17 @@ public class PacketManager extends MinecraftInstance implements Listenable {
 
         if (ticks > maxFrames) {
             ticks = 1;
+        }
+    }
+
+    @EventTarget
+    public void onMotion(MotionEvent event) {
+        if (event.getEventState() == EventState.PRE) {
+            if (mc.thePlayer.swingProgressInt == 1) {
+                swing = 9;
+            } else {
+                swing = Math.max(0, swing - 1);
+            }
         }
     }
 

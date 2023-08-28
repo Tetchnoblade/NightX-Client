@@ -48,7 +48,8 @@ class Animations : Module() {
                 "Smooth",
                 "Jigsaw",
                 "Sigma3",
-                "Sigma4"
+                "Sigma4",
+                "Spin"
             ), "Swing"
         )
 
@@ -56,7 +57,8 @@ class Animations : Module() {
         val swingAnimValue = ListValue(
             "Swing-Animation", arrayOf(
                 "Vanilla",
-                "Flux"
+                "Flux",
+                "Smooth"
             ), "Vanilla"
         )
 
@@ -65,9 +67,6 @@ class Animations : Module() {
 
         @JvmField
         val oldAnimations = BoolValue("OldAnimations", true)
-
-        @JvmField
-        val smoothSwing = BoolValue("Smooth-Swing", false)
 
         @JvmField
         val cancelEquip = BoolValue("CancelEquip", false)
