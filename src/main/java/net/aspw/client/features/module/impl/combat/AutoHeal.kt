@@ -108,6 +108,7 @@ class AutoHeal : Module() {
     @EventTarget(priority = 2)
     fun onMotion(event: MotionEvent) {
         if (autoPotValue.get()) {
+            if (mc.thePlayer.fallDistance < 0.8) return
             if (event.eventState == EventState.PRE) {
                 if (smartValue.get() && !throwQueue.isEmpty()) {
                     var foundPot = false
@@ -280,11 +281,12 @@ class AutoHeal : Module() {
     @EventTarget(priority = -1)
     fun onMotionPost(event: MotionEvent) {
         if (autoPotValue.get()) {
+            if (mc.thePlayer.fallDistance < 0.8) return
             if (event.eventState == EventState.POST) {
                 if (throwing && mc.currentScreen !is GuiContainer
                     && !mc.thePlayer.onGround
                     && !mc.thePlayer.isEating
-                    && mc.thePlayer.fallDistance > 0.8 && (!noCombatValue.get() || !killAura?.state!! || killAura.target == null) && !scaffold?.state!!
+                    && (!noCombatValue.get() || !killAura?.state!! || killAura.target == null) && !scaffold?.state!!
                 ) {
                     val potionEffects = getPotionFromSlot(potIndex)
                     if (potionEffects != null) {
