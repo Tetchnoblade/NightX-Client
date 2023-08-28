@@ -283,7 +283,8 @@ class AutoHeal : Module() {
             if (event.eventState == EventState.POST) {
                 if (throwing && mc.currentScreen !is GuiContainer
                     && !mc.thePlayer.onGround
-                    && mc.thePlayer.fallDistance > 0.5 && (!noCombatValue.get() || !killAura?.state!! || killAura.target == null) && !scaffold?.state!!
+                    && !mc.thePlayer.isEating
+                    && mc.thePlayer.fallDistance > 0.8 && (!noCombatValue.get() || !killAura?.state!! || killAura.target == null) && !scaffold?.state!!
                 ) {
                     val potionEffects = getPotionFromSlot(potIndex)
                     if (potionEffects != null) {
