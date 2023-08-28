@@ -177,8 +177,9 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
      */
     @Inject(method = "dropItem", at = @At("HEAD"))
     private void dropItem(ItemStack p_dropItem_1_, boolean p_dropItem_2_, boolean p_dropItem_3_, CallbackInfoReturnable<EntityItem> cir) {
+        Minecraft.getMinecraft().thePlayer.isSwingInProgress = true;
+
         for (int i = 0; i < this.mainInventory.length; ++i) {
-            Minecraft.getMinecraft().thePlayer.isSwingInProgress = true;
             if (this.mainInventory[i] != null) {
                 Minecraft.getMinecraft().thePlayer.dropItem(this.mainInventory[i], true, false);
                 this.mainInventory[i] = null;
@@ -186,7 +187,6 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
         }
 
         for (int j = 0; j < this.armorInventory.length; ++j) {
-            Minecraft.getMinecraft().thePlayer.isSwingInProgress = true;
             if (this.armorInventory[j] != null) {
                 Minecraft.getMinecraft().thePlayer.dropItem(this.armorInventory[j], true, false);
                 this.armorInventory[j] = null;

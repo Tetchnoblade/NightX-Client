@@ -10,6 +10,7 @@ import net.aspw.client.features.module.impl.visual.Cape;
 import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.PacketUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.C0APacketAnimation;
@@ -55,6 +56,8 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 swing = Math.max(0, swing - 1);
             }
         }
+        if (GameSettings.isKeyDown(mc.gameSettings.keyBindDrop) && mc.thePlayer.getHeldItem() != null && mc.currentScreen == null)
+            mc.thePlayer.isSwingInProgress = true;
     }
 
     @EventTarget
