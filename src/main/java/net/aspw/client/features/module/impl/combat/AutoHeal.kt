@@ -178,6 +178,8 @@ class AutoHeal : Module() {
                     event.pitch = if (customPitchValue.get()) customPitchAngle.get() else 90F
                     debug("silent rotation")
                     isRotating = true
+                } else {
+                    isRotating = false
                 }
             }
         }
@@ -281,7 +283,7 @@ class AutoHeal : Module() {
             if (event.eventState == EventState.POST) {
                 if (throwing && mc.currentScreen !is GuiContainer
                     && !mc.thePlayer.onGround
-                    && (!noCombatValue.get() || !killAura?.state!! || killAura.target == null) && !scaffold?.state!!
+                    && mc.thePlayer.fallDistance > 0.5 && (!noCombatValue.get() || !killAura?.state!! || killAura.target == null) && !scaffold?.state!!
                 ) {
                     val potionEffects = getPotionFromSlot(potIndex)
                     if (potionEffects != null) {

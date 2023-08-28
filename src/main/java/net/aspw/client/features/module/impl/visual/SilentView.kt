@@ -6,6 +6,7 @@ import net.aspw.client.event.MotionEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.impl.combat.AutoHeal
 import net.aspw.client.features.module.impl.combat.BowAura
 import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.features.module.impl.exploit.CivBreak
@@ -65,6 +66,7 @@ class SilentView : Module() {
         val bedBreaker = Client.moduleManager.getModule(BedBreaker::class.java) as BedBreaker
         val nuker = Client.moduleManager.getModule(Nuker::class.java) as Nuker
         val annoy = Client.moduleManager.getModule(Annoy::class.java) as Annoy
+        val autoHeal = Client.moduleManager.getModule(AutoHeal::class.java) as AutoHeal
         return (getState(KillAura::class.java) && killAura.target != null && killAura.silentRotationValue.get() && !killAura.rotations.get()
             .equals("None") || (getState(Scaffold::class.java) || (getState(Nuker::class.java) && nuker.isBreaking || (getState(
             BowAura::class.java
@@ -73,9 +75,11 @@ class SilentView : Module() {
         ) && civBreak.rotationsValue.get() && civBreak.isBreaking || (getState(
             BedBreaker::class.java
         ) && bedBreaker.breaking || (getState(
+            AutoHeal::class.java
+        ) && autoHeal.isRotating || (getState(
             Annoy::class.java
         ) && annoy.rotateValue.get()
-                )))))))
+                ))))))))
     }
 
     init {
