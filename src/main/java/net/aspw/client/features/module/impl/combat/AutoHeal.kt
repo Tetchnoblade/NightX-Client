@@ -6,10 +6,7 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.player.Scaffold
-import net.aspw.client.util.ClientUtils
-import net.aspw.client.util.InventoryHelper
-import net.aspw.client.util.InventoryUtils
-import net.aspw.client.util.RotationUtils
+import net.aspw.client.util.*
 import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -84,7 +81,7 @@ class AutoHeal : Module() {
     }
 
     override fun onDisable() {
-        resetAll()
+        isRotating = false
     }
 
     override fun onEnable() {
@@ -109,20 +106,7 @@ class AutoHeal : Module() {
     fun onMotion(event: MotionEvent) {
         if (autoPotValue.get()) {
             if (event.eventState == EventState.PRE) {
-                if (throwing && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
-                    if (mc.thePlayer.onGround) {
-                        mc.thePlayer.motionX = 0.0
-                        mc.thePlayer.motionZ = 0.0
-                        mc.thePlayer.jump()
-                        debug("jumped")
-                    }
-                    RotationUtils.reset() // reset all rotations
-                    event.pitch = if (customPitchValue.get()) customPitchAngle.get() else 90F
-                    debug("silent rotation")
-                    isRotating = true
-                }
-
-                if (smartValue.get() && throwQueue.isNotEmpty()) {
+                if (smartValue.get() && !throwQueue.isEmpty()) {
                     var foundPot = false
                     for (k in throwQueue.indices.reversed()) {
                         if (mc.thePlayer.isPotionActive(throwQueue[k])) {
@@ -178,6 +162,19 @@ class AutoHeal : Module() {
                         throwing = true
                         debug("found pot, queueing")
                     }
+                }
+
+                if (throwing && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
+                    if (mc.thePlayer.onGround) {
+                        mc.thePlayer.motionX = 0.0
+                        mc.thePlayer.motionZ = 0.0
+                        mc.thePlayer.jump()
+                        debug("jumped")
+                    }
+                    RotationUtils.reset() // reset all rotations
+                    event.pitch = if (customPitchValue.get()) customPitchAngle.get() else 90F
+                    debug("silent rotation")
+                    isRotating = true
                 }
             }
         }
@@ -282,6 +279,7 @@ class AutoHeal : Module() {
                 if (throwing && mc.currentScreen !is GuiContainer
                     && !mc.thePlayer.onGround
                     && !mc.thePlayer.isEating
+                    && MovementUtils.isRidingBlock()
                     && (!noCombatValue.get() || !killAura?.state!! || killAura.target == null) && !scaffold?.state!!
                 ) {
                     val potionEffects = getPotionFromSlot(potIndex)
@@ -302,9 +300,9 @@ class AutoHeal : Module() {
                         isRotating = false
                         debug("thrown")
                     } else {
+                        // refind
                         potIndex = -1
                         throwing = false
-                        isRotating = false
                         debug("failed to retrieve potion info, retrying...")
                     }
                 }

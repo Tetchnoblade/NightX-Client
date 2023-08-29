@@ -335,73 +335,7 @@ class Scaffold : Module() {
     fun onUpdate(event: UpdateEvent?) {
         if (faceBlock)
             place()
-        if (allowTower.get() && mc.gameSettings.keyBindJump.isKeyDown && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && blocksAmount > 0 && (mc.theWorld.getBlockState(
-                BlockPos(
-                    mc.thePlayer.posX,
-                    mc.thePlayer.posY - 1.8,
-                    mc.thePlayer.posZ
-                )
-            ).block !is BlockAir || mc.theWorld.getBlockState(
-                BlockPos(
-                    mc.thePlayer.posX,
-                    mc.thePlayer.posY - 1,
-                    mc.thePlayer.posZ
-                )
-            ).block !is BlockAir || mc.theWorld.getBlockState(
-                BlockPos(
-                    mc.thePlayer.posX,
-                    mc.thePlayer.posY - 0.5,
-                    mc.thePlayer.posZ
-                )
-            ).block !is BlockAir || mc.theWorld.getBlockState(
-                BlockPos(
-                    mc.thePlayer.posX + 0.5,
-                    mc.thePlayer.posY - 1.8,
-                    mc.thePlayer.posZ + 0.5
-                )
-            ).block !is BlockAir || mc.theWorld.getBlockState(
-                BlockPos(
-                    mc.thePlayer.posX - 0.5,
-                    mc.thePlayer.posY - 1.8,
-                    mc.thePlayer.posZ + 0.5
-                )
-            ).block !is BlockAir || mc.theWorld.getBlockState(
-                BlockPos(
-                    mc.thePlayer.posX + 0.5,
-                    mc.thePlayer.posY - 1.8,
-                    mc.thePlayer.posZ - 0.5
-                )
-            ).block !is BlockAir || mc.theWorld.getBlockState(
-                BlockPos(
-                    mc.thePlayer.posX - 0.5,
-                    mc.thePlayer.posY - 1.8,
-                    mc.thePlayer.posZ - 0.5
-                )
-            ).block !is BlockAir || mc.theWorld.getBlockState(
-                BlockPos(
-                    mc.thePlayer.posX + 0.5,
-                    mc.thePlayer.posY - 1,
-                    mc.thePlayer.posZ + 0.5
-                )
-            ).block !is BlockAir || mc.theWorld.getBlockState(
-                BlockPos(
-                    mc.thePlayer.posX - 0.5,
-                    mc.thePlayer.posY - 1,
-                    mc.thePlayer.posZ + 0.5
-                )
-            ).block !is BlockAir || mc.theWorld.getBlockState(
-                BlockPos(
-                    mc.thePlayer.posX + 0.5,
-                    mc.thePlayer.posY - 1,
-                    mc.thePlayer.posZ - 0.5
-                )
-            ).block !is BlockAir || mc.theWorld.getBlockState(
-                BlockPos(
-                    mc.thePlayer.posX - 0.5,
-                    mc.thePlayer.posY - 1,
-                    mc.thePlayer.posZ - 0.5
-                )
-            ).block !is BlockAir) && (!MovementUtils.isMoving() && !towerMove.get() || towerMove.get())
+        if (allowTower.get() && mc.gameSettings.keyBindJump.isKeyDown && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && blocksAmount > 0 && MovementUtils.isRidingBlock() && (!MovementUtils.isMoving() && !towerMove.get() || towerMove.get())
         ) {
             canTower = true
             when (towerModeValue.get().lowercase(Locale.getDefault())) {
