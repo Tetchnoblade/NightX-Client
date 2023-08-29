@@ -17,7 +17,7 @@ public class MixinNetworkManager_5 {
 
     @Inject(method = "initChannel", at = @At(value = "TAIL"), remap = false)
     private void onInitChannel(Channel channel, CallbackInfo ci) {
-        if (channel instanceof SocketChannel && !Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x")) {
+        if (channel instanceof SocketChannel) {
             final UserConnection user = new UserConnectionImpl(channel, true);
             new ProtocolPipelineImpl(user);
 
