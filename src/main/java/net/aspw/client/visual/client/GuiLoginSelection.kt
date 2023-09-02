@@ -19,17 +19,17 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
     override fun initGui() {
         if (CheckConnection.isAvailable) {
             if (CheckConnection.isLatest) {
-                buttonList.add(GuiButton(10, width / 2 - 100, height / 4 + 104, "Enjoy!"))
+                buttonList.add(GuiButton(10, width / 2 - 100, height / 4 + 104, "Connect"))
                 // Old Auth System
                 // buttonList.add(GuiButton(0, width / 2 - 100, height / 4 + 104, "Free Login"))
                 //buttonList.add(GuiButton(1, width / 2 - 100, height / 4 + 144, "Premium Login"))
             } else {
-                buttonList.add(GuiButton(2, width / 2 - 100, height / 4 + 104, "Access Website"))
-                buttonList.add(GuiButton(3, width / 2 - 100, height / 4 + 144, "Official Discord"))
+                buttonList.add(GuiButton(2, width / 2 - 100, height / 4 + 100 + 4, "Access Website"))
+                buttonList.add(GuiButton(3, width / 2 - 100, height / 4 + 135 + 2, "Official Discord"))
             }
         } else {
-            buttonList.add(GuiButton(2, width / 2 - 100, height / 4 + 104, "Access Website"))
-            buttonList.add(GuiButton(3, width / 2 - 100, height / 4 + 144, "Official Discord"))
+            buttonList.add(GuiButton(2, width / 2 - 100, height / 4 + 100 + 4, "Access Website"))
+            buttonList.add(GuiButton(3, width / 2 - 100, height / 4 + 135 + 2, "Official Discord"))
         }
         super.initGui()
     }
@@ -95,22 +95,17 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
             //    mc.displayGuiScreen(GuiLoginScreen(this))
             //}
 
-            0 -> {
-                loggedIn = true
-                id = "User"
-                LoginID.password = "Free"
-                LoginID.uid = "000"
-                mc.displayGuiScreen(GuiMainMenu())
-                ClientUtils.getLogger().info("Logged in with Free Account!")
-            }
-
             10 -> {
-                loggedIn = true
-                id = "User"
-                LoginID.password = "Free"
-                LoginID.uid = "000"
-                mc.displayGuiScreen(GuiMainMenu())
-                ClientUtils.getLogger().info("Logged in with Free Account!")
+                CheckConnection.checkStatus()
+                CheckConnection.getAnnouncement()
+                if (CheckConnection.canConnect) {
+                    loggedIn = true
+                    id = "User"
+                    LoginID.password = "Free"
+                    LoginID.uid = "000"
+                    mc.displayGuiScreen(GuiMainMenu())
+                    ClientUtils.getLogger().info("Logged in with Free Account!")
+                }
             }
         }
     }

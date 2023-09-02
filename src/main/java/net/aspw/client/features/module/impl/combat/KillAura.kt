@@ -164,7 +164,18 @@ class KillAura : Module() {
     val autoBlockModeValue =
         ListValue(
             "AutoBlock",
-            arrayOf("Packet", "AfterTick", "NCP", "HurtTime", "Click", "OldHypixel", "OldIntave", "Fake", "None"),
+            arrayOf(
+                "Packet",
+                "AfterTick",
+                "NCP",
+                "HurtTime",
+                "Click",
+                "Hypixel",
+                "OldHypixel",
+                "OldIntave",
+                "Fake",
+                "None"
+            ),
             "Fake"
         )
 
@@ -801,6 +812,11 @@ class KillAura : Module() {
                 .equals("AfterTick", true) && (mc.thePlayer.isBlocking || canBlock)
         )
             startBlocking(entity, interactAutoBlockValue.get())
+
+        if (mc.thePlayer.isBlocking || canBlock) {
+            if (autoBlockModeValue.get().equals("Hypixel", true))
+                startBlocking(entity, (mc.thePlayer.getDistanceToEntityBox(entity) < maxRange))
+        }
     }
 
     /**
@@ -954,6 +970,11 @@ class KillAura : Module() {
         if (autoBlockModeValue.get().equals("packet", true)) {
             mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
             blockingStatus = true
+        }
+
+        if (autoBlockModeValue.get().equals("hypixel", true)) {
+            mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem % 8 + 1))
+            mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
         }
 
         if (autoBlockModeValue.get().equals("oldhypixel", true)) {

@@ -1,8 +1,8 @@
 package net.aspw.client.visual.client.altmanager.menus
 
-import me.liuli.elixir.account.MicrosoftAccount
-import me.liuli.elixir.compat.OAuthServer
 import net.aspw.client.Client
+import net.aspw.client.auth.account.MicrosoftAccount
+import net.aspw.client.auth.compat.OAuthServer
 import net.aspw.client.features.module.impl.visual.Hud
 import net.aspw.client.util.ClientUtils
 import net.aspw.client.util.misc.MiscUtils
@@ -17,10 +17,11 @@ class GuiMicrosoftLogin(private val prevGui: GuiScreen) : GuiScreen() {
     private lateinit var server: OAuthServer
 
     override fun initGui() {
-        server = MicrosoftAccount.Companion.buildFromOpenBrowser(object : MicrosoftAccount.OAuthHandler {
+        server = MicrosoftAccount.buildFromOpenBrowser(object : MicrosoftAccount.OAuthHandler {
             override fun openUrl(url: String) {
                 stage = "Logging in..."
                 ClientUtils.getLogger().info("Opening URL: $url")
+
                 MiscUtils.showURL(url)
             }
 
@@ -56,8 +57,8 @@ class GuiMicrosoftLogin(private val prevGui: GuiScreen) : GuiScreen() {
     public override fun keyTyped(typedChar: Char, keyCode: Int) {
         when (keyCode) {
             Keyboard.KEY_ESCAPE -> {
-                mc.displayGuiScreen(prevGui)
                 server.stop(true)
+                mc.displayGuiScreen(prevGui)
                 return
             }
         }

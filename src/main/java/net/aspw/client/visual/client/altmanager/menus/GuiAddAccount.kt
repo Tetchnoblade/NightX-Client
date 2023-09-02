@@ -1,8 +1,8 @@
 package net.aspw.client.visual.client.altmanager.menus
 
 import com.thealtening.AltService.EnumAltService
-import me.liuli.elixir.account.CrackedAccount
 import net.aspw.client.Client
+import net.aspw.client.auth.account.CrackedAccount
 import net.aspw.client.features.module.impl.visual.Hud
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager

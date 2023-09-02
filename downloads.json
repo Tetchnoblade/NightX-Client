@@ -63,7 +63,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 17566169,
-        "download_count": 390,
+        "download_count": 1083,
         "created_at": "2023-08-27T12:40:43Z",
         "updated_at": "2023-08-27T12:40:47Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B64-Beta/nightx-beta-b64.jar"
@@ -74,8 +74,8 @@
     "body": "I accidentally deleted the past NightX database completely W",
     "reactions": {
       "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/118839636/reactions",
-      "total_count": 3,
-      "+1": 2,
+      "total_count": 4,
+      "+1": 3,
       "-1": 0,
       "laugh": 0,
       "hooray": 0,
@@ -149,7 +149,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 17567468,
-        "download_count": 335,
+        "download_count": 493,
         "created_at": "2023-08-26T16:17:07Z",
         "updated_at": "2023-08-26T16:17:12Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B63-Release/nightx-release-b63.jar"
@@ -160,13 +160,13 @@
     "body": "Ok I Improved Everything\r\nmade a new config for blocksmc & hypixel safe bypass\r\n(.config download to get)\r\n\r\nChangelog:\r\n + Added New Font Renderer System\r\n + Added New MainMenu\r\n + Added New ESP\r\n + Added New Toggle Sounds\r\n + Added Cape MovingMode Option\r\n + Added SnakeGame\r\n + Added KillAura SilentMovementFix Option\r\n + Added Scaffold Desync Option\r\n + Added Scaffold Tower mode Float, BlocksMC\r\n + Added Animations mode New Swang, New Leaked\r\n - Removed ProtocolFixer (always on)\r\n * Fixed SilentView bugs\r\n * Fixed Block Sounds & Attack Packet when using Protocol 1.9+\r\n *  Fixed sometimes freeze game\r\n *  Fixed sometimes singleplayer crashes (reason: Villager xd)\r\n *  Improved some speed bypasses\r\n *  Improved Performance\r\n *  Improved Animations mode Edit\r\n *  Recoded Shit codes\r\n *  Exhibition & NightX Cape is now rainbow!\r\n *  Changed Item Drop Functions",
     "reactions": {
       "url": "https://api.github.com/repos/Aspw-w/NightX-Client/releases/118811700/reactions",
-      "total_count": 2,
+      "total_count": 3,
       "+1": 0,
       "-1": 0,
       "laugh": 0,
       "hooray": 0,
       "confused": 0,
-      "heart": 2,
+      "heart": 3,
       "rocket": 0,
       "eyes": 0
     }
@@ -235,7 +235,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 16332218,
-        "download_count": 1142,
+        "download_count": 1180,
         "created_at": "2023-08-19T15:58:28Z",
         "updated_at": "2023-08-19T15:58:49Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B62-Release/nightx-release-b62.jar"
@@ -321,7 +321,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 16044483,
-        "download_count": 612,
+        "download_count": 623,
         "created_at": "2023-08-17T10:16:01Z",
         "updated_at": "2023-08-17T10:16:14Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B61-Release-V2/nightx-release-b61-v2.jar"
@@ -407,7 +407,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 16044424,
-        "download_count": 54,
+        "download_count": 72,
         "created_at": "2023-08-17T10:03:45Z",
         "updated_at": "2023-08-17T10:04:05Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B61-Release/nightx-release-b61.jar"
@@ -534,7 +534,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15860740,
-        "download_count": 4966,
+        "download_count": 4989,
         "created_at": "2023-04-20T14:02:31Z",
         "updated_at": "2023-04-20T14:02:35Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/Final/nightx-beta-b48.jar"
@@ -620,7 +620,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15863951,
-        "download_count": 763,
+        "download_count": 774,
         "created_at": "2023-04-18T15:05:58Z",
         "updated_at": "2023-04-18T15:06:03Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B48-Beta/nightx-beta-b48.jar"
@@ -694,7 +694,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15805033,
-        "download_count": 818,
+        "download_count": 838,
         "created_at": "2023-04-16T13:43:31Z",
         "updated_at": "2023-04-16T13:43:35Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B47-Release/nightx-release-b47.jar"
@@ -780,7 +780,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15367394,
-        "download_count": 2038,
+        "download_count": 2052,
         "created_at": "2023-04-07T06:07:52Z",
         "updated_at": "2023-04-07T06:08:35Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B46-Release/nightx-release-b46.jar"
@@ -866,7 +866,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15356495,
-        "download_count": 1353,
+        "download_count": 1355,
         "created_at": "2023-04-03T11:08:04Z",
         "updated_at": "2023-04-03T11:08:13Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B46-Beta/nightx-beta-b46.jar"
@@ -952,7 +952,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15374716,
-        "download_count": 170,
+        "download_count": 175,
         "created_at": "2023-04-03T08:19:10Z",
         "updated_at": "2023-04-03T08:20:09Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B45-Release/nightx-release-b45.jar"
@@ -1026,7 +1026,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15374515,
-        "download_count": 589,
+        "download_count": 593,
         "created_at": "2023-04-01T00:46:36Z",
         "updated_at": "2023-04-01T00:47:09Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B45-Beta/nightx-beta-b45.jar"
@@ -1112,7 +1112,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15167039,
-        "download_count": 333,
+        "download_count": 338,
         "created_at": "2023-03-31T02:29:46Z",
         "updated_at": "2023-03-31T02:29:49Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B44-Release/nightx-release-b44.jar"
@@ -1186,7 +1186,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15164965,
-        "download_count": 329,
+        "download_count": 331,
         "created_at": "2023-03-29T11:09:24Z",
         "updated_at": "2023-03-29T11:09:31Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B44-Beta-v2/nightx-beta-b44.jar"
@@ -1272,7 +1272,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 17952257,
-        "download_count": 310,
+        "download_count": 311,
         "created_at": "2023-03-28T09:43:54Z",
         "updated_at": "2023-03-28T09:45:51Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B44-Beta/nightx-beta-b44.jar"
@@ -1358,7 +1358,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 17955451,
-        "download_count": 277,
+        "download_count": 280,
         "created_at": "2023-03-27T13:16:43Z",
         "updated_at": "2023-03-27T13:17:43Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B43/nightx-release-b43.jar"
@@ -1444,7 +1444,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 18385367,
-        "download_count": 467,
+        "download_count": 469,
         "created_at": "2023-03-25T10:03:52Z",
         "updated_at": "2023-03-25T10:03:58Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B42/nightx-release-b42.jar"
@@ -1518,7 +1518,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 18335769,
-        "download_count": 625,
+        "download_count": 626,
         "created_at": "2023-03-21T11:06:55Z",
         "updated_at": "2023-03-21T11:07:12Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B41/nightx-release-b41.jar"
@@ -1592,7 +1592,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 18433715,
-        "download_count": 652,
+        "download_count": 654,
         "created_at": "2023-03-18T07:10:12Z",
         "updated_at": "2023-03-18T07:10:18Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B40/nightx-release-b40.jar"
@@ -1678,7 +1678,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 18464670,
-        "download_count": 1268,
+        "download_count": 1271,
         "created_at": "2023-03-09T12:20:01Z",
         "updated_at": "2023-03-09T12:20:09Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B39/nightx-release-b39.jar"
@@ -1764,7 +1764,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15958826,
-        "download_count": 656,
+        "download_count": 658,
         "created_at": "2023-03-05T00:47:35Z",
         "updated_at": "2023-03-05T00:47:49Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B38/nightx-release-b38.jar"
@@ -1850,7 +1850,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 16018857,
-        "download_count": 749,
+        "download_count": 751,
         "created_at": "2023-02-27T11:13:14Z",
         "updated_at": "2023-02-27T11:13:19Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B37/nightx-release-b37.jar"
@@ -1936,7 +1936,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 16023490,
-        "download_count": 648,
+        "download_count": 650,
         "created_at": "2023-02-23T05:06:31Z",
         "updated_at": "2023-02-23T05:06:37Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B36/nightx-release-b36.jar"
@@ -2010,7 +2010,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 16010813,
-        "download_count": 849,
+        "download_count": 850,
         "created_at": "2023-02-17T15:53:02Z",
         "updated_at": "2023-02-17T15:53:08Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B35v2/nightx-beta-b35-v2.jar"
@@ -2084,7 +2084,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15923158,
-        "download_count": 844,
+        "download_count": 845,
         "created_at": "2023-02-11T09:22:25Z",
         "updated_at": "2023-02-11T09:22:30Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B35/nightx-beta-b35.jar"
@@ -2170,7 +2170,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15641020,
-        "download_count": 2162,
+        "download_count": 2165,
         "created_at": "2023-01-26T14:24:05Z",
         "updated_at": "2023-01-26T14:24:10Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B34/nightx-release-b34.jar"
@@ -2256,7 +2256,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 15553329,
-        "download_count": 1467,
+        "download_count": 1482,
         "created_at": "2023-01-19T14:07:00Z",
         "updated_at": "2023-01-19T14:07:05Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B33/nightx-release-b33.jar"
@@ -2342,7 +2342,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 17967770,
-        "download_count": 793,
+        "download_count": 796,
         "created_at": "2023-01-14T13:55:03Z",
         "updated_at": "2023-01-14T13:55:09Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B32/nightx-release-b32.jar"
@@ -2416,7 +2416,7 @@
         "content_type": "application/octet-stream",
         "state": "uploaded",
         "size": 17909432,
-        "download_count": 1288,
+        "download_count": 1290,
         "created_at": "2023-01-06T23:26:24Z",
         "updated_at": "2023-01-06T23:26:29Z",
         "browser_download_url": "https://github.com/Aspw-w/NightX-Client/releases/download/B31/nightx-release-b31.jar"

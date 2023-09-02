@@ -1,10 +1,9 @@
 package net.aspw.client.config.configs;
 
 import com.google.gson.*;
-import me.liuli.elixir.account.CrackedAccount;
-import me.liuli.elixir.account.MinecraftAccount;
-import me.liuli.elixir.account.MojangAccount;
-import me.liuli.elixir.manage.AccountSerializer;
+import net.aspw.client.auth.account.CrackedAccount;
+import net.aspw.client.auth.account.MinecraftAccount;
+import net.aspw.client.auth.manage.AccountSerializer;
 import net.aspw.client.config.FileConfig;
 import net.aspw.client.config.FileManager;
 
@@ -47,24 +46,12 @@ public class AccountsConfig extends FileConfig {
                 // Import old account format
 
                 JsonElement name = accountObject.get("name");
-                JsonElement password = accountObject.get("password");
-                JsonElement inGameName = accountObject.get("inGameName");
 
-                if (inGameName.isJsonNull() && password.isJsonNull()) {
-                    final MojangAccount mojangAccount = new MojangAccount();
+                final CrackedAccount crackedAccount = new CrackedAccount();
 
-                    mojangAccount.setEmail(name.getAsString());
-                    mojangAccount.setName(inGameName.getAsString());
-                    mojangAccount.setPassword(password.getAsString());
+                crackedAccount.setName(name.getAsString());
 
-                    accounts.add(mojangAccount);
-                } else {
-                    final CrackedAccount crackedAccount = new CrackedAccount();
-
-                    crackedAccount.setName(name.getAsString());
-
-                    accounts.add(crackedAccount);
-                }
+                accounts.add(crackedAccount);
             }
         }
     }
@@ -95,23 +82,6 @@ public class AccountsConfig extends FileConfig {
             return;
 
         accounts.add(crackedAccount);
-    }
-
-    /**
-     * Add mojang account.
-     *
-     * @param name     the name
-     * @param password the password
-     */
-    public void addMojangAccount(final String name, final String password) {
-        final MojangAccount mojangAccount = new MojangAccount();
-        mojangAccount.setName(name);
-        mojangAccount.setPassword(password);
-
-        if (accountExists(mojangAccount))
-            return;
-
-        accounts.add(mojangAccount);
     }
 
     /**

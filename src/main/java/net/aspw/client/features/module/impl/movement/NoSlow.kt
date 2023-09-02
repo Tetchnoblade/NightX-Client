@@ -6,9 +6,8 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.combat.KillAura
-import net.aspw.client.util.ClientUtils
-import net.aspw.client.util.MovementUtils
-import net.aspw.client.util.PacketUtils
+import net.aspw.client.util.*
+import net.aspw.client.util.extensions.rayTraceCustom
 import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -22,6 +21,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.*
 import net.minecraft.network.play.server.S30PacketWindowItems
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
+import net.minecraft.util.MovingObjectPosition
 import java.util.*
 
 @ModuleInfo(name = "NoSlow", spacedName = "No Slow", description = "", category = ModuleCategory.MOVEMENT)
@@ -32,6 +32,7 @@ class NoSlow : Module() {
         arrayOf(
             "Vanilla",
             "Watchdog",
+            "Hypixel",
             "OldHypixel",
             "Blink",
             "Experimental",
@@ -141,10 +142,49 @@ class NoSlow : Module() {
         }
     }
 
+    private fun sendUseItem(mouse: MovingObjectPosition) {
+        val facingX = (mouse.hitVec.xCoord - mouse.blockPos.x.toDouble()).toFloat()
+        val facingY = (mouse.hitVec.yCoord - mouse.blockPos.y.toDouble()).toFloat()
+        val facingZ = (mouse.hitVec.zCoord - mouse.blockPos.z.toDouble()).toFloat()
+        PacketUtils.sendPacketNoEvent(
+            C08PacketPlayerBlockPlacement(
+                mouse.blockPos,
+                mouse.sideHit.index,
+                mc.thePlayer.heldItem,
+                facingX,
+                facingY,
+                facingZ
+            )
+        )
+    }
+
     @EventTarget
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
         val killAura = Client.moduleManager[KillAura::class.java]!!
+        if (modeValue.get().equals("hypixel", true)) {
+            if (packet is C08PacketPlayerBlockPlacement) {
+                if (mc.gameSettings.keyBindUseItem.isKeyDown && mc.thePlayer.heldItem != null && (mc.thePlayer.heldItem.item is ItemFood || mc.thePlayer.heldItem.item is ItemBucketMilk || mc.thePlayer.heldItem.item is ItemPotion && !ItemPotion.isSplash(
+                        mc.thePlayer.heldItem.metadata
+                    ) || mc.thePlayer.heldItem.item is ItemBow)
+                ) {
+                    if (mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit === MovingObjectPosition.MovingObjectType.BLOCK && packet.position != BlockPos(
+                            -1,
+                            -1,
+                            1
+                        )
+                    ) return
+                    event.cancelEvent()
+                    val position: MovingObjectPosition = rayTraceCustom(
+                        mc.playerController.blockReachDistance.toDouble(), mc.thePlayer.rotationYaw, 90f
+                    )
+                        ?: return
+                    val rot = Rotation(mc.thePlayer.rotationYaw, 90f)
+                    RotationUtils.setTargetRotation(rot)
+                    sendUseItem(position)
+                }
+            }
+        }
         if (modeValue.get().equals(
                 "watchdog",
                 true
@@ -230,6 +270,20 @@ class NoSlow : Module() {
                 }
                 if (event.eventState == EventState.POST) {
                     PacketUtils.sendPacketNoEvent(C08PacketPlayerBlockPlacement(mc.thePlayer.heldItem))
+                }
+            }
+
+            "hypixel" -> {
+                if ((mc.thePlayer.isUsingItem || killAura.blockingStatus) && mc.thePlayer.heldItem != null && mc.thePlayer.heldItem.item is ItemSword) {
+                    if (event.eventState == EventState.POST) {
+                        mc.netHandler.addToSendQueue(
+                            C08PacketPlayerBlockPlacement(
+                                mc.thePlayer.inventoryContainer.getSlot(
+                                    mc.thePlayer.inventory.currentItem + 36
+                                ).stack
+                            )
+                        )
+                    }
                 }
             }
 

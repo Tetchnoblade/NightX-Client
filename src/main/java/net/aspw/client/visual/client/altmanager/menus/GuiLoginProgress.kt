@@ -1,6 +1,6 @@
 package net.aspw.client.visual.client.altmanager.menus
 
-import me.liuli.elixir.account.MinecraftAccount
+import net.aspw.client.auth.account.MinecraftAccount
 import net.aspw.client.visual.client.altmanager.GuiAltManager.Companion.login
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen

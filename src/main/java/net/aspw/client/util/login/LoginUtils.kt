@@ -7,7 +7,7 @@ import net.aspw.client.util.MinecraftInstance
 import net.minecraft.util.Session
 import java.util.*
 
-fun me.liuli.elixir.compat.Session.intoMinecraftSession(): Session = Session(username, uuid, token, type)
+fun net.aspw.client.auth.compat.Session.intoMinecraftSession(): Session = Session(username, uuid, token, type)
 
 object LoginUtils : MinecraftInstance() {
 

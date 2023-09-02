@@ -12,6 +12,7 @@ import net.aspw.client.util.*
 import net.aspw.client.util.ClassUtils.hasForge
 import net.aspw.client.util.connection.CheckConnection
 import net.aspw.client.util.misc.sound.TipSoundManager
+import net.aspw.client.value.ListValue
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.font.Fonts
 import net.aspw.client.visual.hud.HUD
@@ -23,19 +24,26 @@ import kotlin.concurrent.thread
 object Client {
 
     // Client information
-    const val isBeta = true
+    val clientVersion = ListValue("ClientVersion", arrayOf("Release", "Beta", "Developer"), "Release")
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Reloaded"
-    const val CLIENT_VERSION = "Beta B64"
+    const val CLIENT_VERSION = "Release B65"
     const val CLIENT_CREATOR = "As_pw, outaokura"
     const val CLIENT_WEBSITE = "https://aspw-w.github.io/NightX-Web"
     const val CLIENT_CONFIG = "$CLIENT_WEBSITE/data/configs.txt"
-
+    const val CLIENT_SRG = "$CLIENT_WEBSITE/data/srg.txt"
+    const val CLIENT_ANNOUNCEMENT = "$CLIENT_WEBSITE/data/announcement.txt"
+    const val CLIENT_CONTRIBUTORS = "$CLIENT_WEBSITE/data/contributors.json"
+    const val CLIENT_INFORMATION = "https://api.github.com/repos/Aspw-w/NightX-Client/stats/contributors"
+    const val CLIENT_CHAT = "§c§l>> §r"
+    val CLIENT_STATUS = when (clientVersion.get()) {
+        "Release" -> "$CLIENT_WEBSITE/data/release.txt"
+        "Beta" -> "$CLIENT_WEBSITE/data/beta.txt"
+        "Developer" -> "$CLIENT_WEBSITE/data/dev.txt"
+        else -> null
+    }
     // Old Auth System
     // const val CLIENT_USER = "Username:Password:HWID:UID"
-    const val CLIENT_SRG = "$CLIENT_WEBSITE/data/srg.txt"
-    const val CLIENT_CHAT = "§c§l>> §r"
-    val CLIENT_STATUS = if (!isBeta) "$CLIENT_WEBSITE/data/release.txt" else "$CLIENT_WEBSITE/data/beta.txt"
 
     var isStarting = false
 
@@ -73,6 +81,7 @@ object Client {
 
         // Check update
         CheckConnection.checkStatus()
+        CheckConnection.getAnnouncement()
 
         // Get srg file
         CheckConnection.getSRG()

@@ -6,12 +6,11 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication
 import com.thealtening.AltService
 import com.thealtening.api.TheAltening
-import me.liuli.elixir.account.CrackedAccount
-import me.liuli.elixir.account.MicrosoftAccount
-import me.liuli.elixir.account.MinecraftAccount
-import me.liuli.elixir.account.MojangAccount
 import net.aspw.client.Client
 import net.aspw.client.Client.fileManager
+import net.aspw.client.auth.account.CrackedAccount
+import net.aspw.client.auth.account.MicrosoftAccount
+import net.aspw.client.auth.account.MinecraftAccount
 import net.aspw.client.event.SessionEvent
 import net.aspw.client.features.module.impl.visual.Hud
 import net.aspw.client.util.ClientUtils
@@ -48,7 +47,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
     private lateinit var altsList: GuiList
     private lateinit var searchField: GuiTextField
 
-    var lastSessionToken: String? = null
+    private var lastSessionToken: String? = null
 
     override fun initGui() {
         val textFieldWidth = (width / 8).coerceAtLeast(70)
@@ -108,7 +107,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         )
         this.drawString(
             mc.fontRendererObj, "§7Type: §a${
-                if (altService.currentService == AltService.EnumAltService.THEALTENING) "TheAltening" else if (isValidTokenOffline(
+                if (altService.currentService == AltService.EnumAltService.THEALTENING) "Altening" else if (isValidTokenOffline(
                         mc.getSession().token
                     )
                 ) "Microsoft" else "Cracked"
@@ -408,7 +407,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     it.name.contains(
                         search,
                         ignoreCase = true
-                    ) || (it is MojangAccount && it.email.contains(search, ignoreCase = true))
+                    )
                 }
             }
 
@@ -464,15 +463,10 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
         override fun drawSlot(id: Int, x: Int, y: Int, var4: Int, var5: Int, var6: Int) {
             val minecraftAccount = accounts[id]
-            val accountName = if (minecraftAccount is MojangAccount && minecraftAccount.name.isEmpty()) {
-                minecraftAccount.email
-            } else {
-                minecraftAccount.name
-            }
-
+            val accountName = minecraftAccount.name
             Fonts.minecraftFont.drawStringWithShadow(accountName, width / 2f - 40, y + 2f, Color.WHITE.rgb)
             Fonts.minecraftFont.drawStringWithShadow(
-                if (minecraftAccount is CrackedAccount) "Cracked" else if (minecraftAccount is MicrosoftAccount) "Microsoft" else if (minecraftAccount is MojangAccount) "Mojang" else "Something else",
+                if (minecraftAccount is CrackedAccount) "Cracked" else if (minecraftAccount is MicrosoftAccount) "Microsoft" else "Null",
                 width / 2f - 40,
                 y + 15f,
                 if (minecraftAccount is CrackedAccount) Color.GRAY.rgb else Color(118, 255, 95).rgb

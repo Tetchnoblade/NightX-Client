@@ -359,7 +359,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
 
             if (silent) {
                 GlStateManager.pushMatrix();
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 0.1F);
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 0.2F);
                 GlStateManager.depthMask(false);
                 GlStateManager.enableBlend();
                 GlStateManager.blendFunc(770, 771);
@@ -377,7 +377,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
 
             if (silent) {
                 GlStateManager.disableBlend();
-                GlStateManager.alphaFunc(516, 0.05F);
+                GlStateManager.alphaFunc(516, 0.15F);
                 GlStateManager.popMatrix();
                 GlStateManager.depthMask(true);
             }

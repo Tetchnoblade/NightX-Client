@@ -1,10 +1,8 @@
 package net.aspw.client.visual.client
 
 import net.aspw.client.Client
-import net.aspw.client.util.Translate
 import net.aspw.client.util.connection.CheckConnection
 import net.aspw.client.util.connection.LoginID
-import net.aspw.client.util.misc.MiscUtils
 import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.aspw.client.visual.font.Fonts
@@ -19,8 +17,6 @@ import org.lwjgl.util.glu.Project
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
     var alpha = 255
-    var translate: Translate? = null
-    private var hue = 0.0f
     private var lastAnimTick: Long = 0L
     private var alrUpdate = false
     private val buttonWidth = 112
@@ -68,7 +64,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                 this.height / 2 - 80 + 155 - 6,
                 buttonWidth,
                 buttonHeight,
-                "OPTIONS"
+                "INFO MENU"
             )
         )
         this.buttonList.add(
@@ -78,30 +74,19 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                 this.height / 2 - 80 + 180 - 8,
                 buttonWidth,
                 buttonHeight,
+                "OPTIONS"
+            )
+        )
+        this.buttonList.add(
+            GuiButton(
+                5,
+                this.width / 2 - 55,
+                this.height / 2 - 80 + 205 - 10,
+                buttonWidth,
+                buttonHeight,
                 "EXIT"
             )
         )
-        this.buttonList.add(
-            GuiButton(
-                6,
-                3,
-                this.height - 36,
-                buttonWidth - 60,
-                buttonHeight,
-                "Discord"
-            )
-        )
-        this.buttonList.add(
-            GuiButton(
-                7,
-                58,
-                this.height - 36,
-                buttonWidth - 60,
-                buttonHeight,
-                "Website"
-            )
-        )
-        translate = Translate(0f, 0f)
         super.initGui()
     }
 
@@ -256,15 +241,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         ++this.panoramaTimer
         renderSkybox(mouseX, mouseY, partialTicks)
         GlStateManager.enableAlpha()
-        hue += 1f
-        if (hue > 255.0f) {
-            hue = 0.0f
-        }
-        translate?.interpolate(width.toFloat(), height.toFloat(), 4.0)
-        val xTrans = width / 2 - (translate!!.x / 2).toDouble()
-        val yTrans = height / 2 - (translate!!.y / 2).toDouble()
-        GlStateManager.translate(xTrans, yTrans, 0.0)
-        GlStateManager.scale(translate!!.x / width, translate!!.y / height, 1f)
         FontLoaders.logo18.drawStringWithShadow("a", 60.2F.toDouble(), height - 10.3F.toDouble(), -1)
         FontLoaders.SF20.drawStringWithShadow(
             "NightX Client",
@@ -279,7 +255,15 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             height - 23F.toDouble(),
             -1
         )
-        if (Client.isBeta) {
+        if (Client.clientVersion.get() == "Release") {
+            FontLoaders.SF20.drawStringWithShadow(
+                "Your current build is §eLatest Release! §r(§b" + Client.CLIENT_VERSION + "§r)",
+                width - 4F - FontLoaders.SF20.getStringWidth("Your current build is §eLatest Release! §r(§b" + Client.CLIENT_VERSION + "§r)")
+                    .toDouble(),
+                height - 12F.toDouble(),
+                -1
+            )
+        } else if (Client.clientVersion.get() == "Beta") {
             FontLoaders.SF20.drawStringWithShadow(
                 "Your current build is §eLatest Beta! §r(§b" + Client.CLIENT_VERSION + "§r)",
                 width - 4F - FontLoaders.SF20.getStringWidth("Your current build is §eLatest Beta! §r(§b" + Client.CLIENT_VERSION + "§r)")
@@ -287,10 +271,10 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                 height - 12F.toDouble(),
                 -1
             )
-        } else {
+        } else if (Client.clientVersion.get() == "Developer") {
             FontLoaders.SF20.drawStringWithShadow(
-                "Your current build is §eLatest Release! §r(§b" + Client.CLIENT_VERSION + "§r)",
-                width - 4F - FontLoaders.SF20.getStringWidth("Your current build is §eLatest Release! §r(§b" + Client.CLIENT_VERSION + "§r)")
+                "Your current build is §eLatest Developer! §r(§b" + Client.CLIENT_VERSION + "§r)",
+                width - 4F - FontLoaders.SF20.getStringWidth("Your current build is §eLatest Developer! §r(§b" + Client.CLIENT_VERSION + "§r)")
                     .toDouble(),
                 height - 12F.toDouble(),
                 -1
@@ -626,10 +610,9 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             0 -> mc.displayGuiScreen(GuiSelectWorld(this))
             1 -> mc.displayGuiScreen(GuiMultiplayer(this))
             2 -> mc.displayGuiScreen(GuiAltManager(this))
-            3 -> mc.displayGuiScreen(GuiOptions(this, mc.gameSettings))
-            4 -> mc.shutdown()
-            6 -> MiscUtils.showURL(CheckConnection.discord)
-            7 -> MiscUtils.showURL(Client.CLIENT_WEBSITE)
+            3 -> mc.displayGuiScreen(GuiInfo(this))
+            4 -> mc.displayGuiScreen(GuiOptions(this, mc.gameSettings))
+            5 -> mc.shutdown()
         }
     }
 
