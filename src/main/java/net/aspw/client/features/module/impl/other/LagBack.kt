@@ -63,7 +63,7 @@ class LagBack : Module() {
             flight.state = false
             Client.hud.addNotification(
                 net.aspw.client.visual.hud.element.elements.Notification(
-                    "Fly was disabled",
+                    "Flight was disabled",
                     net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                 )
             )
