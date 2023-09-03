@@ -163,7 +163,7 @@ class NoSlow : Module() {
         val packet = event.packet
         val killAura = Client.moduleManager[KillAura::class.java]!!
         if (modeValue.get().equals("hypixel", true)) {
-            if (mc.thePlayer.heldItem.item !is ItemPotion) {
+            if (!mc.thePlayer.isEating) {
                 if (packet is C08PacketPlayerBlockPlacement) {
                     if (mc.gameSettings.keyBindUseItem.isKeyDown && mc.thePlayer.heldItem != null && (mc.thePlayer.heldItem.item is ItemFood || mc.thePlayer.heldItem.item is ItemBucketMilk || mc.thePlayer.heldItem.item is ItemPotion && !ItemPotion.isSplash(
                             mc.thePlayer.heldItem.metadata
@@ -276,7 +276,7 @@ class NoSlow : Module() {
             }
 
             "hypixel" -> {
-                if (mc.thePlayer.heldItem.item !is ItemPotion) {
+                if (!mc.thePlayer.isEating) {
                     if ((mc.thePlayer.isUsingItem || killAura.blockingStatus) && mc.thePlayer.heldItem != null && mc.thePlayer.heldItem.item is ItemSword) {
                         if (event.eventState == EventState.POST) {
                             mc.netHandler.addToSendQueue(
