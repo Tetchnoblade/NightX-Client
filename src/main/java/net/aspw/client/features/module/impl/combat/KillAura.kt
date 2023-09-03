@@ -975,7 +975,6 @@ class KillAura : Module() {
         if (autoBlockModeValue.get().equals("hypixel", true)) {
             mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem % 8 + 1))
             mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
-            blockingStatus = false
         }
 
         if (autoBlockModeValue.get().equals("oldhypixel", true)) {
