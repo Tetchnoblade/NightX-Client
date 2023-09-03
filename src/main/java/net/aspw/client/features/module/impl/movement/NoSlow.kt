@@ -163,25 +163,27 @@ class NoSlow : Module() {
         val packet = event.packet
         val killAura = Client.moduleManager[KillAura::class.java]!!
         if (modeValue.get().equals("hypixel", true)) {
-            if (packet is C08PacketPlayerBlockPlacement) {
-                if (mc.gameSettings.keyBindUseItem.isKeyDown && mc.thePlayer.heldItem != null && (mc.thePlayer.heldItem.item is ItemFood || mc.thePlayer.heldItem.item is ItemBucketMilk || mc.thePlayer.heldItem.item is ItemPotion && !ItemPotion.isSplash(
-                        mc.thePlayer.heldItem.metadata
-                    ) || mc.thePlayer.heldItem.item is ItemBow)
-                ) {
-                    if (mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit === MovingObjectPosition.MovingObjectType.BLOCK && packet.position != BlockPos(
-                            -1,
-                            -1,
-                            1
+            if (mc.thePlayer.heldItem.item !is ItemPotion) {
+                if (packet is C08PacketPlayerBlockPlacement) {
+                    if (mc.gameSettings.keyBindUseItem.isKeyDown && mc.thePlayer.heldItem != null && (mc.thePlayer.heldItem.item is ItemFood || mc.thePlayer.heldItem.item is ItemBucketMilk || mc.thePlayer.heldItem.item is ItemPotion && !ItemPotion.isSplash(
+                            mc.thePlayer.heldItem.metadata
+                        ) || mc.thePlayer.heldItem.item is ItemBow)
+                    ) {
+                        if (mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit === MovingObjectPosition.MovingObjectType.BLOCK && packet.position != BlockPos(
+                                -1,
+                                -1,
+                                1
+                            )
+                        ) return
+                        event.cancelEvent()
+                        val position: MovingObjectPosition = rayTraceCustom(
+                            mc.playerController.blockReachDistance.toDouble(), mc.thePlayer.rotationYaw, 90f
                         )
-                    ) return
-                    event.cancelEvent()
-                    val position: MovingObjectPosition = rayTraceCustom(
-                        mc.playerController.blockReachDistance.toDouble(), mc.thePlayer.rotationYaw, 90f
-                    )
-                        ?: return
-                    val rot = Rotation(mc.thePlayer.rotationYaw, 90f)
-                    RotationUtils.setTargetRotation(rot)
-                    sendUseItem(position)
+                            ?: return
+                        val rot = Rotation(mc.thePlayer.rotationYaw, 90f)
+                        RotationUtils.setTargetRotation(rot)
+                        sendUseItem(position)
+                    }
                 }
             }
         }
@@ -274,15 +276,17 @@ class NoSlow : Module() {
             }
 
             "hypixel" -> {
-                if ((mc.thePlayer.isUsingItem || killAura.blockingStatus) && mc.thePlayer.heldItem != null && mc.thePlayer.heldItem.item is ItemSword) {
-                    if (event.eventState == EventState.POST) {
-                        mc.netHandler.addToSendQueue(
-                            C08PacketPlayerBlockPlacement(
-                                mc.thePlayer.inventoryContainer.getSlot(
-                                    mc.thePlayer.inventory.currentItem + 36
-                                ).stack
+                if (mc.thePlayer.heldItem.item !is ItemPotion) {
+                    if ((mc.thePlayer.isUsingItem || killAura.blockingStatus) && mc.thePlayer.heldItem != null && mc.thePlayer.heldItem.item is ItemSword) {
+                        if (event.eventState == EventState.POST) {
+                            mc.netHandler.addToSendQueue(
+                                C08PacketPlayerBlockPlacement(
+                                    mc.thePlayer.inventoryContainer.getSlot(
+                                        mc.thePlayer.inventory.currentItem + 36
+                                    ).stack
+                                )
                             )
-                        )
+                        }
                     }
                 }
             }
