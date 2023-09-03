@@ -3,7 +3,6 @@ package net.aspw.client.visual.client.clickgui.tab.elements
 import net.aspw.client.features.module.Module
 import net.aspw.client.util.MinecraftInstance
 import net.aspw.client.util.MouseUtils
-import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.BlendUtils
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.util.render.Stencil
@@ -19,6 +18,7 @@ import net.aspw.client.visual.client.clickgui.tab.value.impl.BooleanElement
 import net.aspw.client.visual.client.clickgui.tab.value.impl.FloatElement
 import net.aspw.client.visual.client.clickgui.tab.value.impl.IntElement
 import net.aspw.client.visual.client.clickgui.tab.value.impl.ListElement
+import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.input.Keyboard

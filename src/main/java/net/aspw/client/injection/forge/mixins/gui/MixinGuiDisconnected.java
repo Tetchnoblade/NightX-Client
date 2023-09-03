@@ -22,7 +22,7 @@ import net.aspw.client.visual.client.GuiProxyManager;
 import net.aspw.client.visual.client.altmanager.GuiAltManager;
 import net.aspw.client.visual.client.altmanager.menus.GuiLoginProgress;
 import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening;
-import net.aspw.client.visual.font.Fonts;
+import net.aspw.client.visual.font.semi.Fonts;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiMultiplayer;

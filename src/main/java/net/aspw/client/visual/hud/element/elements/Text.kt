@@ -8,7 +8,7 @@ import net.aspw.client.util.render.BlurUtils
 import net.aspw.client.util.render.ColorUtils
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.*
-import net.aspw.client.visual.font.Fonts
+import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.hud.designer.GuiHudDesigner
 import net.aspw.client.visual.hud.element.Border
 import net.aspw.client.visual.hud.element.Element

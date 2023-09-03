@@ -20,7 +20,7 @@ import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
-import net.aspw.client.visual.font.Fonts
+import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.block.BlockAir
 import net.minecraft.client.gui.ScaledResolution

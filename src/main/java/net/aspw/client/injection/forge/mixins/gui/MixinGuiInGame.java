@@ -6,7 +6,7 @@ import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.features.module.impl.visual.Crosshair;
 import net.aspw.client.features.module.impl.visual.Hud;
 import net.aspw.client.util.render.RenderUtils;
-import net.aspw.client.visual.font.AWTFontRenderer;
+import net.aspw.client.visual.font.semi.AWTFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;

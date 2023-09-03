@@ -1,4 +1,4 @@
-package net.aspw.client.util.connection
+package net.aspw.client.util.network
 
 object LoginID {
     var id = ""

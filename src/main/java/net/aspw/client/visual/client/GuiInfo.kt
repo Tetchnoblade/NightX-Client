@@ -1,17 +1,18 @@
 package net.aspw.client.visual.client
 
 import net.aspw.client.Client
+import net.aspw.client.features.api.CombatManager
 import net.aspw.client.features.command.CommandManager
 import net.aspw.client.features.module.impl.visual.Hud
 import net.aspw.client.util.ClientUtils
-import net.aspw.client.util.connection.CheckConnection
-import net.aspw.client.util.connection.LoginID
 import net.aspw.client.util.misc.MiscUtils
 import net.aspw.client.util.misc.sound.TipSoundManager
+import net.aspw.client.util.network.CheckConnection
+import net.aspw.client.util.network.LoginID
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.client.clickgui.tab.NewUi
-import net.aspw.client.visual.font.Fonts
+import net.aspw.client.visual.font.semi.Fonts
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.util.ResourceLocation
@@ -75,6 +76,7 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
                 Client.scriptManager.loadScripts()
                 Client.scriptManager.enableScripts()
                 Client.tipSoundManager = TipSoundManager()
+                Client.combatManager = CombatManager()
                 Client.fileManager.loadConfig(Client.fileManager.modulesConfig)
                 Client.fileManager.loadConfig(Client.fileManager.valuesConfig)
                 Client.fileManager.loadConfig(Client.fileManager.accountsConfig)

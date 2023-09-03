@@ -10,7 +10,7 @@ import net.aspw.client.auth.utils.HttpUtils
 import net.aspw.client.auth.utils.array
 import net.aspw.client.auth.utils.obj
 import net.aspw.client.auth.utils.string
-import net.aspw.client.util.connection.CheckConnection
+import net.aspw.client.util.network.CheckConnection
 
 class MicrosoftAccount : MinecraftAccount("Microsoft") {
     override var name = "UNKNOWN"

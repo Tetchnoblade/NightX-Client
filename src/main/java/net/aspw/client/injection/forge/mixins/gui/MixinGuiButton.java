@@ -2,11 +2,11 @@ package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.visual.Hud;
-import net.aspw.client.util.newfont.FontLoaders;
 import net.aspw.client.util.render.RenderUtils;
 import net.aspw.client.visual.client.GuiMainMenu;
-import net.aspw.client.visual.font.AWTFontRenderer;
-import net.aspw.client.visual.font.Fonts;
+import net.aspw.client.visual.font.semi.AWTFontRenderer;
+import net.aspw.client.visual.font.semi.Fonts;
+import net.aspw.client.visual.font.smooth.FontLoaders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;

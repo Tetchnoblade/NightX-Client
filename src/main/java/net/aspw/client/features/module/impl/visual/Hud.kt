@@ -11,7 +11,7 @@ import net.aspw.client.value.*
 import net.aspw.client.visual.client.GuiTeleportation
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.client.clickgui.tab.NewUi
-import net.aspw.client.visual.font.Fonts
+import net.aspw.client.visual.font.semi.Fonts
 import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.inventory.GuiInventory
 import net.minecraft.network.play.client.C14PacketTabComplete

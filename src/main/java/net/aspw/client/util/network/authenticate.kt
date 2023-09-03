@@ -1,4 +1,4 @@
-package net.aspw.client.util.connection
+package net.aspw.client.util.network
 
 import net.aspw.client.Client
 import net.aspw.client.features.module.impl.visual.Hud

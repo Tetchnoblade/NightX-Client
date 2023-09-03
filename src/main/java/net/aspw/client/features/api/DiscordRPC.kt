@@ -7,7 +7,7 @@ import com.jagrosh.discordipc.entities.pipe.PipeStatus
 import net.aspw.client.Client
 import net.aspw.client.util.ClientUtils
 import net.aspw.client.util.MinecraftInstance
-import net.aspw.client.util.connection.CheckConnection
+import net.aspw.client.util.network.CheckConnection
 import org.json.JSONObject
 import java.time.OffsetDateTime
 import kotlin.concurrent.thread

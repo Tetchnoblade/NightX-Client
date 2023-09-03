@@ -1,6 +1,7 @@
 package net.aspw.client.features.command.impl
 
 import net.aspw.client.Client
+import net.aspw.client.features.api.CombatManager
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.command.CommandManager
 import net.aspw.client.features.module.impl.visual.Hud
@@ -22,6 +23,7 @@ class ReloadCommand : Command("reload", emptyArray()) {
         Client.scriptManager.loadScripts()
         Client.scriptManager.enableScripts()
         Client.tipSoundManager = TipSoundManager()
+        Client.combatManager = CombatManager()
         Client.fileManager.loadConfig(Client.fileManager.modulesConfig)
         Client.fileManager.loadConfig(Client.fileManager.valuesConfig)
         Client.fileManager.loadConfig(Client.fileManager.accountsConfig)

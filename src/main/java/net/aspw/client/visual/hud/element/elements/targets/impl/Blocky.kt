@@ -1,7 +1,7 @@
 package net.aspw.client.visual.hud.element.elements.targets.impl
 
 import net.aspw.client.util.render.RenderUtils
-import net.aspw.client.visual.font.Fonts
+import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.hud.element.Border
 import net.aspw.client.visual.hud.element.elements.TargetHud
 import net.aspw.client.visual.hud.element.elements.targets.TargetStyle

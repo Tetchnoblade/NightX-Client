@@ -1,9 +1,9 @@
 package net.aspw.client.visual.client
 
-import net.aspw.client.util.connection.LoginID
-import net.aspw.client.util.connection.LoginID.id
-import net.aspw.client.util.connection.LoginID.loggedIn
-import net.aspw.client.util.connection.getHWID
+import net.aspw.client.util.network.LoginID
+import net.aspw.client.util.network.LoginID.id
+import net.aspw.client.util.network.LoginID.loggedIn
+import net.aspw.client.util.network.getHWID
 import net.aspw.client.util.render.RenderUtils
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen

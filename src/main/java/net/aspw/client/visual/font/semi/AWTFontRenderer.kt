@@ -1,4 +1,4 @@
-package net.aspw.client.visual.font
+package net.aspw.client.visual.font.semi
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager

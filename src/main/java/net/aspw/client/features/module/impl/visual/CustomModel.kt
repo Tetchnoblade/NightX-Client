@@ -9,7 +9,6 @@ import net.aspw.client.value.ListValue
 @ModuleInfo(name = "CustomModel", spacedName = "Custom Model", description = "", category = ModuleCategory.VISUAL)
 class CustomModel : Module() {
     val mode = ListValue("Mode", arrayOf("Amongus", "Rabbit", "Freddy"), "Amongus")
-    val hideCape = BoolValue("HideCape", true)
     val onlySelf = BoolValue("OnlySelf", false)
 
     override val tag: String

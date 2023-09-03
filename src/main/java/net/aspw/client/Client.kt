@@ -10,11 +10,11 @@ import net.aspw.client.script.ScriptManager
 import net.aspw.client.script.remapper.Remapper
 import net.aspw.client.util.*
 import net.aspw.client.util.ClassUtils.hasForge
-import net.aspw.client.util.connection.CheckConnection
 import net.aspw.client.util.misc.sound.TipSoundManager
+import net.aspw.client.util.network.CheckConnection
 import net.aspw.client.value.ListValue
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
-import net.aspw.client.visual.font.Fonts
+import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.hud.HUD
 import net.aspw.client.visual.hud.HUD.Companion.createDefault
 import net.minecraft.util.ResourceLocation
@@ -24,10 +24,10 @@ import kotlin.concurrent.thread
 object Client {
 
     // Client information
-    val clientVersion = ListValue("ClientVersion", arrayOf("Release", "Beta", "Developer"), "Release")
+    val clientVersion = ListValue("ClientVersion", arrayOf("Release", "Beta", "Developer"), "Developer")
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Reloaded"
-    const val CLIENT_VERSION = "Release B65"
+    const val CLIENT_VERSION = "Developer B66"
     const val CLIENT_CREATOR = "As_pw, outaokura"
     const val CLIENT_WEBSITE = "https://aspw-w.github.io/NightX-Web"
     const val CLIENT_CONFIG = "$CLIENT_WEBSITE/data/configs.txt"
@@ -53,6 +53,7 @@ object Client {
     lateinit var eventManager: EventManager
     lateinit var fileManager: FileManager
     lateinit var tipSoundManager: TipSoundManager
+    lateinit var combatManager: CombatManager
     lateinit var scriptManager: ScriptManager
 
     // Hud
@@ -95,6 +96,7 @@ object Client {
 
         // Crate event manager
         eventManager = EventManager()
+        combatManager = CombatManager()
 
         // Register listeners
         eventManager.registerListener(RotationUtils())
@@ -104,6 +106,7 @@ object Client {
         eventManager.registerListener(PacketUtils())
         eventManager.registerListener(SessionUtils())
         eventManager.registerListener(MacroManager)
+        eventManager.registerListener(combatManager)
 
         // Init Discord RPC
         discordRPC = DiscordRPC()

@@ -1,12 +1,12 @@
 package net.aspw.client.visual.client.clickgui.tab.value.impl
 
 import net.aspw.client.util.MouseUtils
-import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.ListValue
 import net.aspw.client.visual.client.clickgui.tab.ColorManager
 import net.aspw.client.visual.client.clickgui.tab.extensions.animSmooth
 import net.aspw.client.visual.client.clickgui.tab.value.ValueElement
+import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*

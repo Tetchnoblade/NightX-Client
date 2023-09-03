@@ -1,10 +1,10 @@
 package net.aspw.client.visual.client.clickgui.tab.value.impl
 
 import net.aspw.client.util.MouseUtils
-import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.value.BoolValue
 import net.aspw.client.visual.client.clickgui.tab.components.Checkbox
 import net.aspw.client.visual.client.clickgui.tab.value.ValueElement
+import net.aspw.client.visual.font.smooth.FontLoaders
 import java.awt.Color
 
 class BooleanElement(value: BoolValue) : ValueElement<Boolean>(value) {

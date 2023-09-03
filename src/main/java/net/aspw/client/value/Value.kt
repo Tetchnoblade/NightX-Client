@@ -5,7 +5,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import net.aspw.client.Client
 import net.aspw.client.util.ClientUtils
-import net.aspw.client.visual.font.Fonts
+import net.aspw.client.visual.font.semi.Fonts
 import net.minecraft.client.gui.FontRenderer
 import java.util.*
 

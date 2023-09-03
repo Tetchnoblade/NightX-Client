@@ -2,8 +2,8 @@ package net.aspw.client.visual.hud.element.elements
 
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FontValue
-import net.aspw.client.visual.font.AWTFontRenderer.Companion.assumeNonVolatile
-import net.aspw.client.visual.font.Fonts
+import net.aspw.client.visual.font.semi.AWTFontRenderer.Companion.assumeNonVolatile
+import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.hud.element.Border
 import net.aspw.client.visual.hud.element.Element
 import net.aspw.client.visual.hud.element.ElementInfo

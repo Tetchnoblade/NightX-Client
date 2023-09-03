@@ -4,10 +4,10 @@ import net.aspw.client.Client
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.util.MinecraftInstance
 import net.aspw.client.util.MouseUtils
-import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.client.clickgui.tab.ColorManager
 import net.aspw.client.visual.client.clickgui.tab.extensions.animSmooth
+import net.aspw.client.visual.font.smooth.FontLoaders
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 import kotlin.math.abs

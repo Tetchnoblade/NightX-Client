@@ -1,4 +1,4 @@
-package net.aspw.client.util.newfont;
+package net.aspw.client.visual.font.smooth;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;

@@ -1,4 +1,4 @@
-package net.aspw.client.visual.font;
+package net.aspw.client.visual.font.semi;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

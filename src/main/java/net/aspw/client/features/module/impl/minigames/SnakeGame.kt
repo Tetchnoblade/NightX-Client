@@ -8,7 +8,7 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.misc.RandomUtils
-import net.aspw.client.util.newfont.FontLoaders
+import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
 import org.lwjgl.opengl.GL11

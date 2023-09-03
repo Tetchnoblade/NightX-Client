@@ -2,13 +2,13 @@ package net.aspw.client.visual.client
 
 import net.aspw.client.Client
 import net.aspw.client.util.ClientUtils
-import net.aspw.client.util.connection.CheckConnection
-import net.aspw.client.util.connection.LoginID
-import net.aspw.client.util.connection.LoginID.id
-import net.aspw.client.util.connection.LoginID.loggedIn
 import net.aspw.client.util.misc.MiscUtils
+import net.aspw.client.util.network.CheckConnection
+import net.aspw.client.util.network.LoginID
+import net.aspw.client.util.network.LoginID.id
+import net.aspw.client.util.network.LoginID.loggedIn
 import net.aspw.client.util.render.RenderUtils
-import net.aspw.client.visual.font.Fonts
+import net.aspw.client.visual.font.semi.Fonts
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.util.ResourceLocation
@@ -24,10 +24,12 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
                 // buttonList.add(GuiButton(0, width / 2 - 100, height / 4 + 104, "Free Login"))
                 //buttonList.add(GuiButton(1, width / 2 - 100, height / 4 + 144, "Premium Login"))
             } else {
+                buttonList.add(GuiButton(10, width / 2 - 100, height / 4 + 65 + 6, "Connect"))
                 buttonList.add(GuiButton(2, width / 2 - 100, height / 4 + 100 + 4, "Access Website"))
                 buttonList.add(GuiButton(3, width / 2 - 100, height / 4 + 135 + 2, "Official Discord"))
             }
         } else {
+            buttonList.add(GuiButton(10, width / 2 - 100, height / 4 + 65 + 6, "Connect"))
             buttonList.add(GuiButton(2, width / 2 - 100, height / 4 + 100 + 4, "Access Website"))
             buttonList.add(GuiButton(3, width / 2 - 100, height / 4 + 135 + 2, "Official Discord"))
         }
@@ -65,7 +67,7 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
                 mc.fontRendererObj,
                 "Your current build is §cOutdated!",
                 width / 2,
-                height / 4 + 64,
+                height / 4 + 44,
                 0xffffff
             )
         } else {
@@ -73,7 +75,7 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
                 mc.fontRendererObj,
                 "§cTemporary unavailable!",
                 width / 2,
-                height / 4 + 64,
+                height / 4 + 44,
                 0xffffff
             )
         }
@@ -105,6 +107,8 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
                     LoginID.uid = "000"
                     mc.displayGuiScreen(GuiMainMenu())
                     ClientUtils.getLogger().info("Logged in with Free Account!")
+                } else {
+                    loggedIn = false
                 }
             }
         }

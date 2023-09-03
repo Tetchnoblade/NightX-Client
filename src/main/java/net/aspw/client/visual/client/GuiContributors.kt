@@ -6,8 +6,8 @@ import net.aspw.client.Client
 import net.aspw.client.config.FileManager
 import net.aspw.client.injection.implementations.IMixinGuiSlot
 import net.aspw.client.util.misc.HttpUtils
-import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.CustomTexture
+import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.GuiSlot

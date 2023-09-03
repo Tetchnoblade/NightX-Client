@@ -1,6 +1,6 @@
 package net.aspw.client.visual.client.clickgui.tab.elements
 
-import net.aspw.client.visual.font.Fonts
+import net.aspw.client.visual.font.semi.Fonts
 import net.minecraft.client.gui.GuiTextField
 
 class SearchBox(componentId: Int, x: Int, y: Int, width: Int, height: Int) :

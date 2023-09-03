@@ -9,8 +9,8 @@ import net.aspw.client.visual.client.clickgui.dropdown.Panel
 import net.aspw.client.visual.client.clickgui.dropdown.elements.ButtonElement
 import net.aspw.client.visual.client.clickgui.dropdown.elements.ModuleElement
 import net.aspw.client.visual.client.clickgui.dropdown.style.Style
-import net.aspw.client.visual.font.Fonts
-import net.aspw.client.visual.font.GameFontRenderer
+import net.aspw.client.visual.font.semi.Fonts
+import net.aspw.client.visual.font.semi.GameFontRenderer
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.util.MathHelper
 import org.lwjgl.input.Mouse

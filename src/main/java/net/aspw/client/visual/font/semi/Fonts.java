@@ -1,4 +1,4 @@
-package net.aspw.client.visual.font;
+package net.aspw.client.visual.font.semi;
 
 import net.aspw.client.util.ClientUtils;
 import net.minecraft.client.Minecraft;

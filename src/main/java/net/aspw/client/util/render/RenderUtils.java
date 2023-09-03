@@ -2,7 +2,7 @@ package net.aspw.client.util.render;
 
 import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.block.BlockUtils;
-import net.aspw.client.visual.font.Fonts;
+import net.aspw.client.visual.font.semi.Fonts;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;

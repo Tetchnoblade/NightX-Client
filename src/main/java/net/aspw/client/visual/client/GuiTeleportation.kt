@@ -199,4 +199,8 @@ class GuiTeleportation(private val prevGui: GuiScreen) : GuiScreen() {
         } else playerField.updateCursorCounter()
         super.updateScreen()
     }
+
+    override fun doesGuiPauseGame(): Boolean {
+        return false
+    }
 }

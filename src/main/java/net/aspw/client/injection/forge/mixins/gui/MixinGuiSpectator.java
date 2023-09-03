@@ -2,7 +2,7 @@ package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.Render2DEvent;
-import net.aspw.client.visual.font.AWTFontRenderer;
+import net.aspw.client.visual.font.semi.AWTFontRenderer;
 import net.minecraft.client.gui.GuiSpectator;
 import net.minecraft.client.gui.ScaledResolution;
 import org.spongepowered.asm.mixin.Mixin;

@@ -5,8 +5,8 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.impl.visual.ColorMixer
 import net.aspw.client.util.render.*
 import net.aspw.client.value.*
-import net.aspw.client.visual.font.AWTFontRenderer
-import net.aspw.client.visual.font.Fonts
+import net.aspw.client.visual.font.semi.AWTFontRenderer
+import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.hud.designer.GuiHudDesigner
 import net.aspw.client.visual.hud.element.Border
 import net.aspw.client.visual.hud.element.Element
@@ -30,7 +30,7 @@ class Arraylist(
     side: Side = Side(Horizontal.RIGHT, Vertical.UP)
 ) : Element(x, y, scale, side) {
     private val colorModeValue =
-        ListValue("Color", arrayOf("Custom", "Random", "Sky", "CRainbow", "LiquidSlowly", "Fade", "Mixer"), "Fade")
+        ListValue("Color", arrayOf("Custom", "Random", "Sky", "CRainbow", "LiquidSlowly", "Fade", "Mixer"), "Sky")
     private val blurValue = BoolValue("Blur", false)
     private val blurStrength = FloatValue("Blur-Strength", 5F, 0F, 30F, { blurValue.get() })
     private val shadowShaderValue = BoolValue("Shadow", false)

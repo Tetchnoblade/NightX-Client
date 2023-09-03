@@ -1,11 +1,11 @@
 package net.aspw.client.visual.client
 
 import net.aspw.client.Client
-import net.aspw.client.util.connection.CheckConnection
-import net.aspw.client.util.connection.LoginID
-import net.aspw.client.util.newfont.FontLoaders
+import net.aspw.client.util.network.CheckConnection
+import net.aspw.client.util.network.LoginID
 import net.aspw.client.visual.client.altmanager.GuiAltManager
-import net.aspw.client.visual.font.Fonts
+import net.aspw.client.visual.font.semi.Fonts
+import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.Tessellator

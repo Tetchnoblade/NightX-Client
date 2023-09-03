@@ -2,8 +2,8 @@ package net.aspw.client.script.remapper
 
 import net.aspw.client.Client
 import net.aspw.client.util.ClientUtils
-import net.aspw.client.util.connection.CheckConnection
 import net.aspw.client.util.misc.HttpUtils
+import net.aspw.client.util.network.CheckConnection
 import java.io.File
 
 /**

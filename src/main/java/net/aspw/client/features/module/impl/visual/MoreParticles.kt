@@ -1,6 +1,7 @@
 package net.aspw.client.features.module.impl.visual
 
 import net.aspw.client.event.AttackEvent
+import net.aspw.client.event.EntityKilledEvent
 import net.aspw.client.event.EventTarget
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
@@ -21,15 +22,26 @@ import net.minecraft.util.ResourceLocation
 
 @ModuleInfo(name = "MoreParticles", spacedName = "More Particles", description = "", category = ModuleCategory.VISUAL)
 class MoreParticles : Module() {
-    private val modeValue = ListValue("Mode", arrayOf("Thunder", "Blood", "Fire", "Criticals", "Sharpness"), "Blood")
+    private val attackModeValue = ListValue("Event", arrayOf("Kill", "Hit"), "Kill")
+    private val modeValue =
+        ListValue("ParticleMode", arrayOf("Thunder", "Blood", "Fire", "Criticals", "Sharpness"), "Thunder")
     private val timesValue = IntegerValue("Multi", 1, 1, 10)
     private val soundValue = BoolValue("Sound", false, { modeValue.get().equals("thunder", true) })
     private val blockState = Block.getStateId(Blocks.redstone_block.defaultState)
 
     @EventTarget
     fun onAttack(event: AttackEvent) {
-        if (EntityUtils.isSelected(event.targetEntity, true)) {
-            displayEffectFor(event.targetEntity as EntityLivingBase)
+        if (attackModeValue.get() == "Hit") {
+            if (EntityUtils.isSelected(event.targetEntity, true)) {
+                displayEffectFor(event.targetEntity as EntityLivingBase)
+            }
+        }
+    }
+
+    @EventTarget
+    fun onKilled(event: EntityKilledEvent) {
+        if (attackModeValue.get() == "Kill") {
+            displayEffectFor(event.targetEntity)
         }
     }
 
@@ -85,5 +97,9 @@ class MoreParticles : Module() {
                 "sharpness" -> mc.effectRenderer.emitParticleAtEntity(entity, EnumParticleTypes.CRIT_MAGIC)
             }
         }
+    }
+
+    init {
+        state = true
     }
 }

@@ -2,11 +2,11 @@ package net.aspw.client.visual.hud.designer
 
 import net.aspw.client.Client
 import net.aspw.client.util.MinecraftInstance
-import net.aspw.client.util.newfont.FontLoaders
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.*
-import net.aspw.client.visual.font.Fonts
-import net.aspw.client.visual.font.GameFontRenderer
+import net.aspw.client.visual.font.semi.Fonts
+import net.aspw.client.visual.font.semi.GameFontRenderer
+import net.aspw.client.visual.font.smooth.FontLoaders
 import net.aspw.client.visual.hud.HUD.Companion.createDefault
 import net.aspw.client.visual.hud.HUD.Companion.elements
 import net.aspw.client.visual.hud.element.Element

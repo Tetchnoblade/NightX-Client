@@ -1,4 +1,4 @@
-package net.aspw.client.visual.font
+package net.aspw.client.visual.font.semi
 
 import net.aspw.client.Client
 import net.aspw.client.event.TextEvent

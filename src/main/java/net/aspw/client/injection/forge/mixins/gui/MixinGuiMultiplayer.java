@@ -3,7 +3,7 @@ package net.aspw.client.injection.forge.mixins.gui;
 import net.aspw.client.protocol.Protocol;
 import net.aspw.client.visual.client.GuiProxyManager;
 import net.aspw.client.visual.client.altmanager.GuiAltManager;
-import net.aspw.client.visual.font.Fonts;
+import net.aspw.client.visual.font.semi.Fonts;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;

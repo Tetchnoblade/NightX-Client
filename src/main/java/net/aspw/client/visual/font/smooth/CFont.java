@@ -1,4 +1,4 @@
-package net.aspw.client.util.newfont;
+package net.aspw.client.visual.font.smooth;
 
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import org.lwjgl.opengl.GL11;

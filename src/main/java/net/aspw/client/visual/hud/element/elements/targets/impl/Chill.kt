@@ -5,7 +5,7 @@ import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.util.render.Stencil
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
-import net.aspw.client.visual.font.Fonts
+import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.hud.element.Border
 import net.aspw.client.visual.hud.element.elements.TargetHud
 import net.aspw.client.visual.hud.element.elements.targets.TargetStyle

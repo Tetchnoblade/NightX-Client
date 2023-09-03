@@ -1,4 +1,4 @@
-package net.aspw.client.util.newfont
+package net.aspw.client.visual.font.smooth
 
 import net.aspw.client.util.render.ColorUtils.stripColor
 import net.minecraft.client.renderer.GlStateManager

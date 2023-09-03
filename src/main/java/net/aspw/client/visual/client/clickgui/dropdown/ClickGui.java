@@ -11,7 +11,7 @@ import net.aspw.client.visual.client.clickgui.dropdown.elements.Element;
 import net.aspw.client.visual.client.clickgui.dropdown.elements.ModuleElement;
 import net.aspw.client.visual.client.clickgui.dropdown.style.Style;
 import net.aspw.client.visual.client.clickgui.dropdown.style.styles.DropDown;
-import net.aspw.client.visual.font.AWTFontRenderer;
+import net.aspw.client.visual.font.semi.AWTFontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;

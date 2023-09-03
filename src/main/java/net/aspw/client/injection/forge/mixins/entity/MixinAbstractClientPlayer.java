@@ -3,7 +3,6 @@ package net.aspw.client.injection.forge.mixins.entity;
 import net.aspw.client.Client;
 import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.visual.Cape;
-import net.aspw.client.features.module.impl.visual.CustomModel;
 import net.aspw.client.features.module.impl.visual.Hud;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -28,11 +27,6 @@ public abstract class MixinAbstractClientPlayer extends MixinEntityPlayer {
     @Inject(method = "getLocationCape", at = @At("HEAD"), cancellable = true)
     private void getCape(CallbackInfoReturnable<ResourceLocation> callbackInfoReturnable) {
         final Cape cape = Objects.requireNonNull(Client.moduleManager.getModule(Cape.class));
-        final CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
-        if (customModel.getState() && customModel.getHideCape().get() && Objects.equals(getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
-            callbackInfoReturnable.setReturnValue(new ResourceLocation("client/cape/none.png"));
-            return;
-        }
         if (cape.getCustomCape().get() && Objects.equals(getGameProfile().getName(), Minecraft.getMinecraft().thePlayer.getGameProfile().getName())) {
             if (!cape.getStyleValue().get().equals("Rise5") && !cape.getStyleValue().get().equals("NightX"))
                 callbackInfoReturnable.setReturnValue(cape.getCapeLocation(cape.getStyleValue().get()));
