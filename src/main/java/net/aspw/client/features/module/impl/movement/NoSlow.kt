@@ -276,17 +276,15 @@ class NoSlow : Module() {
             }
 
             "hypixel" -> {
-                if (!mc.thePlayer.isEating) {
-                    if ((mc.thePlayer.isUsingItem || killAura.blockingStatus) && mc.thePlayer.heldItem != null && mc.thePlayer.heldItem.item is ItemSword) {
-                        if (event.eventState == EventState.POST) {
-                            mc.netHandler.addToSendQueue(
-                                C08PacketPlayerBlockPlacement(
-                                    mc.thePlayer.inventoryContainer.getSlot(
-                                        mc.thePlayer.inventory.currentItem + 36
-                                    ).stack
-                                )
+                if ((mc.thePlayer.isUsingItem || killAura.blockingStatus) && mc.thePlayer.heldItem != null && mc.thePlayer.heldItem.item is ItemSword) {
+                    if (event.eventState == EventState.POST) {
+                        mc.netHandler.addToSendQueue(
+                            C08PacketPlayerBlockPlacement(
+                                mc.thePlayer.inventoryContainer.getSlot(
+                                    mc.thePlayer.inventory.currentItem + 36
+                                ).stack
                             )
-                        }
+                        )
                     }
                 }
             }
