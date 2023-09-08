@@ -157,10 +157,8 @@ object Client {
         }
 
         // Set HUD
-        if (CheckConnection.isLatest && CheckConnection.isAvailable) {
-            hud = createDefault()
-            fileManager.loadConfig(fileManager.hudConfig)
-        }
+        hud = createDefault()
+        fileManager.loadConfig(fileManager.hudConfig)
 
         // Setup Discord RPC
         if (CheckConnection.isLatest && CheckConnection.isAvailable && discordRPC.showRichPresenceValue) {
