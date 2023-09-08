@@ -19,6 +19,7 @@ public final class ClientSpoof extends Module {
             "Vanilla",
             "Forge",
             "OptiFine",
+            "Fabric",
             "Lunar",
             "LabyMod",
             "CheatBreaker",

@@ -77,6 +77,8 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                         PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("FML")));
                     if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("OptiFine"))
                         PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("optifine")));
+                    if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("Fabric"))
+                        PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("fabric")));
                     if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("LabyMod"))
                         PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("LMC")));
                     if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("CheatBreaker"))
