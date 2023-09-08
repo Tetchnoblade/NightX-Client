@@ -174,7 +174,7 @@ public final class ESP extends Module {
 
         for (int playerEntitiesSize = playerEntities.size(); i < playerEntitiesSize; ++i) {
             Entity entity = (Entity) playerEntities.get(i);
-            if (entity instanceof EntityPlayer && !(entity instanceof EntityPlayerSP) && !entity.isInvisible() && !((EntityPlayer) entity).isSpectator() && !AntiBots.isBot((EntityPlayer) entity) && mc.thePlayer.getDistanceToEntity(entity) <= 42 || (localPlayer.get() && entity instanceof EntityPlayerSP && mc.gameSettings.thirdPersonView != 0)) {
+            if (entity instanceof EntityPlayer && !(entity instanceof EntityPlayerSP) && !entity.isInvisible() && !((EntityPlayer) entity).isSpectator() && !AntiBots.isBot((EntityPlayer) entity) || (localPlayer.get() && entity instanceof EntityPlayerSP && mc.gameSettings.thirdPersonView != 0)) {
                 collectedEntities.add(entity);
             }
         }

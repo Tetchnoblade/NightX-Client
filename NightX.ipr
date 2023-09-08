@@ -404,6 +404,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="false" name="Minecraft Client" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8 (3)" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <module name="NightX-Client.NightX.main" />
+      <option name="PROGRAM_PARAMETERS" value="-Xmx8G -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M -Djavax.net.ssl.trustStoreType=Windows-ROOT" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>

@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class PacketUtils extends MinecraftInstance implements Listenable {
 
-    private static final ArrayList<Packet<INetHandlerPlayServer>> packets = new ArrayList<Packet<INetHandlerPlayServer>>();
+    public static ArrayList<Packet> packets = new ArrayList<>();
     private static final MSTimer packetTimer = new MSTimer();
     private static final MSTimer wdTimer = new MSTimer();
     /**

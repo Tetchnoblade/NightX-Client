@@ -160,7 +160,6 @@ class ModuleManager : Listenable {
             CameraNoClip::class.java,
             CustomModel::class.java,
             InfiniteDurability::class.java,
-            EntityFlight::class.java,
             BedBreaker::class.java,
             ChestAura::class.java,
             BedWalker::class.java,
@@ -186,7 +185,8 @@ class ModuleManager : Listenable {
             FakeGhostBlock::class.java,
             NoHurtCam::class.java,
             SnakeGame::class.java,
-            ESP::class.java
+            ESP::class.java,
+            PacketPosTracker::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")

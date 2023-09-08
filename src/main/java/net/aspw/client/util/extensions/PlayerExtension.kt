@@ -2,6 +2,7 @@ package net.aspw.client.util.extensions
 
 import net.aspw.client.util.MinecraftInstance
 import net.aspw.client.util.Rotation
+import net.aspw.client.util.RotationUtils
 import net.minecraft.entity.Entity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.MathHelper
@@ -49,6 +50,12 @@ fun rayTraceCustom(blockReachDistance: Double, yaw: Float, pitch: Float): Moving
         vec31.zCoord * blockReachDistance
     )
     return MinecraftInstance.mc.theWorld.rayTraceBlocks(vec3, vec32, false, false, true)
+}
+
+fun Entity.getLookDistanceToEntityBox(entity: Entity = this, rotation: Rotation? = null, range: Double = 10.0): Double {
+    val eyes = this.getPositionEyes(1F)
+    val end = (rotation ?: RotationUtils.targetRotation).toDirection().multiply(range).add(eyes)
+    return entity.entityBoundingBox.calculateIntercept(eyes, end)?.hitVec?.distanceTo(eyes) ?: Double.MAX_VALUE
 }
 
 val Entity.rotation: Rotation
