@@ -113,7 +113,7 @@ class DiscordRPC : MinecraftInstance() {
     }
 
     private fun loadConfiguration() {
-        appID = 1130780572604702821L
+        appID = CheckConnection.discordApp.toLong()
         assets["logo"] = "logo"
         assets["mahiro"] = "mahiro"
     }

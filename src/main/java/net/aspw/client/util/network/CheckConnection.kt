@@ -14,6 +14,7 @@ object CheckConnection {
     var canConnect = false
     var announcement = ""
     var discord = ""
+    var discordApp = ""
     var apiKey = ""
     var appClientID = ""
     var appClientSecret = ""
@@ -112,7 +113,8 @@ object CheckConnection {
             response.close()
             httpClient.close()
             val details = content.split("///")
-            discord = details[5]
+            discord = details[6]
+            discordApp = details[5]
             appClientSecret = details[4]
             appClientID = details[3]
             apiKey = details[2]
@@ -120,7 +122,7 @@ object CheckConnection {
                 isLatest = true
             if (details[0] == "True")
                 isAvailable = true
-            val slashLog = details[6].split("---")
+            val slashLog = details[7].split("---")
             changeLog1 = slashLog[0]
             changeLog2 = slashLog[1]
             changeLog3 = slashLog[2]
