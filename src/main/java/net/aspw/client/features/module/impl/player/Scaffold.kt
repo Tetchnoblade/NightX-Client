@@ -472,6 +472,7 @@ class Scaffold : Module() {
                     )
                 )
             }
+            if (!MovementUtils.isMoving()) return
             if (pulseTimer.hasTimePassed(desyncDelayValue.get().toLong())) {
                 blink()
                 pulseTimer.reset()

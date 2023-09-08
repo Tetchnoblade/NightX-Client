@@ -9,6 +9,7 @@ import net.aspw.client.Client;
 import net.aspw.client.event.PacketEvent;
 import net.aspw.client.features.api.ProxyManager;
 import net.aspw.client.features.module.impl.exploit.PacketPosTracker;
+import net.aspw.client.util.ClientUtils;
 import net.aspw.client.util.PacketUtils;
 import net.minecraft.network.*;
 import net.minecraft.util.MessageDeserializer;
@@ -80,25 +81,25 @@ public class MixinNetworkManager {
      * @reason Packet Pos
      */
     @Overwrite
-    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) {
+    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) throws Exception {
         final PacketEvent event = new PacketEvent(p_channelRead0_2_);
+        Client.eventManager.callEvent(event);
         PacketPosTracker packetPosTracker = Client.moduleManager.getModule(PacketPosTracker.class);
         assert packetPosTracker != null;
         if (packetPosTracker.getState()) {
             try {
                 packetPosTracker.onPacket(event);
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                ClientUtils.getLogger().error("Exception caught in Packet", e);
             }
             if (event.isCancelled()) return;
         }
-        Client.eventManager.callEvent(event);
 
-        if (event.isCancelled())
-            return;
+        if (event.isCancelled()) return;
         if (this.channel.isOpen()) {
             try {
                 p_channelRead0_2_.processPacket(this.packetListener);
-            } catch (ThreadQuickExitException ignored) {
+            } catch (ThreadQuickExitException var4) {
             }
         }
     }
