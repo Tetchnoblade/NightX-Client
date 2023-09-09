@@ -9,21 +9,16 @@ import net.aspw.client.value.ListValue
 import net.minecraft.network.play.client.C0BPacketEntityAction
 
 @ModuleInfo(
-    name = "KnockBack+", spacedName = "Knock Back+", description = "",
+    name = "WTap", description = "",
     category = ModuleCategory.COMBAT
 )
-class KnockBackPlus : Module() {
-    private val modeValue = ListValue("Mode", arrayOf("Legit", "Packet"), "Legit")
+class WTap : Module() {
+    private val modeValue = ListValue("Mode", arrayOf("FullPacket", "LessPacket"), "FullPacket")
 
     @EventTarget
     fun onAttack(event: AttackEvent) {
         when (modeValue.get().lowercase()) {
-            "legit" -> {
-                if (mc.thePlayer.isSprinting)
-                    mc.thePlayer.isSprinting = false
-            }
-
-            "packet" -> {
+            "fullpacket" -> {
                 mc.netHandler.addToSendQueue(
                     C0BPacketEntityAction(
                         mc.thePlayer,
@@ -33,6 +28,12 @@ class KnockBackPlus : Module() {
                 if (mc.thePlayer.isSprinting)
                     mc.thePlayer.isSprinting = true
                 mc.thePlayer.serverSprintState = true
+            }
+
+            "lesspacket" -> {
+                if (mc.thePlayer.isSprinting)
+                    mc.thePlayer.isSprinting = false
+                mc.thePlayer.serverSprintState = false
             }
         }
     }

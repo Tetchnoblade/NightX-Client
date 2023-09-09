@@ -151,7 +151,7 @@ class ModuleManager : Listenable {
             CivBreak::class.java,
             PlayerEdit::class.java,
             ClientSpoof::class.java,
-            KnockBackPlus::class.java,
+            WTap::class.java,
             TriggerBot::class.java,
             FakePlayer::class.java,
             JumpCircle::class.java,
