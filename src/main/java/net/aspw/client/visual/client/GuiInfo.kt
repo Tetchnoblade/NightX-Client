@@ -67,6 +67,8 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
             3 -> {
                 CheckConnection.checkStatus()
                 CheckConnection.getAnnouncement()
+                CheckConnection.getContributors()
+                CheckConnection.getRealContributors()
                 Client.commandManager = CommandManager()
                 Client.commandManager.registerCommands()
                 Client.scriptManager.disableScripts()
@@ -91,6 +93,8 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
             4 -> {
                 CheckConnection.checkStatus()
                 CheckConnection.getAnnouncement()
+                CheckConnection.getContributors()
+                CheckConnection.getRealContributors()
                 if (CheckConnection.canConnect) {
                     LoginID.loggedIn = false
                     LoginID.id = ""

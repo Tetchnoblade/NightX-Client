@@ -1,7 +1,6 @@
 package net.aspw.client.util.network
 
 import net.aspw.client.Client
-import net.aspw.client.util.ClientUtils
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.CloseableHttpClient
 import org.apache.http.impl.client.HttpClients
@@ -18,6 +17,8 @@ object CheckConnection {
     var apiKey = ""
     var appClientID = ""
     var appClientSecret = ""
+    var clientContributors = ""
+    var clientRealContributors = ""
     var srgFile = ""
     var changeLog1 = ""
     var changeLog2 = ""
@@ -97,7 +98,40 @@ object CheckConnection {
             httpClient.close()
             canConnect = true
         } catch (e: Exception) {
-            ClientUtils.getLogger().error("Please check your internet connection!")
+            canConnect = false
+        }
+    }
+
+    fun getContributors() {
+        try {
+            val httpClient: CloseableHttpClient = HttpClients.createDefault()
+            val request = HttpGet(Client.CLIENT_CONTRIBUTORS)
+            val response = httpClient.execute(request)
+            val entity = response.entity
+            val content = EntityUtils.toString(entity)
+            clientContributors = content
+            EntityUtils.consume(entity)
+            response.close()
+            httpClient.close()
+            canConnect = true
+        } catch (e: Exception) {
+            canConnect = false
+        }
+    }
+
+    fun getRealContributors() {
+        try {
+            val httpClient: CloseableHttpClient = HttpClients.createDefault()
+            val request = HttpGet(Client.CLIENT_INFORMATION)
+            val response = httpClient.execute(request)
+            val entity = response.entity
+            val content = EntityUtils.toString(entity)
+            clientRealContributors = content
+            EntityUtils.consume(entity)
+            response.close()
+            httpClient.close()
+            canConnect = true
+        } catch (e: Exception) {
             canConnect = false
         }
     }
@@ -175,7 +209,6 @@ object CheckConnection {
             changeLog50 = slashLog[49]
             canConnect = true
         } catch (e: Exception) {
-            ClientUtils.getLogger().error("Please check your internet connection!")
             canConnect = false
         }
     }

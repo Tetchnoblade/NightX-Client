@@ -37,6 +37,7 @@ class CommandManager {
         registerCommand(MagicTrickCommand())
         registerCommand(PluginsCommand())
         registerCommand(SkinStealerCommand())
+        registerCommand(SpotCommand())
         registerCommand(HelpCommand())
     }
 

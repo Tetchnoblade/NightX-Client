@@ -2,10 +2,10 @@ package net.aspw.client.visual.client
 
 import com.google.gson.JsonParser
 import com.google.gson.annotations.SerializedName
-import net.aspw.client.Client
 import net.aspw.client.config.FileManager
 import net.aspw.client.injection.implementations.IMixinGuiSlot
 import net.aspw.client.util.misc.HttpUtils
+import net.aspw.client.util.network.CheckConnection
 import net.aspw.client.util.render.CustomTexture
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.gui.GuiButton
@@ -171,10 +171,11 @@ class GuiContributors(private val prevGui: GuiScreen) : GuiScreen() {
         val jsonParser = JsonParser()
 
         val gitHubContributors = FileManager.PRETTY_GSON.fromJson(
-            HttpUtils.get(Client.CLIENT_INFORMATION),
+            CheckConnection.clientRealContributors,
             Array<GitHubContributor>::class.java
         )
-        val additionalInformation = jsonParser.parse(HttpUtils.get(Client.CLIENT_CONTRIBUTORS)).asJsonObject
+
+        val additionalInformation = jsonParser.parse(CheckConnection.clientContributors).asJsonObject
 
         val credits = mutableListOf<Credit>()
 

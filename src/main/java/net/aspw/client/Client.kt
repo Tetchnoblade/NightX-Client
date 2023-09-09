@@ -83,6 +83,8 @@ object Client {
         // Check update
         CheckConnection.checkStatus()
         CheckConnection.getAnnouncement()
+        CheckConnection.getContributors()
+        CheckConnection.getRealContributors()
 
         // Get srg file
         CheckConnection.getSRG()

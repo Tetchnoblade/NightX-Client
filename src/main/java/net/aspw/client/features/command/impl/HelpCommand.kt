@@ -62,6 +62,8 @@ class HelpCommand : Command("help", emptyArray()) {
             chat("§a------------")
             chat(".vclip <value>")
             chat("§a------------")
+            chat(".(spot, st) <player name>")
+            chat("§a------------")
             return
         } catch (ex: NumberFormatException) {
             chatSyntaxError()

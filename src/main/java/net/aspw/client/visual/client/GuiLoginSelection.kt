@@ -100,6 +100,8 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
             10 -> {
                 CheckConnection.checkStatus()
                 CheckConnection.getAnnouncement()
+                CheckConnection.getContributors()
+                CheckConnection.getRealContributors()
                 if (CheckConnection.canConnect) {
                     loggedIn = true
                     id = "User"
