@@ -33,11 +33,10 @@ class GuiContributors(private val prevGui: GuiScreen) : GuiScreen() {
         list = GuiList(this)
         list.registerScrollButtons(7, 8)
 
+        buttonList.add(GuiButton(0, width / 2 - 100, height - 52, "Load"))
         buttonList.add(GuiButton(1, width / 2 - 100, height - 30, "Done"))
 
         failed = false
-
-        thread { loadCredits() }
     }
 
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
@@ -145,6 +144,9 @@ class GuiContributors(private val prevGui: GuiScreen) : GuiScreen() {
     }
 
     override fun actionPerformed(button: GuiButton) {
+        if (button.id == 0) {
+            thread { loadCredits() }
+        }
         if (button.id == 1) {
             mc.displayGuiScreen(prevGui)
         }

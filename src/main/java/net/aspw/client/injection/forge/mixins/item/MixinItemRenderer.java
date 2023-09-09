@@ -266,7 +266,7 @@ public abstract class MixinItemRenderer {
                                 final float var = MathHelper.sin((float) (MathHelper.sqrt_float(f1) * Math.PI));
                                 transformFirstPersonItem(0.0F, 0.0f);
                                 this.func_178103_d();
-                                GlStateManager.rotate(-var * 37.0F, 1.0F, 0.8F, 0.0F);
+                                GlStateManager.rotate(-var * 36.0F, 1.0F, 0.8F, 0.0F);
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
