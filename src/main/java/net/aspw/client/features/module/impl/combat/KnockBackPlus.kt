@@ -21,7 +21,6 @@ class KnockBackPlus : Module() {
             "legit" -> {
                 if (mc.thePlayer.isSprinting)
                     mc.thePlayer.isSprinting = false
-                mc.thePlayer.serverSprintState = false
             }
 
             "packet" -> {

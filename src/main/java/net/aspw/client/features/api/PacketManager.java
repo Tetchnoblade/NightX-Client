@@ -5,7 +5,6 @@ import net.aspw.client.Client;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.other.ClientSpoof;
-import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.Cape;
 import net.aspw.client.util.EntityUtils;
 import net.aspw.client.util.MinecraftInstance;
@@ -16,7 +15,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.*;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.client.C0APacketAnimation;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 
 import java.util.Objects;
@@ -111,13 +109,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 }
                 event.cancelEvent();
             }
-        }
-
-        if (mc.thePlayer == null) return;
-
-        if (Animations.oldAnimations.get() && mc.playerController.curBlockDamageMP == 0F && (mc.thePlayer.isUsingItem() || mc.thePlayer.isEating() || mc.thePlayer.isBlocking()) && killAura.getTarget() == null) {
-            if (packet instanceof C0APacketAnimation)
-                event.cancelEvent();
         }
     }
 
