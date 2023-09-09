@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.impl.visual.Hud;
+import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
@@ -50,7 +50,7 @@ public abstract class MixinGuiNewChat {
     @Final
     private List<ChatLine> chatLines;
     private int line;
-    private Hud hud;
+    private Interface anInterface;
 
     /**
      * Gets line count.
@@ -110,8 +110,8 @@ public abstract class MixinGuiNewChat {
     public abstract void printChatMessageWithOptionalDeletion(IChatComponent chatComponent, int chatLineId);
 
     private void checkHud() {
-        if (hud == null)
-            hud = Client.moduleManager.getModule(Hud.class);
+        if (anInterface == null)
+            anInterface = Client.moduleManager.getModule(Interface.class);
     }
 
     @Redirect(method = "deleteChatLine", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/ChatLine;getChatLineID()I"))
@@ -148,7 +148,7 @@ public abstract class MixinGuiNewChat {
     @Overwrite
     public void drawChat(int updateCounter) {
         checkHud();
-        boolean canFont = hud.getState() && hud.getFontChatValue().get();
+        boolean canFont = anInterface.getState() && anInterface.getFontChatValue().get();
         GlStateManager.pushMatrix();
         GlStateManager.translate(0, -12, 0);
 
@@ -163,13 +163,13 @@ public abstract class MixinGuiNewChat {
                     flag = true;
                 }
 
-                if (this.isScrolled || !hud.getState()) {
+                if (this.isScrolled || !anInterface.getState()) {
                     displayPercent = 1F;
-                } else if (displayPercent < 1F && hud.getChatAnimationValue().get()) {
-                    displayPercent += hud.getChatAnimationSpeedValue().get() / 10F * RenderUtils.deltaTime;
+                } else if (displayPercent < 1F && anInterface.getChatAnimationValue().get()) {
+                    displayPercent += anInterface.getChatAnimationSpeedValue().get() / 10F * RenderUtils.deltaTime;
                     displayPercent = MathHelper.clamp_float(displayPercent, 0F, 1F);
                 }
-                if (displayPercent < 1F && !hud.getChatAnimationValue().get()) {
+                if (displayPercent < 1F && !anInterface.getChatAnimationValue().get()) {
                     displayPercent += 10F * RenderUtils.deltaTime;
                     displayPercent = MathHelper.clamp_float(displayPercent, 0F, 1F);
                 }
@@ -180,7 +180,7 @@ public abstract class MixinGuiNewChat {
                 float f1 = this.getChatScale();
                 int l = MathHelper.ceiling_float_int((float) this.getChatWidth() / f1);
                 GlStateManager.pushMatrix();
-                if (hud.getState())
+                if (anInterface.getState())
                     GlStateManager.translate(0F, (1F - animationPercent) * 9F * this.getChatScale(), 0F);
                 GlStateManager.translate(2.0F, 20.0F, 0.0F);
                 GlStateManager.scale(f1, f1, 1.0F);
@@ -212,7 +212,7 @@ public abstract class MixinGuiNewChat {
                                 int i2 = 0;
                                 int j2 = -i1 * 9;
 
-                                if (hud.getState() && hud.getChatRectValue().get() || !hud.getState()) {
+                                if (anInterface.getState() && anInterface.getChatRectValue().get() || !anInterface.getState()) {
                                     if (lineBeingDrawn <= newLines && !flag)
                                         RenderUtils.drawRect(i2, j2 - 9, i2 + l + 4, j2, new Color(0F, 0F, 0F, animationPercent * ((float) d0 / 2F)).getRGB());
                                     else
@@ -224,10 +224,10 @@ public abstract class MixinGuiNewChat {
 
                                 String s = fixString(chatline.getChatComponent().getFormattedText());
                                 GlStateManager.enableBlend();
-                                if (hud.getState() && lineBeingDrawn <= newLines)
-                                    (canFont ? hud.getFontType().get() : this.mc.fontRendererObj).drawString(s, (float) i2, (float) (j2 - 8), new Color(1F, 1F, 1F, animationPercent * (float) d0).getRGB(), true);
+                                if (anInterface.getState() && lineBeingDrawn <= newLines)
+                                    (canFont ? anInterface.getFontType().get() : this.mc.fontRendererObj).drawString(s, (float) i2, (float) (j2 - 8), new Color(1F, 1F, 1F, animationPercent * (float) d0).getRGB(), true);
                                 else
-                                    (canFont ? hud.getFontType().get() : this.mc.fontRendererObj).drawString(s, (float) i2, (float) (j2 - 8), 16777215 + (l1 << 24), true);
+                                    (canFont ? anInterface.getFontType().get() : this.mc.fontRendererObj).drawString(s, (float) i2, (float) (j2 - 8), 16777215 + (l1 << 24), true);
                                 GlStateManager.disableAlpha();
                                 GlStateManager.disableBlend();
                             }
@@ -294,7 +294,7 @@ public abstract class MixinGuiNewChat {
     @Overwrite
     public IChatComponent getChatComponent(int p_146236_1_, int p_146236_2_) {
         checkHud();
-        boolean flagFont = hud.getState() && hud.getFontChatValue().get();
+        boolean flagFont = anInterface.getState() && anInterface.getFontChatValue().get();
 
         if (!this.getChatOpen()) {
             return null;
@@ -308,15 +308,15 @@ public abstract class MixinGuiNewChat {
             mY = MathHelper.floor_float((float) mY / chatScale);
             if (mX >= 0 && mY >= 0) {
                 int lineCount = Math.min(this.getLineCount(), this.drawnChatLines.size());
-                if (mX <= MathHelper.floor_float((float) this.getChatWidth() / this.getChatScale()) && mY < (flagFont ? hud.getFontType().get() : this.mc.fontRendererObj).FONT_HEIGHT * lineCount + lineCount) {
-                    int line = mY / (flagFont ? hud.getFontType().get() : this.mc.fontRendererObj).FONT_HEIGHT + this.scrollPos;
+                if (mX <= MathHelper.floor_float((float) this.getChatWidth() / this.getChatScale()) && mY < (flagFont ? anInterface.getFontType().get() : this.mc.fontRendererObj).FONT_HEIGHT * lineCount + lineCount) {
+                    int line = mY / (flagFont ? anInterface.getFontType().get() : this.mc.fontRendererObj).FONT_HEIGHT + this.scrollPos;
                     if (line >= 0 && line < this.drawnChatLines.size()) {
                         ChatLine chatLine = this.drawnChatLines.get(line);
                         int maxWidth = 0;
 
                         for (IChatComponent iterator : chatLine.getChatComponent()) {
                             if (iterator instanceof ChatComponentText) {
-                                maxWidth += (flagFont ? hud.getFontType().get() : this.mc.fontRendererObj).getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText) iterator).getChatComponentText_TextValue(), false));
+                                maxWidth += (flagFont ? anInterface.getFontType().get() : this.mc.fontRendererObj).getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText) iterator).getChatComponentText_TextValue(), false));
                                 if (maxWidth > mX) {
                                     return iterator;
                                 }

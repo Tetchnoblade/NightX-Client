@@ -1,9 +1,9 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
+import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.other.PlayerEdit;
 import net.aspw.client.features.module.impl.visual.ESP;
-import net.aspw.client.features.module.impl.visual.OptiFinePlus;
 import net.aspw.client.features.module.impl.visual.SilentView;
 import net.aspw.client.util.RotationUtils;
 import net.minecraft.client.Minecraft;
@@ -199,9 +199,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
 
     @Inject(method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V", at = @At("HEAD"), cancellable = true)
     private <T extends EntityLivingBase> void injectChamsPre(T entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo callbackInfo) {
-        final OptiFinePlus optiFinePlus = Objects.requireNonNull(Client.moduleManager.getModule(OptiFinePlus.class));
-
-        if (optiFinePlus.getState() && optiFinePlus.shouldStopRender(entity))
+        if (PacketManager.shouldStopRender(entity))
             callbackInfo.cancel();
     }
 

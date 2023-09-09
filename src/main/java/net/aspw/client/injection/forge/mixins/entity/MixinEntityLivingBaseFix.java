@@ -1,7 +1,5 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
-import net.aspw.client.Client;
-import net.aspw.client.features.module.impl.visual.OptiFinePlus;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,10 +19,7 @@ public abstract class MixinEntityLivingBaseFix extends Entity {
 
     @Inject(method = "getLook", at = @At("HEAD"), cancellable = true)
     private void getLook(float partialTicks, CallbackInfoReturnable<Vec3> callbackInfoReturnable) {
-        if (((EntityLivingBase) (Object) this) instanceof EntityPlayerSP) {
-            if (Client.moduleManager.getModule(OptiFinePlus.class).getState() && Client.moduleManager.getModule(OptiFinePlus.class).mouseDelayFix.get()) {
-                callbackInfoReturnable.setReturnValue(super.getLook(partialTicks));
-            } else callbackInfoReturnable.setReturnValue(getVectorForRotation(this.rotationPitch, this.rotationYaw));
-        }
+        if (((EntityLivingBase) (Object) this) instanceof EntityPlayerSP)
+            callbackInfoReturnable.setReturnValue(super.getLook(partialTicks));
     }
 }

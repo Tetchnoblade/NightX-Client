@@ -52,8 +52,8 @@ class SilentView : Module() {
             return
         }
         prevHeadPitch = headPitch
-        headPitch = RotationUtils.serverRotation.pitch
-        playerYaw = RotationUtils.serverRotation.yaw
+        headPitch = RotationUtils.serverRotation?.pitch!!
+        playerYaw = RotationUtils.serverRotation?.yaw!!
     }
 
     private fun getState(module: Class<out Module>) = Client.moduleManager[module]!!.state

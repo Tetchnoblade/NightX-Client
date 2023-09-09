@@ -379,7 +379,7 @@ class KillAura : Module() {
             }
             if (silentMovementFix.get()) {
                 update()
-                RotationUtils.targetRotation.applyStrafeToPlayer(event)
+                RotationUtils.targetRotation!!.applyStrafeToPlayer(event)
                 event.cancelEvent()
             }
         }
@@ -878,10 +878,12 @@ class KillAura : Module() {
                 false
             ) ?: return null
 
-            val limitedRotation = RotationUtils.limitAngleChange(
-                RotationUtils.serverRotation, rotation,
-                (Math.random() * (maxTurnSpeed.get() - minTurnSpeed.get()) + minTurnSpeed.get()).toFloat()
-            )
+            val limitedRotation = RotationUtils.serverRotation?.let {
+                RotationUtils.limitAngleChange(
+                    it, rotation,
+                    (Math.random() * (maxTurnSpeed.get() - minTurnSpeed.get()) + minTurnSpeed.get()).toFloat()
+                )
+            }
 
             return limitedRotation
         }

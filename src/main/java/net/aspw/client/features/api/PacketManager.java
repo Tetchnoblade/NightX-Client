@@ -7,15 +7,17 @@ import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.other.ClientSpoof;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.Cape;
+import net.aspw.client.util.EntityUtils;
 import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.PacketUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.*;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.C0APacketAnimation;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
-import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 
 import java.util.Objects;
 
@@ -58,6 +60,25 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         }
         if (GameSettings.isKeyDown(mc.gameSettings.keyBindDrop) && mc.thePlayer.getHeldItem() != null && mc.currentScreen == null)
             mc.thePlayer.isSwingInProgress = true;
+        for (Object en : mc.theWorld.loadedEntityList) {
+            Entity entity = (Entity) en;
+            if (shouldStopRender(entity)) {
+                entity.renderDistanceWeight = 0.0;
+            } else {
+                entity.renderDistanceWeight = 1.0;
+            }
+        }
+    }
+
+    public static boolean shouldStopRender(Entity entity) {
+        return (EntityUtils.isMob(entity) ||
+                EntityUtils.isAnimal(entity) ||
+                entity instanceof EntityBoat ||
+                entity instanceof EntityMinecart ||
+                entity instanceof EntityItemFrame ||
+                entity instanceof EntityTNTPrimed ||
+                entity instanceof EntityArmorStand) &&
+                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 40.0f;
     }
 
     @EventTarget
@@ -67,8 +88,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
 
         if (!Minecraft.getMinecraft().isIntegratedServerRunning()) {
-            if (Objects.requireNonNull(clientSpoof).blockModsCheck.get() && packet instanceof FMLProxyPacket)
-                event.cancelEvent();
             if (packet instanceof C17PacketCustomPayload) {
                 if (((C17PacketCustomPayload) event.getPacket()).getChannelName().equalsIgnoreCase("MC|Brand")) {
                     if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("Vanilla"))

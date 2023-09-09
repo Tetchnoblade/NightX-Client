@@ -15,7 +15,7 @@ import net.aspw.client.features.module.impl.movement.Speed
 import net.aspw.client.features.module.impl.player.BowLongJump
 import net.aspw.client.features.module.impl.player.ChestStealer
 import net.aspw.client.features.module.impl.player.InvManager
-import net.aspw.client.features.module.impl.visual.Hud
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.value.BoolValue
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 
@@ -113,7 +113,7 @@ class LagBack : Module() {
                         net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                     )
                 )
-                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
             }
@@ -125,7 +125,7 @@ class LagBack : Module() {
                         net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                     )
                 )
-                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
             }
@@ -137,7 +137,7 @@ class LagBack : Module() {
                         net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                     )
                 )
-                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
             }
@@ -149,7 +149,7 @@ class LagBack : Module() {
                         net.aspw.client.visual.hud.element.elements.Notification.Type.WARNING
                     )
                 )
-                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
             }

@@ -8,7 +8,7 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.targets.AntiBots
-import net.aspw.client.features.module.impl.visual.Hud
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.block.BlockAir
 import net.minecraft.block.BlockHopper
@@ -41,7 +41,7 @@ class HackerDetect : Module() {
                 }
                 val playerSpeed = getBPS(player).toDouble()
                 if ((player.isUsingItem || player.isBlocking) && player.onGround && playerSpeed >= 6.5) {
-                    if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                         Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                     }
                     Client.hud.addNotification(
@@ -55,7 +55,7 @@ class HackerDetect : Module() {
                 if (player.isSprinting
                     && (player.moveForward < 0.0f || player.moveForward == 0.0f && player.moveStrafing != 0.0f)
                 ) {
-                    if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                         Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                     }
                     Client.hud.addNotification(
@@ -73,7 +73,7 @@ class HackerDetect : Module() {
                         )
                         .isEmpty() && player.motionY > 0.0 && playerSpeed > 10.0
                 ) {
-                    if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                         Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                     }
                     Client.hud.addNotification(
@@ -88,7 +88,7 @@ class HackerDetect : Module() {
                 val lastY = Math.abs(player.lastTickPosY.toInt()).toDouble()
                 val yDiff = if (y > lastY) y - lastY else lastY - y
                 if (yDiff > 0.0 && mc.thePlayer.onGround && player.motionY == -0.0784000015258789) {
-                    if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                         Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                     }
                     Client.hud.addNotification(
@@ -100,7 +100,7 @@ class HackerDetect : Module() {
                     hackers.add(player)
                 }
                 if (player.hurtTime in 5..8 && mc.thePlayer.onGround && player.motionY == -0.0784000015258789 && player.motionX == 0.0 && player.motionZ == 0.0) {
-                    if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                    if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                         Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                     }
                     Client.hud.addNotification(
@@ -114,7 +114,7 @@ class HackerDetect : Module() {
                 if (player.fallDistance != 0.0f || player.motionY >= -0.08 || InsideBlock(player) || player.onGround || !mc.thePlayer.isInWater) {
                     continue
                 }
-                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
                 Client.hud.addNotification(

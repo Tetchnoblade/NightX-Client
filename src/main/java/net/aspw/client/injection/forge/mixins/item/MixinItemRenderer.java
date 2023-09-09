@@ -315,25 +315,7 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Hide": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
-                                if (Animations.swingAnimValue.get().equals("Vanilla")) {
-                                    this.doItemUsedTransformations(f1);
-                                    if (Animations.cancelEquip.get())
-                                        this.transformFirstPersonItem(0.0F, f1);
-                                    else this.transformFirstPersonItem(f, f1);
-                                }
-                                if (Animations.swingAnimValue.get().equals("Flux")) {
-                                    if (Animations.cancelEquip.get())
-                                        this.transformFirstPersonItem(0.0F, f1);
-                                    else this.transformFirstPersonItem(f, f1);
-                                }
-                                if (Animations.swingAnimValue.get().equals("Smooth")) {
-                                    if (Animations.cancelEquip.get())
-                                        this.transformFirstPersonItem(0.0F, f1);
-                                    else this.transformFirstPersonItem(f, f1);
-                                    func_178105_d(f1);
-                                }
-                                GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
+                                GlStateManager.scale(0.0, 0.0, 0.0);
                                 break;
                             }
                             case "Winter": {

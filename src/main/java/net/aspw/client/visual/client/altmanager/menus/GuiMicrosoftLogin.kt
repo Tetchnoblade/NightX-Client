@@ -3,7 +3,7 @@ package net.aspw.client.visual.client.altmanager.menus
 import net.aspw.client.Client
 import net.aspw.client.auth.account.MicrosoftAccount
 import net.aspw.client.auth.compat.OAuthServer
-import net.aspw.client.features.module.impl.visual.Hud
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.util.ClientUtils
 import net.aspw.client.util.misc.MiscUtils
 import net.aspw.client.util.render.RenderUtils
@@ -36,7 +36,7 @@ class GuiMicrosoftLogin(private val prevGui: GuiScreen) : GuiScreen() {
                 }
                 Client.fileManager.accountsConfig.addAccount(account)
                 Client.fileManager.saveConfig(Client.fileManager.accountsConfig)
-                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
                 stage = "§aThe account has been added."

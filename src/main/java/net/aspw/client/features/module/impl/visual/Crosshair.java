@@ -72,7 +72,7 @@ public class Crosshair extends Module {
      */
     @EventTarget
     public void onRender2D(Render2DEvent event) {
-        if (!Client.moduleManager.getModule(Hud.class).getNof5crossHair().get() || Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && Client.moduleManager.getModule(Hud.class).getNof5crossHair().get()) {
+        if (!Client.moduleManager.getModule(Interface.class).getNof5crossHair().get() || Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && Client.moduleManager.getModule(Interface.class).getNof5crossHair().get()) {
             final ScaledResolution scaledRes = new ScaledResolution(mc);
             float width = widthVal.get();
             float size = sizeVal.get();

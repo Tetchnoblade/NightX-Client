@@ -4,7 +4,7 @@ import net.aspw.client.Client
 import net.aspw.client.features.api.CombatManager
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.command.CommandManager
-import net.aspw.client.features.module.impl.visual.Hud
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.util.misc.sound.TipSoundManager
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.client.clickgui.tab.NewUi
@@ -30,7 +30,7 @@ class ReloadCommand : Command("reload", emptyArray()) {
         Client.fileManager.loadConfig(Client.fileManager.friendsConfig)
         Client.clickGui = ClickGui()
         NewUi.resetInstance()
-        if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+        if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
             Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
         }
         chat("Reloaded!")

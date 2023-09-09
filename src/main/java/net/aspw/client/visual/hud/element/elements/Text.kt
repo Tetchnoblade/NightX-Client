@@ -2,7 +2,7 @@ package net.aspw.client.visual.hud.element.elements
 
 import net.aspw.client.Client
 import net.aspw.client.features.module.impl.visual.ColorMixer
-import net.aspw.client.features.module.impl.visual.Hud
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.util.*
 import net.aspw.client.util.render.BlurUtils
 import net.aspw.client.util.render.ColorUtils
@@ -141,8 +141,8 @@ class Text(
 
         return when (str) {
             "userName" -> mc.session.username
-            "clientName" -> Client.moduleManager.getModule(Hud::class.java)?.rainbow + "§f" + Client.moduleManager.getModule(
-                Hud::class.java
+            "clientName" -> Client.moduleManager.getModule(Interface::class.java)?.rainbow + "§f" + Client.moduleManager.getModule(
+                Interface::class.java
             )?.white
 
             "clientVersion" -> Client.CLIENT_VERSION

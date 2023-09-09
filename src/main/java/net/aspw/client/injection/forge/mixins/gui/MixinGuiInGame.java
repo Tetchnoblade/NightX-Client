@@ -4,7 +4,7 @@ import net.aspw.client.Client;
 import net.aspw.client.event.Render2DEvent;
 import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.features.module.impl.visual.Crosshair;
-import net.aspw.client.features.module.impl.visual.Hud;
+import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.util.render.RenderUtils;
 import net.aspw.client.visual.font.semi.AWTFontRenderer;
 import net.minecraft.client.Minecraft;
@@ -60,9 +60,9 @@ public abstract class MixinGuiInGame extends MixinGui {
     @Inject(method = "showCrosshair", at = @At("HEAD"), cancellable = true)
     private void injectCrosshair(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         final Crosshair crosshair = Objects.requireNonNull(Client.moduleManager.getModule(Crosshair.class));
-        final Hud hud = Objects.requireNonNull(Client.moduleManager.getModule(Hud.class));
+        final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
 
-        if (crosshair.getState() || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && hud.getNof5crossHair().get())
+        if (crosshair.getState() || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && anInterface.getNof5crossHair().get())
             callbackInfoReturnable.setReturnValue(false);
     }
 
@@ -82,15 +82,15 @@ public abstract class MixinGuiInGame extends MixinGui {
 
     @Inject(method = "renderTooltip", at = @At("HEAD"), cancellable = true)
     private void renderTooltip(ScaledResolution sr, float partialTicks, CallbackInfo callbackInfo) {
-        final Hud hud = Objects.requireNonNull(Client.moduleManager.getModule(Hud.class));
+        final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
 
-        if (Minecraft.getMinecraft().getRenderViewEntity() instanceof EntityPlayer && hud.getState() && (hud.getBlackHotbarValue().get() || hud.getAnimHotbarValue().get())) {
+        if (Minecraft.getMinecraft().getRenderViewEntity() instanceof EntityPlayer && anInterface.getState() && (anInterface.getBlackHotbarValue().get() || anInterface.getAnimHotbarValue().get())) {
             final Minecraft mc = Minecraft.getMinecraft();
             EntityPlayer entityPlayer = (EntityPlayer) mc.getRenderViewEntity();
 
-            boolean blackHB = hud.getBlackHotbarValue().get();
+            boolean blackHB = anInterface.getBlackHotbarValue().get();
             int middleScreen = sr.getScaledWidth() / 2;
-            float posInv = hud.getAnimPos(entityPlayer.inventory.currentItem * 20F);
+            float posInv = anInterface.getAnimPos(entityPlayer.inventory.currentItem * 20F);
 
             GlStateManager.resetColor();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

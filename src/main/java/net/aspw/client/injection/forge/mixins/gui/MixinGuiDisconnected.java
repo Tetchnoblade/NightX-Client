@@ -11,7 +11,7 @@ import net.aspw.client.Client;
 import net.aspw.client.auth.account.CrackedAccount;
 import net.aspw.client.auth.account.MinecraftAccount;
 import net.aspw.client.event.SessionEvent;
-import net.aspw.client.features.module.impl.visual.Hud;
+import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.protocol.Protocol;
 import net.aspw.client.util.ClientUtils;
 import net.aspw.client.util.ServerUtils;
@@ -114,10 +114,10 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
                 break;
             case 4:
                 final CrackedAccount crackedAccount = new CrackedAccount();
-                final Hud hud = Objects.requireNonNull(Client.moduleManager.getModule(Hud.class));
+                final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
                 crackedAccount.setName(RandomUtils.randomString(RandomUtils.nextInt(5, 16)));
                 crackedAccount.update();
-                if (hud.getFlagSoundValue().get()) {
+                if (anInterface.getFlagSoundValue().get()) {
                     Client.tipSoundManager.getPopSound().asyncPlay(Client.moduleManager.getPopSoundPower());
                 }
                 mc.session = new Session(crackedAccount.getSession().getUsername(), crackedAccount.getSession().getUuid(),

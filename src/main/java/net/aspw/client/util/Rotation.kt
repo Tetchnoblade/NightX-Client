@@ -2,7 +2,7 @@ package net.aspw.client.util
 
 import net.aspw.client.Client
 import net.aspw.client.event.StrafeEvent
-import net.aspw.client.features.module.impl.visual.Hud
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.util.block.PlaceInfo
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.MathHelper
@@ -20,7 +20,7 @@ data class Rotation(var yaw: Float, var pitch: Float) {
         if (yaw.isNaN() || pitch.isNaN())
             return
 
-        if (Client.moduleManager.getModule(Hud::class.java)?.state!! && Client.moduleManager.getModule(Hud::class.java)?.gcdfix?.get()!!)
+        if (Client.moduleManager.getModule(Interface::class.java)?.state!! && Client.moduleManager.getModule(Interface::class.java)?.gcdfix?.get()!!)
             fixedSensitivity(MinecraftInstance.mc.gameSettings.mouseSensitivity)
 
         player.rotationYaw = yaw
@@ -40,7 +40,7 @@ data class Rotation(var yaw: Float, var pitch: Float) {
         val rotation = RotationUtils.serverRotation
 
         // fix yaw
-        var deltaYaw = yaw - rotation.yaw
+        var deltaYaw = yaw - rotation?.yaw!!
         deltaYaw -= deltaYaw % gcd
         yaw = rotation.yaw + deltaYaw
 

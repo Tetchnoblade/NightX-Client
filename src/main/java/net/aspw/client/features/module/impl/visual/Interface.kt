@@ -19,8 +19,8 @@ import net.minecraft.network.play.server.S2EPacketCloseWindow
 import net.minecraft.network.play.server.S3APacketTabComplete
 import net.minecraft.network.play.server.S45PacketTitle
 
-@ModuleInfo(name = "Hud", description = "", category = ModuleCategory.VISUAL, array = false)
-class Hud : Module() {
+@ModuleInfo(name = "Interface", description = "", category = ModuleCategory.VISUAL, array = false)
+class Interface : Module() {
     val clientNameValue = TextValue("ClientName", "N:ightX")
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
     val gcdfix = BoolValue("GCD-Fix", true)
@@ -35,7 +35,7 @@ class Hud : Module() {
     val fontChatValue = BoolValue("FontChat", false)
     val fontType = FontValue("Font", Fonts.fontSFUI37, { fontChatValue.get() })
     val chatRectValue = BoolValue("ChatRect", true)
-    val chatAnimationValue = BoolValue("Chat-Animation", true)
+    val chatAnimationValue = BoolValue("Chat-Animation", false)
     val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.06F, 0.01F, 0.5F, { chatAnimationValue.get() })
     private val toggleMessageValue = BoolValue("Toggle-Notification", false)
     private val toggleSoundValue = ListValue("Toggle-Sound", arrayOf("None", "Default", "Custom"), "None")

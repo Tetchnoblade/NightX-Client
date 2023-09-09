@@ -54,7 +54,7 @@ fun rayTraceCustom(blockReachDistance: Double, yaw: Float, pitch: Float): Moving
 
 fun Entity.getLookDistanceToEntityBox(entity: Entity = this, rotation: Rotation? = null, range: Double = 10.0): Double {
     val eyes = this.getPositionEyes(1F)
-    val end = (rotation ?: RotationUtils.targetRotation).toDirection().multiply(range).add(eyes)
+    val end = (rotation ?: RotationUtils.targetRotation)?.toDirection()?.multiply(range)?.add(eyes)
     return entity.entityBoundingBox.calculateIntercept(eyes, end)?.hitVec?.distanceTo(eyes) ?: Double.MAX_VALUE
 }
 

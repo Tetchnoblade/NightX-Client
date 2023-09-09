@@ -3,7 +3,7 @@ package net.aspw.client.injection.forge.mixins.entity;
 import net.aspw.client.Client;
 import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.visual.Cape;
-import net.aspw.client.features.module.impl.visual.Hud;
+import net.aspw.client.features.module.impl.visual.Interface;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -37,10 +37,10 @@ public abstract class MixinAbstractClientPlayer extends MixinEntityPlayer {
 
     @Inject(method = "getFovModifier", at = @At("HEAD"), cancellable = true)
     private void getFovModifier(CallbackInfoReturnable<Float> callbackInfoReturnable) {
-        final Hud hud = Objects.requireNonNull(Client.moduleManager.getModule(Hud.class));
-        float newFov = hud.getCustomFovModifier().getValue();
+        final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
+        float newFov = anInterface.getCustomFovModifier().getValue();
         newFov *= 1.0f;
-        if (hud.getCustomFov().get() && hud.getState()) {
+        if (anInterface.getCustomFov().get() && anInterface.getState()) {
             callbackInfoReturnable.setReturnValue(newFov);
         }
     }

@@ -23,7 +23,7 @@ fun AxisAlignedBB.getLookingTargetRange(
     val eyes = thePlayer.getPositionEyes(1F)
     val movingObj = this.calculateIntercept(
         eyes,
-        (rotation ?: RotationUtils.targetRotation).toDirection().multiply(range).add(eyes)
+        (rotation ?: RotationUtils.targetRotation)?.toDirection()?.multiply(range)?.add(eyes)
     ) ?: return Double.MAX_VALUE
     return movingObj.hitVec.distanceTo(eyes)
 }

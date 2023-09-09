@@ -3,7 +3,7 @@ package net.aspw.client.features.command.impl
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.targets.AntiBots
-import net.aspw.client.features.module.impl.visual.Hud
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.util.PacketUtils
 import net.aspw.client.util.pathfinder.MainPathFinder
 import net.aspw.client.util.pathfinder.Vec3
@@ -26,7 +26,7 @@ class TeleportCommand : Command("tp", arrayOf("teleport")) {
 
             // Attempt to teleport to player's position.
             if (targetPlayer != null) {
-                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
                 Thread {
@@ -69,7 +69,7 @@ class TeleportCommand : Command("tp", arrayOf("teleport")) {
                 val posX = if (args[1].equals("~", true)) mc.thePlayer.posX else args[1].toDouble()
                 val posY = if (args[2].equals("~", true)) mc.thePlayer.posY else args[2].toDouble()
                 val posZ = if (args[3].equals("~", true)) mc.thePlayer.posZ else args[3].toDouble()
-                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }
                 Thread {

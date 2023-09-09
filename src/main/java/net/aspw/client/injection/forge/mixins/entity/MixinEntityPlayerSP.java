@@ -13,7 +13,7 @@ import net.aspw.client.features.module.impl.movement.NoSlow;
 import net.aspw.client.features.module.impl.movement.SilentSneak;
 import net.aspw.client.features.module.impl.movement.Sprint;
 import net.aspw.client.features.module.impl.player.Scaffold;
-import net.aspw.client.features.module.impl.visual.Hud;
+import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.util.CooldownHelper;
 import net.aspw.client.util.MovementUtils;
 import net.aspw.client.util.Rotation;
@@ -300,7 +300,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     @Inject(method = "swingItem", at = @At("HEAD"))
     private void swingItem(CallbackInfo callbackInfo) {
         CooldownHelper.INSTANCE.resetLastAttackedTicks();
-        if (Objects.requireNonNull(Client.moduleManager.getModule(Hud.class)).getSwingSoundValue().get()) {
+        if (Objects.requireNonNull(Client.moduleManager.getModule(Interface.class)).getSwingSoundValue().get()) {
             Client.tipSoundManager.getSwingSound().asyncPlay(Client.moduleManager.getSwingSoundPower());
         }
     }

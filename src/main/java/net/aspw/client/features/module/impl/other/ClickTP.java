@@ -7,7 +7,7 @@ import net.aspw.client.event.UpdateEvent;
 import net.aspw.client.features.module.Module;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.ModuleInfo;
-import net.aspw.client.features.module.impl.visual.Hud;
+import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.util.PacketUtils;
 import net.aspw.client.util.block.BlockUtils;
 import net.aspw.client.util.pathfinder.MainPathFinder;
@@ -75,7 +75,7 @@ public class ClickTP extends Module {
                     PacketUtils.sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(point.getX(), point.getY(), point.getZ(), true));
                 mc.thePlayer.setPosition(endX, endY, endZ);
             }).start();
-            if (Client.moduleManager.getModule(Hud.class).getFlagSoundValue().get()) {
+            if (Client.moduleManager.getModule(Interface.class).getFlagSoundValue().get()) {
                 Client.tipSoundManager.getPopSound().asyncPlay(Client.moduleManager.getPopSoundPower());
             }
             endPos = null;

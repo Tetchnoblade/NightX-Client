@@ -5,7 +5,7 @@ import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.player.ChestStealer;
 import net.aspw.client.features.module.impl.player.InvManager;
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.features.module.impl.visual.Hud;
+import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -100,13 +100,13 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
         ChestStealer chestStealer = Objects.requireNonNull(Client.moduleManager.getModule(ChestStealer.class));
         KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
         InvManager invManager = Objects.requireNonNull(Client.moduleManager.getModule(InvManager.class));
-        final Hud hud = Objects.requireNonNull(Client.moduleManager.getModule(Hud.class));
+        final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
         final Minecraft mc = Minecraft.getMinecraft();
 
         if (progress >= 1F) progress = 1F;
         else progress = (float) (System.currentTimeMillis() - lastMS) / (float) 200;
 
-        if (hud.getContainerBackground().get()
+        if (anInterface.getContainerBackground().get()
                 && (!(mc.currentScreen instanceof GuiChest)
                 || !chestStealer.getState()
                 || !chestStealer.getSilenceValue().get()

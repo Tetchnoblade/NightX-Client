@@ -4,7 +4,6 @@ import net.aspw.client.Client;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.other.FastPlace;
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.features.module.impl.visual.OptiFinePlus;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
 import net.aspw.client.protocol.Protocol;
 import net.aspw.client.util.CPSCounter;
@@ -193,10 +192,8 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "clickMouse", at = @At("HEAD"))
     private void clickMouse(CallbackInfo callbackInfo) {
+        leftClickCounter = 0;
         CPSCounter.registerClick(CPSCounter.MouseButton.LEFT);
-        if (Objects.requireNonNull(Client.moduleManager.getModule(OptiFinePlus.class)).getState() && Objects.requireNonNull(Client.moduleManager.getModule(OptiFinePlus.class)).noHitDelay.get())
-            leftClickCounter = 0;
-        else if (this.leftClickCounter <= 10 && this.objectMouseOver == null) leftClickCounter = 10;
     }
 
     @Inject(method = "middleClickMouse", at = @At("HEAD"))

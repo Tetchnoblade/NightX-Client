@@ -1,7 +1,7 @@
 package net.aspw.client.util.network
 
 import net.aspw.client.Client
-import net.aspw.client.features.module.impl.visual.Hud
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.util.ClientUtils
 import net.aspw.client.visual.client.GuiMainMenu
 import net.minecraft.client.Minecraft
@@ -20,7 +20,7 @@ fun authenticate(authInfo: String, username: String, password: String, hwid: Str
             //CheckConnection.userList = ""
             LoginID.isPremium = true
             LoginID.loggedIn = true
-            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+            if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                 Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
             }
             ClientUtils.getLogger().info("Logged in with NightX Premium Account!")

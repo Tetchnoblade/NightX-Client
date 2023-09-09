@@ -3,7 +3,7 @@ package net.aspw.client.visual.client.altmanager.menus
 import com.thealtening.AltService.EnumAltService
 import net.aspw.client.Client
 import net.aspw.client.auth.account.CrackedAccount
-import net.aspw.client.features.module.impl.visual.Hud
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.minecraft.client.gui.GuiButton
@@ -147,7 +147,7 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
 
             Client.fileManager.accountsConfig.addAccount(account)
             Client.fileManager.saveConfig(Client.fileManager.accountsConfig)
-            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+            if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                 Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
             }
             status = "§aThe account has been added."

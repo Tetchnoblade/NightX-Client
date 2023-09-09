@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.impl.visual.Hud;
+import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.injection.forge.mixins.gui.MixinGuiContainer;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,8 +27,8 @@ public abstract class MixinInventoryEffectRenderer extends MixinGuiContainer {
      */
     @Overwrite
     public void updateActivePotionEffects() {
-        final Hud hud = Client.moduleManager.getModule(Hud.class);
-        if (!Objects.requireNonNull(hud).getInvEffectOffset().get()) {
+        final Interface anInterface = Client.moduleManager.getModule(Interface.class);
+        if (!Objects.requireNonNull(anInterface).getInvEffectOffset().get()) {
             this.guiLeft = (this.width - this.xSize) / 2;
             this.hasActivePotionEffects = !this.mc.thePlayer.getActivePotionEffects().isEmpty();
         } else if (!this.mc.thePlayer.getActivePotionEffects().isEmpty()) {

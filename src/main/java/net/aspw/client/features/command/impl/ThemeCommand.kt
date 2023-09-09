@@ -2,7 +2,7 @@ package net.aspw.client.features.command.impl
 
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
-import net.aspw.client.features.module.impl.visual.Hud
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.visual.hud.Config
 import net.aspw.client.visual.hud.element.elements.Notification
 import java.io.File
@@ -24,7 +24,7 @@ class ThemeCommand : Command("theme", emptyArray()) {
                                 Client.isStarting = true
                                 Client.hud.clearElements()
                                 Client.isStarting = false
-                                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                                 }
                                 chat("§6Theme updated successfully!")
@@ -57,7 +57,7 @@ class ThemeCommand : Command("theme", emptyArray()) {
 
                             val settingsTheme = Config(Client.hud).toJson()
                             themeFile.writeText(settingsTheme)
-                            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                                 Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                             }
                             chat("§6Successfully saved new theme!")
@@ -82,7 +82,7 @@ class ThemeCommand : Command("theme", emptyArray()) {
 
                         if (themeFile.exists()) {
                             themeFile.delete()
-                            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                                 Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                             }
                             chat("§6Theme deleted successfully!")

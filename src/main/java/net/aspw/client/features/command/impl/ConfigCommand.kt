@@ -2,7 +2,7 @@ package net.aspw.client.features.command.impl
 
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
-import net.aspw.client.features.module.impl.visual.Hud
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.util.SettingsUtils
 import net.aspw.client.util.misc.MiscUtils
 import net.aspw.client.util.misc.StringUtils
@@ -26,7 +26,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                             try {
                                 val settings = scriptFile.readText()
                                 SettingsUtils.executeScript(settings)
-                                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                                 }
                                 chat("§6Config updated successfully!")
@@ -70,7 +70,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                             }
                             val settingsScript = SettingsUtils.generateScript(values, binds, states)
                             scriptFile.writeText(settingsScript)
-                            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                                 Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                             }
                             chat("§aSuccessfully saved new config!")
@@ -94,7 +94,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
 
                         if (scriptFile.exists()) {
                             scriptFile.delete()
-                            if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                            if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                                 Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                             }
                             chat("§6Config deleted successfully!")
@@ -144,7 +144,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                                 }
                                 val settingsScript = SettingsUtils.generateScript(values, binds, states)
                                 scriptFile.writeText(settingsScript)
-                                if (Client.moduleManager.getModule(Hud::class.java)?.flagSoundValue!!.get()) {
+                                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                                 }
                                 chat("§6Config fixed successfully!")
