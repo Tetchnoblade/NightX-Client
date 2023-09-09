@@ -41,13 +41,13 @@ class RotationUtils : MinecraftInstance(), Listenable {
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
         if (packet is C03PacketPlayer) {
-            val packetPlayer = packet
-            targetRotation?.let {
-                packetPlayer.yaw = targetRotation!!.yaw
-                packetPlayer.pitch = targetRotation!!.pitch
-                packetPlayer.rotating = true
+            if (targetRotation != null && !keepCurrentRotation && (targetRotation?.yaw !== serverRotation?.yaw || targetRotation?.pitch !== serverRotation?.pitch)) {
+                packet.yaw = targetRotation?.yaw!!
+                packet.pitch = targetRotation?.pitch!!
+                packet.rotating = true
             }
-            serverRotation = Rotation(packetPlayer.yaw, packetPlayer.pitch)
+
+            if (packet.rotating) serverRotation = Rotation(packet.yaw, packet.pitch)
         }
     }
 
