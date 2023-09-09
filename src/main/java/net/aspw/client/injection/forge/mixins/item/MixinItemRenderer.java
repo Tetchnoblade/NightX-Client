@@ -14,12 +14,14 @@ import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
@@ -150,6 +152,9 @@ public abstract class MixinItemRenderer {
     @Shadow
     protected abstract void renderPlayerArm(AbstractClientPlayer clientPlayer, float equipProgress, float swingProgress);
 
+    @Shadow
+    private int equippedItemSlot;
+
     @Unique
     private void func_178103_d(float qq) {
         GlStateManager.translate(-0.5F, qq, 0.0F);
@@ -257,11 +262,11 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Leaked": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.08, Animations.blockPosY.get().doubleValue() + 0.02, Animations.blockPosZ.get().doubleValue());
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.08, Animations.blockPosY.get().doubleValue() + 0.02, Animations.blockPosZ.get().doubleValue() - 0.02);
                                 final float var = MathHelper.sin((float) (MathHelper.sqrt_float(f1) * Math.PI));
                                 transformFirstPersonItem(0.0F, 0.0f);
                                 this.func_178103_d();
-                                GlStateManager.rotate(-var * 35.0F, 1.0F, 0.8F, 0.0F);
+                                GlStateManager.rotate(-var * 37.0F, 1.0F, 0.8F, 0.0F);
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
@@ -645,6 +650,16 @@ public abstract class MixinItemRenderer {
         GlStateManager.disableRescaleNormal();
         RenderHelper.disableStandardItemLighting();
         GL11.glTranslated(-Animations.itemPosX.get().doubleValue(), -Animations.itemPosY.get().doubleValue(), -Animations.itemPosZ.get().doubleValue());
+    }
+
+    @ModifyArg(method = "updateEquippedItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/MathHelper;clamp_float(FFF)F"), index = 0)
+    private float handleItemSwitch(float original) {
+        EntityPlayer entityplayer = Minecraft.getMinecraft().thePlayer;
+        ItemStack itemstack = entityplayer.inventory.getCurrentItem();
+        if (Animations.oldAnimations.get() && this.equippedItemSlot == entityplayer.inventory.currentItem && ItemStack.areItemsEqual(this.itemToRender, itemstack)) {
+            return 1.0f - this.equippedProgress;
+        }
+        return original;
     }
 
     @Inject(method = "renderFireInFirstPerson", at = @At("HEAD"), cancellable = true)

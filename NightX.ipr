@@ -34,14 +34,15 @@
     <option name="description" value="" />
   </component>
   <component name="EntryPointsManager">
-    <list size="7">
-      <item index="0" class="java.lang.String" itemvalue="net.aspw.nightx.event.EventTarget" />
-      <item index="1" class="java.lang.String" itemvalue="net.minecraftforge.eventbus.api.SubscribeEvent" />
-      <item index="2" class="java.lang.String" itemvalue="net.minecraftforge.fml.common.Mod" />
-      <item index="3" class="java.lang.String" itemvalue="net.minecraftforge.fml.common.Mod.EventHandler" />
-      <item index="4" class="java.lang.String" itemvalue="net.minecraftforge.fml.common.eventhandler.SubscribeEvent" />
-      <item index="5" class="java.lang.String" itemvalue="org.spongepowered.asm.mixin.Shadow" />
-      <item index="6" class="java.lang.String" itemvalue="org.spongepowered.asm.mixin.Unique" />
+    <list size="8">
+      <item index="0" class="java.lang.String" itemvalue="net.aspw.client.event.EventTarget" />
+      <item index="1" class="java.lang.String" itemvalue="net.aspw.nightx.event.EventTarget" />
+      <item index="2" class="java.lang.String" itemvalue="net.minecraftforge.eventbus.api.SubscribeEvent" />
+      <item index="3" class="java.lang.String" itemvalue="net.minecraftforge.fml.common.Mod" />
+      <item index="4" class="java.lang.String" itemvalue="net.minecraftforge.fml.common.Mod.EventHandler" />
+      <item index="5" class="java.lang.String" itemvalue="net.minecraftforge.fml.common.eventhandler.SubscribeEvent" />
+      <item index="6" class="java.lang.String" itemvalue="org.spongepowered.asm.mixin.Shadow" />
+      <item index="7" class="java.lang.String" itemvalue="org.spongepowered.asm.mixin.Unique" />
     </list>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
