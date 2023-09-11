@@ -321,11 +321,11 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Hide": {
-                                if (Animations.oldAnimations.getValue() && f1 != 0.0F) {
-                                    GlStateManager.scale(0.85F, 0.85F, 0.85F);
-                                    GlStateManager.translate(-0.06F, 0.003F, 0.05F);
-                                }
                                 if (Animations.swingAnimValue.get().equals("Vanilla")) {
+                                    if (Animations.oldAnimations.getValue() && f1 != 0.0F) {
+                                        GlStateManager.scale(0.85F, 0.85F, 0.85F);
+                                        GlStateManager.translate(-0.06F, 0.003F, 0.05F);
+                                    }
                                     this.doItemUsedTransformations(f1);
                                     if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
                                         this.transformFirstPersonItem(0.0F, f1);
