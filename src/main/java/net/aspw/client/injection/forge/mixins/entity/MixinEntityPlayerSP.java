@@ -3,8 +3,6 @@ package net.aspw.client.injection.forge.mixins.entity;
 import net.aspw.client.Client;
 import net.aspw.client.event.*;
 import net.aspw.client.features.api.PacketManager;
-import net.aspw.client.features.module.impl.combat.KillAura;
-import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.exploit.AntiDesync;
 import net.aspw.client.features.module.impl.exploit.AntiHunger;
 import net.aspw.client.features.module.impl.exploit.PortalMenu;
@@ -201,12 +199,6 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             Client.eventManager.callEvent(event);
 
             PacketManager.update();
-
-            final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
-            final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
-
-            if (mc.thePlayer.isSneaking() && (mc.thePlayer.isBlocking() || (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking())))
-                mc.thePlayer.renderArmYaw = mc.thePlayer.rotationYaw - 40F;
 
             final AntiHunger antiHunger = Objects.requireNonNull(Client.moduleManager.getModule(AntiHunger.class));
 
