@@ -200,9 +200,9 @@ class KillAura : Module() {
         IntegerValue("LimitedMultiTargets", 6, 1, 20, { targetModeValue.get().equals("multi", true) })
 
     // Visuals
+    private val espValue = BoolValue("Round-ESP", true)
     private val tracerESPValue = BoolValue("Tracer-ESP", false)
     private val simpleESPValue = BoolValue("Simple-ESP", false)
-    private val espValue = BoolValue("CSGO-ESP", false)
     private val circleValue = BoolValue("Circle", false)
 
     /**
@@ -1095,7 +1095,10 @@ class KillAura : Module() {
         ) else max(rangeValue.get() - 0.5f, rangeValue.get() - 0.5f)
 
     private val attackRange: Float
-        get() = max(rangeValue.get() - 0.5f, rangeValue.get() - 0.5f)
+        get() = if (!noHitCheck.get()) max(
+            rangeValue.get() - 0.5f,
+            rangeValue.get() - 0.5f
+        ) else max(rangeValue.get() + 0.5f, rangeValue.get() + 0.5f)
 
     /**
      * HUD Tag
