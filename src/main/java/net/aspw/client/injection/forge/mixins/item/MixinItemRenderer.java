@@ -292,7 +292,7 @@ public abstract class MixinItemRenderer {
                                 this.func_178103_d();
                                 final float var16 = MathHelper.sin((float) (f1 * f1 * Math.PI));
                                 GlStateManager.rotate(-var16 * 0f, 0.0f, 1.0f, 0.0f);
-                                GlStateManager.rotate(-var * 65f, 0.0f, 0.0f, 1.0f);
+                                GlStateManager.rotate(-var * 62f, 0.0f, 0.0f, 1.0f);
                                 GlStateManager.rotate(-var * 0f, 1.5f, 0.0f, 0.0f);
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
@@ -308,10 +308,10 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Smooth": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.14, Animations.blockPosY.get().doubleValue() - 0.07, Animations.blockPosZ.get().doubleValue() - 0.24);
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.14, Animations.blockPosY.get().doubleValue() - 0.05, Animations.blockPosZ.get().doubleValue() - 0.24);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
-                                else this.transformFirstPersonItem(f / 2.0f, 0.0f);
+                                else this.transformFirstPersonItem(f / 1.4f, 0.0f);
                                 float var91 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                 this.func_178103_d(0.2F);
                                 GlStateManager.translate(-0.36f, 0.25f, -0.06f);
@@ -370,7 +370,7 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Sigma4": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.01, Animations.blockPosY.get().doubleValue() + 0.35, Animations.blockPosZ.get().doubleValue() + 0.2);
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.6, Animations.blockPosY.get().doubleValue() - 0.06, Animations.blockPosZ.get().doubleValue() + 0.11);
                                 final float var = MathHelper.sin((float) (MathHelper.sqrt_float(f1) * Math.PI));
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
@@ -378,7 +378,7 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.rotate(-var * 55 / 2.0F, -8.0F, -0.0F, 9.0F);
                                 GlStateManager.rotate(-var * 45, 1.0F, var / 2, 0.0F);
                                 this.func_178103_d();
-                                GL11.glTranslated(1.2, 0.3, 0.5);
+                                GL11.glTranslated(-0.08, -1.25, 1.25);
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
@@ -406,7 +406,7 @@ public abstract class MixinItemRenderer {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.18, Animations.blockPosY.get().doubleValue() - 0.02, Animations.blockPosZ.get().doubleValue() - 0.24);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, f1);
-                                else this.transformFirstPersonItem(f / 1.4f, f1);
+                                else this.transformFirstPersonItem(f / 1.2f, f1);
                                 this.doBlockTransformations();
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
@@ -574,7 +574,7 @@ public abstract class MixinItemRenderer {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, f1);
-                                else this.transformFirstPersonItem(f / 1.4f, f1);
+                                else this.transformFirstPersonItem(f / 1.2f, f1);
                                 this.doBlockTransformations();
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
