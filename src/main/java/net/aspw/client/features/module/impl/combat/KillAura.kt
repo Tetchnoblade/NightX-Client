@@ -1092,15 +1092,15 @@ class KillAura : Module() {
         get() = if (!noHitCheck.get()) max(
             rangeValue.get() - 0.5f + prevRangeValue.get() + 1.2f,
             rangeValue.get() - 0.5f + prevRangeValue.get() + 1.2f
-        ) else max(rangeValue.get() - 0.5f, rangeValue.get() - 0.5f)
+        ) else max(rangeValue.get() - 0.3f, rangeValue.get() - 0.3f)
 
     private val attackRange: Float
         get() = if (!noHitCheck.get()) max(
             rangeValue.get() - 1.5f,
             rangeValue.get() - 1.5f
         ) else max(
-            rangeValue.get() - 0.5f,
-            rangeValue.get() - 0.5f
+            rangeValue.get() - 0.3f,
+            rangeValue.get() - 0.3f
         )
 
     /**
