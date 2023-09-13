@@ -43,4 +43,16 @@ class RemoteViewCommand : Command("remoteview", arrayOf("rv")) {
             event.cancelEvent()
         }
     }
+
+    override fun tabComplete(args: Array<String>): List<String> {
+        if (args.isEmpty()) return emptyList()
+
+        return when (args.size) {
+            1 -> return mc.theWorld.playerEntities
+                .map { it.name }
+                .filter { it.startsWith(args[0], true) }
+
+            else -> emptyList()
+        }
+    }
 }

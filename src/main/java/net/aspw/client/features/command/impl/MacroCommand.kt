@@ -82,4 +82,15 @@ class MacroCommand : Command("macro", emptyArray()) {
 
         chatSyntax("macro <list/clear/add/remove>")
     }
+
+    override fun tabComplete(args: Array<String>): List<String> {
+        if (args.isEmpty()) return emptyList()
+
+        return when (args.size) {
+            1 -> listOf("add", "remove", "list", "clear")
+                .filter { it.startsWith(args[0], true) }
+
+            else -> emptyList()
+        }
+    }
 }

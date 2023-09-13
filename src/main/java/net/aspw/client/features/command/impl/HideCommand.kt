@@ -2,6 +2,7 @@ package net.aspw.client.features.command.impl
 
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
+import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.ClientUtils
 
@@ -77,6 +78,38 @@ class HideCommand : Command("hide", emptyArray()) {
         }
 
         chatSyntax("hide <module/list/clear/reset/category>")
+    }
+
+    override fun tabComplete(args: Array<String>): List<String> {
+        if (args.isEmpty()) return emptyList()
+
+        val moduleName = args[0]
+        when (args.size) {
+            1 -> {
+                val moduleList = Client.moduleManager.modules
+                    .map { it.name }
+                    .filter { it.startsWith(moduleName, true) }
+                    .toMutableList()
+
+                moduleList.addAll(listOf("category", "list", "clear", "reset").filter {
+                    it.startsWith(
+                        moduleName,
+                        true
+                    )
+                })
+                return moduleList
+            }
+
+            2 -> {
+                if (moduleName.equals("category", true))
+                    return ModuleCategory.values()
+                        .map { it.displayName }
+                        .filter { it.startsWith(args[1], true) }
+                        .toList()
+            }
+        }
+
+        return emptyList()
     }
 
 }

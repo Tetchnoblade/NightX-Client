@@ -184,4 +184,33 @@ class ConfigCommand : Command("config", arrayOf("c")) {
     }
 
     private fun getLocalSettings(): Array<File>? = Client.fileManager.settingsDir.listFiles()
+
+    override fun tabComplete(args: Array<String>): List<String> {
+        if (args.isEmpty()) return emptyList()
+
+        return when (args.size) {
+            1 -> listOf("delete", "list", "load", "save", "fix").filter { it.startsWith(args[0], true) }
+            2 -> {
+                when (args[0].lowercase(Locale.getDefault())) {
+                    "delete", "load", "fix" -> {
+                        val settings = this.getLocalSettings() ?: return emptyList()
+
+                        return settings
+                            .map { it.name }
+                            .filter { it.startsWith(args[1], true) }
+                    }
+                }
+                return emptyList()
+            }
+
+            3 -> {
+                if (args[0].equals("save", true)) {
+                    return listOf("all", "states", "binds", "values").filter { it.startsWith(args[2], true) }
+                }
+                return emptyList()
+            }
+
+            else -> emptyList()
+        }
+    }
 }

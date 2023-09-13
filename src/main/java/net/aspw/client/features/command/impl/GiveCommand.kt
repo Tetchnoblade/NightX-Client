@@ -3,7 +3,9 @@ package net.aspw.client.features.command.impl
 import net.aspw.client.features.command.Command
 import net.aspw.client.util.item.ItemUtils
 import net.aspw.client.util.misc.StringUtils
+import net.minecraft.item.Item
 import net.minecraft.network.play.client.C10PacketCreativeInventoryAction
+import java.util.*
 
 class GiveCommand : Command("give", arrayOf("item", "i", "get")) {
     /**
@@ -50,5 +52,19 @@ class GiveCommand : Command("give", arrayOf("item", "i", "get")) {
         }
 
         chatSyntax("give <item> [amount] [data] [datatag]")
+    }
+
+    override fun tabComplete(args: Array<String>): List<String> {
+        if (args.isEmpty()) return emptyList()
+
+        return when (args.size) {
+            1 -> {
+                return Item.itemRegistry.keys
+                    .map { it.resourcePath.lowercase(Locale.getDefault()) }
+                    .filter { it.startsWith(args[0], true) }
+            }
+
+            else -> emptyList()
+        }
     }
 }

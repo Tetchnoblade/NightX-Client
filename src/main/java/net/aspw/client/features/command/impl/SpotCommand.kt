@@ -60,4 +60,19 @@ class SpotCommand : Command("spot", arrayOf("st")) {
         chatSyntax("spot <player name>")
     }
 
+    override fun tabComplete(args: Array<String>): List<String> {
+        if (args.isEmpty()) return emptyList()
+
+        val pref = args[0]
+
+        return when (args.size) {
+            1 -> mc.theWorld.playerEntities
+                .filter { !AntiBots.isBot(it) && it.name.startsWith(pref, true) }
+                .map { it.name }
+                .toList()
+
+            else -> emptyList()
+        }
+    }
+
 }

@@ -6,6 +6,7 @@ import net.aspw.client.util.ClientUtils
 
 class CommandManager {
     val commands = mutableListOf<Command>()
+    var latestAutoComplete: Array<String> = emptyArray()
 
     /**
      * Register all default commands
@@ -63,6 +64,49 @@ class CommandManager {
         }
 
         ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§cUnknown command. Try .help for a list of commands.")
+    }
+
+    fun autoComplete(input: String): Boolean {
+        this.latestAutoComplete = this.getCompletions(input) ?: emptyArray()
+        return input.startsWith(".") && this.latestAutoComplete.isNotEmpty()
+    }
+
+    private fun getCompletions(input: String): Array<String>? {
+        if (input.isNotEmpty() && input.toCharArray()[0] == '.') {
+            val args = input.split(" ")
+
+            return if (args.size > 1) {
+                val command = getCommand(args[0].substring(1))
+                val tabCompletions = command?.tabComplete(args.drop(1).toTypedArray())
+
+                tabCompletions?.toTypedArray()
+            } else {
+                val rawInput = input.substring(1)
+                commands
+                    .filter {
+                        it.command.startsWith(rawInput, true)
+                                || it.alias.any { alias -> alias.startsWith(rawInput, true) }
+                    }
+                    .map {
+                        val alias: String = if (it.command.startsWith(rawInput, true))
+                            it.command
+                        else {
+                            it.alias.first { alias -> alias.startsWith(rawInput, true) }
+                        }
+
+                        ".$alias"
+                    }
+                    .toTypedArray()
+            }
+        }
+        return null
+    }
+
+    private fun getCommand(name: String): Command? {
+        return commands.find {
+            it.command.equals(name, ignoreCase = true)
+                    || it.alias.any { alias -> alias.equals(name, true) }
+        }
     }
 
     /**

@@ -187,7 +187,7 @@ class Scaffold : Module() {
     private val keepRotationValue = BoolValue("KeepRotation", true)
     private val keepLengthValue =
         IntegerValue("KeepRotation-Length", 0, 0, 20) { !keepRotationValue.get() }
-    private val rotationStrafeValue = BoolValue("RotationStrafe", false)
+    private val rotationStrafeValue = BoolValue("MovementFix", false)
     private val maxTurnSpeed: FloatValue =
         object : FloatValue("MaxTurnSpeed", 120f, 0f, 180f, "°") {
             override fun onChanged(oldValue: Float, newValue: Float) {

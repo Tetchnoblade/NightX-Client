@@ -3,6 +3,7 @@ package net.aspw.client.features.command.impl
 import net.aspw.client.Client
 import net.aspw.client.features.command.Command
 import net.aspw.client.util.misc.StringUtils
+import java.util.*
 
 class FriendCommand : Command("friend", arrayOf("friends")) {
     /**
@@ -73,5 +74,31 @@ class FriendCommand : Command("friend", arrayOf("friends")) {
         }
 
         chatSyntax("friend <add/remove/list/clear>")
+    }
+
+    override fun tabComplete(args: Array<String>): List<String> {
+        if (args.isEmpty()) return emptyList()
+
+        return when (args.size) {
+            1 -> listOf("add", "addall", "remove", "removeall", "list", "clear").filter { it.startsWith(args[0], true) }
+            2 -> {
+                when (args[0].lowercase(Locale.getDefault())) {
+                    "add" -> {
+                        return mc.theWorld.playerEntities
+                            .map { it.name }
+                            .filter { it.startsWith(args[1], true) }
+                    }
+
+                    "remove" -> {
+                        return Client.fileManager.friendsConfig.friends
+                            .map { it.playerName }
+                            .filter { it.startsWith(args[1], true) }
+                    }
+                }
+                return emptyList()
+            }
+
+            else -> emptyList()
+        }
     }
 }

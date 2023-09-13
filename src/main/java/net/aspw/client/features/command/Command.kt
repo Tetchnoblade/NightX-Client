@@ -11,6 +11,10 @@ abstract class Command(val command: String, val alias: Array<String>) : Minecraf
      */
     abstract fun execute(args: Array<String>)
 
+    open fun tabComplete(args: Array<String>): List<String> {
+        return emptyList()
+    }
+
     /**
      * Print [msg] to chat
      */

@@ -112,4 +112,38 @@ class ModuleCommand(val module: Module, val values: List<Value<*>> = module.valu
             }
         }
     }
+
+    override fun tabComplete(args: Array<String>): List<String> {
+        if (args.isEmpty()) return emptyList()
+
+        return when (args.size) {
+            1 -> values
+                .filter { it !is FontValue && it.name.startsWith(args[0], true) }
+                .map { it.name.lowercase(Locale.getDefault()) }
+
+            2 -> {
+                when (module.getValue(args[0])) {
+                    is BlockValue -> {
+                        return Block.blockRegistry.keys
+                            .map { it.resourcePath.lowercase(Locale.getDefault()) }
+                            .filter { it.startsWith(args[1], true) }
+                    }
+
+                    is ListValue -> {
+                        values.forEach { value ->
+                            if (!value.name.equals(args[0], true))
+                                return@forEach
+                            if (value is ListValue)
+                                return value.values.filter { it.startsWith(args[1], true) }
+                        }
+                        return emptyList()
+                    }
+
+                    else -> emptyList()
+                }
+            }
+
+            else -> emptyList()
+        }
+    }
 }
