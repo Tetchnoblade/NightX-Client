@@ -189,10 +189,10 @@ class ConfigCommand : Command("config", arrayOf("c")) {
         if (args.isEmpty()) return emptyList()
 
         return when (args.size) {
-            1 -> listOf("delete", "list", "load", "save", "fix").filter { it.startsWith(args[0], true) }
+            1 -> listOf("delete", "list", "load", "l", "save", "fix").filter { it.startsWith(args[0], true) }
             2 -> {
                 when (args[0].lowercase(Locale.getDefault())) {
-                    "delete", "load", "fix" -> {
+                    "delete", "load", "l", "fix" -> {
                         val settings = this.getLocalSettings() ?: return emptyList()
 
                         return settings
@@ -204,7 +204,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
             }
 
             3 -> {
-                if (args[0].equals("save", true)) {
+                if (args[0].equals("save", true) || args[0].equals("s", true)) {
                     return listOf("all", "states", "binds", "values").filter { it.startsWith(args[2], true) }
                 }
                 return emptyList()
