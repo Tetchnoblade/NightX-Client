@@ -36,7 +36,7 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
     @Shadow
     private boolean waitingOnAutocomplete;
     private float yPosOfInputField;
-    private float fade = 0;
+    private final float fade = 14;
 
     /**
      * On autocomplete response.
@@ -63,7 +63,6 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
 
     @Inject(method = "updateScreen", at = @At("HEAD"))
     private void updateScreen(CallbackInfo callbackInfo) {
-        fade = 14;
         yPosOfInputField = height - 12;
         inputField.yPosition = (int) yPosOfInputField;
     }
@@ -104,7 +103,7 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
         RenderUtils.drawRect(2F, this.height - fade, this.width - 2, this.height - fade + 12, Integer.MIN_VALUE);
         this.inputField.drawTextBox();
 
-        if (!inputField.getText().isEmpty() && inputField.getText().startsWith(".")) {
+        if (Client.commandManager.getLatestAutoComplete().length > 0 && !inputField.getText().isEmpty() && inputField.getText().startsWith(".")) {
             String[] latestAutoComplete = Client.commandManager.getLatestAutoComplete();
             String[] textArray = inputField.getText().split(" ");
             String trimmedString = latestAutoComplete[0].replaceFirst("(?i)" + textArray[textArray.length - 1], "");
