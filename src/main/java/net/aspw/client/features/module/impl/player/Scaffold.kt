@@ -812,9 +812,7 @@ class Scaffold : Module() {
             ) mc.thePlayer.inventory.mainInventory[i] = null
         }
         if (eventState === EventState.PRE) {
-            if (!shouldPlace() || (InventoryUtils.findAutoBlockBlock() == -1 ||
-                        mc.thePlayer.heldItem.item !is ItemBlock)
-            ) return
+            if (!shouldPlace() || InventoryUtils.findAutoBlockBlock() == -1) return
             findBlock(mode.equals("expand", ignoreCase = true) && !canTower)
         }
         if (targetPlace == null) {
