@@ -23,8 +23,6 @@ public abstract class MixinWorld implements IBlockAccess {
         IBlockState iblockstate = Minecraft.getMinecraft().theWorld.getBlockState(pos);
         Block block = iblockstate.getBlock();
 
-        // Moving playAusSFX out of else-statement to play sound correctly (For some reason block.getMaterial() always returns Material.air on 1.9+ protocols)
-        // This should also function correctly on 1.8.x protocol, so no need for base version checks
         Minecraft.getMinecraft().theWorld.playAuxSFX(2001, pos, Block.getStateId(iblockstate));
 
         if (block.getMaterial() == Material.air) {

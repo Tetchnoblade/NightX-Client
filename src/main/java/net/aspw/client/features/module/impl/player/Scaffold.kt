@@ -112,7 +112,6 @@ class Scaffold : Module() {
 
     @JvmField
     val sprintModeValue = ListValue("SprintMode", arrayOf("Same", "Silent", "Ground", "Air", "Off"), "Same")
-    private val autoBlockMode = ListValue("AutoBlock", arrayOf("Fake", "Spoof", "Switch", "Off"), "Fake")
     private val placeConditionValue =
         ListValue("Place-Condition", arrayOf("Air", "FallDown", "NegativeMotion", "Always"), "Always")
 
@@ -173,7 +172,7 @@ class Scaffold : Module() {
     private val speedSlowDown = FloatValue("SpeedPot-SlowDown", 0.8f, 0.0f, 0.9f) { noSpeedPotValue.get() }
     private val customSpeedValue = BoolValue("CustomSpeed", false)
     private val customMoveSpeedValue = FloatValue("CustomMoveSpeed", 0.2f, 0f, 5f) { customSpeedValue.get() }
-    private val animationValue = BoolValue("Animation", false)
+    private val animationValue = BoolValue("Animation", true)
     private val downValue = BoolValue("Down", true)
     private val noHitCheckValue = BoolValue("NoHitCheck", false)
     private val sameYValue = BoolValue("KeepY", false)
@@ -813,9 +812,7 @@ class Scaffold : Module() {
             ) mc.thePlayer.inventory.mainInventory[i] = null
         }
         if (eventState === EventState.PRE) {
-            if (!shouldPlace() || (if (!autoBlockMode.get()
-                        .equals("Off", ignoreCase = true)
-                ) InventoryUtils.findAutoBlockBlock() == -1 else mc.thePlayer.heldItem == null ||
+            if (!shouldPlace() || (InventoryUtils.findAutoBlockBlock() == -1 ||
                         mc.thePlayer.heldItem.item !is ItemBlock)
             ) return
             findBlock(mode.equals("expand", ignoreCase = true) && !canTower)
@@ -918,21 +915,10 @@ class Scaffold : Module() {
         var blockSlot = -1
         var itemStack = mc.thePlayer.heldItem
         if (mc.thePlayer.heldItem == null || mc.thePlayer.heldItem.item !is ItemBlock) {
-            if (autoBlockMode.get().equals("Off", ignoreCase = true)) return
             blockSlot = InventoryUtils.findAutoBlockBlock()
             if (blockSlot == -1) return
-            if (autoBlockMode.get().equals("Switch", ignoreCase = true)) {
-                mc.thePlayer.inventory.currentItem = blockSlot - 36
-                mc.playerController.updateController()
-            }
-            if (autoBlockMode.get().equals("Spoof", ignoreCase = true)) {
-                mc.netHandler.addToSendQueue(C09PacketHeldItemChange(blockSlot - 36))
-                itemStack = mc.thePlayer.inventoryContainer.getSlot(blockSlot).stack
-            }
-            if (autoBlockMode.get().equals("Fake", ignoreCase = true)) {
-                mc.netHandler.addToSendQueue(C09PacketHeldItemChange(blockSlot - 36))
-                itemStack = mc.thePlayer.inventoryContainer.getSlot(blockSlot).stack
-            }
+            mc.thePlayer.inventory.currentItem = blockSlot - 36
+            mc.playerController.updateController()
         }
         if (itemStack != null && itemStack.item != null && itemStack.item is ItemBlock) {
             val block = (itemStack.item as ItemBlock).getBlock()
@@ -962,11 +948,6 @@ class Scaffold : Module() {
             }
         }
         targetPlace = null
-        if (blockSlot >= 0 && autoBlockMode.get().equals("Spoof", ignoreCase = true)) mc.netHandler.addToSendQueue(
-            C09PacketHeldItemChange(
-                mc.thePlayer.inventory.currentItem
-            )
-        )
     }
 
     /**
@@ -1013,18 +994,10 @@ class Scaffold : Module() {
         mc.timer.timerSpeed = 1f
         shouldGoDown = false
         faceBlock = false
-        if (lastSlot != mc.thePlayer.inventory.currentItem && autoBlockMode.get().equals("switch", ignoreCase = true)) {
+        if (lastSlot != mc.thePlayer.inventory.currentItem) {
             mc.thePlayer.inventory.currentItem = lastSlot
             mc.playerController.updateController()
         }
-        if (slot != mc.thePlayer.inventory.currentItem && (autoBlockMode.get()
-                .equals("spoof", ignoreCase = true) || autoBlockMode.get()
-                .equals("fake", ignoreCase = true)) || slot != mc.thePlayer.inventory.currentItem
-        ) mc.netHandler.addToSendQueue(
-            C09PacketHeldItemChange(
-                mc.thePlayer.inventory.currentItem
-            )
-        )
     }
 
     /**
