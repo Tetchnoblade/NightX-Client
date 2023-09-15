@@ -1,6 +1,6 @@
 package net.aspw.client.util.render;
 
-import net.minecraft.client.Minecraft;
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
@@ -65,9 +65,9 @@ public class Render {
         GL11.glHint(3154, 4354);
         GL11.glLineWidth(3.0F);
         GL11.glBegin(3);
-        double renderPosX = Minecraft.getMinecraft().getRenderManager().viewerPosX;
-        double renderPosY = Minecraft.getMinecraft().getRenderManager().viewerPosY;
-        double renderPosZ = Minecraft.getMinecraft().getRenderManager().viewerPosZ;
+        double renderPosX = MinecraftInstance.mc.getRenderManager().viewerPosX;
+        double renderPosY = MinecraftInstance.mc.getRenderManager().viewerPosY;
+        double renderPosZ = MinecraftInstance.mc.getRenderManager().viewerPosZ;
         RenderUtils.glColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) alpha));
         for (int i = 0; i <= 360; i++) {
             GL11.glVertex3d(

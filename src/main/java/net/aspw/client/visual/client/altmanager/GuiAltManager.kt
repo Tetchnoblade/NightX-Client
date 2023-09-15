@@ -14,6 +14,7 @@ import net.aspw.client.auth.account.MinecraftAccount
 import net.aspw.client.event.SessionEvent
 import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.util.ClientUtils
+import net.aspw.client.util.MinecraftInstance
 import net.aspw.client.util.login.LoginUtils
 import net.aspw.client.util.login.UserUtils.isValidTokenOffline
 import net.aspw.client.util.misc.RandomUtils
@@ -23,7 +24,6 @@ import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.menus.GuiAddAccount
 import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening
 import net.aspw.client.visual.font.semi.Fonts
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.GuiSlot
@@ -501,7 +501,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
             try {
                 minecraftAccount.update()
-                Minecraft.getMinecraft().session = Session(
+                MinecraftInstance.mc.session = Session(
                     minecraftAccount.session.username,
                     minecraftAccount.session.uuid, minecraftAccount.session.token, "mojang"
                 )

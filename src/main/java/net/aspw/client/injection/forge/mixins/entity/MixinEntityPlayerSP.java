@@ -16,6 +16,7 @@ import net.aspw.client.util.CooldownHelper;
 import net.aspw.client.util.MovementUtils;
 import net.aspw.client.util.Rotation;
 import net.aspw.client.util.RotationUtils;
+import net.aspw.client.visual.client.GuiTeleportation;
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui;
 import net.aspw.client.visual.client.clickgui.tab.NewUi;
 import net.minecraft.block.Block;
@@ -314,7 +315,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     @Overwrite
     public void onLivingUpdate() {
         Client.eventManager.callEvent(new UpdateEvent());
-        if (mc.currentScreen instanceof NewUi || mc.currentScreen instanceof ClickGui) {
+        if (mc.currentScreen instanceof NewUi || mc.currentScreen instanceof ClickGui || mc.currentScreen instanceof GuiTeleportation) {
             mc.gameSettings.keyBindForward.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindForward);
             mc.gameSettings.keyBindBack.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindBack);
             mc.gameSettings.keyBindRight.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindRight);

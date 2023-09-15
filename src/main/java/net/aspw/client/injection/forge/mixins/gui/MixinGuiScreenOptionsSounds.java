@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.minecraft.client.Minecraft;
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.client.settings.GameSettings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,6 +22,6 @@ public class MixinGuiScreenOptionsSounds {
 
     @Inject(method = "mouseReleased(II)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/audio/SoundHandler;playSound(Lnet/minecraft/client/audio/ISound;)V"))
     private void save(int mouseX, int mouseY, CallbackInfo ci) {
-        Minecraft.getMinecraft().gameSettings.saveOptions();
+        MinecraftInstance.mc.gameSettings.saveOptions();
     }
 }

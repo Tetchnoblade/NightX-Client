@@ -1,6 +1,5 @@
 package net.aspw.client.util
 
-import net.minecraft.client.Minecraft
 import net.minecraft.item.*
 import net.minecraft.potion.Potion
 import net.minecraft.util.MathHelper
@@ -39,22 +38,22 @@ object CooldownHelper {
             else -> 4.0
         }
 
-        if (Minecraft.getMinecraft().thePlayer.isPotionActive(Potion.digSlowdown)) {
+        if (MinecraftInstance.mc.thePlayer.isPotionActive(Potion.digSlowdown)) {
             genericAttackSpeed *= 1.0 - min(
                 1.0,
-                0.1 * (Minecraft.getMinecraft().thePlayer.getActivePotionEffect(Potion.digSlowdown).amplifier + 1)
+                0.1 * (MinecraftInstance.mc.thePlayer.getActivePotionEffect(Potion.digSlowdown).amplifier + 1)
             )
         }
 
-        if (Minecraft.getMinecraft().thePlayer.isPotionActive(Potion.digSpeed)) {
-            genericAttackSpeed *= 1.0 + (0.1 * (Minecraft.getMinecraft().thePlayer.getActivePotionEffect(Potion.digSpeed).amplifier + 1))
+        if (MinecraftInstance.mc.thePlayer.isPotionActive(Potion.digSpeed)) {
+            genericAttackSpeed *= 1.0 + (0.1 * (MinecraftInstance.mc.thePlayer.getActivePotionEffect(Potion.digSpeed).amplifier + 1))
         }
     }
 
     fun getAttackCooldownProgressPerTick() = 1.0 / genericAttackSpeed * 20.0
 
     fun getAttackCooldownProgress() = MathHelper.clamp_double(
-        (lastAttackedTicks + Minecraft.getMinecraft().timer.renderPartialTicks) / getAttackCooldownProgressPerTick(),
+        (lastAttackedTicks + MinecraftInstance.mc.timer.renderPartialTicks) / getAttackCooldownProgressPerTick(),
         0.0,
         1.0
     )

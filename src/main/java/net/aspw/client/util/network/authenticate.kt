@@ -3,8 +3,8 @@ package net.aspw.client.util.network
 import net.aspw.client.Client
 import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.util.ClientUtils
+import net.aspw.client.util.MinecraftInstance
 import net.aspw.client.visual.client.GuiMainMenu
-import net.minecraft.client.Minecraft
 
 // Old Auth System
 fun authenticate(authInfo: String, username: String, password: String, hwid: String, uid: String) {
@@ -24,7 +24,7 @@ fun authenticate(authInfo: String, username: String, password: String, hwid: Str
                 Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
             }
             ClientUtils.getLogger().info("Logged in with NightX Premium Account!")
-            Minecraft.getMinecraft().displayGuiScreen(GuiMainMenu())
+            MinecraftInstance.mc.displayGuiScreen(GuiMainMenu())
             return
         }
     }

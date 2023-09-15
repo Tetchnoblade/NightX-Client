@@ -3,9 +3,9 @@ package net.aspw.client.visual.font.semi
 import net.aspw.client.Client
 import net.aspw.client.event.TextEvent
 import net.aspw.client.util.ClassUtils
+import net.aspw.client.util.MinecraftInstance
 import net.aspw.client.util.render.ColorUtils
 import net.aspw.client.util.render.RenderUtils
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.resources.IResourceManager
@@ -15,9 +15,9 @@ import java.awt.Color
 import java.awt.Font
 
 class GameFontRenderer(font: Font) : FontRenderer(
-    Minecraft.getMinecraft().gameSettings,
+    MinecraftInstance.mc.gameSettings,
     ResourceLocation("textures/font/ascii.png"),
-    if (ClassUtils.hasForge()) null else Minecraft.getMinecraft().textureManager,
+    if (ClassUtils.hasForge()) null else MinecraftInstance.mc.textureManager,
     false
 ) {
 

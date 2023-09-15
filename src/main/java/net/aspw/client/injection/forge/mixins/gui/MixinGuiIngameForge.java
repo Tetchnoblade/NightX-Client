@@ -2,6 +2,7 @@ package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.util.AnimationUtils;
+import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -54,7 +55,7 @@ public abstract class MixinGuiIngameForge extends MixinGuiInGame {
             remap = false
     )
     private void fixProfilerSectionNotEnding(int width, int height, CallbackInfo ci) {
-        final Minecraft mc = Minecraft.getMinecraft();
+        final Minecraft mc = MinecraftInstance.mc;
         if (mc.mcProfiler.getNameOfLastSection().endsWith("chat"))
             mc.mcProfiler.endSection();
     }
@@ -79,7 +80,7 @@ public abstract class MixinGuiIngameForge extends MixinGuiInGame {
      */
     @Overwrite(remap = false)
     protected void renderPlayerList(int width, int height) {
-        final Minecraft mc = Minecraft.getMinecraft();
+        final Minecraft mc = MinecraftInstance.mc;
         ScoreObjective scoreobjective = mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(0);
         NetHandlerPlayClient handler = mc.thePlayer.sendQueue;
 

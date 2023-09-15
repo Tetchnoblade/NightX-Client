@@ -6,6 +6,7 @@ import net.aspw.client.features.module.impl.player.ChestStealer;
 import net.aspw.client.features.module.impl.player.InvManager;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.Interface;
+import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -70,7 +71,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
      */
     @Inject(method = "initGui", at = @At("HEAD"))
     public void injectInitGui(CallbackInfo callbackInfo) {
-        GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
+        GuiScreen guiScreen = MinecraftInstance.mc.currentScreen;
 
         if (guiScreen instanceof GuiChest) {
             buttonList.add(killAuraButton = new GuiButton(1024576, 5, 5, 150, 20, "Disable KillAura"));
@@ -101,7 +102,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
         KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
         InvManager invManager = Objects.requireNonNull(Client.moduleManager.getModule(InvManager.class));
         final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
-        final Minecraft mc = Minecraft.getMinecraft();
+        final Minecraft mc = MinecraftInstance.mc;
 
         if (progress >= 1F) progress = 1F;
         else progress = (float) (System.currentTimeMillis() - lastMS) / (float) 200;
@@ -170,7 +171,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
     public void drawScreenReturn(CallbackInfo callbackInfo) {
         final Animations animMod = Objects.requireNonNull(Client.moduleManager.getModule(Animations.class));
         ChestStealer chestStealer = Objects.requireNonNull(Client.moduleManager.getModule(ChestStealer.class));
-        final Minecraft mc = Minecraft.getMinecraft();
+        final Minecraft mc = MinecraftInstance.mc;
         boolean checkFullSilence = chestStealer.getState() && chestStealer.getSilenceValue().get() && !chestStealer.getStillDisplayValue().get();
 
         if (animMod != null && animMod.getState() && !(mc.currentScreen instanceof GuiChest && checkFullSilence))

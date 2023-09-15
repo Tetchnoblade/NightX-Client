@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
+import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.ServerUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -102,7 +102,7 @@ public abstract class MixinGuiConnecting extends GuiScreen {
      */
     @Overwrite
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+        ScaledResolution scaledResolution = new ScaledResolution(MinecraftInstance.mc);
 
         this.drawDefaultBackground();
 

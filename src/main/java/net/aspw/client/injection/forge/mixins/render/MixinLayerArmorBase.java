@@ -3,7 +3,7 @@ package net.aspw.client.injection.forge.mixins.render;
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.visual.CustomModel;
 import net.aspw.client.features.module.impl.visual.SilentView;
-import net.minecraft.client.Minecraft;
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.entity.EntityLivingBase;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,12 +36,12 @@ public class MixinLayerArmorBase {
         final CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
         final SilentView silentView = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
 
-        if (customModel.getState() && customModel.getOnlySelf().get() && entitylivingbaseIn == Minecraft.getMinecraft().thePlayer) {
+        if (customModel.getState() && customModel.getOnlySelf().get() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer) {
             ci.cancel();
         } else if (customModel.getState() && !customModel.getOnlySelf().get()) {
             ci.cancel();
         }
-        if (silentView.getState() && silentView.getSilentValue().get() && silentView.shouldRotate() && entitylivingbaseIn == Minecraft.getMinecraft().thePlayer) {
+        if (silentView.getState() && silentView.getSilentValue().get() && silentView.shouldRotate() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer) {
             ci.cancel();
         }
     }

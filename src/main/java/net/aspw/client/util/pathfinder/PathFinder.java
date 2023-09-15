@@ -1,7 +1,7 @@
 package net.aspw.client.util.pathfinder;
 
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.block.*;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockPos;
 
 import java.util.ArrayList;
@@ -132,7 +132,7 @@ public class PathFinder {
     }
 
     private static boolean isNotPassable(final BlockPos block) {
-        final Block b = Minecraft.getMinecraft().theWorld.getBlockState(new BlockPos(block.getX(), block.getY(), block.getZ())).getBlock();
+        final Block b = MinecraftInstance.mc.theWorld.getBlockState(new BlockPos(block.getX(), block.getY(), block.getZ())).getBlock();
 
         return b.isFullBlock()
                 || b instanceof BlockSlab
@@ -160,9 +160,9 @@ public class PathFinder {
     }
 
     private static boolean canWalkOn(final BlockPos block) {
-        return !(Minecraft.getMinecraft().theWorld.getBlockState(new BlockPos(block.getX(), block.getY(),
+        return !(MinecraftInstance.mc.theWorld.getBlockState(new BlockPos(block.getX(), block.getY(),
                 block.getZ())).getBlock() instanceof BlockFence)
-                && !(Minecraft.getMinecraft().theWorld.getBlockState(new BlockPos(block.getX(), block.getY(),
+                && !(MinecraftInstance.mc.theWorld.getBlockState(new BlockPos(block.getX(), block.getY(),
                 block.getZ())).getBlock() instanceof BlockWall);
     }
 

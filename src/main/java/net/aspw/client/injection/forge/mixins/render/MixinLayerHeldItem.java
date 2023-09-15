@@ -1,5 +1,6 @@
 package net.aspw.client.injection.forge.mixins.render;
 
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -66,7 +67,7 @@ public class MixinLayerHeldItem {
                 itemstack = new ItemStack(Items.fishing_rod, 0);
             }
 
-            Minecraft minecraft = Minecraft.getMinecraft();
+            Minecraft minecraft = MinecraftInstance.mc;
 
             if (item instanceof ItemBlock && Block.getBlockFromItem(item).getRenderType() == 2) {
                 GlStateManager.translate(0.0F, 0.1875F, -0.3125F);

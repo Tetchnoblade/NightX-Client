@@ -14,7 +14,7 @@ import net.aspw.client.script.api.global.Chat
 import net.aspw.client.script.api.global.Item
 import net.aspw.client.script.api.global.Setting
 import net.aspw.client.util.ClientUtils
-import net.minecraft.client.Minecraft
+import net.aspw.client.util.MinecraftInstance
 import java.io.File
 import java.util.*
 import java.util.function.Function
@@ -45,7 +45,7 @@ class Script(val scriptFile: File) {
         scriptEngine.put("Item", StaticClass.forClass(Item::class.java))
 
         // Global instances
-        scriptEngine.put("mc", Minecraft.getMinecraft())
+        scriptEngine.put("mc", MinecraftInstance.mc)
         scriptEngine.put("moduleManager", Client.moduleManager)
         scriptEngine.put("commandManager", Client.commandManager)
         scriptEngine.put("scriptManager", Client.scriptManager)

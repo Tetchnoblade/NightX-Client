@@ -6,13 +6,13 @@ import net.aspw.client.event.Render2DEvent;
 import net.aspw.client.features.module.Module;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.ModuleInfo;
+import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.MovementUtils;
 import net.aspw.client.util.render.ColorUtils;
 import net.aspw.client.util.render.RenderUtils;
 import net.aspw.client.value.FloatValue;
 import net.aspw.client.value.IntegerValue;
 import net.aspw.client.value.ListValue;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 
@@ -72,7 +72,7 @@ public class Crosshair extends Module {
      */
     @EventTarget
     public void onRender2D(Render2DEvent event) {
-        if (!Client.moduleManager.getModule(Interface.class).getNof5crossHair().get() || Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && Client.moduleManager.getModule(Interface.class).getNof5crossHair().get()) {
+        if (!Client.moduleManager.getModule(Interface.class).getNof5crossHair().get() || MinecraftInstance.mc.gameSettings.thirdPersonView == 0 && Client.moduleManager.getModule(Interface.class).getNof5crossHair().get()) {
             final ScaledResolution scaledRes = new ScaledResolution(mc);
             float width = widthVal.get();
             float size = sizeVal.get();

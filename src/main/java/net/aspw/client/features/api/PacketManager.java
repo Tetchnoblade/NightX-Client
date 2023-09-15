@@ -3,14 +3,11 @@ package net.aspw.client.features.api;
 import io.netty.buffer.Unpooled;
 import net.aspw.client.Client;
 import net.aspw.client.event.*;
-import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.other.ClientSpoof;
 import net.aspw.client.features.module.impl.visual.Cape;
 import net.aspw.client.util.EntityUtils;
 import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.PacketUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.*;
 import net.minecraft.network.Packet;
@@ -56,8 +53,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 swing = Math.max(0, swing - 1);
             }
         }
-        if (GameSettings.isKeyDown(mc.gameSettings.keyBindDrop) && mc.thePlayer.getHeldItem() != null && mc.currentScreen == null)
-            mc.thePlayer.isSwingInProgress = true;
         for (Object en : mc.theWorld.loadedEntityList) {
             Entity entity = (Entity) en;
             if (shouldStopRender(entity)) {
@@ -83,9 +78,8 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     public void onPacket(PacketEvent event) {
         final Packet<?> packet = event.getPacket();
         final ClientSpoof clientSpoof = Client.moduleManager.getModule(ClientSpoof.class);
-        final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
 
-        if (!Minecraft.getMinecraft().isIntegratedServerRunning()) {
+        if (!MinecraftInstance.mc.isIntegratedServerRunning()) {
             if (packet instanceof C17PacketCustomPayload) {
                 if (((C17PacketCustomPayload) event.getPacket()).getChannelName().equalsIgnoreCase("MC|Brand")) {
                     if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("Vanilla"))

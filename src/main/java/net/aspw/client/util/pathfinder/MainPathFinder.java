@@ -1,8 +1,8 @@
 package net.aspw.client.util.pathfinder;
 
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 
@@ -127,7 +127,7 @@ public class MainPathFinder {
     }
 
     private static boolean isNotPassable(final BlockPos block) {
-        final Block b = Minecraft.getMinecraft().theWorld.getBlockState(new BlockPos(block.getX(), block.getY(), block.getZ())).getBlock();
+        final Block b = MinecraftInstance.mc.theWorld.getBlockState(new BlockPos(block.getX(), block.getY(), block.getZ())).getBlock();
 
         return b.isFullBlock()
                 || b instanceof BlockSlab
@@ -155,9 +155,9 @@ public class MainPathFinder {
     }
 
     private static boolean canWalkOn(final BlockPos block) {
-        return !(Minecraft.getMinecraft().theWorld.getBlockState(new BlockPos(block.getX(), block.getY(),
+        return !(MinecraftInstance.mc.theWorld.getBlockState(new BlockPos(block.getX(), block.getY(),
                 block.getZ())).getBlock() instanceof BlockFence)
-                && !(Minecraft.getMinecraft().theWorld.getBlockState(new BlockPos(block.getX(), block.getY(),
+                && !(MinecraftInstance.mc.theWorld.getBlockState(new BlockPos(block.getX(), block.getY(),
                 block.getZ())).getBlock() instanceof BlockWall);
     }
 
@@ -235,7 +235,7 @@ public class MainPathFinder {
      * @return the boolean
      */
     public static boolean canPassThrough(final BlockPos pos) {
-        final Block block = Minecraft.getMinecraft().theWorld
+        final Block block = MinecraftInstance.mc.theWorld
                 .getBlockState(new BlockPos(pos.getX(), pos.getY(), pos.getZ())).getBlock();
         return block.getMaterial() == Material.air || block.getMaterial() == Material.plants
                 || block.getMaterial() == Material.vine || block == Blocks.ladder || block == Blocks.water

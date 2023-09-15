@@ -2,6 +2,7 @@ package net.aspw.client.visual.client
 
 import net.aspw.client.Client
 import net.aspw.client.features.module.impl.targets.AntiBots
+import net.aspw.client.util.MinecraftInstance
 import net.aspw.client.util.PacketUtils
 import net.aspw.client.util.pathfinder.MainPathFinder
 import net.aspw.client.util.pathfinder.Vec3
@@ -24,17 +25,19 @@ class GuiTeleportation(private val prevGui: GuiScreen) : GuiScreen() {
     override fun initGui() {
         Keyboard.enableRepeatEvents(true)
         teleportXField = GuiTextField(2, mc.fontRendererObj, width / 2 - 100, 65, 200, 20)
-        teleportYField = GuiTextField(3, mc.fontRendererObj, width / 2 - 100, 100, 200, 20)
-        teleportZField = GuiTextField(4, mc.fontRendererObj, width / 2 - 100, 135, 200, 20)
-        playerField = GuiTextField(6, mc.fontRendererObj, width / 2 - 100, 135, 200, 20)
+        teleportYField = GuiTextField(3, mc.fontRendererObj, width / 2 - 100, 95, 200, 20)
+        teleportZField = GuiTextField(4, mc.fontRendererObj, width / 2 - 100, 125, 200, 20)
+        playerField = GuiTextField(6, mc.fontRendererObj, width / 2 - 100, 125, 200, 20)
         teleportXField.maxStringLength = Int.MAX_VALUE
         teleportYField.maxStringLength = Int.MAX_VALUE
         teleportZField.maxStringLength = Int.MAX_VALUE
         playerField.maxStringLength = 16
-        buttonList.add(GuiButton(5, width / 2 - 100, 180, "").also { playerTeleportation = it })
-        buttonList.add(GuiButton(0, width / 2 - 100, 210, "Click to Teleport"))
-        buttonList.add(GuiButton(1, width / 2 - 100, 240, "Set Current Coordinates"))
-        buttonList.add(GuiButton(7, width / 2 - 100, 270, "Done"))
+        buttonList.add(GuiButton(5, width / 2 - 100, 160, "").also { playerTeleportation = it })
+        buttonList.add(GuiButton(0, width / 2 - 100, 185, "Click to Teleport"))
+        buttonList.add(GuiButton(11, width / 2 - 100, 210, "Set Survival"))
+        buttonList.add(GuiButton(12, width / 2 - 100, 235, "Set Creative"))
+        buttonList.add(GuiButton(13, width / 2 - 100, 260, "Set Adventure"))
+        buttonList.add(GuiButton(14, width / 2 - 100, 285, "Set Spectator"))
         updateButtonStat()
     }
 
@@ -53,29 +56,22 @@ class GuiTeleportation(private val prevGui: GuiScreen) : GuiScreen() {
             if (teleportXField.text.isEmpty() && !teleportXField.isFocused)
                 drawString(mc.fontRendererObj, "§7X", width / 2 - 96, 65 + 6, 0xffffff)
             if (teleportYField.text.isEmpty() && !teleportYField.isFocused)
-                drawString(mc.fontRendererObj, "§7Y", width / 2 - 96, 100 + 6, 0xffffff)
+                drawString(mc.fontRendererObj, "§7Y", width / 2 - 96, 95 + 6, 0xffffff)
             if (teleportZField.text.isEmpty() && !teleportZField.isFocused)
-                drawString(mc.fontRendererObj, "§7Z", width / 2 - 96, 135 + 6, 0xffffff)
+                drawString(mc.fontRendererObj, "§7Z", width / 2 - 96, 125 + 6, 0xffffff)
         } else {
             if (playerField.text.isEmpty() && !playerField.isFocused)
-                drawString(mc.fontRendererObj, "§7Player ID", width / 2 - 96, 135 + 6, 0xffffff)
+                drawString(mc.fontRendererObj, "§7Player ID", width / 2 - 96, 125 + 6, 0xffffff)
         }
         super.drawScreen(mouseX, mouseY, partialTicks)
     }
 
     override fun actionPerformed(button: GuiButton) {
         when (button.id) {
-            1 -> {
-                if (!playerTeleport) {
-                    teleportXField.text = mc.thePlayer.posX.toString()
-                    teleportYField.text = mc.thePlayer.posY.toString()
-                    teleportZField.text = mc.thePlayer.posZ.toString()
-                }
-            }
-
-            7 -> {
-                mc.displayGuiScreen(null)
-            }
+            11 -> MinecraftInstance.mc.thePlayer.sendChatMessage("/gamemode survival @p")
+            12 -> MinecraftInstance.mc.thePlayer.sendChatMessage("/gamemode creative @p")
+            13 -> MinecraftInstance.mc.thePlayer.sendChatMessage("/gamemode adventure @p")
+            14 -> MinecraftInstance.mc.thePlayer.sendChatMessage("/gamemode spectator @p")
 
             0 -> {
                 if (!playerTeleport) {

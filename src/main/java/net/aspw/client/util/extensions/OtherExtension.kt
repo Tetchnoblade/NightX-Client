@@ -1,9 +1,9 @@
 package net.aspw.client.util.extensions
 
+import net.aspw.client.util.MinecraftInstance
 import net.aspw.client.util.Rotation
 import net.aspw.client.util.RotationUtils
 import net.minecraft.block.state.IBlockState
-import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos.MutableBlockPos
@@ -47,7 +47,7 @@ fun AxisAlignedBB.getBlockStatesIncluded(): List<IBlockState> {
     val maxX = MathHelper.floor_double(this.maxX)
     val maxY = MathHelper.floor_double(this.maxY)
     val maxZ = MathHelper.floor_double(this.maxZ)
-    val mc = Minecraft.getMinecraft()
+    val mc = MinecraftInstance.mc
     val mbp = MutableBlockPos(minX, minY, minZ)
 
     for (x in minX..maxX) {

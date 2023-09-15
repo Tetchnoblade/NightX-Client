@@ -3,7 +3,7 @@ package net.aspw.client.injection.forge.mixins.render;
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.other.PlayerEdit;
 import net.aspw.client.features.module.impl.visual.CustomModel;
-import net.minecraft.client.Minecraft;
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
@@ -38,7 +38,7 @@ public class MixinRenderPlayer {
     protected void renderLivingAt(AbstractClientPlayer entityLivingBaseIn, double x, double y, double z, CallbackInfo callbackInfo) {
         final PlayerEdit playerEdit = Objects.requireNonNull(Client.moduleManager.getModule(PlayerEdit.class));
 
-        if (playerEdit.getState() & entityLivingBaseIn.equals(Minecraft.getMinecraft().thePlayer) && PlayerEdit.editPlayerSizeValue.get()) {
+        if (playerEdit.getState() & entityLivingBaseIn.equals(MinecraftInstance.mc.thePlayer) && PlayerEdit.editPlayerSizeValue.get()) {
             GlStateManager.scale(PlayerEdit.playerSizeValue.get(), PlayerEdit.playerSizeValue.get(), PlayerEdit.playerSizeValue.get());
         }
     }
@@ -53,7 +53,7 @@ public class MixinRenderPlayer {
     public void getEntityTexture(AbstractClientPlayer entity, CallbackInfoReturnable<ResourceLocation> ci) {
         final CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
 
-        if (customModel.getState() && (!customModel.getOnlySelf().get() || entity == Minecraft.getMinecraft().thePlayer)) {
+        if (customModel.getState() && (!customModel.getOnlySelf().get() || entity == MinecraftInstance.mc.thePlayer)) {
             if (customModel.getMode().get().contains("Rabbit")) {
                 ci.setReturnValue(rabbit);
             }

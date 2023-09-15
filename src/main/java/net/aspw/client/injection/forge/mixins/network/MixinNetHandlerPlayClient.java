@@ -4,7 +4,10 @@ import io.netty.buffer.Unpooled;
 import net.aspw.client.Client;
 import net.aspw.client.event.EntityDamageEvent;
 import net.aspw.client.event.EntityMovementEvent;
+import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.PacketUtils;
+import net.aspw.client.visual.client.GuiTeleportation;
+import net.aspw.client.visual.client.clickgui.dropdown.ClickGui;
 import net.aspw.client.visual.client.clickgui.tab.NewUi;
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.Minecraft;
@@ -107,13 +110,13 @@ public abstract class MixinNetHandlerPlayClient {
 
     @Inject(method = "handleCloseWindow", at = @At("HEAD"), cancellable = true)
     private void handleCloseWindow(final S2EPacketCloseWindow packetIn, final CallbackInfo callbackInfo) {
-        if (this.gameController.currentScreen instanceof GuiChat || this.gameController.currentScreen instanceof NewUi)
+        if (this.gameController.currentScreen instanceof GuiChat || this.gameController.currentScreen instanceof NewUi || this.gameController.currentScreen instanceof ClickGui || this.gameController.currentScreen instanceof GuiTeleportation)
             callbackInfo.cancel();
     }
 
     @Inject(method = "handleJoinGame", at = @At("HEAD"), cancellable = true)
     private void handleJoinGameWithAntiForge(S01PacketJoinGame packetIn, final CallbackInfo callbackInfo) {
-        if (Minecraft.getMinecraft().isIntegratedServerRunning())
+        if (MinecraftInstance.mc.isIntegratedServerRunning())
             return;
 
         PacketThreadUtil.checkThreadAndEnqueue(packetIn, (NetHandlerPlayClient) (Object) this, gameController);

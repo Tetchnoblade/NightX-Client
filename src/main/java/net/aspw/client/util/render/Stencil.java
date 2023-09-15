@@ -1,5 +1,6 @@
 package net.aspw.client.util.render;
 
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.shader.Framebuffer;
@@ -15,7 +16,7 @@ public class Stencil {
     /**
      * The Mc.
      */
-    static Minecraft mc = Minecraft.getMinecraft();
+    static Minecraft mc = MinecraftInstance.mc;
 
     /**
      * Dispose.
@@ -109,7 +110,7 @@ public class Stencil {
         EXTFramebufferObject.glDeleteRenderbuffersEXT(fbo.depthBuffer);
         int stencil_depth_buffer_ID = EXTFramebufferObject.glGenRenderbuffersEXT();
         EXTFramebufferObject.glBindRenderbufferEXT(36161, stencil_depth_buffer_ID);
-        EXTFramebufferObject.glRenderbufferStorageEXT(36161, 34041, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+        EXTFramebufferObject.glRenderbufferStorageEXT(36161, 34041, mc.displayWidth, mc.displayHeight);
         EXTFramebufferObject.glFramebufferRenderbufferEXT(36160, 36128, 36161, stencil_depth_buffer_ID);
         EXTFramebufferObject.glFramebufferRenderbufferEXT(36160, 36096, 36161, stencil_depth_buffer_ID);
     }

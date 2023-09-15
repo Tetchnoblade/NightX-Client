@@ -5,6 +5,7 @@ import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.AntiBlind;
+import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.timer.MSTimer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -276,7 +277,7 @@ public abstract class MixinItemRenderer {
                                 if (Animations.cancelEquip.get())
                                     transformFirstPersonItem(0.0f, 0.0f);
                                 else transformFirstPersonItem(f / 1.4F, 0.0F);
-                                Minecraft.getMinecraft().thePlayer.isSwingInProgress = false;
+                                MinecraftInstance.mc.thePlayer.isSwingInProgress = false;
                                 GlStateManager.translate(0, 0.2F, -1);
                                 GlStateManager.rotate(-59, -1, 0, 3);
                                 GlStateManager.rotate(-(System.currentTimeMillis() / 2 % 360), 1, 0, 0.0F);
@@ -676,7 +677,7 @@ public abstract class MixinItemRenderer {
 
     @ModifyArg(method = "updateEquippedItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/MathHelper;clamp_float(FFF)F"), index = 0)
     private float handleItemSwitch(float original) {
-        EntityPlayer entityplayer = Minecraft.getMinecraft().thePlayer;
+        EntityPlayer entityplayer = MinecraftInstance.mc.thePlayer;
         ItemStack itemstack = entityplayer.inventory.getCurrentItem();
         if (Animations.oldAnimations.get() && this.equippedItemSlot == entityplayer.inventory.currentItem && ItemStack.areItemsEqual(this.itemToRender, itemstack)) {
             return 1.0f - this.equippedProgress;

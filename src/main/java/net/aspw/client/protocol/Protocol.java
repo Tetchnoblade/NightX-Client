@@ -4,7 +4,7 @@ import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.protocol.version.VersionProvider;
 import com.viaversion.viaversion.protocols.base.BaseVersionProvider;
-import net.minecraft.client.Minecraft;
+import net.aspw.client.util.MinecraftInstance;
 import net.raphimc.vialoader.ViaLoader;
 import net.raphimc.vialoader.impl.platform.ViaBackwardsPlatformImpl;
 import net.raphimc.vialoader.impl.platform.ViaRewindPlatformImpl;
@@ -31,7 +31,7 @@ public class Protocol {
                         Via.getManager().getProviders().use(VersionProvider.class, new BaseVersionProvider() {
                             @Override
                             public int getClosestServerProtocol(UserConnection connection) throws Exception {
-                                if (connection.isClientSide() && !Minecraft.getMinecraft().isSingleplayer()) {
+                                if (connection.isClientSide() && !MinecraftInstance.mc.isSingleplayer()) {
                                     return targetVersion.getVersion();
                                 }
                                 return super.getClosestServerProtocol(connection);

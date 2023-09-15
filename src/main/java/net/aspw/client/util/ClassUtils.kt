@@ -1,6 +1,5 @@
 package net.aspw.client.util
 
-import net.minecraft.client.Minecraft
 import net.minecraft.util.AxisAlignedBB
 
 object ClassUtils {
@@ -29,13 +28,13 @@ object ClassUtils {
     fun hasForge() = hasClass("net.minecraftforge.common.MinecraftForge")
 
     fun isBlockUnder(): Boolean {
-        if (Minecraft.getMinecraft().thePlayer.posY < 0) return false
+        if (MinecraftInstance.mc.thePlayer.posY < 0) return false
         var off = 0
-        while (off < Minecraft.getMinecraft().thePlayer.posY.toInt() + 2) {
-            val bb: AxisAlignedBB = Minecraft.getMinecraft().thePlayer.entityBoundingBox
+        while (off < MinecraftInstance.mc.thePlayer.posY.toInt() + 2) {
+            val bb: AxisAlignedBB = MinecraftInstance.mc.thePlayer.entityBoundingBox
                 .offset(0.0, -off.toDouble(), 0.0)
-            if (Minecraft.getMinecraft().theWorld.getCollidingBoundingBoxes(
-                    Minecraft.getMinecraft().thePlayer,
+            if (MinecraftInstance.mc.theWorld.getCollidingBoundingBoxes(
+                    MinecraftInstance.mc.thePlayer,
                     bb
                 ).isNotEmpty()
             ) {

@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.minecraft.client.Minecraft;
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.client.gui.GuiScreenResourcePacks;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.ResourcePackRepository;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinGuiScreenResourcePacks {
     @Inject(method = "actionPerformed", at = @At(value = "INVOKE", target = "Ljava/util/Collections;reverse(Ljava/util/List;)V", remap = false))
     private void clearHandles(CallbackInfo ci) {
-        ResourcePackRepository repository = Minecraft.getMinecraft().getResourcePackRepository();
+        ResourcePackRepository repository = MinecraftInstance.mc.getResourcePackRepository();
         for (ResourcePackRepository.Entry entry : repository.getRepositoryEntries()) {
             IResourcePack current = repository.getResourcePackInstance();
             if (current == null || !entry.getResourcePackName().equals(current.getPackName()))

@@ -1,6 +1,6 @@
 package net.aspw.client.visual.font.smooth;
 
-import net.minecraft.client.Minecraft;
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
@@ -105,7 +105,7 @@ public abstract class FontLoaders {
     private static Font getSF(int size) {
         Font font;
         try {
-            InputStream is = Minecraft.getMinecraft().getResourceManager()
+            InputStream is = MinecraftInstance.mc.getResourceManager()
                     .getResource(new ResourceLocation("client/font/sfui.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
@@ -120,7 +120,7 @@ public abstract class FontLoaders {
     private static Font getExhibition(int size) {
         Font font;
         try {
-            InputStream is = Minecraft.getMinecraft().getResourceManager()
+            InputStream is = MinecraftInstance.mc.getResourceManager()
                     .getResource(new ResourceLocation("client/font/Icons.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
@@ -136,7 +136,7 @@ public abstract class FontLoaders {
     private static Font getTahoma(int size) {
         Font font;
         try {
-            InputStream is = Minecraft.getMinecraft().getResourceManager()
+            InputStream is = MinecraftInstance.mc.getResourceManager()
                     .getResource(new ResourceLocation("client/font/Tahoma.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
@@ -151,7 +151,7 @@ public abstract class FontLoaders {
     private static Font getTahomaBold(int size) {
         Font font;
         try {
-            InputStream is = Minecraft.getMinecraft().getResourceManager()
+            InputStream is = MinecraftInstance.mc.getResourceManager()
                     .getResource(new ResourceLocation("client/font/TahomaBold.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
@@ -166,7 +166,7 @@ public abstract class FontLoaders {
     private static Font getLog2go(int size) {
         Font font;
         try {
-            InputStream is = Minecraft.getMinecraft().getResourceManager()
+            InputStream is = MinecraftInstance.mc.getResourceManager()
                     .getResource(new ResourceLocation("client/font/marks.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
@@ -181,7 +181,7 @@ public abstract class FontLoaders {
     private static Font getLoggo(int size) {
         Font font;
         try {
-            InputStream is = Minecraft.getMinecraft().getResourceManager()
+            InputStream is = MinecraftInstance.mc.getResourceManager()
                     .getResource(new ResourceLocation("client/font/novicon.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
@@ -196,7 +196,7 @@ public abstract class FontLoaders {
     private static Font getLogo(int size) {
         Font font;
         try {
-            InputStream is = Minecraft.getMinecraft().getResourceManager()
+            InputStream is = MinecraftInstance.mc.getResourceManager()
                     .getResource(new ResourceLocation("client/font/other.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
@@ -211,7 +211,7 @@ public abstract class FontLoaders {
     private static Font getClickgui(int size) {
         Font font;
         try {
-            InputStream is = Minecraft.getMinecraft().getResourceManager()
+            InputStream is = MinecraftInstance.mc.getResourceManager()
                     .getResource(new ResourceLocation("client/font/latobold.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);
@@ -226,7 +226,7 @@ public abstract class FontLoaders {
     private static Font getKiona(int size) {
         Font font;
         try {
-            InputStream is = Minecraft.getMinecraft().getResourceManager()
+            InputStream is = MinecraftInstance.mc.getResourceManager()
                     .getResource(new ResourceLocation("client/font/raleway.ttf")).getInputStream();
             font = Font.createFont(0, is);
             font = font.deriveFont(Font.PLAIN, size);

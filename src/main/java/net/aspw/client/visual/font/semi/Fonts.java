@@ -1,7 +1,7 @@
 package net.aspw.client.visual.font.semi;
 
 import net.aspw.client.util.ClientUtils;
-import net.minecraft.client.Minecraft;
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.client.gui.FontRenderer;
 
 import java.awt.*;
@@ -14,7 +14,7 @@ import java.util.List;
 public class Fonts {
 
     @FontDetails(fontName = "Minecraft Font")
-    public static final FontRenderer minecraftFont = Minecraft.getMinecraft().fontRendererObj;
+    public static final FontRenderer minecraftFont = MinecraftInstance.mc.fontRendererObj;
     private static final List<GameFontRenderer> CUSTOM_FONT_RENDERERS = new ArrayList<>();
     @FontDetails(fontName = "Roboto Medium", fontSize = 35)
     public static GameFontRenderer font35;

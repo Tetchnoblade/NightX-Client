@@ -1,9 +1,9 @@
 package net.aspw.client.injection.forge.mixins.block;
 
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -20,19 +20,19 @@ public abstract class MixinWorld implements IBlockAccess {
      */
     @Overwrite
     public boolean destroyBlock(BlockPos pos, boolean dropBlock) {
-        IBlockState iblockstate = Minecraft.getMinecraft().theWorld.getBlockState(pos);
+        IBlockState iblockstate = MinecraftInstance.mc.theWorld.getBlockState(pos);
         Block block = iblockstate.getBlock();
 
-        Minecraft.getMinecraft().theWorld.playAuxSFX(2001, pos, Block.getStateId(iblockstate));
+        MinecraftInstance.mc.theWorld.playAuxSFX(2001, pos, Block.getStateId(iblockstate));
 
         if (block.getMaterial() == Material.air) {
             return false;
         } else {
             if (dropBlock) {
-                block.dropBlockAsItem(Minecraft.getMinecraft().theWorld, pos, iblockstate, 0);
+                block.dropBlockAsItem(MinecraftInstance.mc.theWorld, pos, iblockstate, 0);
             }
 
-            return Minecraft.getMinecraft().theWorld.setBlockState(pos, Blocks.air.getDefaultState(), 3);
+            return MinecraftInstance.mc.theWorld.setBlockState(pos, Blocks.air.getDefaultState(), 3);
         }
     }
 }

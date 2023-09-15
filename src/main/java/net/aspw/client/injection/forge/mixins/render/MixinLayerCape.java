@@ -2,8 +2,8 @@ package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.visual.Cape;
+import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.render.RenderUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
@@ -38,7 +38,7 @@ public class MixinLayerCape {
     @Overwrite
     public void doRenderLayer(final AbstractClientPlayer entitylivingbaseIn, final float p_177141_2_, final float p_177141_3_, final float partialTicks, final float p_177141_5_, final float p_177141_6_, final float p_177141_7_, final float scale) {
         final Cape cape = Objects.requireNonNull(Client.moduleManager.getModule(Cape.class));
-        if (!entitylivingbaseIn.isInvisible() && entitylivingbaseIn == Minecraft.getMinecraft().thePlayer && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && (cape.getCustomCape().get() || !cape.getCustomCape().get() && entitylivingbaseIn.getLocationCape() != null)) {
+        if (!entitylivingbaseIn.isInvisible() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && (cape.getCustomCape().get() || !cape.getCustomCape().get() && entitylivingbaseIn.getLocationCape() != null)) {
             if (cape.getMovingModeValue().get().equals("Smooth")) {
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 if (cape.getCustomCape().get() && cape.getStyleValue().get().equals("NightX"))

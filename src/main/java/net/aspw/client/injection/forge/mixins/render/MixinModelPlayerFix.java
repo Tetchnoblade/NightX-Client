@@ -3,8 +3,8 @@ package net.aspw.client.injection.forge.mixins.render;
 import net.aspw.client.Client;
 import net.aspw.client.event.UpdateModelEvent;
 import net.aspw.client.features.module.impl.visual.CustomModel;
+import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.render.RenderUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelPlayer;
@@ -525,7 +525,7 @@ public class MixinModelPlayerFix extends ModelBiped {
 
         CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
         GlStateManager.pushMatrix();
-        if ((!customModel.getOnlySelf().getValue() || entityIn == (Minecraft.getMinecraft()).thePlayer)) {
+        if ((!customModel.getOnlySelf().getValue() || entityIn == (MinecraftInstance.mc).thePlayer)) {
             if (customModel.getState() && customModel.getMode().get().contains("Rabbit")) {
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(1.25D, 1.25D, 1.25D);

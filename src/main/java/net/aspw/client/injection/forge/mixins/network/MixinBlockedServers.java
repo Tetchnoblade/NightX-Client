@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.network;
 
 import com.mojang.patchy.BlockedServers;
-import net.minecraft.client.Minecraft;
+import net.aspw.client.util.MinecraftInstance;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -13,6 +13,6 @@ public abstract class MixinBlockedServers {
      */
     @Overwrite
     public static boolean isBlockedServer(String server) {
-        return Minecraft.getMinecraft().isIntegratedServerRunning();
+        return MinecraftInstance.mc.isIntegratedServerRunning();
     }
 }

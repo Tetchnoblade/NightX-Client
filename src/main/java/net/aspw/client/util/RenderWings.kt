@@ -1,6 +1,5 @@
 package net.aspw.client.util
 
-import net.minecraft.client.Minecraft
 import net.minecraft.client.model.ModelBase
 import net.minecraft.client.model.ModelRenderer
 import net.minecraft.util.ResourceLocation
@@ -35,8 +34,8 @@ class RenderWings : ModelBase() {
     fun renderWings(partialTicks: Float) {
         val scale = 100 / 100.0
         val rotate = interpolate(
-            Minecraft.getMinecraft().thePlayer.prevRenderYawOffset,
-            Minecraft.getMinecraft().thePlayer.renderYawOffset,
+            MinecraftInstance.mc.thePlayer.prevRenderYawOffset,
+            MinecraftInstance.mc.thePlayer.renderYawOffset,
             partialTicks
         )
         GL11.glPushMatrix()
@@ -44,11 +43,11 @@ class RenderWings : ModelBase() {
         GL11.glRotated(180.0 + rotate, 0.0, 1.0, 0.0)
         GL11.glTranslated(0.0, -if (playerUsesFullHeight) 1.45 else 1.25 / scale, 0.0)
         GL11.glTranslated(0.0, 0.0, 0.2 / scale)
-        if (Minecraft.getMinecraft().thePlayer.isSneaking) {
+        if (MinecraftInstance.mc.thePlayer.isSneaking) {
             GL11.glTranslated(0.0, 0.125 / scale, 0.0)
         }
         GL11.glColor3f(0.9f, 0.9f, 0.9f)
-        Minecraft.getMinecraft().textureManager.bindTexture(location)
+        MinecraftInstance.mc.textureManager.bindTexture(location)
         for (j in 0..1) {
             GL11.glEnable(2884)
             val f11 = (System.currentTimeMillis() % 1000L).toFloat() / 1000.0f * 3.1415927f * 2.0f

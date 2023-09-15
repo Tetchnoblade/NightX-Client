@@ -5,6 +5,7 @@ import net.aspw.client.event.Render2DEvent;
 import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.features.module.impl.visual.Crosshair;
 import net.aspw.client.features.module.impl.visual.Interface;
+import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.render.RenderUtils;
 import net.aspw.client.visual.font.semi.AWTFontRenderer;
 import net.minecraft.client.Minecraft;
@@ -62,7 +63,7 @@ public abstract class MixinGuiInGame extends MixinGui {
         final Crosshair crosshair = Objects.requireNonNull(Client.moduleManager.getModule(Crosshair.class));
         final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
 
-        if (crosshair.getState() || Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && anInterface.getNof5crossHair().get())
+        if (crosshair.getState() || MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && anInterface.getNof5crossHair().get())
             callbackInfoReturnable.setReturnValue(false);
     }
 
@@ -84,8 +85,8 @@ public abstract class MixinGuiInGame extends MixinGui {
     private void renderTooltip(ScaledResolution sr, float partialTicks, CallbackInfo callbackInfo) {
         final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
 
-        if (Minecraft.getMinecraft().getRenderViewEntity() instanceof EntityPlayer && anInterface.getState() && (anInterface.getBlackHotbarValue().get() || anInterface.getAnimHotbarValue().get())) {
-            final Minecraft mc = Minecraft.getMinecraft();
+        if (MinecraftInstance.mc.getRenderViewEntity() instanceof EntityPlayer && anInterface.getState() && (anInterface.getBlackHotbarValue().get() || anInterface.getAnimHotbarValue().get())) {
+            final Minecraft mc = MinecraftInstance.mc;
             EntityPlayer entityPlayer = (EntityPlayer) mc.getRenderViewEntity();
 
             boolean blackHB = anInterface.getBlackHotbarValue().get();

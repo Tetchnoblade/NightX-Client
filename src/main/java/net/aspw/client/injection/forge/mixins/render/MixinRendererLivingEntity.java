@@ -5,8 +5,8 @@ import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.other.PlayerEdit;
 import net.aspw.client.features.module.impl.visual.ESP;
 import net.aspw.client.features.module.impl.visual.SilentView;
+import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.RotationUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -190,7 +190,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
             GlStateManager.rotate(f * this.getDeathMaxRotation(p_rotateCorpse_1_), 0.0F, 0.0F, 1.0F);
         } else {
             String s = EnumChatFormatting.getTextWithoutFormattingCodes(p_rotateCorpse_1_.getName());
-            if (s != null && (PlayerEdit.rotatePlayer.get() && p_rotateCorpse_1_.equals(Minecraft.getMinecraft().thePlayer) && playerEdit.getState()) && (!(p_rotateCorpse_1_ instanceof EntityPlayer) || ((EntityPlayer) p_rotateCorpse_1_).isWearing(EnumPlayerModelParts.CAPE))) {
+            if (s != null && (PlayerEdit.rotatePlayer.get() && p_rotateCorpse_1_.equals(MinecraftInstance.mc.thePlayer) && playerEdit.getState()) && (!(p_rotateCorpse_1_ instanceof EntityPlayer) || ((EntityPlayer) p_rotateCorpse_1_).isWearing(EnumPlayerModelParts.CAPE))) {
                 GlStateManager.translate(0.0F, p_rotateCorpse_1_.height + PlayerEdit.yPos.get() - 1.8F, 0.0F);
                 GlStateManager.rotate(PlayerEdit.xRot.get(), 0.0F, 0.0F, 1.0F);
             }
@@ -287,10 +287,10 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
                 }
             }
 
-            float renderpitch = (Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && rotations.getState() && rotations.getSilentValue().get() && entity == Minecraft.getMinecraft().thePlayer) ? (entity.prevRotationPitch + (((RotationUtils.serverRotation.getPitch() != 0.0f) ? RotationUtils.serverRotation.getPitch() : entity.rotationPitch) - entity.prevRotationPitch)) : (entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks);
-            float renderyaw = (Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && rotations.getState() && rotations.getSilentValue().get() && entity == Minecraft.getMinecraft().thePlayer) ? (entity.prevRotationYaw + (((RotationUtils.serverRotation.getYaw() != 0.0f) ? RotationUtils.serverRotation.getYaw() : entity.rotationYaw) - entity.prevRotationYaw)) : (entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks);
+            float renderpitch = (MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && rotations.getState() && rotations.getSilentValue().get() && entity == MinecraftInstance.mc.thePlayer) ? (entity.prevRotationPitch + (((RotationUtils.serverRotation.getPitch() != 0.0f) ? RotationUtils.serverRotation.getPitch() : entity.rotationPitch) - entity.prevRotationPitch)) : (entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks);
+            float renderyaw = (MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && rotations.getState() && rotations.getSilentValue().get() && entity == MinecraftInstance.mc.thePlayer) ? (entity.prevRotationYaw + (((RotationUtils.serverRotation.getYaw() != 0.0f) ? RotationUtils.serverRotation.getYaw() : entity.rotationYaw) - entity.prevRotationYaw)) : (entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks);
 
-            if (rotations.getState() && rotations.getSilentValue().get() && entity.equals(Minecraft.getMinecraft().thePlayer) && rotations.shouldRotate()) {
+            if (rotations.getState() && rotations.getSilentValue().get() && entity.equals(MinecraftInstance.mc.thePlayer) && rotations.shouldRotate()) {
                 GL11.glPushMatrix();
                 GL11.glPushAttrib(1048575);
                 GL11.glDisable(2929);
@@ -300,11 +300,11 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
                 GL11.glBlendFunc(770, 771);
                 GL11.glDisable(2896);
                 GL11.glPolygonMode(1032, 6914);
-                if (Minecraft.getMinecraft().thePlayer.hurtTime > 0)
+                if (MinecraftInstance.mc.thePlayer.hurtTime > 0)
                     GL11.glColor4f(255, 0, 0, 8);
                 else GL11.glColor4f(255, 200, 0, 8f);
                 GL11.glRotatef(renderyaw - f, 0, 0.001f, 0);
-                this.mainModel.render(Minecraft.getMinecraft().thePlayer, f6, f5, renderpitch, f2, renderpitch, 0.0625F);
+                this.mainModel.render(MinecraftInstance.mc.thePlayer, f6, f5, renderpitch, f2, renderpitch, 0.0625F);
                 GL11.glEnable(2896);
                 GL11.glDisable(3042);
                 GL11.glEnable(3553);
@@ -339,8 +339,8 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
     @Overwrite
     protected <T extends EntityLivingBase> void renderModel(T entitylivingbaseIn, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float scaleFactor) {
         boolean visible = !entitylivingbaseIn.isInvisible();
-        boolean semiVisible = !visible && (!entitylivingbaseIn.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer));
-        boolean silent = entitylivingbaseIn == Minecraft.getMinecraft().thePlayer && Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class)).getState() && Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class)).getSilentValue().get() && Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class)).shouldRotate();
+        boolean semiVisible = !visible && (!entitylivingbaseIn.isInvisibleToPlayer(MinecraftInstance.mc.thePlayer));
+        boolean silent = entitylivingbaseIn == MinecraftInstance.mc.thePlayer && Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class)).getState() && Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class)).getSilentValue().get() && Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class)).shouldRotate();
 
         if (visible || semiVisible || silent) {
             if (!this.bindEntityTexture(entitylivingbaseIn))

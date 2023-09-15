@@ -4,7 +4,7 @@ import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.visual.SilentView;
-import net.minecraft.client.Minecraft;
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -97,8 +97,8 @@ public abstract class MixinModelBiped {
         final SilentView silentView = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
         final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
         final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
-        if (p_setRotationAngles7 instanceof EntityPlayer && p_setRotationAngles7.equals(Minecraft.getMinecraft().thePlayer) && silentView.getNormalRotationsValue().get() && !silentView.getSilentValue().get() && silentView.getState() && (silentView.getModuleCheckValue().get() && silentView.shouldRotate() || !silentView.getModuleCheckValue().get())) {
-            bipedHead.rotateAngleX = (float) Math.toRadians(SilentView.lerp(Minecraft.getMinecraft().timer.renderPartialTicks, SilentView.getPrevHeadPitch(), SilentView.getHeadPitch()));
+        if (p_setRotationAngles7 instanceof EntityPlayer && p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer) && silentView.getNormalRotationsValue().get() && !silentView.getSilentValue().get() && silentView.getState() && (silentView.getModuleCheckValue().get() && silentView.shouldRotate() || !silentView.getModuleCheckValue().get())) {
+            bipedHead.rotateAngleX = (float) Math.toRadians(SilentView.lerp(MinecraftInstance.mc.timer.renderPartialTicks, SilentView.getPrevHeadPitch(), SilentView.getHeadPitch()));
         }
         if (heldItemRight == 3) {
             this.bipedRightArm.rotateAngleZ = 0F;
@@ -107,8 +107,8 @@ public abstract class MixinModelBiped {
         }
         if (heldItemRight == 0 || heldItemRight == 2)
             return;
-        if ((killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking()) && Minecraft.getMinecraft().gameSettings.thirdPersonView != 0 && p_setRotationAngles7 instanceof EntityPlayer && p_setRotationAngles7.equals(Minecraft.getMinecraft().thePlayer)) {
-            if (Minecraft.getMinecraft().thePlayer.getHeldItem().getItem() instanceof ItemSword) {
+        if ((killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking()) && MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && p_setRotationAngles7 instanceof EntityPlayer && p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer)) {
+            if (MinecraftInstance.mc.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
                 this.bipedRightArm.rotateAngleZ = 0F;
                 this.bipedRightArm.rotateAngleX = this.bipedRightArm.rotateAngleX - ((float) Math.PI / 0.94f) * 0.034f;
                 this.bipedRightArm.rotateAngleY = -0.5235988F;

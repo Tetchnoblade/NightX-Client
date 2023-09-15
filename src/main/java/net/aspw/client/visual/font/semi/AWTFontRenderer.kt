@@ -1,6 +1,6 @@
 package net.aspw.client.visual.font.semi
 
-import net.minecraft.client.Minecraft
+import net.aspw.client.util.MinecraftInstance
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.texture.TextureUtil
 import org.lwjgl.opengl.GL11
@@ -116,14 +116,14 @@ class AWTFontRenderer(val font: Font, startChar: Int = 0, stopChar: Int = 255) {
 
                 // Ugly solution, because floating point numbers, but I think that shouldn't be that much of a problem
                 GlStateManager.scale(reverse, reverse, reverse)
-                Minecraft.getMinecraft().fontRendererObj.drawString(
+                MinecraftInstance.mc.fontRendererObj.drawString(
                     "$char",
                     currX.toFloat() * scale.toFloat() + 1,
                     2f,
                     color,
                     false
                 )
-                currX += Minecraft.getMinecraft().fontRendererObj.getStringWidth("$char") * reverse
+                currX += MinecraftInstance.mc.fontRendererObj.getStringWidth("$char") * reverse
 
                 GlStateManager.scale(scale, scale, scale)
                 GlStateManager.bindTexture(textureID)

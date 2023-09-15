@@ -3,7 +3,7 @@ package net.aspw.client.features.module.impl.other
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.minecraft.client.Minecraft
+import net.aspw.client.util.MinecraftInstance
 import org.lwjgl.opengl.Display
 
 @ModuleInfo(
@@ -30,7 +30,7 @@ class FreeLook : Module() {
     }
 
     companion object {
-        private val mc = Minecraft.getMinecraft()
+        private val mc = MinecraftInstance.mc
 
         @JvmField
         var perspectiveToggled = false

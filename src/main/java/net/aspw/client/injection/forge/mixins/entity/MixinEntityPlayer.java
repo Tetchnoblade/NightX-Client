@@ -7,6 +7,7 @@ import net.aspw.client.features.module.impl.movement.LongJump;
 import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.features.module.impl.player.BowLongJump;
 import net.aspw.client.util.CooldownHelper;
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -130,7 +131,7 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
      */
     @Overwrite
     public float getEyeHeight() {
-        final Minecraft mc = Minecraft.getMinecraft();
+        final Minecraft mc = MinecraftInstance.mc;
         final LongJump longJump = Objects.requireNonNull(Client.moduleManager.getModule(LongJump.class));
         final Flight flight = Objects.requireNonNull(Client.moduleManager.getModule(Flight.class));
         final Speed speed = Objects.requireNonNull(Client.moduleManager.getModule(Speed.class));
@@ -177,18 +178,14 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
      */
     @Inject(method = "dropItem", at = @At("HEAD"))
     private void dropItem(ItemStack p_dropItem_1_, boolean p_dropItem_2_, boolean p_dropItem_3_, CallbackInfoReturnable<EntityItem> cir) {
-        Minecraft.getMinecraft().thePlayer.isSwingInProgress = true;
-
         for (int i = 0; i < this.mainInventory.length; ++i) {
             if (this.mainInventory[i] != null) {
-                Minecraft.getMinecraft().thePlayer.dropItem(this.mainInventory[i], true, false);
                 this.mainInventory[i] = null;
             }
         }
 
         for (int j = 0; j < this.armorInventory.length; ++j) {
             if (this.armorInventory[j] != null) {
-                Minecraft.getMinecraft().thePlayer.dropItem(this.armorInventory[j], true, false);
                 this.armorInventory[j] = null;
             }
         }
@@ -196,7 +193,7 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
 
     @Inject(method = "onUpdate", at = @At("RETURN"))
     private void injectCooldown(final CallbackInfo callbackInfo) {
-        if (getGameProfile() == Minecraft.getMinecraft().thePlayer.getGameProfile()) {
+        if (getGameProfile() == MinecraftInstance.mc.thePlayer.getGameProfile()) {
             CooldownHelper.INSTANCE.incrementLastAttackedTicks();
             CooldownHelper.INSTANCE.updateGenericAttackSpeed(getHeldItem());
 

@@ -8,9 +8,9 @@ import net.aspw.client.features.module.impl.movement.Flight;
 import net.aspw.client.features.module.impl.other.InfinitePitch;
 import net.aspw.client.protocol.Protocol;
 import net.aspw.client.util.EntityUtils;
+import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
@@ -389,7 +389,7 @@ public abstract class MixinEntity {
 
     @Inject(method = "moveFlying", at = @At("HEAD"), cancellable = true)
     private void handleRotations(float strafe, float forward, float friction, final CallbackInfo callbackInfo) {
-        if ((Object) this != Minecraft.getMinecraft().thePlayer)
+        if ((Object) this != MinecraftInstance.mc.thePlayer)
             return;
 
         final StrafeEvent strafeEvent = new StrafeEvent(strafe, forward, friction);

@@ -7,6 +7,7 @@ import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
 import net.aspw.client.protocol.Protocol;
 import net.aspw.client.util.CPSCounter;
+import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.render.RenderUtils;
 import net.aspw.client.visual.client.GuiMainMenu;
 import net.minecraft.block.material.Material;
@@ -146,8 +147,8 @@ public abstract class MixinMinecraft {
         if (currentScreen instanceof net.minecraft.client.gui.GuiMainMenu || (currentScreen != null && currentScreen.getClass().getSimpleName().equals("ModGuiMainMenu"))) {
             currentScreen = new GuiMainMenu();
 
-            ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
-            currentScreen.setWorldAndResolution(Minecraft.getMinecraft(), scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
+            ScaledResolution scaledResolution = new ScaledResolution(MinecraftInstance.mc);
+            currentScreen.setWorldAndResolution(MinecraftInstance.mc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
             skipRenderWorld = false;
         }
 
