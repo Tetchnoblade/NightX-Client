@@ -734,6 +734,14 @@ class Scaffold : Module() {
             mc.thePlayer.motionZ = 0.0
         }
 
+        val blockSlot: Int
+        if (mc.thePlayer.heldItem == null || mc.thePlayer.heldItem.item !is ItemBlock) {
+            blockSlot = InventoryUtils.findAutoBlockBlock()
+            if (blockSlot == -1) return
+            mc.thePlayer.inventory.currentItem = blockSlot - 36
+            mc.playerController.updateController()
+        }
+
         // No SpeedPot
         if (noSpeedPotValue.get() && mc.thePlayer.isPotionActive(Potion.moveSpeed) && !canTower && mc.thePlayer.onGround) {
             mc.thePlayer.motionX = mc.thePlayer.motionX * speedSlowDown.get()
@@ -910,22 +918,14 @@ class Scaffold : Module() {
                 Speed::class.java
             )!!.state) && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) && launchY - 1 != (targetPlace)!!.vec3.yCoord.toInt())
         ) return
-        var blockSlot = -1
-        var itemStack = mc.thePlayer.heldItem
-        if (mc.thePlayer.heldItem == null || mc.thePlayer.heldItem.item !is ItemBlock) {
-            blockSlot = InventoryUtils.findAutoBlockBlock()
-            if (blockSlot == -1) return
-            mc.thePlayer.inventory.currentItem = blockSlot - 36
-            mc.playerController.updateController()
-        }
-        if (itemStack != null && itemStack.item != null && itemStack.item is ItemBlock) {
-            val block = (itemStack.item as ItemBlock).getBlock()
-            if (InventoryUtils.BLOCK_BLACKLIST.contains(block) || !block.isFullCube || itemStack.stackSize <= 0) return
+        if (mc.thePlayer.heldItem != null && mc.thePlayer.heldItem.item != null && mc.thePlayer.heldItem.item is ItemBlock) {
+            val block = (mc.thePlayer.heldItem.item as ItemBlock).getBlock()
+            if (InventoryUtils.BLOCK_BLACKLIST.contains(block) || !block.isFullCube || mc.thePlayer.heldItem.stackSize <= 0) return
         }
         if (mc.playerController.onPlayerRightClick(
                 mc.thePlayer,
                 mc.theWorld,
-                itemStack,
+                mc.thePlayer.heldItem,
                 (targetPlace)!!.blockPos,
                 (targetPlace)!!.enumFacing,
                 (targetPlace)!!.vec3
