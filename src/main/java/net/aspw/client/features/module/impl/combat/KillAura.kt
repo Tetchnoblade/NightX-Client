@@ -157,8 +157,11 @@ class KillAura : Module() {
     )
     private val targetModeValue = ListValue("TargetMode", arrayOf("Single", "Switch", "Multi"), "Single")
 
-    // Bypass
+    // Bypasses
     private val swingValue = ListValue("Swing", arrayOf("Full", "Smart", "Packet", "None"), "Full")
+    private val particleValue = ListValue("Particle", arrayOf("Hit", "Always", "None"), "Hit")
+    private val sharpnessValue = BoolValue("Sharpness", true, { !particleValue.get().equals("none", true) })
+    private val criticalsValue = BoolValue("Criticals", true, { !particleValue.get().equals("none", true) })
 
     // AutoBlock
     val autoBlockModeValue =
@@ -231,8 +234,6 @@ class KillAura : Module() {
     var blockingStatus = false
     var verusBlocking = false
     var fakeBlock = false
-
-    var spinYaw = 0F
 
     /**
      * Enable kill aura module
@@ -339,13 +340,26 @@ class KillAura : Module() {
         update()
 
         if (target != null) {
+            when (particleValue.get().lowercase()) {
+                "hit" -> {
+                    if (target?.hurtTime!! > 9) {
+                        if (sharpnessValue.get())
+                            mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT_MAGIC)
+                        if (criticalsValue.get())
+                            mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT)
+                    }
+                }
+
+                "always" -> {
+                    if (sharpnessValue.get())
+                        mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT_MAGIC)
+                    if (criticalsValue.get())
+                        mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT)
+                }
+            }
             if (target?.hurtTime!! > 7.8) {
                 if (animationValue.get())
                     mc.itemRenderer.resetEquippedProgress2()
-            }
-            if (target?.hurtTime!! > 9) {
-                mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT_MAGIC)
-                mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT)
             }
         }
 
