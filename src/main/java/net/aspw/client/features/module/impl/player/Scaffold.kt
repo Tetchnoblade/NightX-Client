@@ -174,6 +174,7 @@ class Scaffold : Module() {
     private val customMoveSpeedValue = FloatValue("CustomMoveSpeed", 0.2f, 0f, 5f) { customSpeedValue.get() }
     private val animationValue = BoolValue("Animation", true)
     private val downValue = BoolValue("Down", true)
+    private val safeStack = BoolValue("SafeStack", true)
     private val noHitCheckValue = BoolValue("NoHitCheck", false)
     private val sameYValue = BoolValue("KeepY", false)
     private val autoJumpValue = BoolValue("AutoJump", false)
@@ -736,7 +737,8 @@ class Scaffold : Module() {
 
         val blockSlot: Int
         if (mc.thePlayer.heldItem == null || mc.thePlayer.heldItem.item !is ItemBlock) {
-            blockSlot = InventoryUtils.findAutoBlockBlock()
+            blockSlot =
+                if (!safeStack.get()) InventoryUtils.findAutoBlockBlock() else InventoryUtils.findLargestAutoBlockBlock()!!
             if (blockSlot == -1) return
             mc.thePlayer.inventory.currentItem = blockSlot - 36
             mc.playerController.updateController()
