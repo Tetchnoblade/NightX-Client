@@ -728,13 +728,7 @@ class Scaffold : Module() {
         synchronized(positions) { positions.clear() }
     }
 
-    @EventTarget
-    fun onMotion(event: MotionEvent) {
-        if (canTower && event.eventState == EventState.POST && !towerMove.get()) {
-            mc.thePlayer.motionX = 0.0
-            mc.thePlayer.motionZ = 0.0
-        }
-
+    private fun switchToBlock() {
         val blockSlot: Int
         if (mc.thePlayer.heldItem == null || mc.thePlayer.heldItem.item !is ItemBlock) {
             blockSlot =
@@ -743,6 +737,16 @@ class Scaffold : Module() {
             mc.thePlayer.inventory.currentItem = blockSlot - 36
             mc.playerController.updateController()
         }
+    }
+
+    @EventTarget
+    fun onMotion(event: MotionEvent) {
+        if (canTower && event.eventState == EventState.POST && !towerMove.get()) {
+            mc.thePlayer.motionX = 0.0
+            mc.thePlayer.motionZ = 0.0
+        }
+
+        switchToBlock()
 
         // No SpeedPot
         if (noSpeedPotValue.get() && mc.thePlayer.isPotionActive(Potion.moveSpeed) && !canTower && mc.thePlayer.onGround) {
@@ -920,6 +924,7 @@ class Scaffold : Module() {
                 Speed::class.java
             )!!.state) && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) && launchY - 1 != (targetPlace)!!.vec3.yCoord.toInt())
         ) return
+        switchToBlock()
         if (mc.thePlayer.heldItem != null && mc.thePlayer.heldItem.item != null && mc.thePlayer.heldItem.item is ItemBlock) {
             val block = (mc.thePlayer.heldItem.item as ItemBlock).getBlock()
             if (InventoryUtils.BLOCK_BLACKLIST.contains(block) || !block.isFullCube || mc.thePlayer.heldItem.stackSize <= 0) return
