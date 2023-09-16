@@ -924,7 +924,6 @@ class Scaffold : Module() {
                 Speed::class.java
             )!!.state) && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) && launchY - 1 != (targetPlace)!!.vec3.yCoord.toInt())
         ) return
-        switchToBlock()
         if (mc.thePlayer.heldItem != null && mc.thePlayer.heldItem.item != null && mc.thePlayer.heldItem.item is ItemBlock) {
             val block = (mc.thePlayer.heldItem.item as ItemBlock).getBlock()
             if (InventoryUtils.BLOCK_BLACKLIST.contains(block) || !block.isFullCube || mc.thePlayer.heldItem.stackSize <= 0) return
