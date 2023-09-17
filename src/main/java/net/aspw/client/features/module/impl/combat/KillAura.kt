@@ -129,6 +129,7 @@ class KillAura : Module() {
     private val animationValue = BoolValue("Animation", false)
     private val noInventoryAttackValue = BoolValue("NoInvAttack", false)
     private val checkSprintValue = BoolValue("StopSprint", false)
+    private val throughWallsValue = BoolValue("No-Walls", false, { rotations.get().equals("undetectable", true) })
     private val randomValue = BoolValue("Random", true, { rotations.get().equals("undetectable", true) })
     val movementFix = BoolValue("MovementFix", false, { !rotations.get().equals("none", true) })
     private val silentMovementFix = BoolValue("SilentMovementFix", false, { !rotations.get().equals("none", true) })
@@ -863,7 +864,7 @@ class KillAura : Module() {
     }
 
     private fun getTargetRotation(entity: Entity): Rotation? {
-        var boundingBox = entity.entityBoundingBox
+        val boundingBox = entity.entityBoundingBox
         if (rotations.get().equals("HvH", ignoreCase = true)) {
             val limitedRotation = RotationUtils.serverRotation?.let {
                 RotationUtils.limitAngleChange(
@@ -881,12 +882,22 @@ class KillAura : Module() {
             if (maxTurnSpeed.get() <= 0F)
                 return RotationUtils.serverRotation
 
-            val (_, rotation) = RotationUtils.searchCenter(
+            val (_, rotation) = if (!throughWallsValue.get()) RotationUtils.searchCenter(
                 boundingBox,
                 false,
                 true,
                 false,
                 mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.5f,
+                maxRange,
+                if (randomValue.get()) 20F else 0F,
+                false
+            ) ?: return null
+            else RotationUtils.searchCenter(
+                boundingBox,
+                false,
+                true,
+                false,
+                false,
                 maxRange,
                 if (randomValue.get()) 20F else 0F,
                 false
@@ -1105,16 +1116,16 @@ class KillAura : Module() {
     private val maxRange: Float
         get() = if (!noHitCheck.get()) max(
             rangeValue.get() + prevRangeValue.get() + 0.9f,
-            rangeValue.get() + prevRangeValue.get() + 0.9f
-        ) else max(rangeValue.get() - 0.3f, rangeValue.get() - 0.3f)
+            if (!throughWallsValue.get()) rangeValue.get() + prevRangeValue.get() + 0.9f else 0.0f
+        ) else max(rangeValue.get() - 0.3f, if (!throughWallsValue.get()) rangeValue.get() - 0.3f else 0.0f)
 
     private val attackRange: Float
         get() = if (!noHitCheck.get()) max(
             rangeValue.get() - 1.3f,
-            rangeValue.get() - 1.3f
+            if (!throughWallsValue.get()) rangeValue.get() - 1.3f else 0.0f
         ) else max(
             rangeValue.get() - 0.3f,
-            rangeValue.get() - 0.3f
+            if (!throughWallsValue.get()) rangeValue.get() - 0.3f else 0.0f
         )
 
     /**
