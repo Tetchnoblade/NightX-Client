@@ -724,29 +724,29 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.typesafe/config/1.2.1/bdacf4f82ce9b29cd474bfde2e91eeb0ca623d28/config-1.2.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: com.viaversion:viabackwards:4.7.0">
+    <library name="Gradle: com.viaversion:viabackwards:4.8.0-1.20.2-pre2-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.7.0/e728d251ca465e71a2d9727b8fc7422020ae5d1b/viabackwards-4.7.0.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.8.0-1.20.2-pre2-SNAPSHOT/9d4453e1697c90b90d6524b2571ec1590390d45d/viabackwards-4.8.0-1.20.2-pre2-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.7.0/235e7717dd4b1aa6b1b2a98c1a69006391669fc/viabackwards-4.7.0-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.8.0-1.20.2-pre2-SNAPSHOT/8021a2b03072fc12cecc500518503ed4567d24cd/viabackwards-4.8.0-1.20.2-pre2-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: com.viaversion:viarewind-core:2.0.4-SNAPSHOT">
+    <library name="Gradle: com.viaversion:viarewind-core:3.0.0-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viarewind-core/2.0.4-SNAPSHOT/6f8f49cd9f996ca439c23d67eab7048452941702/viarewind-core-2.0.4-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viarewind-core/3.0.0-SNAPSHOT/6f1d1a6d3b772264adfda1a6865abcb68f3081c9/viarewind-core-3.0.0-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
-    <library name="Gradle: com.viaversion:viaversion:4.7.0">
+    <library name="Gradle: com.viaversion:viaversion:4.8.0-1.20.2-pre2-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.7.0/a881866da980c9ca657d39eff0dd6cb89c669629/viaversion-4.7.0.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.8.0-1.20.2-pre2-SNAPSHOT/a6dcfa52e8ddcf6a972b2f7eb253912d3f6d1290/viaversion-4.8.0-1.20.2-pre2-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.7.0/dc3d4c24592bc08966e13a283745e662bb4e0399/viaversion-4.7.0-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.8.0-1.20.2-pre2-SNAPSHOT/72fa9fbace1dbcb43f186c40046689f2a8b5da32/viaversion-4.8.0-1.20.2-pre2-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: commons-codec:commons-codec:1.9">
@@ -912,15 +912,15 @@
       <JAVADOC />
       <SOURCES />
     </library>
-    <library name="Gradle: net.raphimc:ViaLoader:2.2.5-SNAPSHOT">
+    <library name="Gradle: net.raphimc:ViaLoader:2.2.9-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaLoader/2.2.5-SNAPSHOT/cbfc2cf2ff19017f5588a273a43a89f90f1679e/ViaLoader-2.2.5-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaLoader/2.2.9-SNAPSHOT/f2f2546d38e59949fcf6204313577b589819b847/ViaLoader-2.2.9-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaLoader/2.2.5-SNAPSHOT/5880ef915024f79815afe466c15f0cef1b87b475/ViaLoader-2.2.5-SNAPSHOT-javadoc.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaLoader/2.2.9-SNAPSHOT/49f02784d233fd3a67bf2158074921ec6d9ff238/ViaLoader-2.2.9-SNAPSHOT-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaLoader/2.2.5-SNAPSHOT/7a3316d25c9e7047b9c2944a786a8a51c1ec1c27/ViaLoader-2.2.5-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaLoader/2.2.9-SNAPSHOT/a341894d111acba22b513b32965d4599871c627e/ViaLoader-2.2.9-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: net.sf.jopt-simple:jopt-simple:4.6">
@@ -1274,15 +1274,15 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scijava/native-lib-loader/2.0.2/b1e0fa440cac2b1ba8ee6694f5a70cd4d79ff85b/native-lib-loader-2.0.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.slf4j:slf4j-api:2.0.7">
+    <library name="Gradle: org.slf4j:slf4j-api:2.0.9">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.7/41eb7184ea9d556f23e18b5cb99cad1f8581fc00/slf4j-api-2.0.7.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.9/7cf2726fdcfbc8610f9a71fb3ed639871f315340/slf4j-api-2.0.9.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.7/20dc281d86b894bc9ff32905832e6599626da03c/slf4j-api-2.0.7-javadoc.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.9/da874a973c797fa1e233fffd2a07d9d38e76e7aa/slf4j-api-2.0.9-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.7/f887f95694cd20d51a062446b6e3d09dd02d98ff/slf4j-api-2.0.7-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.9/97e46b94d70f47892145e09d685461245584d596/slf4j-api-2.0.9-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.spongepowered:mixin:0.7.11-SNAPSHOT">
@@ -1296,15 +1296,15 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.7.11-SNAPSHOT/2f1c5d7d49889d506dac93e7c3ee7707dc072e4d/mixin-0.7.11-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.yaml:snakeyaml:2.0">
+    <library name="Gradle: org.yaml:snakeyaml:2.2">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/2.0/3aab2116756442bf0d4cd1c089b24d34c3baa253/snakeyaml-2.0.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/2.2/3af797a25458550a16bf89acc8e4ab2b7f2bfce0/snakeyaml-2.2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/2.0/5d3db9365672a59baaf0e21362ee9010c4693029/snakeyaml-2.0-javadoc.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/2.2/699e84c4befdcb1c9fb5942264912fb389d88ce8/snakeyaml-2.2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/2.0/b29e84cfffae4be26d4a4c9443d9f246ad4ec63e/snakeyaml-2.0-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/2.2/575a7915b847393207642575c139177ac2b2ac23/snakeyaml-2.2-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: oshi-project:oshi-core:1.1">

@@ -21,10 +21,10 @@ public class VersionSlider extends GuiButton {
         this.values = VersionEnum.SORTED_VERSIONS;
         Collections.reverse(values);
         this.sliderValue = dragValue;
-        if (getSliderVersion().getName().equals("1.20"))
-            this.displayString = "Protocol: 1.20/1";
-        else if (getSliderVersion().getName().equals("1.18/1.18.1"))
+        if (getSliderVersion().getName().equals("1.18/1.18.1"))
             this.displayString = "Protocol: 1.18/1";
+        else if (getSliderVersion().getName().equals("1.20/1.20.1"))
+            this.displayString = "Protocol: 1.20/1";
         else this.displayString = "Protocol: " + getSliderVersion().getName();
     }
 
@@ -66,10 +66,10 @@ public class VersionSlider extends GuiButton {
                 this.sliderValue = (float) (mouseX - (this.xPosition + 4)) / (float) (this.width - 8);
                 this.sliderValue = MathHelper.clamp_float(this.sliderValue, 0.0F, 1.0F);
                 this.dragValue = sliderValue;
-                if (getSliderVersion().getName().equals("1.20"))
-                    this.displayString = "Protocol: 1.20/1";
-                else if (getSliderVersion().getName().equals("1.18/1.18.1"))
+                if (getSliderVersion().getName().equals("1.18/1.18.1"))
                     this.displayString = "Protocol: 1.18/1";
+                else if (getSliderVersion().getName().equals("1.20/1.20.1"))
+                    this.displayString = "Protocol: 1.20/1";
                 else this.displayString = "Protocol: " + getSliderVersion().getName();
                 Protocol.targetVersion = getSliderVersion();
             }
@@ -93,10 +93,10 @@ public class VersionSlider extends GuiButton {
             this.sliderValue = (float) (mouseX - (this.xPosition + 4)) / (float) (this.width - 8);
             this.sliderValue = MathHelper.clamp_float(this.sliderValue, 0.0F, 1.0F);
             this.dragValue = sliderValue;
-            if (getSliderVersion().getName().equals("1.20"))
-                this.displayString = "Protocol: 1.20/1";
-            else if (getSliderVersion().getName().equals("1.18/1.18.1"))
+            if (getSliderVersion().getName().equals("1.18/1.18.1"))
                 this.displayString = "Protocol: 1.18/1";
+            else if (getSliderVersion().getName().equals("1.20/1.20.1"))
+                this.displayString = "Protocol: 1.20/1";
             else this.displayString = "Protocol: " + getSliderVersion().getName();
             Protocol.targetVersion = getSliderVersion();
             this.dragging = true;
