@@ -229,7 +229,6 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
             final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
             final Sprint sprint = Objects.requireNonNull(Client.moduleManager.getModule(Sprint.class));
             if (killAura.getState() && killAura.getMovementFix().get() && killAura.getTarget() != null) {
-                jumpEvent.cancelEvent();
                 jumpEvent.setYaw(RotationUtils.targetRotation != null ? RotationUtils.targetRotation.getYaw() : (RotationUtils.serverRotation != null ? RotationUtils.serverRotation.getYaw() : this.rotationYaw));
             } else if (sprint.getState() && sprint.getAllDirectionsValue().get())
                 jumpEvent.setYaw(MovementUtils.getRawDirection());
