@@ -10,6 +10,7 @@ import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.features.module.impl.visual.SilentView;
 import net.aspw.client.protocol.Protocol;
+import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.MovementUtils;
 import net.aspw.client.util.RotationUtils;
 import net.minecraft.block.Block;
@@ -215,7 +216,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
      */
     @Overwrite
     protected void jump() {
-        final JumpEvent jumpEvent = new JumpEvent(this.getJumpUpwardsMotion());
+        final JumpEvent jumpEvent = new JumpEvent(this.getJumpUpwardsMotion(), this.rotationYaw);
         Client.eventManager.callEvent(jumpEvent);
         if (jumpEvent.isCancelled())
             return;
@@ -228,12 +229,12 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
         if (this.isSprinting()) {
             final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
             final Sprint sprint = Objects.requireNonNull(Client.moduleManager.getModule(Sprint.class));
-            float yaw = this.rotationYaw;
-            if (killAura.getState() && killAura.getMovementFix().get() && killAura.getTarget() != null)
-                yaw = RotationUtils.targetRotation != null ? RotationUtils.targetRotation.getYaw() : (RotationUtils.serverRotation != null ? RotationUtils.serverRotation.getYaw() : yaw);
-            else if (sprint.getState() && sprint.getAllDirectionsValue().get())
-                yaw = MovementUtils.getRawDirection();
-            float f = yaw * 0.017453292F;
+            if (killAura.getState() && killAura.getMovementFix().get() && killAura.getTarget() != null) {
+                jumpEvent.cancelEvent();
+                jumpEvent.setYaw(RotationUtils.targetRotation != null ? RotationUtils.targetRotation.getYaw() : (RotationUtils.serverRotation != null ? RotationUtils.serverRotation.getYaw() : this.rotationYaw));
+            } else if (sprint.getState() && sprint.getAllDirectionsValue().get())
+                jumpEvent.setYaw(MovementUtils.getRawDirection());
+            float f = jumpEvent.getYaw() * ((float) Math.PI / 180F);
             this.motionX -= MathHelper.sin(f) * 0.2F;
             this.motionZ += MathHelper.cos(f) * 0.2F;
         }
@@ -268,7 +269,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @ModifyConstant(method = "onLivingUpdate", constant = @Constant(doubleValue = 0.005D))
     private double ViaVersion_MovementThreshold(double constant) {
-        if (!Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x"))
+        if (!MinecraftInstance.mc.isIntegratedServerRunning() && !Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x"))
             return 0.003D;
         return 0.005D;
     }

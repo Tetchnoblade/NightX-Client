@@ -66,7 +66,6 @@ class Speed : Module() {
         AACGround(),
         AACGround2(),
         AACHop350(),
-        AACHop3313(),
         AACHop438(),
         AACYPort(),
         AACYPort2(),
@@ -204,7 +203,6 @@ class Speed : Module() {
         "Ground",
         "Ground2",
         "Hop3.5.0",
-        "Hop3.3.13",
         "Hop4.3.8",
         "YPort",
         "YPort2"

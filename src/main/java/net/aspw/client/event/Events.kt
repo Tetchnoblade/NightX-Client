@@ -64,7 +64,7 @@ class UpdateModelEvent(val player: EntityPlayer, val model: ModelPlayer) : Event
  *
  * @param motion jump motion (y motion)
  */
-class JumpEvent(var motion: Float) : CancellableEvent()
+class JumpEvent(var motion: Float, var yaw: Float) : CancellableEvent()
 
 /**
  * Called when user press a key once
