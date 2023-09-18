@@ -113,7 +113,7 @@ public final class MovementUtils extends MinecraftInstance {
     public static boolean isVisualBlocking() {
         final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
         final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
-        return Animations.swingAnimValue.get().equals("1.7") && mc.thePlayer.swingProgress != 0.0F && !mc.thePlayer.isEating() && !mc.thePlayer.isUsingItem() && !tpAura.isBlocking() && !mc.thePlayer.isBlocking() && (killAura.getTarget() != null && (killAura.getAutoBlockModeValue().get().equals("None") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword)) || killAura.getTarget() == null);
+        return Animations.swingAnimValue.get().equals("1.7") && !mc.thePlayer.isEating() && !mc.thePlayer.isUsingItem() && !tpAura.isBlocking() && !mc.thePlayer.isBlocking() && (killAura.getTarget() != null && (killAura.getAutoBlockModeValue().get().equals("None") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword)) || killAura.getTarget() == null);
     }
 
     /**
