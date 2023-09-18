@@ -6,6 +6,7 @@ import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.util.MovementUtils;
 import net.aspw.client.util.timer.MSTimer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -194,6 +195,7 @@ public abstract class MixinItemRenderer {
         float f1 = abstractclientplayer.getSwingProgress(partialTicks);
         float f2 = abstractclientplayer.prevRotationPitch + (abstractclientplayer.rotationPitch - abstractclientplayer.prevRotationPitch) * partialTicks;
         float f3 = abstractclientplayer.prevRotationYaw + (abstractclientplayer.rotationYaw - abstractclientplayer.prevRotationYaw) * partialTicks;
+        final float f4 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
         GL11.glTranslated(Animations.itemPosX.get().doubleValue(), Animations.itemPosY.get().doubleValue(), Animations.itemPosZ.get().doubleValue());
         this.rotateArroundXAndY(f2, f3);
         this.setLightMapFromPlayer(abstractclientplayer);
@@ -210,6 +212,11 @@ public abstract class MixinItemRenderer {
             if (Animations.oldAnimations.getValue() && (itemToRender.getItem() instanceof ItemCarrotOnAStick || itemToRender.getItem() instanceof ItemFishingRod)) {
                 GlStateManager.translate(0.08F, -0.027F, -0.33F);
                 GlStateManager.scale(0.93F, 1.0F, 1.0F);
+            }
+
+            if (MovementUtils.isVisualBlocking()) {
+                GlStateManager.scale(0.85F, 0.85F, 0.85F);
+                GlStateManager.translate(-0.06F, 0.003F, 0.05F);
             }
 
             if (this.itemToRender.getItem() instanceof ItemMap) {
@@ -316,25 +323,33 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
-                            case "Hide": {
-                                if (Animations.swingAnimValue.get().equals("Vanilla")) {
-                                    this.doItemUsedTransformations(f1);
-                                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
-                                        this.transformFirstPersonItem(0.0F, f1);
-                                    else this.transformFirstPersonItem(f, f1);
-                                }
-                                if (Animations.swingAnimValue.get().equals("Flux")) {
-                                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
-                                        this.transformFirstPersonItem(0.0F, f1);
-                                    else this.transformFirstPersonItem(f, f1);
-                                }
-                                if (Animations.swingAnimValue.get().equals("Smooth")) {
-                                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
-                                        this.transformFirstPersonItem(0.0F, f1);
-                                    else this.transformFirstPersonItem(f, f1);
-                                    func_178105_d(f1);
-                                }
-                                GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
+                            case "Rhys": {
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.24, Animations.blockPosZ.get().doubleValue());
+                                if (Animations.cancelEquip.get())
+                                    this.transformFirstPersonItem(0.0F, 0.0F);
+                                else this.transformFirstPersonItem(f / 1.4f, 0.0f);
+                                GlStateManager.translate(0.41F, -0.25F, -0.5555557F);
+                                GlStateManager.translate(0.0F, 0, 0.0F);
+                                GlStateManager.rotate(35.0F, 0f, 1.5F, 0.0F);
+                                final float racism = MathHelper.sin(f1 * f1 / 64 * (float) Math.PI);
+                                GlStateManager.rotate(racism * -5.0F, 0.0F, 0.0F, 0.0F);
+                                GlStateManager.rotate(f4 * -12.0F, 0.0F, 0.0F, 1.0F);
+                                GlStateManager.rotate(f4 * -65.0F, 1.0F, 0.0F, 0.0F);
+                                this.doBlockTransformations();
+                                break;
+                            }
+                            case "Stab": {
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.25, Animations.blockPosY.get().doubleValue() + 0.5, Animations.blockPosZ.get().doubleValue() + 0.8);
+                                if (Animations.cancelEquip.get())
+                                    this.transformFirstPersonItem(0.0F, 0.0F);
+                                else this.transformFirstPersonItem(f / 1.5f, 0.0f);
+                                final float spin = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
+                                GlStateManager.translate(0.6f, 0.3f, -0.6f + -spin * 0.7);
+                                GlStateManager.rotate(6090, 0.0f, 0.0f, 0.1f);
+                                GlStateManager.rotate(6085, 0.0f, 0.1f, 0.0f);
+                                GlStateManager.rotate(6110, 0.1f, 0.0f, 0.0f);
+                                this.transformFirstPersonItem(0.0F, 0.0f);
+                                this.doBlockTransformations();
                                 break;
                             }
                             case "Winter": {
@@ -349,7 +364,7 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Slide": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.13, Animations.blockPosY.get().doubleValue() - 0.08, Animations.blockPosZ.get().doubleValue() - 0.07);
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.13, Animations.blockPosY.get().doubleValue() - 0.06, Animations.blockPosZ.get().doubleValue() - 0.07);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
                                 else this.transformFirstPersonItem(f / 1.5F, 0.0F);
@@ -615,7 +630,7 @@ public abstract class MixinItemRenderer {
                                 GL11.glTranslated(0.0D, 0.0D, 0.0D);
                                 float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                 GlStateManager.rotate(Swang * 16.0F / 2.0F, -Swang, -0.0F, 9.0F);
-                                GlStateManager.rotate(Swang * 28.0F, 1.0F, -Swang / 3.0F, -0.0F);
+                                GlStateManager.rotate(Swang * 22.0F, 1.0F, -Swang / 3.0F, -0.0F);
                                 doBlockTransformations();
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
@@ -636,7 +651,13 @@ public abstract class MixinItemRenderer {
                         GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                 }
             } else {
-                if (Animations.swingAnimValue.get().equals("Vanilla")) {
+                if (Animations.swingAnimValue.get().equals("1.7")) {
+                    this.doItemUsedTransformations(f1);
+                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
+                        this.transformFirstPersonItem(0.0F, f1);
+                    else this.transformFirstPersonItem(f, f1);
+                }
+                if (Animations.swingAnimValue.get().equals("1.8")) {
                     this.doItemUsedTransformations(f1);
                     if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
                         this.transformFirstPersonItem(0.0F, f1);

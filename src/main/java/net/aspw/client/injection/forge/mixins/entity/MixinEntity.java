@@ -363,12 +363,12 @@ public abstract class MixinEntity {
         final HitBox hitBoxes = Objects.requireNonNull(Client.moduleManager.getModule(HitBox.class));
 
         if (hitBoxes.getState() && EntityUtils.isSelected(((Entity) ((Object) this)), true)) {
-            if (!MinecraftInstance.mc.isIntegratedServerRunning() && !Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x")) {
+            if (!Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x")) {
                 callbackInfoReturnable.setReturnValue(hitBoxes.getSizeValue().get());
             } else {
                 callbackInfoReturnable.setReturnValue(0.1F + hitBoxes.getSizeValue().get());
             }
-        } else if (!MinecraftInstance.mc.isIntegratedServerRunning() && !Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x")) {
+        } else if (!Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x")) {
             callbackInfoReturnable.setReturnValue(0.0F);
         }
     }

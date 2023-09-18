@@ -21,7 +21,6 @@ class Animations : Module() {
         val Sword = ListValue(
             "Mode", arrayOf(
                 "1.8",
-                "Hide",
                 "Swing",
                 "Old",
                 "Push",
@@ -34,6 +33,8 @@ class Animations : Module() {
                 "Stella",
                 "Small",
                 "Edit",
+                "Rhys",
+                "Stab",
                 "Float",
                 "Remix",
                 "Winter",
@@ -57,10 +58,11 @@ class Animations : Module() {
         @JvmField
         val swingAnimValue = ListValue(
             "Swing-Animation", arrayOf(
-                "Vanilla",
+                "1.7",
+                "1.8",
                 "Flux",
                 "Smooth"
-            ), "Vanilla"
+            ), "1.7"
         )
 
         @JvmField

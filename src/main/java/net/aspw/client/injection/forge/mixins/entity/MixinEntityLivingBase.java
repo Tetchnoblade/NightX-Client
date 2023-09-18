@@ -10,7 +10,6 @@ import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.features.module.impl.visual.SilentView;
 import net.aspw.client.protocol.Protocol;
-import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.MovementUtils;
 import net.aspw.client.util.RotationUtils;
 import net.minecraft.block.Block;
@@ -269,7 +268,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @ModifyConstant(method = "onLivingUpdate", constant = @Constant(doubleValue = 0.005D))
     private double ViaVersion_MovementThreshold(double constant) {
-        if (!MinecraftInstance.mc.isIntegratedServerRunning() && !Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x"))
+        if (!Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x"))
             return 0.003D;
         return 0.005D;
     }
