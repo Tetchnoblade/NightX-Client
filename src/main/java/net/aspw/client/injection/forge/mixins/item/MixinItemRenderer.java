@@ -212,7 +212,7 @@ public abstract class MixinItemRenderer {
                 GlStateManager.scale(0.93F, 1.0F, 1.0F);
             }
 
-            if (!Animations.swingAnimValue.get().equals("Smooth") && Animations.oldAnimations.getValue() && f1 != 0.0F && ((killAura.getTarget() != null && killAura.getAutoBlockModeValue().get().equals("None") || killAura.getTarget() == null) && !tpAura.isBlocking() && !mc.thePlayer.isBlocking() && !mc.thePlayer.isEating() && !mc.thePlayer.isUsingItem())) {
+            if (!Animations.swingAnimValue.get().equals("Smooth") && Animations.oldAnimations.getValue() && f1 != 0.0F && ((killAura.getTarget() != null && killAura.getAutoBlockModeValue().get().equals("None") || killAura.getTarget() != null && !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword) || killAura.getTarget() == null) && !tpAura.isBlocking() && !mc.thePlayer.isBlocking() && !mc.thePlayer.isEating() && !mc.thePlayer.isUsingItem())) {
                 GlStateManager.scale(0.85F, 0.85F, 0.85F);
                 GlStateManager.translate(-0.06F, 0.003F, 0.05F);
             }
