@@ -10,7 +10,11 @@ class MatrixHop : SpeedMode("MatrixHop") {
     }
 
     override fun onTick() {}
-    override fun onMotion() {}
+    override fun onMotion() {
+        if (isMoving())
+            mc.gameSettings.keyBindJump.pressed = false
+    }
+
     override fun onUpdate() {
         if (mc.thePlayer!!.isInWater) return
 
