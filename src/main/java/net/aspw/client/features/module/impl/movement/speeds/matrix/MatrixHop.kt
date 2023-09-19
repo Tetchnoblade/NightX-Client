@@ -10,10 +10,7 @@ class MatrixHop : SpeedMode("MatrixHop") {
     }
 
     override fun onTick() {}
-    override fun onMotion() {
-        if (isMoving())
-            mc.gameSettings.keyBindJump.pressed = false
-    }
+    override fun onMotion() {}
 
     override fun onUpdate() {
         if (mc.thePlayer!!.isInWater) return
@@ -21,7 +18,7 @@ class MatrixHop : SpeedMode("MatrixHop") {
         if (isMoving()) {
             if (mc.thePlayer!!.onGround) {
                 mc.thePlayer!!.jump()
-                mc.timer.timerSpeed = 0.94f
+                mc.timer.timerSpeed = 0.97f
             }
             if (mc.thePlayer!!.fallDistance > 0.7 && mc.thePlayer!!.fallDistance < 1.3) {
                 mc.timer.timerSpeed = 1.3f
