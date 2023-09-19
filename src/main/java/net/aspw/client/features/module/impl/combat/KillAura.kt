@@ -802,7 +802,7 @@ class KillAura : Module() {
         markEntity = entity
 
         // Attack target
-        if (!mc.isIntegratedServerRunning && Protocol.versionSlider.sliderVersion.getName() != "1.8.x")
+        if (Protocol.versionSlider.sliderVersion.getName() != "1.8.x")
             mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         when (swingValue.get().lowercase(Locale.getDefault())) {
@@ -816,7 +816,7 @@ class KillAura : Module() {
             "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
         }
 
-        if (!mc.isIntegratedServerRunning && Protocol.versionSlider.sliderVersion.getName() == "1.8.x")
+        if (Protocol.versionSlider.sliderVersion.getName() == "1.8.x")
             mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         if (checkSprintValue.get())
