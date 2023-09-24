@@ -160,7 +160,7 @@ class KillAura : Module() {
 
     // Bypasses
     private val swingValue = ListValue("Swing", arrayOf("Full", "Smart", "Packet", "None"), "Full")
-    private val particleValue = ListValue("Particle", arrayOf("Hit", "Always", "None"), "Hit")
+    private val particleValue = ListValue("Particle", arrayOf("Hit", "EveryHit", "Always", "None"), "Hit")
     private val sharpnessValue = BoolValue("Sharpness", true, { !particleValue.get().equals("none", true) })
     private val criticalsValue = BoolValue("Criticals", true, { !particleValue.get().equals("none", true) })
 
@@ -358,6 +358,7 @@ class KillAura : Module() {
                         mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT)
                 }
             }
+
             if (target?.hurtTime!! > 7.8) {
                 if (animationValue.get())
                     mc.itemRenderer.resetEquippedProgress2()
@@ -818,6 +819,15 @@ class KillAura : Module() {
 
         if (Protocol.versionSlider.sliderVersion.getName() == "1.8.x")
             mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
+
+        when (particleValue.get().lowercase()) {
+            "everyhit" -> {
+                if (sharpnessValue.get())
+                    mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT_MAGIC)
+                if (criticalsValue.get())
+                    mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT)
+            }
+        }
 
         if (checkSprintValue.get())
             mc.thePlayer.attackTargetEntityWithCurrentItem(entity)
