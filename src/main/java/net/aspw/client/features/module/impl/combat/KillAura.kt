@@ -897,7 +897,7 @@ class KillAura : Module() {
                 false,
                 true,
                 false,
-                mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.5f,
+                if (!throughWallsValue.get()) mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.5f else false,
                 maxRange,
                 if (randomValue.get()) 20F else 0F,
                 false
