@@ -892,22 +892,12 @@ class KillAura : Module() {
             if (maxTurnSpeed.get() <= 0F)
                 return RotationUtils.serverRotation
 
-            val (_, rotation) = if (!throughWallsValue.get()) RotationUtils.searchCenter(
+            val (_, rotation) = RotationUtils.searchCenter(
                 boundingBox,
                 false,
                 true,
                 false,
                 mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.5f,
-                maxRange,
-                if (randomValue.get()) 20F else 0F,
-                false
-            ) ?: return null
-            else RotationUtils.searchCenter(
-                boundingBox,
-                false,
-                true,
-                false,
-                false,
                 maxRange,
                 if (randomValue.get()) 20F else 0F,
                 false

@@ -49,10 +49,9 @@ configurations {
 
 def viaLibs = [
         "com.viaversion:viaversion:4.8.1-SNAPSHOT",
-        "com.viaversion:viabackwards:4.8.0",
-        "com.viaversion:viarewind-universal:3.0.1-SNAPSHOT",
+        "com.viaversion:viabackwards:4.8.1-SNAPSHOT",
+        "com.viaversion:viarewind-common:3.0.1-SNAPSHOT",
         "org.yaml:snakeyaml:2.0",
-
         "net.raphimc:ViaLoader:2.2.9",
         "org.slf4j:slf4j-api:2.0.7"
 ]
