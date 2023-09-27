@@ -726,27 +726,27 @@
     </library>
     <library name="Gradle: com.viaversion:viabackwards:4.8.1-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.8.1-SNAPSHOT/6f46275403fe52215ceb7cd9bde9d11d6c4896c7/viabackwards-4.8.1-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.8.1-SNAPSHOT/42829743a9c2e1697fd5ed94f9e4dc6986413c16/viabackwards-4.8.1-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.8.1-SNAPSHOT/4f36c31472e3670be317e5530372ea29d01d8b32/viabackwards-4.8.1-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.8.1-SNAPSHOT/743c4ae8d4fe309008f76e0761c78c2b5e74b3dc/viabackwards-4.8.1-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.viaversion:viarewind-common:3.0.1-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viarewind-common/3.0.1-SNAPSHOT/81f6287bbc3be97d0549216c65996556de0ca182/viarewind-common-3.0.1-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viarewind-common/3.0.1-SNAPSHOT/872c99bf33428ca4b79fcd0f0db1eea2acb45747/viarewind-common-3.0.1-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="Gradle: com.viaversion:viaversion:4.8.1-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.8.1-SNAPSHOT/f59477fca38923fd718d200afe6590c4ca401444/viaversion-4.8.1-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.8.1-SNAPSHOT/7f3566e42780f7b065b7d825635b5cdd33cd39e9/viaversion-4.8.1-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.8.1-SNAPSHOT/8d068e4bcc6c94f435fd39ff841317aaee4bb159/viaversion-4.8.1-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.8.1-SNAPSHOT/b9651d40e3d4141b8eb2f0cd60e45d391032c5e4/viaversion-4.8.1-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: commons-codec:commons-codec:1.9">

@@ -13,6 +13,7 @@ import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
 import net.minecraft.network.play.client.C03PacketPlayer
+import net.minecraft.network.play.client.C03PacketPlayer.*
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction
 import net.minecraft.network.play.server.S12PacketEntityVelocity
 import net.minecraft.network.play.server.S27PacketExplosion
@@ -22,6 +23,7 @@ import net.minecraft.util.MathHelper
 import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
+
 
 @ModuleInfo(name = "AntiVelocity", spacedName = "Anti Velocity", description = "", category = ModuleCategory.COMBAT)
 class AntiVelocity : Module() {
@@ -60,6 +62,7 @@ class AntiVelocity : Module() {
             "SmoothReverse",
             "Jump",
             "Phase",
+            "Intave",
             "Minemen",
             "YMotion",
             "Vulcan",
@@ -151,6 +154,14 @@ class AntiVelocity : Module() {
                 val yaw = mc.thePlayer.rotationYaw * 0.017453292F
                 mc.thePlayer.motionX -= MathHelper.sin(yaw) * 0.2
                 mc.thePlayer.motionZ += MathHelper.cos(yaw) * 0.2
+            }
+
+            "intave" -> {
+                if (mc.thePlayer.hurtTime > 7) {
+                    mc.thePlayer.motionX = 0.0;
+                    mc.thePlayer.motionY = 0.0;
+                    mc.thePlayer.motionZ = 0.0;
+                }
             }
 
             "grim" -> {
@@ -330,15 +341,39 @@ class AntiVelocity : Module() {
         val packet = event.packet
         val killAura = Client.moduleManager[KillAura::class.java] as KillAura
 
-        if (packet is S32PacketConfirmTransaction && grimTCancel > 0) {
-            event.cancelEvent()
-            grimTCancel--
-        }
+        when (modeValue.get().lowercase(Locale.getDefault())) {
+            "grim" -> {
+                if (packet is S32PacketConfirmTransaction && grimTCancel > 0) {
+                    event.cancelEvent()
+                    grimTCancel--
+                }
+            }
 
-        if (packet is C0FPacketConfirmTransaction && modeValue.get().equals("Vulcan")) {
-            val transUID = (packet.uid).toInt()
-            if (transUID >= -31767 && transUID <= -30769) {
-                event.cancelEvent()
+            "intave" -> {
+                if (mc.thePlayer.hurtTime > 7) {
+                    if (packet is C06PacketPlayerPosLook) {
+                        event.cancelEvent()
+                        mc.netHandler.addToSendQueue(
+                            C05PacketPlayerLook(
+                                packet.getYaw(),
+                                packet.getPitch(),
+                                packet.isOnGround
+                            )
+                        )
+                    } else if (packet is C04PacketPlayerPosition) {
+                        event.cancelEvent()
+                        mc.netHandler.addToSendQueue(C03PacketPlayer(packet.isOnGround))
+                    }
+                }
+            }
+
+            "vulcan" -> {
+                if (packet is C0FPacketConfirmTransaction) {
+                    val transUID = (packet.uid).toInt()
+                    if (transUID >= -31767 && transUID <= -30769) {
+                        event.cancelEvent()
+                    }
+                }
             }
         }
 
@@ -397,7 +432,7 @@ class AntiVelocity : Module() {
                 "aac5.2.0" -> {
                     event.cancelEvent()
                     if (!mc.isIntegratedServerRunning && (!aac5KillAuraValue.get() || killAura.target != null)) mc.netHandler.addToSendQueue(
-                        C03PacketPlayer.C04PacketPlayerPosition(
+                        C04PacketPlayerPosition(
                             mc.thePlayer.posX,
                             1.7976931348623157E+308,
                             mc.thePlayer.posZ,
@@ -433,7 +468,7 @@ class AntiVelocity : Module() {
                 "matrixspoof" -> {
                     event.cancelEvent()
                     mc.netHandler.addToSendQueue(
-                        C03PacketPlayer.C04PacketPlayerPosition(
+                        C04PacketPlayerPosition(
                             mc.thePlayer.posX + packet.motionX / -24000.0,
                             mc.thePlayer.posY + packet.motionY / -24000.0,
                             mc.thePlayer.posZ + packet.motionZ / 8000.0,
