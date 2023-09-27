@@ -45,7 +45,7 @@ class AntiFireBall : Module() {
                     RotationUtils.setTargetRotation(
                         RotationUtils.limitAngleChange(
                             RotationUtils.serverRotation!!,
-                            RotationUtils.getRotations(entity)!!,
+                            RotationUtils.getRotations(entity),
                             RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
                         )
                     )
