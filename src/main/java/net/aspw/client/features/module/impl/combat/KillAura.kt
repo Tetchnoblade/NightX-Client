@@ -132,7 +132,7 @@ class KillAura : Module() {
     private val throughWallsValue = BoolValue(
         "No-Walls",
         false,
-        { rotations.get().equals("undetectable", true) || rotations.get().equals("hvh", true) })
+        { rotations.get().equals("undetectable", true) })
     private val randomValue = BoolValue("Random", true, { rotations.get().equals("undetectable", true) })
     val movementFix = BoolValue("MovementFix", false, { !rotations.get().equals("none", true) })
     private val silentMovementFix = BoolValue("SilentMovementFix", false, { !rotations.get().equals("none", true) })
@@ -886,7 +886,7 @@ class KillAura : Module() {
                         boundingBox,
                         RotationUtils.getCenter(entity.entityBoundingBox),
                         false,
-                        if (!throughWallsValue.get()) mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.3f else false,
+                        mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.3f,
                         maxRange
                     ), (Math.random() * (maxTurnSpeed.get() - minTurnSpeed.get()) + minTurnSpeed.get()).toFloat()
                 )
