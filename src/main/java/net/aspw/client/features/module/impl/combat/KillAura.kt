@@ -886,7 +886,7 @@ class KillAura : Module() {
                         boundingBox,
                         RotationUtils.getCenter(entity.entityBoundingBox),
                         false,
-                        mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.3f,
+                        mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.6f,
                         maxRange
                     ), (Math.random() * (maxTurnSpeed.get() - minTurnSpeed.get()) + minTurnSpeed.get()).toFloat()
                 )
@@ -903,7 +903,7 @@ class KillAura : Module() {
                 false,
                 true,
                 false,
-                if (!throughWallsValue.get()) mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.3f else false,
+                if (!throughWallsValue.get()) mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.6f else false,
                 maxRange,
                 if (randomValue.get()) 20F else 0F,
                 false
