@@ -129,7 +129,10 @@ class KillAura : Module() {
     private val animationValue = BoolValue("Animation", false)
     private val noInventoryAttackValue = BoolValue("NoInvAttack", false)
     private val checkSprintValue = BoolValue("StopSprint", false)
-    private val throughWallsValue = BoolValue("No-Walls", false, { rotations.get().equals("undetectable", true) })
+    private val throughWallsValue = BoolValue(
+        "No-Walls",
+        false,
+        { rotations.get().equals("undetectable", true) || rotations.get().equals("hvh", true) })
     private val randomValue = BoolValue("Random", true, { rotations.get().equals("undetectable", true) })
     val movementFix = BoolValue("MovementFix", false, { !rotations.get().equals("none", true) })
     private val silentMovementFix = BoolValue("SilentMovementFix", false, { !rotations.get().equals("none", true) })
@@ -880,8 +883,11 @@ class KillAura : Module() {
                 RotationUtils.limitAngleChange(
                     it,
                     RotationUtils.OtherRotation(
-                        boundingBox, RotationUtils.getCenter(entity.entityBoundingBox), false,
-                        mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.5f, maxRange
+                        boundingBox,
+                        RotationUtils.getCenter(entity.entityBoundingBox),
+                        false,
+                        if (!throughWallsValue.get()) mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.3f else false,
+                        maxRange
                     ), (Math.random() * (maxTurnSpeed.get() - minTurnSpeed.get()) + minTurnSpeed.get()).toFloat()
                 )
             }
@@ -897,7 +903,7 @@ class KillAura : Module() {
                 false,
                 true,
                 false,
-                if (!throughWallsValue.get()) mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.5f else false,
+                if (!throughWallsValue.get()) mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - 0.3f else false,
                 maxRange,
                 if (randomValue.get()) 20F else 0F,
                 false

@@ -45,15 +45,19 @@ minecraft {
 configurations {
     include
     implementation.extendsFrom(include)
+
+    external
+    compile.extendsFrom(external)
 }
 
 def viaLibs = [
-        "com.viaversion:viaversion:4.8.1-SNAPSHOT",
-        "com.viaversion:viabackwards:4.8.1-SNAPSHOT",
-        "com.viaversion:viarewind-common:3.0.1-SNAPSHOT",
-        "org.yaml:snakeyaml:2.0",
-        "net.raphimc:ViaLoader:2.2.9",
-        "org.slf4j:slf4j-api:2.0.7"
+        "com.viaversion:viaversion:${project.viaversion_version}",
+        "com.viaversion:viabackwards:${project.viabackwards_version}",
+        "com.viaversion:viarewind-universal:${project.viarewind_version}",
+        "org.yaml:snakeyaml:${project.snake_yml_version}",
+
+        "net.raphimc:ViaLoader:${project.vialoader_version}",
+        "org.slf4j:slf4j-api:${project.slf4j_version}"
 ]
 
 dependencies {
@@ -152,11 +156,6 @@ reobf {
     shadowJar {
         mappingType = "SEARGE"
     }
-}
-
-configurations {
-    external
-    compile.extendsFrom(external)
 }
 
 tasks.reobfShadowJar.mustRunAfter shadowJar
