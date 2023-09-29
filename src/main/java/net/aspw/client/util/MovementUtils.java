@@ -1,21 +1,14 @@
 package net.aspw.client.util;
 
-import net.aspw.client.Client;
 import net.aspw.client.event.MoveEvent;
-import net.aspw.client.features.module.impl.combat.KillAura;
-import net.aspw.client.features.module.impl.combat.TPAura;
-import net.aspw.client.features.module.impl.visual.Animations;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockIce;
 import net.minecraft.block.BlockPackedIce;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.item.ItemSword;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
-
-import java.util.Objects;
 
 /**
  * The type Movement utils.
@@ -108,12 +101,6 @@ public final class MovementUtils extends MinecraftInstance {
     // xD
     public static boolean isRidingBlock() {
         return !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1.8, mc.thePlayer.posZ)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 0.5, mc.thePlayer.posZ)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX + 0.5, mc.thePlayer.posY - 1.8, mc.thePlayer.posZ + 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX - 0.5, mc.thePlayer.posY - 1.8, mc.thePlayer.posZ + 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX + 0.5, mc.thePlayer.posY - 1.8, mc.thePlayer.posZ - 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX - 0.5, mc.thePlayer.posY - 1.8, mc.thePlayer.posZ - 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX + 0.5, mc.thePlayer.posY - 1, mc.thePlayer.posZ + 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX - 0.5, mc.thePlayer.posY - 1, mc.thePlayer.posZ + 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX + 0.5, mc.thePlayer.posY - 1, mc.thePlayer.posZ - 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX - 0.5, mc.thePlayer.posY - 1, mc.thePlayer.posZ - 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX + 0.5, mc.thePlayer.posY - 0.5, mc.thePlayer.posZ + 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX - 0.5, mc.thePlayer.posY - 0.5, mc.thePlayer.posZ + 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX + 0.5, mc.thePlayer.posY - 0.5, mc.thePlayer.posZ - 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX - 0.5, mc.thePlayer.posY - 0.5, mc.thePlayer.posZ - 0.5)).getBlock() instanceof BlockAir);
-    }
-
-    public static boolean isVisualBlocking() {
-        final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
-        final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
-        return Animations.swingAnimValue.get().equals("1.7") && !mc.thePlayer.isEating() && !mc.thePlayer.isUsingItem() && !tpAura.isBlocking() && !mc.thePlayer.isBlocking() && (killAura.getTarget() != null && (killAura.getAutoBlockModeValue().get().equals("None") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword)) || killAura.getTarget() == null);
     }
 
     /**
@@ -227,34 +214,6 @@ public final class MovementUtils extends MinecraftInstance {
         arr[0] = -Math.sin(yaw) * speed;
         arr[1] = Math.cos(yaw) * speed;
         return arr;
-    }
-
-    /**
-     * Gets prediction yaw.
-     *
-     * @param x the x
-     * @param z the z
-     * @return the prediction yaw
-     */
-    public static float getPredictionYaw(double x, double z) {
-        if (mc.thePlayer == null) {
-            lastX = -999999.0;
-            lastZ = -999999.0;
-            return 0F;
-        }
-
-        if (lastX == -999999.0)
-            lastX = mc.thePlayer.prevPosX;
-
-        if (lastZ == -999999.0)
-            lastZ = mc.thePlayer.prevPosZ;
-
-        float returnValue = (float) (Math.atan2(z - lastZ, x - lastX) * 180F / Math.PI);
-
-        lastX = x;
-        lastZ = z;
-
-        return returnValue;
     }
 
     /**
