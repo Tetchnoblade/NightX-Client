@@ -5,6 +5,7 @@ import net.aspw.client.Client;
 import net.aspw.client.event.Render3DEvent;
 import net.aspw.client.features.module.impl.combat.Reach;
 import net.aspw.client.features.module.impl.other.FreeLook;
+import net.aspw.client.features.module.impl.other.InfiniteReach;
 import net.aspw.client.features.module.impl.visual.CameraNoClip;
 import net.aspw.client.features.module.impl.visual.FullBright;
 import net.aspw.client.features.module.impl.visual.NoHurtCam;
@@ -235,9 +236,24 @@ public abstract class MixinEntityRenderer {
             this.mc.pointedEntity = null;
 
             final Reach reach = Objects.requireNonNull(Client.moduleManager.getModule(Reach.class));
+            final InfiniteReach infiniteReach = Objects.requireNonNull(Client.moduleManager.getModule(InfiniteReach.class));
 
-            double d0 = reach.getState() ? reach.getMaxRange() : (double) this.mc.playerController.getBlockReachDistance();
-            this.mc.objectMouseOver = entity.rayTrace(reach.getState() ? reach.getBuildReachValue().get() : d0, p_getMouseOver_1_);
+            double d0;
+            if (infiniteReach.getState()) {
+                d0 = infiniteReach.getMaxRange();
+            } else if (reach.getState()) {
+                d0 = reach.getMaxRange();
+            } else {
+                d0 = this.mc.playerController.getBlockReachDistance();
+            }
+
+            if (infiniteReach.getState()) {
+                this.mc.objectMouseOver = entity.rayTrace(200, p_getMouseOver_1_);
+            } else if (reach.getState()) {
+                this.mc.objectMouseOver = entity.rayTrace(reach.getBuildReachValue().get(), p_getMouseOver_1_);
+            } else {
+                this.mc.objectMouseOver = entity.rayTrace(d0, p_getMouseOver_1_);
+            }
             double d1 = d0;
             Vec3 vec3 = entity.getPositionEyes(p_getMouseOver_1_);
             boolean flag = false;
@@ -252,7 +268,10 @@ public abstract class MixinEntityRenderer {
                 d1 = this.mc.objectMouseOver.hitVec.distanceTo(vec3);
             }
 
-            if (reach.getState()) {
+            if (infiniteReach.getState()) {
+                final MovingObjectPosition movingObjectPosition = entity.rayTrace(200, p_getMouseOver_1_);
+                if (movingObjectPosition != null) d1 = movingObjectPosition.hitVec.distanceTo(vec3);
+            } else if (reach.getState()) {
                 final MovingObjectPosition movingObjectPosition = entity.rayTrace(reach.getBuildReachValue().get(), p_getMouseOver_1_);
                 if (movingObjectPosition != null) d1 = movingObjectPosition.hitVec.distanceTo(vec3);
             }
@@ -292,9 +311,19 @@ public abstract class MixinEntityRenderer {
                 }
             }
 
-            if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > (reach.getState() ? reach.getCombatReachValue().get() : 3.0D)) {
-                this.pointedEntity = null;
-                this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, Objects.requireNonNull(vec33), null, new BlockPos(vec33));
+            if (this.pointedEntity != null && flag) {
+                double maxDistance;
+                if (infiniteReach.getState()) {
+                    maxDistance = 200;
+                } else if (reach.getState()) {
+                    maxDistance = reach.getCombatReachValue().get();
+                } else {
+                    maxDistance = 3.0D;
+                }
+                if (vec3.distanceTo(vec33) > maxDistance) {
+                    this.pointedEntity = null;
+                    this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, Objects.requireNonNull(vec33), null, new BlockPos(vec33));
+                }
             }
 
             if (this.pointedEntity != null && (d2 < d1 || this.mc.objectMouseOver == null)) {

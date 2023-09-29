@@ -6,6 +6,7 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.protocol.Protocol
 import net.aspw.client.util.EntityUtils
 import net.aspw.client.util.PacketUtils
 import net.aspw.client.util.RotationUtils
@@ -109,7 +110,6 @@ class TPAura : Module() {
 
         targets.sortBy { it.health }
 
-
         targets.forEach {
             if (mc.thePlayer == null || mc.theWorld == null) return
 
@@ -126,18 +126,22 @@ class TPAura : Module() {
                     vec.x,
                     vec.y,
                     vec.z,
-                    false
+                    true
                 )
             )
 
             lastTarget = it
+
+            if (Protocol.versionSlider.sliderVersion.getName() != "1.8.x")
+                mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             when (swingValue.get().lowercase(Locale.getDefault())) {
                 "normal" -> mc.thePlayer.swingItem()
                 "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
             }
 
-            mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
+            if (Protocol.versionSlider.sliderVersion.getName() == "1.8.x")
+                mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             path.reverse()
 
@@ -146,7 +150,7 @@ class TPAura : Module() {
                     vec.x,
                     vec.y,
                     vec.z,
-                    false
+                    true
                 )
             )
         }

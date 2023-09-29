@@ -185,7 +185,8 @@ class ModuleManager : Listenable {
             NoHurtCam::class.java,
             SnakeGame::class.java,
             ESP::class.java,
-            PacketPosTracker::class.java
+            PacketPosTracker::class.java,
+            InfiniteReach::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")
