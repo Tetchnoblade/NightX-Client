@@ -1,12 +1,6 @@
 package net.aspw.client.util
 
-import net.aspw.client.Client
-import net.aspw.client.features.module.impl.combat.KillAura
-import net.aspw.client.features.module.impl.combat.TPAura
-import net.aspw.client.features.module.impl.visual.Animations
-import net.minecraft.item.ItemSword
 import net.minecraft.util.MathHelper
-import java.util.*
 
 object MovementUtilsFix : MinecraftInstance() {
     val direction: Double
@@ -20,26 +14,6 @@ object MovementUtilsFix : MinecraftInstance() {
             if (mc.thePlayer.moveStrafing < 0f) rotationYaw += 90f * forward
             return Math.toRadians(rotationYaw.toDouble())
         }
-
-    fun isVisualBlocking(): Boolean {
-        return Animations.swingAnimValue.get() == "1.7" && !mc.thePlayer.isEating && !mc.thePlayer.isUsingItem && !Objects.requireNonNull(
-            Client.moduleManager.getModule(
-                TPAura::class.java
-            )
-        )?.isBlocking!! && !mc.thePlayer.isBlocking && (Objects.requireNonNull(
-            Client.moduleManager.getModule(
-                KillAura::class.java
-            )
-        )?.target != null && (Objects.requireNonNull(
-            Client.moduleManager.getModule(
-                KillAura::class.java
-            )
-        )?.autoBlockModeValue?.get() == "None" || mc.thePlayer.heldItem.item !is ItemSword) || Objects.requireNonNull(
-            Client.moduleManager.getModule(
-                KillAura::class.java
-            )
-        )?.target == null)
-    }
 
     private val funDirection: Double
         get() {

@@ -6,7 +6,6 @@ import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.util.MovementUtilsFix;
 import net.aspw.client.util.timer.MSTimer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -212,11 +211,6 @@ public abstract class MixinItemRenderer {
             if (Animations.oldAnimations.getValue() && (itemToRender.getItem() instanceof ItemCarrotOnAStick || itemToRender.getItem() instanceof ItemFishingRod)) {
                 GlStateManager.translate(0.08F, -0.027F, -0.33F);
                 GlStateManager.scale(0.93F, 1.0F, 1.0F);
-            }
-
-            if (MovementUtilsFix.INSTANCE.isVisualBlocking() && f1 != 0.0F) {
-                GlStateManager.scale(0.85F, 0.85F, 0.85F);
-                GlStateManager.translate(-0.06F, 0.003F, 0.05F);
             }
 
             if (this.itemToRender.getItem() instanceof ItemMap) {
@@ -652,6 +646,10 @@ public abstract class MixinItemRenderer {
                 }
             } else {
                 if (Animations.swingAnimValue.get().equals("1.7")) {
+                    if (f1 != 0.0F) {
+                        GlStateManager.scale(0.85F, 0.85F, 0.85F);
+                        GlStateManager.translate(-0.06F, 0.003F, 0.05F);
+                    }
                     this.doItemUsedTransformations(f1);
                     if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
                         this.transformFirstPersonItem(0.0F, f1);
