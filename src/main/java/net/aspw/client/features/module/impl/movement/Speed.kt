@@ -30,6 +30,7 @@ import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogBoo
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogCustom
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogOnGround
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogStable
+import net.aspw.client.util.MovementUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -140,8 +141,7 @@ class Speed : Module() {
     fun onUpdate(event: UpdateEvent?) {
         if (mc.thePlayer.isSneaking) return
         val speedMode = mode
-
-        if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
+        if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !mc.thePlayer.isInWater && !mc.thePlayer.isInLava && MovementUtils.isMoving())
             mc.gameSettings.keyBindJump.pressed = false
         speedMode?.onUpdate()
     }
