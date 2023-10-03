@@ -742,11 +742,11 @@
     </library>
     <library name="Gradle: com.viaversion:viaversion:4.8.1-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.8.1-SNAPSHOT/b7aebc27378685bae88b24a4519a9da8f146cef3/viaversion-4.8.1-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.8.1-SNAPSHOT/cdc5a71400df50fe6a2a5a2062ad8f0a6ad2b29e/viaversion-4.8.1-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.8.1-SNAPSHOT/ef4ad059fc19d3203f32caa30fff1f7184a06cad/viaversion-4.8.1-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.8.1-SNAPSHOT/9ef751ff6d26102a19aeb1b889240950bf5f0e65/viaversion-4.8.1-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: commons-codec:commons-codec:1.9">

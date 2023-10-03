@@ -1,6 +1,5 @@
 package net.aspw.client.features.module.impl.movement
 
-import net.aspw.client.Client
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
@@ -35,8 +34,6 @@ import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
-import net.minecraft.client.gui.GuiChat
-import net.minecraft.client.gui.GuiIngameMenu
 import net.minecraft.client.settings.GameSettings
 
 @ModuleInfo(name = "Speed", description = "", category = ModuleCategory.MOVEMENT)
@@ -144,6 +141,8 @@ class Speed : Module() {
         if (mc.thePlayer.isSneaking) return
         val speedMode = mode
 
+        if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
+            mc.gameSettings.keyBindJump.pressed = false
         speedMode?.onUpdate()
     }
 
@@ -282,14 +281,10 @@ class Speed : Module() {
 
     override fun onDisable() {
         mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
+        if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
+            mc.gameSettings.keyBindJump.pressed = true
         if (mc.thePlayer == null) return
         mc.timer.timerSpeed = 1f
-        mc.gameSettings.keyBindJump.pressed =
-            mc.thePlayer != null && (mc.inGameHasFocus || Client.moduleManager.getModule(
-                InvMove::class.java
-            )!!.state) && !(mc.currentScreen is GuiIngameMenu || mc.currentScreen is GuiChat) && GameSettings.isKeyDown(
-                mc.gameSettings.keyBindJump
-            )
         val speedMode = mode
         speedMode?.onDisable()
     }
