@@ -12,6 +12,7 @@ import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
+import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C03PacketPlayer.*
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction
@@ -308,7 +309,7 @@ class AntiVelocity : Module() {
             }
 
             "matrixground" -> {
-                if (mc.thePlayer.onGround && !mc.gameSettings.keyBindJump.isKeyDown)
+                if (mc.thePlayer.onGround && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
                     mc.thePlayer.onGround = false
             }
 
@@ -453,7 +454,7 @@ class AntiVelocity : Module() {
                 "matrixground" -> {
                     packet.motionX = (packet.getMotionX() * 0.36).toInt()
                     packet.motionZ = (packet.getMotionZ() * 0.36).toInt()
-                    if (mc.thePlayer.onGround && !mc.gameSettings.keyBindJump.isKeyDown) {
+                    if (mc.thePlayer.onGround && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
                         packet.motionY = (-628.7).toInt()
                         packet.motionX = (packet.getMotionX() * 0.6).toInt()
                         packet.motionZ = (packet.getMotionZ() * 0.6).toInt()

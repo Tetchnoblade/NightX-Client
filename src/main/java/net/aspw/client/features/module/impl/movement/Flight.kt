@@ -880,7 +880,7 @@ class Flight : Module() {
                 mc.thePlayer.motionY = vanillaMotionYValue.get().toDouble()
                 mc.thePlayer.motionX = 0.0
                 mc.thePlayer.motionZ = 0.0
-                if (mc.gameSettings.keyBindJump.isKeyDown) {
+                if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
                     mc.thePlayer.motionY += vanillaVSpeed.toDouble()
                 }
                 if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
@@ -894,7 +894,7 @@ class Flight : Module() {
                 mc.thePlayer.motionY = -1E-10
                 mc.thePlayer.motionX = 0.0
                 mc.thePlayer.motionZ = 0.0
-                if (mc.gameSettings.keyBindJump.isKeyDown) {
+                if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
                     mc.thePlayer.motionY += 0.4f
                 }
                 if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
@@ -932,7 +932,7 @@ class Flight : Module() {
                 mc.thePlayer.motionX = 0.0
                 mc.thePlayer.motionZ = 0.0
                 mc.thePlayer.noClip = true
-                if (mc.gameSettings.keyBindJump.isKeyDown) {
+                if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
                     mc.thePlayer.motionY += vanillaVSpeed.toDouble()
                 }
                 if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
@@ -995,7 +995,7 @@ class Flight : Module() {
                 mc.thePlayer.motionY = 0.0
                 mc.thePlayer.motionZ = 0.0
 
-                if (mc.gameSettings.keyBindJump.isKeyDown) {
+                if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
                     mc.thePlayer.motionY += vanillaVSpeed.toDouble()
                 }
                 if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
@@ -1087,7 +1087,7 @@ class Flight : Module() {
                 mc.thePlayer.motionY = 0.0
                 mc.thePlayer.motionX = 0.0
                 mc.thePlayer.motionZ = 0.0
-                if (mc.gameSettings.keyBindJump.isKeyDown) {
+                if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
                     mc.thePlayer.motionY += vanillaVSpeed.toDouble()
                 }
                 if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
@@ -1135,7 +1135,7 @@ class Flight : Module() {
                 mc.thePlayer.motionY = 0.0
                 mc.thePlayer.motionX = 0.0
                 mc.thePlayer.motionZ = 0.0
-                if (mc.gameSettings.keyBindJump.isKeyDown) {
+                if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
                     mc.thePlayer.motionY += vanillaVSpeed.toDouble()
                 }
                 if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
@@ -1268,7 +1268,7 @@ class Flight : Module() {
             }
 
             "aac1.9.10" -> {
-                if (mc.gameSettings.keyBindJump.isKeyDown) {
+                if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
                     aacJump += 0.2
                 }
                 if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
@@ -1316,7 +1316,7 @@ class Flight : Module() {
                 mc.netHandler.addToSendQueue(
                     C06PacketPlayerPosLook(
                         mc.thePlayer.posX + mc.thePlayer.motionX * 999,
-                        mc.thePlayer.posY + (if (mc.gameSettings.keyBindJump.isKeyDown) 1.5624 else 0.00000001) - if (mc.gameSettings.keyBindSneak.isKeyDown) 0.0624 else 0.00000002,
+                        mc.thePlayer.posY + (if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) 1.5624 else 0.00000001) - if (mc.gameSettings.keyBindSneak.isKeyDown) 0.0624 else 0.00000002,
                         mc.thePlayer.posZ + mc.thePlayer.motionZ * 999,
                         mc.thePlayer.rotationYaw,
                         mc.thePlayer.rotationPitch,
@@ -1347,7 +1347,7 @@ class Flight : Module() {
                 mc.thePlayer.motionY = 0.0
                 mc.thePlayer.motionX = 0.0
                 mc.thePlayer.motionZ = 0.0
-                if (mc.gameSettings.keyBindJump.isKeyDown) {
+                if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
                     mc.thePlayer.motionY += vanillaVSpeed.toDouble()
                 }
                 if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
@@ -1358,11 +1358,11 @@ class Flight : Module() {
             }
 
             "jetpack" -> {
-                if (mc.gameSettings.keyBindJump.isKeyDown) {
+                if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
                     mc.thePlayer.motionY += 0.14
                     if (mc.thePlayer.isSprinting) {
-                        mc.thePlayer.motionX *= 1.15
-                        mc.thePlayer.motionZ *= 1.15
+                        mc.thePlayer.motionX *= 1.12
+                        mc.thePlayer.motionZ *= 1.12
                     }
                 }
             }
@@ -1455,7 +1455,7 @@ class Flight : Module() {
                         .equals("damage", ignoreCase = true) && pearlState == 1 && mc.thePlayer.hurtTime > 0
                 ) pearlState = 2
                 if (pearlState == 2) {
-                    if (mc.gameSettings.keyBindJump.isKeyDown) {
+                    if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
                         mc.thePlayer.motionY += vanillaSpeed.toDouble()
                     }
                     if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
@@ -1612,7 +1612,10 @@ class Flight : Module() {
                 when (event.eventState) {
                     EventState.PRE -> {
                         mc.thePlayer.motionY =
-                            if (mc.gameSettings.keyBindJump.isKeyDown) 2.0 else if (mc.gameSettings.keyBindJump.isKeyDown) -2.0 else 0.0
+                            if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) 2.0 else if (GameSettings.isKeyDown(
+                                    mc.gameSettings.keyBindJump
+                                )
+                            ) -2.0 else 0.0
                         var var10_8 = 0
                         while (var10_8 < 3) {
                             PacketUtils.sendPacketNoEvent(
@@ -2199,7 +2202,10 @@ class Flight : Module() {
             "clip" -> if (clipNoMove.get()) event.zeroXZ()
 
             "veruslowhop" -> {
-                if (!mc.thePlayer.isInWeb && !mc.thePlayer.isInLava && !mc.thePlayer.isInWater && !mc.thePlayer.isOnLadder && !mc.gameSettings.keyBindJump.isKeyDown && mc.thePlayer.ridingEntity == null) {
+                if (!mc.thePlayer.isInWeb && !mc.thePlayer.isInLava && !mc.thePlayer.isInWater && !mc.thePlayer.isOnLadder && !GameSettings.isKeyDown(
+                        mc.gameSettings.keyBindJump
+                    ) && mc.thePlayer.ridingEntity == null
+                ) {
                     if (MovementUtils.isMoving()) {
                         mc.gameSettings.keyBindJump.pressed = false
                         if (mc.thePlayer.onGround) {
@@ -2221,7 +2227,7 @@ class Flight : Module() {
                     event.z = Math.cos(Math.toRadians(mc.thePlayer.rotationYaw.toDouble())) * 2.4
                     cubecraftTeleportTickTimer.reset()
                 }
-                if (mc.gameSettings.keyBindJump.isKeyDown && cubecraftTeleportYTickTimer.hasTimePassed(2)) {
+                if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && cubecraftTeleportYTickTimer.hasTimePassed(2)) {
                     event.y = 1.6
                     cubecraftTeleportYTickTimer.reset()
                 }

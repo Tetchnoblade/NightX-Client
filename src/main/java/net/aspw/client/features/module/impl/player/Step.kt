@@ -11,6 +11,7 @@ import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
+import net.minecraft.client.settings.GameSettings
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.network.play.client.C03PacketPlayer
@@ -93,7 +94,7 @@ class Step : Module() {
         // Motion steps
         when {
             mode.equals("jump", true) && mc.thePlayer.isCollidedHorizontally && mc.thePlayer.onGround
-                    && !mc.gameSettings.keyBindJump.isKeyDown -> {
+                    && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump) -> {
                 fakeJump()
                 mc.thePlayer.motionY = jumpHeightValue.get().toDouble()
             }
@@ -146,7 +147,7 @@ class Step : Module() {
             mode.equals(
                 "motionncp",
                 true
-            ) && mc.thePlayer.isCollidedHorizontally && !mc.gameSettings.keyBindJump.isKeyDown -> {
+            ) && mc.thePlayer.isCollidedHorizontally && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump) -> {
                 when {
                     mc.thePlayer.onGround && couldStep() -> {
                         fakeJump()

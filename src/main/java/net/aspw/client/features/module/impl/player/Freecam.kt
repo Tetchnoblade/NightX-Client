@@ -55,7 +55,7 @@ class Freecam : Module() {
         mc.thePlayer.motionY = 0.0
         mc.thePlayer.motionX = 0.0
         mc.thePlayer.motionZ = 0.0
-        if (mc.gameSettings.keyBindJump.isKeyDown) mc.thePlayer.motionY += value.toDouble()
+        if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) mc.thePlayer.motionY += value.toDouble()
         if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
             mc.thePlayer.motionY -= value.toDouble()
             mc.gameSettings.keyBindSneak.pressed = false

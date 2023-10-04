@@ -335,7 +335,7 @@ class Scaffold : Module() {
     fun onUpdate(event: UpdateEvent?) {
         if (faceBlock)
             place()
-        if (allowTower.get() && mc.gameSettings.keyBindJump.isKeyDown && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && blocksAmount > 0 && MovementUtils.isRidingBlock() && (!MovementUtils.isMoving() && !towerMove.get() || towerMove.get())
+        if (allowTower.get() && GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && blocksAmount > 0 && MovementUtils.isRidingBlock() && (!MovementUtils.isMoving() && !towerMove.get() || towerMove.get())
         ) {
             canTower = true
             when (towerModeValue.get().lowercase(Locale.getDefault())) {
@@ -1097,7 +1097,7 @@ class Scaffold : Module() {
                             if (rotationModeValue.get().equals(
                                     "static",
                                     ignoreCase = true
-                                ) && (keepRotOnJumpValue.get() || !mc.gameSettings.keyBindJump.isKeyDown)
+                                ) && (keepRotOnJumpValue.get() || !GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
                             ) rotation = Rotation(
                                 MovementUtils.getScaffoldRotation(
                                     mc.thePlayer.rotationYaw, mc.thePlayer.moveStrafing
@@ -1107,19 +1107,19 @@ class Scaffold : Module() {
                                     .equals(
                                         "static3",
                                         ignoreCase = true
-                                    )) && (keepRotOnJumpValue.get() || !mc.gameSettings.keyBindJump.isKeyDown)
+                                    )) && (keepRotOnJumpValue.get() || !GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
                             ) rotation = Rotation(rotation.yaw, staticPitchValue.get())
                             if (rotationModeValue.get().equals(
                                     "custom",
                                     ignoreCase = true
-                                ) && (keepRotOnJumpValue.get() || !mc.gameSettings.keyBindJump.isKeyDown)
+                                ) && (keepRotOnJumpValue.get() || !GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
                             ) rotation = Rotation(
                                 mc.thePlayer.rotationYaw + customYawValue.get(), customPitchValue.get()
                             )
                             if (rotationModeValue.get().equals(
                                     "watchdog",
                                     ignoreCase = true
-                                ) && (keepRotOnJumpValue.get() || !mc.gameSettings.keyBindJump.isKeyDown)
+                                ) && (keepRotOnJumpValue.get() || !GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
                             ) {
                                 val yaw = MovementUtils.getRawDirection() - watchdogYaw.get()
                                 val pitch = watchdogPitch.get().toFloat()
@@ -1132,7 +1132,7 @@ class Scaffold : Module() {
                             if (rotationModeValue.get().equals(
                                     "spin",
                                     ignoreCase = true
-                                ) && speenRotation != null && (keepRotOnJumpValue.get() || !mc.gameSettings.keyBindJump.isKeyDown)
+                                ) && speenRotation != null && (keepRotOnJumpValue.get() || !GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
                             ) rotation = speenRotation as Rotation
                             val rotationVector = (if (rotationLookupValue.get()
                                     .equals("same", ignoreCase = true)
