@@ -5,7 +5,6 @@ import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
 import net.aspw.client.util.MovementUtils;
-import net.minecraft.client.settings.GameSettings;
 
 /**
  * The type Watchdog stable.
@@ -35,7 +34,7 @@ public class WatchdogStable extends SpeedMode {
         final Speed speed = Client.moduleManager.getModule(Speed.class);
         if (speed == null) return;
 
-        if (MovementUtils.isMoving() && !(mc.thePlayer.isInWater() || mc.thePlayer.isInLava()) && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
+        if (MovementUtils.isMoving() && !(mc.thePlayer.isInWater() || mc.thePlayer.isInLava())) {
             double moveSpeed = Math.max(MovementUtils.getBaseMoveSpeed() * speed.baseStrengthValue.get(), MovementUtils.getSpeed());
 
             if (mc.thePlayer.onGround) {

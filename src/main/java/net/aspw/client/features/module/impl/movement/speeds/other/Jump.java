@@ -5,7 +5,6 @@ import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
 import net.aspw.client.util.MovementUtils;
-import net.minecraft.client.settings.GameSettings;
 
 /**
  * The type Jump.
@@ -31,7 +30,7 @@ public class Jump extends SpeedMode {
 
         if (speed == null)
             return;
-        if (MovementUtils.isMoving() && mc.thePlayer.onGround && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !(mc.thePlayer.isInWater() || mc.thePlayer.isInLava()) && mc.thePlayer.jumpTicks == 0) {
+        if (MovementUtils.isMoving() && mc.thePlayer.onGround && !(mc.thePlayer.isInWater() || mc.thePlayer.isInLava()) && mc.thePlayer.jumpTicks == 0) {
             mc.thePlayer.jump();
             mc.thePlayer.jumpTicks = 10;
         }
