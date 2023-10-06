@@ -53,12 +53,11 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 swing = Math.max(0, swing - 1);
             }
         }
-        for (Object en : mc.theWorld.loadedEntityList) {
-            Entity entity = (Entity) en;
-            if (shouldStopRender(entity)) {
-                entity.renderDistanceWeight = 0.0;
+        for (Entity en : mc.theWorld.loadedEntityList) {
+            if (shouldStopRender(en)) {
+                en.renderDistanceWeight = 0.0;
             } else {
-                entity.renderDistanceWeight = 1.0;
+                en.renderDistanceWeight = 1.0;
             }
         }
     }

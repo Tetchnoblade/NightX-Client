@@ -21,22 +21,22 @@ import net.minecraft.network.play.server.S45PacketTitle
 
 @ModuleInfo(name = "Interface", description = "", category = ModuleCategory.VISUAL, array = false)
 class Interface : Module() {
-    val clientNameValue = TextValue("ClientName", "N:ightX")
+    private val clientNameValue = TextValue("ClientName", "N:ightX")
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
     val gcdfix = BoolValue("GCD-Fix", true)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)
-    val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F, { animHotbarValue.get() })
+    private val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F) { animHotbarValue.get() }
     val blackHotbarValue = BoolValue("Black-Hotbar", false)
-    val noInvClose = BoolValue("NoInvClose", true)
-    val noTitle = BoolValue("NoTitle", false)
-    val antiTabComplete = BoolValue("AntiTabComplete", false)
+    private val noInvClose = BoolValue("NoInvClose", true)
+    private val noTitle = BoolValue("NoTitle", false)
+    private val antiTabComplete = BoolValue("AntiTabComplete", false)
     val customFov = BoolValue("CustomFov", false)
-    val customFovModifier = FloatValue("Fov", 1.3F, 0.8F, 1.5F, { customFov.get() })
+    val customFovModifier = FloatValue("Fov", 1.3F, 0.8F, 1.5F) { customFov.get() }
     val fontChatValue = BoolValue("FontChat", false)
-    val fontType = FontValue("Font", Fonts.fontSFUI37, { fontChatValue.get() })
+    val fontType = FontValue("Font", Fonts.fontSFUI37) { fontChatValue.get() }
     val chatRectValue = BoolValue("ChatRect", true)
     val chatAnimationValue = BoolValue("Chat-Animation", false)
-    val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.06F, 0.01F, 0.5F, { chatAnimationValue.get() })
+    val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.06F, 0.01F, 0.5F) { chatAnimationValue.get() }
     private val toggleMessageValue = BoolValue("Toggle-Notification", false)
     private val toggleSoundValue = ListValue("Toggle-Sound", arrayOf("None", "Default", "Custom"), "None")
     val flagSoundValue = BoolValue("Pop-Sound", true)
@@ -102,9 +102,12 @@ class Interface : Module() {
     }
 
     fun getAnimPos(pos: Float): Float {
-        if (state && animHotbarValue.get()) hotBarX =
-            AnimationUtils.animate(pos, hotBarX, animHotbarSpeedValue.get() * RenderUtils.deltaTime.toFloat())
-        else hotBarX = pos
+        hotBarX = if (state && animHotbarValue.get()) AnimationUtils.animate(
+            pos,
+            hotBarX,
+            animHotbarSpeedValue.get() * RenderUtils.deltaTime.toFloat()
+        )
+        else pos
 
         return hotBarX
     }

@@ -40,7 +40,7 @@ import net.minecraft.client.settings.GameSettings
 @ModuleInfo(name = "Speed", description = "", category = ModuleCategory.MOVEMENT)
 class Speed : Module() {
     private var wasDown: Boolean = false
-    val speedModes = arrayOf(
+    private val speedModes = arrayOf(
         NCPBHop(),
         NCPFHop(),
         SNCPBHop(),
@@ -146,7 +146,7 @@ class Speed : Module() {
         speedMode?.onUpdate()
     }
 
-    val ncpModeValue: ListValue = object : ListValue(
+    private val ncpModeValue: ListValue = object : ListValue(
         "NCP-Mode",
         arrayOf("BHop", "FHop", "SBHop", "Hop", "SemiStrafe", "YPort", "Boost", "Frame", "MiniJump", "OnGround"),
         "BHop",
@@ -183,27 +183,28 @@ class Speed : Module() {
         speedMode?.onMove(event)
     }
 
-    val aacModeValue: ListValue = object : ListValue("AAC-Mode", arrayOf(
-        "4Hop",
-        "4SlowHop",
-        "v4BHop",
-        "BHop",
-        "2BHop",
-        "3BHop",
-        "4BHop",
-        "5BHop",
-        "6BHop",
-        "7BHop",
-        "OldBHop",
-        "Port",
-        "LowHop",
-        "LowHop2",
-        "LowHop3",
-        "Ground",
-        "Ground2",
-        "Hop3.5.0",
-        "Hop4.3.8",
-        "YPort",
+    private val aacModeValue: ListValue = object : ListValue(
+        "AAC-Mode", arrayOf(
+            "4Hop",
+            "4SlowHop",
+            "v4BHop",
+            "BHop",
+            "2BHop",
+            "3BHop",
+            "4BHop",
+            "5BHop",
+            "6BHop",
+            "7BHop",
+            "OldBHop",
+            "Port",
+            "LowHop",
+            "LowHop2",
+            "LowHop3",
+            "Ground",
+            "Ground2",
+            "Hop3.5.0",
+            "Hop4.3.8",
+            "YPort",
         "YPort2"
     ), "4Hop", { typeValue.get().equals("aac", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
@@ -228,7 +229,7 @@ class Speed : Module() {
         speedMode?.onJump(event)
     }
 
-    val hypixelModeValue: ListValue = object : ListValue(
+    private val hypixelModeValue: ListValue = object : ListValue(
         "Watchdog-Mode",
         arrayOf("OnGround", "Boost", "Stable", "Custom"),
         "OnGround",
@@ -242,7 +243,7 @@ class Speed : Module() {
         }
     }
 
-    val kauriModeValue: ListValue = object : ListValue(
+    private val kauriModeValue: ListValue = object : ListValue(
         "Kauri-Mode",
         arrayOf("LowHop"),
         "LowHop",
@@ -256,7 +257,7 @@ class Speed : Module() {
         }
     }
 
-    val intaveModeValue: ListValue = object : ListValue(
+    private val intaveModeValue: ListValue = object : ListValue(
         "Intave-Mode",
         arrayOf("Hop"),
         "Hop",
@@ -289,7 +290,7 @@ class Speed : Module() {
         speedMode?.onDisable()
     }
 
-    val spectreModeValue: ListValue = object : ListValue(
+    private val spectreModeValue: ListValue = object : ListValue(
         "Spectre-Mode",
         arrayOf("BHop", "LowHop", "OnGround"),
         "BHop",
@@ -306,7 +307,7 @@ class Speed : Module() {
     override val tag: String
         get() = typeValue.get()
 
-    val otherModeValue: ListValue = object : ListValue(
+    private val otherModeValue: ListValue = object : ListValue(
         "Other-Mode",
         arrayOf(
             "YPort",
@@ -362,7 +363,7 @@ class Speed : Module() {
             for (speedMode in speedModes) if (speedMode.modeName.equals(modeName, ignoreCase = true)) return speedMode
             return null
         }
-    val verusModeValue: ListValue = object : ListValue(
+    private val verusModeValue: ListValue = object : ListValue(
         "Verus-Mode",
         arrayOf("Hop", "LowHop", "Float"),
         "Hop",
@@ -375,7 +376,7 @@ class Speed : Module() {
             if (state) onEnable()
         }
     }
-    val vulcanModeValue: ListValue = object : ListValue("Vulcan-Mode", arrayOf(
+    private val vulcanModeValue: ListValue = object : ListValue("Vulcan-Mode", arrayOf(
         "Hop1",
         "Hop2",
         "YPort",
@@ -389,7 +390,7 @@ class Speed : Module() {
             if (state) onEnable()
         }
     }
-    val matrixModeValue: ListValue = object : ListValue("Matrix-Mode", arrayOf(
+    private val matrixModeValue: ListValue = object : ListValue("Matrix-Mode", arrayOf(
         "Hop",
         "YPort",
         "6.7.0",

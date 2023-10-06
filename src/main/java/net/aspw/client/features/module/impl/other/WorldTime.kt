@@ -13,11 +13,15 @@ import net.minecraft.network.play.server.S03PacketTimeUpdate
 
 @ModuleInfo(name = "WorldTime", spacedName = "World Time", description = "", category = ModuleCategory.OTHER)
 class WorldTime : Module() {
-    val timeModeValue = ListValue("Time", arrayOf("Static", "Cycle"), "Static")
-    val cycleSpeedValue = IntegerValue("CycleSpeed", 30, -30, 100, { timeModeValue.get().equals("cycle", true) })
-    val staticTimeValue = IntegerValue("StaticTime", 18000, 0, 24000, { timeModeValue.get().equals("static", true) })
-    val weatherModeValue = ListValue("Weather", arrayOf("Clear", "Rain", "NoModification"), "Clear")
-    val rainStrengthValue = FloatValue("RainStrength", 1F, 0.01F, 1F, { weatherModeValue.get().equals("rain", true) })
+    private val timeModeValue = ListValue("Time", arrayOf("Static", "Cycle"), "Static")
+    private val cycleSpeedValue = IntegerValue("CycleSpeed", 30, -30, 100) { timeModeValue.get().equals("cycle", true) }
+    private val staticTimeValue = IntegerValue("StaticTime", 18000, 0, 24000) {
+        timeModeValue.get().equals("static", true)
+    }
+    private val weatherModeValue = ListValue("Weather", arrayOf("Clear", "Rain", "NoModification"), "Clear")
+    private val rainStrengthValue = FloatValue("RainStrength", 1F, 0.01F, 1F) {
+        weatherModeValue.get().equals("rain", true)
+    }
 
     private var timeCycle = 0L
 

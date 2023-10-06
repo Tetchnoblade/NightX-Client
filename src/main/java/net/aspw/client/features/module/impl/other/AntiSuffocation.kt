@@ -25,13 +25,13 @@ class AntiSuffocation : Module() {
     private val breakPositionValue = ListValue(
         "BreakPosition",
         arrayOf("Normal", "Down"),
-        "Normal",
-        { modeValue.get().equals("legit", ignoreCase = true) })
+        "Normal"
+    ) { modeValue.get().equals("legit", ignoreCase = true) }
     private val swingValue = ListValue(
         "Swing",
         arrayOf("Normal", "Packet", "None"),
-        "Packet",
-        { modeValue.get().equals("legit", ignoreCase = true) })
+        "Packet"
+    ) { modeValue.get().equals("legit", ignoreCase = true) }
 
     override val tag: String
         get() = modeValue.get()

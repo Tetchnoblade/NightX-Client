@@ -75,7 +75,7 @@ class Animations : Module() {
         val cancelEquip = BoolValue("CancelEquip", false)
 
         @JvmField
-        val blockingOnly = BoolValue("BlockingOnly", true, { cancelEquip.get() })
+        val blockingOnly = BoolValue("BlockingOnly", true) { cancelEquip.get() }
 
         @JvmField
         val scale = FloatValue("Scale", 0f, -0.5f, 0.5f)

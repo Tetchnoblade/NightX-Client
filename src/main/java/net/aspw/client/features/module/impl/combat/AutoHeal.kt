@@ -26,32 +26,32 @@ import net.minecraft.util.EnumFacing
 class AutoHeal : Module() {
     // Auto Pot
     private val autoPotValue = BoolValue("AutoPot", true)
-    private val healthValue = FloatValue("Health-Pot", 15F, 0F, 100F, "%", { autoPotValue.get() })
-    private val delayValue = IntegerValue("Delay-Pot", 300, 0, 5000, "ms", { autoPotValue.get() })
-    private val regenValue = BoolValue("Heal-Pot", true, { autoPotValue.get() })
-    private val utilityValue = BoolValue("Utility-Pot", true, { autoPotValue.get() })
-    private val smartValue = BoolValue("Smart-Pot", true, { autoPotValue.get() })
+    private val healthValue = FloatValue("Health-Pot", 15F, 0F, 100F, "%") { autoPotValue.get() }
+    private val delayValue = IntegerValue("Delay-Pot", 300, 0, 5000, "ms") { autoPotValue.get() }
+    private val regenValue = BoolValue("Heal-Pot", true) { autoPotValue.get() }
+    private val utilityValue = BoolValue("Utility-Pot", true) { autoPotValue.get() }
+    private val smartValue = BoolValue("Smart-Pot", true) { autoPotValue.get() }
     private val smartTimeoutValue =
-        IntegerValue("SmartTimeout-Pot", 500, 500, 5000, "ms", { smartValue.get() && autoPotValue.get() })
-    private val spoofInvValue = BoolValue("InvSpoof-Pot", false, { autoPotValue.get() })
+        IntegerValue("SmartTimeout-Pot", 500, 500, 5000, "ms") { smartValue.get() && autoPotValue.get() }
+    private val spoofInvValue = BoolValue("InvSpoof-Pot", false) { autoPotValue.get() }
     private val spoofDelayValue =
-        IntegerValue("InvDelay-Pot", 500, 500, 5000, "ms", { spoofInvValue.get() && autoPotValue.get() })
-    private val noCombatValue = BoolValue("NoCombat-Pot", true, { autoPotValue.get() })
-    private val customPitchValue = BoolValue("Custom-Pitch-Pot", false, { autoPotValue.get() })
+        IntegerValue("InvDelay-Pot", 500, 500, 5000, "ms") { spoofInvValue.get() && autoPotValue.get() }
+    private val noCombatValue = BoolValue("NoCombat-Pot", true) { autoPotValue.get() }
+    private val customPitchValue = BoolValue("Custom-Pitch-Pot", false) { autoPotValue.get() }
     private val customPitchAngle =
-        FloatValue("Angle-Pot", 90F, -90F, 90F, "°", { customPitchValue.get() && autoPotValue.get() })
-    private val debugValue = BoolValue("Debug-Pot", false, { autoPotValue.get() })
+        FloatValue("Angle-Pot", 90F, -90F, 90F, "°") { customPitchValue.get() && autoPotValue.get() }
+    private val debugValue = BoolValue("Debug-Pot", false) { autoPotValue.get() }
 
     // Auto Soup
     private val autoSoupValue = BoolValue("AutoSoup", false)
-    private val healthValueA = FloatValue("Health-Soup", 15f, 0f, 20f, { autoSoupValue.get() })
-    private val delayValueA = IntegerValue("Delay-Soup", 150, 0, 500, "ms", { autoSoupValue.get() })
-    private val openInventoryValue = BoolValue("OpenInv-Soup", false, { autoSoupValue.get() })
-    private val simulateInventoryValue = BoolValue("SimulateInventory-Soup", true, { autoSoupValue.get() })
-    private val bowlValue = ListValue("Bowl-Soup", arrayOf("Drop", "Move", "Stay"), "Drop", { autoSoupValue.get() })
+    private val healthValueA = FloatValue("Health-Soup", 15f, 0f, 20f) { autoSoupValue.get() }
+    private val delayValueA = IntegerValue("Delay-Soup", 150, 0, 500, "ms") { autoSoupValue.get() }
+    private val openInventoryValue = BoolValue("OpenInv-Soup", false) { autoSoupValue.get() }
+    private val simulateInventoryValue = BoolValue("SimulateInventory-Soup", true) { autoSoupValue.get() }
+    private val bowlValue = ListValue("Bowl-Soup", arrayOf("Drop", "Move", "Stay"), "Drop") { autoSoupValue.get() }
 
-    var isRotating = false
-    var throwing = false
+    private var isRotating = false
+    private var throwing = false
     private var rotated = false
     private var prevSlot = -1
     private var potIndex = -1
@@ -106,7 +106,7 @@ class AutoHeal : Module() {
     fun onMotion(event: MotionEvent) {
         if (autoPotValue.get()) {
             if (event.eventState == EventState.PRE) {
-                if (smartValue.get() && !throwQueue.isEmpty()) {
+                if (smartValue.get() && throwQueue.isNotEmpty()) {
                     var foundPot = false
                     for (k in throwQueue.indices.reversed()) {
                         if (mc.thePlayer.isPotionActive(throwQueue[k])) {

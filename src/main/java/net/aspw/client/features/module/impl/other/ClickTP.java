@@ -23,6 +23,7 @@ import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * The type Click tp.
@@ -52,7 +53,7 @@ public class ClickTP extends Module {
         if (mc.currentScreen == null && Mouse.isButtonDown(Arrays.asList(buttonValue.getValues()).indexOf(buttonValue.get())) && delay <= 0) {
             endPos = objectPosition.getBlockPos();
 
-            if (BlockUtils.getBlock(endPos).getMaterial() == Material.air) {
+            if (Objects.requireNonNull(BlockUtils.getBlock(endPos)).getMaterial() == Material.air) {
                 endPos = null;
                 return;
             }
@@ -75,7 +76,7 @@ public class ClickTP extends Module {
                     PacketUtils.sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(point.getX(), point.getY(), point.getZ(), true));
                 mc.thePlayer.setPosition(endX, endY, endZ);
             }).start();
-            if (Client.moduleManager.getModule(Interface.class).getFlagSoundValue().get()) {
+            if (Objects.requireNonNull(Client.moduleManager.getModule(Interface.class)).getFlagSoundValue().get()) {
                 Client.tipSoundManager.getPopSound().asyncPlay(Client.moduleManager.getPopSoundPower());
             }
             endPos = null;
@@ -98,7 +99,7 @@ public class ClickTP extends Module {
         final int y = objectPosition.getBlockPos().getY();
         final int z = objectPosition.getBlockPos().getZ();
 
-        if (BlockUtils.getBlock(objectPosition.getBlockPos()).getMaterial() != Material.air) {
+        if (Objects.requireNonNull(BlockUtils.getBlock(objectPosition.getBlockPos())).getMaterial() != Material.air) {
             final RenderManager renderManager = mc.getRenderManager();
         }
     }

@@ -38,7 +38,7 @@ class FastLadder : Module() {
     private val downSpeedValue = FloatValue("DownSpeed", 0.15F, 0.01F, 10F)
     private val timerValue = FloatValue("Timer", 1F, 0.1F, 10F, "x")
     private val spartanTimerBoostValue =
-        BoolValue("SpartanTimerBoost", true, { modeValue.get().equals("spartan", true) })
+        BoolValue("SpartanTimerBoost", true) { modeValue.get().equals("spartan", true) }
 
     private var usedTimer = false
 
@@ -84,8 +84,8 @@ class FastLadder : Module() {
 
             mode.equals("AAC3.0.5", ignoreCase = true) && mc.gameSettings.keyBindForward.isKeyDown &&
                     collideBlockIntersects(
-                        mc.thePlayer.entityBoundingBox,
-                        { it is BlockLadder || it is BlockVine }) -> {
+                        mc.thePlayer.entityBoundingBox
+                    ) { it is BlockLadder || it is BlockVine } -> {
                 event.x = 0.0
                 event.y = 0.5
                 event.z = 0.0

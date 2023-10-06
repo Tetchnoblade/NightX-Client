@@ -17,7 +17,7 @@ class Sprint : Module() {
 
     val allDirectionsValue = BoolValue("Multi", true)
     private val noPacketPatchValue = BoolValue("Silent", false)
-    val rot = BoolValue("Rotations", false)
+    private val rot = BoolValue("Rotations", false)
 
     @EventTarget
     fun onMotion(event: MotionEvent) {

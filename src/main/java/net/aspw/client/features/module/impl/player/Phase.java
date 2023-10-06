@@ -221,10 +221,7 @@ public class Phase extends Module {
                 }
                 break;
             }
-            case "redesky": {
-                this.setState(false);
-                break;
-            }
+            case "redesky":
             case "redesky2": {
                 this.setState(false);
                 break;

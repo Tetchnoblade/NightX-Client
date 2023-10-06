@@ -19,7 +19,6 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
 import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.network.play.client.C0DPacketCloseWindow
 import net.minecraft.network.play.client.C16PacketClientStatus
-import java.util.function.Function
 import java.util.stream.Collectors
 import java.util.stream.IntStream
 
@@ -56,8 +55,7 @@ class AutoArmor : Module() {
             }
             .mapToObj { i: Int -> ArmorPiece(mc.thePlayer.inventory.getStackInSlot(i), i) }
             .collect(
-                Collectors.groupingBy(
-                    Function { obj: ArmorPiece? -> obj!!.armorType })
+                Collectors.groupingBy { obj: ArmorPiece? -> obj!!.armorType }
             )
         val bestArmor = arrayOfNulls<ArmorPiece>(4)
         for ((key, value) in armorPieces) {

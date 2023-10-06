@@ -17,8 +17,8 @@ class ColorMixer : Module() {
 
         @JvmStatic
         fun getMixedColor(index: Int, seconds: Int): Color {
-            val colMixer = Client.moduleManager.getModule(ColorMixer::class.java) ?: return Color.white
-            if (lastColors.size <= 0 || lastFraction.size <= 0) regenerateColors(true) // just to make sure it won't go white
+            Client.moduleManager.getModule(ColorMixer::class.java) ?: return Color.white
+            if (lastColors.isEmpty() || lastFraction.isEmpty()) regenerateColors(true) // just to make sure it won't go white
             return BlendUtils.blendColors(
                 lastFraction,
                 lastColors,
@@ -26,11 +26,11 @@ class ColorMixer : Module() {
             )
         }
 
-        fun regenerateColors(forceValue: Boolean) {
+        private fun regenerateColors(forceValue: Boolean) {
             val colMixer = Client.moduleManager.getModule(ColorMixer::class.java) ?: return
 
             // color generation
-            if (forceValue || lastColors.size <= 0 || lastColors.size != 2 * 2 - 1) {
+            if (forceValue || lastColors.isEmpty() || lastColors.size != 2 * 2 - 1) {
                 val generator = arrayOfNulls<Color>(2 * 2 - 1)
 
                 // reflection is cool
@@ -44,9 +44,9 @@ class ColorMixer : Module() {
                         val g = (green[colMixer] as ColorElement).get()
                         val b = (blue[colMixer] as ColorElement).get()
                         result = Color(
-                            Math.max(0, Math.min(r, 255)),
-                            Math.max(0, Math.min(g, 255)),
-                            Math.max(0, Math.min(b, 255))
+                            0.coerceAtLeast(r.coerceAtMost(255)),
+                            0.coerceAtLeast(g.coerceAtMost(255)),
+                            0.coerceAtLeast(b.coerceAtMost(255))
                         )
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -62,7 +62,7 @@ class ColorMixer : Module() {
             }
 
             // cache thingy
-            if (forceValue || lastFraction.size <= 0 || lastFraction.size != 2 * 2 - 1) {
+            if (forceValue || lastFraction.isEmpty() || lastFraction.size != 2 * 2 - 1) {
                 // color frac regenerate if necessary
                 val colorFraction = FloatArray(2 * 2 - 1)
                 for (i in 0..2 * 2 - 2) {

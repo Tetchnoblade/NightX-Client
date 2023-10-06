@@ -18,6 +18,8 @@ import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
+import kotlin.math.abs
+import kotlin.math.sqrt
 
 @ModuleInfo(name = "HackerDetect", spacedName = "Hacker Detect", description = "", category = ModuleCategory.OTHER)
 class HackerDetect : Module() {
@@ -66,12 +68,11 @@ class HackerDetect : Module() {
                     )
                     hackers.add(player)
                 }
-                if (!mc.theWorld
+                if (mc.theWorld
                         .getCollidingBoundingBoxes(
                             player,
                             mc.thePlayer.entityBoundingBox.offset(0.0, player.motionY, 0.0)
-                        )
-                        .isEmpty() && player.motionY > 0.0 && playerSpeed > 10.0
+                        ).isNotEmpty() && player.motionY > 0.0 && playerSpeed > 10.0
                 ) {
                     if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                         Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
@@ -84,8 +85,8 @@ class HackerDetect : Module() {
                     )
                     hackers.add(player)
                 }
-                val y = Math.abs(player.posY.toInt()).toDouble()
-                val lastY = Math.abs(player.lastTickPosY.toInt()).toDouble()
+                val y = abs(player.posY.toInt()).toDouble()
+                val lastY = abs(player.lastTickPosY.toInt()).toDouble()
                 val yDiff = if (y > lastY) y - lastY else lastY - y
                 if (yDiff > 0.0 && mc.thePlayer.onGround && player.motionY == -0.0784000015258789) {
                     if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
@@ -128,18 +129,18 @@ class HackerDetect : Module() {
         }
     }
 
-    fun getBPS(entityIn: EntityLivingBase): Int {
+    private fun getBPS(entityIn: EntityLivingBase): Int {
         val bps = getLastDist(entityIn) * 10.0
         return bps.toInt()
     }
 
-    fun getLastDist(entIn: EntityLivingBase): Double {
+    private fun getLastDist(entIn: EntityLivingBase): Double {
         val xDist = entIn.posX - entIn.prevPosX
         val zDist = entIn.posZ - entIn.prevPosZ
-        return Math.sqrt(xDist * xDist + zDist * zDist)
+        return sqrt(xDist * xDist + zDist * zDist)
     }
 
-    fun InsideBlock(player: EntityPlayer): Boolean {
+    private fun InsideBlock(player: EntityPlayer): Boolean {
         for (x in MathHelper.floor_double(player.entityBoundingBox.minX) until MathHelper
             .floor_double(player.entityBoundingBox.maxX) + 1) {
             for (y in MathHelper.floor_double(player.entityBoundingBox.minY) until MathHelper

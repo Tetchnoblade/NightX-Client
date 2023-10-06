@@ -228,8 +228,8 @@ class Flight : Module() {
     private var boostGround = false
     private var disableLogger = false
     private val packetBuffer = LinkedBlockingQueue<Packet<INetHandlerPlayServer>>()
-    var wdState = 0
-    var wdTick = 0
+    private var wdState = 0
+    private var wdTick = 0
     private var fly = false
     var y = 0.0
     private val timer = MSTimer()
@@ -276,7 +276,7 @@ class Flight : Module() {
     private var aac3delay = 0
     private var aac3glideDelay = 0
 
-    private fun isInventory(action: Short): Boolean = action > 0 && action < 100
+    private fun isInventory(action: Short): Boolean = action in 1..99
 
     private fun hClip(x: Double, y: Double, z: Double) {
         if (mc.thePlayer == null) return
@@ -290,8 +290,8 @@ class Flight : Module() {
     private fun getMoves(h: Double, v: Double): DoubleArray {
         if (mc.thePlayer == null) return doubleArrayOf(0.0, 0.0, 0.0)
         val yaw = Math.toRadians(mc.thePlayer.rotationYaw.toDouble())
-        val expectedX = -Math.sin(yaw) * h
-        val expectedZ = Math.cos(yaw) * h
+        val expectedX = -sin(yaw) * h
+        val expectedZ = cos(yaw) * h
         return doubleArrayOf(expectedX, v, expectedZ)
     }
 
@@ -518,11 +518,11 @@ class Flight : Module() {
             }
 
             "funcraft" -> {
-                if (mc.thePlayer.onGround) {
+                moveSpeed = if (mc.thePlayer.onGround) {
                     mc.thePlayer.jump()
-                    moveSpeed = 1.61
+                    1.61
                 } else {
-                    moveSpeed = 0.25
+                    0.25
                 }
             }
 
@@ -943,7 +943,7 @@ class Flight : Module() {
             }
 
             "newspartan" -> {
-                if (modeValue.get().equals("NewSpartan") && !mc.thePlayer.onGround && !mc.thePlayer.isSneaking) {
+                if (modeValue.get() == "NewSpartan" && !mc.thePlayer.onGround && !mc.thePlayer.isSneaking) {
                     if (mc.thePlayer.ticksExisted % 3 != 0) return
                     mc.thePlayer.motionY = 0.0
                     if (mc.thePlayer.fallDistance > 0) {
@@ -1017,8 +1017,8 @@ class Flight : Module() {
                 mc.thePlayer.onGround = true
                 mc.timer.timerSpeed = 1.3f
                 val playerYaw = Math.toRadians(mc.thePlayer.rotationYaw.toDouble())
-                var x = -Math.sin(playerYaw) * 0.2873
-                var z = Math.cos(playerYaw) * 0.2873
+                val x = -sin(playerYaw) * 0.2873
+                val z = cos(playerYaw) * 0.2873
 
                 if (MovementUtils.isMoving() && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !GameSettings.isKeyDown(
                         mc.gameSettings.keyBindSneak
@@ -1247,8 +1247,7 @@ class Flight : Module() {
                 }
                 if (boostTicks > 0) {
                     mc.timer.timerSpeed = verusTimerValue.get()
-                    var motion = 0f
-                    motion = if (verusBoostModeValue.get()
+                    val motion: Float = if (verusBoostModeValue.get()
                             .equals("static", ignoreCase = true)
                     ) verusSpeedValue.get() else boostTicks.toFloat() / verusDmgTickValue.get()
                         .toFloat() * verusSpeedValue.get()
@@ -1904,10 +1903,10 @@ class Flight : Module() {
                 if (packet is S08PacketPlayerPosLook) {
                     if (mc.thePlayer == null || mc.thePlayer.ticksExisted <= 0) return
 
-                    var x = packet.getX() - mc.thePlayer.posX
-                    var y = packet.getY() - mc.thePlayer.posY
-                    var z = packet.getZ() - mc.thePlayer.posZ
-                    var diff = sqrt(x * x + y * y + z * z)
+                    val x = packet.getX() - mc.thePlayer.posX
+                    val y = packet.getY() - mc.thePlayer.posY
+                    val z = packet.getZ() - mc.thePlayer.posZ
+                    val diff = sqrt(x * x + y * y + z * z)
                     if (diff <= 8) {
                         event.cancelEvent()
                         PacketUtils.sendPacketNoEvent(
@@ -2026,19 +2025,18 @@ class Flight : Module() {
             }
         }
         if (packet is C03PacketPlayer) {
-            val packetPlayer = packet
             if (mode.equals("NCP", ignoreCase = true) || mode.equals(
                     "Verus",
                     ignoreCase = true
                 ) && verusSpoofGround.get() && verusDmged
-            ) packetPlayer.onGround = true
+            ) packet.onGround = true
             if (mode.equals("AAC5-Vanilla", ignoreCase = true) && !mc.isIntegratedServerRunning) {
-                if (aac5NofallValue.get()) packetPlayer.onGround = true
-                aac5C03List.add(packetPlayer)
+                if (aac5NofallValue.get()) packet.onGround = true
+                aac5C03List.add(packet)
                 event.cancelEvent()
                 if (aac5C03List.size > aac5PursePacketsValue.get()) sendAAC5Packets()
             }
-            if (mode.equals("clip", ignoreCase = true) && clipGroundSpoof.get()) packetPlayer.onGround = true
+            if (mode.equals("clip", ignoreCase = true) && clipGroundSpoof.get()) packet.onGround = true
             if ((mode.equals("motion", ignoreCase = true) || mode.equals(
                     "creative",
                     ignoreCase = true
@@ -2046,21 +2044,21 @@ class Flight : Module() {
                     "noclip",
                     ignoreCase = true
                 )) && groundSpoofValue.get()
-            ) packetPlayer.onGround = true
+            ) packet.onGround = true
             if (verusDmgModeValue.get().equals("Jump", ignoreCase = true) && verusJumpTimes < 5 && mode.equals(
                     "Verus",
                     ignoreCase = true
                 )
             ) {
-                packetPlayer.onGround = false
+                packet.onGround = false
             }
             if (mode.equals("exploit", ignoreCase = true)) {
                 if (wdState == 2) {
-                    packetPlayer.y -= 0.187
+                    packet.y -= 0.187
                     wdState++
                 }
                 if (wdState > 3) {
-                    if (fakeNoMoveValue.get()) packetPlayer.isMoving = false
+                    if (fakeNoMoveValue.get()) packet.isMoving = false
                 }
             }
         }
@@ -2223,8 +2221,8 @@ class Flight : Module() {
 
             "sentinel" -> {
                 if (MovementUtils.isMoving() && cubecraftTeleportTickTimer.hasTimePassed(2)) {
-                    event.x = -Math.sin(Math.toRadians(mc.thePlayer.rotationYaw.toDouble())) * 2.4
-                    event.z = Math.cos(Math.toRadians(mc.thePlayer.rotationYaw.toDouble())) * 2.4
+                    event.x = -sin(Math.toRadians(mc.thePlayer.rotationYaw.toDouble())) * 2.4
+                    event.z = cos(Math.toRadians(mc.thePlayer.rotationYaw.toDouble())) * 2.4
                     cubecraftTeleportTickTimer.reset()
                 }
                 if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && cubecraftTeleportYTickTimer.hasTimePassed(2)) {
@@ -2311,31 +2309,8 @@ class Flight : Module() {
         ) e.stepHeight = 0f
     }
 
-    private fun calculateGround(): Double {
-        val playerBoundingBox = mc.thePlayer.entityBoundingBox
-        var blockHeight = 1.0
-        var ground = mc.thePlayer.posY
-        while (ground > 0.0) {
-            val customBox = AxisAlignedBB(
-                playerBoundingBox.maxX,
-                ground + blockHeight,
-                playerBoundingBox.maxZ,
-                playerBoundingBox.minX,
-                ground,
-                playerBoundingBox.minZ
-            )
-            if (mc.theWorld.checkBlockCollision(customBox)) {
-                if (blockHeight <= 0.05) return ground + blockHeight
-                ground += blockHeight
-                blockHeight = 0.05
-            }
-            ground -= blockHeight
-        }
-        return 0.0
-    }
-
     private val pearlSlot: Int
-        private get() {
+        get() {
             for (i in 36..44) {
                 val stack = mc.thePlayer.inventoryContainer.getSlot(i).stack
                 if (stack != null && stack.item is ItemEnderPearl) {
@@ -2345,7 +2320,7 @@ class Flight : Module() {
             return -1
         }
     private val slimeSlot: Int
-        private get() {
+        get() {
             for (i in 36..44) {
                 val stack = mc.thePlayer.inventoryContainer.getSlot(i).stack
                 if (stack != null && stack.item != null && stack.item is ItemBlock) {

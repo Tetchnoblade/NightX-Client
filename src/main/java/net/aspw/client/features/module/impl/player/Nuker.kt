@@ -34,7 +34,7 @@ class Nuker : Module() {
     private val radiusValue = FloatValue("Radius", 4.2F, 1F, 6F)
     private val throughWallsValue = BoolValue("ThroughWalls", true)
     private val priorityValue = ListValue("Priority", arrayOf("Distance", "Hardness"), "Distance")
-    val rotationsValue = BoolValue("Rotations", true)
+    private val rotationsValue = BoolValue("Rotations", true)
     private val layerValue = BoolValue("Layer", false)
     private val hitDelayValue = IntegerValue("HitDelay", 0, 0, 20)
     private val nukeValue = IntegerValue("Nuke", 1, 1, 20)
@@ -108,7 +108,7 @@ class Nuker : Module() {
 
             do {
                 val (blockPos, block) = when (priorityValue.get()) {
-                    "Distance" -> validBlocks.minByOrNull { (pos, block) ->
+                    "Distance" -> validBlocks.minByOrNull { (pos, _) ->
                         val distance = getCenterDistance(pos)
                         val safePos = BlockPos(thePlayer.posX, thePlayer.posY - 1, thePlayer.posZ)
 

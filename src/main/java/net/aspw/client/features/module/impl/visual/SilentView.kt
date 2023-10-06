@@ -24,9 +24,9 @@ import net.aspw.client.value.BoolValue
     array = false
 )
 class SilentView : Module() {
-    val normalRotationsValue = BoolValue("NormalRotations", true, { !silentValue.get() })
-    val moduleCheckValue = BoolValue("ModuleCheck", false, { !silentValue.get() })
-    val bodyLockValue = BoolValue("BodyLock", false, { !silentValue.get() })
+    val normalRotationsValue = BoolValue("NormalRotations", true) { !silentValue.get() }
+    val moduleCheckValue = BoolValue("ModuleCheck", true) { !silentValue.get() }
+    val bodyLockValue = BoolValue("BodyLock", true) { !silentValue.get() }
     val silentValue = BoolValue("Silent", false)
 
     var playerYaw: Float? = null
@@ -65,8 +65,9 @@ class SilentView : Module() {
         val bedBreaker = Client.moduleManager.getModule(BedBreaker::class.java) as BedBreaker
         val nuker = Client.moduleManager.getModule(Nuker::class.java) as Nuker
         val annoy = Client.moduleManager.getModule(Annoy::class.java) as Annoy
-        return (getState(KillAura::class.java) && killAura.target != null && killAura.silentRotationValue.get() && !killAura.rotations.get()
-            .equals("None") || (getState(Scaffold::class.java) || (getState(Nuker::class.java) && nuker.isBreaking || (getState(
+        return (getState(KillAura::class.java) && killAura.target != null && killAura.silentRotationValue.get() && killAura.rotations.get() != "None" || (getState(
+            Scaffold::class.java
+        ) || (getState(Nuker::class.java) && nuker.isBreaking || (getState(
             BowAura::class.java
         ) && bowAim.silentValue.get() && bowAim.hasTarget() || (getState(
             CivBreak::class.java

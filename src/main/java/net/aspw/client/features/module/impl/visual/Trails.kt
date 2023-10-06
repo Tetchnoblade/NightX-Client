@@ -18,13 +18,13 @@ import java.util.*
 
 @ModuleInfo(name = "Trails", description = "", category = ModuleCategory.VISUAL)
 class Trails : Module() {
-    val unlimitedValue = BoolValue("Unlimited", false)
-    val lineWidth = FloatValue("LineWidth", 4f, 1f, 10f)
+    private val unlimitedValue = BoolValue("Unlimited", false)
+    private val lineWidth = FloatValue("LineWidth", 4f, 1f, 10f)
     val colorRedValue = IntegerValue("R", 255, 0, 255)
     val colorGreenValue = IntegerValue("G", 255, 0, 255)
     val colorBlueValue = IntegerValue("B", 255, 0, 255)
     val alphaValue = IntegerValue("Alpha", 150, 0, 255)
-    val fadeSpeedValue = IntegerValue("Fade-Speed", 1, 0, 255)
+    private val fadeSpeedValue = IntegerValue("Fade-Speed", 1, 0, 255)
     val colorRainbow = BoolValue("Rainbow", true)
     private val positions = LinkedList<Dot>()
     private var lastX = 0.0

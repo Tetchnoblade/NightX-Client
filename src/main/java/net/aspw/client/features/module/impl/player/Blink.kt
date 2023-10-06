@@ -26,7 +26,7 @@ import java.util.concurrent.LinkedBlockingQueue
 
 @ModuleInfo(name = "Blink", description = "", category = ModuleCategory.PLAYER)
 class Blink : Module() {
-    val pulseValue = BoolValue("Pulse", true)
+    private val pulseValue = BoolValue("Pulse", true)
     private val packets = LinkedBlockingQueue<Packet<*>>()
     private val positions = LinkedList<DoubleArray>()
     private val c0FValue = BoolValue("C0FCancel", false)

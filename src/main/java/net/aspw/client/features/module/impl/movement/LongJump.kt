@@ -390,7 +390,7 @@ class LongJump : Module() {
 
             "aacv2", "mineplex3" -> {
                 mc.thePlayer.jumpMovementFactor = 0.09f
-                mc.thePlayer.motionY += 0.0132099999999999999999999999999
+                mc.thePlayer.motionY += 0.01321
                 mc.thePlayer.jumpMovementFactor = 0.08f
                 MovementUtils.strafe()
             }
@@ -414,7 +414,7 @@ class LongJump : Module() {
             }
 
             "mineplex1" -> {
-                mc.thePlayer.motionY += 0.0132099999999999999999999999999
+                mc.thePlayer.motionY += 0.01321
                 mc.thePlayer.jumpMovementFactor = 0.08f
                 MovementUtils.strafe()
             }
@@ -454,10 +454,8 @@ class LongJump : Module() {
                         mc.thePlayer.motionY += 0.03
                     }
                     if (redeskyTimerBoostValue.get() && currentTimer > redeskyTimerBoostEndValue.get()) {
-                        currentTimer = Math.max(
-                            0.08f,
-                            currentTimer - 0.05f * redeskyTimerBoostSlowDownSpeedValue.get()
-                        ) // zero-timer protection
+                        currentTimer =
+                            0.08f.coerceAtLeast(currentTimer - 0.05f * redeskyTimerBoostSlowDownSpeedValue.get()) // zero-timer protection
                     }
                 }
                 ticks++
@@ -465,7 +463,9 @@ class LongJump : Module() {
 
             "infiniteredesky" -> {
                 if (mc.thePlayer.fallDistance > 0.6f) mc.thePlayer.motionY += 0.02
-                MovementUtils.strafe(Math.min(0.85, Math.max(0.25, MovementUtils.getSpeed() * 1.05878)).toFloat())
+                MovementUtils.strafe(
+                    0.85.coerceAtMost(0.25.coerceAtLeast(MovementUtils.getSpeed() * 1.05878)).toFloat()
+                )
             }
         }
     }
@@ -558,7 +558,7 @@ class LongJump : Module() {
     }
 
     private val pearlSlot: Int
-        private get() {
+        get() {
             for (i in 36..44) {
                 val stack = mc.thePlayer.inventoryContainer.getSlot(i).stack
                 if (stack != null && stack.item is ItemEnderPearl) {

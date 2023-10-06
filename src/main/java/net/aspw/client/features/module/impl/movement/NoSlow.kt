@@ -53,20 +53,20 @@ class NoSlow : Module() {
     private val bowStrafeMultiplier = FloatValue("BowStrafeMultiplier", 1.0F, 0.2F, 1.0F, "x")
     val sneakForwardMultiplier = FloatValue("SneakForwardMultiplier", 0.3F, 0.3F, 1.0F, "x")
     val sneakStrafeMultiplier = FloatValue("SneakStrafeMultiplier", 0.3F, 0.3F, 1.0F, "x")
-    private val customRelease = BoolValue("CustomReleasePacket", false, { modeValue.get().equals("custom", true) })
-    private val customPlace = BoolValue("CustomPlacePacket", false, { modeValue.get().equals("custom", true) })
-    private val customOnGround = BoolValue("CustomOnGround", false, { modeValue.get().equals("custom", true) })
+    private val customRelease = BoolValue("CustomReleasePacket", false) { modeValue.get().equals("custom", true) }
+    private val customPlace = BoolValue("CustomPlacePacket", false) { modeValue.get().equals("custom", true) }
+    private val customOnGround = BoolValue("CustomOnGround", false) { modeValue.get().equals("custom", true) }
     private val customDelayValue =
-        IntegerValue("CustomDelay", 60, 0, 1000, "ms", { modeValue.get().equals("custom", true) })
-    private val testValue = BoolValue("SendPacket", false, { modeValue.get().equals("watchdog", true) })
-    private val ciucValue = BoolValue("CheckInUseCount", false, { modeValue.get().equals("blink", true) })
+        IntegerValue("CustomDelay", 60, 0, 1000, "ms") { modeValue.get().equals("custom", true) }
+    private val testValue = BoolValue("SendPacket", false) { modeValue.get().equals("watchdog", true) }
+    private val ciucValue = BoolValue("CheckInUseCount", false) { modeValue.get().equals("blink", true) }
     private val packetTriggerValue = ListValue(
         "PacketTrigger",
         arrayOf("PreRelease", "PostRelease"),
-        "PostRelease",
-        { modeValue.get().equals("blink", true) })
+        "PostRelease"
+    ) { modeValue.get().equals("blink", true) }
     private val debugValue =
-        BoolValue("Debug", false, { modeValue.get().equals("watchdog", true) || modeValue.get().equals("blink", true) })
+        BoolValue("Debug", false) { modeValue.get().equals("watchdog", true) || modeValue.get().equals("blink", true) }
 
     // Soulsand
     val soulsandValue = BoolValue("Soulsand", true)

@@ -34,6 +34,7 @@ import net.minecraft.stats.StatList
 import net.minecraft.util.*
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
+import kotlin.math.*
 
 
 @ModuleInfo(name = "Scaffold", description = "", category = ModuleCategory.PLAYER)
@@ -120,7 +121,7 @@ class Scaffold : Module() {
         arrayOf("Normal", "AAC", "Watchdog", "Static", "Static2", "Static3", "Spin", "Custom"),
         "Normal"
     )
-    val rotationLookupValue = ListValue("RotationLookup", arrayOf("Normal", "AAC", "Same"), "Normal")
+    private val rotationLookupValue = ListValue("RotationLookup", arrayOf("Normal", "AAC", "Same"), "Normal")
     private val staticPitchValue = FloatValue("Static-Pitch", 86f, 80f, 90f, "°") {
         rotationModeValue.get().lowercase(
             Locale.getDefault()
@@ -138,7 +139,7 @@ class Scaffold : Module() {
         !rotationModeValue.get().equals("normal", ignoreCase = true) && !rotationModeValue.get()
             .equals("aac", ignoreCase = true)
     }
-    private val preRotationValue = ListValue("PreRotationMode", arrayOf("Lock", "Normal", "None"), "Lock")
+    private val preRotationValue = ListValue("WaitRotationMode", arrayOf("Normal", "Lock", "None"), "Normal")
     private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Packet")
 
     // Delay
@@ -174,7 +175,6 @@ class Scaffold : Module() {
     private val customMoveSpeedValue = FloatValue("CustomMoveSpeed", 0.2f, 0f, 5f) { customSpeedValue.get() }
     private val animationValue = BoolValue("Animation", true)
     private val downValue = BoolValue("Down", true)
-    private val safeStack = BoolValue("SafeStack", true)
     private val noHitCheckValue = BoolValue("NoHitCheck", false)
     private val sameYValue = BoolValue("KeepY", false)
     private val autoJumpValue = BoolValue("AutoJump", false)
@@ -280,8 +280,8 @@ class Scaffold : Module() {
 
     // Render thingy
     var canTower = false
-    var firstPitch = 0f
-    var firstRotate = 0f
+    private var firstPitch = 0f
+    private var firstRotate = 0f
     private var progress = 0f
     private var spinYaw = 0f
     private var lastMS = 0L
@@ -407,14 +407,14 @@ class Scaffold : Module() {
                     if (mc.thePlayer.posY % 1 <= 0.00153598) {
                         mc.thePlayer.setPosition(
                             mc.thePlayer.posX,
-                            Math.floor(mc.thePlayer.posY),
+                            floor(mc.thePlayer.posY),
                             mc.thePlayer.posZ
                         )
                         mc.thePlayer.motionY = 0.42
                     } else if (mc.thePlayer.posY % 1 < 0.1 && offGroundTicks != 0) {
                         mc.thePlayer.setPosition(
                             mc.thePlayer.posX,
-                            Math.floor(mc.thePlayer.posY),
+                            floor(mc.thePlayer.posY),
                             mc.thePlayer.posZ
                         )
                     }
@@ -549,8 +549,8 @@ class Scaffold : Module() {
             if (zitterValue.get() && zitterModeValue.get().equals("teleport", ignoreCase = true)) {
                 MovementUtils.strafe(zitterSpeed.get())
                 val yaw = Math.toRadians(mc.thePlayer.rotationYaw + if (zitterDirection) 90.0 else -90.0)
-                mc.thePlayer.motionX -= Math.sin(yaw) * zitterStrength.get()
-                mc.thePlayer.motionZ += Math.cos(yaw) * zitterStrength.get()
+                mc.thePlayer.motionX -= sin(yaw) * zitterStrength.get()
+                mc.thePlayer.motionZ += cos(yaw) * zitterStrength.get()
                 zitterDirection = !zitterDirection
             }
         }
@@ -728,17 +728,6 @@ class Scaffold : Module() {
         synchronized(positions) { positions.clear() }
     }
 
-    private fun switchToBlock() {
-        val blockSlot: Int
-        if (mc.thePlayer.heldItem == null || mc.thePlayer.heldItem.item !is ItemBlock) {
-            blockSlot =
-                if (!safeStack.get()) InventoryUtils.findAutoBlockBlock() else InventoryUtils.findLargestAutoBlockBlock()!!
-            if (blockSlot == -1) return
-            mc.thePlayer.inventory.currentItem = blockSlot - 36
-            mc.playerController.updateController()
-        }
-    }
-
     @EventTarget
     fun onMotion(event: MotionEvent) {
         if (canTower && event.eventState == EventState.POST && !towerMove.get()) {
@@ -746,7 +735,16 @@ class Scaffold : Module() {
             mc.thePlayer.motionZ = 0.0
         }
 
-        switchToBlock()
+        if (mc.thePlayer.heldItem == null || mc.thePlayer.heldItem.item !is ItemBlock) {
+            val blockSlot = InventoryUtils.findAutoBlockBlock()
+            try {
+                if (blockSlot == -1) return
+                mc.thePlayer.inventory.currentItem = blockSlot - 36
+                mc.playerController.updateController()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
 
         // No SpeedPot
         if (noSpeedPotValue.get() && mc.thePlayer.isPotionActive(Potion.moveSpeed) && !canTower && mc.thePlayer.onGround) {
@@ -816,6 +814,7 @@ class Scaffold : Module() {
                 }
             }
         }
+
         val mode = modeValue.get()
         val eventState = event.eventState
 
@@ -845,10 +844,10 @@ class Scaffold : Module() {
     }
 
     private fun floatUP(event: MotionEvent) {
-        if (!mc.theWorld.getCollidingBoundingBoxes(
+        if (mc.theWorld.getCollidingBoundingBoxes(
                 mc.thePlayer,
                 mc.thePlayer.entityBoundingBox.offset(0.0, -0.01, 0.0)
-            ).isEmpty() && mc.thePlayer.onGround && mc.thePlayer.isCollidedVertically
+            ).isNotEmpty() && mc.thePlayer.onGround && mc.thePlayer.isCollidedVertically
         ) {
             verusState = 0
             verusJumped = true
@@ -900,10 +899,10 @@ class Scaffold : Module() {
         if (!expand && (!isReplaceable(blockPosition) || search(blockPosition, !shouldGoDown, false))) return
         if (expand) {
             val yaw = Math.toRadians(mc.thePlayer.rotationYaw.toDouble())
-            val x = if (omniDirectionalExpand.get()) Math.round(-Math.sin(yaw))
-                .toInt() else mc.thePlayer.horizontalFacing.directionVec.x
-            val z = if (omniDirectionalExpand.get()) Math.round(Math.cos(yaw))
-                .toInt() else mc.thePlayer.horizontalFacing.directionVec.z
+            val x =
+                if (omniDirectionalExpand.get()) (-sin(yaw)).roundToInt() else mc.thePlayer.horizontalFacing.directionVec.x
+            val z =
+                if (omniDirectionalExpand.get()) cos(yaw).roundToInt() else mc.thePlayer.horizontalFacing.directionVec.z
             for (i in 0 until expandLengthValue.get()) {
                 if (search(blockPosition.add(x * i, 0, z * i), false, false)) return
             }
@@ -1089,9 +1088,9 @@ class Scaffold : Module() {
                             val diffXZ = MathHelper.sqrt_double(diffX * diffX + diffZ * diffZ).toDouble()
                             var rotation = Rotation(
                                 MathHelper.wrapAngleTo180_float(
-                                    Math.toDegrees(Math.atan2(diffZ, diffX)).toFloat() - 90f
+                                    Math.toDegrees(atan2(diffZ, diffX)).toFloat() - 90f
                                 ),
-                                MathHelper.wrapAngleTo180_float(-Math.toDegrees(Math.atan2(diffY, diffXZ)).toFloat())
+                                MathHelper.wrapAngleTo180_float(-Math.toDegrees(atan2(diffY, diffXZ)).toFloat())
                             )
                             lookupRotation = rotation
                             if (rotationModeValue.get().equals(

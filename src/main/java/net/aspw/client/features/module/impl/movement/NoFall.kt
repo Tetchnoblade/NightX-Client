@@ -22,6 +22,7 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
 import java.util.*
+import kotlin.math.roundToInt
 
 @ModuleInfo(name = "NoFall", spacedName = "No Fall", description = "", category = ModuleCategory.MOVEMENT)
 class NoFall : Module() {
@@ -45,24 +46,24 @@ class NoFall : Module() {
     val editMode = ListValue(
         "Edit-Mode",
         arrayOf("Always", "Default", "Smart", "NoGround", "Damage"),
-        "Default",
-        { typeValue.get().equals("edit", true) })
+        "Default"
+    ) { typeValue.get().equals("edit", true) }
     private val packetMode =
-        ListValue("Packet-Mode", arrayOf("Default", "Smart"), "Default", { typeValue.get().equals("packet", true) })
+        ListValue("Packet-Mode", arrayOf("Default", "Smart"), "Default") { typeValue.get().equals("packet", true) }
     private val aacMode = ListValue(
         "AAC-Mode",
         arrayOf("Default", "LAAC", "3.3.11", "3.3.15", "4.x", "4.4.x", "Loyisa4.4.2", "5.0.4", "5.0.14"),
-        "Default",
-        { typeValue.get().equals("aac", true) })
+        "Default"
+    ) { typeValue.get().equals("aac", true) }
     private val hypixelMode = ListValue(
         "Hypixel-Mode",
         arrayOf("Default", "Packet", "New"),
-        "Default",
-        { typeValue.get().equals("hypixel", true) })
+        "Default"
+    ) { typeValue.get().equals("hypixel", true) }
     private val matrixMode =
-        ListValue("Matrix-Mode", arrayOf("Old", "6.2.x", "6.6.3"), "6.6.3", { typeValue.get().equals("matrix", true) })
+        ListValue("Matrix-Mode", arrayOf("Old", "6.2.x", "6.6.3"), "6.6.3") { typeValue.get().equals("matrix", true) }
 
-    private val flySpeedValue = FloatValue("MotionSpeed", -0.01F, -5F, 5F, { typeValue.get().equals("motion", true) })
+    private val flySpeedValue = FloatValue("MotionSpeed", -0.01F, -5F, 5F) { typeValue.get().equals("motion", true) }
 
     private val voidCheckValue = BoolValue("Void-Check", false)
 
@@ -495,7 +496,7 @@ class NoFall : Module() {
             if (doSpoof) {
                 packet.onGround = true
                 doSpoof = false
-                packet.y = Math.round(mc.thePlayer.posY * 2).toDouble() / 2
+                packet.y = (mc.thePlayer.posY * 2).roundToInt().toDouble() / 2
                 mc.thePlayer.setPosition(mc.thePlayer.posX, packet.y, mc.thePlayer.posZ)
             }
 
@@ -666,7 +667,7 @@ class NoFall : Module() {
                 off.toDouble(),
                 mc.thePlayer.posZ
             )
-            if (!mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, bb).isEmpty()) {
+            if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, bb).isNotEmpty()) {
                 return true
             }
             off += 2
@@ -686,7 +687,7 @@ class NoFall : Module() {
                 mc.thePlayer.posY - off,
                 mc.thePlayer.posZ
             )
-            if (!mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, bb).isEmpty())
+            if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, bb).isNotEmpty())
                 return true
 
             off += plus.toInt()

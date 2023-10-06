@@ -123,26 +123,26 @@ class KillAura : Module() {
         "Angle-Tick",
         1,
         1,
-        100,
-        { !rotations.get().equals("none", true) })
+        100
+    ) { !rotations.get().equals("none", true) }
 
     private val animationValue = BoolValue("Animation", false)
     private val noInventoryAttackValue = BoolValue("NoInvAttack", false)
     private val checkSprintValue = BoolValue("StopSprint", false)
     private val throughWallsValue = BoolValue(
         "No-Walls",
-        false,
-        { rotations.get().equals("undetectable", true) })
-    private val randomValue = BoolValue("Random", true, { rotations.get().equals("undetectable", true) })
-    val movementFix = BoolValue("MovementFix", false, { !rotations.get().equals("none", true) })
-    private val silentMovementFix = BoolValue("SilentMovementFix", false, { !rotations.get().equals("none", true) })
+        false
+    ) { rotations.get().equals("undetectable", true) }
+    private val randomValue = BoolValue("Random", true) { rotations.get().equals("undetectable", true) }
+    val movementFix = BoolValue("MovementFix", false) { !rotations.get().equals("none", true) }
+    private val silentMovementFix = BoolValue("SilentMovementFix", false) { !rotations.get().equals("none", true) }
     private val multiCombo = BoolValue("MultiCombo", false)
-    private val amountValue = IntegerValue("Multi-Packet", 5, 0, 20, "x", { multiCombo.get() })
+    private val amountValue = IntegerValue("Multi-Packet", 5, 0, 20, "x") { multiCombo.get() }
 
     private val noHitCheck = BoolValue(
         "NoHitCheck",
-        false,
-        { !rotations.get().equals("none", true) })
+        false
+    ) { !rotations.get().equals("none", true) }
 
     private val priorityValue = ListValue(
         "Priority",
@@ -164,8 +164,8 @@ class KillAura : Module() {
     // Bypasses
     private val swingValue = ListValue("Swing", arrayOf("Full", "Smart", "Packet", "None"), "Full")
     private val particleValue = ListValue("Particle", arrayOf("Hit", "EveryHit", "Always", "None"), "Hit")
-    private val sharpnessValue = BoolValue("Sharpness", true, { !particleValue.get().equals("none", true) })
-    private val criticalsValue = BoolValue("Criticals", true, { !particleValue.get().equals("none", true) })
+    private val sharpnessValue = BoolValue("Sharpness", true) { !particleValue.get().equals("none", true) }
+    private val criticalsValue = BoolValue("Criticals", true) { !particleValue.get().equals("none", true) }
 
     // AutoBlock
     val autoBlockModeValue =
@@ -196,15 +196,15 @@ class KillAura : Module() {
     ) { !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true) }
 
     // Bypass
-    val silentRotationValue = BoolValue("SilentRotation", true, { !rotations.get().equals("none", true) })
+    val silentRotationValue = BoolValue("SilentRotation", true) { !rotations.get().equals("none", true) }
     private val toggleFreeLook =
-        BoolValue("ToggleFreeLook", false, { !rotations.get().equals("none", true) && !silentRotationValue.get() })
+        BoolValue("ToggleFreeLook", false) { !rotations.get().equals("none", true) && !silentRotationValue.get() }
 
     private val fovValue = FloatValue("FOV", 180f, 0f, 180f)
 
     private val failRateValue = FloatValue("FailRate", 0f, 0f, 100f)
     private val limitedMultiTargetsValue =
-        IntegerValue("LimitedMultiTargets", 6, 1, 20, { targetModeValue.get().equals("multi", true) })
+        IntegerValue("LimitedMultiTargets", 6, 1, 20) { targetModeValue.get().equals("multi", true) }
 
     // Visuals
     private val espValue = BoolValue("Round-ESP", true)
@@ -218,8 +218,8 @@ class KillAura : Module() {
 
     // Target
     var target: EntityLivingBase? = null
-    var currentTarget: EntityLivingBase? = null
-    var hitable = false
+    private var currentTarget: EntityLivingBase? = null
+    private var hitable = false
     private val prevTargetEntities = mutableListOf<Int>()
 
     private var markEntity: EntityLivingBase? = null
@@ -236,7 +236,7 @@ class KillAura : Module() {
 
     // Fake block status
     var blockingStatus = false
-    var verusBlocking = false
+    private var verusBlocking = false
     var fakeBlock = false
 
     /**
@@ -490,8 +490,8 @@ class KillAura : Module() {
 
             for (i in 0..360 step 60 - 40) { // You can change circle accuracy  (60 - accuracy)
                 GL11.glVertex2f(
-                    Math.cos(i * Math.PI / 180.0).toFloat() * rangeValue.get() - 0.5f,
-                    (Math.sin(i * Math.PI / 180.0).toFloat() * rangeValue.get() - 0.5f)
+                    cos(i * Math.PI / 180.0).toFloat() * rangeValue.get() - 0.5f,
+                    (sin(i * Math.PI / 180.0).toFloat() * rangeValue.get() - 0.5f)
                 )
             }
 
@@ -576,8 +576,8 @@ class KillAura : Module() {
 
             for (i in 0..360 step 60 - 20) { // You can change circle accuracy  (60 - accuracy)
                 GL11.glVertex2f(
-                    Math.cos(i * Math.PI / 180.0).toFloat() * 0.8f,
-                    (Math.sin(i * Math.PI / 180.0).toFloat() * 0.8f)
+                    cos(i * Math.PI / 180.0).toFloat() * 0.8f,
+                    (sin(i * Math.PI / 180.0).toFloat() * 0.8f)
                 )
             }
 
@@ -593,8 +593,8 @@ class KillAura : Module() {
                     0 / 255.0f
                 )
                 GL11.glVertex2f(
-                    Math.cos(i * Math.PI / 180.0).toFloat() * 0.8f,
-                    (Math.sin(i * Math.PI / 180.0).toFloat() * 0.8f)
+                    cos(i * Math.PI / 180.0).toFloat() * 0.8f,
+                    (sin(i * Math.PI / 180.0).toFloat() * 0.8f)
                 )
             }
 
@@ -694,7 +694,6 @@ class KillAura : Module() {
      */
     private fun updateTarget() {
         // Reset fixed target to null
-        var searchTarget = null
 
         // Settings
         val hurtTime = 10
@@ -755,12 +754,7 @@ class KillAura : Module() {
         if (found)
             return
 
-        if (searchTarget != null) {
-            if (target != searchTarget) target = searchTarget
-            return
-        } else {
-            target = null
-        }
+        target = null
 
         // Cleanup last targets when no target found and try again
         if (prevTargetEntities.isNotEmpty()) {

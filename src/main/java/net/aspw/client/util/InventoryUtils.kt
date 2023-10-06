@@ -5,7 +5,6 @@ import net.aspw.client.event.EventTarget
 import net.aspw.client.event.Listenable
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.util.timer.MSTimer
-import net.minecraft.block.BlockBush
 import net.minecraft.init.Blocks
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
@@ -145,18 +144,6 @@ class InventoryUtils : MinecraftInstance(), Listenable {
                 }
             }
             return -1
-        }
-
-        fun findLargestAutoBlockBlock(): Int? {
-            val player = mc.thePlayer ?: return null
-            val inventory = player.inventoryContainer
-
-            return (36..44).filter {
-                val stack = inventory.getSlot(it).stack ?: return@filter false
-                val block = if (stack.item is ItemBlock) (stack.item as ItemBlock).block else return@filter false
-
-                stack.item is ItemBlock && stack.stackSize > 0 && block.isFullCube && block !in BLOCK_BLACKLIST && block !is BlockBush
-            }.maxByOrNull { inventory.getSlot(it).stack.stackSize }
         }
 
         /**

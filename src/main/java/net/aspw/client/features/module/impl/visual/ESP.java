@@ -32,7 +32,6 @@ import java.nio.IntBuffer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 @ModuleInfo(name = "ESP", description = "", category = ModuleCategory.VISUAL)
@@ -47,7 +46,6 @@ public final class ESP extends Module {
     private final FloatBuffer projection;
     private final FloatBuffer vector;
     private final int backgroundColor;
-    private final int black;
 
     private final DecimalFormat dFormat = new DecimalFormat("0.0");
 
@@ -57,7 +55,7 @@ public final class ESP extends Module {
         this.projection = GLAllocation.createDirectFloatBuffer(16);
         this.vector = GLAllocation.createDirectFloatBuffer(4);
         this.backgroundColor = new Color(0, 0, 0, 120).getRGB();
-        this.black = Color.BLACK.getRGB();
+        int black = Color.BLACK.getRGB();
     }
 
     @Override
@@ -74,7 +72,6 @@ public final class ESP extends Module {
         int scaleFactor = scaledResolution.getScaleFactor();
         double scaling = (double) scaleFactor / Math.pow(scaleFactor, 2.0D);
         GL11.glScaled(scaling, scaling, scaling);
-        int background = this.backgroundColor;
         RenderManager renderMng = mc.getRenderManager();
         EntityRenderer entityRenderer = mc.entityRenderer;
         boolean health = this.healthBar.get();
@@ -92,10 +89,9 @@ public final class ESP extends Module {
                 List vectors = Arrays.asList(new Vector3d(aabb.minX, aabb.minY, aabb.minZ), new Vector3d(aabb.minX, aabb.maxY, aabb.minZ), new Vector3d(aabb.maxX, aabb.minY, aabb.minZ), new Vector3d(aabb.maxX, aabb.maxY, aabb.minZ), new Vector3d(aabb.minX, aabb.minY, aabb.maxZ), new Vector3d(aabb.minX, aabb.maxY, aabb.maxZ), new Vector3d(aabb.maxX, aabb.minY, aabb.maxZ), new Vector3d(aabb.maxX, aabb.maxY, aabb.maxZ));
                 entityRenderer.setupCameraTransform(partialTicks, 0);
                 Vector4d position = null;
-                Iterator var38 = vectors.iterator();
 
-                while (var38.hasNext()) {
-                    Vector3d vector = (Vector3d) var38.next();
+                for (Object o : vectors) {
+                    Vector3d vector = (Vector3d) o;
                     vector = this.project2D(scaleFactor, vector.x - renderMng.viewerPosX, vector.y - renderMng.viewerPosY, vector.z - renderMng.viewerPosZ);
                     if (vector != null && vector.z >= 0.0D && vector.z < 1.0D) {
                         if (position == null) {
@@ -132,7 +128,7 @@ public final class ESP extends Module {
 
                             durabilityWidth = armorValue / itemDurability;
                             textWidth = (endPosY - posY) * durabilityWidth;
-                            RenderUtils.newDrawRect(posX - 3.5D, posY - 0.5D, posX - 1.5D, endPosY + 0.5D, background);
+                            RenderUtils.newDrawRect(posX - 3.5D, posY - 0.5D, posX - 1.5D, endPosY + 0.5D, this.backgroundColor);
                             if (armorValue > 0.0F) {
                                 int healthColor = BlendUtils.getHealthColor(armorValue, itemDurability).getRGB();
                                 RenderUtils.newDrawRect(posX - 3.0D, endPosY, posX - 2.0D, endPosY - textWidth, healthColor);

@@ -59,7 +59,7 @@ class InvManager : Module() {
     // Inventory options
     private val invOpenValue = BoolValue("InvOpen", false)
     private val invSpoof = BoolValue("InvSpoof", false)
-    private val invSpoofOld = BoolValue("InvSpoof-Old", false, { invSpoof.get() })
+    private val invSpoofOld = BoolValue("InvSpoof-Old", false) { invSpoof.get() }
 
     // Others
     private val noMoveValue = BoolValue("NoMove", false)
@@ -73,9 +73,9 @@ class InvManager : Module() {
     // NBT
     private val nbtGoalValue =
         ListValue("NBTGoal", ItemHelper.EnumNBTPriorityType.values().map { it.toString() }.toTypedArray(), "NONE")
-    private val nbtItemNotGarbage = BoolValue("NBTItemNotGarbage", true, { !nbtGoalValue.equals("NONE") })
-    private val nbtArmorPriority = FloatValue("NBTArmorPriority", 0f, 0f, 5f, { !nbtGoalValue.equals("NONE") })
-    private val nbtWeaponPriority = FloatValue("NBTWeaponPriority", 0f, 0f, 5f, { !nbtGoalValue.equals("NONE") })
+    private val nbtItemNotGarbage = BoolValue("NBTItemNotGarbage", true) { !nbtGoalValue.equals("NONE") }
+    private val nbtArmorPriority = FloatValue("NBTArmorPriority", 0f, 0f, 5f) { !nbtGoalValue.equals("NONE") }
+    private val nbtWeaponPriority = FloatValue("NBTWeaponPriority", 0f, 0f, 5f) { !nbtGoalValue.equals("NONE") }
 
     private val items = arrayOf(
         "None",
@@ -91,15 +91,15 @@ class InvManager : Module() {
         "Pearl",
         "Potion"
     )
-    private val sortSlot1Value = ListValue("SortSlot-1", items, "Sword", { sortValue.get() })
-    private val sortSlot2Value = ListValue("SortSlot-2", items, "Pickaxe", { sortValue.get() })
-    private val sortSlot3Value = ListValue("SortSlot-3", items, "Axe", { sortValue.get() })
-    private val sortSlot4Value = ListValue("SortSlot-4", items, "None", { sortValue.get() })
-    private val sortSlot5Value = ListValue("SortSlot-5", items, "Gapple", { sortValue.get() })
-    private val sortSlot6Value = ListValue("SortSlot-6", items, "None", { sortValue.get() })
-    private val sortSlot7Value = ListValue("SortSlot-7", items, "Bow", { sortValue.get() })
-    private val sortSlot8Value = ListValue("SortSlot-8", items, "Block", { sortValue.get() })
-    private val sortSlot9Value = ListValue("SortSlot-9", items, "Potion", { sortValue.get() })
+    private val sortSlot1Value = ListValue("SortSlot-1", items, "Sword") { sortValue.get() }
+    private val sortSlot2Value = ListValue("SortSlot-2", items, "Pickaxe") { sortValue.get() }
+    private val sortSlot3Value = ListValue("SortSlot-3", items, "Axe") { sortValue.get() }
+    private val sortSlot4Value = ListValue("SortSlot-4", items, "None") { sortValue.get() }
+    private val sortSlot5Value = ListValue("SortSlot-5", items, "Gapple") { sortValue.get() }
+    private val sortSlot6Value = ListValue("SortSlot-6", items, "None") { sortValue.get() }
+    private val sortSlot7Value = ListValue("SortSlot-7", items, "Bow") { sortValue.get() }
+    private val sortSlot8Value = ListValue("SortSlot-8", items, "Block") { sortValue.get() }
+    private val sortSlot9Value = ListValue("SortSlot-9", items, "Potion") { sortValue.get() }
 
     private var garbageQueue = mutableMapOf<Int, ItemStack>()
     private var armorQueue = arrayOf<ArmorPart?>()
@@ -129,7 +129,7 @@ class InvManager : Module() {
             spoofInventory = false
 
         garbageQueue.clear()
-        armorQueue = arrayOf<ArmorPart?>()
+        armorQueue = arrayOf()
     }
 
     @EventTarget
@@ -138,7 +138,7 @@ class InvManager : Module() {
             spoofInventory = false
 
         garbageQueue.clear()
-        armorQueue = arrayOf<ArmorPart?>()
+        armorQueue = arrayOf()
     }
 
     @EventTarget
@@ -146,7 +146,7 @@ class InvManager : Module() {
         performManager()
     }
 
-    fun performManager() {
+    private fun performManager() {
         if (!InventoryUtils.CLICK_TIMER.hasTimePassed(
                 delay
             ) ||
@@ -182,7 +182,7 @@ class InvManager : Module() {
 
         if (mc.currentScreen !is GuiInventory && invOpenValue.get() && !invSpoof.get()) return
 
-        if (garbageQueue.isEmpty() && armorQueue.size <= 0) {
+        if (garbageQueue.isEmpty() && armorQueue.isEmpty()) {
             if (invSpoof.get() && !invSpoofOld.get())
                 spoofInventory = false
             return

@@ -213,13 +213,11 @@ class Step : Module() {
             return
 
         if (mc.thePlayer.entityBoundingBox.minY - stepY > 0.8) {
-            if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && !modeValue.get()
-                    .equals("Matrix")
+            if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && modeValue.get() != "Matrix"
             ) {
                 mc.timer.timerSpeed = 0.7f
             }
-            if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && modeValue.get()
-                    .equals("Matrix")
+            if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && modeValue.get() == "Matrix"
             ) {
                 mc.timer.timerSpeed = 0.12f
             }

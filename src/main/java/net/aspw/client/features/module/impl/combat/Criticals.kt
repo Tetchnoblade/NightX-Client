@@ -51,7 +51,7 @@ class Criticals : Module() {
     private val hurtTimeValue = IntegerValue("HurtTime", 10, 0, 10)
     private val onlyAuraValue = BoolValue("OnlyAura", false)
 
-    val msTimer = MSTimer()
+    private val msTimer = MSTimer()
     private var readyCrits = false
     private var canCrits = true
     private var counter = 0

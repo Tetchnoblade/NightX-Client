@@ -22,7 +22,7 @@ class HighJump : Module() {
     @EventTarget
     fun onUpdate(event: UpdateEvent?) {
         when (modeValue.get().lowercase(Locale.getDefault())) {
-            "damage" -> if (mc.thePlayer.hurtTime > 0 && mc.thePlayer.onGround) mc.thePlayer.motionY += (0.41999998688698f * heightValue.get()).toDouble()
+            "damage" -> if (mc.thePlayer.hurtTime > 0 && mc.thePlayer.onGround) mc.thePlayer.motionY += (0.42f * heightValue.get()).toDouble()
             "aacv3" -> if (!mc.thePlayer.onGround) mc.thePlayer.motionY += 0.059
             "dac" -> if (!mc.thePlayer.onGround) mc.thePlayer.motionY += 0.049999
             "mineplex" -> if (!mc.thePlayer.onGround) MovementUtils.strafe(0.35f)

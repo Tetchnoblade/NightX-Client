@@ -22,22 +22,24 @@ import net.minecraft.entity.Entity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.MathHelper
 import java.util.*
+import kotlin.math.cos
+import kotlin.math.sin
 
 @ModuleInfo(name = "TargetStrafe", spacedName = "Target Strafe", description = "", category = ModuleCategory.PLAYER)
 class TargetStrafe : Module() {
-    val range = FloatValue("Range", 2.5f, 0.1f, 4.0f, "m", { !behind.get() })
+    val range = FloatValue("Range", 2.5f, 0.1f, 4.0f, "m") { !behind.get() }
     private val modeValue = ListValue("KeyMode", arrayOf("Jump", "None"), "Jump")
     private val safewalk = BoolValue("SafeWalk", true)
-    val behind = BoolValue("Behind", false)
-    val thirdPerson = BoolValue("ThirdPerson", false)
+    private val behind = BoolValue("Behind", false)
+    private val thirdPerson = BoolValue("ThirdPerson", false)
     val killAura = Client.moduleManager.getModule(KillAura::class.java)
     val speed = Client.moduleManager.getModule(Speed::class.java)
-    val longJump = Client.moduleManager.getModule(LongJump::class.java)
+    private val longJump = Client.moduleManager.getModule(LongJump::class.java)
     val flight = Client.moduleManager.getModule(Flight::class.java)
 
     var direction = 1
-    var lastView = 0
-    var hasChangedThirdPerson = true
+    private var lastView = 0
+    private var hasChangedThirdPerson = true
 
     override fun onEnable() {
         hasChangedThirdPerson = true
@@ -89,8 +91,8 @@ class TargetStrafe : Module() {
             MovementUtils.setSpeed(event, moveSpeed, rotYaw, direction.toDouble(), 1.0)
 
         if (behind.get()) {
-            val xPos: Double = target!!.posX + -Math.sin(Math.toRadians(target.rotationYaw.toDouble())) * -2
-            val zPos: Double = target.posZ + Math.cos(Math.toRadians(target.rotationYaw.toDouble())) * -2
+            val xPos: Double = target!!.posX + -sin(Math.toRadians(target.rotationYaw.toDouble())) * -2
+            val zPos: Double = target.posZ + cos(Math.toRadians(target.rotationYaw.toDouble())) * -2
             event.x = (moveSpeed * -MathHelper.sin(
                 Math.toRadians(RotationUtils.getRotations1(xPos, target.posY, zPos)[0].toDouble())
                     .toFloat()
@@ -108,14 +110,14 @@ class TargetStrafe : Module() {
     }
 
 
-    val keyMode: Boolean
+    private val keyMode: Boolean
         get() = when (modeValue.get().lowercase(Locale.getDefault())) {
             "jump" -> GameSettings.isKeyDown(mc.gameSettings.keyBindJump)
             "none" -> mc.thePlayer.movementInput.moveStrafe != 0f || mc.thePlayer.movementInput.moveForward != 0f
             else -> false
         }
 
-    val canStrafe: Boolean
+    private val canStrafe: Boolean
         get() = (state && (speed!!.state || flight!!.state || longJump!!.state) && killAura!!.state && killAura.target != null && !mc.thePlayer.isSneaking && keyMode && mc.gameSettings.keyBindForward.isKeyDown && !mc.gameSettings.keyBindRight.isKeyDown && !mc.gameSettings.keyBindLeft.isKeyDown && !mc.gameSettings.keyBindBack.isKeyDown)
 
     private fun checkVoid(): Boolean {

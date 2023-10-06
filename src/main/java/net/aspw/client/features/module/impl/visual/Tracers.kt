@@ -33,7 +33,7 @@ class Tracers : Module() {
 
     private val directLineValue = BoolValue("Directline", false)
     private val fovModeValue = ListValue("FOV-Mode", arrayOf("All", "Back", "Front"), "All")
-    private val fovValue = FloatValue("FOV", 180F, 0F, 180F, { !fovModeValue.get().equals("all", true) })
+    private val fovValue = FloatValue("FOV", 180F, 0F, 180F) { !fovModeValue.get().equals("all", true) }
 
     @EventTarget
     fun onRender3D(event: Render3DEvent) {
@@ -62,15 +62,15 @@ class Tracers : Module() {
                 val colorMode = colorMode.get().lowercase(Locale.getDefault())
                 val color = when {
                     EntityUtils.isFriend(entity) -> Color(0, 0, 255, 150)
-                    colorMode.equals("custom") -> Color(
+                    colorMode == "custom" -> Color(
                         colorRedValue.get(),
                         colorGreenValue.get(),
                         colorBlueValue.get(),
                         150
                     )
 
-                    colorMode.equals("distancecolor") -> Color(255 - dist, dist, 0, 150)
-                    colorMode.equals("rainbow") -> ColorUtils.rainbow()
+                    colorMode == "distancecolor" -> Color(255 - dist, dist, 0, 150)
+                    colorMode == "rainbow" -> ColorUtils.rainbow()
                     else -> Color(255, 255, 255, 150)
                 }
 

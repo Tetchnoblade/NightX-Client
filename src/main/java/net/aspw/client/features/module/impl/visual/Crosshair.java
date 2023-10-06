@@ -17,6 +17,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 
 import java.awt.*;
+import java.util.Objects;
 
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
@@ -72,7 +73,7 @@ public class Crosshair extends Module {
      */
     @EventTarget
     public void onRender2D(Render2DEvent event) {
-        if (!Client.moduleManager.getModule(Interface.class).getNof5crossHair().get() || MinecraftInstance.mc.gameSettings.thirdPersonView == 0 && Client.moduleManager.getModule(Interface.class).getNof5crossHair().get()) {
+        if (!Objects.requireNonNull(Client.moduleManager.getModule(Interface.class)).getNof5crossHair().get() || MinecraftInstance.mc.gameSettings.thirdPersonView == 0 && Objects.requireNonNull(Client.moduleManager.getModule(Interface.class)).getNof5crossHair().get()) {
             final ScaledResolution scaledRes = new ScaledResolution(mc);
             float width = widthVal.get();
             float size = sizeVal.get();

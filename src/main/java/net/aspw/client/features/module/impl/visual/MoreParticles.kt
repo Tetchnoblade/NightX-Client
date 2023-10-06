@@ -26,7 +26,7 @@ class MoreParticles : Module() {
     private val modeValue =
         ListValue("ParticleMode", arrayOf("Thunder", "Blood", "Fire", "Criticals", "Sharpness"), "Thunder")
     private val timesValue = IntegerValue("Multi", 1, 1, 10)
-    private val soundValue = BoolValue("Sound", false, { modeValue.get().equals("thunder", true) })
+    private val soundValue = BoolValue("Sound", false) { modeValue.get().equals("thunder", true) }
     private val blockState = Block.getStateId(Blocks.redstone_block.defaultState)
 
     @EventTarget

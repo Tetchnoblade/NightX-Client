@@ -40,7 +40,7 @@ class Jesus : Module() {
         ),
         "NCP"
     )
-    private val aacFlyValue = FloatValue("Motion", 0.5f, 0.1f, 1f, { modeValue.get().equals("AACFly") })
+    private val aacFlyValue = FloatValue("Motion", 0.5f, 0.1f, 1f) { modeValue.get() == "AACFly" }
     private var nextTick = false
 
     @EventTarget

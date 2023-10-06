@@ -116,14 +116,13 @@ class Spider : Module() {
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
         if (packet is C03PacketPlayer) {
-            val packetPlayer = packet
             if (glitch) {
                 val yaw = MovementUtils.getDirection().toFloat()
-                packetPlayer.x = packetPlayer.x - MathHelper.sin(yaw) * 0.00000001
-                packetPlayer.z = packetPlayer.z + MathHelper.cos(yaw) * 0.00000001
+                packet.x = packet.x - MathHelper.sin(yaw) * 0.00000001
+                packet.z = packet.z + MathHelper.cos(yaw) * 0.00000001
                 glitch = false
             }
-            if (canClimb) packetPlayer.onGround = true
+            if (canClimb) packet.onGround = true
         }
     }
 
@@ -133,7 +132,7 @@ class Spider : Module() {
         val mode = modeValue.get()
         when (mode.lowercase(Locale.getDefault())) {
             "checkerclimb" -> if (event.y > mc.thePlayer.posY) event.boundingBox = null
-            "clip" -> if (event.block != null && mc.thePlayer != null && event.block is BlockAir && event.y < mc.thePlayer.posY && mc.thePlayer.isCollidedHorizontally && !mc.thePlayer.isOnLadder && !mc.thePlayer.isInWater && !mc.thePlayer.isInLava) event.boundingBox =
+            "clip" -> if (mc.thePlayer != null && event.block is BlockAir && event.y < mc.thePlayer.posY && mc.thePlayer.isCollidedHorizontally && !mc.thePlayer.isOnLadder && !mc.thePlayer.isInWater && !mc.thePlayer.isInLava) event.boundingBox =
                 AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 1.0, 1.0).offset(
                     mc.thePlayer.posX, (mc.thePlayer.posY.toInt() - 1).toDouble(), mc.thePlayer.posZ
                 )

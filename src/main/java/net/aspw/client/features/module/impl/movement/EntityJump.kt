@@ -22,9 +22,9 @@ class EntityJump : Module() {
     private val modeValue = ListValue("Mode", arrayOf("Boost", "Launch", "Matrix"), "Boost")
     private val hBoostValue = FloatValue("HBoost", 2f, 0f, 6f)
     private val vBoostValue = FloatValue("VBoost", 2f, 0f, 6f)
-    private val matrixTimerStartValue = FloatValue("MatrixTimerStart", 0.3f, 0.1f, 1f, { modeValue.equals("Matrix") })
-    private val matrixTimerAirValue = FloatValue("MatrixTimerAir", 0.5f, 0.1f, 1.5f, { modeValue.equals("Matrix") })
-    private val launchRadiusValue = FloatValue("LaunchRadius", 4F, 3F, 10F, { modeValue.equals("Launch") })
+    private val matrixTimerStartValue = FloatValue("MatrixTimerStart", 0.3f, 0.1f, 1f) { modeValue.equals("Matrix") }
+    private val matrixTimerAirValue = FloatValue("MatrixTimerAir", 0.5f, 0.1f, 1.5f) { modeValue.equals("Matrix") }
+    private val launchRadiusValue = FloatValue("LaunchRadius", 4F, 3F, 10F) { modeValue.equals("Launch") }
     private val delayValue = IntegerValue("Delay", 200, 100, 500)
     private val autoHitValue = BoolValue("AutoDestroy", false)
 

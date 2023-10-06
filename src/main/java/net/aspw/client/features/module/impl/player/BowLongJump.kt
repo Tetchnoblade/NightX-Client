@@ -90,7 +90,7 @@ class BowLongJump : Module() {
                     forceDisable = true
                     bowState = 5
                 } else if (lastPlayerTick == -1L) {
-                    val stack = mc.thePlayer.inventoryContainer.getSlot(slot + 36).stack
+                    mc.thePlayer.inventoryContainer.getSlot(slot + 36).stack
                     if (lastSlot != slot) PacketUtils.sendPacketNoEvent(C09PacketHeldItemChange(slot))
                     PacketUtils.sendPacketNoEvent(
                         C08PacketPlayerBlockPlacement(
@@ -164,7 +164,7 @@ class BowLongJump : Module() {
     }
 
     private val bowSlot: Int
-        private get() {
+        get() {
             for (i in 36..44) {
                 val stack = mc.thePlayer.inventoryContainer.getSlot(i).stack
                 if (stack != null && stack.item is ItemBow) {
@@ -201,7 +201,7 @@ class BowLongJump : Module() {
         )
     }
 
-    val bowStatus: String
+    private val bowStatus: String
         get() = when (bowState) {
             0 -> "Idle..."
             1 -> "Preparing..."
@@ -209,7 +209,7 @@ class BowLongJump : Module() {
             3, 4 -> "Successfully!"
             else -> "Task completed."
         }
-    val statusColor: Color
+    private val statusColor: Color
         get() = when (bowState) {
             0 -> Color(21, 21, 21)
             1 -> Color(48, 48, 48)

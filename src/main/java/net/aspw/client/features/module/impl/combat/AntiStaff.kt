@@ -22,8 +22,8 @@ class AntiStaff : Module() {
 
     override fun onInitialize() {
         thread {
-            totalCount = obStaffs.filter { it.isWhitespace() }.count()
-            println("[Staff/fallback] ${obStaffs}")
+            totalCount = obStaffs.count { it.isWhitespace() }
+            println("[Staff/fallback] $obStaffs")
         }
     }
 

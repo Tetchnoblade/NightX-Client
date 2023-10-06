@@ -37,15 +37,15 @@ class AntiVelocity : Module() {
         0F,
         -1F,
         1F,
-        "%",
-        { modeValue.get().equals("aac", ignoreCase = true) || modeValue.get().equals("simple", ignoreCase = true) })
+        "%"
+    ) { modeValue.get().equals("aac", ignoreCase = true) || modeValue.get().equals("simple", ignoreCase = true) }
     private val verticalValue = FloatValue(
         "Vertical",
         0F,
         -1F,
         1F,
-        "%",
-        { modeValue.get().equals("aac", ignoreCase = true) || modeValue.get().equals("simple", ignoreCase = true) })
+        "%"
+    ) { modeValue.get().equals("aac", ignoreCase = true) || modeValue.get().equals("simple", ignoreCase = true) }
     private val horizontalExplosionValue = FloatValue("HorizontalExplosion", 0F, 0F, 1F, "%")
     private val verticalExplosionValue = FloatValue("VerticalExplosion", 0F, 0F, 1F, "%")
     private val modeValue = ListValue(
@@ -80,7 +80,7 @@ class AntiVelocity : Module() {
     )
 
     private val aac5KillAuraValue =
-        BoolValue("AAC5.2.0-Attack-Only", true, { modeValue.get().equals("aac5.2.0", true) })
+        BoolValue("AAC5.2.0-Attack-Only", true) { modeValue.get().equals("aac5.2.0", true) }
 
     // Affect chance
     private val reduceChance = FloatValue("Chance", 100F, 0F, 100F, "%")
@@ -88,25 +88,25 @@ class AntiVelocity : Module() {
 
     // Reverse
     private val reverseStrengthValue =
-        FloatValue("ReverseStrength", 1F, 0.1F, 1F, "x", { modeValue.get().equals("reverse", true) })
+        FloatValue("ReverseStrength", 1F, 0.1F, 1F, "x") { modeValue.get().equals("reverse", true) }
     private val reverse2StrengthValue =
-        FloatValue("SmoothReverseStrength", 0.05F, 0.02F, 0.1F, "x", { modeValue.get().equals("smoothreverse", true) })
+        FloatValue("SmoothReverseStrength", 0.05F, 0.02F, 0.1F, "x") { modeValue.get().equals("smoothreverse", true) }
 
     // AAC Push
     private val aacPushXZReducerValue =
-        FloatValue("AACPushXZReducer", 2F, 1F, 3F, "x", { modeValue.get().equals("aacpush", true) })
-    private val aacPushYReducerValue = BoolValue("AACPushYReducer", true, { modeValue.get().equals("aacpush", true) })
+        FloatValue("AACPushXZReducer", 2F, 1F, 3F, "x") { modeValue.get().equals("aacpush", true) }
+    private val aacPushYReducerValue = BoolValue("AACPushYReducer", true) { modeValue.get().equals("aacpush", true) }
 
     // legit
-    private val legitStrafeValue = BoolValue("LegitStrafe", false, { modeValue.get().equals("legit", true) })
-    private val legitFaceValue = BoolValue("LegitFace", true, { modeValue.get().equals("legit", true) })
+    private val legitStrafeValue = BoolValue("LegitStrafe", false) { modeValue.get().equals("legit", true) }
+    private val legitFaceValue = BoolValue("LegitFace", true) { modeValue.get().equals("legit", true) }
 
-    //add strafe in aac
-    private val aacStrafeValue = BoolValue("AACStrafeValue", false, { modeValue.get().equals("aac", true) })
+    // add strafe in aac
+    private val aacStrafeValue = BoolValue("AACStrafeValue", false) { modeValue.get().equals("aac", true) }
 
-    //epic
+    // epic
     private val phaseOffsetValue =
-        FloatValue("Phase-Offset", 0.05F, -10F, 10F, "m", { modeValue.get().equals("phase", true) })
+        FloatValue("Phase-Offset", 0.05F, -10F, 10F, "m") { modeValue.get().equals("phase", true) }
 
     /**
      * VALUES

@@ -36,18 +36,18 @@ class Gui : Module() {
 
     @JvmField
     val animationValue: ListValue =
-        object : ListValue("Animation", arrayOf("None", "Zoom"), "Zoom", { styleValue.get().equals("DropDown") }) {}
+        object : ListValue("Animation", arrayOf("None", "Zoom"), "Zoom", { styleValue.get() == "DropDown" }) {}
 
     @JvmField
-    val scaleValue = FloatValue("Scale", 1.0f, 0.4f, 2f, { styleValue.get().equals("DropDown") })
+    val scaleValue = FloatValue("Scale", 1.0f, 0.4f, 2f) { styleValue.get() == "DropDown" }
 
     @JvmField
     val imageModeValue =
         ListValue(
             "Image",
             arrayOf("none", "mahiro", "delta", "defoko", "astolfo", "nao", "miguel", "infinity"),
-            "none",
-            { styleValue.get().equals("DropDown") })
+            "none"
+        ) { styleValue.get() == "DropDown" }
 
     override fun onEnable() {
         Client.clickGui.progress = 0.0

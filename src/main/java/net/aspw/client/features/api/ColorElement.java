@@ -12,17 +12,6 @@ public class ColorElement extends IntegerValue {
      *
      * @param counter the counter
      * @param m       the m
-     * @param basis   the basis
-     */
-    public ColorElement(int counter, Material m, IntegerValue basis) {
-        super("Color" + counter + "-" + m.getColorName(), 255, 0, 255, () -> (basis.get() >= counter));
-    }
-
-    /**
-     * Instantiates a new Color element.
-     *
-     * @param counter the counter
-     * @param m       the m
      */
     public ColorElement(int counter, Material m) {
         super("Color" + counter + "-" + m.getColorName(), 255, 0, 255);

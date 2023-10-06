@@ -58,8 +58,8 @@ class ChestStealer : Module() {
     private val instantValue = BoolValue("Instant", false)
     private val autoCloseValue = BoolValue("AutoClose", true)
     val silenceValue = BoolValue("SilentMode", true)
-    val showStringValue = BoolValue("Silent-ShowString", true, { silenceValue.get() })
-    val stillDisplayValue = BoolValue("Silent-StillDisplay", true, { silenceValue.get() })
+    val showStringValue = BoolValue("Silent-ShowString", true) { silenceValue.get() }
+    val stillDisplayValue = BoolValue("Silent-StillDisplay", true) { silenceValue.get() }
 
     private val autoCloseMaxDelayValue: IntegerValue = object : IntegerValue("AutoCloseMaxDelay", 5, 0, 400, "ms") {
         override fun onChanged(oldValue: Int, newValue: Int) {
@@ -90,7 +90,7 @@ class ChestStealer : Module() {
     private val autoCloseTimer = MSTimer()
     private var nextCloseDelay = TimeUtils.randomDelay(autoCloseMinDelayValue.get(), autoCloseMaxDelayValue.get())
 
-    var contentReceived = 0
+    private var contentReceived = 0
 
     var once = false
 
@@ -126,7 +126,7 @@ class ChestStealer : Module() {
         performStealer(screen)
     }
 
-    fun performStealer(screen: GuiScreen) {
+    private fun performStealer(screen: GuiScreen) {
         if (once && screen !is GuiChest) {
             // prevent a bug where the chest suddenly closed while not finishing stealing items inside, leaving cheststealer turned on alone.
             state = false

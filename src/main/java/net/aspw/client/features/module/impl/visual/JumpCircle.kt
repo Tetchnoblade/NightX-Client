@@ -36,7 +36,7 @@ class JumpCircle : Module() {
 
     private val points = mutableMapOf<Int, MutableList<Render>>()
     var jump = false
-    val circles = mutableListOf<Circle>()
+    private val circles = mutableListOf<Circle>()
     var red = colorRedValue.get()
     var green = colorGreenValue.get()
     var blue = colorBlueValue.get()
@@ -80,7 +80,7 @@ class JumpCircle : Module() {
         }
     }
 
-    fun updatePoints(entity: EntityLivingBase) {
+    private fun updatePoints(entity: EntityLivingBase) {
         circles.add(Circle(System.currentTimeMillis(), mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ))
     }
 
@@ -95,20 +95,16 @@ class JumpCircle : Module() {
 
     class Circle(val time: Long, val x: Double, val y: Double, val z: Double) {
         var entity: EntityLivingBase = mc.thePlayer
-        val jumpModule = Client.moduleManager.getModule(JumpCircle::class.java) as JumpCircle
-        var colorModeValue = jumpModule.colorModeValue.get()
+        private val jumpModule = Client.moduleManager.getModule(JumpCircle::class.java) as JumpCircle
+        private var colorModeValue = jumpModule.colorModeValue.get()
         var colorRedValue = jumpModule.colorRedValue.get()
         var colorGreenValue = jumpModule.colorGreenValue.get()
         var colorBlueValue = jumpModule.colorBlueValue.get()
-        var mixerSecondsValue = jumpModule.mixerSecondsValue.get()
+        private var mixerSecondsValue = jumpModule.mixerSecondsValue.get()
         var saturationValue = jumpModule.saturationValue.get()
         var brightnessValue = jumpModule.brightnessValue.get()
 
         fun draw() {
-            if (jumpModule == null) {
-                return
-            }
-
             val dif = (System.currentTimeMillis() - time)
             val c = 125 - (dif / 1000.toFloat()) * 125
 

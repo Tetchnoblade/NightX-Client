@@ -14,7 +14,7 @@ import net.aspw.client.value.FloatValue
 class ViewBobbing : Module() {
     private val noBob = BoolValue("NoBob", false)
     private val customBobbing = BoolValue("CustomBobbing", true)
-    private val bobbingAmount = FloatValue("BobbingAmount", 0.03f, -0.5f, 0.5f, { customBobbing.get() })
+    private val bobbingAmount = FloatValue("BobbingAmount", 0.03f, -0.5f, 0.5f) { customBobbing.get() }
 
     @EventTarget
     fun onMotion(event: MotionEvent?) {

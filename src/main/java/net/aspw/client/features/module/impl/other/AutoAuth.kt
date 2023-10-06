@@ -74,7 +74,7 @@ class AutoAuth : Module() {
 
         if (packet is S45PacketTitle) {
             val messageOrigin = packet.message ?: return
-            var message: String = messageOrigin.unformattedText
+            val message: String = messageOrigin.unformattedText
 
             if (message.contains(loginRegex.get(), true))
                 sendLogin(loginCmd.get().replace("%p", password.get(), true))
@@ -84,7 +84,7 @@ class AutoAuth : Module() {
         }
 
         if (packet is S02PacketChat) {
-            var message: String = packet.chatComponent.unformattedText
+            val message: String = packet.chatComponent.unformattedText
 
             if (message.contains(loginRegex.get(), true))
                 sendLogin(loginCmd.get().replace("%p", password.get(), true))
