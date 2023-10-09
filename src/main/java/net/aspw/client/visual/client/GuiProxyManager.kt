@@ -39,7 +39,7 @@ class GuiProxyManager(private val prevGui: GuiScreen) : GuiScreen() {
         this.drawCenteredString(mc.fontRendererObj, "Proxy Manager", width / 2, 12, 0xffffff)
         textField.drawTextBox()
         if (textField.text.isEmpty() && !textField.isFocused) {
-            drawString(mc.fontRendererObj, "§7Proxy : Port", width / 2 - 92, 66, 0xffffff)
+            drawString(mc.fontRendererObj, "§7Address : Port", width / 2 - 92, 66, 0xffffff)
         }
         super.drawScreen(mouseX, mouseY, partialTicks)
     }
