@@ -14,7 +14,6 @@ object CheckConnection {
     var announcement = ""
     var discord = ""
     var discordApp = ""
-    var apiKey = ""
     var appClientID = ""
     var appClientSecret = ""
     var clientContributors = ""
@@ -136,6 +135,26 @@ object CheckConnection {
         }
     }
 
+    fun checkLatestVersion() {
+        try {
+            val httpClient: CloseableHttpClient = HttpClients.createDefault()
+            val request = HttpGet(Client.CLIENT_LATEST)
+            val response = httpClient.execute(request)
+            val entity = response.entity
+            val content = EntityUtils.toString(entity)
+            EntityUtils.consume(entity)
+            response.close()
+            httpClient.close()
+            val details = content.split("///")
+            isAvailable = details[0] == "True"
+            isLatest = details[1] == Client.CLIENT_VERSION
+            canConnect = true
+        } catch (e: Exception) {
+            canConnect = false
+            isLatest = false
+        }
+    }
+
     fun checkStatus() {
         try {
             val httpClient: CloseableHttpClient = HttpClients.createDefault()
@@ -147,16 +166,11 @@ object CheckConnection {
             response.close()
             httpClient.close()
             val details = content.split("///")
-            discord = details[6]
-            discordApp = details[5]
-            appClientSecret = details[4]
-            appClientID = details[3]
-            apiKey = details[2]
-            if (details[1] == Client.CLIENT_VERSION)
-                isLatest = true
-            if (details[0] == "True")
-                isAvailable = true
-            val slashLog = details[7].split("---")
+            discord = details[3]
+            discordApp = details[2]
+            appClientSecret = details[1]
+            appClientID = details[0]
+            val slashLog = details[4].split("---")
             changeLog1 = slashLog[0]
             changeLog2 = slashLog[1]
             changeLog3 = slashLog[2]

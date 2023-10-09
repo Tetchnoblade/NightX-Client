@@ -735,7 +735,7 @@
     </library>
     <library name="Gradle: com.viaversion:viarewind-universal:3.0.1-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viarewind-universal/3.0.1-SNAPSHOT/404e56b6191f75b578e1b6a746dc57d2496a9503/viarewind-universal-3.0.1-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viarewind-universal/3.0.1-SNAPSHOT/85be7d3d7d5389ea299d21632880149a27ca71be/viarewind-universal-3.0.1-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

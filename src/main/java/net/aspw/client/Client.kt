@@ -18,7 +18,6 @@ import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.hud.HUD
 import net.aspw.client.visual.hud.HUD.Companion.createDefault
 import net.minecraft.util.ResourceLocation
-import org.lwjgl.opengl.Display
 import kotlin.concurrent.thread
 
 object Client {
@@ -40,6 +39,12 @@ object Client {
         "Release" -> "$CLIENT_WEBSITE/data/release.txt"
         "Beta" -> "$CLIENT_WEBSITE/data/beta.txt"
         "Developer" -> "$CLIENT_WEBSITE/data/dev.txt"
+        else -> null
+    }
+    val CLIENT_LATEST = when (clientVersion.get()) {
+        "Release" -> "$CLIENT_WEBSITE/data/release-latest.txt"
+        "Beta" -> "$CLIENT_WEBSITE/data/beta-latest.txt"
+        "Developer" -> "$CLIENT_WEBSITE/data/dev-latest.txt"
         else -> null
     }
     // Old Auth System
@@ -142,12 +147,10 @@ object Client {
         commandManager.registerCommands()
 
         // Load configs
-        if (CheckConnection.isLatest && CheckConnection.isAvailable) {
-            fileManager.loadConfigs(
-                fileManager.modulesConfig, fileManager.valuesConfig, fileManager.accountsConfig,
-                fileManager.friendsConfig
-            )
-        }
+        fileManager.loadConfigs(
+            fileManager.modulesConfig, fileManager.valuesConfig, fileManager.accountsConfig,
+            fileManager.friendsConfig
+        )
 
         clickGui = ClickGui()
 
@@ -163,7 +166,7 @@ object Client {
         fileManager.loadConfig(fileManager.hudConfig)
 
         // Setup Discord RPC
-        if (CheckConnection.isLatest && CheckConnection.isAvailable && discordRPC.showRichPresenceValue) {
+        if (discordRPC.showRichPresenceValue) {
             thread {
                 try {
                     discordRPC.setup()
@@ -173,15 +176,7 @@ object Client {
             }
         }
 
-        ClientUtils.getLogger().info("Successfully loaded $CLIENT_BEST in ${System.currentTimeMillis() - lastTick}ms.")
-
-        if (CheckConnection.isAvailable) {
-            if (CheckConnection.isLatest)
-                Display.setTitle("$CLIENT_BEST Client - $CLIENT_VERSION")
-            else Display.setTitle("Outdated! Please Update on $CLIENT_WEBSITE (your current version is $CLIENT_VERSION)")
-        } else {
-            Display.setTitle("Temporary unavailable!")
-        }
+        ClientUtils.getLogger().info("Loaded!")
 
         isStarting = false
     }

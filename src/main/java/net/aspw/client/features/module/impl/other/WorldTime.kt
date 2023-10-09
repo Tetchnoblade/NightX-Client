@@ -6,7 +6,6 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 import net.minecraft.network.play.server.S03PacketTimeUpdate
@@ -17,10 +16,6 @@ class WorldTime : Module() {
     private val cycleSpeedValue = IntegerValue("CycleSpeed", 30, -30, 100) { timeModeValue.get().equals("cycle", true) }
     private val staticTimeValue = IntegerValue("StaticTime", 18000, 0, 24000) {
         timeModeValue.get().equals("static", true)
-    }
-    private val weatherModeValue = ListValue("Weather", arrayOf("Clear", "Rain", "NoModification"), "Clear")
-    private val rainStrengthValue = FloatValue("RainStrength", 1F, 0.01F, 1F) {
-        weatherModeValue.get().equals("rain", true)
     }
 
     private var timeCycle = 0L
@@ -46,10 +41,5 @@ class WorldTime : Module() {
             if (timeCycle > 24000L) timeCycle = 0L
             if (timeCycle < 0L) timeCycle = 24000L
         }
-
-        if (!weatherModeValue.get().equals("nomodification", true))
-            mc.theWorld.setRainStrength(
-                if (weatherModeValue.get().equals("clear", true)) 0F else rainStrengthValue.get()
-            )
     }
 }

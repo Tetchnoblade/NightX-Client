@@ -1,11 +1,6 @@
 package net.aspw.client.visual.client.altmanager
 
-import com.mojang.authlib.Agent
-import com.mojang.authlib.exceptions.AuthenticationException
-import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
-import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication
 import com.thealtening.AltService
-import com.thealtening.api.TheAltening
 import net.aspw.client.Client
 import net.aspw.client.Client.fileManager
 import net.aspw.client.auth.account.CrackedAccount
@@ -18,8 +13,6 @@ import net.aspw.client.util.MinecraftInstance
 import net.aspw.client.util.login.LoginUtils
 import net.aspw.client.util.login.UserUtils.isValidTokenOffline
 import net.aspw.client.util.misc.RandomUtils
-import net.aspw.client.util.network.CheckConnection
-import net.aspw.client.util.network.LoginID
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.menus.GuiAddAccount
 import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening
@@ -32,7 +25,6 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.Session
 import org.lwjgl.input.Keyboard
 import java.awt.Color
-import java.net.Proxy
 import java.util.*
 import kotlin.concurrent.thread
 
@@ -145,63 +137,64 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 }
             }
 
-            13 -> {
-                if (LoginID.isPremium) {
-                    val altening = TheAltening(CheckConnection.apiKey)
-                    val asynchronous = TheAltening.Asynchronous(altening)
-                    if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
-                    }
-                    asynchronous.accountData.thenAccept { account ->
-                        if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
-                        }
-                        try {
-                            // Change Alt Service
-                            altService.switchService(AltService.EnumAltService.THEALTENING)
+            // Old Auth System
+            //13 -> {
+            //    if (LoginID.isPremium) {
+            //        val altening = TheAltening(CheckConnection.apiKey)
+            //        val asynchronous = TheAltening.Asynchronous(altening)
+            //        if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+            //            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+            //        }
+            //        asynchronous.accountData.thenAccept { account ->
+            //            if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+            //                Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+            //            }
+            //            try {
+            //                // Change Alt Service
+            //                altService.switchService(AltService.EnumAltService.THEALTENING)
 
-                            if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                                Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
-                            }
+            //                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+            //                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+            //                }
 
-                            // Set token as username
-                            val yggdrasilUserAuthentication =
-                                YggdrasilUserAuthentication(
-                                    YggdrasilAuthenticationService(Proxy.NO_PROXY, ""),
-                                    Agent.MINECRAFT
-                                )
-                            yggdrasilUserAuthentication.setUsername(account.token)
-                            yggdrasilUserAuthentication.setPassword(RandomUtils.randomString(6))
+            // Set token as username
+            //                val yggdrasilUserAuthentication =
+            //                    YggdrasilUserAuthentication(
+            //                        YggdrasilAuthenticationService(Proxy.NO_PROXY, ""),
+            //                        Agent.MINECRAFT
+            //                    )
+            //                yggdrasilUserAuthentication.setUsername(account.token)
+            //                yggdrasilUserAuthentication.setPassword(RandomUtils.randomString(6))
 
-                            try {
-                                yggdrasilUserAuthentication.logIn()
+            //                try {
+            //                    yggdrasilUserAuthentication.logIn()
 
-                                mc.session = Session(
-                                    yggdrasilUserAuthentication.selectedProfile.name, yggdrasilUserAuthentication
-                                        .selectedProfile.id.toString(),
-                                    yggdrasilUserAuthentication.authenticatedToken, "mojang"
-                                )
-                                Client.eventManager.callEvent(SessionEvent())
-                            } catch (e: AuthenticationException) {
-                                altService.switchService(AltService.EnumAltService.MOJANG)
+            //                    mc.session = Session(
+            //                        yggdrasilUserAuthentication.selectedProfile.name, yggdrasilUserAuthentication
+            //                            .selectedProfile.id.toString(),
+            //                        yggdrasilUserAuthentication.authenticatedToken, "mojang"
+            //                    )
+            //                    Client.eventManager.callEvent(SessionEvent())
+            //                } catch (e: AuthenticationException) {
+            //                    altService.switchService(AltService.EnumAltService.MOJANG)
 
-                                ClientUtils.getLogger().error("Failed to login.", e)
-                                "§cFailed to login: ${e.message}"
-                            }
-                        } catch (throwable: Throwable) {
-                            if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                                Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
-                            }
-                            ClientUtils.getLogger().error("Failed to login.", throwable)
-                        }
-                    }.whenComplete { _, _ ->
-                        status = "§aLogged successfully to ${mc.session.username}."
-                    }
-                } else {
-                    status = "§dPremium Gen is only for Premium NightX Users!"
-                    ClientUtils.getLogger().info("You are not using Premium Account!")
-                }
-            }
+            //                    ClientUtils.getLogger().error("Failed to login.", e)
+            //                    "§cFailed to login: ${e.message}"
+            //                }
+            //            } catch (throwable: Throwable) {
+            //                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+            //                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+            //                }
+            //                ClientUtils.getLogger().error("Failed to login.", throwable)
+            //            }
+            //        }.whenComplete { _, _ ->
+            //            status = "§aLogged successfully to ${mc.session.username}."
+            //        }
+            //    } else {
+            //        status = "§dPremium Gen is only for Premium NightX Users!"
+            //        ClientUtils.getLogger().info("You are not using Premium Account!")
+            //    }
+            //}
 
             3 -> {
                 if (lastSessionToken == null)

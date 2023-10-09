@@ -91,19 +91,13 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
             }
 
             4 -> {
-                CheckConnection.checkStatus()
-                CheckConnection.getAnnouncement()
-                CheckConnection.getContributors()
-                CheckConnection.getRealContributors()
-                if (CheckConnection.canConnect) {
-                    LoginID.loggedIn = false
-                    LoginID.id = ""
-                    LoginID.password = ""
-                    LoginID.uid = ""
-                    mc.displayGuiScreen(GuiLoginSelection(this))
-                    ClientUtils.getLogger().info("Logout!")
-                    CheckConnection.canConnect = false
-                }
+                LoginID.loggedIn = false
+                LoginID.id = ""
+                LoginID.password = ""
+                LoginID.uid = ""
+                mc.displayGuiScreen(GuiLoginSelection(this))
+                ClientUtils.getLogger().info("Logout!")
+                CheckConnection.canConnect = false
             }
 
             5 -> mc.displayGuiScreen(GuiContributors(this))
