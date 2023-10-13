@@ -7,6 +7,7 @@ import net.aspw.client.event.Listenable
 import net.aspw.client.features.command.impl.ModuleCommand
 import net.aspw.client.features.module.impl.combat.*
 import net.aspw.client.features.module.impl.exploit.*
+import net.aspw.client.features.module.impl.minigames.Debugger
 import net.aspw.client.features.module.impl.minigames.SnakeGame
 import net.aspw.client.features.module.impl.movement.*
 import net.aspw.client.features.module.impl.other.*
@@ -186,7 +187,8 @@ class ModuleManager : Listenable {
             SnakeGame::class.java,
             ESP::class.java,
             PacketPosTracker::class.java,
-            InfiniteReach::class.java
+            InfiniteReach::class.java,
+            Debugger::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")
