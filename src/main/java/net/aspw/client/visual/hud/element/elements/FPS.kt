@@ -19,7 +19,7 @@ import kotlin.math.sqrt
 
 @ElementInfo(name = "FPS")
 class FPS(
-    x: Double = 3.0, y: Double = 22.0, scale: Float = 1F,
+    x: Double = 3.0, y: Double = 12.0, scale: Float = 1F,
     side: Side = Side(Side.Horizontal.LEFT, Side.Vertical.DOWN)
 ) : Element(x, y, scale, side) {
 

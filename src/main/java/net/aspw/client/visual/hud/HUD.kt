@@ -29,9 +29,7 @@ open class HUD : MinecraftInstance() {
             Image::class.java,
             SessionInformation::class.java,
             TabGui::class.java,
-            Position::class.java,
-            FPS::class.java,
-            Build::class.java
+            FPS::class.java
         )
 
         /**
@@ -40,14 +38,12 @@ open class HUD : MinecraftInstance() {
         @JvmStatic
         fun createDefault() = HUD()
             .addElement(Text.defaultClient())
-            .addElement(Position())
             .addElement(Arraylist())
             .addElement(Effects())
             .addElement(Armor())
             .addElement(Notifications())
             .addElement(TargetHud())
             .addElement(FPS())
-            .addElement(Build())
     }
 
     /**

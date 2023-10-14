@@ -49,7 +49,7 @@ class Text(
         fun defaultClient(): Text {
             val text = Text(x = 2.0, y = 3.0, scale = 1F)
 
-            text.displayString.set("%clientName%")
+            text.displayString.set("%clientName% - %clientVersion%")
             text.shadow.set(true)
             text.fontValue.set(Fonts.fontSFUI35)
             text.setColor(Color(255, 255, 255))
@@ -60,7 +60,7 @@ class Text(
     }
 
     private val displayString =
-        TextValue("DisplayText", "%clientName%")
+        TextValue("DisplayText", "%clientName% - %clientVersion%")
     private val backgroundValue = BoolValue("Background", false)
     private val skeetRectValue = BoolValue("SkeetRect", false)
     private val lineValue = BoolValue("Line", false)
