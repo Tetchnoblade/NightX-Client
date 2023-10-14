@@ -18,7 +18,7 @@ import net.minecraft.potion.Potion
  */
 @ElementInfo(name = "Effects")
 class Effects(
-    x: Double = 1.0, y: Double = 10.0, scale: Float = 1F,
+    x: Double = 1.0, y: Double = -1.0, scale: Float = 1F,
     side: Side = Side(Side.Horizontal.RIGHT, Side.Vertical.DOWN)
 ) : Element(x, y, scale, side) {
 

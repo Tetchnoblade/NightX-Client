@@ -31,7 +31,7 @@ class Interface : Module() {
     private val noTitle = BoolValue("NoTitle", false)
     private val antiTabComplete = BoolValue("AntiTabComplete", false)
     val customFov = BoolValue("CustomFov", false)
-    val customFovModifier = FloatValue("Fov", 1.3F, 0.8F, 1.5F) { customFov.get() }
+    val customFovModifier = FloatValue("Fov", 1.4F, 0.8F, 1.5F) { customFov.get() }
     val fontChatValue = BoolValue("FontChat", false)
     val fontType = FontValue("Font", Fonts.fontSFUI37) { fontChatValue.get() }
     val chatRectValue = BoolValue("ChatRect", true)
