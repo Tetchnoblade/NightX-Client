@@ -188,7 +188,8 @@ class ModuleManager : Listenable {
             ESP::class.java,
             PacketPosTracker::class.java,
             InfiniteReach::class.java,
-            Debugger::class.java
+            Debugger::class.java,
+            MotionBlur::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")
