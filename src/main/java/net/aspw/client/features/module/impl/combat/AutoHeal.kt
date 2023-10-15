@@ -181,24 +181,6 @@ class AutoHeal : Module() {
     }
 
     @EventTarget
-    fun onPacket(event: PacketEvent) {
-        if (mc.thePlayer == null) return
-        val packet = event.packet
-
-        if (autoPotValue.get()) {
-            if (throwing) {
-                if (!mc.isSingleplayer && packet is C09PacketHeldItemChange) {
-                    if (packet.slotId == prevSlot) {
-                        event.cancelEvent()
-                    } else {
-                        prevSlot = packet.slotId
-                    }
-                }
-            }
-        }
-    }
-
-    @EventTarget
     fun onUpdate(event: UpdateEvent?) {
         if (autoSoupValue.get()) {
             if (!timer.hasTimePassed(delayValueA.get().toLong()))
