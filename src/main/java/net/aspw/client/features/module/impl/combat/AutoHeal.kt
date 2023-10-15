@@ -54,6 +54,7 @@ class AutoHeal : Module() {
     private var throwing = false
     private var rotated = false
     private var potIndex = -1
+    private var prevSlot = -1
 
     private var throwTimer = MSTimer()
     private var resetTimer = MSTimer()
@@ -243,6 +244,24 @@ class AutoHeal : Module() {
                     mc.netHandler.addToSendQueue(C0DPacketCloseWindow())
 
                 timer.reset()
+            }
+        }
+    }
+
+    @EventTarget
+    fun onPacket(event: PacketEvent) {
+        if (mc.thePlayer == null) return
+        val packet = event.packet
+
+        if (autoPotValue.get()) {
+            if (throwing) {
+                if (!mc.isSingleplayer && packet is C09PacketHeldItemChange) {
+                    if (packet.slotId == prevSlot) {
+                        event.cancelEvent()
+                    } else {
+                        prevSlot = packet.slotId
+                    }
+                }
             }
         }
     }
