@@ -53,7 +53,6 @@ class AutoHeal : Module() {
     private var isRotating = false
     private var throwing = false
     private var rotated = false
-    private var prevSlot = -1
     private var potIndex = -1
 
     private var throwTimer = MSTimer()
@@ -164,13 +163,7 @@ class AutoHeal : Module() {
                     }
                 }
 
-                if (throwing && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
-                    if (mc.thePlayer.onGround) {
-                        mc.thePlayer.motionX = 0.0
-                        mc.thePlayer.motionZ = 0.0
-                        mc.thePlayer.jump()
-                        debug("jumped")
-                    }
+                if (throwing && !mc.thePlayer.isEating && MovementUtils.isRidingBlock() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
                     RotationUtils.reset() // reset all rotations
                     event.pitch = if (customPitchValue.get()) customPitchAngle.get() else 90F
                     debug("silent rotation")
@@ -259,7 +252,7 @@ class AutoHeal : Module() {
         if (autoPotValue.get()) {
             if (event.eventState == EventState.POST) {
                 if (throwing && mc.currentScreen !is GuiContainer
-                    && !mc.thePlayer.onGround
+                    && mc.thePlayer.onGround
                     && !mc.thePlayer.isEating
                     && MovementUtils.isRidingBlock()
                     && (!noCombatValue.get() || !killAura?.state!! || killAura.target == null) && !scaffold?.state!!
