@@ -96,7 +96,7 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
                 LoginID.id = ""
                 LoginID.password = ""
                 LoginID.uid = ""
-                Display.setTitle("Waiting...")
+                Display.setTitle("Launching...")
                 mc.displayGuiScreen(GuiLoginSelection(this))
                 ClientUtils.getLogger().info("Logout!")
                 CheckConnection.canConnect = false

@@ -59,22 +59,17 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
 
             10 -> {
                 CheckConnection.checkLatestVersion()
-                if (CheckConnection.isAvailable) {
-                    if (CheckConnection.isLatest)
-                        Display.setTitle("${Client.CLIENT_BEST} Client - ${Client.CLIENT_VERSION}")
-                    else Display.setTitle("Outdated! Please Update on ${Client.CLIENT_WEBSITE} (your current version is ${Client.CLIENT_VERSION}")
-                } else {
-                    Display.setTitle("Temporary Unavailable. Wait a minute!")
-                }
                 if (CheckConnection.isLatest && CheckConnection.canConnect) {
                     loggedIn = true
                     id = "User"
                     LoginID.password = "Free"
                     LoginID.uid = "000"
                     mc.displayGuiScreen(GuiMainMenu())
+                    Display.setTitle("${Client.CLIENT_BEST} Client")
                     ClientUtils.getLogger().info("Logged in with Free Account!")
                 } else {
                     loggedIn = false
+                    Display.setTitle("Launching...")
                 }
             }
         }
