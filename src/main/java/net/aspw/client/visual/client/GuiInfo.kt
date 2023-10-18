@@ -17,7 +17,6 @@ import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.input.Keyboard
-import org.lwjgl.opengl.Display
 
 class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
 
@@ -96,7 +95,6 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
                 LoginID.id = ""
                 LoginID.password = ""
                 LoginID.uid = ""
-                Display.setTitle("Launching...")
                 mc.displayGuiScreen(GuiLoginSelection(this))
                 ClientUtils.getLogger().info("Logout!")
                 CheckConnection.canConnect = false

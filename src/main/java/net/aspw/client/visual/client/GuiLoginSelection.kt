@@ -1,6 +1,5 @@
 package net.aspw.client.visual.client
 
-import net.aspw.client.Client
 import net.aspw.client.util.ClientUtils
 import net.aspw.client.util.network.CheckConnection
 import net.aspw.client.util.network.LoginID
@@ -12,7 +11,6 @@ import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.input.Keyboard
-import org.lwjgl.opengl.Display
 
 class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
 
@@ -65,12 +63,8 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
                     LoginID.password = "Free"
                     LoginID.uid = "000"
                     mc.displayGuiScreen(GuiMainMenu())
-                    Display.setTitle("${Client.CLIENT_BEST} Client")
                     ClientUtils.getLogger().info("Logged in with Free Account!")
-                } else {
-                    loggedIn = false
-                    Display.setTitle("Launching...")
-                }
+                } else loggedIn = false
             }
         }
     }
