@@ -568,7 +568,7 @@ public class MixinModelPlayerFix extends ModelBiped {
                 GlStateManager.translate(0.0, 0.85, 0.0);
                 this.fredbody.render(scale);
                 GlStateManager.popMatrix();
-            } else if (customModel.getState() && customModel.getMode().get().contains("Amongus")) {
+            } else if (customModel.getState() && customModel.getMode().get().contains("Imposter")) {
                 this.bipedHead.rotateAngleY = netHeadYaw * 0.017453292F;
                 this.bipedHead.rotateAngleX = headPitch * 0.017453292F;
                 this.bipedBody.rotateAngleY = 0.0F;

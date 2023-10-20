@@ -23,7 +23,7 @@ import java.util.Objects;
 public class MixinRenderPlayer {
     private final ResourceLocation rabbit = new ResourceLocation("client/models/rabbit.png");
     private final ResourceLocation fred = new ResourceLocation("client/models/freddy.png");
-    private final ResourceLocation amongus = new ResourceLocation("client/models/amongus.png");
+    private final ResourceLocation imposter = new ResourceLocation("client/models/imposter.png");
 
     /**
      * Render living at.
@@ -60,8 +60,8 @@ public class MixinRenderPlayer {
             if (customModel.getMode().get().contains("Freddy")) {
                 ci.setReturnValue(fred);
             }
-            if (customModel.getMode().get().contains("Amongus")) {
-                ci.setReturnValue(amongus);
+            if (customModel.getMode().get().contains("Imposter")) {
+                ci.setReturnValue(imposter);
             }
         }
     }

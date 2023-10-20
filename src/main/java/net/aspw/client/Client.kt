@@ -23,10 +23,10 @@ import kotlin.concurrent.thread
 object Client {
 
     // Client information
-    val clientVersion = ListValue("ClientVersion", arrayOf("Release", "Beta", "Developer"), "Developer")
+    val clientVersion = ListValue("ClientVersion", arrayOf("Release", "Beta", "Developer"), "Release")
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Reloaded"
-    const val CLIENT_VERSION = "Developer B70"
+    const val CLIENT_VERSION = "Release B70"
     const val CLIENT_CREATOR = "As_pw, Maple, outaokura"
     const val CLIENT_WEBSITE = "https://aspw-w.github.io/NightX-Web"
     const val CLIENT_CONFIG = "$CLIENT_WEBSITE/data/configs.txt"
