@@ -407,6 +407,7 @@ class LongJump : Module() {
                         EnumFacing.EAST -> x = +value
                         EnumFacing.SOUTH -> z = +value
                         EnumFacing.WEST -> x = -value
+                        else -> {}
                     }
                     player.setPosition(player.posX + x, player.posY, player.posZ + z)
                     teleported = true

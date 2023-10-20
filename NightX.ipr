@@ -231,9 +231,6 @@
   <component name="JavadocGenerationManager">
     <option name="OTHER_OPTIONS" value="" />
   </component>
-  <component name="KotlinJpsPluginSettings">
-    <option name="version" value="1.6.10" />
-  </component>
   <component name="Palette2">
     <group name="Swing">
       <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.svg" removable="false" auto-create-binding="false" can-attach-label="false">
@@ -724,29 +721,29 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.typesafe/config/1.2.1/bdacf4f82ce9b29cd474bfde2e91eeb0ca623d28/config-1.2.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: com.viaversion:viabackwards:4.9.0-23w42a-SNAPSHOT">
+    <library name="Gradle: com.viaversion:viabackwards:4.8.1">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.9.0-23w42a-SNAPSHOT/3127c4cc9fd0c56c45ee82d28be582cc0e0d1d3f/viabackwards-4.9.0-23w42a-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.8.1/7a75c3cddc9bcbfd387cfdacfafb43f15f3bec70/viabackwards-4.8.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.9.0-23w42a-SNAPSHOT/6bbf05a0dcaefd9870dd75bbc916c77597072c38/viabackwards-4.9.0-23w42a-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.8.1/c15d7dbedbf9f300eb56b5ba4da67b054fe0e5b/viabackwards-4.8.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: com.viaversion:viarewind-universal:3.0.3-SNAPSHOT">
+    <library name="Gradle: com.viaversion:viarewind-universal:3.0.1-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viarewind-universal/3.0.3-SNAPSHOT/ad81b74b7ffb2203359286bf2329b18b267a58f0/viarewind-universal-3.0.3-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viarewind-universal/3.0.1-SNAPSHOT/85be7d3d7d5389ea299d21632880149a27ca71be/viarewind-universal-3.0.1-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
-    <library name="Gradle: com.viaversion:viaversion:4.9.0-23w42a-SNAPSHOT">
+    <library name="Gradle: com.viaversion:viaversion:4.8.1">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.9.0-23w42a-SNAPSHOT/ba2682a15b10d158dd479ad92b5eec0c9f50a7a9/viaversion-4.9.0-23w42a-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.8.1/e729fc0c89167d02e1acd7d45a25b740c380a478/viaversion-4.8.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.9.0-23w42a-SNAPSHOT/6bb33b65a4c9f0e8e64cec2fe88ed54583fed6c6/viaversion-4.9.0-23w42a-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.8.1/7e46d0cfad2b4562d06ce72e3e3959588c10d39e/viaversion-4.8.1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: commons-codec:commons-codec:1.9">
@@ -1033,48 +1030,48 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.fusesource.jansi/jansi/1.11/2f0e4b53b6b0eec426dad7118bf54b3deb58000b/jansi-1.11-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.6.10" type="kotlin.common">
+    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.9.10" type="kotlin.common">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.6.10/c118700e3a33c8a0d9adc920e9dec0831171925/kotlin-stdlib-common-1.6.10.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.9.10/dafaf2c27f27c09220cee312df10917d9a5d97ce/kotlin-stdlib-common-1.9.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.6.10/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-common-1.6.10-javadoc.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.9.10/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-common-1.9.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.6.10/884efb386c94b1ee8e2ca37335264a0ffb155250/kotlin-stdlib-common-1.6.10-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.9.10/9960410cb3852df9251d5b30927ff2070bfb453/kotlin-stdlib-common-1.9.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10">
+    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.10">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.6.10/e1c380673654a089c4f0c9f83d0ddfdc1efdb498/kotlin-stdlib-jdk7-1.6.10.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.9.10/bc5bfc2690338defd5195b05c57562f2194eeb10/kotlin-stdlib-jdk7-1.9.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.6.10/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-jdk7-1.6.10-javadoc.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.9.10/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-jdk7-1.9.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.6.10/ccdfdab71f0f3ba104191d8f673d0620e7ed2e46/kotlin-stdlib-jdk7-1.6.10-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.9.10/3641d7cb7650db9fe93a5361b1b88cbcefdb01e0/kotlin-stdlib-jdk7-1.9.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10">
+    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.6.10/e80fe6ac3c3573a80305f5ec43f86b829e8ab53d/kotlin-stdlib-jdk8-1.6.10.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.9.10/c7510d64a83411a649c76f2778304ddf71d7437b/kotlin-stdlib-jdk8-1.9.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.6.10/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-jdk8-1.6.10-javadoc.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.9.10/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-jdk8-1.9.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.6.10/a61c046a90a08dd30eb105b8b8530fce678ecb46/kotlin-stdlib-jdk8-1.6.10-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.9.10/20739e7aae2a2bfb66c4081b233ffea7b947cf77/kotlin-stdlib-jdk8-1.9.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.6.10">
+    <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.9.10">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.6.10/b8af3fe6f1ca88526914929add63cf5e7c5049af/kotlin-stdlib-1.6.10.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.9.10/72812e8a368917ab5c0a5081b56915ffdfec93b7/kotlin-stdlib-1.9.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.6.10/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-1.6.10-javadoc.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.9.10/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-1.9.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.6.10/a6284476c56bd752eb0020e062c78c930abdc168/kotlin-stdlib-1.6.10-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.9.10/40b9c37d8c614f0a5f87bab78da0ca7c771d1395/kotlin-stdlib-1.9.10-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.jetbrains:annotations:13.0">
