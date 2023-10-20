@@ -243,7 +243,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         GlStateManager.enableAlpha()
         FontLoaders.logo18.drawStringWithShadow("a", 60.2F.toDouble(), height - 10.3F.toDouble(), -1)
         FontLoaders.SF20.drawStringWithShadow(
-            "NightX Client",
+            Client.CLIENT_BEST + " Client",
             4F.toDouble(),
             height - 12F.toDouble(),
             -1
