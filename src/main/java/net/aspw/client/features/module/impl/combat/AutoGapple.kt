@@ -21,9 +21,8 @@ import java.util.*
 
 @ModuleInfo(name = "AutoGapple", spacedName = "Auto Gapple", description = "", category = ModuleCategory.COMBAT)
 class AutoGapple : Module() {
-    val modeValue = ListValue("Mode", arrayOf("Auto", "Once", "Head"), "Auto")
-
     // Auto Mode
+    val modeValue = ListValue("Mode", arrayOf("Auto", "Once", "Head"), "Auto")
     private val healthValue = FloatValue("Health", 10F, 1F, 20F)
     private val delayValue = IntegerValue("Delay", 150, 0, 1000, "ms")
     private val noAbsorption = BoolValue("NoAbsorption", true)
