@@ -140,7 +140,7 @@ class Scaffold : Module() {
             .equals("aac", ignoreCase = true)
     }
     private val preRotationValue = ListValue("WaitRotationMode", arrayOf("Normal", "Lock", "None"), "Normal")
-    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Packet")
+    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Normal")
 
     // Delay
     private val placeableDelay = BoolValue("PlaceableDelay", false)
@@ -940,7 +940,7 @@ class Scaffold : Module() {
             if (animationValue.get())
                 mc.itemRenderer.resetEquippedProgress2()
             delay = if (!placeableDelay.get()) 0L else TimeUtils.randomDelay(minDelayValue.get(), maxDelayValue.get())
-            if (mc.thePlayer.onGround) {
+            if (mc.thePlayer.onGround && placeSlowDownValue.get()) {
                 val modifier = speedModifierValue.get()
                 mc.thePlayer.motionX *= modifier.toDouble()
                 mc.thePlayer.motionZ *= modifier.toDouble()
