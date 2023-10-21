@@ -8,13 +8,21 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.misc.RandomUtils
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
+import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
-@ModuleInfo(name = "SnakeGame", spacedName = "Snake Game", description = "", category = ModuleCategory.MINIGAMES)
+@ModuleInfo(
+    name = "SnakeGame",
+    spacedName = "Snake Game",
+    description = "",
+    category = ModuleCategory.MINIGAMES,
+    keyBind = Keyboard.KEY_F10
+)
 class SnakeGame : Module() {
     private var snake = mutableListOf(Position(0, 0))
     private var lastKey = 208
@@ -78,6 +86,24 @@ class SnakeGame : Module() {
         val startX = (width / 2 - fieldWidth / 2).toDouble()
         val startY = (height / 2 - fieldHeight / 2).toDouble()
 
+        for (i in 0 until 18) {
+            RenderUtils.drawGradientRect(
+                startX.toInt() - i + 4,
+                startY.toInt() - i - 3,
+                startX.toInt() + fieldWidth + i - 4,
+                startY.toInt() + fieldHeight + i - 4,
+                Color(0, 0, 0, 120).rgb,
+                Color(0, 0, 0, 120).rgb
+            )
+            drawBorder(
+                startX - i + 15,
+                startY - i + 15,
+                startX + fieldWidth + i - 15,
+                startY + fieldHeight + i - 15,
+                Color(255, 255, 255, 120).rgb
+            )
+        }
+
         drawRect(startX, startY, startX + fieldWidth, startY + fieldHeight, Color(30, 0, 0, 0).rgb)
 
         for (index in snake.indices) {
@@ -96,21 +122,11 @@ class SnakeGame : Module() {
 
         drawRect(foodX, foodY, foodX + blockSize, foodY + blockSize, Color(220, 20, 60).rgb)
 
-        for (i in 0 until 18) {
-            drawBorder(
-                startX - i,
-                startY - i,
-                startX + fieldWidth + i,
-                startY + fieldHeight + i,
-                Color(0, 0, 0, 120).rgb
-            )
-        }
-
         FontLoaders.SF20.drawStringWithShadow(
-            "Current Score: §a$score",
+            "Score: §a$score",
             startX,
-            startY - 12.2,
-            Color(255, 255, 255).rgb
+            startY - 14.0,
+            Color(220, 220, 220).rgb
         )
     }
 

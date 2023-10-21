@@ -490,8 +490,8 @@ class KillAura : Module() {
 
             for (i in 0..360 step 60 - 40) { // You can change circle accuracy  (60 - accuracy)
                 GL11.glVertex2f(
-                    cos(i * Math.PI / 180.0).toFloat() * rangeValue.get() - 0.5f,
-                    (sin(i * Math.PI / 180.0).toFloat() * rangeValue.get() - 0.5f)
+                    cos(i * Math.PI / 180.0).toFloat() * rangeValue.get(),
+                    (sin(i * Math.PI / 180.0).toFloat() * rangeValue.get())
                 )
             }
 

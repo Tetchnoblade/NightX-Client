@@ -58,9 +58,9 @@ class TargetHud(
     val resetBar = BoolValue("ResetBarWhenHiding", true)
 
     val colorModeValue =
-        ListValue("Color", arrayOf("Custom", "Rainbow", "Sky", "Slowly", "Fade", "Mixer", "Health"), "Sky")
+        ListValue("Color", arrayOf("Custom", "Rainbow", "Sky", "Slowly", "Fade", "Mixer", "Health"), "Fade")
     val redValue = IntegerValue("Red", 255, 0, 255)
-    val greenValue = IntegerValue("Green", 0, 0, 255)
+    val greenValue = IntegerValue("Green", 85, 0, 255)
     val blueValue = IntegerValue("Blue", 255, 0, 255)
     val saturationValue = FloatValue("Saturation", 0.6F, 0F, 1F)
     val brightnessValue = FloatValue("Brightness", 1F, 0F, 1F)

@@ -12,12 +12,15 @@ import net.aspw.client.visual.client.GuiTeleportation
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.client.clickgui.tab.NewUi
 import net.aspw.client.visual.font.semi.Fonts
+import net.aspw.client.visual.font.smooth.FontLoaders
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.inventory.GuiInventory
 import net.minecraft.network.play.client.C14PacketTabComplete
 import net.minecraft.network.play.server.S2EPacketCloseWindow
 import net.minecraft.network.play.server.S3APacketTabComplete
 import net.minecraft.network.play.server.S45PacketTitle
+import java.awt.Color
 
 @ModuleInfo(name = "Interface", description = "", category = ModuleCategory.VISUAL, array = false)
 class Interface : Module() {
@@ -61,6 +64,12 @@ class Interface : Module() {
     fun onRender2D(event: Render2DEvent) {
         Client.hud.render(false)
         slashName()
+        FontLoaders.SF20.drawStringWithShadow(
+            "$rainbow§d$white" + " §b[" + Minecraft.getDebugFPS().toString() + " FPS]",
+            2.0,
+            3.0,
+            Color(169, 0, 170).rgb
+        )
     }
 
     @EventTarget
