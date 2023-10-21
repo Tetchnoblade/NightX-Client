@@ -15,8 +15,8 @@ import net.minecraft.util.BlockPos;
  */
 public final class MovementUtils extends MinecraftInstance {
 
-    private static double lastX = -999999.0;
-    private static double lastZ = -999999.0;
+    private static final double lastX = -999999.0;
+    private static final double lastZ = -999999.0;
 
     /**
      * Gets speed.

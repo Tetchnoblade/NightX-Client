@@ -205,8 +205,8 @@ class Speed : Module() {
             "Hop3.5.0",
             "Hop4.3.8",
             "YPort",
-        "YPort2"
-    ), "4Hop", { typeValue.get().equals("aac", ignoreCase = true) }) {
+            "YPort2"
+        ), "4Hop", { typeValue.get().equals("aac", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
         }
