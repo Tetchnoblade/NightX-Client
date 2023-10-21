@@ -33,10 +33,10 @@ class TargetHud(
     val styleValue: ListValue
 
     // Global variables
-    val blurValue = BoolValue("Blur", false)
-    val blurStrength = FloatValue("Blur-Strength", 12F, 0.01F, 40F, { blurValue.get() })
+    val blurValue = BoolValue("Blur", true)
+    val blurStrength = FloatValue("Blur-Strength", 5F, 0.01F, 40F, { blurValue.get() })
 
-    val shadowValue = BoolValue("Shadow", false)
+    val shadowValue = BoolValue("Shadow", true)
     val shadowStrength = FloatValue("Shadow-Strength", 12F, 0.01F, 40F, { shadowValue.get() })
     val shadowColorMode =
         ListValue("Shadow-Color", arrayOf("Background", "Custom", "Bar"), "Custom", { shadowValue.get() })
@@ -48,7 +48,7 @@ class TargetHud(
     val shadowColorBlueValue =
         IntegerValue("Shadow-Blue", 255, 0, 255, { shadowValue.get() && shadowColorMode.get().equals("custom", true) })
 
-    val fadeValue = BoolValue("FadeAnim", false)
+    val fadeValue = BoolValue("FadeAnim", true)
     val fadeSpeed = FloatValue("Fade-Speed", 1F, 0F, 5F, { fadeValue.get() })
 
     val noAnimValue = BoolValue("No-Animation", true)
