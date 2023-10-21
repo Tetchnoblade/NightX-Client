@@ -48,7 +48,7 @@ class TargetHud(
     val shadowColorBlueValue =
         IntegerValue("Shadow-Blue", 255, 0, 255, { shadowValue.get() && shadowColorMode.get().equals("custom", true) })
 
-    val fadeValue = BoolValue("FadeAnim", true)
+    val fadeValue = BoolValue("FadeAnim", false)
     val fadeSpeed = FloatValue("Fade-Speed", 1F, 0F, 5F, { fadeValue.get() })
 
     val noAnimValue = BoolValue("No-Animation", true)

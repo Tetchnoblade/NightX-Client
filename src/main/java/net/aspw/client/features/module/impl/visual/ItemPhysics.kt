@@ -8,4 +8,8 @@ import net.aspw.client.value.FloatValue
 @ModuleInfo(name = "ItemPhysics", spacedName = "Item Physics", description = "", category = ModuleCategory.VISUAL)
 class ItemPhysics : Module() {
     val xzValue = FloatValue("X-Z", 2F, 0F, 2F, "x")
+
+    init {
+        state = true
+    }
 }
