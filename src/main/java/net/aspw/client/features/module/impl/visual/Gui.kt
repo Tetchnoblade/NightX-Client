@@ -36,7 +36,7 @@ class Gui : Module() {
 
     @JvmField
     val animationValue: ListValue =
-        object : ListValue("Animation", arrayOf("None", "Zoom"), "Zoom", { styleValue.get() == "DropDown" }) {}
+        object : ListValue("Animation", arrayOf("None", "Zoom"), "None", { styleValue.get() == "DropDown" }) {}
 
     @JvmField
     val scaleValue = FloatValue("Scale", 1.0f, 0.4f, 2f) { styleValue.get() == "DropDown" }

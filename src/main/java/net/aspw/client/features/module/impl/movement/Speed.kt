@@ -590,6 +590,6 @@ class Speed : Module() {
         FloatValue("MineplexGround-Speed", 0.6f, 0.1f, 1f) { modeName.equals("mineplexground", ignoreCase = true) }
 
     @JvmField
-    val noBob = BoolValue("NoBob", false)
+    val noBob = BoolValue("NoBob", true)
     val fakeYValue = BoolValue("FakeY", false)
 }
