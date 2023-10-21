@@ -43,7 +43,7 @@ class NoSlow : Module() {
             "AAC5",
             "Custom"
         ),
-        "NCP"
+        "Vanilla"
     )
     private val blockForwardMultiplier = FloatValue("BlockForwardMultiplier", 1.0F, 0.2F, 1.0F, "x")
     private val blockStrafeMultiplier = FloatValue("BlockStrafeMultiplier", 1.0F, 0.2F, 1.0F, "x")

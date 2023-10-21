@@ -2,6 +2,7 @@ package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.Render2DEvent;
+import net.aspw.client.features.module.impl.minigames.SnakeGame;
 import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.features.module.impl.visual.Crosshair;
 import net.aspw.client.features.module.impl.visual.Interface;
@@ -62,8 +63,9 @@ public abstract class MixinGuiInGame extends MixinGui {
     private void injectCrosshair(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         final Crosshair crosshair = Objects.requireNonNull(Client.moduleManager.getModule(Crosshair.class));
         final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
+        final SnakeGame snakeGame = Objects.requireNonNull(Client.moduleManager.getModule(SnakeGame.class));
 
-        if (crosshair.getState() || MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && anInterface.getNof5crossHair().get())
+        if (snakeGame.getState() || crosshair.getState() || MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && anInterface.getNof5crossHair().get())
             callbackInfoReturnable.setReturnValue(false);
     }
 
