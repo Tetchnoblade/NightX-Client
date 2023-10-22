@@ -106,21 +106,27 @@ class SnakeGame : Module() {
 
         drawRect(startX, startY, startX + fieldWidth, startY + fieldHeight, Color(30, 0, 0, 0).rgb)
 
+        val foodX = food.x * blockSize + startX
+        val foodY = food.y * blockSize + startY
+
+        drawRect(foodX, foodY, foodX + blockSize, foodY + blockSize, Color(255, 169, 67).rgb)
+
         for (index in snake.indices) {
             val snakeStartX = snake[index].x * blockSize + startX
             val snakeStartY = snake[index].y * blockSize + startY
 
-            drawRect(snakeStartX, snakeStartY, snakeStartX + blockSize, snakeStartY + blockSize, Color(51, 153, 96).rgb)
+            drawRect(
+                snakeStartX,
+                snakeStartY,
+                snakeStartX + blockSize,
+                snakeStartY + blockSize,
+                Color(255, 253, 255).rgb
+            )
         }
 
         if (snake[0].x * blockSize + startX >= startX + fieldWidth || snake[0].x * blockSize + startX < startX || snake[0].y * blockSize + startY < startY || snake[0].y * blockSize + startY >= startY + fieldHeight) {
             setupGame()
         }
-
-        val foodX = food.x * blockSize + startX
-        val foodY = food.y * blockSize + startY
-
-        drawRect(foodX, foodY, foodX + blockSize, foodY + blockSize, Color(220, 20, 60).rgb)
 
         FontLoaders.SF20.drawStringWithShadow(
             "Score: §a$score",

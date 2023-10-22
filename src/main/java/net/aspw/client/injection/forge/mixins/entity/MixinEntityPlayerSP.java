@@ -1,8 +1,15 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
+import com.viaversion.viarewind.protocol.protocol1_8to1_9.Protocol1_8To1_9;
+import com.viaversion.viarewind.utils.PacketUtil;
+import com.viaversion.viaversion.api.Via;
+import com.viaversion.viaversion.api.connection.UserConnection;
+import com.viaversion.viaversion.api.protocol.packet.PacketWrapper;
 import net.aspw.client.Client;
 import net.aspw.client.event.*;
 import net.aspw.client.features.api.PacketManager;
+import net.aspw.client.features.module.impl.combat.KillAura;
+import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.exploit.AntiDesync;
 import net.aspw.client.features.module.impl.exploit.AntiHunger;
 import net.aspw.client.features.module.impl.exploit.PortalMenu;
@@ -12,6 +19,7 @@ import net.aspw.client.features.module.impl.movement.SilentSneak;
 import net.aspw.client.features.module.impl.movement.Sprint;
 import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.features.module.impl.visual.Interface;
+import net.aspw.client.protocol.Protocol;
 import net.aspw.client.util.CooldownHelper;
 import net.aspw.client.util.MovementUtils;
 import net.aspw.client.util.Rotation;
@@ -322,6 +330,16 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             mc.gameSettings.keyBindLeft.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindLeft);
             mc.gameSettings.keyBindJump.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindJump);
             mc.gameSettings.keyBindSprint.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindSprint);
+        }
+
+        final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
+        final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
+
+        if (!Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x") && (mc.thePlayer.isBlocking() || mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof ItemSword && mc.thePlayer.isUsingItem() || killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") && !killAura.getAutoBlockModeValue().get().equals("Fake") || tpAura.getState() && tpAura.isBlocking())) {
+            int packetId = 29;
+            UserConnection userConnection = Via.getManager().getConnectionManager().getConnections().iterator().next();
+            PacketWrapper packet = PacketWrapper.create(packetId, null, userConnection);
+            PacketUtil.sendToServer(packet, Protocol1_8To1_9.class, true, true);
         }
 
         if (this.sprintingTicksLeft > 0) {

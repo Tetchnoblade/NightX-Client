@@ -5,6 +5,7 @@ import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.other.FastPlace;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
+import net.aspw.client.protocol.AttackFixer;
 import net.aspw.client.protocol.Protocol;
 import net.aspw.client.util.CPSCounter;
 import net.aspw.client.util.MinecraftInstance;
@@ -25,6 +26,7 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.stream.IStream;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -188,8 +190,24 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "clickMouse", at = @At("HEAD"))
     private void clickMouse(CallbackInfo callbackInfo) {
-        leftClickCounter = 0;
         CPSCounter.registerClick(CPSCounter.MouseButton.LEFT);
+        leftClickCounter = 0;
+    }
+
+    @Redirect(
+            method = "clickMouse",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;swingItem()V")
+    )
+    private void fixAttackOrder_VanillaSwing() {
+        AttackFixer.sendConditionalSwing(this.objectMouseOver);
+    }
+
+    @Redirect(
+            method = "clickMouse",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerControllerMP;attackEntity(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/entity/Entity;)V")
+    )
+    public void fixAttackOrder_VanillaAttack(PlayerControllerMP controller, EntityPlayer player, Entity e) {
+        AttackFixer.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);
     }
 
     @Inject(method = "middleClickMouse", at = @At("HEAD"))
@@ -241,7 +259,7 @@ public abstract class MixinMinecraft {
                 if (!Animations.oldAnimations.get() && this.thePlayer.isUsingItem())
                     return;
                 else if (Animations.oldAnimations.get() && this.thePlayer.isUsingItem()) {
-                    this.thePlayer.swingItem();
+                    this.thePlayer.isSwingInProgress = true;
                     return;
                 }
 
