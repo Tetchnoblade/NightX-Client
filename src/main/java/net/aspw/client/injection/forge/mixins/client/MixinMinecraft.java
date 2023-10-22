@@ -220,7 +220,7 @@ public abstract class MixinMinecraft {
                     case MISS:
                     default:
                         if (this.playerController.isNotCreative()) {
-                            this.leftClickCounter = 0;
+                            this.leftClickCounter = 10;
                         }
                 }
             }
