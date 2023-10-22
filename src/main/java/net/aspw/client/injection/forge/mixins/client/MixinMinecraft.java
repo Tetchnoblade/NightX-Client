@@ -26,7 +26,6 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.stream.IStream;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -188,10 +187,44 @@ public abstract class MixinMinecraft {
         Client.INSTANCE.stopClient();
     }
 
-    @Inject(method = "clickMouse", at = @At("HEAD"))
-    private void clickMouse(CallbackInfo callbackInfo) {
+    /**
+     * @author As_pw
+     * @reason Fix Attack Order
+     */
+    @Overwrite
+    public void clickMouse() {
         CPSCounter.registerClick(CPSCounter.MouseButton.LEFT);
-        leftClickCounter = 0;
+        if (this.leftClickCounter <= 0) {
+            if (this.objectMouseOver != null && Objects.requireNonNull(this.objectMouseOver.typeOfHit) != MovingObjectPosition.MovingObjectType.ENTITY) {
+                this.thePlayer.swingItem();
+            }
+
+            if (this.objectMouseOver == null) {
+                if (this.playerController.isNotCreative()) {
+                    this.leftClickCounter = 0;
+                }
+            } else {
+                switch (this.objectMouseOver.typeOfHit) {
+                    case ENTITY:
+                        AttackFixer.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);
+                        break;
+
+                    case BLOCK:
+                        BlockPos blockpos = this.objectMouseOver.getBlockPos();
+
+                        if (this.theWorld.getBlockState(blockpos).getBlock().getMaterial() != Material.air) {
+                            this.playerController.clickBlock(blockpos, this.objectMouseOver.sideHit);
+                            break;
+                        }
+
+                    case MISS:
+                    default:
+                        if (this.playerController.isNotCreative()) {
+                            this.leftClickCounter = 0;
+                        }
+                }
+            }
+        }
     }
 
     @Redirect(
@@ -200,14 +233,6 @@ public abstract class MixinMinecraft {
     )
     private void fixAttackOrder_VanillaSwing() {
         AttackFixer.sendConditionalSwing(this.objectMouseOver);
-    }
-
-    @Redirect(
-            method = "clickMouse",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerControllerMP;attackEntity(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/entity/Entity;)V")
-    )
-    public void fixAttackOrder_VanillaAttack(PlayerControllerMP controller, EntityPlayer player, Entity e) {
-        AttackFixer.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);
     }
 
     @Inject(method = "middleClickMouse", at = @At("HEAD"))
