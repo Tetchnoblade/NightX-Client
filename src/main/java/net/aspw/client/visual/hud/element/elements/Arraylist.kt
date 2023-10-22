@@ -32,10 +32,10 @@ class Arraylist(
     private val colorModeValue =
         ListValue("Color", arrayOf("Custom", "Random", "Sky", "CRainbow", "LiquidSlowly", "Fade", "Mixer"), "Fade")
     private val blurValue = BoolValue("Blur", true)
-    private val blurStrength = FloatValue("Blur-Strength", 5F, 0F, 30F, { blurValue.get() })
+    private val blurStrength = FloatValue("Blur-Strength", 2F, 0F, 30F, { blurValue.get() })
     private val shadowShaderValue = BoolValue("Shadow", true)
     private val shadowNoCutValue = BoolValue("Shadow-NoCut", false)
-    private val shadowStrength = IntegerValue("Shadow-Strength", 10, 1, 50, { shadowShaderValue.get() })
+    private val shadowStrength = IntegerValue("Shadow-Strength", 7, 1, 50, { shadowShaderValue.get() })
     private val shadowColorMode =
         ListValue("Shadow-Color", arrayOf("Background", "Text", "Custom"), "Background", { shadowShaderValue.get() })
     private val shadowColorRedValue = IntegerValue(

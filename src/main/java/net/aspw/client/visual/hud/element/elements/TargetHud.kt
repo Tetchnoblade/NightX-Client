@@ -34,10 +34,10 @@ class TargetHud(
 
     // Global variables
     val blurValue = BoolValue("Blur", true)
-    val blurStrength = FloatValue("Blur-Strength", 5F, 0.01F, 40F, { blurValue.get() })
+    val blurStrength = FloatValue("Blur-Strength", 2F, 0.01F, 40F, { blurValue.get() })
 
     val shadowValue = BoolValue("Shadow", true)
-    val shadowStrength = FloatValue("Shadow-Strength", 8F, 0.01F, 40F, { shadowValue.get() })
+    val shadowStrength = FloatValue("Shadow-Strength", 7F, 0.01F, 40F, { shadowValue.get() })
     val shadowColorMode =
         ListValue("Shadow-Color", arrayOf("Background", "Custom", "Bar"), "Custom", { shadowValue.get() })
 
