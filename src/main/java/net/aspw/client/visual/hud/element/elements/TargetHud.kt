@@ -33,10 +33,10 @@ class TargetHud(
     val styleValue: ListValue
 
     // Global variables
-    val blurValue = BoolValue("Blur", true)
+    val blurValue = BoolValue("Blur", false)
     val blurStrength = FloatValue("Blur-Strength", 2F, 0.01F, 40F, { blurValue.get() })
 
-    val shadowValue = BoolValue("Shadow", true)
+    val shadowValue = BoolValue("Shadow", false)
     val shadowStrength = FloatValue("Shadow-Strength", 7F, 0.01F, 40F, { shadowValue.get() })
     val shadowColorMode =
         ListValue("Shadow-Color", arrayOf("Background", "Custom", "Bar"), "Custom", { shadowValue.get() })
@@ -53,9 +53,6 @@ class TargetHud(
 
     val noAnimValue = BoolValue("No-Animation", true)
     val globalAnimSpeed = FloatValue("Global-AnimSpeed", 5F, 1F, 9F, { !noAnimValue.get() })
-
-    val showWithChatOpen = BoolValue("Show-ChatOpen", true)
-    val resetBar = BoolValue("ResetBarWhenHiding", true)
 
     val colorModeValue =
         ListValue("Color", arrayOf("Custom", "Rainbow", "Sky", "Slowly", "Fade", "Mixer", "Health"), "Fade")
@@ -107,7 +104,7 @@ class TargetHud(
 
         val actualTarget = if (kaTarget != null && kaTarget is EntityPlayer) kaTarget
         else if (taTarget != null && taTarget is EntityPlayer) taTarget
-        else if ((mc.currentScreen is GuiChat && showWithChatOpen.get()) || mc.currentScreen is GuiHudDesigner) mc.thePlayer
+        else if (mc.currentScreen is GuiChat || mc.currentScreen is GuiHudDesigner) mc.thePlayer
         else null
 
         val preBarColor = when (colorModeValue.get()) {
@@ -153,8 +150,7 @@ class TargetHud(
         val borderHeight = returnBorder.y2 - returnBorder.y
 
         if (mainTarget == null) {
-            if (resetBar.get())
-                mainStyle.easingHealth = 0F
+            mainStyle.easingHealth = 0F
             if (mainStyle is Rice)
                 mainStyle.particleList.clear()
             return returnBorder

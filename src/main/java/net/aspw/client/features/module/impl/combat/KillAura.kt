@@ -207,7 +207,7 @@ class KillAura : Module() {
         IntegerValue("LimitedMultiTargets", 6, 1, 20) { targetModeValue.get().equals("multi", true) }
 
     // Visuals
-    private val espValue = BoolValue("Round-ESP", true)
+    private val espValue = BoolValue("CSGO-ESP", false)
     private val tracerESPValue = BoolValue("Tracer-ESP", false)
     private val simpleESPValue = BoolValue("Simple-ESP", false)
     private val circleValue = BoolValue("Circle", false)

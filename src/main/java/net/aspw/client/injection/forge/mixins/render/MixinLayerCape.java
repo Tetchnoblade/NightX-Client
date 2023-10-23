@@ -96,7 +96,8 @@ public class MixinLayerCape {
                     red = (float) (rgb >> 16 & 255) / 255.0F;
                     green = (float) (rgb >> 8 & 255) / 255.0F;
                     float blue = (float) (rgb & 255) / 255.0F;
-                    GlStateManager.color(red, green, blue, alpha);
+                    if (cape.getStyleValue().get().equals("Exhibition"))
+                        GlStateManager.color(red, green, blue, alpha);
                     this.playerRenderer.getMainModel().renderCape(0.0625F);
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 }
@@ -159,7 +160,8 @@ public class MixinLayerCape {
                     red = (float) (rgb >> 16 & 255) / 255.0F;
                     green = (float) (rgb >> 8 & 255) / 255.0F;
                     float blue = (float) (rgb & 255) / 255.0F;
-                    GL11.glColor4f(red, green, blue, alpha);
+                    if (cape.getStyleValue().get().equals("Exhibition"))
+                        GL11.glColor4f(red, green, blue, alpha);
                     this.playerRenderer.getMainModel().renderCape(0.0625F);
                     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 }

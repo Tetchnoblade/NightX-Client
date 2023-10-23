@@ -23,8 +23,6 @@ import net.aspw.client.features.module.impl.movement.speeds.verus.VerusFloat
 import net.aspw.client.features.module.impl.movement.speeds.verus.VerusHop
 import net.aspw.client.features.module.impl.movement.speeds.verus.VerusLowHop
 import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanGround
-import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanHop1
-import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanHop2
 import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanYPort
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogBoost
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogCustom
@@ -96,8 +94,6 @@ class Speed : Module() {
         VerusHop(),
         VerusLowHop(),
         VerusFloat(),
-        VulcanHop1(),
-        VulcanHop2(),
         VulcanYPort(),
         VulcanGround(),
         MatrixHop(),
@@ -377,8 +373,6 @@ class Speed : Module() {
         }
     }
     private val vulcanModeValue: ListValue = object : ListValue("Vulcan-Mode", arrayOf(
-        "Hop1",
-        "Hop2",
         "YPort",
         "Ground"
     ), "YPort", { typeValue.get().equals("vulcan", ignoreCase = true) }) {

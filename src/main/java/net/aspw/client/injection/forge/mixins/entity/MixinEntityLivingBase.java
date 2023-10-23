@@ -9,17 +9,20 @@ import net.aspw.client.features.module.impl.movement.Sprint;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.features.module.impl.visual.SilentView;
+import net.aspw.client.injection.access.IEntityLivingBase;
 import net.aspw.client.protocol.Protocol;
 import net.aspw.client.util.MovementUtils;
 import net.aspw.client.util.RotationUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -37,9 +40,23 @@ import java.util.Objects;
 /**
  * The type Mixin entity living base.
  */
-@Mixin(EntityLivingBase.class)
-public abstract class MixinEntityLivingBase extends MixinEntity {
+@Mixin({EntityLivingBase.class})
+public abstract class MixinEntityLivingBase extends Entity implements IEntityLivingBase {
 
+    public float rotationPitchHead;
+    public float prevRotationPitchHead;
+    @Shadow
+    protected int newPosRotationIncrements;
+    @Shadow
+    protected double newPosX;
+    @Shadow
+    protected double newPosY;
+    @Shadow
+    protected double newPosZ;
+    @Shadow
+    protected double newRotationYaw;
+    @Shadow
+    protected double newRotationPitch;
     /**
      * The Swing progress int.
      */
@@ -65,6 +82,10 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
      */
     @Shadow
     public int jumpTicks;
+
+    public MixinEntityLivingBase() {
+        super(null);
+    }
 
     /**
      * Gets jump upwards motion.
@@ -93,13 +114,6 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
     public abstract boolean isPotionActive(Potion potionIn);
 
     /**
-     * On living update.
-     */
-    @Shadow
-    public void onLivingUpdate() {
-    }
-
-    /**
      * Update fall state.
      *
      * @param y          the y
@@ -126,11 +140,36 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
     @Shadow
     public abstract ItemStack getHeldItem();
 
+    @Shadow
+    public abstract boolean isServerWorld();
+
+    @Shadow
+    protected abstract void updateEntityActionState();
+
+    @Shadow
+    protected abstract void collideWithNearbyEntities();
+
+    @Shadow
+    protected abstract boolean isMovementBlocked();
+
+    @Shadow
+    public float moveStrafing;
+    @Shadow
+    public float moveForward;
+    @Shadow
+    protected float randomYawVelocity;
+
+    @Shadow
+    protected abstract void handleJumpLava();
+
     /**
      * Update ai tick.
      */
     @Shadow
     protected abstract void updateAITick();
+
+    @Shadow
+    public abstract void moveEntityWithHeading(float var1, float var2);
 
     /**
      * The Render yaw offset.
@@ -157,6 +196,26 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
             ci.cancel();
     }
 
+    @Inject(
+            method = {"onEntityUpdate"},
+            at = {@At("HEAD")}
+    )
+    public void onEntityUpdate(CallbackInfo callbackInfo) {
+        this.prevRotationPitchHead = this.rotationPitchHead;
+    }
+
+    public float getprevRotationPitchHead() {
+        return this.prevRotationPitchHead;
+    }
+
+    public float getrotationPitchHead() {
+        return this.rotationPitchHead;
+    }
+
+    public float setrotationPitchHead(float a) {
+        return this.rotationPitchHead = a;
+    }
+
     /**
      * Update distance float.
      *
@@ -178,7 +237,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
             rotationYawHead = silentView.getPlayerYaw();
         }
         float f = MathHelper.wrapAngleTo180_float(p_1101461 - this.renderYawOffset);
-        this.renderYawOffset += f * 0.24F;
+        this.renderYawOffset += f * 0.3F;
         float f1 = MathHelper.wrapAngleTo180_float(rotationYaw - this.renderYawOffset);
         boolean flag = f1 < 90.0F || f1 >= 90.0F;
 
@@ -186,22 +245,22 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
             f1 = 0.0F;
         }
 
-        if (f1 < -78.0F) {
-            f1 = -78.0F;
+        if (f1 < -75.0F) {
+            f1 = -75.0F;
         }
 
-        if (f1 >= 78.0F) {
-            f1 = 78.0F;
+        if (f1 >= 75.0F) {
+            f1 = 75.0F;
         }
 
         this.renderYawOffset = rotationYaw - f1;
 
         if (f1 * f1 > 2500.0F) {
-            this.renderYawOffset += f1 * 0.16F;
+            this.renderYawOffset += f1 * 0.2F;
         }
 
         if (flag) {
-            p_1101462 *= -1.2F;
+            p_1101462 *= -1.0F;
         }
 
         return p_1101462;
