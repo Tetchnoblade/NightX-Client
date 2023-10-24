@@ -241,11 +241,17 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         ++this.panoramaTimer
         renderSkybox(mouseX, mouseY, partialTicks)
         GlStateManager.enableAlpha()
-        FontLoaders.logo18.drawStringWithShadow("a", 60.2F.toDouble(), height - 10.3F.toDouble(), -1)
         FontLoaders.SF20.drawStringWithShadow(
             Client.CLIENT_BEST + " Client",
             4F.toDouble(),
             height - 12F.toDouble(),
+            -1
+        )
+        FontLoaders.SF20.drawStringWithShadow(
+            "Welcome, §a" + mc.getSession().username,
+            width - 4F - FontLoaders.SF20.getStringWidth("Welcome, §a" + mc.getSession().username)
+                .toDouble(),
+            height - 23F.toDouble(),
             -1
         )
         if (Client.clientVersion.get() == "Release") {
