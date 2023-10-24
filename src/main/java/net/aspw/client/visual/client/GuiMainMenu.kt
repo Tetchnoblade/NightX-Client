@@ -248,13 +248,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             height - 12F.toDouble(),
             -1
         )
-        FontLoaders.SF20.drawStringWithShadow(
-            "Welcome, §a" + LoginID.id + "§r, UID: §6" + LoginID.uid,
-            width - 4F - FontLoaders.SF20.getStringWidth("Welcome, §a" + LoginID.id + ", UID: " + LoginID.uid)
-                .toDouble(),
-            height - 23F.toDouble(),
-            -1
-        )
         if (Client.clientVersion.get() == "Release") {
             FontLoaders.SF20.drawStringWithShadow(
                 "Your current build is §eLatest Release! §r(§b" + Client.CLIENT_VERSION + "§r)",
