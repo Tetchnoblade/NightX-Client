@@ -5,7 +5,6 @@ import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.other.PlayerEdit;
 import net.aspw.client.features.module.impl.visual.ESP;
 import net.aspw.client.features.module.impl.visual.SilentView;
-import net.aspw.client.injection.access.IRendererLivingEntity;
 import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.RotationUtils;
 import net.minecraft.client.model.ModelBase;
@@ -35,7 +34,7 @@ import java.util.Objects;
  * The type Mixin renderer living entity.
  */
 @Mixin(RendererLivingEntity.class)
-public abstract class MixinRendererLivingEntity extends MixinRender implements IRendererLivingEntity {
+public abstract class MixinRendererLivingEntity extends MixinRender {
     @Final
     @Shadow
     private static final Logger logger = LogManager.getLogger();

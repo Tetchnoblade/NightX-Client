@@ -3,7 +3,7 @@ package net.aspw.client.visual.client
 import com.google.gson.JsonParser
 import com.google.gson.annotations.SerializedName
 import net.aspw.client.config.FileManager
-import net.aspw.client.injection.implementations.IMixinGuiSlot
+import net.aspw.client.injection.access.IMixinGuiSlot
 import net.aspw.client.util.misc.HttpUtils
 import net.aspw.client.util.network.CheckConnection
 import net.aspw.client.util.render.CustomTexture

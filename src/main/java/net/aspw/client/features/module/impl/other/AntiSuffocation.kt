@@ -38,6 +38,7 @@ class AntiSuffocation : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
+        if (mc.theWorld == null || mc.thePlayer == null) return
         if (mc.thePlayer.isEntityInsideOpaqueBlock) {
             when (modeValue.get().lowercase()) {
                 "legit" -> {
@@ -75,6 +76,7 @@ class AntiSuffocation : Module() {
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
 
+        if (mc.theWorld == null || mc.thePlayer == null) return
         if (mc.thePlayer.isEntityInsideOpaqueBlock) {
             when (modeValue.get().lowercase()) {
                 "godmode" -> {

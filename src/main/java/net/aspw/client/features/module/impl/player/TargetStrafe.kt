@@ -112,8 +112,8 @@ class TargetStrafe : Module() {
 
     private val keyMode: Boolean
         get() = when (modeValue.get().lowercase(Locale.getDefault())) {
-            "jump" -> GameSettings.isKeyDown(mc.gameSettings.keyBindJump)
-            "none" -> mc.thePlayer.movementInput.moveStrafe != 0f || mc.thePlayer.movementInput.moveForward != 0f
+            "jump" -> MovementUtils.isMoving() && GameSettings.isKeyDown(mc.gameSettings.keyBindJump)
+            "none" -> MovementUtils.isMoving()
             else -> false
         }
 

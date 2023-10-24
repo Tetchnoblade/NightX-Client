@@ -6,7 +6,24 @@
   <component name="ChangeListManager">
     <list default="true" id="af093b99-5942-419c-869b-8b2d7cb4dd2a" name="変更" comment="">
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/GuiMainMenu.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/GuiMainMenu.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AutoArmor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/combat/AutoArmor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/AntiSuffocation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/other/AntiSuffocation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/InvManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/InvManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/TargetStrafe.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/player/TargetStrafe.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/access/IEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/access/IEntityLivingBase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/access/IEntityPlayerSP.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/access/IRendererLivingEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/block/MixinBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityLivingBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityLivingBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityPlayerSP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/entity/MixinEntityPlayerSP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiSlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/gui/MixinGuiSlot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/item/MixinItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/item/MixinItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRendererLivingEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/forge/mixins/render/MixinRendererLivingEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/implementations/IItemStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/access/IItemStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/implementations/IMixinGuiSlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/injection/access/IMixinGuiSlot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/GuiContributors.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/visual/client/GuiContributors.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,82 +191,82 @@
       <option name="MAIN_CLASS_NAME" value="GradleStart" />
       <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
       <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStart" />
-      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStart" />
-      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStart" />
-      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStart" />
-      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStart" />
-      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
-      <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Client" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStart" />
+      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
@@ -351,66 +368,6 @@
       <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="NightX.main" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
-      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -427,6 +384,66 @@
       <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-master\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="NightX.main" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration default="false" factoryName="Application" name="Minecraft Server" type="Application">
+      <extension enabled="false" name="coverage" runner="idea" sample_coverage="true" />
+      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../NightX-Client\run" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />

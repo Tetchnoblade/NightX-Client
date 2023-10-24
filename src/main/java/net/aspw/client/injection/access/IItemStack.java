@@ -1,4 +1,4 @@
-package net.aspw.client.injection.implementations;
+package net.aspw.client.injection.access;
 
 /**
  * The interface Item stack.

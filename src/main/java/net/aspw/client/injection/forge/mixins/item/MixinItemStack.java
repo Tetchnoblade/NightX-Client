@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.item;
 
-import net.aspw.client.injection.implementations.IItemStack;
+import net.aspw.client.injection.access.IItemStack;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

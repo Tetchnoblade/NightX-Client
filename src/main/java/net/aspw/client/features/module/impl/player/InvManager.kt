@@ -7,7 +7,7 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.injection.implementations.IItemStack
+import net.aspw.client.injection.access.IItemStack
 import net.aspw.client.util.ClientUtils
 import net.aspw.client.util.InventoryHelper
 import net.aspw.client.util.InventoryUtils
