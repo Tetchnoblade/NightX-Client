@@ -3,16 +3,14 @@ package net.aspw.client.visual.client
 import net.aspw.client.Client
 import net.aspw.client.util.network.CheckConnection
 import net.aspw.client.util.network.LoginID
+import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.client.renderer.Tessellator
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11
-import org.lwjgl.util.glu.Project
 
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
@@ -21,7 +19,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     private var alrUpdate = false
     private val buttonWidth = 112
     private val buttonHeight = 20
-    private var panoramaTimer = 0
 
     override fun initGui() {
         if (!LoginID.loggedIn) {
@@ -90,156 +87,25 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         super.initGui()
     }
 
-    private var titlePanoramaPaths = arrayOf(
-        ResourceLocation("client/background/panorama_0.png"),
-        ResourceLocation("client/background/panorama_1.png"),
-        ResourceLocation("client/background/panorama_2.png"),
-        ResourceLocation("client/background/panorama_3.png"),
-        ResourceLocation("client/background/portal.png"),
-        ResourceLocation("client/background/panorama_4.png")
-    )
-
-    private fun drawPanorama(p_73970_1_: Int, p_73970_2_: Int, p_73970_3_: Float) {
-        val tessellator = Tessellator.getInstance()
-        val worldrenderer = tessellator.worldRenderer
-        GlStateManager.matrixMode(5889)
-        GlStateManager.pushMatrix()
-        GlStateManager.loadIdentity()
-        Project.gluPerspective(120.0f, 1.0f, 0.05f, 10.0f)
-        GlStateManager.matrixMode(5888)
-        GlStateManager.pushMatrix()
-        GlStateManager.loadIdentity()
-        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f)
-        GlStateManager.rotate(180.0f, 1.0f, 0.0f, 0.0f)
-        GlStateManager.rotate(90.0f, 0.0f, 0.0f, 1.0f)
-        GlStateManager.enableBlend()
-        GlStateManager.disableAlpha()
-        GlStateManager.disableCull()
-        GlStateManager.depthMask(false)
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0)
-        val i = 8
-        for (j in 0 until i * i) {
-            GlStateManager.pushMatrix()
-            val f = ((j % i).toFloat() / i.toFloat() - 0.5f) / 64.0f
-            val f1 = ((j / i).toFloat() / i.toFloat() - 0.5f) / 64.0f
-            val f2 = 0.0f
-            GlStateManager.translate(f, f1, f2)
-            GlStateManager.rotate(-(this.panoramaTimer.toFloat() + p_73970_3_) * 0.01f, 0.0f, 1.0f, 0.0f)
-            for (k in 0..5) {
-                GlStateManager.pushMatrix()
-                if (k == 1) {
-                    GlStateManager.rotate(90.0f, 0.0f, 1.0f, 0.0f)
-                }
-                if (k == 2) {
-                    GlStateManager.rotate(180.0f, 0.0f, 1.0f, 0.0f)
-                }
-                if (k == 3) {
-                    GlStateManager.rotate(-90.0f, 0.0f, 1.0f, 0.0f)
-                }
-                if (k == 4) {
-                    GlStateManager.rotate(90.0f, 1.0f, 0.0f, 0.0f)
-                }
-                if (k == 5) {
-                    GlStateManager.rotate(-90.0f, 1.0f, 0.0f, 0.0f)
-                }
-                mc.textureManager.bindTexture(titlePanoramaPaths[k])
-                worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR)
-                val l = 255 / (j + 1)
-                val f3 = 0.0f
-                worldrenderer.pos(-1.0, -1.0, 1.0).tex(0.0, 0.0).color(255, 255, 255, l).endVertex()
-                worldrenderer.pos(1.0, -1.0, 1.0).tex(1.0, 0.0).color(255, 255, 255, l).endVertex()
-                worldrenderer.pos(1.0, 1.0, 1.0).tex(1.0, 1.0).color(255, 255, 255, l).endVertex()
-                worldrenderer.pos(-1.0, 1.0, 1.0).tex(0.0, 1.0).color(255, 255, 255, l).endVertex()
-                tessellator.draw()
-                GlStateManager.popMatrix()
-            }
-            GlStateManager.popMatrix()
-            GlStateManager.colorMask(true, true, true, false)
-        }
-        worldrenderer.setTranslation(0.0, 0.0, 0.0)
-        GlStateManager.colorMask(true, true, true, true)
-        GlStateManager.matrixMode(5889)
-        GlStateManager.popMatrix()
-        GlStateManager.matrixMode(5888)
-        GlStateManager.popMatrix()
-        GlStateManager.depthMask(true)
-        GlStateManager.enableCull()
-        GlStateManager.enableDepth()
-    }
-
-    private fun rotateAndBlurSkybox(p_73968_1_: Float) {
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR)
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR)
-        GL11.glCopyTexSubImage2D(GL11.GL_TEXTURE_2D, 0, 0, 0, 0, 0, 256, 256)
-        GlStateManager.enableBlend()
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0)
-        GlStateManager.colorMask(true, true, true, false)
-        val tessellator = Tessellator.getInstance()
-        val worldrenderer = tessellator.worldRenderer
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR)
-        GlStateManager.disableAlpha()
-        val i = 3
-        for (j in 0 until i) {
-            val f = 1.0f / (j + 1).toFloat()
-            val k = width
-            val l = height
-            val f1 = (j - i / 2).toFloat() / 256.0f
-            worldrenderer.pos(k.toDouble(), l.toDouble(), zLevel.toDouble()).tex((0.0f + f1).toDouble(), 1.0)
-                .color(1.0f, 1.0f, 1.0f, f).endVertex()
-            worldrenderer.pos(k.toDouble(), 0.0, zLevel.toDouble()).tex((1.0f + f1).toDouble(), 1.0)
-                .color(1.0f, 1.0f, 1.0f, f).endVertex()
-            worldrenderer.pos(0.0, 0.0, zLevel.toDouble()).tex((1.0f + f1).toDouble(), 0.0)
-                .color(1.0f, 1.0f, 1.0f, f).endVertex()
-            worldrenderer.pos(0.0, l.toDouble(), zLevel.toDouble()).tex((0.0f + f1).toDouble(), 0.0)
-                .color(1.0f, 1.0f, 1.0f, f).endVertex()
-        }
-        tessellator.draw()
-        GlStateManager.enableAlpha()
-        GlStateManager.colorMask(true, true, true, true)
-    }
-
-    private fun renderSkybox(p_73971_1_: Int, p_73971_2_: Int, p_73971_3_: Float) {
-        mc.framebuffer.unbindFramebuffer()
-        GlStateManager.viewport(0, 0, 256, 256)
-        drawPanorama(p_73971_1_, p_73971_2_, p_73971_3_)
-        this.rotateAndBlurSkybox(p_73971_3_)
-        this.rotateAndBlurSkybox(p_73971_3_)
-        this.rotateAndBlurSkybox(p_73971_3_)
-        this.rotateAndBlurSkybox(p_73971_3_)
-        this.rotateAndBlurSkybox(p_73971_3_)
-        this.rotateAndBlurSkybox(p_73971_3_)
-        this.rotateAndBlurSkybox(p_73971_3_)
-        mc.framebuffer.bindFramebuffer(true)
-        GlStateManager.viewport(0, 0, mc.displayWidth, mc.displayHeight)
-        val f = if (width > height) 120.0f / width.toFloat() else 120.0f / height.toFloat()
-        val f1 = height.toFloat() * f / 256.0f
-        val f2 = width.toFloat() * f / 256.0f
-        val i = width
-        val j = height
-        val tessellator = Tessellator.getInstance()
-        val worldrenderer = tessellator.worldRenderer
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR)
-        worldrenderer.pos(0.0, j.toDouble(), zLevel.toDouble()).tex((0.5f - f1).toDouble(), (0.5f + f2).toDouble())
-            .color(1.0f, 1.0f, 1.0f, 1.0f).endVertex()
-        worldrenderer.pos(i.toDouble(), j.toDouble(), zLevel.toDouble())
-            .tex((0.5f - f1).toDouble(), (0.5f - f2).toDouble())
-            .color(1.0f, 1.0f, 1.0f, 1.0f).endVertex()
-        worldrenderer.pos(i.toDouble(), 0.0, zLevel.toDouble()).tex((0.5f + f1).toDouble(), (0.5f - f2).toDouble())
-            .color(1.0f, 1.0f, 1.0f, 1.0f).endVertex()
-        worldrenderer.pos(0.0, 0.0, zLevel.toDouble()).tex((0.5f + f1).toDouble(), (0.5f + f2).toDouble())
-            .color(1.0f, 1.0f, 1.0f, 1.0f).endVertex()
-        tessellator.draw()
-    }
-
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
         if (!alrUpdate) {
             lastAnimTick = System.currentTimeMillis()
             alrUpdate = true
         }
         GL11.glPushMatrix()
+        GlStateManager.disableAlpha()
         drawBackground(0)
-        ++this.panoramaTimer
-        renderSkybox(mouseX, mouseY, partialTicks)
+        RenderUtils.drawImage(
+            ResourceLocation("client/background/mainmenu.png"), 0, 0,
+            width, height
+        )
+        RenderUtils.drawImage2(
+            ResourceLocation("client/images/nightx-logo2.png"),
+            width / 2F - 50F,
+            height / 2F - 120F,
+            100,
+            100
+        )
         GlStateManager.enableAlpha()
         FontLoaders.SF20.drawStringWithShadow(
             Client.CLIENT_BEST + " Client",

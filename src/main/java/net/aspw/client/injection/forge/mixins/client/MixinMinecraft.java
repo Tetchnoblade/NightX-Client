@@ -39,7 +39,6 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import scala.Int;
 
 import java.util.Objects;
 
@@ -220,7 +219,7 @@ public abstract class MixinMinecraft {
                     case MISS:
                     default:
                         if (this.playerController.isNotCreative()) {
-                            this.leftClickCounter = 0;
+                            this.leftClickCounter = 10;
                         }
                 }
             }
@@ -303,6 +302,6 @@ public abstract class MixinMinecraft {
 
     @ModifyConstant(method = "getLimitFramerate", constant = @Constant(intValue = 30))
     public int getLimitFramerate(int constant) {
-        return Int.MaxValue();
+        return 60;
     }
 }
