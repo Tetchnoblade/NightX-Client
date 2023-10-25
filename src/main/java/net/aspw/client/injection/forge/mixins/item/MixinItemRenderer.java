@@ -263,6 +263,7 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "AstolfoSpin": {
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
                                 GlStateManager.rotate(this.delay, 0.0F, 0.0F, -0.1F);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
@@ -274,16 +275,17 @@ public abstract class MixinItemRenderer {
                                     }
                                     this.rotateTimer.reset();
                                 }
-
                                 if (this.delay > 360.0F) {
                                     this.delay = 0.0F;
                                 }
-
                                 this.func_178103_d();
                                 break;
                             }
                             case "Astro": {
-                                this.transformFirstPersonItem(f / 2, f1);
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
+                                if (Animations.cancelEquip.get())
+                                    this.transformFirstPersonItem(0.0F, f1);
+                                else this.transformFirstPersonItem(f / 1.6F, f1);
                                 float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                 var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                 GlStateManager.rotate(var9 * 50.0F / 9.0F, -var9, -0.0F, 90.0F);
