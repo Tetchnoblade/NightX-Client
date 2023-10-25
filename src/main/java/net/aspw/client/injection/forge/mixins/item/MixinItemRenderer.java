@@ -6,7 +6,7 @@ import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.util.timer.MSTimer;
+import net.aspw.client.util.TimerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -33,15 +33,6 @@ import java.util.Objects;
 @Mixin(ItemRenderer.class)
 public abstract class MixinItemRenderer {
 
-    /**
-     * The Delay.
-     */
-    float delay = 0.0F;
-    /**
-     * The Rotate timer.
-     */
-    MSTimer rotateTimer = new MSTimer();
-
     @Shadow
     private float prevEquippedProgress;
 
@@ -54,6 +45,9 @@ public abstract class MixinItemRenderer {
     private Minecraft mc;
     @Shadow
     private ItemStack itemToRender;
+
+    private float delay = 0;
+    private final TimerUtils rotateTimer = new TimerUtils();
 
     /**
      * Rotate arround x and y.
@@ -266,6 +260,35 @@ public abstract class MixinItemRenderer {
                                 this.func_178103_d();
                                 GlStateManager.rotate(-var * 36.0F, 1.0F, 0.8F, 0.0F);
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
+                                break;
+                            }
+                            case "AstolfoSpin": {
+                                GlStateManager.rotate(this.delay, 0.0F, 0.0F, -0.1F);
+                                if (Animations.cancelEquip.get())
+                                    this.transformFirstPersonItem(0.0F, 0.0F);
+                                else this.transformFirstPersonItem(f / 1.4F, 0.0F);
+                                float var15 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.0F);
+                                if (this.rotateTimer.hasReached(1L)) {
+                                    for (int i = 0; i < 1; i++) {
+                                        ++this.delay;
+                                    }
+                                    this.rotateTimer.reset();
+                                }
+
+                                if (this.delay > 360.0F) {
+                                    this.delay = 0.0F;
+                                }
+
+                                this.func_178103_d();
+                                break;
+                            }
+                            case "Astro": {
+                                this.transformFirstPersonItem(f / 2, f1);
+                                float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                GlStateManager.rotate(var9 * 50.0F / 9.0F, -var9, -0.0F, 90.0F);
+                                GlStateManager.rotate(var9 * 50.0F, 200.0F, -var9 / 2.0F, -0.0F);
+                                this.func_178103_d();
                                 break;
                             }
                             case "Spin": {

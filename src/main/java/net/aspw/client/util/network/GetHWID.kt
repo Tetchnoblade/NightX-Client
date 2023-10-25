@@ -1,6 +1,5 @@
 package net.aspw.client.util.network
 
-import net.aspw.client.Client
 import net.aspw.client.util.ClientUtils
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
@@ -29,8 +28,6 @@ fun getHWID(): String {
     ClientUtils.getLogger().info("Your HWID is:")
     ClientUtils.getLogger().info(uuid.substring(pos1, uuid.length - 15))
     ClientUtils.getLogger().info("Copied to your clipboard!")
-
-    Client.tipSoundManager.hwidSound.asyncPlay(95f)
 
     val stringSelection = StringSelection(uuid.substring(pos1, uuid.length - 15))
     Toolkit.getDefaultToolkit().systemClipboard.setContents(stringSelection, stringSelection)
