@@ -68,6 +68,8 @@
     "performance.MixinChunk",
     "performance.MixinEntityPackets",
     "performance.MixinItemModelMesher",
+    "performance.MixinNodeProcessor",
+    "performance.MixinRegionRenderCache",
     "performance.MixinWorld",
     "performance.MixinWorldManager",
     "render.MixinEffectRenderer",
