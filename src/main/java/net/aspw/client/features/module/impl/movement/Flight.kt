@@ -50,6 +50,7 @@ class Flight : Module() {
             "Desync",
             "LatestNCP",
             "Cubecraft",
+            "BlocksMC",
             "NCP",
             "AAC1.9.10",
             "AAC3.0.5",
@@ -231,6 +232,8 @@ class Flight : Module() {
     private var wdState = 0
     private var wdTick = 0
     private var fly = false
+    private var bmcSpeed = 0.0
+    private var started = false
     var y = 0.0
     private val timer = MSTimer()
     private val packetLol = LinkedList<C0FPacketConfirmTransaction>()
@@ -250,7 +253,7 @@ class Flight : Module() {
     private var noFlag = false
     private var boostMotion = 0
     private var pog = false
-    private var started = false
+    private var starteds = false
     private var lastSentX = 0.0
     private var lastSentY = 0.0
     private var lastSentZ = 0.0
@@ -304,6 +307,8 @@ class Flight : Module() {
         packetLol.clear()
         y = mc.thePlayer.posY
         shouldFakeJump = false
+        bmcSpeed = 0.0
+        starteds = false
         boostMotion = 0
         shouldActive = true
         fly = false
@@ -575,6 +580,8 @@ class Flight : Module() {
         mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
         wasDead = false
         fly = false
+        bmcSpeed = 0.0
+        starteds = false
         c = false
         packetLol.clear()
         mc.thePlayer?.noClip = false
@@ -1508,6 +1515,26 @@ class Flight : Module() {
                             C0BPacketEntityAction.Action.START_SNEAKING
                         )
                     )
+                }
+            }
+
+            "blocksmc" -> {
+                if (event.eventState === EventState.PRE) {
+                    val bb = mc.thePlayer.entityBoundingBox.offset(0.0, 1.0, 0.0)
+
+                    if (started) {
+                        mc.thePlayer.motionY += 0.025
+                        MovementUtils.strafe(0.835f.let { bmcSpeed *= it; bmcSpeed }.toFloat())
+                        if (mc.thePlayer.motionY < -0.5 && !MovementUtils.isBlockUnder()) {
+                            toggle()
+                        }
+                    }
+
+                    if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, bb).isEmpty() && !started) {
+                        started = true
+                        mc.thePlayer.jump()
+                        MovementUtils.strafe(8.also { bmcSpeed = it.toDouble() }.toFloat())
+                    }
                 }
             }
 

@@ -190,8 +190,7 @@ class ModuleManager : Listenable {
             InfiniteReach::class.java,
             Debugger::class.java,
             MotionBlur::class.java,
-            AntiFrozen::class.java,
-            UnderFlight::class.java
+            AntiFrozen::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")

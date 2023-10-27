@@ -267,7 +267,7 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.rotate(this.delay, 0.0F, 0.0F, -0.1F);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
-                                else this.transformFirstPersonItem(f / 1.4F, 0.0F);
+                                else this.transformFirstPersonItem(f / 1.6F, 0.0F);
                                 float var15 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.0F);
                                 if (this.rotateTimer.hasReached(1L)) {
                                     for (int i = 0; i < 1; i++) {
@@ -298,7 +298,6 @@ public abstract class MixinItemRenderer {
                                 if (Animations.cancelEquip.get())
                                     transformFirstPersonItem(0.0f, 0.0f);
                                 else transformFirstPersonItem(f / 1.4F, 0.0F);
-                                MinecraftInstance.mc.thePlayer.isSwingInProgress = false;
                                 GlStateManager.translate(0, 0.2F, -1);
                                 GlStateManager.rotate(-59, -1, 0, 3);
                                 GlStateManager.rotate(-(System.currentTimeMillis() / 2 % 360), 1, 0, 0.0F);
