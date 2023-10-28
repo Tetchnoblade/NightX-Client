@@ -290,7 +290,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
             float renderpitch = (MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && rotations.getState() && rotations.getRotationMode().get().equals("Silent") && entity == MinecraftInstance.mc.thePlayer) ? (entity.prevRotationPitch + (((RotationUtils.serverRotation.getPitch() != 0.0f) ? RotationUtils.serverRotation.getPitch() : entity.rotationPitch) - entity.prevRotationPitch)) : (entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks);
             float renderyaw = (MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && rotations.getState() && rotations.getRotationMode().get().equals("Silent") && entity == MinecraftInstance.mc.thePlayer) ? (entity.prevRotationYaw + (((RotationUtils.serverRotation.getYaw() != 0.0f) ? RotationUtils.serverRotation.getYaw() : entity.rotationYaw) - entity.prevRotationYaw)) : (entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks);
 
-            if (rotations.getState() && rotations.getRotationMode().get().equals("Silent") && entity.equals(MinecraftInstance.mc.thePlayer)) {
+            if (rotations.getState() && rotations.getRotationMode().get().equals("Silent") && RotationUtils.targetRotation != null && entity.equals(MinecraftInstance.mc.thePlayer)) {
                 GL11.glPushMatrix();
                 GL11.glPushAttrib(1048575);
                 GL11.glDisable(2929);
@@ -340,7 +340,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
     protected <T extends EntityLivingBase> void renderModel(T entitylivingbaseIn, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float scaleFactor) {
         boolean visible = !entitylivingbaseIn.isInvisible();
         boolean semiVisible = !visible && (!entitylivingbaseIn.isInvisibleToPlayer(MinecraftInstance.mc.thePlayer));
-        boolean silent = entitylivingbaseIn == MinecraftInstance.mc.thePlayer && Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class)).getState() && Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class)).getRotationMode().get().equals("Silent");
+        boolean silent = entitylivingbaseIn == MinecraftInstance.mc.thePlayer && Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class)).getState() && Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class)).getRotationMode().get().equals("Silent") && RotationUtils.targetRotation != null;
 
         if (visible || semiVisible || silent) {
             if (!this.bindEntityTexture(entitylivingbaseIn))
