@@ -1522,7 +1522,7 @@ class Flight : Module() {
                 if (event.eventState === EventState.PRE) {
                     val bb = mc.thePlayer.entityBoundingBox.offset(0.0, 1.0, 0.0)
 
-                    if (started) {
+                    if (starteds) {
                         mc.thePlayer.motionY += 0.025
                         MovementUtils.strafe(0.835f.let { bmcSpeed *= it; bmcSpeed }.toFloat())
                         if (mc.thePlayer.motionY < -0.5 && !MovementUtils.isBlockUnder()) {
@@ -1530,8 +1530,8 @@ class Flight : Module() {
                         }
                     }
 
-                    if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, bb).isEmpty() && !started) {
-                        started = true
+                    if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, bb).isEmpty() && !starteds) {
+                        starteds = true
                         mc.thePlayer.jump()
                         MovementUtils.strafe(8.also { bmcSpeed = it.toDouble() }.toFloat())
                     }
