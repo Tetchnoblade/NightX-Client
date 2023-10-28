@@ -1,20 +1,13 @@
 package net.aspw.client.features.module.impl.visual
 
-import net.aspw.client.Client
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.MotionEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.features.module.impl.combat.BowAura
-import net.aspw.client.features.module.impl.combat.KillAura
-import net.aspw.client.features.module.impl.exploit.CivBreak
-import net.aspw.client.features.module.impl.other.Annoy
-import net.aspw.client.features.module.impl.player.BedBreaker
-import net.aspw.client.features.module.impl.player.Nuker
-import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.util.RotationUtils
 import net.aspw.client.value.BoolValue
+import net.aspw.client.value.ListValue
 
 @ModuleInfo(
     name = "SilentView",
@@ -24,10 +17,9 @@ import net.aspw.client.value.BoolValue
     array = false
 )
 class SilentView : Module() {
-    val normalRotationsValue = BoolValue("NormalRotations", true) { !silentValue.get() }
-    val moduleCheckValue = BoolValue("ModuleCheck", true) { !silentValue.get() }
-    val bodyLockValue = BoolValue("BodyLock", true) { !silentValue.get() }
-    val silentValue = BoolValue("Silent", false)
+    val rotationMode = ListValue("Mode", arrayOf("Normal", "Silent"), "Normal")
+    val rotatingCheckValue = BoolValue("RotatingCheck", true) { rotationMode.get().equals("normal", true) }
+    val bodyLockValue = BoolValue("BodyLock", true) { rotationMode.get().equals("normal", true) }
 
     var playerYaw: Float? = null
 
@@ -47,36 +39,15 @@ class SilentView : Module() {
     @EventTarget
     fun onMotion(event: MotionEvent) {
         val thePlayer = mc.thePlayer
-        if (thePlayer == null) {
+        if (thePlayer == null || RotationUtils.targetRotation == null && rotatingCheckValue.get()) {
             playerYaw = null
+            headPitch = 0f
+            prevHeadPitch = 0f
             return
         }
         prevHeadPitch = headPitch
         headPitch = RotationUtils.serverRotation?.pitch!!
         playerYaw = RotationUtils.serverRotation?.yaw!!
-    }
-
-    private fun getState(module: Class<out Module>) = Client.moduleManager[module]!!.state
-
-    fun shouldRotate(): Boolean {
-        val killAura = Client.moduleManager.getModule(KillAura::class.java) as KillAura
-        val bowAim = Client.moduleManager.getModule(BowAura::class.java) as BowAura
-        val civBreak = Client.moduleManager.getModule(CivBreak::class.java) as CivBreak
-        val bedBreaker = Client.moduleManager.getModule(BedBreaker::class.java) as BedBreaker
-        val nuker = Client.moduleManager.getModule(Nuker::class.java) as Nuker
-        val annoy = Client.moduleManager.getModule(Annoy::class.java) as Annoy
-        return (getState(KillAura::class.java) && killAura.target != null && killAura.silentRotationValue.get() && killAura.rotations.get() != "None" || (getState(
-            Scaffold::class.java
-        ) || (getState(Nuker::class.java) && nuker.isBreaking || (getState(
-            BowAura::class.java
-        ) && bowAim.silentValue.get() && bowAim.hasTarget() || (getState(
-            CivBreak::class.java
-        ) && civBreak.rotationsValue.get() && civBreak.isBreaking || (getState(
-            BedBreaker::class.java
-        ) && bedBreaker.breaking || (getState(
-            Annoy::class.java
-        ) && annoy.rotateValue.get()
-                )))))))
     }
 
     init {

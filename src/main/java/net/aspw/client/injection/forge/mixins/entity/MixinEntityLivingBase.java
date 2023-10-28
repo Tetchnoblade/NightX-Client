@@ -170,7 +170,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
     protected float updateDistance(float p_1101461, float p_1101462) {
         float rotationYaw = this.rotationYaw;
         final SilentView silentView = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
-        if (silentView.getNormalRotationsValue().get() && !silentView.getSilentValue().get() && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP && (silentView.getModuleCheckValue().get() && silentView.shouldRotate() || !silentView.getModuleCheckValue().get())) {
+        if (silentView.getRotationMode().get().equals("Normal") && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP) {
             if (this.swingProgress > 0F && !silentView.getBodyLockValue().get()) {
                 p_1101461 = silentView.getPlayerYaw();
             }
@@ -182,7 +182,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
         float f1 = MathHelper.wrapAngleTo180_float(rotationYaw - this.renderYawOffset);
         boolean flag = f1 < 90.0F || f1 >= 90.0F;
 
-        if (!silentView.getSilentValue().get() && silentView.getBodyLockValue().get() && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP && (silentView.getModuleCheckValue().get() && silentView.shouldRotate() || !silentView.getModuleCheckValue().get())) {
+        if (silentView.getRotationMode().get().equals("Normal") && silentView.getBodyLockValue().get() && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP) {
             f1 = 0.0F;
         }
 
@@ -228,7 +228,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
         if (this.isSprinting()) {
             final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
             final Sprint sprint = Objects.requireNonNull(Client.moduleManager.getModule(Sprint.class));
-            if (killAura.getState() && killAura.getMovementFix().get() && killAura.getTarget() != null) {
+            if (killAura.getState() && killAura.getMovementFix().get().equals("Full") && killAura.getTarget() != null) {
                 jumpEvent.setYaw(RotationUtils.targetRotation != null ? RotationUtils.targetRotation.getYaw() : (RotationUtils.serverRotation != null ? RotationUtils.serverRotation.getYaw() : this.rotationYaw));
             } else if (sprint.getState() && sprint.getAllDirectionsValue().get())
                 jumpEvent.setYaw(MovementUtils.getRawDirection());

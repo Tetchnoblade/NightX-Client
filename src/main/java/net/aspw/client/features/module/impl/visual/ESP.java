@@ -55,7 +55,6 @@ public final class ESP extends Module {
         this.projection = GLAllocation.createDirectFloatBuffer(16);
         this.vector = GLAllocation.createDirectFloatBuffer(4);
         this.backgroundColor = new Color(0, 0, 0, 120).getRGB();
-        int black = Color.BLACK.getRGB();
     }
 
     @Override

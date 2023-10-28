@@ -134,8 +134,6 @@ class KillAura : Module() {
         false
     ) { rotations.get().equals("undetectable", true) }
     private val randomValue = BoolValue("Random", true) { rotations.get().equals("undetectable", true) }
-    val movementFix = BoolValue("MovementFix", false) { !rotations.get().equals("none", true) }
-    private val silentMovementFix = BoolValue("SilentMovementFix", false) { !rotations.get().equals("none", true) }
     private val multiCombo = BoolValue("MultiCombo", false)
     private val amountValue = IntegerValue("Multi-Packet", 5, 0, 20, "x") { multiCombo.get() }
 
@@ -143,6 +141,9 @@ class KillAura : Module() {
         "NoHitCheck",
         false
     ) { !rotations.get().equals("none", true) }
+
+    val movementFix =
+        ListValue("MovementFix", arrayOf("Full", "Semi", "None"), "None") { !rotations.get().equals("none", true) }
 
     private val priorityValue = ListValue(
         "Priority",
@@ -369,37 +370,40 @@ class KillAura : Module() {
         }
 
         if (currentTarget != null && RotationUtils.targetRotation != null) {
-            if (movementFix.get()) {
-                val (yaw) = RotationUtils.targetRotation ?: return
-                var strafe = event.strafe
-                var forward = event.forward
-                val friction = event.friction
+            when (movementFix.get().lowercase()) {
+                "full" -> {
+                    val (yaw) = RotationUtils.targetRotation ?: return
+                    var strafe = event.strafe
+                    var forward = event.forward
+                    val friction = event.friction
 
-                var f = strafe * strafe + forward * forward
+                    var f = strafe * strafe + forward * forward
 
-                if (f >= 1.0E-4F) {
-                    f = MathHelper.sqrt_float(f)
+                    if (f >= 1.0E-4F) {
+                        f = MathHelper.sqrt_float(f)
 
-                    if (f < 1.0F)
-                        f = 1.0F
+                        if (f < 1.0F)
+                            f = 1.0F
 
-                    f = friction / f
-                    strafe *= f
-                    forward *= f
+                        f = friction / f
+                        strafe *= f
+                        forward *= f
 
-                    val yawSin = MathHelper.sin((yaw * Math.PI / 180F).toFloat())
-                    val yawCos = MathHelper.cos((yaw * Math.PI / 180F).toFloat())
+                        val yawSin = MathHelper.sin((yaw * Math.PI / 180F).toFloat())
+                        val yawCos = MathHelper.cos((yaw * Math.PI / 180F).toFloat())
 
-                    mc.thePlayer.motionX += strafe * yawCos - forward * yawSin
-                    mc.thePlayer.motionZ += forward * yawCos + strafe * yawSin
+                        mc.thePlayer.motionX += strafe * yawCos - forward * yawSin
+                        mc.thePlayer.motionZ += forward * yawCos + strafe * yawSin
 
+                        event.cancelEvent()
+                    }
+                }
+
+                "semi" -> {
+                    update()
+                    RotationUtils.targetRotation!!.applyStrafeToPlayer(event)
                     event.cancelEvent()
                 }
-            }
-            if (silentMovementFix.get()) {
-                update()
-                RotationUtils.targetRotation!!.applyStrafeToPlayer(event)
-                event.cancelEvent()
             }
         }
     }
