@@ -267,7 +267,7 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.rotate(this.delay, 0.0F, 0.0F, -0.1F);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
-                                else this.transformFirstPersonItem(f / 1.6F, 0.0F);
+                                else this.transformFirstPersonItem(f / 1.2F, 0.0F);
                                 float var15 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.0F);
                                 if (this.rotateTimer.hasReached(1L)) {
                                     for (int i = 0; i < 1; i++) {
