@@ -100,7 +100,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             width, height
         )
         RenderUtils.drawImage2(
-            ResourceLocation("client/images/nightx-logo2.png"),
+            ResourceLocation("client/images/nightx-logo4.png"),
             width / 2F - 50F,
             height / 2F - 120F,
             100,
