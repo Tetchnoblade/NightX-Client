@@ -4,6 +4,7 @@ import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.visual.CustomModel;
 import net.aspw.client.features.module.impl.visual.SilentView;
 import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.util.RotationUtils;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.entity.EntityLivingBase;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,7 +42,7 @@ public class MixinLayerArmorBase {
         } else if (customModel.getState() && !customModel.getOnlySelf().get()) {
             ci.cancel();
         }
-        if (silentView.getState() && silentView.getRotationMode().get().equals("Silent") && entitylivingbaseIn == MinecraftInstance.mc.thePlayer) {
+        if (silentView.getState() && silentView.getRotationMode().get().equals("Silent") && entitylivingbaseIn == MinecraftInstance.mc.thePlayer && (RotationUtils.targetRotation != null && silentView.getRotatingCheckValue().get() || !silentView.getRotatingCheckValue().get())) {
             ci.cancel();
         }
     }
