@@ -333,6 +333,12 @@ class KillAura : Module() {
             verusBlocking = false
     }
 
+    @EventTarget
+    fun onJump(event: JumpEvent) {
+        if (movementFix.get().equals("Full") && currentTarget != null)
+            event.yaw = RotationUtils.serverRotation?.yaw!!
+    }
+
     /**
      * Strafe event
      */
