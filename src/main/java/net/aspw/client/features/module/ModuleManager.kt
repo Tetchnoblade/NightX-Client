@@ -7,7 +7,6 @@ import net.aspw.client.event.Listenable
 import net.aspw.client.features.command.impl.ModuleCommand
 import net.aspw.client.features.module.impl.combat.*
 import net.aspw.client.features.module.impl.exploit.*
-import net.aspw.client.features.module.impl.minigames.Debugger
 import net.aspw.client.features.module.impl.minigames.SnakeGame
 import net.aspw.client.features.module.impl.movement.*
 import net.aspw.client.features.module.impl.other.*
@@ -40,7 +39,6 @@ class ModuleManager : Listenable {
         ClientUtils.getLogger().info("Loading modules...")
 
         registerModules(
-            Jenisuke::class.java,
             Protect::class.java,
             KeepChest::class.java,
             BowAura::class.java,
@@ -77,7 +75,7 @@ class ModuleManager : Listenable {
             Regen::class.java,
             NoFall::class.java,
             Blink::class.java,
-            NameProtect::class.java,
+            StreamerMode::class.java,
             Timer::class.java,
             Freecam::class.java,
             HitBox::class.java,
@@ -163,24 +161,19 @@ class ModuleManager : Listenable {
             InfiniteDurability::class.java,
             BedBreaker::class.java,
             ChestAura::class.java,
-            BedWalker::class.java,
             Wings::class.java,
             SilentView::class.java,
             BackTrack::class.java,
-            ChatFilter::class.java,
             AntiWaterPush::class.java,
             XRay::class.java,
             Cape::class.java,
             HudEditor::class.java,
             Gui::class.java,
             InfinitePitch::class.java,
-            PacketDumper::class.java,
             HackerDetect::class.java,
-            InfiniteChat::class.java,
             EntityJump::class.java,
             ConsoleSpammer::class.java,
             GodBridge::class.java,
-            AirPlace::class.java,
             AntiSuffocation::class.java,
             FakeGhostBlock::class.java,
             NoHurtCam::class.java,

@@ -38,10 +38,7 @@ import net.minecraft.util.*
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.util.*
-import kotlin.math.cos
-import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.sin
+import kotlin.math.*
 
 
 @ModuleInfo(
@@ -178,7 +175,6 @@ class KillAura : Module() {
                 "NCP",
                 "HurtTime",
                 "Click",
-                "Hypixel",
                 "OldHypixel",
                 "OldIntave",
                 "Fake",
@@ -197,7 +193,7 @@ class KillAura : Module() {
     ) { !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true) }
 
     // Bypass
-    val silentRotationValue = BoolValue("SilentRotation", true) { !rotations.get().equals("none", true) }
+    private val silentRotationValue = BoolValue("SilentRotation", true) { !rotations.get().equals("none", true) }
     private val toggleFreeLook =
         BoolValue("ToggleFreeLook", false) { !rotations.get().equals("none", true) && !silentRotationValue.get() }
 
@@ -337,6 +333,12 @@ class KillAura : Module() {
             verusBlocking = false
     }
 
+    @EventTarget
+    fun onJump(event: JumpEvent) {
+        if (movementFix.get().equals("Full") && currentTarget != null)
+            event.yaw = RotationUtils.serverRotation?.yaw!!
+    }
+
     /**
      * Strafe event
      */
@@ -344,7 +346,7 @@ class KillAura : Module() {
     fun onStrafe(event: StrafeEvent) {
         update()
 
-        if (target != null) {
+        if (currentTarget != null) {
             when (particleValue.get().lowercase()) {
                 "hit" -> {
                     if (target?.hurtTime!! > 9) {
@@ -376,27 +378,32 @@ class KillAura : Module() {
                     var strafe = event.strafe
                     var forward = event.forward
                     val friction = event.friction
+                    var factor = strafe * strafe + forward * forward
 
-                    var f = strafe * strafe + forward * forward
+                    ((MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationYaw - yaw - 22.5f - 135.0f) + 180.0) / (45.0).toDouble()).toInt()
 
-                    if (f >= 1.0E-4F) {
-                        f = MathHelper.sqrt_float(f)
+                    var calcMoveDir = abs(strafe).coerceAtLeast(abs(forward))
+                    calcMoveDir *= calcMoveDir
+                    MathHelper.sqrt_float(calcMoveDir / 1.0f.coerceAtMost(calcMoveDir * 2.0f))
 
-                        if (f < 1.0F)
-                            f = 1.0F
+                    if (factor >= 1.0E-4F) {
+                        factor = MathHelper.sqrt_float(factor)
 
-                        f = friction / f
-                        strafe *= f
-                        forward *= f
+                        if (factor < 1.0F) {
+                            factor = 1.0F
+                        }
+
+                        factor = friction / factor
+                        strafe *= factor
+                        forward *= factor
 
                         val yawSin = MathHelper.sin((yaw * Math.PI / 180F).toFloat())
                         val yawCos = MathHelper.cos((yaw * Math.PI / 180F).toFloat())
 
                         mc.thePlayer.motionX += strafe * yawCos - forward * yawSin
                         mc.thePlayer.motionZ += forward * yawCos + strafe * yawSin
-
-                        event.cancelEvent()
                     }
+                    event.cancelEvent()
                 }
 
                 "semi" -> {
@@ -838,11 +845,6 @@ class KillAura : Module() {
                 .equals("AfterTick", true) && (mc.thePlayer.isBlocking || canBlock)
         )
             startBlocking(entity, interactAutoBlockValue.get())
-
-        if (mc.thePlayer.isBlocking || canBlock) {
-            if (autoBlockModeValue.get().equals("Hypixel", true))
-                startBlocking(entity, (mc.thePlayer.getDistanceToEntityBox(entity) < maxRange))
-        }
     }
 
     /**
@@ -1003,11 +1005,6 @@ class KillAura : Module() {
             blockingStatus = true
         }
 
-        if (autoBlockModeValue.get().equals("hypixel", true)) {
-            mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem % 8 + 1))
-            mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
-        }
-
         if (autoBlockModeValue.get().equals("oldhypixel", true)) {
             PacketUtils.sendPacketNoEvent(
                 C08PacketPlayerBlockPlacement(
@@ -1077,8 +1074,7 @@ class KillAura : Module() {
                 )
             }
             if (!autoBlockModeValue.get().equals("fake", true) && !autoBlockModeValue.get()
-                    .equals("none", true) && !autoBlockModeValue.get()
-                    .equals("hypixel", true)
+                    .equals("none", true)
             ) {
                 PacketUtils.sendPacketNoEvent(
                     C07PacketPlayerDigging(

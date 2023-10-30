@@ -11,11 +11,11 @@ import net.aspw.client.util.render.ColorUtils.translateAlternateColorCodes
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.TextValue
 
-@ModuleInfo(name = "NameProtect", spacedName = "Name Protect", description = "", category = ModuleCategory.OTHER)
-class NameProtect : Module() {
+@ModuleInfo(name = "StreamerMode", spacedName = "Streamer Mode", description = "", category = ModuleCategory.OTHER)
+class StreamerMode : Module() {
     private val selfValue = BoolValue("Yourself", true)
     private val tagValue = BoolValue("Tag", false)
-    private val fakeNameValue = TextValue("FakeName", "User")
+    private val fakeNameValue = TextValue("FakeName", "ElonMusk")
 
     @EventTarget
     fun onText(event: TextEvent) {

@@ -1,7 +1,6 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.impl.other.InfiniteChat;
 import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiTextField;
@@ -13,12 +12,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import scala.Int;
 
 import java.awt.*;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * The type Mixin gui chat.
@@ -56,8 +53,6 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
     private void updateLength(CallbackInfo callbackInfo) {
         if (inputField.getText().startsWith((".")))
             Client.commandManager.autoComplete(inputField.getText());
-        if (Objects.requireNonNull(Client.moduleManager.getModule(InfiniteChat.class)).getState())
-            inputField.setMaxStringLength(Int.MaxValue());
         else inputField.setMaxStringLength(100);
     }
 

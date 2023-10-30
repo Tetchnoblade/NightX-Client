@@ -25,9 +25,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-/**
- * The type Click tp.
- */
 @ModuleInfo(name = "ClickTP", spacedName = "Click TP", description = "", category = ModuleCategory.OTHER)
 public class ClickTP extends Module {
     private final ListValue buttonValue = new ListValue("Button", new String[]{"Left", "Right", "Middle"}, "Middle");

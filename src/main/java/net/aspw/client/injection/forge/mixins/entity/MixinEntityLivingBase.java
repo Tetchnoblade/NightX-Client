@@ -2,7 +2,6 @@ package net.aspw.client.injection.forge.mixins.entity;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.JumpEvent;
-import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.movement.AirJump;
 import net.aspw.client.features.module.impl.movement.Jesus;
 import net.aspw.client.features.module.impl.movement.Sprint;
@@ -11,7 +10,6 @@ import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.features.module.impl.visual.SilentView;
 import net.aspw.client.protocol.Protocol;
 import net.aspw.client.util.MovementUtils;
-import net.aspw.client.util.RotationUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
@@ -226,11 +224,8 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
             this.motionY += (float) (this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F;
 
         if (this.isSprinting()) {
-            final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
             final Sprint sprint = Objects.requireNonNull(Client.moduleManager.getModule(Sprint.class));
-            if (killAura.getState() && killAura.getMovementFix().get().equals("Full") && killAura.getTarget() != null) {
-                jumpEvent.setYaw(RotationUtils.targetRotation != null ? RotationUtils.targetRotation.getYaw() : (RotationUtils.serverRotation != null ? RotationUtils.serverRotation.getYaw() : this.rotationYaw));
-            } else if (sprint.getState() && sprint.getAllDirectionsValue().get())
+            if (sprint.getState() && sprint.getAllDirectionsValue().get())
                 jumpEvent.setYaw(MovementUtils.getRawDirection());
             float f = jumpEvent.getYaw() * ((float) Math.PI / 180F);
             this.motionX -= MathHelper.sin(f) * 0.2F;

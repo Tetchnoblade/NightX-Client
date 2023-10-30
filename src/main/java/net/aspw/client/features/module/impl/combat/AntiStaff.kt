@@ -23,7 +23,6 @@ class AntiStaff : Module() {
     override fun onInitialize() {
         thread {
             totalCount = obStaffs.count { it.isWhitespace() }
-            println("[Staff/fallback] $obStaffs")
         }
     }
 
@@ -39,14 +38,13 @@ class AntiStaff : Module() {
     @EventTarget
     fun onPacket(event: PacketEvent) {
         if (mc.theWorld == null || mc.thePlayer == null) return
-
-        val packet = event.packet // smart convert
+        if (mc.thePlayer.ticksExisted % 3 == 0) detected = false
+        val packet = event.packet
         if (packet is S1DPacketEntityEffect) {
             val entity = mc.theWorld.getEntityByID(packet.entityId)
             if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
-                    Client.hud.addNotification(Notification("Staff Detected!", Notification.Type.ERROR))
-                    mc.thePlayer.sendChatMessage("/leave")
+                    Client.hud.addNotification(Notification("Staff Detected!", Notification.Type.INFO))
                     detected = true
                 }
             }
@@ -55,13 +53,7 @@ class AntiStaff : Module() {
             val entity = mc.theWorld.getEntityByID(packet.entityId)
             if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
-                    Client.hud.addNotification(
-                        Notification(
-                            "Staff Detected!",
-                            Notification.Type.ERROR
-                        )
-                    )
-                    mc.thePlayer.sendChatMessage("/leave")
+                    Client.hud.addNotification(Notification("Staff Detected!", Notification.Type.INFO))
                     detected = true
                 }
             }
@@ -70,13 +62,7 @@ class AntiStaff : Module() {
             val entity = mc.theWorld.getEntityByID(packet.entityId)
             if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
-                    Client.hud.addNotification(
-                        Notification(
-                            "Staff Detected!",
-                            Notification.Type.ERROR
-                        )
-                    )
-                    mc.thePlayer.sendChatMessage("/leave")
+                    Client.hud.addNotification(Notification("Staff Detected!", Notification.Type.INFO))
                     detected = true
                 }
             }
@@ -85,13 +71,7 @@ class AntiStaff : Module() {
             val entity = mc.theWorld.getEntityByID(packet.entityID)
             if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
-                    Client.hud.addNotification(
-                        Notification(
-                            "Staff Detected!",
-                            Notification.Type.ERROR
-                        )
-                    )
-                    mc.thePlayer.sendChatMessage("/leave")
+                    Client.hud.addNotification(Notification("Staff Detected!", Notification.Type.INFO))
                     detected = true
                 }
             }
@@ -101,8 +81,7 @@ class AntiStaff : Module() {
 
             if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
-                    Client.hud.addNotification(Notification("Staff Detected!", Notification.Type.ERROR))
-                    mc.thePlayer.sendChatMessage("/leave")
+                    Client.hud.addNotification(Notification("Staff Detected!", Notification.Type.INFO))
                     detected = true
                 }
             }
@@ -112,8 +91,7 @@ class AntiStaff : Module() {
 
             if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
-                    Client.hud.addNotification(Notification("Staff Detected!", Notification.Type.ERROR))
-                    mc.thePlayer.sendChatMessage("/leave")
+                    Client.hud.addNotification(Notification("Staff Detected!", Notification.Type.INFO))
                     detected = true
                 }
             }
@@ -123,8 +101,7 @@ class AntiStaff : Module() {
 
             if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
-                    Client.hud.addNotification(Notification("Staff Detected!", Notification.Type.ERROR))
-                    mc.thePlayer.sendChatMessage("/leave")
+                    Client.hud.addNotification(Notification("Staff Detected!", Notification.Type.INFO))
                     detected = true
                 }
             }
@@ -134,8 +111,7 @@ class AntiStaff : Module() {
 
             if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
-                    Client.hud.addNotification(Notification("Staff Detected!", Notification.Type.ERROR))
-                    mc.thePlayer.sendChatMessage("/leave")
+                    Client.hud.addNotification(Notification("Staff Detected!", Notification.Type.INFO))
                     detected = true
                 }
             }
