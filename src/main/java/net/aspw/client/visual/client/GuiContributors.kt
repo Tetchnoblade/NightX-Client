@@ -136,7 +136,7 @@ class GuiContributors(private val prevGui: GuiScreen) : GuiScreen() {
                 val gb = ((sin(System.currentTimeMillis() * (1 / 333.0)) + 1) * (0.5 * 255)).toInt()
                 FontLoaders.SF21.drawCenteredString("Failed to load", width / 8f, height / 2f, Color(255, gb, gb).rgb)
             } else {
-                FontLoaders.SF21.drawCenteredString("Connecting Database...", width / 8f, height / 2f, Color.WHITE.rgb)
+                FontLoaders.SF21.drawCenteredString("Waiting...", width / 8f, height / 2f, Color.WHITE.rgb)
             }
         }
 
