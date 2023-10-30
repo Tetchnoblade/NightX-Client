@@ -40,7 +40,6 @@ class ModuleManager : Listenable {
 
         registerModules(
             Protect::class.java,
-            KeepChest::class.java,
             BowAura::class.java,
             AimAssist::class.java,
             AutoProjectile::class.java,
@@ -184,7 +183,8 @@ class ModuleManager : Listenable {
             Debugger::class.java,
             MotionBlur::class.java,
             AntiFrozen::class.java,
-            Trajectories::class.java
+            Trajectories::class.java,
+            ChatFilter::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")

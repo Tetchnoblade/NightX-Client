@@ -38,7 +38,7 @@ class AntiStaff : Module() {
     @EventTarget
     fun onPacket(event: PacketEvent) {
         if (mc.theWorld == null || mc.thePlayer == null) return
-        if (mc.thePlayer.ticksExisted % 3 == 0) detected = false
+        if (mc.thePlayer.ticksExisted % 3 == 0 && detected) detected = false
         val packet = event.packet
         if (packet is S1DPacketEntityEffect) {
             val entity = mc.theWorld.getEntityByID(packet.entityId)
