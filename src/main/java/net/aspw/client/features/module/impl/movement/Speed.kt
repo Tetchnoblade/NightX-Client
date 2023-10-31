@@ -79,7 +79,6 @@ class Speed : Module() {
         Jump(),
         AEMine(),
         NCPSemiStrafe(),
-        GWEN(),
         NCPBoost(),
         NCPFrame(),
         NCPMiniJump(),
@@ -88,7 +87,6 @@ class Speed : Module() {
         YPort2(),
         HiveHop(),
         Minemen(),
-        MineplexGround(),
         RedeskyHop(),
         TeleportCubeCraft(),
         VerusHop(),
@@ -311,10 +309,8 @@ class Speed : Module() {
             "SlowHop",
             "Jump",
             "AEMine",
-            "GWEN",
             "HiveHop",
             "Minemen",
-            "MineplexGround",
             "RedeskyHop",
             "TeleportCubeCraft"
         ),
@@ -578,10 +574,6 @@ class Speed : Module() {
     @JvmField
     val cubecraftPortLengthValue =
         FloatValue("CubeCraft-PortLength", 1f, 0.1f, 2f) { modeName.equals("teleportcubecraft", ignoreCase = true) }
-
-    @JvmField
-    val mineplexGroundSpeedValue =
-        FloatValue("MineplexGround-Speed", 0.6f, 0.1f, 1f) { modeName.equals("mineplexground", ignoreCase = true) }
 
     @JvmField
     val noBob = BoolValue("NoBob", true)
