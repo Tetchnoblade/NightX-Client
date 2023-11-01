@@ -13,7 +13,7 @@ import java.util.WeakHashMap;
  * The type Mixin block RedStone torch.
  */
 @Mixin(BlockRedstoneTorch.class)
-public class MixinBlockRedStoneTorch {
+public class MixinBlockRedstoneTorch {
     @Shadow
     private static final Map<World, List<BlockRedstoneTorch.Toggle>> toggles = new WeakHashMap<>();
 }

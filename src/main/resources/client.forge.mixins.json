@@ -12,7 +12,7 @@
     "block.MixinBlockLilyPad",
     "block.MixinBlockLiquid",
     "block.MixinBlockModelRenderer",
-    "block.MixinBlockRedStoneTorch",
+    "block.MixinBlockRedstoneTorch",
     "block.MixinBlockSoulSand",
     "block.MixinWorld",
     "client.MixinGameSettings",
