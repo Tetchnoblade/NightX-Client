@@ -112,7 +112,7 @@ class AntiVelocity : Module() {
     private val ignoreVelocity =
         BoolValue("IgnoreVelocity", true) { modeValue.get().equals("jumpreset", true) }
     private val simulatePerfect =
-        BoolValue("SpoofPerfect", true) { modeValue.get().equals("jumpreset", true) }
+        BoolValue("SimulatePerfect", true) { modeValue.get().equals("jumpreset", true) }
 
     // add strafe in aac
     private val aacStrafeValue =
@@ -171,11 +171,11 @@ class AntiVelocity : Module() {
                     mc.thePlayer.motionX -= MathHelper.sin(yaw) * 0.2
                     mc.thePlayer.motionZ += MathHelper.cos(yaw) * 0.2
                 }
-            "jumpreset" -> {
+            "jumpreset" ->
                 if (mc.thePlayer.hurtTime > 0 && mc.thePlayer.onGround) {
                     mc.thePlayer.motionY = 0
                     mc.thePlayer.jump()
-                    
+
                     if (ignoreVelocity.get()) {
                         mc.thePlayer.motionX = 0.0
                         mc.thePlayer.motionZ = 0.0
@@ -184,7 +184,6 @@ class AntiVelocity : Module() {
                         // Someone figure out the math for a **PERFECT** Jump Reset
                     }
                 }
-            }
             "intave" -> {
                 if (mc.thePlayer.hurtTime > 7) {
                     mc.thePlayer.motionX = 0.0
