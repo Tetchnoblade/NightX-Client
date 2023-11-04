@@ -68,6 +68,9 @@ class Animations : Module() {
         )
 
         @JvmField
+        val blockingAnimation = ListValue("ThirdPerson-Blocking", arrayOf("1.7", "1.8"), "1.8")
+
+        @JvmField
         val tabAnimations = ListValue("Tab-Animation", arrayOf("None", "Zoom", "Slide"), "None")
 
         @JvmField

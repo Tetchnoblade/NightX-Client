@@ -41,7 +41,8 @@ class Criticals : Module() {
             "NanoPacket",
             "Non-Calculable",
             "Invalid",
-            "VerusSmart"
+            "VerusSmart",
+            "BlocksMC"
         ),
         "NCPPacket"
     )
@@ -224,6 +225,12 @@ class Criticals : Module() {
                     }
                     if (counter >= 5)
                         counter = 0
+                }
+
+                "blocksmc" -> {
+                    mc.netHandler.addToSendQueue(C04PacketPlayerPosition(x, y + 0.001091981, z, true))
+                    mc.netHandler.addToSendQueue(C04PacketPlayerPosition(x, y + 0.000114514, z, false))
+                    mc.netHandler.addToSendQueue(C04PacketPlayerPosition(x, y, z, false))
                 }
             }
 

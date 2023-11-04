@@ -1,5 +1,9 @@
 package net.aspw.client.injection.forge.mixins.render;
 
+import net.aspw.client.Client;
+import net.aspw.client.features.module.impl.combat.KillAura;
+import net.aspw.client.features.module.impl.combat.TPAura;
+import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -18,6 +22,9 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * The type Mixin layer held item.
@@ -58,8 +65,24 @@ public class MixinLayerHeldItem {
             }
 
             Item item = itemstack.getItem();
+            final UUID uuid = entitylivingbaseIn.getUniqueID();
+            final EntityPlayer entityplayer = Minecraft.getMinecraft().theWorld.getPlayerEntityByUUID(uuid);
+            final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
+            final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
 
-            ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0625F);
+            if (Animations.blockingAnimation.get().equals("1.7") && MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && (entityplayer != null && entityplayer.isBlocking() || (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking()))) {
+                if (entitylivingbaseIn.isSneaking()) {
+                    ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0325F);
+                    GlStateManager.translate(-0.58F, 0.3F, -0.2F);
+                    GlStateManager.rotate(-24390.0F, 137290.0F, -2009900.0F, -2054900.0F);
+                } else {
+                    ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0325F);
+                    GlStateManager.translate(-0.48F, 0.2F, -0.2F);
+                    GlStateManager.rotate(-24390.0F, 137290.0F, -2009900.0F, -2054900.0F);
+                }
+            } else {
+                ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0625F);
+            }
 
             GlStateManager.translate(-0.0625F, 0.4375F, 0.0625F);
 

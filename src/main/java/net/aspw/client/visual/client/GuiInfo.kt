@@ -1,17 +1,12 @@
 package net.aspw.client.visual.client
 
 import net.aspw.client.Client
-import net.aspw.client.features.api.CombatManager
-import net.aspw.client.features.command.CommandManager
 import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.util.ClientUtils
 import net.aspw.client.util.misc.MiscUtils
-import net.aspw.client.util.misc.sound.TipSoundManager
 import net.aspw.client.util.network.CheckConnection
 import net.aspw.client.util.network.LoginID
 import net.aspw.client.util.render.RenderUtils
-import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
-import net.aspw.client.visual.client.clickgui.tab.NewUi
 import net.aspw.client.visual.font.semi.Fonts
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
@@ -21,11 +16,11 @@ import org.lwjgl.input.Keyboard
 class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
 
     override fun initGui() {
-        buttonList.add(GuiButton(1, width / 2 - 100, height / 4 + 20 + 4, "Website"))
-        buttonList.add(GuiButton(2, width / 2 - 100, height / 4 + 55 + 2, "Discord"))
-        buttonList.add(GuiButton(3, width / 2 - 100, height / 4 + 90 - 2, "Reload All"))
-        buttonList.add(GuiButton(4, width / 2 - 100, height / 4 + 125 - 4, "Logout"))
-        buttonList.add(GuiButton(5, width / 2 - 100, height / 4 + 160 - 6, "Contributors"))
+        buttonList.add(GuiButton(1, width / 2 - 100, height / 4 + 20 + 4, "Open Website"))
+        buttonList.add(GuiButton(2, width / 2 - 100, height / 4 + 55 + 2, "Join Discord"))
+        buttonList.add(GuiButton(5, width / 2 - 100, height / 4 + 90 - 2, "Contributors List"))
+        buttonList.add(GuiButton(3, width / 2 - 100, height / 4 + 125 - 4, "Reconnect Database"))
+        buttonList.add(GuiButton(4, width / 2 - 100, height / 4 + 160 - 6, "Logout from NightX"))
         buttonList.add(GuiButton(6, width / 2 - 100, height / 4 + 195 - 8, "Done"))
         super.initGui()
     }
@@ -69,22 +64,6 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
                 CheckConnection.getAnnouncement()
                 CheckConnection.getContributors()
                 CheckConnection.getRealContributors()
-                Client.commandManager = CommandManager()
-                Client.commandManager.registerCommands()
-                Client.scriptManager.disableScripts()
-                Client.scriptManager.unloadScripts()
-                for (module in Client.moduleManager.modules)
-                    Client.moduleManager.generateCommand(module)
-                Client.scriptManager.loadScripts()
-                Client.scriptManager.enableScripts()
-                Client.tipSoundManager = TipSoundManager()
-                Client.combatManager = CombatManager()
-                Client.fileManager.loadConfig(Client.fileManager.modulesConfig)
-                Client.fileManager.loadConfig(Client.fileManager.valuesConfig)
-                Client.fileManager.loadConfig(Client.fileManager.accountsConfig)
-                Client.fileManager.loadConfig(Client.fileManager.friendsConfig)
-                Client.clickGui = ClickGui()
-                NewUi.resetInstance()
                 if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }

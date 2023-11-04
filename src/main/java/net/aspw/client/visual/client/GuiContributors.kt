@@ -33,8 +33,8 @@ class GuiContributors(private val prevGui: GuiScreen) : GuiScreen() {
         list = GuiList(this)
         list.registerScrollButtons(7, 8)
 
-        buttonList.add(GuiButton(0, width / 2 - 100, height - 52, "Load"))
-        buttonList.add(GuiButton(1, width / 2 - 100, height - 30, "Done"))
+        buttonList.add(GuiButton(0, width / 2 - 100, height - 62, "Load"))
+        buttonList.add(GuiButton(1, width / 2 - 100, height - 34, "Done"))
 
         failed = false
     }

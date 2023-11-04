@@ -24,7 +24,8 @@ import java.awt.Color
 
 @ModuleInfo(name = "Interface", description = "", category = ModuleCategory.VISUAL, array = false)
 class Interface : Module() {
-    private val clientNameValue = TextValue("ClientName", "NightX")
+    private val watermarkValue = BoolValue("WaterMark", true)
+    private val clientNameValue = TextValue("ClientName", "NightX") { watermarkValue.get() }
     val nof5crossHair = BoolValue("NoF5-Crosshair", false)
     val gcdfix = BoolValue("GCD-Fix", true)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)
@@ -52,15 +53,17 @@ class Interface : Module() {
     @EventTarget
     fun onRender2D(event: Render2DEvent) {
         Client.hud.render(false)
-        val inputString = clientNameValue.get()
-        val firstChar = inputString[0]
-        val restOfString = inputString.substring(1)
-        FontLoaders.SF20.drawStringWithShadow(
-            "$firstChar§d$restOfString" + " §b[" + Minecraft.getDebugFPS().toString() + " FPS]",
-            2.0,
-            3.0,
-            Color(169, 0, 170).rgb
-        )
+        if (watermarkValue.get()) {
+            val inputString = clientNameValue.get()
+            val firstChar = inputString[0]
+            val restOfString = inputString.substring(1)
+            FontLoaders.SF20.drawStringWithShadow(
+                "$firstChar§d$restOfString" + " §b[" + Minecraft.getDebugFPS().toString() + " FPS]",
+                2.0,
+                3.0,
+                Color(169, 0, 170).rgb
+            )
+        }
     }
 
     @EventTarget

@@ -349,23 +349,23 @@ class KillAura : Module() {
         if (currentTarget != null) {
             when (particleValue.get().lowercase()) {
                 "hit" -> {
-                    if (target?.hurtTime!! > 9) {
+                    if (currentTarget?.hurtTime!! > 9) {
                         if (sharpnessValue.get())
-                            mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT_MAGIC)
+                            mc.effectRenderer.emitParticleAtEntity(currentTarget, EnumParticleTypes.CRIT_MAGIC)
                         if (criticalsValue.get())
-                            mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT)
+                            mc.effectRenderer.emitParticleAtEntity(currentTarget, EnumParticleTypes.CRIT)
                     }
                 }
 
                 "always" -> {
                     if (sharpnessValue.get())
-                        mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT_MAGIC)
+                        mc.effectRenderer.emitParticleAtEntity(currentTarget, EnumParticleTypes.CRIT_MAGIC)
                     if (criticalsValue.get())
-                        mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT)
+                        mc.effectRenderer.emitParticleAtEntity(currentTarget, EnumParticleTypes.CRIT)
                 }
             }
 
-            if (target?.hurtTime!! > 7.8) {
+            if (currentTarget?.hurtTime!! > 7.8) {
                 if (animationValue.get())
                     mc.itemRenderer.resetEquippedProgress2()
             }
@@ -831,9 +831,9 @@ class KillAura : Module() {
         when (particleValue.get().lowercase()) {
             "everyhit" -> {
                 if (sharpnessValue.get())
-                    mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT_MAGIC)
+                    mc.effectRenderer.emitParticleAtEntity(currentTarget, EnumParticleTypes.CRIT_MAGIC)
                 if (criticalsValue.get())
-                    mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.CRIT)
+                    mc.effectRenderer.emitParticleAtEntity(currentTarget, EnumParticleTypes.CRIT)
             }
         }
 
