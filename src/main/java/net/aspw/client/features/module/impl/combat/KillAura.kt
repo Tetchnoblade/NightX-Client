@@ -538,7 +538,7 @@ class KillAura : Module() {
 
         if (simpleESPValue.get()) {
             RenderUtils.drawBlockBox(
-                BlockPos(target!!.posX.toInt(), target!!.posY.toInt() + 2, target!!.posZ.toInt()),
+                BlockPos(currentTarget!!.posX.toInt(), currentTarget!!.posY.toInt() + 2, currentTarget!!.posZ.toInt()),
                 Color.WHITE,
                 false
             )
@@ -1075,6 +1075,8 @@ class KillAura : Module() {
             }
             if (!autoBlockModeValue.get().equals("fake", true) && !autoBlockModeValue.get()
                     .equals("none", true)
+                && !autoBlockModeValue.get()
+                    .equals("oldhypixel", true)
             ) {
                 PacketUtils.sendPacketNoEvent(
                     C07PacketPlayerDigging(

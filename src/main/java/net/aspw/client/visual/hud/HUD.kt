@@ -28,7 +28,8 @@ open class HUD : MinecraftInstance() {
             Radar::class.java,
             Image::class.java,
             SessionInformation::class.java,
-            TabGui::class.java
+            TabGui::class.java,
+            PlayerList::class.java
         )
 
         /**
@@ -41,6 +42,7 @@ open class HUD : MinecraftInstance() {
             .addElement(Armor())
             .addElement(Notifications())
             .addElement(TargetHud())
+            .addElement(PlayerList())
     }
 
     /**

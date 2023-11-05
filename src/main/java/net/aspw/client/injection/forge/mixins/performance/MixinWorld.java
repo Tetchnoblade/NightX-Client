@@ -64,10 +64,10 @@ public abstract class MixinWorld implements IWorld {
     public Random rand;
 
     @Shadow
-    public abstract ImmutableSetMultimap<ChunkCoordIntPair, ForgeChunkManager.Ticket> getPersistentChunks();
+    protected abstract int getRenderDistanceChunks();
 
     @Shadow
-    protected abstract int getRenderDistanceChunks();
+    public abstract ImmutableSetMultimap<ChunkCoordIntPair, ForgeChunkManager.Ticket> getPersistentChunks();
 
     @Inject(method = {"setActivePlayerChunksAndCheckLight"}, at = {@At(value = "HEAD")}, cancellable = true)
     private void setActivePlayerChunksAndCheckLight(CallbackInfo callbackInfo) {

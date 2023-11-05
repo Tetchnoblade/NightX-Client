@@ -493,7 +493,7 @@ public abstract class MixinEntityRenderer {
                     int n2 = (int) (f13 * 255.0f);
                     int n3 = (int) (f14 * 255.0f);
                     int n4 = (int) (f15 * 255.0f);
-                    this.lightmapColors[i2] = (xray.getState() || brightness.getState()) ? new Color(220, 220, 220).getRGB() : 0xFF000000 | n2 << 16 | n3 << 8 | n4;
+                    this.lightmapColors[i2] = (xray.getState() || brightness.getState()) ? new Color(255, 255, 255).getRGB() : 0xFF000000 | n2 << 16 | n3 << 8 | n4;
                 }
                 this.lightmapTexture.updateDynamicTexture();
                 this.lightmapUpdateNeeded = false;

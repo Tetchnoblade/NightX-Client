@@ -110,9 +110,6 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
     public abstract boolean isPlayerSleeping();
 
     @Shadow
-    public float eyeHeight = this.getDefaultEyeHeight();
-
-    @Shadow
     public abstract float getDefaultEyeHeight();
 
     /**
@@ -160,7 +157,7 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
             f2 = (float) (1.62F - (mc.thePlayer.lastTickPosY + (((mc.thePlayer.posY - mc.thePlayer.lastTickPosY) * mc.timer.renderPartialTicks)) - y));
             return f2;
         } else {
-            float f = this.eyeHeight;
+            float f = this.getDefaultEyeHeight();
             if (this.isPlayerSleeping()) {
                 f = 0.2F;
             }

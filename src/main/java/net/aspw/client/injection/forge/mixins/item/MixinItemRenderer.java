@@ -256,9 +256,11 @@ public abstract class MixinItemRenderer {
                             case "Leaked": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.08, Animations.blockPosY.get().doubleValue() + 0.02, Animations.blockPosZ.get().doubleValue() - 0.02);
                                 final float var = MathHelper.sin((float) (MathHelper.sqrt_float(f1) * Math.PI));
-                                transformFirstPersonItem(0.0F, 0.0f);
+                                if (Animations.cancelEquip.get())
+                                    transformFirstPersonItem(0.0F, 0.0f);
+                                else transformFirstPersonItem(f / 1.4F, 0.0f);
                                 this.func_178103_d();
-                                GlStateManager.rotate(-var * 36.0F, 1.0F, 0.8F, 0.0F);
+                                GlStateManager.rotate(-var * 35.5F, 1.0F, 0.7F, -0.2F);
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
@@ -267,7 +269,7 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.rotate(this.delay, 0.0F, 0.0F, -0.1F);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
-                                else this.transformFirstPersonItem(f / 1.2F, 0.0F);
+                                else this.transformFirstPersonItem(f / 1.3F, 0.0F);
                                 float var15 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.0F);
                                 if (this.rotateTimer.hasReached(1L)) {
                                     for (int i = 0; i < 1; i++) {
@@ -286,7 +288,7 @@ public abstract class MixinItemRenderer {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, f1);
-                                else this.transformFirstPersonItem(f / 2.2F, f1);
+                                else this.transformFirstPersonItem(f / 2.3F, f1);
                                 float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                 var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                 GlStateManager.rotate(var9 * 50.0F / 9.0F, -var9, -0.0F, 90.0F);
