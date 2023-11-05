@@ -42,7 +42,6 @@ open class HUD : MinecraftInstance() {
             .addElement(Armor())
             .addElement(Notifications())
             .addElement(TargetHud())
-            .addElement(PlayerList())
     }
 
     /**

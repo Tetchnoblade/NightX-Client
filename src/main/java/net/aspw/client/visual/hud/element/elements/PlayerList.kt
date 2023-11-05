@@ -29,7 +29,7 @@ class PlayerList(
     private val fontOffsetValue = FloatValue("Font-Offset", 0F, 3F, -3F)
     private val reverseValue = BoolValue("Reverse", false)
     private val fontValue = FontValue("Font", Fonts.minecraftFont)
-    private val shadowValue = BoolValue("Shadow", true)
+    private val shadowValue = BoolValue("Shadow", false)
     private val lineValue = BoolValue("Line", true)
     private val redValue = IntegerValue("Red", 255, 0, 255)
     private val greenValue = IntegerValue("Green", 0, 0, 255)
