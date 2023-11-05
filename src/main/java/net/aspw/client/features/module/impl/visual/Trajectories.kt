@@ -223,7 +223,7 @@ class Trajectories : Module() {
                 2 -> GL11.glRotatef(90F, 1F, 0F, 0F)
             }
 
-            RenderUtils.drawAxisAlignedBB(AxisAlignedBB(-0.5, 0.0, -0.5, 0.5, 0.1, 0.5), Color(255, 180, 180, 70))
+            RenderUtils.drawAxisAlignedBB(AxisAlignedBB(-0.5, 0.0, -0.5, 0.5, 0.1, 0.5), Color(180, 180, 180, 70))
         }
         GL11.glPopMatrix()
         GL11.glDepthMask(true)
