@@ -576,6 +576,6 @@ class Speed : Module() {
         FloatValue("CubeCraft-PortLength", 1f, 0.1f, 2f) { modeName.equals("teleportcubecraft", ignoreCase = true) }
 
     @JvmField
-    val noBob = BoolValue("NoBob", true)
+    val noBob = BoolValue("NoBob", false)
     val fakeYValue = BoolValue("FakeY", false)
 }
