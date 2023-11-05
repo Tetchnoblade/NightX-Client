@@ -26,7 +26,7 @@ import net.minecraft.util.EnumFacing
 class AutoHeal : Module() {
     // Auto Pot
     private val autoPotValue = BoolValue("AutoPot", true)
-    private val healthValue = FloatValue("Health-Pot", 15F, 0F, 100F, "%") { autoPotValue.get() }
+    private val healthValue = FloatValue("Health-Pot", 50F, 0F, 100F, "%") { autoPotValue.get() }
     private val delayValue = IntegerValue("Delay-Pot", 300, 0, 5000, "ms") { autoPotValue.get() }
     private val regenValue = BoolValue("Heal-Pot", true) { autoPotValue.get() }
     private val utilityValue = BoolValue("Utility-Pot", true) { autoPotValue.get() }
