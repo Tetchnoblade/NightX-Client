@@ -40,6 +40,7 @@ class CommandManager {
         registerCommand(SkinStealerCommand())
         registerCommand(SpotCommand())
         registerCommand(HelpCommand())
+        registerCommand(PayPayCommand())
     }
 
     /**

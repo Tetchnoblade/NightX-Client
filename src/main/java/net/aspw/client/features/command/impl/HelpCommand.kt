@@ -64,6 +64,8 @@ class HelpCommand : Command("help", emptyArray()) {
             chat("§a------------")
             chat(".(spot, st) <player name>")
             chat("§a------------")
+            chat(".(paypay, pay) <amount>")
+            chat("§a------------")
             return
         } catch (ex: NumberFormatException) {
             chatSyntaxError()

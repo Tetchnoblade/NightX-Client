@@ -64,6 +64,7 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
                 CheckConnection.getAnnouncement()
                 CheckConnection.getContributors()
                 CheckConnection.getRealContributors()
+                CheckConnection.checkStaffList()
                 if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }

@@ -48,6 +48,7 @@ class GuiLoginSelection(private val prevGui: GuiScreen) : GuiScreen() {
                 CheckConnection.getAnnouncement()
                 CheckConnection.getContributors()
                 CheckConnection.getRealContributors()
+                CheckConnection.checkStaffList()
             }
 
             // Old Auth System

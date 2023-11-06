@@ -19,6 +19,7 @@ object CheckConnection {
     var clientContributors = ""
     var clientRealContributors = ""
     var srgFile = ""
+    var stafflist = ""
     var changeLog1 = ""
     var changeLog2 = ""
     var changeLog3 = ""
@@ -70,7 +71,6 @@ object CheckConnection {
     var changeLog49 = ""
     var changeLog50 = ""
     var isLatest = false
-    var isAvailable = false
 
     fun getSRG() {
         val httpClient: CloseableHttpClient = HttpClients.createDefault()
@@ -145,13 +145,27 @@ object CheckConnection {
             EntityUtils.consume(entity)
             response.close()
             httpClient.close()
-            val details = content.split("///")
-            isAvailable = details[0] == "True"
-            isLatest = details[1] == Client.CLIENT_VERSION
+            isLatest = content == Client.CLIENT_VERSION
             canConnect = true
         } catch (e: Exception) {
             canConnect = false
             isLatest = false
+        }
+    }
+
+    fun checkStaffList() {
+        try {
+            val httpClient: CloseableHttpClient = HttpClients.createDefault()
+            val request = HttpGet(Client.CLIENT_STAFFLIST)
+            val response = httpClient.execute(request)
+            val entity = response.entity
+            val content = EntityUtils.toString(entity)
+            EntityUtils.consume(entity)
+            response.close()
+            httpClient.close()
+            stafflist = content
+        } catch (e: Exception) {
+            canConnect = false
         }
     }
 

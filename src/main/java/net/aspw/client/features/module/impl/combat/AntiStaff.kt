@@ -3,7 +3,6 @@ package net.aspw.client.features.module.impl.combat
 //import net.minecraft.network.play.server.S02PacketChat
 
 import net.aspw.client.Client
-import net.aspw.client.auth.utils.HttpUtils
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.event.UpdateEvent
@@ -12,6 +11,7 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.EntityUtils
+import net.aspw.client.util.network.CheckConnection
 import net.aspw.client.util.render.ColorUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.ListValue
@@ -30,19 +30,15 @@ class AntiStaff : Module() {
 
     private var staffs = mutableListOf<String>()
     private var staffsInWorld = mutableListOf<String>()
-    private var staffList: String = "${Client.CLIENT_WEBSITE}/data/bmcstafflist.txt"
-
-    override fun onInitialize() {
-        thread {
-            totalCount = obStaffs.count { it.isWhitespace() }
-            staffs.addAll(HttpUtils.get(staffList).split(","))
-        }
-    }
 
     override val tag: String
         get() = modeValue.get()
 
     override fun onEnable() {
+        thread {
+            totalCount = obStaffs.count { it.isWhitespace() }
+            staffs.addAll(CheckConnection.stafflist.split(","))
+        }
         detected = false
         staffsInWorld.clear()
     }
