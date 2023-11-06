@@ -495,7 +495,7 @@ public abstract class MixinItemRenderer {
                                 float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
-                                else transformFirstPersonItem(f / 3.0f, 0.0f);
+                                else this.transformFirstPersonItem(f / 1.8f, 0.0f);
                                 GL11.glRotated(-var9 * -30.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
                                 GL11.glRotated(-var9 * 7.5F, 1.0F, var9 / 3.0F, -0.0F);
                                 doBlockTransformations();
