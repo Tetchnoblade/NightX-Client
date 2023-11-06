@@ -178,7 +178,7 @@ class ModuleManager : Listenable {
             NoHurtCam::class.java,
             SnakeGame::class.java,
             ESP::class.java,
-            PacketPosTracker::class.java,
+            PacketTracker::class.java,
             InfiniteReach::class.java,
             Debugger::class.java,
             MotionBlur::class.java,

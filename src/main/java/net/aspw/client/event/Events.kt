@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.network.Packet
+import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
@@ -38,6 +39,15 @@ class BlockBBEvent(blockPos: BlockPos, val block: Block, var boundingBox: AxisAl
  * Called when player clicks a block
  */
 class ClickBlockEvent(val clickedBlock: BlockPos?, val enumFacing: EnumFacing?) : Event()
+
+class TeleportEvent(
+    val response: C03PacketPlayer? = null,
+    val posX: Double,
+    val posY: Double,
+    val posZ: Double,
+    var yaw: Float,
+    var pitch: Float
+) : CancellableEvent()
 
 /**
  * Called when client is shutting down

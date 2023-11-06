@@ -8,8 +8,7 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 import net.aspw.client.Client;
 import net.aspw.client.event.PacketEvent;
 import net.aspw.client.features.api.ProxyManager;
-import net.aspw.client.features.module.impl.exploit.PacketPosTracker;
-import net.aspw.client.util.ClientUtils;
+import net.aspw.client.features.module.impl.exploit.PacketTracker;
 import net.aspw.client.util.PacketUtils;
 import net.minecraft.network.*;
 import net.minecraft.util.MessageDeserializer;
@@ -78,24 +77,25 @@ public class MixinNetworkManager {
 
     /**
      * @author As_pw
-     * @reason Packet Pos
+     * @reason Packet Tracking
      */
     @Overwrite
     protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) throws Exception {
         final PacketEvent event = new PacketEvent(p_channelRead0_2_);
-        Client.eventManager.callEvent(event);
-        PacketPosTracker packetPosTracker = Client.moduleManager.getModule(PacketPosTracker.class);
-        assert packetPosTracker != null;
-        if (packetPosTracker.getState()) {
+        PacketTracker packetTracker = Client.moduleManager.getModule(PacketTracker.class);
+        assert packetTracker != null;
+        if (packetTracker.getState()) {
             try {
-                packetPosTracker.onPacket(event);
+                packetTracker.onPacket(event);
             } catch (Exception e) {
-                ClientUtils.getLogger().error("Exception caught in Packet", e);
+                // nothing
             }
-            if (event.isCancelled()) return;
         }
+        Client.eventManager.callEvent(event);
 
-        if (event.isCancelled()) return;
+        if (event.isCancelled())
+            return;
+
         if (this.channel.isOpen()) {
             try {
                 p_channelRead0_2_.processPacket(this.packetListener);
@@ -108,6 +108,15 @@ public class MixinNetworkManager {
     private void send(Packet<?> packet, CallbackInfo callback) {
         if (PacketUtils.handleSendPacket(packet)) return;
         final PacketEvent event = new PacketEvent(packet);
+        PacketTracker packetTracker = Client.moduleManager.getModule(PacketTracker.class);
+        assert packetTracker != null;
+        if (packetTracker.getState()) {
+            try {
+                packetTracker.onPacket(event);
+            } catch (Exception e) {
+                // nothing
+            }
+        }
         Client.eventManager.callEvent(event);
 
         if (event.isCancelled())

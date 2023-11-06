@@ -41,6 +41,7 @@ import kotlin.math.round
 import kotlin.math.sin
 import kotlin.math.sqrt
 
+
 @ModuleInfo(name = "Flight", description = "", category = ModuleCategory.MOVEMENT)
 class Flight : Module() {
     @JvmField
@@ -1344,15 +1345,18 @@ class Flight : Module() {
 
                     if (starteds) {
                         mc.thePlayer.motionY += 0.025
-                        MovementUtils.strafe(0.835f.let { bmcSpeed *= it; bmcSpeed }.toFloat())
-                        if (mc.thePlayer.motionY < -0.5 && !MovementUtils.isBlockUnder())
+                        MovementUtils.strafe(0.935f.let { bmcSpeed *= it; bmcSpeed }.toFloat())
+                        if (mc.thePlayer.motionY < -0.5 && !MovementUtils.isBlockUnder()) {
                             toggle()
+                            mc.timer.timerSpeed = 0.7f
+                        }
                     }
 
                     if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, bb).isEmpty() && !starteds) {
                         starteds = true
                         mc.thePlayer.jump()
-                        MovementUtils.strafe(8.also { bmcSpeed = it.toDouble() }.toFloat())
+                        MovementUtils.strafe(9.also { bmcSpeed = it.toDouble() }.toFloat())
+                        mc.timer.timerSpeed = 0.7f
                     }
                 }
             }
