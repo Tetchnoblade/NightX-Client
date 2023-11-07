@@ -58,7 +58,7 @@ public class Protocol {
     public static VersionSlider versionSlider;
 
     public static void initAsyncSlider() {
-        initAsyncSlider(5, 5, 88, 20);
+        initAsyncSlider(5, 5, 120, 20);
     }
 
     public static void initAsyncSlider(int x, int y, int width, int height) {

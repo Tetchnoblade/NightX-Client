@@ -23,6 +23,7 @@ open class HUD : MinecraftInstance() {
             Arraylist::class.java,
             Effects::class.java,
             Notifications::class.java,
+            ScoreboardElement::class.java,
             Text::class.java,
             TargetHud::class.java,
             Radar::class.java,
@@ -42,6 +43,7 @@ open class HUD : MinecraftInstance() {
             .addElement(Armor())
             .addElement(Notifications())
             .addElement(TargetHud())
+            .addElement(ScoreboardElement())
     }
 
     /**

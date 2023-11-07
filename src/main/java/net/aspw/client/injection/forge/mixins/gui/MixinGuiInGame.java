@@ -74,7 +74,8 @@ public abstract class MixinGuiInGame extends MixinGui {
     @Inject(method = "renderScoreboard", at = @At("HEAD"), cancellable = true)
     private void renderScoreboard(ScoreObjective scoreObjective, ScaledResolution scaledResolution, CallbackInfo callbackInfo) {
         final AntiBlind antiBlind = Objects.requireNonNull(Client.moduleManager.getModule(AntiBlind.class));
-        if (antiBlind.getState() && antiBlind.getScoreBoard().get())
+        final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
+        if (antiBlind.getState() && antiBlind.getScoreBoard().get() || anInterface.getState())
             callbackInfo.cancel();
     }
 
