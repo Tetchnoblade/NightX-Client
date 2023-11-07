@@ -61,7 +61,6 @@ class AntiVelocity : Module() {
             "AACZero",
             "Reverse",
             "SmoothReverse",
-            "Jump",
             "JumpReset",
             "Phase",
             "Intave",
@@ -103,10 +102,13 @@ class AntiVelocity : Module() {
     private val legitFaceValue = BoolValue("LegitFace", true) { modeValue.get().equals("legit", true) }
 
     // Jump Reset
+    // TODO: Turn this into a ListValue
     private val ignoreVelocity =
-        BoolValue("IgnoreVelocity", true) { modeValue.get().equals("jumpreset", true) }
+        BoolValue("IgnoreVelocity", false) { modeValue.get().equals("jumpreset", true) }
     private val simulatePerfect =
-        BoolValue("SimulatePerfect", true) { modeValue.get().equals("jumpreset", true) }
+        BoolValue("SimulatePerfect", false) { modeValue.get().equals("jumpreset", true) }
+    private val simulateReduce = 
+        BoolValue("SimulateReduce", true) { modeValue.get().equals("jumpreset", true) }
 
     // add strafe in aac
     private val aacStrafeValue = BoolValue("AACStrafeValue", false) { modeValue.get().equals("aac", true) }
@@ -137,6 +139,14 @@ class AntiVelocity : Module() {
     private var grimTCancel = 0
     private var updates = 0
 
+    // Debug
+    private val debugValue = BoolValue("Debug", false)
+
+    private fun debug(s: String, force: Boolean = false) {
+        if (debugValue.get() || force)
+            ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§f$s")
+    }
+
     override fun onDisable() {
         grimTCancel = 0
     }
@@ -156,14 +166,6 @@ class AntiVelocity : Module() {
         updates++
 
         when (modeValue.get().lowercase(Locale.getDefault())) {
-            "jump" -> if (mc.thePlayer.hurtTime > 0 && mc.thePlayer.onGround) {
-                mc.thePlayer.motionY = 0.41999998688698
-
-                val yaw = mc.thePlayer.rotationYaw * 0.017453292F
-                mc.thePlayer.motionX -= MathHelper.sin(yaw) * 0.2
-                mc.thePlayer.motionZ += MathHelper.cos(yaw) * 0.2
-            }
-
             "jumpreset" -> if (mc.thePlayer.hurtTime > 0 && mc.thePlayer.onGround) {
                 mc.thePlayer.motionY = 0.0
                 mc.thePlayer.jump()
@@ -171,9 +173,16 @@ class AntiVelocity : Module() {
                 if (ignoreVelocity.get()) {
                     mc.thePlayer.motionX = 0.0
                     mc.thePlayer.motionZ = 0.0
+                } else if (simulateReduce.get()) {
+                    val yaw = mc.thePlayer.rotationYaw * 0.017453292F
+                    mc.thePlayer.motionX -= MathHelper.sin(yaw) * 0.2
+                    mc.thePlayer.motionZ += MathHelper.cos(yaw) * 0.2
+                    
+                    debug("Modified X:" + mc.thePlayer.motionX)
+                    debug("Modified Z:" + mc.thePlayer.motionZ)
                 } else if (simulatePerfect.get()) {
-                    // Further implementation required
-                    // Someone figure out the math for a **PERFECT** Jump Reset
+                    // Requies mixin stuff
+                    // So we jump at the exact time we recieve the damage tick
                 }
             }
 
