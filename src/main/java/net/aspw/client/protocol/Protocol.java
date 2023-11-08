@@ -17,9 +17,6 @@ public class Protocol {
     public static VersionEnum targetVersion = VersionEnum.r1_8;
 
     public static void start() {
-        VersionEnum.SORTED_VERSIONS.remove(VersionEnum.r1_7_6tor1_7_10);
-        VersionEnum.SORTED_VERSIONS.remove(VersionEnum.r1_7_2tor1_7_5);
-
         initAsyncSlider();
 
         ViaLoader.init(
@@ -58,7 +55,7 @@ public class Protocol {
     public static VersionSlider versionSlider;
 
     public static void initAsyncSlider() {
-        initAsyncSlider(5, 5, 120, 20);
+        initAsyncSlider(5, 5, 200, 20);
     }
 
     public static void initAsyncSlider(int x, int y, int width, int height) {

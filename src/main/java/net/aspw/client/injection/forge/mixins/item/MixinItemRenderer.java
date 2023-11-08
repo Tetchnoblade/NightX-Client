@@ -583,7 +583,7 @@ public abstract class MixinItemRenderer {
                                 GL11.glTranslated(0.0D, 0.0D, 0.0D);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
-                                else this.transformFirstPersonItem(f / 2.0f, 0.0f);
+                                else this.transformFirstPersonItem(f / 1.4f, 0.0f);
                                 GlStateManager.rotate(-var9 * 65.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
                                 GlStateManager.rotate(-var9 * 60.0F, 1.0F, var9 / 3.0F, -0.0F);
                                 this.func_178103_d(0.2F);

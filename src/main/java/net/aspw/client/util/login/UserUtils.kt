@@ -42,15 +42,13 @@ object UserUtils {
 
     fun getUsername(uuid: String): String? {
         val client = HttpClients.createDefault()
-        val request = HttpGet("https://api.mojang.com/user/profiles/${uuid}/names")
+        val request = HttpGet("https://sessionserver.mojang.com/session/minecraft/profile/${uuid}/names")
         val response = client.execute(request)
 
         if (response.statusLine.statusCode != 200) {
             return null
         }
 
-        val names = JsonParser().parse(EntityUtils.toString(response.entity)).asJsonArray
-
-        return names.get(names.size() - 1).asJsonObject.get("name").asString
+        return JsonParser().parse(EntityUtils.toString(response.entity)).asJsonObject.get("name").asString
     }
 }
