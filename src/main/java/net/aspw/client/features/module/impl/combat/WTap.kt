@@ -1,6 +1,6 @@
 // LiquidBounce:legacy Implementation
 
-package net.aspw.client.features.module.modules.combat
+package net.aspw.client.features.module.impl.combat
 
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
