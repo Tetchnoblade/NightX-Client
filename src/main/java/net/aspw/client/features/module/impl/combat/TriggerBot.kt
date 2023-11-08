@@ -1,4 +1,4 @@
-package net.aspw.client.features.module.modules.combat
+package net.aspw.client.features.module.impl.combat
 
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.Render3DEvent
