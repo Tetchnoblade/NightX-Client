@@ -33,14 +33,6 @@ import kotlin.math.sin
     category = ModuleCategory.COMBAT
 )
 
-// Notes (Fetched from LiquidBounce:Legacy)
-// Vanilla XZ limits
-// Non-KB: 0.4 (no sprint), 0.9 (sprint)
-// KB 1: 0.9 (no sprint), 1.4 (sprint)
-// KB 2: 1.4 (no sprint), 1.9 (sprint)
-// Vanilla Y limits
-// 0.36075 (no sprint), 0.46075 (sprint)
-
 class AntiVelocity : Module() {
 
     /** OPTIONS */
@@ -135,6 +127,8 @@ class AntiVelocity : Module() {
     private val phaseOffsetValue =
         FloatValue("Phase-Offset", 0.05F, -10F, 10F, "m") { modeValue.get().equals("phase", true) }
 
+    private val debugValue = BoolValue("Debug", false)
+
     /** VALUES */
     private var velocityTimer = MSTimer()
     private var velocityInput = false
@@ -154,9 +148,6 @@ class AntiVelocity : Module() {
     private var resetPersec = 8
     private var grimTCancel = 0
     private var updates = 0
-
-    // Debug
-    private val debugValue = BoolValue("Debug", false)
 
     private fun debug(s: String, force: Boolean = false) {
         if (debugValue.get() || force) ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§f$s")
@@ -185,13 +176,13 @@ class AntiVelocity : Module() {
         when (modeValue.get().lowercase(Locale.getDefault())) {
             "jumpreset" ->
                 if (mc.thePlayer.hurtTime > 0 && mc.thePlayer.onGround) {
-                    if (jumpResetMode.get().equals("resetvelocity")) {
+                    if (jumpResetMode.get() == "ResetVelocity") {
                         mc.thePlayer.motionY = 0.0
                         mc.thePlayer.jump()
 
                         mc.thePlayer.motionX = 0.0
                         mc.thePlayer.motionZ = 0.0
-                    } else if (jumpResetMode.get().equals("simulatereduce")) {
+                    } else if (jumpResetMode.get() == "SimulateReduce") {
                         mc.thePlayer.motionY = 0.0
                         mc.thePlayer.jump()
 
@@ -201,22 +192,21 @@ class AntiVelocity : Module() {
 
                         debug("Modified X:" + mc.thePlayer.motionX)
                         debug("Modified Z:" + mc.thePlayer.motionZ)
-                    } else if (jumpResetMode.get().equals("simulateperfect")) {
+                    } else if (jumpResetMode.get() == "SimulatePerfect") {
                         // TODO: Implementation Required
                         // Requies mixin stuff to listen for packets
                         // So we jump at the exact time we recieve the damage tick
-                    } else if (jumpResetMode.get().equals("normal")) {
+                    } else if (jumpResetMode.get() == "Normal") {
                         mc.thePlayer.jump()
                     }
                 } else if (
-                    jumpResetMode.get().equals("anticombo") &&
+                    jumpResetMode.get() == "AntiCombo" &&
                     mc.thePlayer.hurtTime == 9 &&
                     mc.thePlayer.onGround
                 ) {
                     // Very shawty way but works provided you're actually in a combo
                     mc.thePlayer.jump()
                 }
-
             "intave" -> {
                 if (mc.thePlayer.hurtTime > 7) {
                     mc.thePlayer.motionX = 0.0
@@ -224,7 +214,6 @@ class AntiVelocity : Module() {
                     mc.thePlayer.motionZ = 0.0
                 }
             }
-
             "grim" -> {
                 if (resetPersec > 0) {
                     if (updates >= 0 || updates >= resetPersec) {
@@ -235,7 +224,6 @@ class AntiVelocity : Module() {
                     }
                 }
             }
-
             "reverse" -> {
                 if (!velocityInput) return
 
@@ -243,7 +231,6 @@ class AntiVelocity : Module() {
                     MovementUtils.strafe(MovementUtils.getSpeed() * reverseStrengthValue.get())
                 } else if (velocityTimer.hasTimePassed(80L)) velocityInput = false
             }
-
             "aacv4" -> {
                 if (!mc.thePlayer.onGround) {
                     if (velocityInput) {
@@ -256,7 +243,6 @@ class AntiVelocity : Module() {
                     mc.thePlayer.jumpMovementFactor = 0.02f
                 }
             }
-
             "aac4reduce" -> {
                 if (
                     mc.thePlayer.hurtTime > 0 &&
@@ -275,7 +261,6 @@ class AntiVelocity : Module() {
                     velocityInput = false
                 }
             }
-
             "aac5reduce" -> {
                 if (mc.thePlayer.hurtTime > 1 && velocityInput) {
                     mc.thePlayer.motionX *= 0.81
@@ -289,7 +274,6 @@ class AntiVelocity : Module() {
                     velocityInput = false
                 }
             }
-
             "smoothreverse" -> {
                 if (!velocityInput) {
                     mc.thePlayer.jumpMovementFactor = 0.02F
@@ -305,7 +289,6 @@ class AntiVelocity : Module() {
                     reverseHurt = false
                 }
             }
-
             "aac" ->
                 if (velocityInput && velocityTimer.hasTimePassed(50)) {
                     mc.thePlayer.motionX *= horizontalValue.get()
@@ -316,7 +299,6 @@ class AntiVelocity : Module() {
                     }
                     velocityInput = false
                 }
-
             "aacpush" -> {
                 if (jump) {
                     if (mc.thePlayer.onGround) jump = false
@@ -346,7 +328,6 @@ class AntiVelocity : Module() {
                     mc.thePlayer.motionZ /= reduce
                 }
             }
-
             "aaczero" ->
                 if (mc.thePlayer.hurtTime > 0) {
                     if (!velocityInput || mc.thePlayer.onGround || mc.thePlayer.fallDistance > 2F)
@@ -355,7 +336,6 @@ class AntiVelocity : Module() {
                     mc.thePlayer.addVelocity(0.0, -1.0, 0.0)
                     mc.thePlayer.onGround = true
                 } else velocityInput = false
-
             "matrixreduce" -> {
                 if (mc.thePlayer.hurtTime > 0) {
                     if (mc.thePlayer.onGround) {
@@ -373,12 +353,10 @@ class AntiVelocity : Module() {
                     }
                 }
             }
-
             "matrixground" -> {
                 if (mc.thePlayer.onGround && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
                     mc.thePlayer.onGround = false
             }
-
             "aemine" -> {
                 if (mc.thePlayer.hurtTime <= 0) {
                     return
@@ -393,7 +371,6 @@ class AntiVelocity : Module() {
                     mc.thePlayer.motionY -= 0.095
                 }
             }
-
             "grimreverse" -> {
                 mc.thePlayer.motionX += -1.0E-7
                 mc.thePlayer.motionY += -1.0E-7
@@ -415,7 +392,6 @@ class AntiVelocity : Module() {
                     grimTCancel--
                 }
             }
-
             "intave" -> {
                 if (mc.thePlayer.hurtTime > 7) {
                     if (packet is C06PacketPlayerPosLook) {
@@ -433,7 +409,6 @@ class AntiVelocity : Module() {
                     }
                 }
             }
-
             "vulcan" -> {
                 if (packet is C0FPacketConfirmTransaction) {
                     val transUID = (packet.uid).toInt()
@@ -457,7 +432,6 @@ class AntiVelocity : Module() {
             when (modeValue.get().lowercase(Locale.getDefault())) {
                 "cancel",
                 "vulcan" -> event.cancelEvent()
-
                 "simple" -> {
                     val horizontal = horizontalValue.get()
                     val vertical = verticalValue.get()
@@ -466,7 +440,6 @@ class AntiVelocity : Module() {
                     packet.motionY = (packet.getMotionY() * vertical).toInt()
                     packet.motionZ = (packet.getMotionZ() * horizontal).toInt()
                 }
-
                 "minemen" -> {
                     if (velocity > 20) {
                         if (packet.entityID == mc.thePlayer.entityId) {
@@ -475,7 +448,6 @@ class AntiVelocity : Module() {
                         }
                     }
                 }
-
                 "ymotion" -> {
                     if (
                         mc.thePlayer.onGround ||
@@ -490,27 +462,23 @@ class AntiVelocity : Module() {
                         event.cancelEvent()
                     }
                 }
-
                 "grim" -> {
                     if (packet.entityID == mc.thePlayer.entityId) {
                         event.cancelEvent()
                         grimTCancel = cancelPacket
                     }
                 }
-
                 "aac4reduce" -> {
                     velocityInput = true
                     packet.motionX = (packet.getMotionX() * 0.6).toInt()
                     packet.motionZ = (packet.getMotionZ() * 0.6).toInt()
                 }
-
                 "aac",
                 "aac5reduce",
                 "reverse",
                 "aacv4",
                 "smoothreverse",
                 "aaczero" -> velocityInput = true
-
                 "aac5.2.0" -> {
                     event.cancelEvent()
                     if (
@@ -526,7 +494,6 @@ class AntiVelocity : Module() {
                             )
                         )
                 }
-
                 "matrixsimple" -> {
                     packet.motionX = (packet.getMotionX() * 0.36).toInt()
                     packet.motionZ = (packet.getMotionZ() * 0.36).toInt()
@@ -535,7 +502,6 @@ class AntiVelocity : Module() {
                         packet.motionZ = (packet.getMotionZ() * 0.9).toInt()
                     }
                 }
-
                 "matrixground" -> {
                     packet.motionX = (packet.getMotionX() * 0.36).toInt()
                     packet.motionZ = (packet.getMotionZ() * 0.36).toInt()
@@ -548,12 +514,10 @@ class AntiVelocity : Module() {
                         packet.motionZ = (packet.getMotionZ() * 0.6).toInt()
                     }
                 }
-
                 "matrixreverse" -> {
                     packet.motionX = (packet.getMotionX() * -0.3).toInt()
                     packet.motionZ = (packet.getMotionZ() * -0.3).toInt()
                 }
-
                 "matrixspoof" -> {
                     event.cancelEvent()
                     mc.netHandler.addToSendQueue(
@@ -565,21 +529,18 @@ class AntiVelocity : Module() {
                         )
                     )
                 }
-
                 "glitch" -> {
                     if (!mc.thePlayer.onGround) return
 
                     velocityInput = true
                     event.cancelEvent()
                 }
-
                 "phase" ->
                     mc.thePlayer.setPositionAndUpdate(
                         mc.thePlayer.posX,
                         mc.thePlayer.posY + phaseOffsetValue.get().toDouble(),
                         mc.thePlayer.posZ
                     )
-
                 "legit" -> {
                     pos = BlockPos(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ)
                 }
@@ -662,13 +623,11 @@ class AntiVelocity : Module() {
 
                 if (!mc.thePlayer.isCollidedVertically) event.cancelEvent()
             }
-
             "aacv4" -> {
                 if (mc.thePlayer.hurtTime > 0) {
                     event.cancelEvent()
                 }
             }
-
             "aaczero" -> if (mc.thePlayer.hurtTime > 0) event.cancelEvent()
         }
     }

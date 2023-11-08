@@ -150,7 +150,6 @@ class ModuleManager : Listenable {
             PlayerEdit::class.java,
             ClientSpoof::class.java,
             WTap::class.java,
-            TriggerBot::class.java,
             FakePlayer::class.java,
             JumpCircle::class.java,
             AntiDesync::class.java,
@@ -162,7 +161,6 @@ class ModuleManager : Listenable {
             ChestAura::class.java,
             Wings::class.java,
             SilentView::class.java,
-            BackTrack::class.java,
             AntiWaterPush::class.java,
             XRay::class.java,
             Cape::class.java,
@@ -184,7 +182,10 @@ class ModuleManager : Listenable {
             MotionBlur::class.java,
             AntiFrozen::class.java,
             Trajectories::class.java,
-            ChatFilter::class.java
+            ChatFilter::class.java,
+            WTap::class.java,
+            BackTrack::class.java,
+            TriggerBot::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")
