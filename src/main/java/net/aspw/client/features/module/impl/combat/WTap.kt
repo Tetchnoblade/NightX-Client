@@ -5,6 +5,7 @@ package net.aspw.client.features.module.modules.combat
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
+import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.MovementUtils.isMoving
 import net.aspw.client.util.PacketUtils.sendPacket
 import net.aspw.client.util.PacketUtils.sendPackets
