@@ -163,3 +163,22 @@ tasks.reobfShadowJar.mustRunAfter shadowJar
 tasks.reobfJar.dependsOn(shadowJar)
 
 jar.dependsOn("shadowJar")
+
+
+configurations{
+    apiCompileClasspath {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+    testCompileClasspath {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+    compileClasspath {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+    runtimeClasspath {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+    include {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+}
