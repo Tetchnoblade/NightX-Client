@@ -1,6 +1,6 @@
 // LiquidBoucne:legacy implementation
 
-package net.aspw.client.features.module.modules.combat
+package net.aspw.client.features.module.impl.combat
 
 import java.awt.Color
 import java.util.*
