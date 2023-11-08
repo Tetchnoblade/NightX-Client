@@ -5,51 +5,56 @@ import net.aspw.client.event.Render3DEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.CooldownHelper
-import net.aspw.client.util.EntityUtils
-import net.aspw.client.util.timer.TimeUtils
-import net.aspw.client.value.BoolValue
+import net.aspw.client.util.Entityutil.isSelected
+import net.aspw.client.util.timing.Timeutil.randomClickDelay
 import net.aspw.client.value.IntegerValue
+import net.minecraft.client.settings.KeyBinding
 
-@ModuleInfo(name = "TriggerBot", spacedName = "Trigger Bot", description = "", category = ModuleCategory.COMBAT)
-class TriggerBot : Module() {
-    private val coolDownCheck = BoolValue("Cooldown-Check", false)
-    private val maxCPS: IntegerValue = object : IntegerValue("MaxCPS", 12, 1, 20, { !coolDownCheck.get() }) {
-        override fun onChanged(oldValue: Int, newValue: Int) {
-            val i = minCPS.get()
-            if (i > newValue) set(i)
-            delay = TimeUtils.randomClickDelay(minCPS.get(), this.get())
+@ModuleInfo(
+    name = "TriggerBot",
+    spacedName = "Trigger Bot",
+    description = "",
+    category = ModuleCategory.COMBAT
+)
+object Trigger : Module("Trigger", ModuleCategory.COMBAT) {
+
+    private val maxCPSValue: IntegerValue =
+        object : IntegerValue("MaxCPS", 8, 1..20) {
+            override fun onChange(oldValue: Int, newValue: Int) = newValue.coerceAtLeast(minCPS)
+
+            override fun onChanged(oldValue: Int, newValue: Int) {
+                delay = randomClickDelay(minCPS, get())
+            }
         }
-    }
+    private val maxCPS by maxCPSValue
 
-    private val minCPS: IntegerValue = object : IntegerValue("MinCPS", 10, 1, 20, { !coolDownCheck.get() }) {
-        override fun onChanged(oldValue: Int, newValue: Int) {
-            val i = maxCPS.get()
-            if (i < newValue) set(i)
-            delay = TimeUtils.randomClickDelay(this.get(), maxCPS.get())
+    private val minCPS: Int by
+        object : IntegerValue("MinCPS", 5, 1..20) {
+            override fun onChange(oldValue: Int, newValue: Int) = newValue.coerceAtMost(maxCPS)
+
+            override fun onChanged(oldValue: Int, newValue: Int) {
+                delay = randomClickDelay(get(), maxCPS)
+            }
+
+            override fun isSupported() = !maxCPSValue.isMinimal()
         }
-    }
 
-    private var delay = if (coolDownCheck.get())
-        TimeUtils.randomClickDelay(20, 20)
-    else TimeUtils.randomClickDelay(minCPS.get(), maxCPS.get())
+    private var delay = randomClickDelay(minCPS, maxCPS)
     private var lastSwing = 0L
 
     @EventTarget
     fun onRender(event: Render3DEvent) {
-        if (coolDownCheck.get() && CooldownHelper.getAttackCooldownProgress() < 1f)
-            return
         val objectMouseOver = mc.objectMouseOver
 
-        if (objectMouseOver != null && System.currentTimeMillis() - lastSwing >= delay &&
-            EntityUtils.isSelected(objectMouseOver.entityHit, true)
+        if (
+            objectMouseOver != null &&
+                System.currentTimeMillis() - lastSwing >= delay &&
+                isSelected(objectMouseOver.entityHit, true)
         ) {
-            net.minecraft.client.settings.KeyBinding.onTick(mc.gameSettings.keyBindAttack.keyCode)
+            KeyBinding.onTick(mc.gameSettings.keyBindAttack.keyCode) // Minecraft Click handling
 
             lastSwing = System.currentTimeMillis()
-            delay = if (coolDownCheck.get())
-                TimeUtils.randomClickDelay(20, 20)
-            else TimeUtils.randomClickDelay(minCPS.get(), maxCPS.get())
+            delay = randomClickDelay(minCPS, maxCPS)
         }
     }
 }
