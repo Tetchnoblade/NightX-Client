@@ -15,7 +15,10 @@
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.7.11-SNAPSHOT/7a670207bdb97db418118ad1e9bb42424ff3776d/mixin-0.7.11-SNAPSHOT.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/17.0/9c6ef172e8de35fd8d4d8783e4821e57cdef7445/guava-17.0.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar" />
         </processorPath>
         <module name="NightX-Client.NightX.main" />
       </profile>
@@ -558,17 +561,6 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.2/b19b5927c2c25b6c70f093767041e641ae0b1b35/jsr305-3.0.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: com.google.code.gson:gson:2.10">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.10/dd9b193aef96e973d5a11ab13cd17430c2e4306b/gson-2.10.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.10/fa585815e708725bcd12c9e70ae300c76ab660bd/gson-2.10-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.10/6ed5748c6f0860e81e09d4d2582fe914cfa41d1e/gson-2.10-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Gradle: com.google.code.gson:gson:2.2.4">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar!/" />
@@ -578,6 +570,17 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a6dc5db8a12928e583bd3f23e72d3ab611ecd58f/gson-2.2.4-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: com.google.code.gson:gson:2.8.5">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/f645ed69d595b24d4cf8b3fbb64cc505bede8829/gson-2.8.5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/a2841d93c258a70e320be81586e92208a60144f2/gson-2.8.5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f/gson-2.8.5-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.google.errorprone:error_prone_annotations:2.21.1">
@@ -704,15 +707,6 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mojang/authlib/1.5.21/f382946bdf3a377761a0efe96f7c1f1fe0fef718/authlib-1.5.21-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: com.mojang:brigadier:1.0.18">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mojang/brigadier/1.0.18/c1ef1234282716483c92183f49bef47b1a89bfa9/brigadier-1.0.18.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mojang/brigadier/1.0.18/f93ce897789cb28518ebb7a8a6bc3946922bc8b6/brigadier-1.0.18-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Gradle: com.mojang:netty:1.8.8">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mojang/netty/1.8.8/a796914d1c8a55b4da9f4a8856dd9623375d8bb/netty-1.8.8.jar!/" />
@@ -794,17 +788,6 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.typesafe/config/1.2.1/bdacf4f82ce9b29cd474bfde2e91eeb0ca623d28/config-1.2.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: com.vdurmont:semver4j:3.1.0">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.vdurmont/semver4j/3.1.0/de1248f09dfe8df3b021c84e0642ee222cceb13/semver4j-3.1.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.vdurmont/semver4j/3.1.0/74560b44221883f24e75605cb1681f484f5bc08e/semver4j-3.1.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.vdurmont/semver4j/3.1.0/6e8b0bba0f4d70754dbe2027fa8b3aab93349cc7/semver4j-3.1.0-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Gradle: com.viaversion:viabackwards-common:4.9.0-23w44a-SNAPSHOT">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards-common/4.9.0-23w44a-SNAPSHOT/7dcdd05754ebb0e7bc8b3614a05d4c559ae98b92/viabackwards-common-4.9.0-23w44a-SNAPSHOT.jar!/" />
@@ -821,13 +804,13 @@
       <JAVADOC />
       <SOURCES />
     </library>
-    <library name="Gradle: com.viaversion:viaversion:4.9.0-23w44a-SNAPSHOT">
+    <library name="Gradle: com.viaversion:viaversion:4.9.0-23w45a-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.9.0-23w44a-SNAPSHOT/2d9482cc06fe82111495834ac47873dff189ebc/viaversion-4.9.0-23w44a-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.9.0-23w45a-SNAPSHOT/6a925010d4617b1d065304d644494a2c50045ca3/viaversion-4.9.0-23w45a-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.9.0-23w44a-SNAPSHOT/7ae15cc9d9815ce0036fba16ae18e49f0e592ee/viaversion-4.9.0-23w44a-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viaversion/4.9.0-23w45a-SNAPSHOT/a957fb418891c1201e58922ac05693f39d9fdb2e/viaversion-4.9.0-23w45a-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: commons-codec:commons-codec:1.9">
@@ -863,39 +846,6 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.3/28bb0405fddaf04f15058fbfbe01fe2780d7d3b6/commons-logging-1.1.3-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: io.jsonwebtoken:jjwt-api:0.12.3">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.jsonwebtoken/jjwt-api/0.12.3/30b7de9176d17fa347eef14b85480825dab76b58/jjwt-api-0.12.3.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.jsonwebtoken/jjwt-api/0.12.3/49d08a48e2514b00e9a8564ed71e7522035bce76/jjwt-api-0.12.3-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.jsonwebtoken/jjwt-api/0.12.3/486e6433fe11fba42dbfa74b0d6996745b6eaa4e/jjwt-api-0.12.3-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: io.jsonwebtoken:jjwt-gson:0.12.3">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.jsonwebtoken/jjwt-gson/0.12.3/3e43a1caaeb79d3bb080e6431a775cbbef3fdf6e/jjwt-gson-0.12.3.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.jsonwebtoken/jjwt-gson/0.12.3/481df0c30cec8a11cad726f864508fbccfeb18fc/jjwt-gson-0.12.3-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.jsonwebtoken/jjwt-gson/0.12.3/e3cdc4e0959d42f130fb1b8c89515fc6bf5326c5/jjwt-gson-0.12.3-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: io.jsonwebtoken:jjwt-impl:0.12.3">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.jsonwebtoken/jjwt-impl/0.12.3/e850d2b3f53bd82355cd9ee1c471054aa602b320/jjwt-impl-0.12.3.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.jsonwebtoken/jjwt-impl/0.12.3/4f07d4f5c6091cfab460f972adedff93bc55aca/jjwt-impl-0.12.3-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.jsonwebtoken/jjwt-impl/0.12.3/7cfad367ca4cf3aab4d12668445aad5f5c628e2d/jjwt-impl-0.12.3-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Gradle: io.netty:netty-all:4.0.23.Final">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-all/4.0.23.Final/294104aaf1781d6a56a07d561e792c5d0c95f45/netty-all-4.0.23.Final.jar!/" />
@@ -905,17 +855,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-all/4.0.23.Final/fd8e5b2341f3a08b02fe116d6e9886654e65b219/netty-all-4.0.23.Final-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: io.netty:netty-codec-http:4.1.100.Final">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-http/4.1.100.Final/992623e7d8f2d96e41faf1687bb963f5433e3517/netty-codec-http-4.1.100.Final.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-http/4.1.100.Final/9ab63fe69f2d50a7a70386d06d6af5f9daa78fa7/netty-codec-http-4.1.100.Final-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-http/4.1.100.Final/d8be0b54191325da735d0c28887c0f5cda98e4e3/netty-codec-http-4.1.100.Final-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: java3d:vecmath:1.5.2">
@@ -1021,72 +960,6 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.java.jutils/jutils/1.0.0/d18678a00b216863206a1bb6190507e02a32971b/jutils-1.0.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: net.lenni0451.mcstructs-bedrock:forms:1.2.0">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs-bedrock/forms/1.2.0/ecc86a8c5ab01ac9fe41fb3dc39159abb1cbf036/forms-1.2.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs-bedrock/forms/1.2.0/6d7424c8b402a5269e9126aa8e37ae269abea82f/forms-1.2.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs-bedrock/forms/1.2.0/536240621d8e7d2fe3f6ee89c13fcd5a241aca8/forms-1.2.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: net.lenni0451.mcstructs-bedrock:text:1.2.0">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs-bedrock/text/1.2.0/5da420a0d4ee164ab3c74a0d8efc721497495250/text-1.2.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs-bedrock/text/1.2.0/c3f3e9fd03c91903f96e4c2bab6419af4a8d8218/text-1.2.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs-bedrock/text/1.2.0/b899a1678af251694b294056c18326f5289349d8/text-1.2.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: net.lenni0451.mcstructs:core:2.4.0-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs/core/2.4.0-SNAPSHOT/1276821cb36c28a4cb65f62667c373961fcd682c/core-2.4.0-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs/core/2.4.0-SNAPSHOT/77c4c798b656fa531036bdce5152920eaade36df/core-2.4.0-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs/core/2.4.0-SNAPSHOT/b2b1cc5ad276f580bddbbf3aee086e2b9296c617/core-2.4.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: net.lenni0451.mcstructs:nbt:2.4.0-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs/nbt/2.4.0-SNAPSHOT/c8bc8e78141996cc5d1b9c5e35af91765d01ae2d/nbt-2.4.0-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs/nbt/2.4.0-SNAPSHOT/90e94bd215e334ee4ca343c96d0cacfc78013c79/nbt-2.4.0-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs/nbt/2.4.0-SNAPSHOT/445496ccfde0db17af750a8f2cbcfae9ca886587/nbt-2.4.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: net.lenni0451.mcstructs:snbt:2.4.0-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs/snbt/2.4.0-SNAPSHOT/63a443d3808747a461b28fe5c10174006da84335/snbt-2.4.0-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs/snbt/2.4.0-SNAPSHOT/c3457006c27735fe432c50200f2d61be43a2041e/snbt-2.4.0-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs/snbt/2.4.0-SNAPSHOT/e85a757e71712d18f3602a5e5c1242a0502843be/snbt-2.4.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: net.lenni0451.mcstructs:text:2.4.0-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs/text/2.4.0-SNAPSHOT/6b70cad5dc5d02f0a3fffa3b7e144eb8a8b96e7/text-2.4.0-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs/text/2.4.0-SNAPSHOT/eb5e2ec7fb67ba3f8c38c767ce6fe146f7196605/text-2.4.0-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.lenni0451.mcstructs/text/2.4.0-SNAPSHOT/c040e3b3ba607a27f9c1e98cb881ed9dcd2d6ded/text-2.4.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Gradle: net.minecraft:launchwrapper:1.12">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.minecraft/launchwrapper/1.12/111e7bea9c968cdb3d06ef4632bf7ff0824d0f36/launchwrapper-1.12.jar!/" />
@@ -1102,39 +975,6 @@
       </CLASSES>
       <JAVADOC />
       <SOURCES />
-    </library>
-    <library name="Gradle: net.raphimc:ViaAprilFools:2.0.10-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaAprilFools/2.0.10-SNAPSHOT/379ab4e4163a8f5693156cb24718ea31dee3d419/ViaAprilFools-2.0.10-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaAprilFools/2.0.10-SNAPSHOT/cb3c1b8e5448be7bbc6adbd3932a92bfbd84e728/ViaAprilFools-2.0.10-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaAprilFools/2.0.10-SNAPSHOT/41c157a056ee8680a893634dc10f6fe98f32623b/ViaAprilFools-2.0.10-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: net.raphimc:ViaBedrock:0.0.3-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaBedrock/0.0.3-SNAPSHOT/f53eefbaf4a7e2fb20da768d1ff4af0852623012/ViaBedrock-0.0.3-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaBedrock/0.0.3-SNAPSHOT/1fa5a2dac04dae181d1f9a26a86ba91695866f58/ViaBedrock-0.0.3-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaBedrock/0.0.3-SNAPSHOT/5dff3d96dcc86eaadc517dc826cfa8d2f4e10f85/ViaBedrock-0.0.3-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: net.raphimc:ViaLegacy:2.2.21-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaLegacy/2.2.21-SNAPSHOT/8076b10852f375965c38fbd3419151ac140f46ab/ViaLegacy-2.2.21-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaLegacy/2.2.21-SNAPSHOT/6063a5313ab5b17570ccbdfd5623f4e2cf6a9e03/ViaLegacy-2.2.21-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.raphimc/ViaLegacy/2.2.21-SNAPSHOT/371290c9762418b5bddcaea1ec4b9b9be7767633/ViaLegacy-2.2.21-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
     </library>
     <library name="Gradle: net.raphimc:ViaLoader:2.2.11-SNAPSHOT">
       <CLASSES>
@@ -1509,15 +1349,15 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.9/97e46b94d70f47892145e09d685461245584d596/slf4j-api-2.0.9-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.spongepowered:mixin:0.8.5">
+    <library name="Gradle: org.spongepowered:mixin:0.7.11-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.7.11-SNAPSHOT/7a670207bdb97db418118ad1e9bb42424ff3776d/mixin-0.7.11-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/a48b5a078460f26190a194eb4a5ccf04e26fbfed/mixin-0.8.5-javadoc.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.7.11-SNAPSHOT/2ee41f0d272151abb51c4e34c32f4eb3b8393dbe/mixin-0.7.11-SNAPSHOT-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/958671fbe7661c8cae6b1994014583332a14c7d5/mixin-0.8.5-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.7.11-SNAPSHOT/2f1c5d7d49889d506dac93e7c3ee7707dc072e4d/mixin-0.7.11-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.yaml:snakeyaml:2.2">

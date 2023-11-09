@@ -49,6 +49,22 @@ configurations {
 
     external
     compile.extendsFrom(external)
+
+    apiCompileClasspath {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+    testCompileClasspath {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+    compileClasspath {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+    runtimeClasspath {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+    include {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
 }
 
 def viaLibs = [
@@ -57,14 +73,11 @@ def viaLibs = [
         "com.viaversion:viarewind-common:${project.viarewind_version}",
         "org.yaml:snakeyaml:${project.snake_yml_version}",
         "net.raphimc:ViaLoader:${project.vialoader_version}",
-        "net.raphimc:ViaLegacy:${project.vialegacy_version}",
-        "net.raphimc:ViaAprilFools:${project.viaapril_version}",
-        "net.raphimc:ViaBedrock:${project.viabedrock_version}",
         "org.slf4j:slf4j-api:${project.slf4j_version}"
 ]
 
 dependencies {
-    include("org.spongepowered:mixin:0.8.5") {
+    include("org.spongepowered:mixin:${project.mixin_version}") {
         transitive = false
         exclude module: "guava"
         exclude module: "commons-io"
@@ -84,7 +97,7 @@ dependencies {
         exclude module: 'asm'
     }
 
-    annotationProcessor("org.spongepowered:mixin:0.8.5")
+    annotationProcessor("org.spongepowered:mixin:${project.mixin_version}")
 
     include "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
@@ -166,21 +179,3 @@ tasks.reobfShadowJar.mustRunAfter shadowJar
 tasks.reobfJar.dependsOn(shadowJar)
 
 jar.dependsOn("shadowJar")
-
-configurations{
-    apiCompileClasspath {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
-    testCompileClasspath {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
-    compileClasspath {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
-    runtimeClasspath {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
-    include {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
-}
