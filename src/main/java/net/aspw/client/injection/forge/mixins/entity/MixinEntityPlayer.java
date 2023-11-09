@@ -109,7 +109,7 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
     @Shadow
     public abstract boolean isPlayerSleeping();
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract float getDefaultEyeHeight();
 
     /**
