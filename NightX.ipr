@@ -371,10 +371,6 @@
       <module fileurl="file://$PROJECT_DIR$/AvoidWare.api.iml" filepath="$PROJECT_DIR$/AvoidWare.api.iml" />
       <module fileurl="file://$PROJECT_DIR$/AvoidWare.main.iml" filepath="$PROJECT_DIR$/AvoidWare.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/AvoidWare.test.iml" filepath="$PROJECT_DIR$/AvoidWare.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/NightX.iml" filepath="$PROJECT_DIR$/NightX.iml" />
-      <module fileurl="file://$PROJECT_DIR$/NightX-Client.NightX.api.iml" filepath="$PROJECT_DIR$/NightX-Client.NightX.api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/NightX-Client.NightX.main.iml" filepath="$PROJECT_DIR$/NightX-Client.NightX.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/NightX-Client.NightX.test.iml" filepath="$PROJECT_DIR$/NightX-Client.NightX.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX-master.NightX.iml" filepath="$PROJECT_DIR$/NightX-master.NightX.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.api.iml" filepath="$PROJECT_DIR$/NightX.api.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.main.iml" filepath="$PROJECT_DIR$/NightX.main.iml" />
@@ -797,9 +793,9 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viabackwards/4.9.0-23w45a-SNAPSHOT/50ee64d9f5dc9a394853c8810425c2772a6460dc/viabackwards-4.9.0-23w45a-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: com.viaversion:viarewind-universal:3.0.3-SNAPSHOT">
+    <library name="Gradle: com.viaversion:viarewind-universal:3.0.4-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viarewind-universal/3.0.3-SNAPSHOT/e9a9adbd130c53289233500736eea5c1477343dc/viarewind-universal-3.0.3-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viaversion/viarewind-universal/3.0.4-SNAPSHOT/390896415fd935488ca869a489a10fd2eed555b9/viarewind-universal-3.0.4-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
