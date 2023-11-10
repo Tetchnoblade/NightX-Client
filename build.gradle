@@ -18,7 +18,6 @@ repositories {
     maven { url = "https://maven.minecraftforge.net/" }
     maven { url = "https://repo.spongepowered.org/repository/maven-public/" }
     maven { url = "https://repo.viaversion.com" }
-    maven { url = "https://maven.lenni0451.net/everything" }
     maven { url = "https://jitpack.io/" }
 }
 
@@ -49,28 +48,12 @@ configurations {
 
     external
     compile.extendsFrom(external)
-
-    apiCompileClasspath {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
-    testCompileClasspath {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
-    compileClasspath {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
-    runtimeClasspath {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
-    include {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
 }
 
 def viaLibs = [
         "com.viaversion:viaversion:${project.viaversion_version}",
-        "com.viaversion:viabackwards-common:${project.viabackwards_version}",
-        "com.viaversion:viarewind-common:${project.viarewind_version}",
+        "com.viaversion:viabackwards:${project.viabackwards_version}",
+        "com.viaversion:viarewind-universal:${project.viarewind_version}",
         "org.yaml:snakeyaml:${project.snake_yml_version}",
         "net.raphimc:ViaLoader:${project.vialoader_version}",
         "org.slf4j:slf4j-api:${project.slf4j_version}"
@@ -179,3 +162,21 @@ tasks.reobfShadowJar.mustRunAfter shadowJar
 tasks.reobfJar.dependsOn(shadowJar)
 
 jar.dependsOn("shadowJar")
+
+configurations{
+    apiCompileClasspath {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+    testCompileClasspath {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+    compileClasspath {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+    runtimeClasspath {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+    include {
+        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
+    }
+}

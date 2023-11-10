@@ -26,7 +26,7 @@ public class VersionSlider extends GuiButton {
         else if (getSliderVersion().getName().equals("1.20/1.20.1"))
             this.displayString = "Protocol: 1.20/1";
         else if (getSliderVersion().getName().equals("1.20.3"))
-            this.displayString = "Protocol: 23w44a";
+            this.displayString = "Protocol: 23w45a";
         else this.displayString = "Protocol: " + getSliderVersion().getName();
     }
 
@@ -73,7 +73,7 @@ public class VersionSlider extends GuiButton {
                 else if (getSliderVersion().getName().equals("1.20/1.20.1"))
                     this.displayString = "Protocol: 1.20/1";
                 else if (getSliderVersion().getName().equals("1.20.3"))
-                    this.displayString = "Protocol: 23w44a";
+                    this.displayString = "Protocol: 23w45a";
                 else this.displayString = "Protocol: " + getSliderVersion().getName();
                 Protocol.targetVersion = getSliderVersion();
             }
@@ -102,7 +102,7 @@ public class VersionSlider extends GuiButton {
             else if (getSliderVersion().getName().equals("1.20/1.20.1"))
                 this.displayString = "Protocol: 1.20/1";
             else if (getSliderVersion().getName().equals("1.20.3"))
-                this.displayString = "Protocol: 23w44a";
+                this.displayString = "Protocol: 23w45a";
             else this.displayString = "Protocol: " + getSliderVersion().getName();
             Protocol.targetVersion = getSliderVersion();
             this.dragging = true;
