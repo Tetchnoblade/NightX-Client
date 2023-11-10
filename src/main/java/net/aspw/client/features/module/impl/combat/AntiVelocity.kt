@@ -113,7 +113,7 @@ class AntiVelocity : Module() {
     private val jumpResetMode =
         ListValue(
             "JumpReset-Mode",
-            arrayOf("Normal", "ResetVelocity", "SimulatePerfect", "SimulateReduce", "AntiCombo"),
+            arrayOf("Normal", "Reset", "Reduce", "Combo"),
             "Normal"
         ) {
             modeValue.get().equals("jumpreset", true)
@@ -176,35 +176,31 @@ class AntiVelocity : Module() {
         when (modeValue.get().lowercase(Locale.getDefault())) {
             "jumpreset" ->
                 if (mc.thePlayer.hurtTime > 0 && mc.thePlayer.onGround) {
-                    if (jumpResetMode.get() == "ResetVelocity") {
+                    if (jumpResetMode.get() == "Reset") {
                         mc.thePlayer.motionY = 0.0
-                        mc.thePlayer.jump()
-
                         mc.thePlayer.motionX = 0.0
                         mc.thePlayer.motionZ = 0.0
-                    } else if (jumpResetMode.get() == "SimulateReduce") {
-                        mc.thePlayer.motionY = 0.0
+
                         mc.thePlayer.jump()
+                    } else if (jumpResetMode.get() == "Reduce") {
+                        mc.thePlayer.motionY = 0.0
 
                         val yaw = mc.thePlayer.rotationYaw * 0.017453292F
                         mc.thePlayer.motionX -= MathHelper.sin(yaw) * 0.2
                         mc.thePlayer.motionZ += MathHelper.cos(yaw) * 0.2
+                        
+                        mc.thePlayer.jump()
 
                         debug("Modified X:" + mc.thePlayer.motionX)
                         debug("Modified Z:" + mc.thePlayer.motionZ)
-                    } else if (jumpResetMode.get() == "SimulatePerfect") {
-                        // TODO: Implementation Required
-                        // Requies mixin stuff to listen for packets
-                        // So we jump at the exact time we recieve the damage tick
                     } else if (jumpResetMode.get() == "Normal") {
                         mc.thePlayer.jump()
                     }
                 } else if (
-                    jumpResetMode.get() == "AntiCombo" &&
+                    jumpResetMode.get() == "Combo" &&
                     mc.thePlayer.hurtTime == 9 &&
                     mc.thePlayer.onGround
                 ) {
-                    // Very shawty way but works provided you're actually in a combo
                     mc.thePlayer.jump()
                 }
             "intave" -> {
