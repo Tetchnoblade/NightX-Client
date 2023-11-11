@@ -214,6 +214,7 @@ var _ModuleManager = function () {
             registerEvent("strafe", "onStrafe");
             registerEvent("slowDown", "onSlowDown");
             registerEvent("killed", "onKilled");
+            registerEvent("teleport", "onTeleport");
         });
     }
 

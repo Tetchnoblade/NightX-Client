@@ -21,6 +21,10 @@ class TestModule1 : Module() {
     }
 
     @EventTarget
+    fun onTeleport(event: TeleportEvent) {
+    }
+
+    @EventTarget
     fun onMotion(event: MotionEvent) {
     }
 

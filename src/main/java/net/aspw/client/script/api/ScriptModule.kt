@@ -121,6 +121,9 @@ class ScriptModule(private val moduleObject: JSObject) : Module() {
     @EventTarget
     fun onKilled(entityKilledEvent: EntityKilledEvent) = callEvent("killed", entityKilledEvent)
 
+    @EventTarget
+    fun onTeleport(entityTeleportEvent: TeleportEvent) = callEvent("teleport", entityTeleportEvent)
+
     /**
      * Calls the handler of a registered event.
      * @param eventName Name of the event to be called.

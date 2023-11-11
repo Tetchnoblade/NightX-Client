@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af093b99-5942-419c-869b-8b2d7cb4dd2a" name="変更" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/minigames/TestModule1.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/minigames/TestModule2.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NightX.iws" beforeDir="false" afterPath="$PROJECT_DIR$/NightX.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/ModuleManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/ModuleManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/minigames/TestModule1.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/minigames/TestModule1.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/minigames/TestModule2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/features/module/impl/minigames/TestModule2.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/aspw/client/script/api/ScriptModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/aspw/client/script/api/ScriptModule.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/script/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/minecraft/client/script/api.js" afterDir="false" />
     </list>
