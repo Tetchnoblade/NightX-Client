@@ -137,7 +137,7 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
     private void drawScreen(CallbackInfo callbackInfo) {
         Fonts.minecraftFont.drawStringWithShadow(
                 "§7Username: §d" + mc.getSession().getUsername(),
-                98f,
+                117f,
                 11.5f,
                 0xffffff);
     }

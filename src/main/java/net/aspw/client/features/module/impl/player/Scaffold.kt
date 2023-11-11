@@ -140,7 +140,7 @@ class Scaffold : Module() {
             .equals("aac", ignoreCase = true)
     }
     private val preRotationValue = ListValue("WaitRotationMode", arrayOf("Normal", "Lock", "None"), "Normal")
-    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Normal")
+    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Packet")
 
     // Delay
     private val placeableDelay = BoolValue("PlaceableDelay", false)
@@ -173,7 +173,7 @@ class Scaffold : Module() {
     private val speedSlowDown = FloatValue("SpeedPot-SlowDown", 0.8f, 0.0f, 0.9f) { noSpeedPotValue.get() }
     private val customSpeedValue = BoolValue("CustomSpeed", false)
     private val customMoveSpeedValue = FloatValue("CustomMoveSpeed", 0.2f, 0f, 5f) { customSpeedValue.get() }
-    private val animationValue = BoolValue("Animation", true)
+    private val animationValue = BoolValue("Animation", false)
     private val downValue = BoolValue("Down", true)
     private val noHitCheckValue = BoolValue("NoHitCheck", false)
     private val sameYValue = BoolValue("KeepY", false)
