@@ -371,6 +371,10 @@
       <module fileurl="file://$PROJECT_DIR$/AvoidWare.api.iml" filepath="$PROJECT_DIR$/AvoidWare.api.iml" />
       <module fileurl="file://$PROJECT_DIR$/AvoidWare.main.iml" filepath="$PROJECT_DIR$/AvoidWare.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/AvoidWare.test.iml" filepath="$PROJECT_DIR$/AvoidWare.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NightX.iml" filepath="$PROJECT_DIR$/NightX.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NightX-Client.NightX.api.iml" filepath="$PROJECT_DIR$/NightX-Client.NightX.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NightX-Client.NightX.main.iml" filepath="$PROJECT_DIR$/NightX-Client.NightX.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NightX-Client.NightX.test.iml" filepath="$PROJECT_DIR$/NightX-Client.NightX.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX-master.NightX.iml" filepath="$PROJECT_DIR$/NightX-master.NightX.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.api.iml" filepath="$PROJECT_DIR$/NightX.api.iml" />
       <module fileurl="file://$PROJECT_DIR$/NightX.main.iml" filepath="$PROJECT_DIR$/NightX.main.iml" />
@@ -383,35 +387,6 @@
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8 (3)" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
-  </component>
-  <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="Minecraft Client" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="1.8 (3)" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStart" />
-      <module name="NightX-Client.NightX.main" />
-      <option name="PROGRAM_PARAMETERS" value="-Xmx8G -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M -Djavax.net.ssl.trustStoreType=Windows-ROOT" />
-      <option name="VM_PARAMETERS" value="-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader -Ddev-mode" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="false" name="Minecraft Server" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="1.8 (3)" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="GradleStartServer" />
-      <module name="NightX-Client.NightX.main" />
-      <option name="PROGRAM_PARAMETERS" value="-Xmx8G -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M -Djavax.net.ssl.trustStoreType=Windows-ROOT" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
@@ -588,17 +563,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.21.1/68e62df0cf0c3927fa98f6d795543ecbeb919521/error_prone_annotations-2.21.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: com.google.errorprone:error_prone_annotations:2.5.1">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.5.1/562d366678b89ce5d6b6b82c1a073880341e3fba/error_prone_annotations-2.5.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.5.1/9a653f29d249e06b99600a4f79ba5aea87fd9bca/error_prone_annotations-2.5.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.5.1/600a12b3f1ec5aab8f10aff4e11cd28c6ee52697/error_prone_annotations-2.5.1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.google.guava:failureaccess:1.0.1">
@@ -1069,17 +1033,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-core/2.0-beta9/c7da50fd52d6ee6991a0e16e2df1431f7656a7f4/log4j-core-2.0-beta9-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: org.checkerframework:checker-qual:3.10.0">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/3.10.0/710fd6abff4b26b40dc0917050dc4c67efcf60b6/checker-qual-3.10.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/3.10.0/b99a04cd43c4d04886426cb0a5dfa227bf3509ff/checker-qual-3.10.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/3.10.0/f503a8f16118db22642c950342dc0460d19409fa/checker-qual-3.10.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.checkerframework:checker-qual:3.37.0">

@@ -19,7 +19,8 @@ object CheckConnection {
     var clientContributors = ""
     var clientRealContributors = ""
     var srgFile = ""
-    var stafflist = ""
+    var bmcstafflist = ""
+    var mushstafflist = ""
     var changeLog1 = ""
     var changeLog2 = ""
     var changeLog3 = ""
@@ -156,14 +157,28 @@ object CheckConnection {
     fun checkStaffList() {
         try {
             val httpClient: CloseableHttpClient = HttpClients.createDefault()
-            val request = HttpGet(Client.CLIENT_STAFFLIST)
+            val request = HttpGet(Client.CLIENT_BLOCKSMC)
             val response = httpClient.execute(request)
             val entity = response.entity
             val content = EntityUtils.toString(entity)
             EntityUtils.consume(entity)
             response.close()
             httpClient.close()
-            stafflist = content
+            bmcstafflist = content
+        } catch (e: Exception) {
+            canConnect = false
+        }
+
+        try {
+            val httpClient: CloseableHttpClient = HttpClients.createDefault()
+            val request = HttpGet(Client.CLIENT_MUSHMC)
+            val response = httpClient.execute(request)
+            val entity = response.entity
+            val content = EntityUtils.toString(entity)
+            EntityUtils.consume(entity)
+            response.close()
+            httpClient.close()
+            mushstafflist = content
         } catch (e: Exception) {
             canConnect = false
         }

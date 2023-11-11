@@ -33,7 +33,6 @@ object Client {
     const val CLIENT_SRG = "$CLIENT_WEBSITE/data/srg.txt"
     const val CLIENT_ANNOUNCEMENT = "$CLIENT_WEBSITE/data/announcement.txt"
     const val CLIENT_CONTRIBUTORS = "$CLIENT_WEBSITE/data/contributors.json"
-    const val CLIENT_STAFFLIST = "$CLIENT_WEBSITE/data/bmcstafflist.txt"
     const val CLIENT_INFORMATION = "https://api.github.com/repos/Aspw-w/NightX-Client/stats/contributors"
     const val CLIENT_CHAT = "§c§l>> §r"
     val CLIENT_STATUS = when (clientVersion.get()) {
@@ -48,6 +47,8 @@ object Client {
         "Developer" -> "$CLIENT_WEBSITE/data/dev-latest.txt"
         else -> null
     }
+    const val CLIENT_BLOCKSMC = "$CLIENT_WEBSITE/stafflist/blocksmc.txt"
+    const val CLIENT_MUSHMC = "$CLIENT_WEBSITE/stafflist/mushmc.txt"
     // Old Auth System
     // const val CLIENT_USER = "Username:Password:HWID:UID"
 
