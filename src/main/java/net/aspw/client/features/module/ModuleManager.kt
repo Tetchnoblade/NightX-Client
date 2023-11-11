@@ -8,6 +8,8 @@ import net.aspw.client.features.command.impl.ModuleCommand
 import net.aspw.client.features.module.impl.combat.*
 import net.aspw.client.features.module.impl.exploit.*
 import net.aspw.client.features.module.impl.minigames.SnakeGame
+import net.aspw.client.features.module.impl.minigames.TestModule1
+import net.aspw.client.features.module.impl.minigames.TestModule2
 import net.aspw.client.features.module.impl.movement.*
 import net.aspw.client.features.module.impl.other.*
 import net.aspw.client.features.module.impl.player.*
@@ -185,7 +187,9 @@ class ModuleManager : Listenable {
             ChatFilter::class.java,
             WTap::class.java,
             BackTrack::class.java,
-            TriggerBot::class.java
+            TriggerBot::class.java,
+            TestModule1::class.java,
+            TestModule2::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")

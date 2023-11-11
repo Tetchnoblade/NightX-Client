@@ -71,7 +71,7 @@ class ScriptModule(private val moduleObject: JSObject) : Module() {
     override fun onDisable() = callEvent("disable")
 
     @EventTarget
-    fun onUpdate(updateEvent: UpdateEvent) = callEvent("update")
+    fun onUpdate(updateEvent: UpdateEvent) = callEvent("update", updateEvent)
 
     @EventTarget
     fun onMotion(motionEvent: MotionEvent) = callEvent("motion", motionEvent)
@@ -117,6 +117,9 @@ class ScriptModule(private val moduleObject: JSObject) : Module() {
 
     @EventTarget
     fun onSlowDown(slowDownEvent: SlowDownEvent) = callEvent("slowDown", slowDownEvent)
+
+    @EventTarget
+    fun onKilled(entityKilledEvent: EntityKilledEvent) = callEvent("killed", entityKilledEvent)
 
     /**
      * Calls the handler of a registered event.

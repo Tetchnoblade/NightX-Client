@@ -213,6 +213,7 @@ var _ModuleManager = function () {
             registerEvent("clickBlock", "onClickBlock");
             registerEvent("strafe", "onStrafe");
             registerEvent("slowDown", "onSlowDown");
+            registerEvent("killed", "onKilled");
         });
     }
 
