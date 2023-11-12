@@ -263,7 +263,6 @@ class Scaffold : Module() {
      */
     // Target block
     private var targetPlace: PlaceInfo? = null
-    private var towerPlace: PlaceInfo? = null
 
     // Desync
     private val packets = LinkedBlockingQueue<Packet<*>>()
@@ -994,7 +993,7 @@ class Scaffold : Module() {
         ) else if (mc.thePlayer.posY == mc.thePlayer.posY.toInt() + 0.5) BlockPos(
             mc.thePlayer
         ) else BlockPos(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ).down()
-        if (!expand && (!isReplaceable(blockPosition) || search(blockPosition, !shouldGoDown, false))) return
+        if (!expand && (!isReplaceable(blockPosition) || search(blockPosition, !shouldGoDown))) return
         if (expand) {
             val yaw = Math.toRadians(mc.thePlayer.rotationYaw.toDouble())
             val x =
@@ -1002,10 +1001,10 @@ class Scaffold : Module() {
             val z =
                 if (omniDirectionalExpand.get()) cos(yaw).roundToInt() else mc.thePlayer.horizontalFacing.directionVec.z
             for (i in 0 until expandLengthValue.get()) {
-                if (search(blockPosition.add(x * i, 0, z * i), false, false)) return
+                if (search(blockPosition.add(x * i, 0, z * i), false)) return
             }
         } else {
-            for (x in -1..1) for (z in -1..1) if (search(blockPosition.add(x, 0, z), !shouldGoDown, false)) return
+            for (x in -1..1) for (z in -1..1) if (search(blockPosition.add(x, 0, z), !shouldGoDown)) return
         }
     }
 
@@ -1142,7 +1141,7 @@ class Scaffold : Module() {
      * @param checks        visible
      * @return
      */
-    private fun search(blockPosition: BlockPos, checks: Boolean, towerActive: Boolean): Boolean {
+    private fun search(blockPosition: BlockPos, checks: Boolean): Boolean {
         faceBlock = false
         if (!isReplaceable(blockPosition)) return false
         val staticYawMode = rotationLookupValue.get().equals("AAC", ignoreCase = true) || rotationLookupValue.get()
@@ -1283,7 +1282,7 @@ class Scaffold : Module() {
             faceBlock = true
         }
         if (rotationLookupValue.get().equals("same", ignoreCase = true)) lookupRotation = lockRotation
-        if (towerActive) towerPlace = placeRotation.placeInfo else targetPlace = placeRotation.placeInfo
+        targetPlace = placeRotation.placeInfo
         return true
     }
 

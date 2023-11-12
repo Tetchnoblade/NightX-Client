@@ -33,7 +33,7 @@ class LagBack : Module() {
     private val bowLongJumpValue = BoolValue("BowLongJump-LagBack", value = true)
 
     @EventTarget
-    fun onWorld(e: WorldEvent) {
+    fun onWorld(event: WorldEvent) {
         val killAura = Client.moduleManager.getModule(KillAura::class.java)
         val flight = Client.moduleManager.getModule(Flight::class.java)
         val speed = Client.moduleManager.getModule(Speed::class.java)

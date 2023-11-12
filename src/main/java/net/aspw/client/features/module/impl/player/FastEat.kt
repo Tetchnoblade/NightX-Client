@@ -24,11 +24,11 @@ class FastEat : Module() {
 
     private val noMoveValue = BoolValue("NoMove", false)
 
-    private val delayValue = IntegerValue("CustomDelay", 0, 0, 300, { modeValue.get().equals("customdelay", true) })
+    private val delayValue = IntegerValue("CustomDelay", 0, 0, 300) { modeValue.get().equals("customdelay", true) }
     private val customSpeedValue =
-        IntegerValue("CustomSpeed", 2, 0, 35, " packet", { modeValue.get().equals("customdelay", true) })
+        IntegerValue("CustomSpeed", 2, 0, 35, " packet") { modeValue.get().equals("customdelay", true) }
     private val customTimer =
-        FloatValue("CustomTimer", 1.1f, 0.5f, 2f, "x", { modeValue.get().equals("customdelay", true) })
+        FloatValue("CustomTimer", 1.1f, 0.5f, 2f, "x") { modeValue.get().equals("customdelay", true) }
 
     private val msTimer = MSTimer()
     private var usedTimer = false

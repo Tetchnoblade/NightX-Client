@@ -54,7 +54,7 @@ class AutoTool : Module() {
     }
 
     @EventTarget
-    fun onUpdate(update: UpdateEvent) {
+    fun onUpdate(event: UpdateEvent) {
         if (spoofedSlot > 0) {
             if (spoofedSlot == 1)
                 mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))

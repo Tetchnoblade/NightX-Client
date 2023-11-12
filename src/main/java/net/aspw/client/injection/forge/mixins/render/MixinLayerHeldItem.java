@@ -70,7 +70,7 @@ public class MixinLayerHeldItem {
             final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
             final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
 
-            if (Animations.blockingAnimation.get().equals("1.7") && MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && (entityplayer != null && entityplayer.isBlocking() || (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking()))) {
+            if (Animations.blockingAnimation.get().equals("1.7") && (entityplayer != null && entityplayer.isBlocking() || (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking()))) {
                 if (entitylivingbaseIn.isSneaking()) {
                     ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0325F);
                     GlStateManager.translate(-0.58F, 0.3F, -0.2F);

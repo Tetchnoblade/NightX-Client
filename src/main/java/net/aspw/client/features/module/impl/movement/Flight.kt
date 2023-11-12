@@ -758,6 +758,28 @@ class Flight : Module() {
             "minemora" -> {
                 if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak))
                     mc.gameSettings.keyBindSneak.pressed = false
+                if (boost) {
+                    repeat(10) {
+                        mc.timer.timerSpeed = (it / 10).toFloat()
+                        mc.netHandler.addToSendQueue(
+                            C04PacketPlayerPosition(
+                                mc.thePlayer.posX,
+                                mc.thePlayer.posY,
+                                mc.thePlayer.posZ,
+                                false
+                            )
+                        )
+                        mc.netHandler.addToSendQueue(
+                            C04PacketPlayerPosition(
+                                mc.thePlayer.posX,
+                                mc.thePlayer.posY,
+                                mc.thePlayer.posZ,
+                                true
+                            )
+                        )
+                    }
+                    state = false
+                }
             }
 
             "jump" -> {
@@ -798,31 +820,6 @@ class Flight : Module() {
 
             "vanilla" -> {
                 mc.thePlayer.capabilities.allowFlying = true
-            }
-
-            "minemora" -> {
-                if (boost) {
-                    repeat(10) {
-                        mc.timer.timerSpeed = (it / 10).toFloat()
-                        mc.netHandler.addToSendQueue(
-                            C04PacketPlayerPosition(
-                                mc.thePlayer.posX,
-                                mc.thePlayer.posY,
-                                mc.thePlayer.posZ,
-                                false
-                            )
-                        )
-                        mc.netHandler.addToSendQueue(
-                            C04PacketPlayerPosition(
-                                mc.thePlayer.posX,
-                                mc.thePlayer.posY,
-                                mc.thePlayer.posZ,
-                                true
-                            )
-                        )
-                    }
-                    state = false
-                }
             }
 
             "desync" -> {

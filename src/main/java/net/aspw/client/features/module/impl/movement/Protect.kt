@@ -17,8 +17,6 @@ class Protect : Module() {
 
     @EventTarget
     fun onBlockBB(e: BlockBBEvent) {
-        val thePlayer = mc.thePlayer ?: return
-
         when (e.block) {
             Blocks.fire -> if (!fire.get()) return
 

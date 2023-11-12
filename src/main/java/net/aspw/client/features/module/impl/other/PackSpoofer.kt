@@ -35,7 +35,7 @@ class PackSpoofer : Module() {
                     val file1 = File(mc.mcDataDir, "saves")
                     val file2 = File(file1, s2)
 
-                    if (!file2.isFile || url.contains("liquidbounce", true)) {
+                    if (!file2.isFile || url.contains("minecraft", true)) {
                         mc.netHandler.addToSendQueue(
                             C19PacketResourcePackStatus(
                                 hash,

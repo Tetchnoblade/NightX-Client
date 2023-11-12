@@ -47,7 +47,7 @@ class Nuker : Module() {
     private val attackedBlocks = arrayListOf<BlockPos>()
     private var currentBlock: BlockPos? = null
     private var blockHitDelay = 0
-    var isBreaking = false
+    private var isBreaking = false
 
     private var nukeTimer = TickTimer()
     private var nuke = 0

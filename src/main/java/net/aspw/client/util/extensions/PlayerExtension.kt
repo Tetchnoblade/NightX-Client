@@ -2,17 +2,27 @@ package net.aspw.client.util.extensions
 
 import net.aspw.client.util.MinecraftInstance
 import net.aspw.client.util.Rotation
-import net.aspw.client.util.RotationUtils
 import net.minecraft.entity.Entity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.MathHelper
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.Vec3
+import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 /**
  * Allows to get the distance between the current entity and [entity] from the nearest corner of the bounding box
  */
-fun Entity.getDistanceToEntityBox(entity: Entity) = eyes.distanceTo(getNearestPointBB(eyes, entity.hitBox))
+fun Entity.getDistanceToEntityBox(entity: Entity): Double = this.eyesLoc.distanceTo(entity.entityBoundingBox)
+
+fun Vec3.distanceTo(bb: AxisAlignedBB): Double {
+    val pos = getNearestPointBB(this, bb)
+    val xDist = abs(pos.xCoord - this.xCoord)
+    val yDist = abs(pos.yCoord - this.yCoord)
+    val zDist = abs(pos.zCoord - this.zCoord)
+    return sqrt(xDist.pow(2) + yDist.pow(2) + zDist.pow(2))
+}
 
 fun getNearestPointBB(eye: Vec3, box: AxisAlignedBB): Vec3 {
     val origin = doubleArrayOf(eye.xCoord, eye.yCoord, eye.zCoord)
@@ -23,12 +33,6 @@ fun getNearestPointBB(eye: Vec3, box: AxisAlignedBB): Vec3 {
     }
     return Vec3(origin[0], origin[1], origin[2])
 }
-
-val Entity.hitBox: AxisAlignedBB
-    get() {
-        val borderSize = collisionBorderSize.toDouble()
-        return entityBoundingBox.expand(borderSize, borderSize, borderSize)
-    }
 
 val Entity.eyes: Vec3
     get() = getPositionEyes(1f)
@@ -52,11 +56,8 @@ fun rayTraceCustom(blockReachDistance: Double, yaw: Float, pitch: Float): Moving
     return MinecraftInstance.mc.theWorld.rayTraceBlocks(vec3, vec32, false, false, true)
 }
 
-fun Entity.getLookDistanceToEntityBox(entity: Entity = this, rotation: Rotation? = null, range: Double = 10.0): Double {
-    val eyes = this.getPositionEyes(1F)
-    val end = (rotation ?: RotationUtils.targetRotation)?.toDirection()?.multiply(range)?.add(eyes)
-    return entity.entityBoundingBox.calculateIntercept(eyes, end)?.hitVec?.distanceTo(eyes) ?: Double.MAX_VALUE
-}
-
 val Entity.rotation: Rotation
     get() = Rotation(rotationYaw, rotationPitch)
+
+val Entity.eyesLoc: Vec3
+    get() = getPositionEyes(1f)

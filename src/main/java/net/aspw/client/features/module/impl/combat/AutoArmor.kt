@@ -5,7 +5,6 @@ import net.aspw.client.event.Render3DEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.injection.access.IItemStack
 import net.aspw.client.util.InventoryUtils
 import net.aspw.client.util.MovementUtils
 import net.aspw.client.util.item.ArmorComparator
@@ -51,7 +50,7 @@ class AutoArmor : Module() {
             .filter { i: Int ->
                 val itemStack = mc.thePlayer.inventory.getStackInSlot(i)
                 (itemStack != null && itemStack.item is ItemArmor
-                        && (i < 9 || System.currentTimeMillis() - (itemStack as IItemStack).itemDelay >= 200))
+                        && i < 9)
             }
             .mapToObj { i: Int -> ArmorPiece(mc.thePlayer.inventory.getStackInSlot(i), i) }
             .collect(

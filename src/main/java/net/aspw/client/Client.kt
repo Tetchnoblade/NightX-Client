@@ -27,7 +27,7 @@ object Client {
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Continued"
     const val CLIENT_VERSION = "Developer B73"
-    const val CLIENT_CREATOR = "As_pw, outaokura"
+    const val CLIENT_CREATOR = "As_pw"
     const val CLIENT_WEBSITE = "https://aspw-w.github.io/NightX-Web"
     const val CLIENT_CONFIG = "$CLIENT_WEBSITE/data/configs.txt"
     const val CLIENT_SRG = "$CLIENT_WEBSITE/data/srg.txt"
@@ -47,8 +47,8 @@ object Client {
         "Developer" -> "$CLIENT_WEBSITE/data/dev-latest.txt"
         else -> null
     }
-    const val CLIENT_BLOCKSMC = "$CLIENT_WEBSITE/stafflist/blocksmc.txt"
-    const val CLIENT_MUSHMC = "$CLIENT_WEBSITE/stafflist/mushmc.txt"
+    const val CLIENT_BLOCKSMC = "$CLIENT_WEBSITE/data/stafflist/blocksmc.txt"
+    const val CLIENT_MUSHMC = "$CLIENT_WEBSITE/data/stafflist/mushmc.txt"
     // Old Auth System
     // const val CLIENT_USER = "Username:Password:HWID:UID"
 

@@ -138,7 +138,7 @@ class KillAura : Module() {
         false
     ) { !rotations.get().equals("none", true) }
 
-    val movementFix =
+    private val movementFix =
         ListValue("MovementFix", arrayOf("Full", "Semi", "None"), "None") { !rotations.get().equals("none", true) }
 
     private val priorityValue = ListValue(
@@ -334,7 +334,7 @@ class KillAura : Module() {
 
     @EventTarget
     fun onJump(event: JumpEvent) {
-        if (movementFix.get().equals("Full") && currentTarget != null)
+        if (movementFix.get() == "Full" && currentTarget != null)
             event.yaw = RotationUtils.serverRotation?.yaw!!
     }
 

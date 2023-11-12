@@ -214,7 +214,7 @@ class AntiVelocity : Module() {
 
             "grim" -> {
                 if (resetPersec > 0) {
-                    if (updates >= 0 || updates >= resetPersec) {
+                    if (updates >= 0) {
                         updates = 0
                         if (grimTCancel > 0) {
                             grimTCancel--

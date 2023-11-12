@@ -8,7 +8,7 @@ import net.aspw.client.features.module.ModuleInfo
 @ModuleInfo(name = "TestModule3", spacedName = "Test Module 3", description = "", category = ModuleCategory.MINIGAMES)
 class TestModule3 : Module() {
     override val tag: String
-        get() = "Spam Teleport"
+        get() = "Test"
 
     override fun onEnable() {
     }

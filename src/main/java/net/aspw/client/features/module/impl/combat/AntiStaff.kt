@@ -46,7 +46,7 @@ class AntiStaff : Module() {
     }
 
     @EventTarget
-    fun onWorld(e: WorldEvent) {
+    fun onWorld(event: WorldEvent) {
         detected = false
         staffsInWorld.clear()
     }

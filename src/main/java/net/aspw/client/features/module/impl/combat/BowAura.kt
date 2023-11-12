@@ -17,7 +17,7 @@ import java.util.*
 @ModuleInfo(name = "BowAura", spacedName = "Bow Aura", description = "", category = ModuleCategory.COMBAT)
 class BowAura : Module() {
 
-    val silentValue = BoolValue("Silent", true)
+    private val silentValue = BoolValue("Silent", true)
     private val throughWallsValue = BoolValue("ThroughWalls", false)
     private val priorityValue = ListValue("Priority", arrayOf("Health", "Distance", "Direction"), "Direction")
 

@@ -27,6 +27,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.BlockPos
 import java.util.*
+import kotlin.math.abs
 
 @ModuleInfo(name = "AntiVoid", spacedName = "Anti Void", description = "", category = ModuleCategory.MOVEMENT)
 class AntiVoid : Module() {
@@ -192,7 +193,7 @@ class AntiVoid : Module() {
                 } catch (e: Exception) {
                     // do nothing. i hate errors
                 }
-                if (detectedLocation != null && Math.abs(mc.thePlayer.posY - detectedLocation.y) +
+                if (detectedLocation != null && abs(mc.thePlayer.posY - detectedLocation.y) +
                     mc.thePlayer.fallDistance <= maxFallDistSimulateValue.get()
                 ) {
                     lastFound = mc.thePlayer.fallDistance.toDouble()

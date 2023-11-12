@@ -50,7 +50,7 @@ class BedBreaker : Module() {
     private var oldPos: BlockPos? = null
     private var blockHitDelay = 0
     private var currentDamage = 0F
-    var breaking = false
+    private var breaking = false
 
     override val tag: String
         get() = if (hypixelValue.get()) "Watchdog" else "Normal"

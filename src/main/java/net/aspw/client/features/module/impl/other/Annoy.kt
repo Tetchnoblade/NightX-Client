@@ -8,13 +8,15 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.Rotation
 import net.aspw.client.util.RotationUtils
 import net.aspw.client.value.BoolValue
+import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 
 @ModuleInfo(name = "Annoy", description = "", category = ModuleCategory.OTHER)
 class Annoy : Module() {
     private val yawModeValue = ListValue("YawMove", arrayOf("None", "Jitter", "Spin", "Back"), "Spin")
     private val pitchModeValue = ListValue("PitchMode", arrayOf("None", "Down", "Up", "Jitter"), "Down")
-    val rotateValue = BoolValue("SilentRotate", true)
+    private val spinSpeed = IntegerValue("SpinSpeed", 20, 0, 40) { yawModeValue.get().equals("spin", true) }
+    private val rotateValue = BoolValue("SilentRotate", true)
 
     private var yaw = 0f
     private var pitch = 0f
@@ -27,7 +29,7 @@ class Annoy : Module() {
             }
 
             "spin" -> {
-                yaw += 20.0f
+                yaw += spinSpeed.get()
                 if (yaw > 175.0f) {
                     yaw = -180.0f
                 } else if (yaw < -175.0f) {
