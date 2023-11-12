@@ -51,7 +51,7 @@ class AutoArmor : Module() {
             .filter { i: Int ->
                 val itemStack = mc.thePlayer.inventory.getStackInSlot(i)
                 (itemStack != null && itemStack.item is ItemArmor
-                        && (i < 9 || System.currentTimeMillis() - (itemStack as IItemStack).itemDelay >= 260))
+                        && (i < 9 || System.currentTimeMillis() - (itemStack as IItemStack).itemDelay >= 200))
             }
             .mapToObj { i: Int -> ArmorPiece(mc.thePlayer.inventory.getStackInSlot(i), i) }
             .collect(

@@ -2,6 +2,7 @@ package net.aspw.client.features.module.impl.other;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.EventTarget;
+import net.aspw.client.event.Render3DEvent;
 import net.aspw.client.event.UpdateEvent;
 import net.aspw.client.features.module.Module;
 import net.aspw.client.features.module.ModuleCategory;
@@ -14,6 +15,7 @@ import net.aspw.client.util.pathfinder.Vec3;
 import net.aspw.client.value.ListValue;
 import net.aspw.client.visual.hud.element.elements.Notification;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
@@ -75,6 +77,22 @@ public class ClickTP extends Module {
                 Client.tipSoundManager.getPopSound().asyncPlay(Client.moduleManager.getPopSoundPower());
             }
             endPos = null;
+        }
+    }
+
+    @EventTarget
+    public void onRender3D(final Render3DEvent event) {
+        objectPosition = mc.thePlayer.rayTrace(1000, event.getPartialTicks());
+
+        if (objectPosition.getBlockPos() == null)
+            return;
+
+        final int x = objectPosition.getBlockPos().getX();
+        final int y = objectPosition.getBlockPos().getY();
+        final int z = objectPosition.getBlockPos().getZ();
+
+        if (Objects.requireNonNull(BlockUtils.getBlock(objectPosition.getBlockPos())).getMaterial() != Material.air) {
+            final RenderManager renderManager = mc.getRenderManager();
         }
     }
 }
