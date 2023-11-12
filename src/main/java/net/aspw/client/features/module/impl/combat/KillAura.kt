@@ -123,7 +123,6 @@ class KillAura : Module() {
         100
     ) { !rotations.get().equals("none", true) }
 
-    private val animationValue = BoolValue("Animation", false)
     private val noInventoryAttackValue = BoolValue("NoInvAttack", false)
     private val checkSprintValue = BoolValue("StopSprint", false)
     private val throughWallsValue = BoolValue(
@@ -363,11 +362,6 @@ class KillAura : Module() {
                     if (criticalsValue.get())
                         mc.effectRenderer.emitParticleAtEntity(currentTarget, EnumParticleTypes.CRIT)
                 }
-            }
-
-            if (currentTarget?.hurtTime!! > 7.8) {
-                if (animationValue.get())
-                    mc.itemRenderer.resetEquippedProgress2()
             }
         }
 

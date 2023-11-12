@@ -5,6 +5,7 @@ import net.aspw.client.event.JumpEvent;
 import net.aspw.client.features.module.impl.movement.AirJump;
 import net.aspw.client.features.module.impl.movement.Jesus;
 import net.aspw.client.features.module.impl.movement.Sprint;
+import net.aspw.client.features.module.impl.other.NoJumpDelay;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.features.module.impl.visual.SilentView;
@@ -233,6 +234,12 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
         }
 
         this.isAirBorne = true;
+    }
+
+    @Inject(method = "onLivingUpdate", at = @At("HEAD"))
+    private void headLiving(CallbackInfo callbackInfo) {
+        if (Client.moduleManager.getModule(NoJumpDelay.class).getState())
+            jumpTicks = 0;
     }
 
     @Inject(method = "onLivingUpdate", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/EntityLivingBase;isJumping:Z", ordinal = 1))

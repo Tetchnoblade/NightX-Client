@@ -2,6 +2,7 @@ package net.aspw.client.injection.forge.mixins.entity;
 
 import com.mojang.authlib.GameProfile;
 import net.aspw.client.Client;
+import net.aspw.client.features.module.impl.minigames.TestModule2;
 import net.aspw.client.features.module.impl.movement.Flight;
 import net.aspw.client.features.module.impl.movement.LongJump;
 import net.aspw.client.features.module.impl.movement.Speed;
@@ -133,6 +134,7 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
         final Flight flight = Objects.requireNonNull(Client.moduleManager.getModule(Flight.class));
         final Speed speed = Objects.requireNonNull(Client.moduleManager.getModule(Speed.class));
         final BowLongJump bowLongJump = Objects.requireNonNull(Client.moduleManager.getModule(BowLongJump.class));
+        final TestModule2 testModule2 = Objects.requireNonNull(Client.moduleManager.getModule(TestModule2.class));
         if (longJump.getState() && longJump.getFakeYValue().get()) {
             float f2 = 1.62F;
             final double y = longJump.getY();
@@ -148,6 +150,12 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
         if (speed.getState() && speed.getFakeYValue().get()) {
             float f2 = 1.62F;
             final double y = speed.getY();
+            f2 = (float) (1.62F - (mc.thePlayer.lastTickPosY + (((mc.thePlayer.posY - mc.thePlayer.lastTickPosY) * mc.timer.renderPartialTicks)) - y));
+            return f2;
+        }
+        if (testModule2.getState() && testModule2.getStage() < 6) {
+            float f2 = 1.62F;
+            final double y = testModule2.getFakeY();
             f2 = (float) (1.62F - (mc.thePlayer.lastTickPosY + (((mc.thePlayer.posY - mc.thePlayer.lastTickPosY) * mc.timer.renderPartialTicks)) - y));
             return f2;
         }

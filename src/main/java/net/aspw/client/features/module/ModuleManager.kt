@@ -7,9 +7,7 @@ import net.aspw.client.event.Listenable
 import net.aspw.client.features.command.impl.ModuleCommand
 import net.aspw.client.features.module.impl.combat.*
 import net.aspw.client.features.module.impl.exploit.*
-import net.aspw.client.features.module.impl.minigames.SnakeGame
-import net.aspw.client.features.module.impl.minigames.TestModule1
-import net.aspw.client.features.module.impl.minigames.TestModule2
+import net.aspw.client.features.module.impl.minigames.*
 import net.aspw.client.features.module.impl.movement.*
 import net.aspw.client.features.module.impl.other.*
 import net.aspw.client.features.module.impl.player.*
@@ -188,8 +186,13 @@ class ModuleManager : Listenable {
             WTap::class.java,
             BackTrack::class.java,
             TriggerBot::class.java,
+            NoJumpDelay::class.java,
             TestModule1::class.java,
-            TestModule2::class.java
+            TestModule2::class.java,
+            TestModule3::class.java,
+            TestModule4::class.java,
+            TestModule5::class.java,
+            TestModule6::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")

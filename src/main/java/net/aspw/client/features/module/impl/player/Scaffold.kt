@@ -12,6 +12,9 @@ import net.aspw.client.util.block.BlockUtils.canBeClicked
 import net.aspw.client.util.block.BlockUtils.isReplaceable
 import net.aspw.client.util.block.PlaceInfo
 import net.aspw.client.util.block.PlaceInfo.Companion.get
+import net.aspw.client.util.extensions.eyes
+import net.aspw.client.util.extensions.getVectorForRotation
+import net.aspw.client.util.extensions.rotation
 import net.aspw.client.util.misc.RandomUtils
 import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.util.timer.TickTimer
@@ -159,6 +162,25 @@ class Scaffold : Module() {
             }
         }
 
+    // Extra Clicks
+    private val extraClicks = BoolValue("ExtraClicks", false)
+    private val extraClickMaxCPSValue: IntegerValue =
+        object : IntegerValue("ExtraClick-MaxCPS", 7, 1, 50, { extraClicks.get() }) {
+            override fun onChanged(oldValue: Int, newValue: Int) {
+                val i = extraClickMinCPSValue.get()
+                if (i > newValue) set(i)
+            }
+        }
+    private val extraClickMinCPSValue: IntegerValue =
+        object : IntegerValue("ExtraClick-MinCPS", 3, 1, 50, { extraClicks.get() }) {
+            override fun onChanged(oldValue: Int, newValue: Int) {
+                val i = extraClickMaxCPSValue.get()
+                if (i < newValue) set(i)
+            }
+        }
+    private var extraClick =
+        ExtraClickInfo(RandomUtils.nextInt(extraClickMinCPSValue.get(), extraClickMaxCPSValue.get()), 0L, 0)
+
     private val watchdogYaw: IntegerValue =
         object : IntegerValue("WatchdogYaw", 180, 0, 360, { rotationModeValue.get().equals("watchdog", true) }) {}
     private val watchdogPitch: IntegerValue =
@@ -173,7 +195,6 @@ class Scaffold : Module() {
     private val speedSlowDown = FloatValue("SpeedPot-SlowDown", 0.8f, 0.0f, 0.9f) { noSpeedPotValue.get() }
     private val customSpeedValue = BoolValue("CustomSpeed", false)
     private val customMoveSpeedValue = FloatValue("CustomMoveSpeed", 0.2f, 0f, 5f) { customSpeedValue.get() }
-    private val animationValue = BoolValue("Animation", false)
     private val downValue = BoolValue("Down", true)
     private val noHitCheckValue = BoolValue("NoHitCheck", false)
     private val sameYValue = BoolValue("KeepY", false)
@@ -261,7 +282,7 @@ class Scaffold : Module() {
 
     // Auto block slot
     private var slot = 0
-    private var lastSlot = 0
+    var lastSlot = 0
 
     // Zitter Smooth
     private var zitterDirection = false
@@ -277,6 +298,7 @@ class Scaffold : Module() {
 
     // Down
     private var shouldGoDown = false
+    private val currRotation = RotationUtils.serverRotation ?: mc.thePlayer.rotation
 
     // Render thingy
     var canTower = false
@@ -843,6 +865,82 @@ class Scaffold : Module() {
         }
     }
 
+    @EventTarget
+    fun onTick(event: TickEvent) {
+        if (extraClicks.get()) {
+            while (extraClick.clicks > 0) {
+                extraClick.clicks--
+
+                doPlaceAttempt()
+            }
+        }
+    }
+
+    @EventTarget
+    fun onRender3D(event: Render3DEvent) {
+        if (extraClicks.get() && MovementUtils.isMoving()) {
+            currRotation.let {
+                performBlockRaytrace(it, mc.playerController.blockReachDistance)?.let { raytrace ->
+                    val timePassed = System.currentTimeMillis() - extraClick.lastClick >= extraClick.delay
+
+                    if (raytrace.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && timePassed) {
+                        extraClick = ExtraClickInfo(
+                            RandomUtils.nextInt(extraClickMinCPSValue.get(), extraClickMaxCPSValue.get()),
+                            System.currentTimeMillis(),
+                            extraClick.clicks + 1
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun performBlockRaytrace(rotation: Rotation, maxReach: Float): MovingObjectPosition? {
+        val player = mc.thePlayer ?: return null
+        val world = mc.theWorld ?: return null
+
+        val eyes = player.eyes
+        val rotationVec = getVectorForRotation(rotation.pitch, rotation.yaw)
+        val vec3 = mc.thePlayer.getPositionEyes(1.0f)
+        val reach = vec3.addVector(
+            rotationVec.xCoord * maxReach.toDouble(),
+            rotationVec.yCoord * maxReach.toDouble(),
+            rotationVec.zCoord * maxReach.toDouble()
+        )
+
+        return world.rayTraceBlocks(eyes, reach, false, false, true)
+    }
+
+    private fun doPlaceAttempt() {
+        val player = mc.thePlayer ?: return
+        val world = mc.theWorld ?: return
+
+        val stack = player.inventoryContainer.getSlot(slot + 36).stack ?: return
+
+        if (stack.item !is ItemBlock || InventoryUtils.BLOCK_BLACKLIST.contains((stack.item as ItemBlock).block)) {
+            return
+        }
+
+        val block = stack.item as ItemBlock
+
+        val raytrace = performBlockRaytrace(currRotation, mc.playerController.blockReachDistance) ?: return
+
+        val shouldPlace = !block.canPlaceBlockOnSide(world, raytrace.blockPos, raytrace.sideHit, player, stack)
+
+        if (raytrace.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK || !shouldPlace) {
+            return
+        }
+
+        mc.playerController.onPlayerRightClick(
+            mc.thePlayer,
+            mc.theWorld,
+            mc.thePlayer.heldItem,
+            raytrace.blockPos,
+            raytrace.sideHit,
+            raytrace.hitVec
+        )
+    }
+
     private fun floatUP(event: MotionEvent) {
         if (mc.theWorld.getCollidingBoundingBoxes(
                 mc.thePlayer,
@@ -937,8 +1035,6 @@ class Scaffold : Module() {
             )
         ) {
             delayTimer.reset()
-            if (animationValue.get())
-                mc.itemRenderer.resetEquippedProgress2()
             delay = if (!placeableDelay.get()) 0L else TimeUtils.randomDelay(minDelayValue.get(), maxDelayValue.get())
             if (mc.thePlayer.onGround && placeSlowDownValue.get()) {
                 val modifier = speedModifierValue.get()
@@ -1206,4 +1302,6 @@ class Scaffold : Module() {
             }
             return amount
         }
+
+    data class ExtraClickInfo(val delay: Int, val lastClick: Long, var clicks: Int)
 }
