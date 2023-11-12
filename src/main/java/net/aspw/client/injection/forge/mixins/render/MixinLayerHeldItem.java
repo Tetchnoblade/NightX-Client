@@ -7,7 +7,6 @@ import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -71,7 +70,7 @@ public class MixinLayerHeldItem {
             final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
             final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
 
-            if ((EntityLivingBase) (Object) this instanceof EntityPlayerSP && Animations.blockingAnimation.get().equals("1.7") && (entityplayer != null && entityplayer.isBlocking() || (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking()))) {
+            if (Animations.blockingAnimation.get().equals("1.7") && (entityplayer != null && entityplayer.isBlocking() || (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking()))) {
                 if (entitylivingbaseIn.isSneaking()) {
                     ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0325F);
                     GlStateManager.translate(-0.58F, 0.3F, -0.2F);
