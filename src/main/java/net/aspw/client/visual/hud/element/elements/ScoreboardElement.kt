@@ -6,7 +6,6 @@ import net.aspw.client.Client
 import net.aspw.client.features.module.impl.visual.AntiBlind
 import net.aspw.client.features.module.impl.visual.ColorMixer
 import net.aspw.client.util.render.*
-import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.value.*
 import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.hud.element.Border
@@ -25,7 +24,7 @@ import java.util.*
 
 @ElementInfo(name = "ScoreboardElement")
 class ScoreboardElement(
-    x: Double = 5.0, y: Double = 0.0, scale: Float = 1F,
+    x: Double = 6.0, y: Double = 30.0, scale: Float = 1F,
     side: Side = Side(Side.Horizontal.RIGHT, Side.Vertical.MIDDLE)
 ) : Element(x, y, scale, side) {
 
@@ -74,17 +73,6 @@ class ScoreboardElement(
     private val shadowValue = BoolValue("FontShadow", false)
     private val showRedNumbersValue = BoolValue("ShowRedNumbers", false)
     private val fontValue = FontValue("Font", Fonts.minecraftFont)
-
-    private val cachedDomains = arrayListOf<String>()
-
-    private val garbageTimer = MSTimer()
-
-    override fun updateElement() {
-        if (garbageTimer.hasTimePassed(30000L) || cachedDomains.size > 50) {
-            cachedDomains.clear()
-            garbageTimer.reset()
-        }
-    }
 
     /**
      * Draw element
