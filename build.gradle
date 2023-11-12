@@ -7,11 +7,6 @@ plugins {
     id "org.spongepowered.mixin"
 }
 
-apply plugin: "net.minecraftforge.gradle.forge"
-apply plugin: "org.spongepowered.mixin"
-apply plugin: "com.github.johnrengelman.shadow"
-apply plugin: "java"
-
 repositories {
     mavenLocal()
     mavenCentral()
@@ -49,7 +44,7 @@ configurations {
     external
     compile.extendsFrom(external)
 
-    runtimeOnly.canBeResolved=true
+    runtimeOnly.canBeResolved = true
 }
 
 def viaLibs = [
@@ -86,13 +81,18 @@ dependencies {
 
     include "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    include("com.jagrosh:DiscordIPC:0.4")
+    include("com.jagrosh:DiscordIPC:0.4") {
+        exclude module: "log4j"
+    }
+
     include("com.github.CCBlueX:Elixir:1.2.6") {
         exclude module: "kotlin-stdlib"
         exclude module: "authlib"
     }
 
-    include 'com.github.TheAltening:TheAltening4j:d0771f42d3'
+    include ('com.github.TheAltening:TheAltening4j:-SNAPSHOT') {
+        exclude module: "gson"
+    }
     include 'com.github.TheAltening:TheAlteningAuth4j:-SNAPSHOT'
 
     include 'com.github.ben-manes.caffeine:caffeine:2.9.0'
@@ -123,9 +123,9 @@ processResources {
     rename "(.+_at.cfg)", "META-INF/\$1"
 }
 
-task moveResources {
+tasks.register('moveResources') {
     doLast {
-                "${buildDir}/classes/java"
+        "${buildDir}/classes/java"
     }
 }
 
@@ -144,7 +144,7 @@ jar {
             "FMLAT": "client_at.cfg",
     )
 
-    enabled = false
+    enabled = true
 }
 
 mixin {
@@ -165,17 +165,8 @@ tasks.reobfJar.dependsOn(shadowJar)
 
 jar.dependsOn("shadowJar")
 
-configurations{
-    apiCompileClasspath {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
-    testCompileClasspath {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
+configurations {
     compileClasspath {
-        attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
-    }
-    runtimeClasspath {
         attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
     }
     include {

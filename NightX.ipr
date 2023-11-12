@@ -476,13 +476,13 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.CCBlueX/Elixir/1.2.6/d471c02cdfd7151bcf096051153bb7070b78a7da/Elixir-1.2.6-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: com.github.TheAltening:TheAltening4j:d0771f42d3">
+    <library name="Gradle: com.github.TheAltening:TheAltening4j:-SNAPSHOT">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.TheAltening/TheAltening4j/d0771f42d3/d007754387b6442579e855143d6a610c9875eeb7/TheAltening4j-d0771f42d3.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.TheAltening/TheAltening4j/-SNAPSHOT/b76472ca2cb7deec6bdf0fbc57034db31fc5d038/TheAltening4j--SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.TheAltening/TheAltening4j/d0771f42d3/4083fd3cfa61108bc7fd0c47cda80329f28862a5/TheAltening4j-d0771f42d3-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.TheAltening/TheAltening4j/-SNAPSHOT/163322384a20498f0b4478d639f0b7abb20291c7/TheAltening4j--SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.github.TheAltening:TheAlteningAuth4j:-SNAPSHOT">
@@ -541,17 +541,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a6dc5db8a12928e583bd3f23e72d3ab611ecd58f/gson-2.2.4-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: com.google.code.gson:gson:2.8.5">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/f645ed69d595b24d4cf8b3fbb64cc505bede8829/gson-2.8.5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/a2841d93c258a70e320be81586e92208a60144f2/gson-2.8.5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f/gson-2.8.5-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.google.errorprone:error_prone_annotations:2.21.1">
@@ -846,17 +835,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/jline/jline/2.13/e290282bf7683ae3307e85bdc5d5e08424dfb893/jline-2.13-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: log4j:log4j:1.2.17">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/log4j/log4j/1.2.17/5af35056b4d257e4b64b9e8069c0746e8b08629f/log4j-1.2.17.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/log4j/log4j/1.2.17/c10c20168206896442f3192d5417815df7fcbf9a/log4j-1.2.17-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/log4j/log4j/1.2.17/677abe279b68c5e7490d6d50c6951376238d7d3e/log4j-1.2.17-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: lzma:lzma:0.0.1">
