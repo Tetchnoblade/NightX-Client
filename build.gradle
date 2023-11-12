@@ -110,6 +110,8 @@ shadowJar {
 
     exclude "org/apache/**"
     exclude "org/junit/**"
+
+    enabled = true
 }
 
 processResources {
@@ -144,7 +146,7 @@ jar {
             "FMLAT": "client_at.cfg",
     )
 
-    enabled = true
+    enabled = false
 }
 
 mixin {
