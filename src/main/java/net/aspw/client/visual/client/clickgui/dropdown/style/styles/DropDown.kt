@@ -27,11 +27,11 @@ class DropDown : Style() {
 
     override fun drawPanel(mouseX: Int, mouseY: Int, panel: Panel) {
         RenderUtils.drawRect(
-            (panel.getX() - 2).toFloat(),
-            panel.getY().toFloat(),
-            (panel.getX() + panel.width + 2).toFloat(),
-            (panel.getY() + 21 + panel.fade).toFloat(),
-            Color(17, 17, 17).rgb
+            (panel.getX()).toFloat(),
+            panel.getY().toFloat() + 0.5f,
+            (panel.getX() + panel.width).toFloat(),
+            panel.getY().toFloat() + 17,
+            Color(0, 0, 0).rgb
         )
         RenderUtils.drawRect(
             panel.getX().toFloat() + 1, panel.getY().toFloat() + 19, panel.getX().toFloat() + panel.width - 1,
@@ -147,7 +147,7 @@ class DropDown : Style() {
     override fun drawModuleElement(mouseX: Int, mouseY: Int, moduleElement: ModuleElement) {
         ClickGui.drawRect(
             moduleElement.x + 1, moduleElement.y + 1, moduleElement.x + moduleElement.width - 1,
-            moduleElement.y + moduleElement.height + 2, hoverColor(Color(26, 26, 26), moduleElement.hoverTime).rgb
+            moduleElement.y + moduleElement.height + 2, hoverColor(Color(18, 18, 18), moduleElement.hoverTime).rgb
         )
         ClickGui.drawRect(
             moduleElement.x + 1, moduleElement.y + 1, moduleElement.x
@@ -167,7 +167,7 @@ class DropDown : Style() {
             moduleElement.y + 7, Color(200, 200, 200, 255).rgb
         )
         val moduleValues = moduleElement.module.values
-        if (!moduleValues.isEmpty()) {
+        if (moduleValues.isNotEmpty()) {
             if (moduleElement.isShowSettings) {
                 Fonts.font72.drawString(
                     "-", moduleElement.x + moduleElement.width - 9,

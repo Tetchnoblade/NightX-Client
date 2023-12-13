@@ -43,8 +43,4 @@ class ThunderNotifier : Module() {
                 )
         }
     }
-
-    init {
-        state = true
-    }
 }

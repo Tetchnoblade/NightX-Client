@@ -16,19 +16,23 @@ import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.client.settings.GameSettings
+import net.minecraft.init.Blocks
 import net.minecraft.item.ItemEnderPearl
+import net.minecraft.item.ItemStack
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C03PacketPlayer.*
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
 import net.minecraft.network.play.client.C09PacketHeldItemChange
+import net.minecraft.network.play.client.C0BPacketEntityAction
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
+import net.minecraft.network.play.server.S12PacketEntityVelocity
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import java.util.*
 
 @ModuleInfo(name = "LongJump", spacedName = "Long Jump", description = "", category = ModuleCategory.MOVEMENT)
 class LongJump : Module() {
-    private val modeValue = ListValue(
+    val modeValue = ListValue(
         "Mode",
         arrayOf(
             "NCP",
@@ -43,6 +47,7 @@ class LongJump : Module() {
             "Redesky",
             "InfiniteRedesky",
             "MatrixFlag",
+            "VerusHigh",
             "VerusDmg",
             "Pearl"
         ),
@@ -96,6 +101,11 @@ class LongJump : Module() {
         FloatValue("Pearl-Height", 0.42f, 0f, 10f) { modeValue.get().equals("pearl", ignoreCase = true) }
     private val pearlTimerValue =
         FloatValue("Pearl-Timer", 1f, 0.05f, 10f) { modeValue.get().equals("pearl", ignoreCase = true) }
+    private val verusHighTimerValue =
+        BoolValue("VerusHigh-TimerBoost", false) { modeValue.get().equals("verushigh", ignoreCase = true) }
+    private val verusHighHeightValue =
+        FloatValue("VerusHigh-Height", 10f, 0.05f, 10f) { modeValue.get().equals("verushigh", ignoreCase = true) }
+    private val lagCheck = BoolValue("LagCheck", true)
     private val autoDisableValue = BoolValue("AutoDisable", true)
     private val fakeDmgValue = BoolValue("FakeDamage", false)
     val fakeYValue = BoolValue("FakeY", false)
@@ -119,6 +129,10 @@ class LongJump : Module() {
     private var pearlState = 0
     private var lastMotX = 0.0
     private var lastMotY = 0.0
+    private var started = false
+    private var stage = 0
+    private var jumpWaiting = false
+    private var fulljumped = false
     private var lastMotZ = 0.0
     var y = 0.0
     private var flagged = false
@@ -129,6 +143,10 @@ class LongJump : Module() {
 
     @EventTarget
     fun onMotion(event: MotionEvent?) {
+        if (modeValue.get().equals("verushigh", true) && (stage < 4 || stage <= 5)) {
+            mc.thePlayer.cameraPitch = 0f
+            mc.thePlayer.cameraYaw = 0f
+        }
         if (MovementUtils.isMoving() && viewBobbingValue.get())
             mc.thePlayer.cameraYaw = bobbingAmountValue.get()
         if (fakeYValue.get())
@@ -260,6 +278,22 @@ class LongJump : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent?) {
+        if (modeValue.get().equals("verushigh", true)) {
+            if (stage < 4 && verusHighTimerValue.get())
+                mc.timer.timerSpeed = 2f
+            else mc.timer.timerSpeed = 1f
+            if (!mc.thePlayer.onGround || jumpWaiting || stage == 5) return
+            mc.timer.timerSpeed = 1f
+            if (stage < 3) {
+                stage += 1
+                if (stage < 2)
+                    mc.thePlayer.jump()
+                chat(stage.toString())
+            }
+            if (stage == 3) {
+                jumpWaiting = true
+            }
+        }
         if (modeValue.get().equals("ncp", ignoreCase = true)) {
             mc.gameSettings.keyBindJump.pressed = false
         }
@@ -472,6 +506,32 @@ class LongJump : Module() {
     }
 
     @EventTarget
+    fun onWorld(event: WorldEvent) {
+        if (!lagCheck.get()) {
+            state = false
+            Client.hud.addNotification(
+                Notification(
+                    "LongJump was disabled",
+                    Notification.Type.WARNING
+                )
+            )
+        }
+    }
+
+    @EventTarget
+    fun onTeleport(event: TeleportEvent) {
+        if (lagCheck.get()) {
+            state = false
+            Client.hud.addNotification(
+                Notification(
+                    "Disabling LongJump due to lag back",
+                    Notification.Type.WARNING
+                )
+            )
+        }
+    }
+
+    @EventTarget
     fun onMove(event: MoveEvent) {
         val mode = modeValue.get()
         if (mode.equals("mineplex3", ignoreCase = true)) {
@@ -480,6 +540,44 @@ class LongJump : Module() {
             mc.thePlayer.motionX = 0.0
             mc.thePlayer.motionZ = 0.0
             event.zeroXZ()
+        }
+        if (mode.equals("verushigh", true)) {
+            if (mc.thePlayer.hurtTime > 0 && started || stage > 5 && fulljumped || !fulljumped || stage == 4 && jumpWaiting || stage == 5 && mc.thePlayer.onGround) {
+                event.zeroXZ()
+            }
+            if (mc.thePlayer.hurtTime > 0) {
+                started = true
+                PacketUtils.sendPacketNoEvent(
+                    C08PacketPlayerBlockPlacement(
+                        mc.thePlayer.position.add(0.0, -1.5, 0.0),
+                        1,
+                        ItemStack(Blocks.stone.getItem(mc.theWorld, mc.thePlayer.position.add(0.0, -1.5, 0.0))),
+                        0.0F,
+                        0.5F + Math.random().toFloat() * 0.44.toFloat(),
+                        0.0F
+                    )
+                )
+            } else {
+                if (stage >= 5) {
+                    PacketUtils.sendPacketNoEvent(
+                        C08PacketPlayerBlockPlacement(
+                            mc.thePlayer.position.add(0.0, -1.5, 0.0),
+                            1,
+                            ItemStack(Blocks.stone.getItem(mc.theWorld, mc.thePlayer.position.add(0.0, -1.5, 0.0))),
+                            0.0F,
+                            0.5F + Math.random().toFloat() * 0.44.toFloat(),
+                            0.0F
+                        )
+                    )
+                    event.y = 0.0
+                }
+                started = false
+            }
+            if (started) {
+                stage = 5
+                event.y += verusHighHeightValue.get()
+                mc.timer.timerSpeed = 1f
+            }
         }
         if (mode.equals(
                 "verusdmg",
@@ -493,6 +591,27 @@ class LongJump : Module() {
     @EventTarget
     fun onPacket(event: PacketEvent) {
         val mode = modeValue.get()
+        if (mode.equals("verushigh", true)) {
+            val packet = event.packet
+            if (mc.thePlayer.onGround && mc.thePlayer.hurtTime > 0 && (packet is C03PacketPlayer || packet is C0BPacketEntityAction)) {
+                event.cancelEvent()
+            }
+            if (packet is S12PacketEntityVelocity && stage <= 5) {
+                event.cancelEvent()
+            }
+            if (stage == 5) return
+            if (!jumpWaiting) {
+                if (packet is C03PacketPlayer) {
+                    packet.onGround = false
+                }
+            } else if (packet is C03PacketPlayer && mc.thePlayer.onGround) {
+                packet.onGround = true
+                fulljumped = true
+                if (stage == 3)
+                    chat("started")
+                stage = 4
+            }
+        }
         if (event.packet is C03PacketPlayer) {
             val packetPlayer = event.packet
             if (mode.equals("verusdmg", ignoreCase = true) && verusDmgModeValue.get()
@@ -573,6 +692,13 @@ class LongJump : Module() {
         if (modeValue.get().equals("ncp", ignoreCase = true)) {
             if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
                 mc.gameSettings.keyBindJump.pressed = true
+        }
+        if (modeValue.get().equals("verushigh", true)) {
+            mc.thePlayer.motionY = 0.0
+            started = false
+            jumpWaiting = false
+            fulljumped = false
+            stage = 0
         }
         mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
         mc.timer.timerSpeed = 1.0f

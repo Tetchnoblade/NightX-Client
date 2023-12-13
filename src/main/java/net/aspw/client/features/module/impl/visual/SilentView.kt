@@ -18,8 +18,8 @@ import net.aspw.client.value.ListValue
 )
 class SilentView : Module() {
     val rotationMode = ListValue("Mode", arrayOf("Normal", "Silent"), "Normal")
-    val rotatingCheckValue = BoolValue("RotatingCheck", true) { rotationMode.get().equals("normal", true) }
-    val bodyLockValue = BoolValue("BodyLock", true) { rotationMode.get().equals("normal", true) }
+    val rotatingCheckValue = BoolValue("RotatingCheck", false) { rotationMode.get().equals("normal", true) }
+    val bodyLockValue = BoolValue("BodyLock", false) { rotationMode.get().equals("normal", true) }
 
     var playerYaw: Float? = null
 
@@ -48,9 +48,5 @@ class SilentView : Module() {
         prevHeadPitch = headPitch
         headPitch = RotationUtils.serverRotation?.pitch!!
         playerYaw = RotationUtils.serverRotation?.yaw!!
-    }
-
-    init {
-        state = true
     }
 }

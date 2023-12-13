@@ -4,10 +4,10 @@ import net.aspw.client.Client;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.combat.AutoClicker;
 import net.aspw.client.features.module.impl.other.FastPlace;
-import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
-import net.aspw.client.protocol.AttackFixer;
-import net.aspw.client.protocol.Protocol;
+import net.aspw.client.protocol.ProtocolBase;
+import net.aspw.client.protocol.ProtocolMod;
+import net.aspw.client.protocol.api.AttackFixer;
 import net.aspw.client.util.CPSCounter;
 import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.render.RenderUtils;
@@ -100,7 +100,7 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     public void startVia(GameConfiguration p_i45547_1_, CallbackInfo ci) {
-        Protocol.start();
+        ProtocolBase.init(ProtocolMod.PLATFORM);
     }
 
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
@@ -283,12 +283,8 @@ public abstract class MixinMinecraft {
             if (leftClick && this.objectMouseOver != null && this.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
                 BlockPos blockPos = this.objectMouseOver.getBlockPos();
 
-                if (!Animations.oldAnimations.get() && this.thePlayer.isUsingItem())
+                if (this.thePlayer.isUsingItem())
                     return;
-                else if (Animations.oldAnimations.get() && this.thePlayer.isUsingItem()) {
-                    this.thePlayer.isSwingInProgress = true;
-                    return;
-                }
 
                 if (this.leftClickCounter == 0)
                     Client.eventManager.callEvent(new ClickBlockEvent(blockPos, this.objectMouseOver.sideHit));

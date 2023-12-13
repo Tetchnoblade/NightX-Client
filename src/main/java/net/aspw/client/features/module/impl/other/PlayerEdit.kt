@@ -13,22 +13,10 @@ import net.aspw.client.value.FloatValue
  */
 @ModuleInfo(name = "PlayerEdit", spacedName = "Player Edit", description = "", category = ModuleCategory.OTHER)
 class PlayerEdit : Module() {
-    @EventTarget
-    fun onMotion(event: MotionEvent?) {
-        if (editPlayerSizeValue.get()) mc.thePlayer.eyeHeight =
-            playerSizeValue.get() + 0.62f else mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
-    }
-
-    override fun onDisable() {
-        mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
-    }
 
     companion object {
-        /**
-         * The constant editPlayerSizeValue.
-         */
         @JvmField
-        val editPlayerSizeValue = BoolValue("PlayerSize", true)
+        val editPlayerSizeValue = BoolValue("PlayerSize", false)
 
         /**
          * The constant playerSizeValue.
@@ -43,9 +31,19 @@ class PlayerEdit : Module() {
         val rotatePlayer = BoolValue("PlayerRotate", true)
 
         @JvmField
-        val xRot = FloatValue("X-Rotation", 0.0f, -180.0f, 180.0f) { rotatePlayer.get() }
+        val xRot = FloatValue("X-Rotation", 90.0f, -180.0f, 180.0f) { rotatePlayer.get() }
 
         @JvmField
         val yPos = FloatValue("Y-Position", 0.0f, -5.0f, 5.0f) { rotatePlayer.get() }
+    }
+
+    @EventTarget
+    fun onMotion(event: MotionEvent?) {
+        if (editPlayerSizeValue.get()) mc.thePlayer.eyeHeight =
+            playerSizeValue.get() + 0.62f else mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
+    }
+
+    override fun onDisable() {
+        mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
     }
 }

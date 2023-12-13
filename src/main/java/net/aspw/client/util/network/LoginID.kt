@@ -7,5 +7,4 @@ object LoginID {
     var hwid = ""
     var currentHWID = ""
     var loggedIn = false
-    var isPremium = false
 }

@@ -4,8 +4,7 @@ import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.features.module.impl.visual.AntiBlind;
-import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.features.module.impl.visual.VisualAbilities;
 import net.aspw.client.util.TimerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -15,14 +14,15 @@ import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemMap;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
@@ -202,11 +202,6 @@ public abstract class MixinItemRenderer {
             final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
             final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
 
-            if (Animations.oldAnimations.getValue() && (itemToRender.getItem() instanceof ItemCarrotOnAStick || itemToRender.getItem() instanceof ItemFishingRod)) {
-                GlStateManager.translate(0.08F, -0.027F, -0.33F);
-                GlStateManager.scale(0.93F, 1.0F, 1.0F);
-            }
-
             if (this.itemToRender.getItem() instanceof ItemMap) {
                 this.renderItemMap(abstractclientplayer, f2, f, f1);
             } else if (abstractclientplayer.getItemInUseCount() > 0
@@ -226,15 +221,9 @@ public abstract class MixinItemRenderer {
                     case EAT:
                     case DRINK:
                         this.performDrinking(abstractclientplayer, partialTicks);
-                        if (Animations.oldAnimations.getValue()) {
-                            if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
-                                this.transformFirstPersonItem(0.0F, f1);
-                            else this.transformFirstPersonItem(f, f1);
-                        } else {
-                            if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
-                                this.transformFirstPersonItem(0.0F, 0.0F);
-                            else this.transformFirstPersonItem(f, 0.0F);
-                        }
+                        if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
+                            this.transformFirstPersonItem(0.0F, 0.0F);
+                        else this.transformFirstPersonItem(f, 0.0F);
                         GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                         break;
                     case BLOCK:
@@ -250,6 +239,22 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.rotate(-var9 * 58.0F / 2.0F, var9 / 2.0F, 1.0F, 0.5F);
                                 GlStateManager.rotate(-var9 * 43.0F, 1.0F, var9 / 3.0F, -0.0F);
                                 this.func_178103_d(0.2F);
+                                GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
+                                break;
+                            }
+                            case "Scale": {
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.84, Animations.blockPosY.get().doubleValue() - 0.72, Animations.blockPosZ.get().doubleValue() - 1.1);
+                                GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
+                                if (Animations.cancelEquip.get())
+                                    GlStateManager.translate(0.0F, 0.0f * -0.8F, 0.0F);
+                                else GlStateManager.translate(0.0F, f / 0.8f * -0.8F, 0.0F);
+                                GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
+                                float var3 = MathHelper.sin(f1 * f1 * (float) Math.PI);
+                                float var4 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
+                                GlStateManager.rotate(var3 * -25.0F, 0.0F, 0.0F, 0.0F);
+                                GlStateManager.rotate(var4 * -25.0F, 0.0F, 0.0F, 0.0F);
+                                GlStateManager.rotate(var4 * -25.0F, 0.0F, 0.0F, 0.0F);
+                                this.func_178103_d();
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
@@ -297,6 +302,37 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
+                            case "Hide": {
+                                if (Animations.swingAnimValue.get().equals("1.7")) {
+                                    if (f1 != 0.0F) {
+                                        GlStateManager.scale(0.85F, 0.85F, 0.85F);
+                                        GlStateManager.translate(-0.06F, 0.003F, 0.05F);
+                                    }
+                                    this.doItemUsedTransformations(f1);
+                                    if (Animations.cancelEquip.get())
+                                        this.transformFirstPersonItem(0.0F, f1);
+                                    else this.transformFirstPersonItem(f, f1);
+                                }
+                                if (Animations.swingAnimValue.get().equals("1.8")) {
+                                    this.doItemUsedTransformations(f1);
+                                    if (Animations.cancelEquip.get())
+                                        this.transformFirstPersonItem(0.0F, f1);
+                                    else this.transformFirstPersonItem(f, f1);
+                                }
+                                if (Animations.swingAnimValue.get().equals("Flux")) {
+                                    if (Animations.cancelEquip.get())
+                                        this.transformFirstPersonItem(0.0F, f1);
+                                    else this.transformFirstPersonItem(f, f1);
+                                }
+                                if (Animations.swingAnimValue.get().equals("Smooth")) {
+                                    if (Animations.cancelEquip.get())
+                                        this.transformFirstPersonItem(0.0F, f1);
+                                    else this.transformFirstPersonItem(f, f1);
+                                    func_178105_d(f1);
+                                }
+                                GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
+                                break;
+                            }
                             case "Spin": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.05, Animations.blockPosZ.get().doubleValue());
                                 if (Animations.cancelEquip.get())
@@ -317,7 +353,7 @@ public abstract class MixinItemRenderer {
                                 this.func_178103_d();
                                 final float var16 = MathHelper.sin((float) (f1 * f1 * Math.PI));
                                 GlStateManager.rotate(-var16 * 0f, 0.0f, 1.0f, 0.0f);
-                                GlStateManager.rotate(-var * 62f, 0.0f, 0.0f, 1.0f);
+                                GlStateManager.rotate(-var * 50f, 0.0f, 0.0f, 1.0f);
                                 GlStateManager.rotate(-var * 0f, 1.5f, 0.0f, 0.0f);
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
@@ -386,7 +422,7 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Slide": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.13, Animations.blockPosY.get().doubleValue() - 0.06, Animations.blockPosZ.get().doubleValue() - 0.07);
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.08, Animations.blockPosY.get().doubleValue() - 0.06, Animations.blockPosZ.get().doubleValue() - 0.07);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
                                 else this.transformFirstPersonItem(f / 1.5F, 0.0F);
@@ -445,8 +481,8 @@ public abstract class MixinItemRenderer {
                                 float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
-                                else transformFirstPersonItem(f / 2.5f, 0.0f);
-                                GL11.glRotated(-var9 * 20.0F, var9 / 2, 0.0F, 9.0F);
+                                else transformFirstPersonItem(f / 2.2f, 0.0f);
+                                GL11.glRotated(-var9 * 22.0F, var9 / 2, 0.0F, 9.0F);
                                 GL11.glRotated(-var9 * 50.0F, 0.8F, var9 / 2, 0F);
                                 doBlockTransformations();
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
@@ -645,13 +681,13 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Edit": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.03, Animations.blockPosY.get().doubleValue() + 0.11, Animations.blockPosZ.get().doubleValue());
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.04, Animations.blockPosY.get().doubleValue() + 0.11, Animations.blockPosZ.get().doubleValue());
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, f1);
-                                else transformFirstPersonItem(f / 1.6f, f1);
+                                else transformFirstPersonItem(f / 1.4f, f1);
                                 GL11.glTranslated(0.0D, 0.0D, 0.0D);
                                 float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
-                                GlStateManager.rotate(Swang * 16.0F / 2.0F, -Swang, -0.0F, 9.0F);
+                                GlStateManager.rotate(Swang * 16.0F / 2.0F, -Swang, -0.0F, 2.0F);
                                 GlStateManager.rotate(Swang * 22.0F, 1.0F, -Swang / 3.0F, -0.0F);
                                 doBlockTransformations();
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
@@ -660,15 +696,9 @@ public abstract class MixinItemRenderer {
                         }
                         break;
                     case BOW:
-                        if (Animations.oldAnimations.getValue()) {
-                            if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
-                                this.transformFirstPersonItem(0.0F, f1);
-                            else this.transformFirstPersonItem(f, f1);
-                        } else {
-                            if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
-                                this.transformFirstPersonItem(0.0F, 0.0F);
-                            else this.transformFirstPersonItem(f, 0.0F);
-                        }
+                        if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
+                            this.transformFirstPersonItem(0.0F, 0.0F);
+                        else this.transformFirstPersonItem(f, 0.0F);
                         this.doBowTransformations(partialTicks, abstractclientplayer);
                         GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                 }
@@ -713,21 +743,11 @@ public abstract class MixinItemRenderer {
         GL11.glTranslated(-Animations.itemPosX.get().doubleValue(), -Animations.itemPosY.get().doubleValue(), -Animations.itemPosZ.get().doubleValue());
     }
 
-    @ModifyArg(method = "updateEquippedItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/MathHelper;clamp_float(FFF)F"), index = 0)
-    private float handleItemSwitch(float original) {
-        EntityPlayer entityplayer = MinecraftInstance.mc.thePlayer;
-        ItemStack itemstack = entityplayer.inventory.getCurrentItem();
-        if (Animations.oldAnimations.get() && this.equippedItemSlot == entityplayer.inventory.currentItem && ItemStack.areItemsEqual(this.itemToRender, itemstack)) {
-            return 1.0f - this.equippedProgress;
-        }
-        return original;
-    }
-
     @Inject(method = "renderFireInFirstPerson", at = @At("HEAD"), cancellable = true)
     private void renderFireInFirstPerson(final CallbackInfo callbackInfo) {
-        final AntiBlind antiBlind = Client.moduleManager.getModule(AntiBlind.class);
+        final VisualAbilities visualAbilities = Client.moduleManager.getModule(VisualAbilities.class);
 
-        if (antiBlind.getState() && antiBlind.getFireEffect().get()) {
+        if (visualAbilities.getState() && visualAbilities.getFireEffect().get()) {
             //vanilla's method
             GlStateManager.color(1.0F, 1.0F, 1.0F, 0.9F);
             GlStateManager.depthFunc(519);

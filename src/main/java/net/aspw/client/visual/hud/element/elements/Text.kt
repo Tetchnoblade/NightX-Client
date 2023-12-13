@@ -35,27 +35,11 @@ class Text(
 ) : Element(x, y, scale, side) {
 
     companion object {
-
         val DATE_FORMAT = SimpleDateFormat("yyyy-MM-dd")
         val HOUR_FORMAT = SimpleDateFormat("HH:mm")
 
         val DECIMAL_FORMAT = DecimalFormat("0.00")
         val DECIMAL_FORMAT_INT = DecimalFormat("0")
-
-        /**
-         * Create default element
-         */
-        fun defaultClient(): Text {
-            val text = Text(x = 2.0, y = 3.0, scale = 1F)
-
-            text.displayString.set("type your text here")
-            text.shadow.set(true)
-            text.fontValue.set(Fonts.fontSFUI35)
-            text.setColor(Color(255, 255, 255))
-
-            return text
-        }
-
     }
 
     private val displayString =

@@ -10,8 +10,8 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.PacketUtils
 import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.value.BoolValue
 import net.aspw.client.value.IntegerValue
-import net.aspw.client.value.TextValue
 import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.network.play.client.C01PacketChatMessage
 import net.minecraft.network.play.server.S02PacketChat
@@ -24,12 +24,7 @@ import net.minecraft.network.play.server.S45PacketTitle
 )
 class AutoAuth : Module() {
 
-    private val password = TextValue("Password", "Aspw95639535")
-    private val regRegex = TextValue("Register-Regex", "/register")
-    private val loginRegex = TextValue("Login-Regex", "/login")
-    private val regCmd = TextValue("Register-Cmd", "/register Aspw95639535 Aspw95639535")
-    private val loginCmd = TextValue("Login-Cmd", "/login Aspw95639535")
-
+    private val doubleRegister = BoolValue("Double-Register", true)
     private val delayValue = IntegerValue("Delay", 5000, 0, 5000, "ms")
 
     private val loginPackets = arrayListOf<C01PacketChatMessage>()
@@ -76,21 +71,33 @@ class AutoAuth : Module() {
             val messageOrigin = packet.message ?: return
             val message: String = messageOrigin.unformattedText
 
-            if (message.contains(loginRegex.get(), true))
-                sendLogin(loginCmd.get().replace("%p", password.get(), true))
+            if (message.contains("/login", true))
+                sendLogin("/login Aspw95639535".replace("%p", "Aspw95639535", true))
 
-            if (message.contains(regRegex.get(), true))
-                sendRegister(regCmd.get().replace("%p", password.get(), true))
+            if (message.contains("/register", true))
+                sendRegister(
+                    ("/register Aspw95639535" + if (doubleRegister.get()) " Aspw95639535" else "").replace(
+                        "%p",
+                        "Aspw95639535",
+                        true
+                    )
+                )
         }
 
         if (packet is S02PacketChat) {
             val message: String = packet.chatComponent.unformattedText
 
-            if (message.contains(loginRegex.get(), true))
-                sendLogin(loginCmd.get().replace("%p", password.get(), true))
+            if (message.contains("/login", true))
+                sendLogin("/login Aspw95639535".replace("%p", "Aspw95639535", true))
 
-            if (message.contains(regRegex.get(), true))
-                sendRegister(regCmd.get().replace("%p", password.get(), true))
+            if (message.contains("/register", true))
+                sendRegister(
+                    ("/register Aspw95639535" + if (doubleRegister.get()) " Aspw95639535" else "").replace(
+                        "%p",
+                        "Aspw95639535",
+                        true
+                    )
+                )
         }
     }
 

@@ -1,8 +1,6 @@
 package net.aspw.client.util
 
-import net.aspw.client.Client
 import net.aspw.client.event.StrafeEvent
-import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.util.block.PlaceInfo
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.MathHelper
@@ -20,8 +18,7 @@ data class Rotation(var yaw: Float, var pitch: Float) {
         if (yaw.isNaN() || pitch.isNaN())
             return
 
-        if (Client.moduleManager.getModule(Interface::class.java)?.state!! && Client.moduleManager.getModule(Interface::class.java)?.gcdfix?.get()!!)
-            fixedSensitivity(MinecraftInstance.mc.gameSettings.mouseSensitivity)
+        fixedSensitivity(MinecraftInstance.mc.gameSettings.mouseSensitivity)
 
         player.rotationYaw = yaw
         player.rotationPitch = pitch

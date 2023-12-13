@@ -4,9 +4,12 @@ import net.aspw.client.Client
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.util.SettingsUtils
-import net.aspw.client.util.misc.MiscUtils
 import net.aspw.client.util.misc.StringUtils
 import net.aspw.client.visual.hud.element.elements.Notification
+import org.apache.http.client.methods.HttpGet
+import org.apache.http.impl.client.CloseableHttpClient
+import org.apache.http.impl.client.HttpClients
+import org.apache.http.util.EntityUtils
 import java.awt.Desktop
 import java.io.File
 import java.io.IOException
@@ -44,6 +47,33 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                         return
                     }
                     chatSyntax("config load <name>")
+                    return
+                }
+
+                args[1].equals("onlineload", ignoreCase = true) -> {
+                    if (args.size > 2) {
+                        val httpClient: CloseableHttpClient = HttpClients.createDefault()
+                        val request = HttpGet(Client.CLIENT_CONFIGS + args[2])
+                        val response = httpClient.execute(request)
+                        val entity = response.entity
+                        val content = EntityUtils.toString(entity)
+                        EntityUtils.consume(entity)
+                        response.close()
+                        httpClient.close()
+                        SettingsUtils.executeScript(content)
+                        if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                        }
+                        chat("§6Config updated successfully!")
+                        Client.hud.addNotification(
+                            Notification(
+                                "Config updated successfully!",
+                                Notification.Type.SUCCESS
+                            )
+                        )
+                        return
+                    }
+                    chatSyntax("config onlineload <name>")
                     return
                 }
 
@@ -167,20 +197,28 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                     return
                 }
 
+                args[1].equals("onlinelist", ignoreCase = true) -> {
+                    val httpClient: CloseableHttpClient = HttpClients.createDefault()
+                    val request = HttpGet(Client.CLIENT_CONFIGLIST)
+                    val response = httpClient.execute(request)
+                    val entity = response.entity
+                    val content = EntityUtils.toString(entity)
+                    EntityUtils.consume(entity)
+                    response.close()
+                    httpClient.close()
+                    chat("§cOnlineConfigs:")
+                    chat(content)
+                    return
+                }
+
                 args[1].equals("folder", ignoreCase = true) -> {
                     Desktop.getDesktop().open(Client.fileManager.settingsDir)
                     chat("Successfully opened configs folder.")
                     return
                 }
-
-                args[1].equals("download", ignoreCase = true) || args[1].equals("dl", ignoreCase = true) -> {
-                    MiscUtils.showURL(Client.CLIENT_CONFIG)
-                    chat("Successfully opened browser.")
-                    return
-                }
             }
         }
-        chatSyntax("config <load/save/list/delete/fix/folder/download>")
+        chatSyntax("config <load/save/list/delete/fix/folder/onlineload/onlinelist>")
     }
 
     private fun getLocalSettings(): Array<File>? = Client.fileManager.settingsDir.listFiles()
@@ -189,7 +227,13 @@ class ConfigCommand : Command("config", arrayOf("c")) {
         if (args.isEmpty()) return emptyList()
 
         return when (args.size) {
-            1 -> listOf("delete", "list", "load", "l", "save", "fix").filter { it.startsWith(args[0], true) }
+            1 -> listOf("delete", "list", "load", "l", "save", "fix", "onlineload", "onlinelist").filter {
+                it.startsWith(
+                    args[0],
+                    true
+                )
+            }
+
             2 -> {
                 when (args[0].lowercase(Locale.getDefault())) {
                     "delete", "load", "l", "fix" -> {

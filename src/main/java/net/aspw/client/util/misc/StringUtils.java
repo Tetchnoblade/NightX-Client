@@ -9,35 +9,9 @@ import java.util.HashMap;
  */
 public final class StringUtils {
 
-    private static final HashMap<String, String> stringCache = new HashMap<>();
     private static final HashMap<String, String> stringReplaceCache = new HashMap<>();
     private static final HashMap<String, String> stringRegexCache = new HashMap<>();
     private static final HashMap<String, String> airCache = new HashMap<>();
-
-    /**
-     * Fix string string.
-     *
-     * @param str the str
-     * @return the string
-     */
-    public static String fixString(String str) {
-        if (stringCache.containsKey(str)) return stringCache.get(str);
-
-        str = str.replaceAll("\uF8FF", "");//remove air chars
-
-        StringBuilder sb = new StringBuilder();
-        for (char c : str.toCharArray()) {
-            if ((int) c > (33 + 65248) && (int) c < (128 + 65248)) {
-                sb.append(Character.toChars((int) c - 65248));
-            } else {
-                sb.append(c);
-            }
-        }
-        String result = sb.toString();
-        stringCache.put(str, result);
-
-        return result;
-    }
 
     /**
      * Inject air string string.

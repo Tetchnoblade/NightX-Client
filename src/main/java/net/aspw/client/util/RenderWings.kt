@@ -4,16 +4,16 @@ import net.minecraft.client.model.ModelBase
 import net.minecraft.client.model.ModelRenderer
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11
+import kotlin.math.cos
+import kotlin.math.sin
 
 class RenderWings : ModelBase() {
-    private val location: ResourceLocation
+    private val location: ResourceLocation = ResourceLocation("client/models/wing.png")
     private val wing: ModelRenderer
     private val wingTip: ModelRenderer
-    private val playerUsesFullHeight: Boolean
+    private val playerUsesFullHeight: Boolean = true
 
     init {
-        location = ResourceLocation("client/models/wing.png")
-        playerUsesFullHeight = true
         setTextureOffset("wing.bone", 0, 0)
         setTextureOffset("wing.skin", -10, 8)
         setTextureOffset("wingtip.bone", 0, 5)
@@ -51,10 +51,10 @@ class RenderWings : ModelBase() {
         for (j in 0..1) {
             GL11.glEnable(2884)
             val f11 = (System.currentTimeMillis() % 1000L).toFloat() / 1000.0f * 3.1415927f * 2.0f
-            wing.rotateAngleX = Math.toRadians(-10.0).toFloat() - Math.cos(f11.toDouble()).toFloat() * -0.6f
-            wing.rotateAngleY = Math.toRadians(30.0).toFloat() + Math.sin(f11.toDouble()).toFloat() * 0.2f
+            wing.rotateAngleX = Math.toRadians(-10.0).toFloat() - cos(f11.toDouble()).toFloat() * -0.6f
+            wing.rotateAngleY = Math.toRadians(30.0).toFloat() + sin(f11.toDouble()).toFloat() * 0.2f
             wing.rotateAngleZ = Math.toRadians(30.0).toFloat()
-            wingTip.rotateAngleZ = -(Math.sin((f11 + 1.2f).toDouble()) + 1.1).toFloat() * 0.75f
+            wingTip.rotateAngleZ = -(sin((f11 + 1.2f).toDouble()) + 1.1).toFloat() * 0.75f
             wing.render(0.0525f)
             GL11.glScalef(-1.0f, 1.0f, 1.0f)
             if (j == 0) {

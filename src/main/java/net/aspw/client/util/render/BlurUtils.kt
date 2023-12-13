@@ -46,7 +46,6 @@ object BlurUtils : MinecraftInstance() {
         y: Float,
         w: Float,
         h: Float,
-        width: Float,
         height: Float,
         force: Boolean = false
     ) {
@@ -100,14 +99,14 @@ object BlurUtils : MinecraftInstance() {
 
         if (sizeHasChanged(scaleFactor, width, height)) {
             setupFramebuffers()
-            setValues(blurStrength, x, y, x2 - x, y2 - y, width.toFloat(), height.toFloat(), true)
+            setValues(blurStrength, x, y, x2 - x, y2 - y, height.toFloat(), true)
         }
 
         lastFactor = scaleFactor
         lastWidth = width
         lastHeight = height
 
-        setValues(blurStrength, x, y, x2 - x, y2 - y, width.toFloat(), height.toFloat())
+        setValues(blurStrength, x, y, x2 - x, y2 - y, height.toFloat())
 
         framebuffer.bindFramebuffer(true)
         shaderGroup.loadShaderGroup(mc.timer.renderPartialTicks)
@@ -171,7 +170,7 @@ object BlurUtils : MinecraftInstance() {
             GlStateManager.disableBlend()
         }
 
-    fun sizeHasChanged(scaleFactor: Int, width: Int, height: Int): Boolean =
+    private fun sizeHasChanged(scaleFactor: Int, width: Int, height: Int): Boolean =
         (lastFactor != scaleFactor || lastWidth != width || lastHeight != height)
 }
 

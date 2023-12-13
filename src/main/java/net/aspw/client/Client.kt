@@ -6,13 +6,16 @@ import net.aspw.client.event.EventManager
 import net.aspw.client.features.api.*
 import net.aspw.client.features.command.CommandManager
 import net.aspw.client.features.module.ModuleManager
-import net.aspw.client.script.ScriptManager
-import net.aspw.client.script.remapper.Remapper
+import net.aspw.client.features.module.impl.other.HackerDetect
+import net.aspw.client.features.module.impl.other.ThunderNotifier
+import net.aspw.client.features.module.impl.visual.Interface
+import net.aspw.client.features.module.impl.visual.MoreParticles
+import net.aspw.client.features.module.impl.visual.SilentView
+import net.aspw.client.features.module.impl.visual.Trajectories
 import net.aspw.client.util.*
 import net.aspw.client.util.ClassUtils.hasForge
 import net.aspw.client.util.misc.sound.TipSoundManager
-import net.aspw.client.util.network.CheckConnection
-import net.aspw.client.value.ListValue
+import net.aspw.client.util.network.Access
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.hud.HUD
@@ -23,34 +26,18 @@ import kotlin.concurrent.thread
 object Client {
 
     // Client information
-    val clientVersion = ListValue("ClientVersion", arrayOf("Release", "Beta", "Developer"), "Release")
     const val CLIENT_BEST = "NightX"
-    const val CLIENT_FOLDER = "NightX-Continued"
-    const val CLIENT_VERSION = "Release B73 Patch-1"
+    const val CLIENT_FOLDER = "NightWare"
+    const val CLIENT_VERSION = "Release B74"
     const val CLIENT_CREATOR = "As_pw"
     const val CLIENT_WEBSITE = "https://aspw-w.github.io/NightX-Web"
-    const val CLIENT_CONFIG = "$CLIENT_WEBSITE/data/configs.txt"
-    const val CLIENT_SRG = "$CLIENT_WEBSITE/data/srg.txt"
-    const val CLIENT_ANNOUNCEMENT = "$CLIENT_WEBSITE/data/announcement.txt"
-    const val CLIENT_CONTRIBUTORS = "$CLIENT_WEBSITE/data/contributors.json"
-    const val CLIENT_INFORMATION = "https://api.github.com/repos/Aspw-w/NightX-Client/stats/contributors"
-    const val CLIENT_CHAT = "§c§l>> §r"
-    val CLIENT_STATUS = when (clientVersion.get()) {
-        "Release" -> "$CLIENT_WEBSITE/data/release.txt"
-        "Beta" -> "$CLIENT_WEBSITE/data/beta.txt"
-        "Developer" -> "$CLIENT_WEBSITE/data/dev.txt"
-        else -> null
-    }
-    val CLIENT_LATEST = when (clientVersion.get()) {
-        "Release" -> "$CLIENT_WEBSITE/data/release-latest.txt"
-        "Beta" -> "$CLIENT_WEBSITE/data/beta-latest.txt"
-        "Developer" -> "$CLIENT_WEBSITE/data/dev-latest.txt"
-        else -> null
-    }
-    const val CLIENT_BLOCKSMC = "$CLIENT_WEBSITE/data/stafflist/blocksmc.txt"
-    const val CLIENT_MUSHMC = "$CLIENT_WEBSITE/data/stafflist/mushmc.txt"
-    // Old Auth System
-    // const val CLIENT_USER = "Username:Password:HWID:UID"
+    const val CLIENT_ANNOUNCEMENT = "$CLIENT_WEBSITE/database/announcement.txt"
+    const val CLIENT_CHAT = "§b§l>> §r"
+    const val CLIENT_STATUS = "$CLIENT_WEBSITE/database/data.txt"
+    const val CLIENT_LATEST = "$CLIENT_WEBSITE/database/currentversion.txt"
+    const val CLIENT_CONFIGLIST = "$CLIENT_WEBSITE/configs/string/list.txt"
+    const val CLIENT_CONFIGS = "$CLIENT_WEBSITE/configs/"
+    //const val CLIENT_USERS = "$CLIENT_WEBSITE/users/list.txt"
 
     var isStarting = false
 
@@ -61,7 +48,6 @@ object Client {
     lateinit var fileManager: FileManager
     lateinit var tipSoundManager: TipSoundManager
     lateinit var combatManager: CombatManager
-    lateinit var scriptManager: ScriptManager
 
     // Hud
     lateinit var hud: HUD
@@ -76,7 +62,7 @@ object Client {
     var playTimeStart: Long = 0
 
     // Discord RPC
-    lateinit var discordRPC: DiscordRPC
+    private lateinit var discordRPC: DiscordRPC
 
     /**
      * Execute if client will be started
@@ -88,17 +74,11 @@ object Client {
         lastTick = System.currentTimeMillis()
 
         // Check update
-        CheckConnection.checkStatus()
-        CheckConnection.getAnnouncement()
-        CheckConnection.getContributors()
-        CheckConnection.getRealContributors()
-        CheckConnection.checkStaffList()
+        Access.checkStatus()
+        Access.checkLatestVersion()
+        Access.getAnnouncement()
+        Access.checkStaffList()
 
-        // Get srg file
-        CheckConnection.getSRG()
-
-        // Old Auth System
-        // Check HWID
         //getCurrentHWID()
 
         // Create file manager
@@ -134,16 +114,15 @@ object Client {
         moduleManager = ModuleManager()
         moduleManager.registerModules()
 
-        // Remapper
-        try {
-            Remapper.loadSrg()
-
-            // ScriptManager
-            scriptManager = ScriptManager()
-            scriptManager.loadScripts()
-            scriptManager.enableScripts()
-        } catch (throwable: Throwable) {
-            ClientUtils.getLogger().error("Failed to load scripts.", throwable)
+        // Setup default states
+        if (!fileManager.modulesConfig.hasConfig() || !fileManager.valuesConfig.hasConfig()) {
+            ClientUtils.getLogger().info("Setting up default modules...")
+            moduleManager.getModule(Interface::class.java)?.state = true
+            moduleManager.getModule(SilentView::class.java)?.state = true
+            moduleManager.getModule(ThunderNotifier::class.java)?.state = true
+            moduleManager.getModule(Trajectories::class.java)?.state = true
+            moduleManager.getModule(MoreParticles::class.java)?.state = true
+            moduleManager.getModule(HackerDetect::class.java)?.state = true
         }
 
         // Register commands

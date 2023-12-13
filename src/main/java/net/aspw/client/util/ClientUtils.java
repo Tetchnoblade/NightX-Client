@@ -15,11 +15,9 @@ public final class ClientUtils extends MinecraftInstance {
 
     private static final Logger logger = LogManager.getLogger("Client");
 
-    private static Field fastRenderField;
-
     static {
         try {
-            fastRenderField = GameSettings.class.getDeclaredField("ofFastRender");
+            Field fastRenderField = GameSettings.class.getDeclaredField("ofFastRender");
 
             if (!fastRenderField.isAccessible())
                 fastRenderField.setAccessible(true);
@@ -34,21 +32,6 @@ public final class ClientUtils extends MinecraftInstance {
      */
     public static Logger getLogger() {
         return logger;
-    }
-
-    /**
-     * Disable fast render.
-     */
-    public static void disableFastRender() {
-        try {
-            if (fastRenderField != null) {
-                if (!fastRenderField.isAccessible())
-                    fastRenderField.setAccessible(true);
-
-                fastRenderField.setBoolean(mc.gameSettings, false);
-            }
-        } catch (final IllegalAccessException ignored) {
-        }
     }
 
     /**

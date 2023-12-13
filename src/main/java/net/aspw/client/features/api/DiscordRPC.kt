@@ -7,7 +7,7 @@ import com.jagrosh.discordipc.entities.pipe.PipeStatus
 import net.aspw.client.Client
 import net.aspw.client.util.ClientUtils
 import net.aspw.client.util.MinecraftInstance
-import net.aspw.client.util.network.CheckConnection
+import net.aspw.client.util.network.Access
 import org.json.JSONObject
 import java.time.OffsetDateTime
 import kotlin.concurrent.thread
@@ -88,9 +88,9 @@ class DiscordRPC : MinecraftInstance() {
             builder.setLargeImage(assets["logo"])
 
         // Set display infos
-        builder.setDetails("Build: ${Client.CLIENT_VERSION}")
-        builder.setState(CheckConnection.discord)
-        builder.setSmallImage(assets["mahiro"], "https://youtube.com/@as_pw")
+        builder.setDetails(Client.CLIENT_VERSION)
+        builder.setState(Access.discord)
+        builder.setSmallImage(assets["icon"], "https://youtube.com/@as_pw")
 
         // Check ipc client is connected and send rpc
         if (ipcClient?.status == PipeStatus.CONNECTED)
@@ -113,8 +113,8 @@ class DiscordRPC : MinecraftInstance() {
     }
 
     private fun loadConfiguration() {
-        appID = CheckConnection.discordApp.toLong()
+        appID = Access.discordApp.toLong()
         assets["logo"] = "logo"
-        assets["mahiro"] = "mahiro"
+        assets["icon"] = "icon"
     }
 }

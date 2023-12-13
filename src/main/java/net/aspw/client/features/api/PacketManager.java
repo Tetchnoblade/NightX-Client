@@ -4,7 +4,9 @@ import io.netty.buffer.Unpooled;
 import net.aspw.client.Client;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.other.ClientSpoof;
+import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.Cape;
+import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.util.EntityUtils;
 import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.PacketUtils;
@@ -12,7 +14,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.*;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
+import net.raphimc.vialoader.util.VersionEnum;
 
 import java.util.Objects;
 
@@ -21,6 +25,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     public static int ticks;
     public static String selectedCape;
     public static int swing;
+    public static boolean isVisualBlocking = false;
 
     public static void update() {
         int maxFrames = 40;
@@ -45,14 +50,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     }
 
     @EventTarget
-    public void onMotion(MotionEvent event) {
-        if (event.getEventState() == EventState.PRE) {
-            if (mc.thePlayer.swingProgressInt == 1) {
-                swing = 9;
-            } else {
-                swing = Math.max(0, swing - 1);
-            }
-        }
+    public void onUpdate(UpdateEvent event) {
         for (Entity en : mc.theWorld.loadedEntityList) {
             if (shouldStopRender(en)) {
                 en.renderDistanceWeight = 0.0;
@@ -70,13 +68,32 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 entity instanceof EntityItemFrame ||
                 entity instanceof EntityTNTPrimed ||
                 entity instanceof EntityArmorStand) &&
-                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 40.0f;
+                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 38.0f;
+    }
+
+    @EventTarget
+    public void onMotion(MotionEvent event) {
+        if (Animations.swingAnimValue.get().equals("Smooth") && event.getEventState() == EventState.PRE) {
+            if (mc.thePlayer.swingProgressInt == 1) {
+                swing = 9;
+            } else {
+                swing = Math.max(0, swing - 1);
+            }
+        }
     }
 
     @EventTarget
     public void onPacket(PacketEvent event) {
         final Packet<?> packet = event.getPacket();
         final ClientSpoof clientSpoof = Client.moduleManager.getModule(ClientSpoof.class);
+
+        if (ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_9_3tor1_9_4)) {
+            if (packet instanceof C08PacketPlayerBlockPlacement) {
+                ((C08PacketPlayerBlockPlacement) packet).facingX = 0.5F;
+                ((C08PacketPlayerBlockPlacement) packet).facingY = 0.5F;
+                ((C08PacketPlayerBlockPlacement) packet).facingZ = 0.5F;
+            }
+        }
 
         if (!MinecraftInstance.mc.isIntegratedServerRunning()) {
             if (packet instanceof C17PacketCustomPayload) {

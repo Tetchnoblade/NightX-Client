@@ -81,28 +81,6 @@ public final class ItemUtils {
     }
 
     /**
-     * Gets enchantment count.
-     *
-     * @param itemStack the item stack
-     * @return the enchantment count
-     */
-    public static int getEnchantmentCount(ItemStack itemStack) {
-        if (itemStack == null || itemStack.getEnchantmentTagList() == null || itemStack.getEnchantmentTagList().hasNoTags())
-            return 0;
-
-        int c = 0;
-
-        for (int i = 0; i < itemStack.getEnchantmentTagList().tagCount(); i++) {
-            NBTTagCompound tagCompound = itemStack.getEnchantmentTagList().getCompoundTagAt(i);
-
-            if ((tagCompound.hasKey("ench") || tagCompound.hasKey("id")))
-                c++;
-        }
-
-        return c;
-    }
-
-    /**
      * Gets item durability.
      *
      * @param stack the stack

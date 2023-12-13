@@ -1,8 +1,6 @@
 package net.aspw.client.injection.forge.mixins.render;
 
-import net.aspw.client.Client;
-import net.aspw.client.features.module.impl.combat.KillAura;
-import net.aspw.client.features.module.impl.combat.TPAura;
+import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.block.Block;
@@ -23,7 +21,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -67,10 +64,8 @@ public class MixinLayerHeldItem {
             Item item = itemstack.getItem();
             final UUID uuid = entitylivingbaseIn.getUniqueID();
             final EntityPlayer entityplayer = Minecraft.getMinecraft().theWorld.getPlayerEntityByUUID(uuid);
-            final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
-            final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
 
-            if (Animations.blockingAnimation.get().equals("1.7") && (entityplayer != null && entityplayer.isBlocking() || (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking()))) {
+            if (entityplayer != null && Animations.thirdPersonBlockingValue.get().equals("1.7") && (entityplayer.isBlocking() || PacketManager.isVisualBlocking)) {
                 if (entitylivingbaseIn.isSneaking()) {
                     ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0325F);
                     GlStateManager.translate(-0.58F, 0.3F, -0.2F);

@@ -17,7 +17,7 @@ object ShadowUtils : MinecraftInstance() {
 
     private var initFramebuffer: Framebuffer? = null
     private var frameBuffer: Framebuffer? = null
-    var resultBuffer: Framebuffer? = null
+    private var resultBuffer: Framebuffer? = null
 
     private var shaderGroup: ShaderGroup? = null
     private var lastWidth = 0

@@ -5,7 +5,9 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.protocol.ProtocolBase
 import net.aspw.client.util.AnimationUtils
+import net.aspw.client.util.network.Access
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.*
 import net.aspw.client.visual.client.GuiTeleportation
@@ -25,9 +27,8 @@ import java.awt.Color
 @ModuleInfo(name = "Interface", description = "", category = ModuleCategory.VISUAL, array = false)
 class Interface : Module() {
     private val watermarkValue = BoolValue("WaterMark", true)
-    private val clientNameValue = TextValue("ClientName", "NightX") { watermarkValue.get() }
-    val nof5crossHair = BoolValue("NoF5-Crosshair", false)
-    val gcdfix = BoolValue("GCD-Fix", true)
+    private val clientNameValue = TextValue("ClientName", "Night-X") { watermarkValue.get() }
+    val nof5crossHair = BoolValue("NoF5-Crosshair", true)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)
     private val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F) { animHotbarValue.get() }
     val blackHotbarValue = BoolValue("Black-Hotbar", false)
@@ -35,7 +36,7 @@ class Interface : Module() {
     private val noTitle = BoolValue("NoTitle", false)
     private val antiTabComplete = BoolValue("AntiTabComplete", false)
     val customFov = BoolValue("CustomFov", false)
-    val customFovModifier = FloatValue("Fov", 1.3F, 0.8F, 1.5F) { customFov.get() }
+    val customFovModifier = FloatValue("Fov", 1.4F, 0.8F, 1.5F) { customFov.get() }
     val fontChatValue = BoolValue("FontChat", false)
     val fontType = FontValue("Font", Fonts.fontSFUI37) { fontChatValue.get() }
     val chatRectValue = BoolValue("ChatRect", true)
@@ -45,8 +46,6 @@ class Interface : Module() {
     private val toggleSoundValue = ListValue("Toggle-Sound", arrayOf("None", "Default", "Custom"), "None")
     val flagSoundValue = BoolValue("Pop-Sound", true)
     val swingSoundValue = BoolValue("Swing-Sound", false)
-    val containerBackground = BoolValue("Gui-Background", true)
-    val invEffectOffset = BoolValue("InventoryEffect-Moveable", false)
 
     private var hotBarX = 0F
 
@@ -57,8 +56,10 @@ class Interface : Module() {
             val inputString = clientNameValue.get()
             val firstChar = inputString[0]
             val restOfString = inputString.substring(1)
+            val showName =
+                if (Access.canConnect) "$firstChar§d$restOfString" + " §b[" + Client.CLIENT_VERSION + "] | FPS: " + Minecraft.getDebugFPS() + " | version: " + ProtocolBase.getManager().targetVersion.getName() else "$firstChar§d$restOfString" + " §b[" + Client.CLIENT_VERSION + "] | FPS: " + Minecraft.getDebugFPS() + " | version: " + ProtocolBase.getManager().targetVersion.getName() + " | Disconnected"
             FontLoaders.SF20.drawStringWithShadow(
-                "$firstChar§d$restOfString" + " §b[" + Minecraft.getDebugFPS().toString() + " FPS]",
+                showName,
                 2.0,
                 3.0,
                 Color(169, 0, 170).rgb
@@ -90,8 +91,8 @@ class Interface : Module() {
         if (Client.moduleManager.toggleSoundMode != toggleSoundValue.values.indexOf(toggleSoundValue.get()))
             Client.moduleManager.toggleSoundMode = toggleSoundValue.values.indexOf(toggleSoundValue.get())
 
-        if (Client.moduleManager.toggleVolume != 90f)
-            Client.moduleManager.toggleVolume = 90f
+        if (Client.moduleManager.toggleVolume != 83f)
+            Client.moduleManager.toggleVolume = 83f
     }
 
     @EventTarget
@@ -113,9 +114,5 @@ class Interface : Module() {
         else pos
 
         return hotBarX
-    }
-
-    init {
-        state = true
     }
 }

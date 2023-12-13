@@ -7,9 +7,10 @@ import net.minecraft.util.Vec3;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
- * The type A star custom path finder.
+ * The type A star custom pathfinder
  */
 public class AStarCustomPathFinder {
     private static final Vec3[] flatCardinalDirections = {
@@ -22,12 +23,10 @@ public class AStarCustomPathFinder {
     private final Vec3 endVec3;
     private final ArrayList<Hub> hubs = new ArrayList<>();
     private final ArrayList<Hub> hubsToWork = new ArrayList<>();
-    private final double minDistanceSquared = 9;
-    private final boolean nearest = true;
     private ArrayList<Vec3> path = new ArrayList<>();
 
     /**
-     * Instantiates a new A star custom path finder.
+     * Instantiates a new A star custom pathfinder.
      *
      * @param startVec3 the start vec 3
      * @param endVec3   the end vec 3
@@ -121,7 +120,7 @@ public class AStarCustomPathFinder {
         hubsToWork.clear();
         ArrayList<Vec3> initPath = new ArrayList<>();
         initPath.add(startVec3);
-        hubsToWork.add(new Hub(startVec3, null, initPath, startVec3.squareDistanceTo(endVec3), 0, 0));
+        hubsToWork.add(new Hub(startVec3, initPath, startVec3.squareDistanceTo(endVec3), 0, 0));
         search:
         for (int i = 0; i < loops; i++) {
             hubsToWork.sort(new CompareHub());
@@ -162,10 +161,8 @@ public class AStarCustomPathFinder {
                 }
             }
         }
-        if (nearest) {
-            hubs.sort(new CompareHub());
-            path = hubs.get(0).getPath();
-        }
+        hubs.sort(new CompareHub());
+        path = hubs.get(0).getPath();
     }
 
     /**
@@ -203,21 +200,22 @@ public class AStarCustomPathFinder {
             totalCost += parent.getTotalCost();
         }
         if (existingHub == null) {
-            if ((loc.xCoord == endVec3.xCoord && loc.yCoord == endVec3.yCoord && loc.zCoord == endVec3.zCoord) || (minDistanceSquared != 0 && loc.squareDistanceTo(endVec3) <= minDistanceSquared)) {
+            double minDistanceSquared = 9;
+            if (loc.xCoord == endVec3.xCoord && loc.yCoord == endVec3.yCoord && loc.zCoord == endVec3.zCoord || loc.squareDistanceTo(endVec3) <= minDistanceSquared) {
                 path.clear();
-                path = parent.getPath();
+                path = Objects.requireNonNull(parent).getPath();
                 path.add(loc);
                 return true;
             } else {
-                ArrayList<Vec3> path = new ArrayList<>(parent.getPath());
+                ArrayList<Vec3> path = new ArrayList<>(Objects.requireNonNull(parent).getPath());
                 path.add(loc);
-                hubsToWork.add(new Hub(loc, parent, path, loc.squareDistanceTo(endVec3), cost, totalCost));
+                hubsToWork.add(new Hub(loc, path, loc.squareDistanceTo(endVec3), cost, totalCost));
             }
         } else if (existingHub.getCost() > cost) {
-            ArrayList<Vec3> path = new ArrayList<>(parent.getPath());
+            ArrayList<Vec3> path = new ArrayList<>(Objects.requireNonNull(parent).getPath());
             path.add(loc);
             existingHub.setLoc(loc);
-            existingHub.setParent(parent);
+            existingHub.setParent();
             existingHub.setPath(path);
             existingHub.setSquareDistanceToFromTarget(loc.squareDistanceTo(endVec3));
             existingHub.setCost(cost);
@@ -226,9 +224,8 @@ public class AStarCustomPathFinder {
         return false;
     }
 
-    private class Hub {
-        private Vec3 loc = null;
-        private Hub parent = null;
+    private static class Hub {
+        private Vec3 loc;
         private ArrayList<Vec3> path;
         private double squareDistanceToFromTarget;
         private double cost;
@@ -238,15 +235,13 @@ public class AStarCustomPathFinder {
          * Instantiates a new Hub.
          *
          * @param loc                        the loc
-         * @param parent                     the parent
          * @param path                       the path
          * @param squareDistanceToFromTarget the square distance to from target
          * @param cost                       the cost
          * @param totalCost                  the total cost
          */
-        public Hub(Vec3 loc, Hub parent, ArrayList<Vec3> path, double squareDistanceToFromTarget, double cost, double totalCost) {
+        public Hub(Vec3 loc, ArrayList<Vec3> path, double squareDistanceToFromTarget, double cost, double totalCost) {
             this.loc = loc;
-            this.parent = parent;
             this.path = path;
             this.squareDistanceToFromTarget = squareDistanceToFromTarget;
             this.cost = cost;
@@ -273,11 +268,8 @@ public class AStarCustomPathFinder {
 
         /**
          * Sets parent.
-         *
-         * @param parent the parent
          */
-        public void setParent(Hub parent) {
-            this.parent = parent;
+        public void setParent() {
         }
 
         /**
@@ -356,7 +348,7 @@ public class AStarCustomPathFinder {
     /**
      * The type Compare hub.
      */
-    public class CompareHub implements Comparator<Hub> {
+    public static class CompareHub implements Comparator<Hub> {
         @Override
         public int compare(Hub o1, Hub o2) {
             return (int) (

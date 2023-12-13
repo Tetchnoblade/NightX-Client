@@ -45,7 +45,7 @@ class Gui : Module() {
     val imageModeValue =
         ListValue(
             "Image",
-            arrayOf("none", "mahiro", "delta", "defoko", "astolfo", "nao", "miguel", "infinity"),
+            arrayOf("none", "mahiro", "ayoz", "delta", "defoko", "astolfo", "nao", "miguel", "infinity"),
             "none"
         ) { styleValue.get() == "DropDown" }
 

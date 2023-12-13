@@ -7,6 +7,7 @@ import net.aspw.client.visual.hud.element.Border
 import net.aspw.client.visual.hud.element.elements.TargetHud
 import net.aspw.client.visual.hud.element.elements.targets.TargetStyle
 import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.entity.player.EntityPlayer
 import org.lwjgl.opengl.GL11
 import java.awt.Color
@@ -31,26 +32,41 @@ class New(inst: TargetHud) : TargetStyle("New", inst, true) {
         updateAnim(entity.health)
 
         // Draw rect box
-        RenderUtils.drawRect(-8F, -1F, width - 3F, 43F, targetHudInstance.bgColor.rgb)
+        RenderUtils.drawRect(-12F, -1F, width - 3F, 56F, targetHudInstance.bgColor.rgb)
 
         // Health bar
-        val barLength = 69F * (entity.health / entity.maxHealth).coerceIn(0F, 1F)
+        val healthLength = 69F * (entity.health / entity.maxHealth).coerceIn(0F, 1F)
         RenderUtils.drawRect(
             36F,
             32F,
-            42F + 69F,
-            39F,
+            41.5F + 69F,
+            35.5F,
             targetHudInstance.barColor.darker(0.3f)
         )
         RenderUtils.drawRect(
             36F,
             32F,
-            42F + barLength,
-            39F,
+            (easingHealth / entity.maxHealth).coerceIn(0F, entity.maxHealth) * (healthLength + 41.5F),
+            35.5F,
             targetHudInstance.barColor.rgb
         )
-        for (i in 0..9)
-            RenderUtils.drawRectBasedBorder(36F, 32F, 42F + 69F, 39F, 0.5F, getColor(Color.black).rgb)
+
+        // Armor bar
+        val armorLength = 68.5F * (entity.totalArmorValue.toFloat() / 20F).coerceIn(0F, 1F)
+        RenderUtils.drawRect(
+            36F,
+            36F,
+            42F + 68.5F,
+            39.5F,
+            getColor(Color.white.darker()).rgb
+        )
+        RenderUtils.drawRect(
+            36F,
+            36F,
+            (easingHealth / entity.maxHealth).coerceIn(0F, entity.maxHealth) * (armorLength + 42F),
+            39.5F,
+            getColor(Color.white).rgb
+        )
 
         updateAnim(entity.health)
         // Name
@@ -63,7 +79,33 @@ class New(inst: TargetHud) : TargetStyle("New", inst, true) {
         GL11.glPopMatrix()
 
         GlStateManager.resetColor()
-        RenderUtils.drawEntityOnScreen(14, 42, 21, entity)
+        RenderUtils.drawEntityOnScreen(11, 53, 26, entity)
+
+        GL11.glPushMatrix()
+        GL11.glColor4f(1f, 1f, 1f, 1f - targetHudInstance.getFadeProgress())
+        RenderHelper.enableGUIStandardItemLighting()
+
+        val renderItem = mc.renderItem
+
+        var x = 34
+        val y = 39
+
+        for (index in 3 downTo 0) {
+            val stack = entity.inventory.armorInventory[index] ?: continue
+
+            if (stack.item == null)
+                continue
+
+            renderItem.renderItemAndEffectIntoGUI(stack, x, y)
+            x += 16
+        }
+
+        RenderHelper.disableStandardItemLighting()
+        GlStateManager.enableAlpha()
+        GlStateManager.disableBlend()
+        GlStateManager.disableLighting()
+        GlStateManager.disableCull()
+        GL11.glPopMatrix()
 
         lastTarget = entity
     }
@@ -76,7 +118,7 @@ class New(inst: TargetHud) : TargetStyle("New", inst, true) {
         GlStateManager.enableBlend()
         GlStateManager.disableTexture2D()
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0)
-        RenderUtils.quickDrawRect(-8F, -1F, width - 3F, 43F)
+        RenderUtils.quickDrawRect(-12F, -1F, width - 3F, 56F)
         GlStateManager.enableTexture2D()
         GlStateManager.disableBlend()
     }
@@ -88,7 +130,7 @@ class New(inst: TargetHud) : TargetStyle("New", inst, true) {
             .coerceAtLeast(118)
             .toFloat()
 
-        RenderUtils.newDrawRect(-8F, -1F, width - 3F, 43F, shadowOpaque.rgb)
+        RenderUtils.newDrawRect(-12F, -1F, width - 3F, 56F, shadowOpaque.rgb)
     }
 
     override fun getBorder(entity: EntityPlayer?): Border {
@@ -96,6 +138,6 @@ class New(inst: TargetHud) : TargetStyle("New", inst, true) {
         val width = (38 + Fonts.minecraftFont.getStringWidth(entity.name))
             .coerceAtLeast(118)
             .toFloat()
-        return Border(-8F, -1F, width - 3F, 43F)
+        return Border(-12F, -1F, width - 3F, 56F)
     }
 }

@@ -21,12 +21,14 @@ class Animations : Module() {
         val Sword = ListValue(
             "Mode", arrayOf(
                 "1.8",
+                "Hide",
                 "Swing",
                 "Old",
                 "Push",
                 "Dash",
                 "Slash",
                 "Slide",
+                "Scale",
                 "Swank",
                 "Swang",
                 "Swonk",
@@ -68,13 +70,15 @@ class Animations : Module() {
         )
 
         @JvmField
-        val blockingAnimation = ListValue("ThirdPerson-Blocking", arrayOf("1.7", "1.8"), "1.8")
+        val thirdPersonBlockingValue = ListValue(
+            "ThirdPerson-Blocking", arrayOf(
+                "1.7",
+                "1.8"
+            ), "1.8"
+        )
 
         @JvmField
         val tabAnimations = ListValue("Tab-Animation", arrayOf("None", "Zoom", "Slide"), "None")
-
-        @JvmField
-        val oldAnimations = BoolValue("OldAnimations", true)
 
         @JvmField
         val cancelEquip = BoolValue("CancelEquip", false)

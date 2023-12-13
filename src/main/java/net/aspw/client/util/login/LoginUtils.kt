@@ -7,8 +7,6 @@ import net.aspw.client.util.MinecraftInstance
 import net.minecraft.util.Session
 import java.util.*
 
-fun net.aspw.client.auth.compat.Session.intoMinecraftSession(): Session = Session(username, uuid, token, type)
-
 object LoginUtils : MinecraftInstance() {
 
     @JvmStatic

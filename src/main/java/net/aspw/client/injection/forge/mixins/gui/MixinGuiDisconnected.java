@@ -12,13 +12,12 @@ import net.aspw.client.auth.account.CrackedAccount;
 import net.aspw.client.auth.account.MinecraftAccount;
 import net.aspw.client.event.SessionEvent;
 import net.aspw.client.features.module.impl.visual.Interface;
-import net.aspw.client.protocol.Protocol;
+import net.aspw.client.protocol.api.ProtocolSelector;
 import net.aspw.client.util.ClientUtils;
 import net.aspw.client.util.ServerUtils;
 import net.aspw.client.util.SessionUtils;
 import net.aspw.client.util.misc.RandomUtils;
 import net.aspw.client.visual.client.GuiMainMenu;
-import net.aspw.client.visual.client.GuiProxyManager;
 import net.aspw.client.visual.client.altmanager.GuiAltManager;
 import net.aspw.client.visual.client.altmanager.menus.GuiLoginProgress;
 import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening;
@@ -57,8 +56,7 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
         buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 100, 20, "Reconnect with Alt"));
         buttonList.add(new GuiButton(4, this.width / 2 + 2, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 98, 20, "Random Cracked"));
         buttonList.add(new GuiButton(998, width - 94, 5, 88, 20, "Alt Manager"));
-        buttonList.add(new GuiButton(1000, 4, height - 24, 68, 20, "Proxy"));
-        buttonList.add(Protocol.getAsyncVersionSlider());
+        buttonList.add(new GuiButton(1151, 4, height - 24, 68, 20, "Protocol"));
     }
 
     @Inject(method = "actionPerformed", at = @At("HEAD"))
@@ -124,11 +122,11 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
                         crackedAccount.getSession().getToken(), crackedAccount.getSession().getType());
                 Client.eventManager.callEvent(new SessionEvent());
                 break;
-            case 1000:
-                mc.displayGuiScreen(new GuiProxyManager((GuiScreen) (Object) this));
-                break;
             case 998:
                 mc.displayGuiScreen(new GuiAltManager((GuiScreen) (Object) this));
+                break;
+            case 1151:
+                mc.displayGuiScreen(new ProtocolSelector((GuiScreen) (Object) this));
                 break;
         }
     }
@@ -137,8 +135,8 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
     private void drawScreen(CallbackInfo callbackInfo) {
         Fonts.minecraftFont.drawStringWithShadow(
                 "§7Username: §d" + mc.getSession().getUsername(),
-                117f,
-                11.5f,
+                6f,
+                6f,
                 0xffffff);
     }
 }

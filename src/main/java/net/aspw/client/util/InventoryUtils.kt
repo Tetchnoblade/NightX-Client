@@ -9,7 +9,6 @@ import net.minecraft.init.Blocks
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
-import java.util.*
 
 /**
  * The type Inventory utils.
@@ -49,7 +48,7 @@ class InventoryUtils : MinecraftInstance(), Listenable {
         /**
          * The constant BLOCK_BLACKLIST.
          */
-        val BLOCK_BLACKLIST = Arrays.asList(
+        val BLOCK_BLACKLIST = listOf(
             Blocks.enchanting_table,
             Blocks.chest,
             Blocks.ender_chest,
@@ -124,13 +123,13 @@ class InventoryUtils : MinecraftInstance(), Listenable {
          */
         fun hasSpaceHotbar(): Boolean {
             for (i in 36..44) {
-                val itemStack = mc.thePlayer.inventoryContainer.getSlot(i).stack ?: return true
+                mc.thePlayer.inventoryContainer.getSlot(i).stack ?: return true
             }
             return false
         }
 
         /**
-         * Find auto block block int.
+         * Find auto block int.
          *
          * @return the int
          */

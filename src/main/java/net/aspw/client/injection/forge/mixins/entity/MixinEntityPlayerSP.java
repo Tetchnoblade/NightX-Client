@@ -12,10 +12,8 @@ import net.aspw.client.features.module.impl.movement.SilentSneak;
 import net.aspw.client.features.module.impl.movement.Sprint;
 import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.features.module.impl.visual.Interface;
-import net.aspw.client.util.CooldownHelper;
-import net.aspw.client.util.MovementUtils;
-import net.aspw.client.util.Rotation;
-import net.aspw.client.util.RotationUtils;
+import net.aspw.client.protocol.ProtocolBase;
+import net.aspw.client.util.*;
 import net.aspw.client.visual.client.GuiTeleportation;
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui;
 import net.aspw.client.visual.client.clickgui.tab.NewUi;
@@ -34,13 +32,16 @@ import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemSword;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.*;
+import net.raphimc.vialoader.util.VersionEnum;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -52,6 +53,9 @@ import java.util.Objects;
  */
 @Mixin(EntityPlayerSP.class)
 public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
+
+    @Unique
+    private boolean viaForge$prevOnGround;
 
     /**
      * The Server sprint state.
@@ -185,6 +189,21 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         final Flight flight = Objects.requireNonNull(Client.moduleManager.getModule(Flight.class));
 
         return (mc.getRenderViewEntity() != null && mc.getRenderViewEntity().equals(this)) || (Client.moduleManager != null && flight.getState());
+    }
+
+    @Redirect(method = "onUpdateWalkingPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/NetHandlerPlayClient;addToSendQueue(Lnet/minecraft/network/Packet;)V", ordinal = 7))
+    public void emulateIdlePacket(NetHandlerPlayClient instance, Packet p_addToSendQueue_1_) {
+        if (ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning()) {
+            if (this.viaForge$prevOnGround == this.onGround) {
+                return;
+            }
+        }
+        instance.addToSendQueue(p_addToSendQueue_1_);
+    }
+
+    @Inject(method = "onUpdateWalkingPlayer", at = @At("RETURN"))
+    public void saveGroundState(CallbackInfo ci) {
+        this.viaForge$prevOnGround = this.onGround;
     }
 
     /**

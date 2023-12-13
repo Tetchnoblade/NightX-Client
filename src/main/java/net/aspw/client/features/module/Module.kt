@@ -18,19 +18,7 @@ abstract class Module : MinecraftInstance(), Listenable {
     var description: String
     var category: ModuleCategory
     var keyBind = Keyboard.CHAR_NONE
-        set(keyBind) {
-            field = keyBind
-
-            if (!Client.isStarting)
-                Client.fileManager.saveConfig(Client.fileManager.modulesConfig)
-        }
     var array = true
-        set(array) {
-            field = array
-
-            if (!Client.isStarting)
-                Client.fileManager.saveConfig(Client.fileManager.modulesConfig)
-        }
     private val canEnable: Boolean
     private val onlyEnable: Boolean
     private val forceNoSound: Boolean
@@ -93,9 +81,6 @@ abstract class Module : MinecraftInstance(), Listenable {
                 onDisable()
                 field = false
             }
-
-            // Save module state
-            Client.fileManager.saveConfig(Client.fileManager.modulesConfig)
         }
 
     // HUD

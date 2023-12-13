@@ -195,7 +195,7 @@ class Nuker : Module() {
             // Fast creative mode nuker (CreativeStorm option)
 
             // Unable to break with swords in creative mode
-            if (thePlayer.heldItem?.item is ItemSword)
+            if (thePlayer.heldItem?.item is ItemSword || mc.thePlayer.ticksExisted % nukeDelay.get() != 0)
                 return
 
             // Search for new blocks to break

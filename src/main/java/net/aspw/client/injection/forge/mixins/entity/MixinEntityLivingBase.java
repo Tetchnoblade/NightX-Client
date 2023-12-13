@@ -4,12 +4,13 @@ import net.aspw.client.Client;
 import net.aspw.client.event.JumpEvent;
 import net.aspw.client.features.module.impl.movement.AirJump;
 import net.aspw.client.features.module.impl.movement.Jesus;
+import net.aspw.client.features.module.impl.movement.NoJumpDelay;
 import net.aspw.client.features.module.impl.movement.Sprint;
-import net.aspw.client.features.module.impl.other.NoJumpDelay;
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.features.module.impl.visual.SilentView;
-import net.aspw.client.protocol.Protocol;
+import net.aspw.client.features.module.impl.visual.VisualAbilities;
+import net.aspw.client.protocol.ProtocolBase;
+import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.MovementUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -19,6 +20,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
+import net.raphimc.vialoader.util.VersionEnum;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -177,7 +179,9 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
             rotationYawHead = silentView.getPlayerYaw();
         }
         float f = MathHelper.wrapAngleTo180_float(p_1101461 - this.renderYawOffset);
-        this.renderYawOffset += f * 0.3F;
+        if (silentView.getRotationMode().get().equals("Normal") && silentView.getBodyLockValue().get() && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP)
+            this.renderYawOffset += f;
+        else this.renderYawOffset += f * 0.3F;
         float f1 = MathHelper.wrapAngleTo180_float(rotationYaw - this.renderYawOffset);
         boolean flag = f1 < 90.0F || f1 >= 90.0F;
 
@@ -261,15 +265,15 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @Inject(method = "isPotionActive(Lnet/minecraft/potion/Potion;)Z", at = @At("HEAD"), cancellable = true)
     private void isPotionActive(Potion p_isPotionActive_1_, final CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        final AntiBlind antiBlind = Objects.requireNonNull(Client.moduleManager.getModule(AntiBlind.class));
+        final VisualAbilities visualAbilities = Objects.requireNonNull(Client.moduleManager.getModule(VisualAbilities.class));
 
-        if ((p_isPotionActive_1_ == Potion.confusion || p_isPotionActive_1_ == Potion.blindness) && antiBlind.getState() && antiBlind.getConfusionEffect().get())
+        if ((p_isPotionActive_1_ == Potion.confusion || p_isPotionActive_1_ == Potion.blindness) && visualAbilities.getState() && visualAbilities.getConfusionEffect().get())
             callbackInfoReturnable.setReturnValue(false);
     }
 
     @ModifyConstant(method = "onLivingUpdate", constant = @Constant(doubleValue = 0.005D))
     private double ViaVersion_MovementThreshold(double constant) {
-        if (!Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x"))
+        if (ProtocolBase.getManager().getTargetVersion().getProtocol() != VersionEnum.r1_8.getProtocol() && !MinecraftInstance.mc.isIntegratedServerRunning())
             return 0.003D;
         return 0.005D;
     }

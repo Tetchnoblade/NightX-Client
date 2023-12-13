@@ -50,7 +50,7 @@ object CooldownHelper {
         }
     }
 
-    fun getAttackCooldownProgressPerTick() = 1.0 / genericAttackSpeed * 20.0
+    private fun getAttackCooldownProgressPerTick() = 1.0 / genericAttackSpeed * 20.0
 
     fun getAttackCooldownProgress() = MathHelper.clamp_double(
         (lastAttackedTicks + MinecraftInstance.mc.timer.renderPartialTicks) / getAttackCooldownProgressPerTick(),

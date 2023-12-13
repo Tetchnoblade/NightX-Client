@@ -12,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayer
 class CombatManager : Listenable, MinecraftInstance() {
     private val lastAttackTimer = MSTimer()
 
-    private var inCombat = false
+    var inCombat = false
     var target: EntityLivingBase? = null
         private set
     private val attackedEntityList = mutableListOf<EntityLivingBase>()

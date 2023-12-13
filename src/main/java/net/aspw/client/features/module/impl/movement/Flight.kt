@@ -5,10 +5,7 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.MovementUtils
-import net.aspw.client.util.PacketUtils
-import net.aspw.client.util.RotationUtils
-import net.aspw.client.util.TransferUtils
+import net.aspw.client.util.*
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.util.timer.TickTimer
@@ -21,8 +18,10 @@ import net.minecraft.block.BlockAir
 import net.minecraft.block.BlockSlime
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.settings.GameSettings
+import net.minecraft.init.Blocks
 import net.minecraft.item.ItemBlock
 import net.minecraft.item.ItemEnderPearl
+import net.minecraft.item.ItemStack
 import net.minecraft.network.Packet
 import net.minecraft.network.play.INetHandlerPlayServer
 import net.minecraft.network.play.client.*
@@ -74,6 +73,7 @@ class Flight : Module() {
             "NeruxVace",
             "Verus",
             "VerusLowHop",
+            "VerusSmooth",
             "Matrix",
             "VulcanZoom",
             "VulcanClip",
@@ -212,6 +212,7 @@ class Flight : Module() {
         BoolValue("FakeNoMove", false) { modeValue.get().lowercase(Locale.getDefault()).contains("exploit") }
 
     // Visuals
+    private val lagCheck = BoolValue("LagCheck", false)
     private val fakeDmgValue = BoolValue("FakeDamage", false)
     val fakeYValue = BoolValue("FakeY", false)
     private val viewBobbingValue = BoolValue("ViewBobbing", false)
@@ -644,6 +645,15 @@ class Flight : Module() {
     @EventTarget
     fun onWorld(event: WorldEvent) {
         packetLol.clear()
+        if (!lagCheck.get()) {
+            state = false
+            Client.hud.addNotification(
+                Notification(
+                    "Flight was disabled",
+                    Notification.Type.WARNING
+                )
+            )
+        }
     }
 
     @EventTarget
@@ -741,6 +751,12 @@ class Flight : Module() {
                     mc.gameSettings.keyBindSneak.pressed = false
                 }
                 MovementUtils.strafe(vanillaSpeed)
+            }
+
+            "verussmooth" -> {
+                if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
+                    mc.gameSettings.keyBindSneak.pressed = false
+                }
             }
 
             "veruslowhop" -> {
@@ -1336,24 +1352,34 @@ class Flight : Module() {
         if (fakeYValue.get())
             mc.thePlayer.cameraPitch = 0f
         when (modeValue.get().lowercase()) {
+            "verussmooth" -> {
+                mc.thePlayer.cameraPitch = 0f
+            }
+
             "blocksmc" -> {
                 if (event.eventState === EventState.PRE) {
                     val bb = mc.thePlayer.entityBoundingBox.offset(0.0, 1.0, 0.0)
 
                     if (starteds) {
                         mc.thePlayer.motionY += 0.025
-                        MovementUtils.strafe(0.935f.let { bmcSpeed *= it; bmcSpeed }.toFloat())
-                        if (mc.thePlayer.motionY < -0.5 && !MovementUtils.isBlockUnder()) {
-                            toggle()
-                            mc.timer.timerSpeed = 0.7f
-                        }
+                        MovementUtils.strafe(0.95f.let { bmcSpeed *= it; bmcSpeed }.toFloat())
                     }
 
                     if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, bb).isEmpty() && !starteds) {
                         starteds = true
+                        val pos = mc.thePlayer.position.add(0.0, -1.5, 0.0)
+                        PacketUtils.sendPacketNoEvent(
+                            C08PacketPlayerBlockPlacement(
+                                pos,
+                                1,
+                                ItemStack(Blocks.stone.getItem(mc.theWorld, pos)),
+                                0.0F,
+                                0.5F + Math.random().toFloat() * 0.44.toFloat(),
+                                0.0F
+                            )
+                        )
                         mc.thePlayer.jump()
-                        MovementUtils.strafe(9.also { bmcSpeed = it.toDouble() }.toFloat())
-                        mc.timer.timerSpeed = 0.7f
+                        MovementUtils.strafe(4.also { bmcSpeed = it.toDouble() }.toFloat())
                     }
                 }
             }
@@ -1547,9 +1573,7 @@ class Flight : Module() {
                             mc.thePlayer.posZ,
                             (mc.thePlayer.posY.toInt() - 1).toDouble()
                         )
-                        RotationUtils.setTargetRotation(rot)
-                        event.yaw = rot.yaw
-                        event.pitch = rot.pitch
+                        RotationUtils.setTargetRotation(Rotation(rot.yaw, rot.pitch))
                     } else event.y = event.y - 0.08
                 } else if (wdState == 2) {
                     if (mc.playerController.onPlayerRightClick(
@@ -1569,6 +1593,19 @@ class Flight : Module() {
                     wdState = 3
                 }
             }
+        }
+    }
+
+    @EventTarget
+    fun onTeleport(event: TeleportEvent) {
+        if (lagCheck.get()) {
+            state = false
+            Client.hud.addNotification(
+                Notification(
+                    "Disabling Flight due to lag back",
+                    Notification.Type.WARNING
+                )
+            )
         }
     }
 
@@ -1631,6 +1668,15 @@ class Flight : Module() {
                     if (boostMotion == 1) {
                         boostMotion = 2
                     }
+                }
+            }
+
+            "verussmooth" -> {
+                if (packet is C03PacketPlayer) {
+                    if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
+                        packet.y = mc.thePlayer.posY + 0.08
+                    else if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak))
+                        packet.y = mc.thePlayer.posY - 0.08
                 }
             }
 
@@ -1982,6 +2028,30 @@ class Flight : Module() {
         when (modeValue.get().lowercase(Locale.getDefault())) {
             "pearl" -> if (pearlState != 2 && pearlState != -1) {
                 event.cancelEvent()
+            }
+
+            "verussmooth" -> {
+                val pos = mc.thePlayer.position.add(0.0, -1.5, 0.0)
+                PacketUtils.sendPacketNoEvent(
+                    C08PacketPlayerBlockPlacement(
+                        pos,
+                        1,
+                        ItemStack(Blocks.stone.getItem(mc.theWorld, pos)),
+                        0.0F,
+                        0.5F + Math.random().toFloat() * 0.44.toFloat(),
+                        0.0F
+                    )
+                )
+                if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
+                    event.y = 0.08
+                else if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak))
+                    event.y = -0.08
+                else event.y = 0.0
+                if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                    MovementUtils.strafe(0.45f)
+                } else {
+                    MovementUtils.strafe(0.35f)
+                }
             }
 
             "verus" -> if (!verusDmged) if (verusDmgModeValue.get()

@@ -31,7 +31,7 @@ public final class AnimationUtils {
         if (larger) {
             current += factor;
             if (current >= target) current = target;
-        } else if (target < current) {
+        } else {
             current -= factor;
             if (current <= target) current = target;
         }
@@ -66,7 +66,7 @@ public final class AnimationUtils {
         if (larger) {
             current += (float) factor;
             if (current >= target) current = target;
-        } else if (target < current) {
+        } else {
             current -= (float) factor;
             if (current <= target) current = target;
         }

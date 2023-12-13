@@ -10,7 +10,7 @@ import net.aspw.client.auth.utils.HttpUtils
 import net.aspw.client.auth.utils.array
 import net.aspw.client.auth.utils.obj
 import net.aspw.client.auth.utils.string
-import net.aspw.client.util.network.CheckConnection
+import net.aspw.client.util.network.Access
 
 class MicrosoftAccount : MinecraftAccount("Microsoft") {
     override var name = "UNKNOWN"
@@ -235,8 +235,8 @@ class MicrosoftAccount : MinecraftAccount("Microsoft") {
                 "<access_token>"
             )
             val AZURE_APP = AuthMethod(
-                CheckConnection.appClientID,
-                CheckConnection.appClientSecret,
+                Access.appClientID,
+                Access.appClientSecret,
                 "http://localhost:1919/login",
                 "XboxLive.signin%20offline_access",
                 "d=<access_token>"

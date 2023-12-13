@@ -98,8 +98,4 @@ class MoreParticles : Module() {
             }
         }
     }
-
-    init {
-        state = true
-    }
 }

@@ -19,6 +19,8 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 
+import java.util.Objects;
+
 /**
  * The type Entity utils.
  */
@@ -69,7 +71,7 @@ public final class EntityUtils extends MinecraftInstance {
                             return false;
 
                         final AntiTeams antiTeams = Client.moduleManager.getModule(AntiTeams.class);
-                        return !antiTeams.getState() || !antiTeams.isInYourTeam(entityPlayer);
+                        return !Objects.requireNonNull(antiTeams).getState() || !antiTeams.isInYourTeam(entityPlayer);
                     }
 
                     return true;

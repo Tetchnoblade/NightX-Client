@@ -29,7 +29,6 @@ import javax.vecmath.Vector4d;
 import java.awt.*;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,8 +45,6 @@ public final class ESP extends Module {
     private final FloatBuffer projection;
     private final FloatBuffer vector;
     private final int backgroundColor;
-
-    private final DecimalFormat dFormat = new DecimalFormat("0.0");
 
     public ESP() {
         this.viewport = GLAllocation.createDirectIntBuffer(16);

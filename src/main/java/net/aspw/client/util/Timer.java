@@ -21,22 +21,6 @@ public final class Timer {
     }
 
     /**
-     * Sleep boolean.
-     *
-     * @param time the time
-     * @return the boolean
-     */
-    /* methods */
-    public boolean sleep(long time) {
-        if (time() >= time) {
-            reset();
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Check boolean.
      *
      * @param milliseconds the milliseconds
@@ -80,23 +64,5 @@ public final class Timer {
      */
     public long getCurrentMS() {
         return System.nanoTime() / 1000000L;
-    }
-
-    /**
-     * Gets last delay.
-     *
-     * @return the last delay
-     */
-    public double getLastDelay() {
-        return getCurrentMS() - getLastMS();
-    }
-
-    /**
-     * Gets last ms.
-     *
-     * @return the last ms
-     */
-    public long getLastMS() {
-        return lastMS;
     }
 }

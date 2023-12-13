@@ -15,10 +15,10 @@ import net.minecraft.network.play.client.C16PacketClientStatus
 import net.minecraft.potion.Potion
 
 object InventoryHelper : MinecraftInstance(), Listenable {
-    val CLICK_TIMER = MSTimer()
+    private val CLICK_TIMER = MSTimer()
 
     //val INV_TIMER = MSTimer()
-    val BLOCK_BLACKLIST = listOf(
+    private val BLOCK_BLACKLIST = listOf(
         Blocks.enchanting_table,
         Blocks.chest,
         Blocks.ender_chest,
@@ -101,7 +101,7 @@ object InventoryHelper : MinecraftInstance(), Listenable {
         mc.netHandler.addToSendQueue(C0DPacketCloseWindow())
     }
 
-    fun isPositivePotionEffect(id: Int): Boolean {
+    private fun isPositivePotionEffect(id: Int): Boolean {
         if (id == Potion.regeneration.id || id == Potion.moveSpeed.id ||
             id == Potion.heal.id || id == Potion.nightVision.id ||
             id == Potion.jump.id || id == Potion.invisibility.id ||

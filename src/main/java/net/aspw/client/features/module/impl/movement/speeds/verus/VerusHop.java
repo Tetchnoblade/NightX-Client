@@ -31,7 +31,7 @@ public class VerusHop extends SpeedMode {
                 if (mc.thePlayer.onGround) {
                     mc.thePlayer.jump();
                     if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                        MovementUtils.strafe(0.57f);
+                        MovementUtils.strafe(0.56f);
                     } else {
                         MovementUtils.strafe(0.48f);
                     }
@@ -45,10 +45,8 @@ public class VerusHop extends SpeedMode {
     public void onDisable() {
         final Scaffold scaffold = Client.moduleManager.getModule(Scaffold.class);
 
-        if (!mc.thePlayer.isSneaking() && !scaffold.getState()) {
-            mc.thePlayer.motionX = 0.0;
-            mc.thePlayer.motionZ = 0.0;
-        }
+        if (!mc.thePlayer.isSneaking() && !scaffold.getState())
+            MovementUtils.strafe(0.2f);
     }
 
     @Override

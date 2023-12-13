@@ -172,8 +172,4 @@ class HackerDetect : Module() {
         }
         return false
     }
-
-    init {
-        state = true
-    }
 }

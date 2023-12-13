@@ -60,28 +60,4 @@ public final class MiscUtils extends MinecraftInstance {
 
         return action == JFileChooser.APPROVE_OPTION ? fileChooser.getSelectedFile() : null;
     }
-
-    /**
-     * Save file chooser file.
-     *
-     * @return the file
-     */
-    public static File saveFileChooser() {
-        if (mc.isFullScreen())
-            mc.toggleFullscreen();
-
-        final JFileChooser fileChooser = new JFileChooser();
-        final JFrame frame = new JFrame();
-
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-        frame.setVisible(true);
-        frame.toFront();
-        frame.setVisible(false);
-
-        final int action = fileChooser.showSaveDialog(frame);
-        frame.dispose();
-
-        return action == JFileChooser.APPROVE_OPTION ? fileChooser.getSelectedFile() : null;
-    }
 }

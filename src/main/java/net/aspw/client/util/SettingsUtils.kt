@@ -4,7 +4,6 @@ import net.aspw.client.Client
 import net.aspw.client.features.api.MacroManager
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.impl.exploit.Debugger
-import net.aspw.client.features.module.impl.exploit.PacketTracker
 import net.aspw.client.features.module.impl.exploit.Plugins
 import net.aspw.client.features.module.impl.other.*
 import net.aspw.client.features.module.impl.player.Freecam
@@ -48,14 +47,13 @@ object SettingsUtils {
 
                 "load" -> {
                     val urlRaw = StringUtils.toCompleteString(args, 1)
-                    val url = urlRaw
 
                     try {
-                        ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§7Loading settings from §a§l$url§7...")
-                        executeScript(get(url))
-                        ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§7Loaded settings from §a§l$url§7.")
+                        ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§7Loading settings from §a§l$urlRaw§7...")
+                        executeScript(get(urlRaw))
+                        ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§7Loaded settings from §a§l$urlRaw§7.")
                     } catch (e: Exception) {
-                        ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§7Failed to load settings from §a§l$url§7.")
+                        ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§7Failed to load settings from §a§l$urlRaw§7.")
                     }
                 }
 
@@ -139,8 +137,6 @@ object SettingsUtils {
                 }
             }
         }
-
-        Client.fileManager.saveConfig(Client.fileManager.valuesConfig)
     }
 
     /**
@@ -152,7 +148,7 @@ object SettingsUtils {
         MacroManager.macroMapping.filter { it.key != 0 }
             .forEach { stringBuilder.append("macro ${it.key} ${it.value}").append("\n") }
 
-        Client.moduleManager.modules.filter { it.category !== ModuleCategory.MINIGAMES && it !is SilentView && it !is Gui && it !is Cape && it !is Trajectories && it !is Debugger && it !is PacketTracker && it !is HackerDetect && it !is HudEditor && it !is XRay && it !is MotionBlur && it !is Wings && it !is BlockOverlay && it !is ChestESP && it !is Crosshair && it !is CustomModel && it !is EnchantColor && it !is MoreParticles && it !is ItemESP && it !is ItemPhysics && it !is JumpCircle && it !is PlayerEdit && it !is PointerESP && it !is ViewBobbing && it !is ChinaHat && it !is StreamerMode && it !is Tracers && it !is Trails && it !is Freecam && it !is FreeLook && it !is Plugins && it !is ThunderNotifier && it !is Interface && it !is Animations }
+        Client.moduleManager.modules.filter { it.category !== ModuleCategory.MINIGAMES && it !is SilentView && it !is Gui && it !is Cape && it !is Trajectories && it !is Debugger && it !is HackerDetect && it !is HudEditor && it !is XRay && it !is MotionBlur && it !is Wings && it !is BlockOverlay && it !is ChestESP && it !is Crosshair && it !is CustomModel && it !is EnchantColor && it !is MoreParticles && it !is ItemESP && it !is ItemPhysics && it !is JumpCircle && it !is PlayerEdit && it !is PointerESP && it !is ViewBobbing && it !is ChinaHat && it !is StreamerMode && it !is Tracers && it !is Trails && it !is Freecam && it !is FreeLook && it !is Plugins && it !is ThunderNotifier && it !is Interface && it !is Animations }
             .forEach {
                 if (values)
                     it.values.forEach { value ->

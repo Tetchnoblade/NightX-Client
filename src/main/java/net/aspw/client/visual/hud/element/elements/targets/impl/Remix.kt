@@ -109,7 +109,7 @@ class Remix(inst: TargetHud) : TargetStyle("Remix", inst, false) {
         val renderItem = mc.renderItem
 
         var x = 41
-        var y = 17
+        val y = 17
 
         for (index in 3 downTo 0) {
             val stack = entity.inventory.armorInventory[index] ?: continue

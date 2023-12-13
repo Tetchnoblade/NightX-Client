@@ -21,7 +21,6 @@ class CommandManager {
         registerCommand(ToggleCommand())
         registerCommand(BindsCommand())
         registerCommand(PingCommand())
-        registerCommand(ReloadCommand())
         registerCommand(HideCommand())
         registerCommand(TeleportCommand())
         registerCommand(EnchantCommand())

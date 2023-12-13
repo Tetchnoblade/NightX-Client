@@ -6,20 +6,19 @@ import net.aspw.client.features.module.impl.combat.HitBox;
 import net.aspw.client.features.module.impl.movement.AntiWaterPush;
 import net.aspw.client.features.module.impl.movement.Flight;
 import net.aspw.client.features.module.impl.other.InfinitePitch;
-import net.aspw.client.protocol.Protocol;
+import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.util.EntityUtils;
 import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityDispatcher;
+import net.raphimc.vialoader.util.VersionEnum;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -37,7 +36,7 @@ import java.util.UUID;
  * The type Mixin entity.
  */
 @Mixin(Entity.class)
-public abstract class MixinEntity {
+public abstract class MixinEntity implements ICommandSender {
 
     /**
      * The Pos x.
@@ -301,14 +300,6 @@ public abstract class MixinEntity {
     public abstract UUID getUniqueID();
 
     /**
-     * Is sneaking boolean.
-     *
-     * @return the boolean
-     */
-    @Shadow
-    public abstract boolean isSneaking();
-
-    /**
      * Is inside of material boolean.
      *
      * @param materialIn the material in
@@ -358,19 +349,31 @@ public abstract class MixinEntity {
     @Shadow
     public abstract Vec3 getLook(float p_getLook_1_);
 
+    @Shadow
+    protected abstract boolean getFlag(int p_getFlag_1_);
+
     @Inject(method = "getCollisionBorderSize", at = @At("HEAD"), cancellable = true)
     private void getCollisionBorderSize(final CallbackInfoReturnable<Float> callbackInfoReturnable) {
         final HitBox hitBoxes = Objects.requireNonNull(Client.moduleManager.getModule(HitBox.class));
 
         if (hitBoxes.getState() && EntityUtils.isSelected(((Entity) ((Object) this)), true)) {
-            if (!Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x")) {
+            if (ProtocolBase.getManager().getTargetVersion().getProtocol() != VersionEnum.r1_8.getProtocol() && !MinecraftInstance.mc.isIntegratedServerRunning()) {
                 callbackInfoReturnable.setReturnValue(hitBoxes.getSizeValue().get());
             } else {
                 callbackInfoReturnable.setReturnValue(0.1F + hitBoxes.getSizeValue().get());
             }
-        } else if (!Protocol.versionSlider.getSliderVersion().getName().equals("1.8.x")) {
+        } else if (ProtocolBase.getManager().getTargetVersion().getProtocol() != VersionEnum.r1_8.getProtocol() && !MinecraftInstance.mc.isIntegratedServerRunning()) {
             callbackInfoReturnable.setReturnValue(0.0F);
         }
+    }
+
+    /**
+     * @author As_pw
+     * @reason Sneaking Animation
+     */
+    @Overwrite
+    public boolean isSneaking() {
+        return this.getFlag(1);
     }
 
     @Inject(method = "setAngles", at = @At("HEAD"), cancellable = true)
@@ -387,16 +390,44 @@ public abstract class MixinEntity {
         }
     }
 
-    @Inject(method = "moveFlying", at = @At("HEAD"), cancellable = true)
-    private void handleRotations(float strafe, float forward, float friction, final CallbackInfo callbackInfo) {
-        if ((Object) this != MinecraftInstance.mc.thePlayer)
-            return;
+    /**
+     * @author As_pw
+     * @reason Event
+     */
+    @Overwrite
+    public void moveFlying(float strafe, float forward, float friction) {
+        float rotationYaw = this.rotationYaw;
+        if ((Object) this == MinecraftInstance.mc.thePlayer) {
 
-        final StrafeEvent strafeEvent = new StrafeEvent(strafe, forward, friction);
-        Client.eventManager.callEvent(strafeEvent);
+            final StrafeEvent strafeEvent = new StrafeEvent(strafe, forward, friction, rotationYaw);
+            Client.eventManager.callEvent(strafeEvent);
 
-        if (strafeEvent.isCancelled())
-            callbackInfo.cancel();
+            if (strafeEvent.isCancelled())
+                return;
+
+            strafe = strafeEvent.getStrafe();
+            forward = strafeEvent.getForward();
+            friction = strafeEvent.getFriction();
+            rotationYaw = strafeEvent.getYaw();
+        }
+
+        float f = strafe * strafe + forward * forward;
+
+        if (!(f < 1.0E-4F)) {
+            f = MathHelper.sqrt_float(f);
+
+            if (f < 1.0F) {
+                f = 1.0F;
+            }
+
+            f = friction / f;
+            strafe = strafe * f;
+            forward = forward * f;
+            float f1 = MathHelper.sin(rotationYaw * (float) Math.PI / 180.0F);
+            float f2 = MathHelper.cos(rotationYaw * (float) Math.PI / 180.0F);
+            this.motionX += strafe * f2 - forward * f1;
+            this.motionZ += forward * f2 + strafe * f1;
+        }
     }
 
     @Inject(method = "isInWater", at = @At("HEAD"), cancellable = true)

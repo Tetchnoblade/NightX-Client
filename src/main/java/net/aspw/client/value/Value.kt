@@ -3,7 +3,6 @@ package net.aspw.client.value
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
-import net.aspw.client.Client
 import net.aspw.client.util.ClientUtils
 import net.aspw.client.visual.font.semi.Fonts
 import net.minecraft.client.gui.FontRenderer
@@ -20,7 +19,6 @@ abstract class Value<T>(val name: String, var value: T, var canDisplay: () -> Bo
             onChange(oldValue, newValue)
             changeValue(newValue)
             onChanged(oldValue, newValue)
-            Client.fileManager.saveConfig(Client.fileManager.valuesConfig)
         } catch (e: Exception) {
             ClientUtils.getLogger()
                 .error("[ValueSystem ($name)]: ${e.javaClass.name} (${e.message}) [$oldValue >> $newValue]")

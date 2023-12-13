@@ -27,12 +27,7 @@ public class TipSoundPlayer {
      * @param volume the volume
      */
     public void asyncPlay(float volume) {
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                playSound(volume / 100F);
-            }
-        };
+        Thread thread = new Thread(() -> playSound(volume / 100F));
         thread.start();
     }
 

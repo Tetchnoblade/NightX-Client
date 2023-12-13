@@ -1,6 +1,5 @@
 package net.aspw.client.visual.client.clickgui.tab;
 
-import net.aspw.client.features.api.GuiFastRender;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.impl.visual.Gui;
 import net.aspw.client.util.AnimationUtils;
@@ -37,7 +36,7 @@ public class NewUi extends GuiScreen {
         categoryElements.get(0).setFocused(true);
     }
 
-    public static final NewUi getInstance() {
+    public static NewUi getInstance() {
         return instance == null ? instance = new NewUi() : instance;
     }
 
@@ -110,8 +109,25 @@ public class NewUi extends GuiScreen {
         for (CategoryElement ce : categoryElements) {
             ce.drawLabel(mouseX, mouseY, 30F, startY, 200F, elementHeight);
             if (ce.getFocused()) {
-                startYAnim = GuiFastRender.fixValue.get() ? startY + 6F : AnimationUtils.animate(startY + 6F, startYAnim, (startYAnim - (startY + 5F) > 0 ? 0.65F : 0.55F) * RenderUtils.deltaTime * 0.025F);
-                endYAnim = GuiFastRender.fixValue.get() ? startY + elementHeight - 6F : AnimationUtils.animate(startY + elementHeight - 6F, endYAnim, (endYAnim - (startY + elementHeight - 5F) < 0 ? 0.65F : 0.55F) * RenderUtils.deltaTime * 0.025F);
+                float goY;
+                float goDelta = RenderUtils.deltaTime * 0.025F;
+                float goCondition = startYAnim - (startY + 5F);
+                if (goCondition > 0) {
+                    goY = AnimationUtils.animate(startY + 6F, startYAnim, 0.65F * goDelta);
+                } else {
+                    goY = AnimationUtils.animate(startY + 6F, startYAnim, 0.55F * goDelta);
+                }
+                startYAnim = goY;
+
+                float finishY;
+                float endDelta = RenderUtils.deltaTime * 0.025F;
+                float endCondition = endYAnim - (startY + elementHeight - 5F);
+                if (endCondition < 0) {
+                    finishY = AnimationUtils.animate(startY + elementHeight - 6F, endYAnim, 0.65F * endDelta);
+                } else {
+                    finishY = AnimationUtils.animate(startY + elementHeight - 6F, endYAnim, 0.55F * endDelta);
+                }
+                endYAnim = finishY;
 
                 ce.drawPanel(mouseX, mouseY, 230, 0, width - 260, height - 40, Mouse.getDWheel(), accentColor);
                 ce.drawPanel(mouseX, mouseY, 230, 0, width - 260, height - 40, Mouse.getDWheel(), accentColor);

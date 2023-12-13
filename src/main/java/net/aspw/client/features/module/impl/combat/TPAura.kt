@@ -1,12 +1,14 @@
 package net.aspw.client.features.module.impl.combat
 
+import net.aspw.client.Client
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.event.UpdateEvent
+import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.protocol.Protocol
+import net.aspw.client.protocol.ProtocolBase
 import net.aspw.client.util.EntityUtils
 import net.aspw.client.util.PacketUtils
 import net.aspw.client.util.RotationUtils
@@ -16,12 +18,14 @@ import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
+import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.network.play.client.C02PacketUseEntity
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C0APacketAnimation
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.Vec3
+import net.raphimc.vialoader.util.VersionEnum
 import java.util.*
 
 
@@ -64,6 +68,17 @@ class TPAura : Module() {
         clickTimer.reset()
         tpVectors.clear()
         lastTarget = null
+    }
+
+    @EventTarget
+    fun onWorld(event: WorldEvent) {
+        state = false
+        Client.hud.addNotification(
+            Notification(
+                "TPAura was disabled",
+                Notification.Type.WARNING
+            )
+        )
     }
 
     @EventTarget
@@ -132,7 +147,7 @@ class TPAura : Module() {
 
             lastTarget = it
 
-            if (Protocol.versionSlider.sliderVersion.getName() != "1.8.x")
+            if (ProtocolBase.getManager().targetVersion.protocol != VersionEnum.r1_8.protocol)
                 mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             when (swingValue.get().lowercase(Locale.getDefault())) {
@@ -140,7 +155,7 @@ class TPAura : Module() {
                 "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
             }
 
-            if (Protocol.versionSlider.sliderVersion.getName() == "1.8.x")
+            if (ProtocolBase.getManager().targetVersion.protocol == VersionEnum.r1_8.protocol)
                 mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             path.reverse()

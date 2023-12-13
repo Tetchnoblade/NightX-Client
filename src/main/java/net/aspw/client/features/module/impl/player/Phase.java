@@ -28,6 +28,7 @@ public class Phase extends Module {
      * The Mode value.
      */
     public final ListValue modeValue = new ListValue("Mode", new String[]{
+            "FullBlock",
             "Vanilla",
             "Skip",
             "Spartan",
@@ -38,12 +39,16 @@ public class Phase extends Module {
             "Packetless",
             "Redesky",
             "SmartVClip"
-    }, "Packetless");
+    }, "FullBlock");
 
     private final TickTimer tickTimer = new TickTimer();
     private final TickTimer mineplexTickTimer = new TickTimer();
     private boolean mineplexClip, noRot;
     private int stage;
+    private boolean shouldContinue;
+    private int clipState;
+    private double yaw;
+    private double value;
 
     @Override
     public void onEnable() {
@@ -56,6 +61,9 @@ public class Phase extends Module {
     public void onDisable() {
         if (modeValue.get().equalsIgnoreCase("aacv4"))
             mc.timer.timerSpeed = 1F;
+        shouldContinue = false;
+        clipState = 0;
+        value = 0;
     }
 
     /**
@@ -65,6 +73,7 @@ public class Phase extends Module {
      */
     @EventTarget
     public void onUpdate(final UpdateEvent event) {
+        if (modeValue.get().equals("FullBlock")) return;
         if (modeValue.get().equalsIgnoreCase("aacv4")) {
             switch (stage) {
                 case 1: {
@@ -238,6 +247,7 @@ public class Phase extends Module {
      */
     @EventTarget
     public void onBlockBB(final BlockBBEvent event) {
+        if (modeValue.get().equals("FullBlock")) return;
         if (mc.thePlayer != null && BlockUtils.collideBlockIntersects(mc.thePlayer.getEntityBoundingBox(), block -> !(block instanceof BlockAir)) && event.getBoundingBox() != null && event.getBoundingBox().maxY > mc.thePlayer.getEntityBoundingBox().minY && !modeValue.get().equalsIgnoreCase("Packetless") && !modeValue.get().equalsIgnoreCase("SmartVClip")) {
             final AxisAlignedBB axisAlignedBB = event.getBoundingBox();
 
@@ -252,6 +262,7 @@ public class Phase extends Module {
      */
     @EventTarget
     public void onPacket(final PacketEvent event) {
+        if (modeValue.get().equals("FullBlock")) return;
         final Packet<?> packet = event.getPacket();
 
         if (packet instanceof C03PacketPlayer) {
@@ -300,6 +311,50 @@ public class Phase extends Module {
                 final double direction = MovementUtils.getDirection();
 
                 mc.thePlayer.setPosition(mc.thePlayer.posX + (-Math.sin(direction) * offset), mc.thePlayer.posY, mc.thePlayer.posZ + (Math.cos(direction) * offset));
+            }
+        }
+        if (modeValue.get().equals("FullBlock")) {
+            if (mc.thePlayer.isCollidedHorizontally) {
+                clipState++;
+            }
+            switch (clipState) {
+                case 1:
+                    double i = 0;
+                    double moveYaw = MovementUtils.getDirection();
+                    while ((i += 0.025) <= 2) {
+                        if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(-(Math.sin(moveYaw) * i), 0, (Math.cos(moveYaw) * i)).expand(0, 0, 0)).isEmpty() && (mc.thePlayer.movementInput.moveForward != 0 || mc.thePlayer.movementInput.moveStrafe != 0)) {
+                            if (i <= 0.06) {
+                                mc.thePlayer.setPositionAndUpdate(mc.thePlayer.posX - (Math.sin(moveYaw) * 0.06), mc.thePlayer.posY, mc.thePlayer.posZ + (Math.cos(moveYaw) * 0.06));
+                                shouldContinue = false;
+                                event.setX(0);
+                                event.setZ(0);
+                                break;
+                            } else {
+                                mc.thePlayer.setPositionAndUpdate(mc.thePlayer.posX - (Math.sin(moveYaw) * 0.06), mc.thePlayer.posY, mc.thePlayer.posZ + (Math.cos(moveYaw) * 0.06));
+                                value = i;
+                                yaw = moveYaw;
+                                shouldContinue = true;
+                                event.setX(0);
+                                event.setZ(0);
+                                break;
+                            }
+                        } else {
+                            shouldContinue = false;
+                        }
+                    }
+                    clipState++;
+                    if (!shouldContinue) {
+                        clipState = 0;
+                    }
+                    break;
+                case 2:
+                    if (mc.thePlayer.movementInput.moveForward != 0 || mc.thePlayer.movementInput.moveStrafe != 0) {
+                        mc.thePlayer.setPositionAndUpdate(mc.thePlayer.posX - (Math.sin(yaw) * value), mc.thePlayer.posY, mc.thePlayer.posZ + (Math.cos(yaw) * value));
+                    } else {
+                        mc.thePlayer.setPositionAndUpdate(mc.thePlayer.posX - (Math.sin(yaw) * -0.06), mc.thePlayer.posY, mc.thePlayer.posZ + (Math.cos(yaw) * -0.06));
+                    }
+                    clipState = 0;
+                    break;
             }
         }
         if (modeValue.get().equalsIgnoreCase("SmartVClip") && noRot)

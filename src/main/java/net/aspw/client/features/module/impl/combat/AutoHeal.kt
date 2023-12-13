@@ -54,7 +54,6 @@ class AutoHeal : Module() {
     private var throwing = false
     private var rotated = false
     private var potIndex = -1
-    private var prevSlot = -1
 
     private var throwTimer = MSTimer()
     private var resetTimer = MSTimer()
@@ -165,8 +164,12 @@ class AutoHeal : Module() {
                 }
 
                 if (throwing && !mc.thePlayer.isEating && MovementUtils.isRidingBlock() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
-                    RotationUtils.reset() // reset all rotations
-                    event.pitch = if (customPitchValue.get()) customPitchAngle.get() else 90F
+                    RotationUtils.setTargetRotation(
+                        Rotation(
+                            MovementUtils.getRawDirection(),
+                            if (customPitchValue.get()) customPitchAngle.get() else 80F
+                        ),
+                    )
                     debug("silent rotation")
                     isRotating = true
                 }
@@ -244,24 +247,6 @@ class AutoHeal : Module() {
                     mc.netHandler.addToSendQueue(C0DPacketCloseWindow())
 
                 timer.reset()
-            }
-        }
-    }
-
-    @EventTarget
-    fun onPacket(event: PacketEvent) {
-        if (mc.thePlayer == null) return
-        val packet = event.packet
-
-        if (autoPotValue.get()) {
-            if (throwing) {
-                if (!mc.isSingleplayer && packet is C09PacketHeldItemChange) {
-                    if (packet.slotId == prevSlot) {
-                        event.cancelEvent()
-                    } else {
-                        prevSlot = packet.slotId
-                    }
-                }
             }
         }
     }

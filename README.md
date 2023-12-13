@@ -3,10 +3,10 @@
 Access the official website to get more information & configs
 > https://aspw-w.github.io/NightX-Web
 
-Join discord server to get more support! ↓
+Join discord server to get more support!
 > https://discord.gg/SGBccUXFK
 
-Official YouTube Channel
+Developer youtube channel
 > https://www.youtube.com/@as_pw
 
 # Installation Guide
@@ -32,6 +32,4 @@ If NightX fails to launch or provides an error:
   - The issue must provide your crash / error log
 
 # Configs
-Installing configs is done by moving the config file into the configs folder located at `AppData\Roaming\.minecraft\NightX\configs`
-
-Loading configs is done via the command `.config load <config_name>`
+Loading configs is done via the command `.config onlinelist` or `.config onlineload <config_name>`

@@ -7,7 +7,6 @@ import java.util.ArrayList;
  */
 public class PathHub {
     private Vec3 loc;
-    private PathHub parentPathHub;
     private ArrayList<Vec3> pathway;
     private double sqDist;
     private double currentCost;
@@ -26,7 +25,6 @@ public class PathHub {
     public PathHub(final Vec3 loc, final PathHub parentPathHub, final ArrayList<Vec3> pathway,
                    final double sqDist, final double currentCost, final double maxCost) {
         this.loc = loc;
-        this.parentPathHub = parentPathHub;
         this.pathway = pathway;
         this.sqDist = sqDist;
         this.currentCost = currentCost;
@@ -40,15 +38,6 @@ public class PathHub {
      */
     public Vec3 getLoc() {
         return this.loc;
-    }
-
-    /**
-     * Gets last hub.
-     *
-     * @return the last hub
-     */
-    public PathHub getLastHub() {
-        return this.parentPathHub;
     }
 
     /**
@@ -93,7 +82,6 @@ public class PathHub {
      * @param parentPathHub the parent path hub
      */
     public void setParentPathHub(final PathHub parentPathHub) {
-        this.parentPathHub = parentPathHub;
     }
 
     /**

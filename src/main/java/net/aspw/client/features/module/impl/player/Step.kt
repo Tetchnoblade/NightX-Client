@@ -477,7 +477,6 @@ class Step : Module() {
 
                 mode.equals("Verus", true) -> {
                     val superHeight = mc.thePlayer.entityBoundingBox.minY - stepY
-                    mc.timer.timerSpeed = 1f / ceil(superHeight * 2.0).toFloat()
                     var superHighest = 0.0
                     fakeJump()
                     repeat((ceil(superHeight * 2.0) - 1.0).toInt()) {

@@ -16,7 +16,7 @@ public abstract class MixinGuiIngameMenu extends MixinGuiScreen {
     @Inject(method = "initGui", at = @At("RETURN"))
     private void initGui(CallbackInfo callbackInfo) {
         this.buttonList.add(new GuiButton(1337, this.width / 2 - 100, this.height / 4 + 128, "Reconnect"));
-        this.buttonList.add(new GuiButton(1000, 4, height - 24, 68, 20, "Dev"));
+        this.buttonList.add(new GuiButton(1000, 4, height - 24, 68, 20, "Warp"));
     }
 
     @Inject(method = "actionPerformed", at = @At("HEAD"))

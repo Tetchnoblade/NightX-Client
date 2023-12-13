@@ -19,7 +19,10 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Timer;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -107,166 +110,6 @@ public final class RenderUtils extends MinecraftInstance {
         tessellator.draw();
     }
 
-    public static void otherDrawOutlinedBoundingBox(float yaw, double x, double y, double z, double width, double height) {
-        width *= 1.5D;
-        yaw = MathHelper.wrapAngleTo180_float(yaw) + 45.0F;
-        float yaw1, yaw2, yaw3, yaw4;
-        if (yaw < 0.0F) {
-            yaw1 = 0.0F;
-            yaw1 += 360.0F - Math.abs(yaw);
-        } else {
-            yaw1 = yaw;
-        }
-        yaw1 *= -1.0F;
-        yaw1 = (float) (yaw1 * 0.017453292519943295D);
-
-        yaw += 90;
-        if (yaw < 0.0F) {
-            yaw2 = 0.0F;
-            yaw2 += 360.0F - Math.abs(yaw);
-        } else {
-            yaw2 = yaw;
-        }
-        yaw2 *= -1.0F;
-        yaw2 = (float) (yaw2 * 0.017453292519943295D);
-
-        yaw += 90F;
-        if (yaw < 0.0F) {
-            yaw3 = 0.0F;
-            yaw3 += 360.0F - Math.abs(yaw);
-        } else {
-            yaw3 = yaw;
-        }
-        yaw3 *= -1.0F;
-        yaw3 = (float) (yaw3 * 0.017453292519943295D);
-
-        yaw += 90F;
-        if (yaw < 0.0F) {
-            yaw4 = 0.0F;
-            yaw4 += 360.0F - Math.abs(yaw);
-        } else {
-            yaw4 = yaw;
-        }
-        yaw4 *= -1.0F;
-        yaw4 = (float) (yaw4 * 0.017453292519943295D);
-
-        float x1 = (float) (Math.sin(yaw1) * width + x);
-        float z1 = (float) (Math.cos(yaw1) * width + z);
-        float x2 = (float) (Math.sin(yaw2) * width + x);
-        float z2 = (float) (Math.cos(yaw2) * width + z);
-        float x3 = (float) (Math.sin(yaw3) * width + x);
-        float z3 = (float) (Math.cos(yaw3) * width + z);
-        float x4 = (float) (Math.sin(yaw4) * width + x);
-        float z4 = (float) (Math.cos(yaw4) * width + z);
-        float y2 = (float) (y + height);
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.begin(GL_LINE_STRIP, DefaultVertexFormats.POSITION);
-        worldrenderer.pos(x1, y, z1).endVertex();
-        worldrenderer.pos(x1, y2, z1).endVertex();
-        worldrenderer.pos(x2, y2, z2).endVertex();
-        worldrenderer.pos(x2, y, z2).endVertex();
-        worldrenderer.pos(x1, y, z1).endVertex();
-        worldrenderer.pos(x4, y, z4).endVertex();
-        worldrenderer.pos(x3, y, z3).endVertex();
-        worldrenderer.pos(x3, y2, z3).endVertex();
-        worldrenderer.pos(x4, y2, z4).endVertex();
-        worldrenderer.pos(x4, y, z4).endVertex();
-        worldrenderer.pos(x4, y2, z4).endVertex();
-        worldrenderer.pos(x3, y2, z3).endVertex();
-        worldrenderer.pos(x2, y2, z2).endVertex();
-        worldrenderer.pos(x2, y, z2).endVertex();
-        worldrenderer.pos(x3, y, z3).endVertex();
-        worldrenderer.pos(x4, y, z4).endVertex();
-        worldrenderer.pos(x4, y2, z4).endVertex();
-        worldrenderer.pos(x1, y2, z1).endVertex();
-        worldrenderer.pos(x1, y, z1).endVertex();
-        tessellator.draw();
-    }
-
-    public static void otherDrawBoundingBox(float yaw, double x, double y, double z, double width, double height) {
-        width *= 1.5D;
-        yaw = MathHelper.wrapAngleTo180_float(yaw) + 45.0F;
-        float yaw1, yaw2, yaw3, yaw4;
-        if (yaw < 0.0F) {
-            yaw1 = 0.0F;
-            yaw1 += 360.0F - Math.abs(yaw);
-        } else {
-            yaw1 = yaw;
-        }
-        yaw1 *= -1.0F;
-        yaw1 = (float) ((double) yaw1 * 0.017453292519943295D);
-
-        yaw += 90F;
-        if (yaw < 0.0F) {
-            yaw2 = 0.0F;
-            yaw2 += 360.0F - Math.abs(yaw);
-        } else {
-            yaw2 = yaw;
-        }
-
-        yaw2 *= -1.0F;
-        yaw2 = (float) ((double) yaw2 * 0.017453292519943295D);
-        yaw += 90F;
-        if (yaw < 0.0F) {
-            yaw3 = 0.0F;
-            yaw3 += 360.0F - Math.abs(yaw);
-        } else {
-            yaw3 = yaw;
-        }
-
-        yaw3 *= -1.0F;
-        yaw3 = (float) ((double) yaw3 * 0.017453292519943295D);
-        yaw += 90F;
-        if (yaw < 0.0F) {
-            yaw4 = 0.0F;
-            yaw4 += 360.0F - Math.abs(yaw);
-        } else {
-            yaw4 = yaw;
-        }
-
-        yaw4 *= -1.0F;
-        yaw4 = (float) ((double) yaw4 * 0.017453292519943295D);
-        float x1 = (float) (Math.sin(yaw1) * width + x);
-        float z1 = (float) (Math.cos(yaw1) * width + z);
-        float x2 = (float) (Math.sin(yaw2) * width + x);
-        float z2 = (float) (Math.cos(yaw2) * width + z);
-        float x3 = (float) (Math.sin(yaw3) * width + x);
-        float z3 = (float) (Math.cos(yaw3) * width + z);
-        float x4 = (float) (Math.sin(yaw4) * width + x);
-        float z4 = (float) (Math.cos(yaw4) * width + z);
-        float y1 = (float) y;
-        float y2 = (float) (y + height);
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.begin(GL_QUADS, DefaultVertexFormats.POSITION);
-        worldrenderer.pos(x1, y1, z1).endVertex();
-        worldrenderer.pos(x1, y2, z1).endVertex();
-        worldrenderer.pos(x2, y2, z2).endVertex();
-        worldrenderer.pos(x2, y1, z2).endVertex();
-        worldrenderer.pos(x2, y1, z2).endVertex();
-        worldrenderer.pos(x2, y2, z2).endVertex();
-        worldrenderer.pos(x3, y2, z3).endVertex();
-        worldrenderer.pos(x3, y1, z3).endVertex();
-        worldrenderer.pos(x3, y1, z3).endVertex();
-        worldrenderer.pos(x3, y2, z3).endVertex();
-        worldrenderer.pos(x4, y2, z4).endVertex();
-        worldrenderer.pos(x4, y1, z4).endVertex();
-        worldrenderer.pos(x4, y1, z4).endVertex();
-        worldrenderer.pos(x4, y2, z4).endVertex();
-        worldrenderer.pos(x1, y2, z1).endVertex();
-        worldrenderer.pos(x1, y1, z1).endVertex();
-        worldrenderer.pos(x1, y1, z1).endVertex();
-        worldrenderer.pos(x2, y1, z2).endVertex();
-        worldrenderer.pos(x3, y1, z3).endVertex();
-        worldrenderer.pos(x4, y1, z4).endVertex();
-        worldrenderer.pos(x1, y2, z1).endVertex();
-        worldrenderer.pos(x2, y2, z2).endVertex();
-        worldrenderer.pos(x3, y2, z3).endVertex();
-        worldrenderer.pos(x4, y2, z4).endVertex();
-        tessellator.draw();
-    }
-
     public static void color(final int color, final float alpha) {
         final float r = (color >> 16 & 0xFF) / 255.0f;
         final float g = (color >> 8 & 0xFF) / 255.0f;
@@ -292,23 +135,6 @@ public final class RenderUtils extends MinecraftInstance {
         Entity current = mc.getRenderViewEntity();
         frustrum.setPosition(current.posX, current.posY, current.posZ);
         return frustrum.isBoundingBoxInFrustum(bb);
-    }
-
-    public static void startSmooth() {
-        glEnable(2848);
-        glEnable(2881);
-        glEnable(2832);
-        glEnable(3042);
-        glBlendFunc(770, 771);
-        glHint(3154, 4354);
-        glHint(3155, 4354);
-        glHint(3153, 4354);
-    }
-
-    public static void endSmooth() {
-        glDisable(2848);
-        glDisable(2881);
-        glEnable(2832);
     }
 
     /**
@@ -360,8 +186,7 @@ public final class RenderUtils extends MinecraftInstance {
      */
     public static int getRainbowOpaque(int seconds, float saturation, float brightness, int index) {
         float hue = ((System.currentTimeMillis() + index) % (seconds * 1000)) / (float) (seconds * 1000);
-        int color = Color.HSBtoRGB(hue, saturation, brightness);
-        return color;
+        return Color.HSBtoRGB(hue, saturation, brightness);
     }
 
     /**
@@ -885,46 +710,6 @@ public final class RenderUtils extends MinecraftInstance {
     }
 
     /**
-     * Draw gradient sideways.
-     *
-     * @param left   the left
-     * @param top    the top
-     * @param right  the right
-     * @param bottom the bottom
-     * @param col1   the col 1
-     * @param col2   the col 2
-     */
-    public static void drawGradientSideways(final float left, final float top, final float right, final float bottom, final int col1, final int col2) {
-        final float f = (col1 >> 24 & 0xFF) / 255.0f;
-        final float f2 = (col1 >> 16 & 0xFF) / 255.0f;
-        final float f3 = (col1 >> 8 & 0xFF) / 255.0f;
-        final float f4 = (col1 & 0xFF) / 255.0f;
-        final float f5 = (col2 >> 24 & 0xFF) / 255.0f;
-        final float f6 = (col2 >> 16 & 0xFF) / 255.0f;
-        final float f7 = (col2 >> 8 & 0xFF) / 255.0f;
-        final float f8 = (col2 & 0xFF) / 255.0f;
-        glEnable(3042);
-        glDisable(3553);
-        glBlendFunc(770, 771);
-        glEnable(2848);
-        glShadeModel(7425);
-        glPushMatrix();
-        glBegin(7);
-        glColor4f(f2, f3, f4, f);
-        glVertex2f(left, top);
-        glVertex2f(left, bottom);
-        glColor4f(f6, f7, f8, f5);
-        glVertex2f(right, bottom);
-        glVertex2f(right, top);
-        glEnd();
-        glPopMatrix();
-        glEnable(3553);
-        glDisable(3042);
-        glDisable(2848);
-        glShadeModel(7424);
-    }
-
-    /**
      * Draw block box.
      *
      * @param blockPos the block pos
@@ -1283,27 +1068,6 @@ public final class RenderUtils extends MinecraftInstance {
         tessellator.draw();
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
-    }
-
-    /**
-     * Quick draw rect.
-     *
-     * @param x     the x
-     * @param y     the y
-     * @param x2    the x 2
-     * @param y2    the y 2
-     * @param color the color
-     */
-    public static void quickDrawRect(final float x, final float y, final float x2, final float y2, final int color) {
-        glColor(color);
-        glBegin(GL_QUADS);
-
-        glVertex2d(x2, y);
-        glVertex2d(x, y);
-        glVertex2d(x, y2);
-        glVertex2d(x2, y2);
-
-        glEnd();
     }
 
     /**

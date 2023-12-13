@@ -6,6 +6,7 @@ import net.minecraft.util.BlockPos;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * The type Path finder.
@@ -13,9 +14,9 @@ import java.util.Comparator;
 public class PathFinder {
     private final Vec3 startVec3Path;
     private final Vec3 endVec3Path;
-    private ArrayList<Vec3> path = new ArrayList();
-    private final ArrayList<PathHub> pathHubs = new ArrayList();
-    private final ArrayList<PathHub> workingPathHubList = new ArrayList();
+    private ArrayList<Vec3> path = new ArrayList<>();
+    private final ArrayList<PathHub> pathHubs = new ArrayList<>();
+    private final ArrayList<PathHub> workingPathHubList = new ArrayList<>();
     private static final Vec3[] directions = new Vec3[]{new Vec3(1.0, 0.0, 0.0), new Vec3(-1.0, 0.0, 0.0),
             new Vec3(0.0, 0.0, 1.0), new Vec3(0.0, 0.0, -1.0)};
 
@@ -212,16 +213,16 @@ public class PathFinder {
                     && loc.getZ() == this.endVec3Path.getZ()
                     || loc.squareDistanceTo(this.endVec3Path) <= 1) {
                 this.path.clear();
-                this.path = parent.getPathway();
+                this.path = Objects.requireNonNull(parent).getPathway();
                 this.path.add(loc);
                 return true;
             }
 
-            final ArrayList<Vec3> path = new ArrayList<>(parent.getPathway());
+            final ArrayList<Vec3> path = new ArrayList<>(Objects.requireNonNull(parent).getPathway());
             path.add(loc);
             this.workingPathHubList.add(new PathHub(loc, parent, path, loc.squareDistanceTo(this.endVec3Path), cost, totalCost));
         } else if (existingPathHub.getCurrentCost() > cost) {
-            final ArrayList<Vec3> path = new ArrayList<>(parent.getPathway());
+            final ArrayList<Vec3> path = new ArrayList<>(Objects.requireNonNull(parent).getPathway());
             path.add(loc);
             existingPathHub.setLoc(loc);
             existingPathHub.setParentPathHub(parent);

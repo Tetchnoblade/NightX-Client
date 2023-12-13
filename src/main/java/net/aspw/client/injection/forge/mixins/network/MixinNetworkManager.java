@@ -1,37 +1,37 @@
 package net.aspw.client.injection.forge.mixins.network;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.*;
-import io.netty.channel.oio.OioEventLoopGroup;
-import io.netty.handler.timeout.ReadTimeoutHandler;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
 import net.aspw.client.Client;
 import net.aspw.client.event.PacketEvent;
-import net.aspw.client.features.api.ProxyManager;
-import net.aspw.client.features.module.impl.exploit.PacketTracker;
+import net.aspw.client.features.module.impl.exploit.ExtendedPosition;
+import net.aspw.client.protocol.ProtocolBase;
+import net.aspw.client.protocol.api.VFNetworkManager;
 import net.aspw.client.util.PacketUtils;
 import net.minecraft.network.*;
-import net.minecraft.util.MessageDeserializer;
-import net.minecraft.util.MessageDeserializer2;
-import net.minecraft.util.MessageSerializer;
-import net.minecraft.util.MessageSerializer2;
-import net.raphimc.vialoader.netty.CompressionReorderEvent;
+import net.minecraft.util.CryptManager;
+import net.minecraft.util.LazyLoadBase;
+import net.raphimc.vialoader.netty.VLLegacyPipeline;
+import net.raphimc.vialoader.util.VersionEnum;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
 import java.net.InetAddress;
-import java.net.Proxy;
 
 /**
  * The type Mixin network manager.
  */
 @Mixin(NetworkManager.class)
-public class MixinNetworkManager {
+public class MixinNetworkManager implements VFNetworkManager {
 
     @Shadow
     private Channel channel;
@@ -39,40 +39,44 @@ public class MixinNetworkManager {
     @Shadow
     private INetHandler packetListener;
 
-    @Inject(method = "setCompressionTreshold", at = @At("RETURN"))
-    public void reOrderPipeline(int p_setCompressionTreshold_1_, CallbackInfo ci) {
-        channel.pipeline().fireUserEventTriggered(CompressionReorderEvent.INSTANCE);
+    @Unique
+    private Cipher viaForge$decryptionCipher;
+
+    @Unique
+    private VersionEnum viaForge$targetVersion;
+
+    @Inject(method = "func_181124_a", at = @At(value = "INVOKE", target = "Lio/netty/bootstrap/Bootstrap;group(Lio/netty/channel/EventLoopGroup;)Lio/netty/bootstrap/AbstractBootstrap;"), locals = LocalCapture.CAPTURE_FAILHARD, remap = false)
+    private static void trackSelfTarget(InetAddress address, int serverPort, boolean useNativeTransport, CallbackInfoReturnable<NetworkManager> cir, NetworkManager networkmanager, Class oclass, LazyLoadBase lazyloadbase) {
+        ((VFNetworkManager) networkmanager).viaForge$setTrackedVersion(ProtocolBase.getManager().getTargetVersion());
     }
 
-    @Inject(method = "createNetworkManagerAndConnect", at = @At("HEAD"), cancellable = true)
-    private static void createNetworkManagerAndConnect(InetAddress address, int serverPort, boolean useNativeTransport, CallbackInfoReturnable<NetworkManager> cir) {
-        if (!ProxyManager.INSTANCE.isEnable()) {
-            return;
+    @Inject(method = "enableEncryption", at = @At("HEAD"), cancellable = true)
+    private void storeEncryptionCiphers(SecretKey key, CallbackInfo ci) {
+        if (ProtocolBase.getManager().getTargetVersion().isOlderThanOrEqualTo(VersionEnum.r1_6_4)) {
+            ci.cancel();
+            this.viaForge$decryptionCipher = CryptManager.createNetCipherInstance(2, key);
+            this.channel.pipeline().addBefore(VLLegacyPipeline.VIALEGACY_PRE_NETTY_LENGTH_REMOVER_NAME, "encrypt", new NettyEncryptingEncoder(CryptManager.createNetCipherInstance(1, key)));
         }
-        final NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.CLIENTBOUND);
+    }
 
-        Bootstrap bootstrap = new Bootstrap();
+    @Inject(method = "setCompressionTreshold", at = @At("RETURN"))
+    public void reorderPipeline(int p_setCompressionTreshold_1_, CallbackInfo ci) {
+        ProtocolBase.getManager().reorderCompression(channel);
+    }
 
-        EventLoopGroup eventLoopGroup;
-        Proxy proxy = ProxyManager.INSTANCE.getProxyInstance();
-        eventLoopGroup = new OioEventLoopGroup(0, (new ThreadFactoryBuilder()).setNameFormat("Netty Client IO #%d").setDaemon(true).build());
-        bootstrap.channelFactory(new ProxyManager.ProxyOioChannelFactory(proxy));
+    @Override
+    public void viaForge$setupPreNettyDecryption() {
+        this.channel.pipeline().addBefore(VLLegacyPipeline.VIALEGACY_PRE_NETTY_LENGTH_REMOVER_NAME, "decrypt", new NettyEncryptingDecoder(this.viaForge$decryptionCipher));
+    }
 
-        bootstrap.group(eventLoopGroup).handler(new ChannelInitializer<Channel>() {
-            protected void initChannel(Channel channel) {
-                try {
-                    channel.config().setOption(ChannelOption.TCP_NODELAY, true);
-                } catch (ChannelException var3) {
-                    var3.printStackTrace();
-                }
-                channel.pipeline().addLast("timeout", new ReadTimeoutHandler(30)).addLast("splitter", new MessageDeserializer2()).addLast("decoder", new MessageDeserializer(EnumPacketDirection.CLIENTBOUND)).addLast("prepender", new MessageSerializer2()).addLast("encoder", new MessageSerializer(EnumPacketDirection.SERVERBOUND)).addLast("packet_handler", networkmanager);
-            }
-        });
+    @Override
+    public VersionEnum viaForge$getTrackedVersion() {
+        return viaForge$targetVersion;
+    }
 
-        bootstrap.connect(address, serverPort).syncUninterruptibly();
-
-        cir.setReturnValue(networkmanager);
-        cir.cancel();
+    @Override
+    public void viaForge$setTrackedVersion(VersionEnum version) {
+        viaForge$targetVersion = version;
     }
 
     /**
@@ -82,11 +86,11 @@ public class MixinNetworkManager {
     @Overwrite
     protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) throws Exception {
         final PacketEvent event = new PacketEvent(p_channelRead0_2_);
-        PacketTracker packetTracker = Client.moduleManager.getModule(PacketTracker.class);
-        assert packetTracker != null;
-        if (packetTracker.getState()) {
+        ExtendedPosition extendedPosition = Client.moduleManager.getModule(ExtendedPosition.class);
+        assert extendedPosition != null;
+        if (extendedPosition.getState()) {
             try {
-                packetTracker.onPacket(event);
+                extendedPosition.onPacket(event);
             } catch (Exception e) {
                 // nothing
             }
@@ -108,11 +112,11 @@ public class MixinNetworkManager {
     private void send(Packet<?> packet, CallbackInfo callback) {
         if (PacketUtils.handleSendPacket(packet)) return;
         final PacketEvent event = new PacketEvent(packet);
-        PacketTracker packetTracker = Client.moduleManager.getModule(PacketTracker.class);
-        assert packetTracker != null;
-        if (packetTracker.getState()) {
+        ExtendedPosition extendedPosition = Client.moduleManager.getModule(ExtendedPosition.class);
+        assert extendedPosition != null;
+        if (extendedPosition.getState()) {
             try {
-                packetTracker.onPacket(event);
+                extendedPosition.onPacket(event);
             } catch (Exception e) {
                 // nothing
             }

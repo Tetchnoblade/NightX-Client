@@ -5,7 +5,6 @@ import net.aspw.client.event.Render3DEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.RotationUtils
 import net.aspw.client.util.render.RenderUtils
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.Tessellator
@@ -66,17 +65,8 @@ class Trajectories : Module() {
         }
 
         // Yaw and pitch of player
-        val yaw = if (RotationUtils.targetRotation != null) {
-            RotationUtils.targetRotation!!.yaw
-        } else {
-            mc.thePlayer.rotationYaw
-        }
-
-        val pitch = if (RotationUtils.targetRotation != null) {
-            RotationUtils.targetRotation!!.pitch
-        } else {
-            mc.thePlayer.rotationPitch
-        }
+        val yaw = mc.thePlayer.rotationYaw
+        val pitch = mc.thePlayer.rotationPitch
 
         // Positions
         var posX = renderManager.renderPosX - MathHelper.cos(yaw / 180F * 3.1415927F) * 0.16F
@@ -229,9 +219,5 @@ class Trajectories : Module() {
         GL11.glDepthMask(true)
         RenderUtils.resetCaps()
         GL11.glColor4f(1F, 1F, 1F, 1F)
-    }
-
-    init {
-        state = true
     }
 }

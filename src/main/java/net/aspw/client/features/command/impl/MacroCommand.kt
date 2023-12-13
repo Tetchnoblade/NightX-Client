@@ -1,6 +1,5 @@
 package net.aspw.client.features.command.impl
 
-import net.aspw.client.Client
 import net.aspw.client.features.api.MacroManager
 import net.aspw.client.features.command.Command
 import net.aspw.client.util.ClientUtils
@@ -29,7 +28,6 @@ class MacroCommand : Command("macro", emptyArray()) {
                     val message = StringUtils.toCompleteString(args, 3)
                     val existed = MacroManager.macroMapping.containsKey(key)
                     MacroManager.addMacro(key, message)
-                    Client.fileManager.saveConfig(Client.fileManager.valuesConfig)
                     if (existed)
                         chat("§a§lSuccessfully changed macro in key §7${Keyboard.getKeyName(key)} to §r$message.")
                     else
@@ -41,7 +39,6 @@ class MacroCommand : Command("macro", emptyArray()) {
                     if (MacroManager.macroMapping.containsKey(key)) {
                         val lastMessage = MacroManager.macroMapping[key]
                         MacroManager.removeMacro(key)
-                        Client.fileManager.saveConfig(Client.fileManager.valuesConfig)
                         chat("§a§lSuccessfully removed the macro §r$lastMessage §a§lfrom §7${Keyboard.getKeyName(key)}.")
                         return
                     }
@@ -63,7 +60,6 @@ class MacroCommand : Command("macro", emptyArray()) {
 
                 "clear" -> {
                     MacroManager.macroMapping.clear()
-                    Client.fileManager.saveConfig(Client.fileManager.valuesConfig)
                     chat("§a§lSuccessfully cleared macro list.")
                     return
                 }

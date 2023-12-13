@@ -32,7 +32,11 @@ class Cape : Module() {
             "Exhibition",
             "Novoline",
             "Dortware",
+            "DortwareDev",
             "Diablo",
+            "Ayoz",
+            "RektSky",
+            "LiquidBounceNG",
             "Skidware",
             "Crosssine",
             "Moon",
@@ -85,7 +89,11 @@ class Cape : Module() {
         EXHIBITION(ResourceLocation("client/cape/animation/exhibition/base.png")),
         NOVOLINE(ResourceLocation("client/cape/novoline.png")),
         DORTWARE(ResourceLocation("client/cape/dortware.png")),
+        DORTWAREDEV(ResourceLocation("client/cape/dortwaredev.png")),
         DIABLO(ResourceLocation("client/cape/diablo.png")),
+        AYOZ(ResourceLocation("client/cape/ayoz.png")),
+        REKTSKY(ResourceLocation("client/cape/rektsky.png")),
+        LIQUIDBOUNCENG(ResourceLocation("client/cape/liquidnext.png")),
         SKIDWARE(ResourceLocation("client/cape/skidware.png")),
         CROSSSINE(ResourceLocation("client/cape/crosssine.png")),
         MOON(ResourceLocation("client/cape/moon.png")),
@@ -105,8 +113,4 @@ class Cape : Module() {
 
     override val tag: String
         get() = styleValue.get()
-
-    init {
-        state = true
-    }
 }

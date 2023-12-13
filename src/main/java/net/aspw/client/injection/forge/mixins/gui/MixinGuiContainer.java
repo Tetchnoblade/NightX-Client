@@ -2,10 +2,9 @@ package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.combat.KillAura;
-import net.aspw.client.features.module.impl.player.ChestStealer;
-import net.aspw.client.features.module.impl.player.InvManager;
+import net.aspw.client.features.module.impl.player.Manager;
+import net.aspw.client.features.module.impl.player.Stealer;
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.render.RenderUtils;
 import net.minecraft.client.Minecraft;
@@ -75,8 +74,8 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
         if (guiScreen instanceof GuiChest) {
             buttonList.add(killAuraButton = new GuiButton(1024576, 5, 5, 150, 20, "Disable KillAura"));
-            buttonList.add(invManagerButton = new GuiButton(321123, 5, 27, 150, 20, "Disable InvManager"));
-            buttonList.add(chestStealerButton = new GuiButton(727, 5, 49, 150, 20, "Disable ChestStealer"));
+            buttonList.add(chestStealerButton = new GuiButton(727, 5, 27, 150, 20, "Disable Stealer"));
+            buttonList.add(invManagerButton = new GuiButton(321123, 5, 49, 150, 20, "Disable Manager"));
         }
 
         lastMS = System.currentTimeMillis();
@@ -86,50 +85,48 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
     @Override
     protected void injectedActionPerformed(GuiButton button) {
         final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
-        final InvManager invManager = Objects.requireNonNull(Client.moduleManager.getModule(InvManager.class));
-        final ChestStealer chestStealer = Objects.requireNonNull(Client.moduleManager.getModule(ChestStealer.class));
+        final Manager invManager = Objects.requireNonNull(Client.moduleManager.getModule(Manager.class));
+        final Stealer stealer = Objects.requireNonNull(Client.moduleManager.getModule(Stealer.class));
         if (button.id == 1024576)
             killAura.setState(false);
         if (button.id == 321123)
             invManager.setState(false);
         if (button.id == 727)
-            chestStealer.setState(false);
+            stealer.setState(false);
     }
 
     @Inject(method = "drawScreen", at = @At("HEAD"), cancellable = true)
     private void drawScreenHead(CallbackInfo callbackInfo) {
-        ChestStealer chestStealer = Objects.requireNonNull(Client.moduleManager.getModule(ChestStealer.class));
+        Stealer stealer = Objects.requireNonNull(Client.moduleManager.getModule(Stealer.class));
         KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
-        InvManager invManager = Objects.requireNonNull(Client.moduleManager.getModule(InvManager.class));
-        final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
+        Manager invManager = Objects.requireNonNull(Client.moduleManager.getModule(Manager.class));
         final Minecraft mc = MinecraftInstance.mc;
 
         if (progress >= 1F) progress = 1F;
         else progress = (float) (System.currentTimeMillis() - lastMS) / (float) 200;
 
-        if (anInterface.getContainerBackground().get()
-                && (!(mc.currentScreen instanceof GuiChest)
-                || !chestStealer.getState()
-                || !chestStealer.getSilenceValue().get()
-                || chestStealer.getStillDisplayValue().get()))
+        if ((!(mc.currentScreen instanceof GuiChest)
+                || !stealer.getState()
+                || !stealer.getSilenceValue().get()
+                || stealer.getStillDisplayValue().get()))
             RenderUtils.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
 
         try {
             GuiScreen guiScreen = mc.currentScreen;
 
-            if (stealButton != null) stealButton.enabled = !chestStealer.getState();
+            if (stealButton != null) stealButton.enabled = !stealer.getState();
             if (killAuraButton != null)
                 killAuraButton.enabled = killAura.getState();
-            if (chestStealerButton != null) chestStealerButton.enabled = chestStealer.getState();
+            if (chestStealerButton != null) chestStealerButton.enabled = stealer.getState();
             if (invManagerButton != null)
                 invManagerButton.enabled = invManager.getState();
 
-            if (chestStealer.getState() && chestStealer.getSilenceValue().get() && guiScreen instanceof GuiChest) {
+            if (stealer.getState() && stealer.getSilenceValue().get() && guiScreen instanceof GuiChest) {
                 mc.setIngameFocus();
                 mc.currentScreen = guiScreen;
 
                 //hide GUI
-                if (chestStealer.getShowStringValue().get() && !chestStealer.getStillDisplayValue().get()) {
+                if (stealer.getShowStringValue().get() && !stealer.getStillDisplayValue().get()) {
                     String tipString = "Stealing... Press Esc to stop.";
 
                     mc.fontRendererObj.drawString(tipString,
@@ -149,7 +146,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
                             (height / 2F) + 30, 0xffffffff, false);
                 }
 
-                if (!chestStealer.getOnce() && !chestStealer.getStillDisplayValue().get())
+                if (!stealer.getOnce() && !stealer.getStillDisplayValue().get())
                     callbackInfo.cancel();
             }
         } catch (Exception e) {
@@ -170,9 +167,9 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
     @Inject(method = "drawScreen", at = @At("RETURN"))
     public void drawScreenReturn(CallbackInfo callbackInfo) {
         final Animations animMod = Objects.requireNonNull(Client.moduleManager.getModule(Animations.class));
-        ChestStealer chestStealer = Objects.requireNonNull(Client.moduleManager.getModule(ChestStealer.class));
+        Stealer stealer = Objects.requireNonNull(Client.moduleManager.getModule(Stealer.class));
         final Minecraft mc = MinecraftInstance.mc;
-        boolean checkFullSilence = chestStealer.getState() && chestStealer.getSilenceValue().get() && !chestStealer.getStillDisplayValue().get();
+        boolean checkFullSilence = stealer.getState() && stealer.getSilenceValue().get() && !stealer.getStillDisplayValue().get();
 
         if (animMod != null && animMod.getState() && !(mc.currentScreen instanceof GuiChest && checkFullSilence))
             GL11.glPopMatrix();

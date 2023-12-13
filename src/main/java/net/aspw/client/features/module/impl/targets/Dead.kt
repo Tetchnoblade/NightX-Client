@@ -8,12 +8,10 @@ import net.aspw.client.util.EntityUtils
 @ModuleInfo(name = "Dead", description = "", category = ModuleCategory.TARGETS, array = false)
 class Dead : Module() {
     override fun onEnable() {
-        super.onEnable()
         EntityUtils.targetDead = true
     }
 
     override fun onDisable() {
-        super.onDisable()
         EntityUtils.targetDead = false
     }
 }

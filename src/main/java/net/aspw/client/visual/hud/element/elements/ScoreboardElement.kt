@@ -3,8 +3,8 @@ package net.aspw.client.visual.hud.element.elements
 import com.google.common.collect.Iterables
 import com.google.common.collect.Lists
 import net.aspw.client.Client
-import net.aspw.client.features.module.impl.visual.AntiBlind
 import net.aspw.client.features.module.impl.visual.ColorMixer
+import net.aspw.client.features.module.impl.visual.VisualAbilities
 import net.aspw.client.util.render.*
 import net.aspw.client.value.*
 import net.aspw.client.visual.font.semi.Fonts
@@ -78,8 +78,8 @@ class ScoreboardElement(
      * Draw element
      */
     override fun drawElement(): Border? {
-        val antiBlind = Client.moduleManager.getModule(AntiBlind::class.java) as AntiBlind
-        if (antiBlind.state && antiBlind.scoreBoard.get())
+        val visualAbilities = Client.moduleManager.getModule(VisualAbilities::class.java) as VisualAbilities
+        if (visualAbilities.state && visualAbilities.scoreBoard.get())
             return null
 
         val fontRenderer = fontValue.get()

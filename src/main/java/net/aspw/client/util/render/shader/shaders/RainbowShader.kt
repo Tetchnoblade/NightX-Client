@@ -5,8 +5,7 @@ import org.lwjgl.opengl.GL20
 import java.io.Closeable
 
 class RainbowShader : Shader("rainbow_shader.frag"), Closeable {
-    var isInUse = false
-        private set
+    private var isInUse = false
 
     var strengthX = 0f
     var strengthY = 0f

@@ -116,7 +116,7 @@ public class SessionUtils extends MinecraftInstance implements Listenable {
      */
     @EventTarget
     public void onScreen(ScreenEvent event) {
-        if (event.getGuiScreen() == null && lastScreen != null && (lastScreen instanceof GuiDownloadTerrain || lastScreen instanceof GuiConnecting))
+        if (event.getGuiScreen() == null && (lastScreen instanceof GuiDownloadTerrain || lastScreen instanceof GuiConnecting))
             handleReconnection();
 
         lastScreen = event.getGuiScreen();

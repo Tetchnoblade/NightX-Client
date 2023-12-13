@@ -84,14 +84,9 @@ public class Render {
             }
         }
         double var14 = 0.0D;
-        if (var14 < 361.0D) {
-            var14 = var14 + 5;
-        }
+        var14 = var14 + 5;
         double var15 = 0.0D;
-        if (var15 < 255) {
-
-            var15 = var15 + 3;
-        }
+        var15 = var15 + 3;
         GL11.glEnd();
         GL11.glDepthMask(true);
         GlStateManager.enableDepth();
@@ -100,9 +95,9 @@ public class Render {
         GL11.glDisable(3042);
         GL11.glPopMatrix();
         if (d == 1.5F) {
-            this.alpha = MathHelper.clamp_float(this.alpha = (float) ((double) this.alpha - var15), 0.0F, 255.0F);
+            this.alpha = MathHelper.clamp_float((float) ((double) this.alpha - var15), 0.0F, 255.0F);
         }
-        this.d = MathHelper.clamp_float(this.d = (float) ((double) this.d + 0.005D * var14), 0.0F, 1.5F);
+        this.d = MathHelper.clamp_float((float) ((double) this.d + 0.005D * var14), 0.0F, 1.5F);
     }
 
     /**

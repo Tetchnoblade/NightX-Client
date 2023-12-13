@@ -4,9 +4,9 @@ import net.aspw.client.Client;
 import net.aspw.client.event.Render2DEvent;
 import net.aspw.client.features.module.impl.minigames.SnakeGame;
 import net.aspw.client.features.module.impl.player.Scaffold;
-import net.aspw.client.features.module.impl.visual.AntiBlind;
 import net.aspw.client.features.module.impl.visual.Crosshair;
 import net.aspw.client.features.module.impl.visual.Interface;
+import net.aspw.client.features.module.impl.visual.VisualAbilities;
 import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.render.RenderUtils;
 import net.aspw.client.visual.font.semi.AWTFontRenderer;
@@ -75,9 +75,9 @@ public abstract class MixinGuiInGame extends MixinGui {
 
     @Inject(method = "renderScoreboard", at = @At("HEAD"), cancellable = true)
     private void renderScoreboard(ScoreObjective scoreObjective, ScaledResolution scaledResolution, CallbackInfo callbackInfo) {
-        final AntiBlind antiBlind = Objects.requireNonNull(Client.moduleManager.getModule(AntiBlind.class));
+        final VisualAbilities visualAbilities = Objects.requireNonNull(Client.moduleManager.getModule(VisualAbilities.class));
         final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
-        if (antiBlind.getState() && antiBlind.getScoreBoard().get() || anInterface.getState())
+        if (visualAbilities.getState() && visualAbilities.getScoreBoard().get() || anInterface.getState())
             callbackInfo.cancel();
     }
 
@@ -88,8 +88,8 @@ public abstract class MixinGuiInGame extends MixinGui {
 
     @Inject(method = "renderBossHealth", at = @At("HEAD"), cancellable = true)
     private void renderBossHealth(CallbackInfo callbackInfo) {
-        final AntiBlind antiBlind = Objects.requireNonNull(Client.moduleManager.getModule(AntiBlind.class));
-        if (antiBlind.getState() && antiBlind.getBossHealth().get())
+        final VisualAbilities visualAbilities = Objects.requireNonNull(Client.moduleManager.getModule(VisualAbilities.class));
+        if (visualAbilities.getState() && visualAbilities.getBossHealth().get())
             callbackInfo.cancel();
     }
 
@@ -108,7 +108,7 @@ public abstract class MixinGuiInGame extends MixinGui {
         int slot = entityPlayer.inventory.currentItem;
         Scaffold scaffold = Client.moduleManager.getModule(Scaffold.class);
         if (scaffold != null && scaffold.getState())
-            slot = scaffold.getLastSlot();
+            slot = scaffold.getSlot();
 
         final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
 
@@ -184,9 +184,9 @@ public abstract class MixinGuiInGame extends MixinGui {
 
     @Inject(method = "renderPumpkinOverlay", at = @At("HEAD"), cancellable = true)
     private void renderPumpkinOverlay(final CallbackInfo callbackInfo) {
-        final AntiBlind antiBlind = Objects.requireNonNull(Client.moduleManager.getModule(AntiBlind.class));
+        final VisualAbilities visualAbilities = Objects.requireNonNull(Client.moduleManager.getModule(VisualAbilities.class));
 
-        if (antiBlind.getState() && antiBlind.getPumpkinEffect().get())
+        if (visualAbilities.getState() && visualAbilities.getPumpkinEffect().get())
             callbackInfo.cancel();
     }
 }

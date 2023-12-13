@@ -6,7 +6,6 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.movement.Speed
-import net.aspw.client.util.ClientUtils
 import net.aspw.client.util.MovementUtils
 import net.aspw.client.util.RotationUtils
 import net.aspw.client.util.timer.MSTimer
@@ -36,18 +35,6 @@ import kotlin.math.sin
 class AntiVelocity : Module() {
 
     /** OPTIONS */
-    private val horizontalValue =
-        FloatValue("Horizontal", 0F, -1F, 1F, "%") {
-            modeValue.get().equals("aac", ignoreCase = true) ||
-                    modeValue.get().equals("simple", ignoreCase = true)
-        }
-    private val verticalValue =
-        FloatValue("Vertical", 0F, -1F, 1F, "%") {
-            modeValue.get().equals("aac", ignoreCase = true) ||
-                    modeValue.get().equals("simple", ignoreCase = true)
-        }
-    private val horizontalExplosionValue = FloatValue("HorizontalExplosion", 0F, 0F, 1F, "%")
-    private val verticalExplosionValue = FloatValue("VerticalExplosion", 0F, 0F, 1F, "%")
     private val modeValue =
         ListValue(
             "Mode",
@@ -81,6 +68,18 @@ class AntiVelocity : Module() {
             ),
             "Cancel"
         )
+    private val horizontalValue =
+        FloatValue("Horizontal", 0F, -1F, 1F, "%") {
+            modeValue.get().equals("aac", ignoreCase = true) ||
+                    modeValue.get().equals("simple", ignoreCase = true)
+        }
+    private val verticalValue =
+        FloatValue("Vertical", 0F, -1F, 1F, "%") {
+            modeValue.get().equals("aac", ignoreCase = true) ||
+                    modeValue.get().equals("simple", ignoreCase = true)
+        }
+
+    private val explosionMode = ListValue("Explosion-Mode", arrayOf("Cancel", "None"), "Cancel")
 
     private val aac5KillAuraValue =
         BoolValue("AAC5.2.0-Attack-Only", true) { modeValue.get().equals("aac5.2.0", true) }
@@ -127,8 +126,6 @@ class AntiVelocity : Module() {
     private val phaseOffsetValue =
         FloatValue("Phase-Offset", 0.05F, -10F, 10F, "m") { modeValue.get().equals("phase", true) }
 
-    private val debugValue = BoolValue("Debug", false)
-
     /** VALUES */
     private var velocityTimer = MSTimer()
     private var velocityInput = false
@@ -148,13 +145,11 @@ class AntiVelocity : Module() {
     private var resetPersec = 8
     private var grimTCancel = 0
     private var updates = 0
-
-    private fun debug(s: String, force: Boolean = false) {
-        if (debugValue.get() || force) ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§f$s")
-    }
+    private var start2 = 0
 
     override fun onDisable() {
         grimTCancel = 0
+        start2 = 0
     }
 
     @EventTarget
@@ -190,9 +185,6 @@ class AntiVelocity : Module() {
                         mc.thePlayer.motionZ += MathHelper.cos(yaw) * 0.2
 
                         mc.thePlayer.jump()
-
-                        debug("Modified X:" + mc.thePlayer.motionX)
-                        debug("Modified Z:" + mc.thePlayer.motionZ)
                     } else if (jumpResetMode.get() == "Normal") {
                         mc.thePlayer.jump()
                     }
@@ -260,6 +252,27 @@ class AntiVelocity : Module() {
                     velocityTimer.hasTimePassed(120L)
                 ) {
                     velocityInput = false
+                }
+            }
+
+            "sneak" -> {
+                if (mc.thePlayer.onGround) {
+                    while (mc.thePlayer.hurtTime >= 8) {
+                        mc.gameSettings.keyBindSneak.pressed = true
+                        break
+                    }
+                }
+                while (mc.thePlayer.hurtTime >= 7 && !mc.gameSettings.keyBindForward.pressed) {
+                    mc.gameSettings.keyBindForward.pressed = true
+                    start2 = 1
+                    break
+                }
+                if (mc.thePlayer.hurtTime in 1..6) {
+                    mc.gameSettings.keyBindSneak.pressed = false
+                    if (start2 == 1) {
+                        mc.gameSettings.keyBindForward.pressed = false
+                        start2 = 0
+                    }
                 }
             }
 
@@ -382,10 +395,12 @@ class AntiVelocity : Module() {
             }
 
             "grimreverse" -> {
-                mc.thePlayer.motionX += -1.0E-7
-                mc.thePlayer.motionY += -1.0E-7
-                mc.thePlayer.motionZ += -1.0E-7
-                mc.thePlayer.isAirBorne = true
+                if (mc.thePlayer.hurtTime > 0) {
+                    mc.thePlayer.motionX += -1.0E-7
+                    mc.thePlayer.motionY += -1.0E-7
+                    mc.thePlayer.motionZ += -1.0E-7
+                    mc.thePlayer.isAirBorne = true
+                }
             }
         }
     }
@@ -574,13 +589,9 @@ class AntiVelocity : Module() {
         }
 
         if (packet is S27PacketExplosion) {
-            mc.thePlayer.motionX =
-                mc.thePlayer.motionX + packet.func_149149_c() * (horizontalExplosionValue.get())
-            mc.thePlayer.motionY =
-                mc.thePlayer.motionY + packet.func_149144_d() * (verticalExplosionValue.get())
-            mc.thePlayer.motionZ =
-                mc.thePlayer.motionZ + packet.func_149147_e() * (horizontalExplosionValue.get())
-            event.cancelEvent()
+            when (explosionMode.get().lowercase()) {
+                "cancel" -> event.cancelEvent()
+            }
         }
     }
 

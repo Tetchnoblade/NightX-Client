@@ -51,13 +51,13 @@ class TargetHud(
     val fadeValue = BoolValue("FadeAnim", false)
     val fadeSpeed = FloatValue("Fade-Speed", 1F, 0F, 5F, { fadeValue.get() })
 
-    val noAnimValue = BoolValue("No-Animation", true)
-    val globalAnimSpeed = FloatValue("Global-AnimSpeed", 5F, 1F, 9F, { !noAnimValue.get() })
+    val noAnimValue = BoolValue("No-Animation", false)
+    val globalAnimSpeed = FloatValue("Global-AnimSpeed", 4.5F, 1F, 9F, { !noAnimValue.get() })
 
     val colorModeValue =
         ListValue("Color", arrayOf("Custom", "Rainbow", "Sky", "Slowly", "Fade", "Mixer", "Health"), "Fade")
     val redValue = IntegerValue("Red", 255, 0, 255)
-    val greenValue = IntegerValue("Green", 85, 0, 255)
+    val greenValue = IntegerValue("Green", 180, 0, 255)
     val blueValue = IntegerValue("Blue", 255, 0, 255)
     val saturationValue = FloatValue("Saturation", 0.6F, 0F, 1F)
     val brightnessValue = FloatValue("Brightness", 1F, 0F, 1F)
@@ -85,8 +85,9 @@ class TargetHud(
                 Slowly(this),
                 Blocky(this),
                 Old(this),
-                New(this)
-            ).toTypedArray(), "New"
+                New(this),
+                Crazy(this)
+            ).toTypedArray(), "Crazy"
         )
     }
 

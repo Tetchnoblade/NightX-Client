@@ -12,7 +12,6 @@ import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
-import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
@@ -20,8 +19,7 @@ import java.awt.Color
     name = "SnakeGame",
     spacedName = "Snake Game",
     description = "",
-    category = ModuleCategory.MINIGAMES,
-    keyBind = Keyboard.KEY_F10
+    category = ModuleCategory.MINIGAMES
 )
 class SnakeGame : Module() {
     private var snake = mutableListOf(Position(0, 0))
@@ -210,9 +208,7 @@ class SnakeGame : Module() {
 
     data class Position(var x: Int, var y: Int)
 
-    companion object {
-        private const val blockSize = 10
-        private const val fieldWidth = 200
-        private const val fieldHeight = 150
-    }
+    private val blockSize = 10
+    private val fieldWidth = 200
+    private val fieldHeight = 150
 }

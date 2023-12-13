@@ -5,6 +5,7 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.protocol.ProtocolBase
 import net.aspw.client.util.RotationUtils
 import net.aspw.client.util.misc.RandomUtils
 import net.aspw.client.util.timer.MSTimer
@@ -14,6 +15,7 @@ import net.aspw.client.value.ListValue
 import net.minecraft.entity.projectile.EntityFireball
 import net.minecraft.network.play.client.C02PacketUseEntity
 import net.minecraft.network.play.client.C0APacketAnimation
+import net.raphimc.vialoader.util.VersionEnum
 import java.util.*
 
 @ModuleInfo(name = "AntiFireBall", spacedName = "Anti Fire Ball", description = "", category = ModuleCategory.COMBAT)
@@ -51,12 +53,16 @@ class AntiFireBall : Module() {
                     )
                 }
 
+                if (ProtocolBase.getManager().targetVersion.protocol != VersionEnum.r1_8.protocol)
+                    mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
+
                 when (swingValue.get().lowercase(Locale.getDefault())) {
                     "normal" -> mc.thePlayer.swingItem()
                     "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
                 }
 
-                mc.thePlayer.sendQueue.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
+                if (ProtocolBase.getManager().targetVersion.protocol == VersionEnum.r1_8.protocol)
+                    mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
                 timer.reset()
                 break

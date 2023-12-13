@@ -8,6 +8,7 @@ import org.lwjgl.opengl.*;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * The type Shader.
@@ -27,11 +28,11 @@ public abstract class Shader extends MinecraftInstance {
 
         try {
             final InputStream vertexStream = getClass().getResourceAsStream("/assets/minecraft/client/shader/vertex.vert");
-            vertexShaderID = createShader(IOUtils.toString(vertexStream), ARBVertexShader.GL_VERTEX_SHADER_ARB);
+            vertexShaderID = createShader(IOUtils.toString(Objects.requireNonNull(vertexStream)), ARBVertexShader.GL_VERTEX_SHADER_ARB);
             IOUtils.closeQuietly(vertexStream);
 
             final InputStream fragmentStream = getClass().getResourceAsStream("/assets/minecraft/client/shader/fragment/" + fragmentShader);
-            fragmentShaderID = createShader(IOUtils.toString(fragmentStream), ARBFragmentShader.GL_FRAGMENT_SHADER_ARB);
+            fragmentShaderID = createShader(IOUtils.toString(Objects.requireNonNull(fragmentStream)), ARBFragmentShader.GL_FRAGMENT_SHADER_ARB);
             IOUtils.closeQuietly(fragmentStream);
         } catch (final Exception e) {
             e.printStackTrace();

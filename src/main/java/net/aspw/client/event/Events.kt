@@ -118,7 +118,7 @@ class SlowDownEvent(var strafe: Float, var forward: Float) : Event()
 /**
  * Called in "moveFlying"
  */
-class StrafeEvent(val strafe: Float, val forward: Float, val friction: Float) : CancellableEvent()
+class StrafeEvent(var strafe: Float, var forward: Float, var friction: Float, var yaw: Float) : CancellableEvent()
 
 /**
  * Called when player moves

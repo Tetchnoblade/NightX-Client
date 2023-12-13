@@ -4,15 +4,13 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.MinecraftInstance
-import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.Display
 
 @ModuleInfo(
     name = "FreeLook",
     spacedName = "Free Look",
     description = "",
-    category = ModuleCategory.OTHER,
-    keyBind = Keyboard.KEY_F9
+    category = ModuleCategory.OTHER
 )
 class FreeLook : Module() {
     override fun onEnable() {

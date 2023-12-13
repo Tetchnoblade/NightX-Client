@@ -1,9 +1,11 @@
 package net.aspw.client.features.module.impl.movement.speeds.verus
 
+import net.aspw.client.Client
 import net.aspw.client.event.JumpEvent
 import net.aspw.client.event.MotionEvent
 import net.aspw.client.event.MoveEvent
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode
+import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.util.MovementUtils
 
 class VerusFloat : SpeedMode("VerusFloat") {
@@ -15,7 +17,13 @@ class VerusFloat : SpeedMode("VerusFloat") {
             event.cancelEvent()
     }
 
-    override fun onDisable() {}
+    override fun onDisable() {
+        val scaffold = Client.moduleManager.getModule(Scaffold::class.java)
+
+        if (!mc.thePlayer.isSneaking && !scaffold!!.state)
+            MovementUtils.strafe(0.2f)
+    }
+
     override fun onTick() {}
     override fun onMotion(event: MotionEvent) {}
     override fun onMotion() {}

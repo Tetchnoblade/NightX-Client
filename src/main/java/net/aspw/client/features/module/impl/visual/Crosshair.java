@@ -40,31 +40,31 @@ public class Crosshair extends Module {
     /**
      * The Color red value.
      */
-    public IntegerValue colorRedValue = new IntegerValue("Red", 93, 0, 255);
+    public IntegerValue colorRedValue = new IntegerValue("Red", 255, 0, 255);
     /**
      * The Color green value.
      */
-    public IntegerValue colorGreenValue = new IntegerValue("Green", 121, 0, 255);
+    public IntegerValue colorGreenValue = new IntegerValue("Green", 255, 0, 255);
     /**
      * The Color blue value.
      */
-    public IntegerValue colorBlueValue = new IntegerValue("Blue", 174, 0, 255);
+    public IntegerValue colorBlueValue = new IntegerValue("Blue", 255, 0, 255);
     /**
      * The Color alpha value.
      */
-    public IntegerValue colorAlphaValue = new IntegerValue("Alpha", 255, 0, 255);
+    public IntegerValue colorAlphaValue = new IntegerValue("Alpha", 200, 0, 255);
     /**
      * The Width val.
      */
-    public FloatValue widthVal = new FloatValue("Width", 0.6F, 0.25F, 10);
+    public FloatValue widthVal = new FloatValue("Width", 0.3F, 0.25F, 10);
     /**
      * The Size val.
      */
-    public FloatValue sizeVal = new FloatValue("Size/Length", 6, 0.25F, 15);
+    public FloatValue sizeVal = new FloatValue("Size/Length", 9, 0.25F, 15);
     /**
      * The Gap val.
      */
-    public FloatValue gapVal = new FloatValue("Gap", 5F, 0.25F, 15);
+    public FloatValue gapVal = new FloatValue("Gap", 4F, 0.25F, 15);
 
     /**
      * On render 2 d.

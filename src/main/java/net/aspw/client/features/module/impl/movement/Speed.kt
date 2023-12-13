@@ -1,5 +1,6 @@
 package net.aspw.client.features.module.impl.movement
 
+import net.aspw.client.Client
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
@@ -33,6 +34,7 @@ import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
+import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.client.settings.GameSettings
 
 @ModuleInfo(name = "Speed", description = "", category = ModuleCategory.MOVEMENT)
@@ -207,6 +209,32 @@ class Speed : Module() {
 
         override fun onChanged(oldValue: String, newValue: String) {
             if (state) onEnable()
+        }
+    }
+
+    @EventTarget
+    fun onWorld(event: WorldEvent) {
+        if (!lagCheck.get()) {
+            state = false
+            Client.hud.addNotification(
+                Notification(
+                    "Speed was disabled",
+                    Notification.Type.WARNING
+                )
+            )
+        }
+    }
+
+    @EventTarget
+    fun onTeleport(event: TeleportEvent) {
+        if (lagCheck.get()) {
+            state = false
+            Client.hud.addNotification(
+                Notification(
+                    "Disabling Speed due to lag back",
+                    Notification.Type.WARNING
+                )
+            )
         }
     }
 
@@ -574,6 +602,8 @@ class Speed : Module() {
     @JvmField
     val cubecraftPortLengthValue =
         FloatValue("CubeCraft-PortLength", 1f, 0.1f, 2f) { modeName.equals("teleportcubecraft", ignoreCase = true) }
+
+    private val lagCheck = BoolValue("LagCheck", true)
 
     @JvmField
     val noBob = BoolValue("NoBob", false)

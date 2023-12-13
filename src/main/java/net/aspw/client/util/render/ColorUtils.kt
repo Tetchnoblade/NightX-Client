@@ -101,17 +101,6 @@ object ColorUtils {
     }
 
     @JvmStatic
-    fun TwoRainbow(offset: Long, alpha: Float): Color {
-        var currentColor = Color(Color.HSBtoRGB((System.nanoTime() + offset) / 8.9999999E10F % 1, 0.75F, 0.8F))
-        return Color(
-            currentColor.red / 255.0F * 1.0F,
-            currentColor.green / 255.0F * 1.0F,
-            currentColor.blue / 255.0F * 1.0F,
-            alpha
-        )
-    }
-
-    @JvmStatic
     fun fade(color: Color, index: Int, count: Int): Color {
         val hsb = FloatArray(3)
         Color.RGBtoHSB(color.red, color.green, color.blue, hsb)
@@ -128,7 +117,4 @@ object ColorUtils {
     @JvmStatic
     fun reAlpha(color: Color, alpha: Float): Color =
         Color(color.red / 255F, color.green / 255F, color.blue / 255F, alpha.coerceIn(0F, 1F))
-
-    @JvmStatic
-    fun getOppositeColor(color: Color): Color = Color(255 - color.red, 255 - color.green, 255 - color.blue, color.alpha)
 }

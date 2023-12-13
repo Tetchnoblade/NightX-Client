@@ -13,8 +13,8 @@ import net.aspw.client.util.ClientUtils
 import net.aspw.client.util.misc.MiscUtils
 import net.aspw.client.util.misc.RandomUtils
 import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.visual.client.GuiPasswordField
 import net.aspw.client.visual.client.altmanager.GuiAltManager
-import net.aspw.client.visual.elements.GuiPasswordField
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.GuiTextField
