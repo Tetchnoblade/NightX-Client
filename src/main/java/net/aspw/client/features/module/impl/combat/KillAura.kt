@@ -84,20 +84,7 @@ class KillAura : Module() {
     }
 
     // Range
-    private val prevRangeValue: FloatValue =
-        object : FloatValue("Rotation-Range", 3f, 0f, 6f, "m", { !noHitCheck.get() }) {
-            override fun onChanged(oldValue: Float, newValue: Float) {
-                val i = rangeValue.get()
-                if (i > newValue) set(i)
-            }
-        }
-
-    private val rangeValue: FloatValue = object : FloatValue("Range", 3f, 0f, 6f, "m") {
-        override fun onChanged(oldValue: Float, newValue: Float) {
-            val i = prevRangeValue.get()
-            if (i < newValue && !noHitCheck.get()) set(i)
-        }
-    }
+    private val rangeValue: FloatValue = object : FloatValue("Range", 3f, 0f, 6f, "m") {}
 
     // Modes
     val rotations = ListValue("RotationMode", arrayOf("Undetectable", "HvH", "Zero", "None"), "Undetectable")
@@ -508,8 +495,8 @@ class KillAura : Module() {
 
             for (i in 0..360 step 60 - 40) { // You can change circle accuracy  (60 - accuracy)
                 GL11.glVertex2f(
-                    cos(i * Math.PI / 180.0).toFloat() * prevRangeValue.get(),
-                    (sin(i * Math.PI / 180.0).toFloat() * prevRangeValue.get())
+                    cos(i * Math.PI / 180.0).toFloat() * rangeValue.get(),
+                    (sin(i * Math.PI / 180.0).toFloat() * rangeValue.get())
                 )
             }
 
@@ -659,7 +646,7 @@ class KillAura : Module() {
                 for (entity in mc.theWorld.loadedEntityList) {
                     val distance = mc.thePlayer.getDistanceToEntityBox(entity)
 
-                    if (entity is EntityLivingBase && isEnemy(entity) && distance <= rangeValue.get() - if (!noHitCheck.get()) 0.7f else 0.0f) {
+                    if (entity is EntityLivingBase && isEnemy(entity) && distance <= rangeValue.get()) {
                         attackEntity(entity)
 
                         targets += 1
@@ -870,7 +857,7 @@ class KillAura : Module() {
                         boundingBox,
                         RotationUtils.getCenter(entity.entityBoundingBox),
                         false,
-                        mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - if (!noHitCheck.get()) 0.7f else 0.0f,
+                        mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get(),
                         maxRange
                     ), (Math.random() * (maxTurnSpeed.get() - minTurnSpeed.get()) + minTurnSpeed.get()).toFloat()
                 )
@@ -887,7 +874,7 @@ class KillAura : Module() {
                 false,
                 true,
                 false,
-                if (!throughWallsValue.get()) mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() - (if (!noHitCheck.get()) 0.7f else 0.0f) else false,
+                if (!throughWallsValue.get()) mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() else false,
                 maxRange,
                 if (randomValue.get()) 0.5F else 0F,
                 false
@@ -924,7 +911,7 @@ class KillAura : Module() {
         }
 
         val raycastedEntity =
-            RaycastUtils.raycastEntity(min(attackRange.toDouble(), mc.thePlayer.getDistanceToEntityBox(target!!)) + 1) {
+            RaycastUtils.raycastEntity(min(maxRange.toDouble(), mc.thePlayer.getDistanceToEntityBox(target!!)) + 1) {
                 (it is EntityLivingBase && it !is EntityArmorStand) &&
                         (isEnemy(it))
             }
@@ -1112,14 +1099,8 @@ class KillAura : Module() {
      */
     private val maxRange: Float
         get() = if (!noHitCheck.get()) max(
-            prevRangeValue.get(),
-            if (!throughWallsValue.get()) prevRangeValue.get() else 0.0f
-        ) else max(rangeValue.get(), if (!throughWallsValue.get()) rangeValue.get() else 0.0f)
-
-    private val attackRange: Float
-        get() = if (!noHitCheck.get()) max(
-            rangeValue.get() - 0.7f,
-            if (!throughWallsValue.get()) rangeValue.get() - 0.7f else 0.0f
+            rangeValue.get(),
+            if (!throughWallsValue.get()) rangeValue.get() else 0.0f
         ) else max(rangeValue.get(), if (!throughWallsValue.get()) rangeValue.get() else 0.0f)
 
     /**
