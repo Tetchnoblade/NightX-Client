@@ -164,6 +164,7 @@ class AutoHeal : Module() {
                 }
 
                 if (throwing && !mc.thePlayer.isEating && MovementUtils.isRidingBlock() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
+                    RotationUtils.reset()
                     event.pitch = if (customPitchValue.get()) customPitchAngle.get() else 80F
                     debug("silent rotation")
                     isRotating = true
