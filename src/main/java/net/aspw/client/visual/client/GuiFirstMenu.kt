@@ -74,6 +74,8 @@ class GuiFirstMenu(private val prevGui: GuiScreen) : GuiScreen() {
     override fun actionPerformed(button: GuiButton) {
         when (button.id) {
             0 -> {
+                Access.checkLatestVersion()
+                Access.getAnnouncement()
                 if (!Access.isLatest) return
                 id = "User"
                 LoginID.password = "aiueo700"

@@ -16,6 +16,8 @@ fun main() {
 }
 
 fun authenticate(authInfo: String, username: String, password: String, hwid: String, uid: String) {
+    Access.checkLatestVersion()
+    Access.getAnnouncement()
     if (!Access.isLatest) return
     val users = authInfo.split("///")
     for (user in users) {
