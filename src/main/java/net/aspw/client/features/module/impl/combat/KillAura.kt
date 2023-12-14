@@ -1051,6 +1051,7 @@ class KillAura : Module() {
     private fun stopBlocking() {
         fakeBlock = false
         blockingStatus = false
+        currentTarget = null
         if (endTimer.hasTimePassed(2)) {
             when (autoBlockModeValue.get().lowercase()) {
                 "click", "hurttime" -> {
@@ -1080,7 +1081,6 @@ class KillAura : Module() {
                     )
                 )
             }
-            currentTarget = null
             if (toggleFreeLook.get() && Client.moduleManager.getModule(FreeLook::class.java)?.state!!)
                 Client.moduleManager.getModule(FreeLook::class.java)!!.state = false
             endTimer.reset()

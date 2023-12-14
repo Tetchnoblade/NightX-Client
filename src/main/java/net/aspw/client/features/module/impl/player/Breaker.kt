@@ -21,11 +21,9 @@ import net.minecraft.network.play.client.C07PacketPlayerDigging
 import net.minecraft.network.play.client.C0APacketAnimation
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
-import net.minecraft.util.MathHelper
 import net.minecraft.util.Vec3
 import java.awt.Color
 import java.util.*
-import kotlin.math.abs
 
 @ModuleInfo(name = "Breaker", description = "", category = ModuleCategory.PLAYER)
 class Breaker : Module() {
@@ -70,32 +68,7 @@ class Breaker : Module() {
     fun onStrafe(event: StrafeEvent) {
         if (event.isCancelled || !movementFix.get() || !rotationsValue.get() || killAura.state && killAura.currentTarget != null || scaffold.state) return
         val (yaw) = RotationUtils.targetRotation ?: return
-        var strafe = event.strafe
-        var forward = event.forward
-        val friction = event.friction
-        var factor = strafe * strafe + forward * forward
-
-        var calcMoveDir = abs(strafe).coerceAtLeast(abs(forward))
-        calcMoveDir *= calcMoveDir
-
-        if (factor >= 1.0E-4F) {
-            factor = MathHelper.sqrt_float(factor)
-
-            if (factor < 1.0F) {
-                factor = 1.0F
-            }
-
-            factor = friction / factor
-            strafe *= factor
-            forward *= factor
-
-            val yawSin = MathHelper.sin((yaw * Math.PI / 180F).toFloat())
-            val yawCos = MathHelper.cos((yaw * Math.PI / 180F).toFloat())
-
-            mc.thePlayer.motionX += strafe * yawCos - forward * yawSin
-            mc.thePlayer.motionZ += forward * yawCos + strafe * yawSin
-        }
-        event.cancelEvent()
+        event.yaw = yaw
     }
 
     @EventTarget

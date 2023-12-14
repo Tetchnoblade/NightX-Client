@@ -37,8 +37,6 @@ public class ProtocolBase {
         manager = new ProtocolBase(platform);
 
         ViaLoader.init(new ViaVersionPlatformImpl(null), new ProtocolVLLoader(platform), new ProtocolVLInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new, ViaLegacyPlatformImpl::new, ViaAprilFoolsPlatformImpl::new);
-
-        initAsyncSlider();
     }
 
     public void inject(final Channel channel, final VFNetworkManager networkManager) {
@@ -75,19 +73,5 @@ public class ProtocolBase {
 
     public static ProtocolBase getManager() {
         return manager;
-    }
-
-    public static VersionSlider versionSlider;
-
-    public static void initAsyncSlider() {
-        initAsyncSlider(5, 5, 200, 20);
-    }
-
-    public static void initAsyncSlider(int x, int y, int width, int height) {
-        versionSlider = new VersionSlider(-1, x, y, Math.max(width, 88), height);
-    }
-
-    public static VersionSlider getAsyncVersionSlider() {
-        return versionSlider;
     }
 }

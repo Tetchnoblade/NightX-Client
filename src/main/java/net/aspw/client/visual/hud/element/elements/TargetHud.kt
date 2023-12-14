@@ -52,7 +52,7 @@ class TargetHud(
     val fadeSpeed = FloatValue("Fade-Speed", 1F, 0F, 5F, { fadeValue.get() })
 
     val noAnimValue = BoolValue("No-Animation", false)
-    val globalAnimSpeed = FloatValue("Global-AnimSpeed", 4.5F, 1F, 9F, { !noAnimValue.get() })
+    val globalAnimSpeed = FloatValue("Global-AnimSpeed", 3F, 1F, 9F, { !noAnimValue.get() })
 
     val colorModeValue =
         ListValue("Color", arrayOf("Custom", "Rainbow", "Sky", "Slowly", "Fade", "Mixer", "Health"), "Fade")
@@ -77,17 +77,15 @@ class TargetHud(
     init {
         styleValue = ListValue(
             "Style", addStyles(
+                NightX(this),
+                AstolfoNew(this),
+                Exhibition(this),
                 LiquidBounce(this),
                 Chill(this),
                 Rice(this),
-                Exhibition(this),
                 Remix(this),
-                Slowly(this),
-                Blocky(this),
-                Old(this),
-                New(this),
-                Crazy(this)
-            ).toTypedArray(), "Crazy"
+                Slowly(this)
+            ).toTypedArray(), "NightX"
         )
     }
 

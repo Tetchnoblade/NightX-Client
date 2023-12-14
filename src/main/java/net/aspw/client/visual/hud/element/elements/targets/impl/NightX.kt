@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11
 import java.awt.Color
 import kotlin.math.abs
 
-class Crazy(inst: TargetHud) : TargetStyle("Crazy", inst, true) {
+class NightX(inst: TargetHud) : TargetStyle("NightX", inst, true) {
     private var lastTarget: EntityPlayer? = null
 
     override fun drawTarget(entity: EntityPlayer) {
@@ -33,11 +33,11 @@ class Crazy(inst: TargetHud) : TargetStyle("Crazy", inst, true) {
         RenderUtils.drawRect(3F, -1F, width - 3F, 47F, targetHudInstance.bgColor.rgb)
 
         // Health bar
-        val healthLength = 69F * (entity.health / entity.maxHealth).coerceIn(0F, 1F)
+        val healthLength = (entity.health / entity.maxHealth).coerceIn(0F, 1F)
         RenderUtils.drawRect(
             35.5F,
             14F,
-            (easingHealth / entity.maxHealth).coerceIn(0F, entity.maxHealth) * (healthLength + 42F),
+            35.5f + (easingHealth / entity.maxHealth).coerceIn(0F, entity.maxHealth) * (healthLength + 75F),
             18F,
             Color(245, 251, 1).rgb
         )
@@ -64,7 +64,9 @@ class Crazy(inst: TargetHud) : TargetStyle("Crazy", inst, true) {
         GL11.glPopMatrix()
 
         GlStateManager.resetColor()
+        GlStateManager.color(1.0f, 1.0f, 1.0f)
         RenderUtils.drawEntityOnScreen(20, 42, 19, entity)
+        GlStateManager.resetColor()
 
         GL11.glPushMatrix()
         GL11.glColor4f(1f, 1f, 1f, 1f - targetHudInstance.getFadeProgress())

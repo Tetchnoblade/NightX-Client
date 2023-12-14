@@ -27,7 +27,7 @@ import java.awt.Color
 @ModuleInfo(name = "Interface", description = "", category = ModuleCategory.VISUAL, array = false)
 class Interface : Module() {
     private val watermarkValue = BoolValue("WaterMark", true)
-    private val clientNameValue = TextValue("ClientName", "Night-X") { watermarkValue.get() }
+    private val clientNameValue = TextValue("ClientName", "NightX") { watermarkValue.get() }
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)
     private val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F) { animHotbarValue.get() }
@@ -36,7 +36,7 @@ class Interface : Module() {
     private val noTitle = BoolValue("NoTitle", false)
     private val antiTabComplete = BoolValue("AntiTabComplete", false)
     val customFov = BoolValue("CustomFov", false)
-    val customFovModifier = FloatValue("Fov", 1.4F, 0.8F, 1.5F) { customFov.get() }
+    val customFovModifier = FloatValue("Fov", 1.1F, 0.8F, 1.5F) { customFov.get() }
     val fontChatValue = BoolValue("FontChat", false)
     val fontType = FontValue("Font", Fonts.fontSFUI37) { fontChatValue.get() }
     val chatRectValue = BoolValue("ChatRect", true)

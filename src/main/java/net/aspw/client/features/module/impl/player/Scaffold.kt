@@ -368,7 +368,7 @@ class Scaffold : Module() {
         }
         if (faceBlock)
             place()
-        if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex && mc.thePlayer.ticksExisted % 3 == 0)
+        if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex)
             mc.netHandler.addToSendQueue(C09PacketHeldItemChange(InventoryUtils.findAutoBlockBlock() - 36))
         if (allowTower.get() && GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && blocksAmount > 0 && MovementUtils.isRidingBlock() && (!MovementUtils.isMoving() && !towerMove.get() || towerMove.get())
         ) {
@@ -715,6 +715,18 @@ class Scaffold : Module() {
     fun onStrafe(event: StrafeEvent) {
         if (blocksAmount <= 0) return
         if (rotationStrafeValue.get()) {
+            if (lockRotation == null) {
+                when (preRotationValue.get().lowercase()) {
+                    "lock" -> {
+                        event.yaw = firstRotate
+                    }
+
+                    "normal" -> {
+                        event.yaw = MovementUtils.getRawDirection()
+                    }
+                }
+                return
+            }
             val dif =
                 ((MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationYaw - lookupRotation!!.yaw - 23.5f - 135) + 180) / 45).toInt()
             val yaw = lookupRotation!!.yaw
@@ -886,7 +898,7 @@ class Scaffold : Module() {
 
                     "normal" -> {
                         val yaw = MovementUtils.getRawDirection() - 180f
-                        val pitch = 84f
+                        val pitch = 83f
                         RotationUtils.setTargetRotation(
                             RotationUtils.limitAngleChange(
                                 RotationUtils.serverRotation!!,
