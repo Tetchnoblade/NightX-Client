@@ -164,12 +164,7 @@ class AutoHeal : Module() {
                 }
 
                 if (throwing && !mc.thePlayer.isEating && MovementUtils.isRidingBlock() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
-                    RotationUtils.setTargetRotation(
-                        Rotation(
-                            MovementUtils.getRawDirection(),
-                            if (customPitchValue.get()) customPitchAngle.get() else 80F
-                        ),
-                    )
+                    event.pitch = if (customPitchValue.get()) customPitchAngle.get() else 80F
                     debug("silent rotation")
                     isRotating = true
                 }
@@ -271,7 +266,6 @@ class AutoHeal : Module() {
                         mc.netHandler.addToSendQueue(C09PacketHeldItemChange(potIndex - 36))
                         mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.heldItem))
                         mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
-                        mc.itemRenderer.resetEquippedProgress2()
 
                         potIndex = -1
                         throwing = false
