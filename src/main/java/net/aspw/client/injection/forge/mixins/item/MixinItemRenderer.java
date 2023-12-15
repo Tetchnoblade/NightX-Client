@@ -394,6 +394,7 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.rotate(f4 * -12.0F, 0.0F, 0.0F, 1.0F);
                                 GlStateManager.rotate(f4 * -65.0F, 1.0F, 0.0F, 0.0F);
                                 this.doBlockTransformations();
+                                GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
                             case "Stab": {
@@ -408,6 +409,7 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.rotate(6110, 0.1f, 0.0f, 0.0f);
                                 this.transformFirstPersonItem(0.0F, 0.0f);
                                 this.doBlockTransformations();
+                                GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
                             case "Winter": {
