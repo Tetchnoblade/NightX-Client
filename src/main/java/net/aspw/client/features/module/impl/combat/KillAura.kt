@@ -84,7 +84,18 @@ class KillAura : Module() {
     }
 
     // Range
-    private val rangeValue: FloatValue = object : FloatValue("Range", 3f, 0f, 6f, "m") {}
+    private val rangeValue: FloatValue = object : FloatValue("TargetRange", 4f, 0f, 8f, "m") {
+        override fun onChanged(oldValue: Float, newValue: Float) {
+            val i = attackRangeValue.get()
+            if (i > newValue) set(i)
+        }
+    }
+    private val attackRangeValue: FloatValue = object : FloatValue("AttackRange", 3f, 0f, 6f, "m") {
+        override fun onChanged(oldValue: Float, newValue: Float) {
+            val i = rangeValue.get()
+            if (i < newValue) set(i)
+        }
+    }
 
     // Modes
     val rotations = ListValue("RotationMode", arrayOf("Undetectable", "HvH", "Zero", "None"), "Undetectable")
@@ -770,6 +781,8 @@ class KillAura : Module() {
      * Attack [entity]
      */
     private fun attackEntity(entity: EntityLivingBase) {
+        if (mc.thePlayer!!.getDistanceToEntityBox(entity) >= attackRangeValue.get()) return
+
         // Call attack event
         Client.eventManager.callEvent(AttackEvent(entity))
 
@@ -839,7 +852,7 @@ class KillAura : Module() {
         if (silentRotationValue.get()) {
             RotationUtils.setTargetRotation(
                 defRotation,
-                if (bypassSomeChecks.get()) 8 else 0
+                if (bypassSomeChecks.get()) 12 else 0
             )
         } else {
             defRotation.toPlayer(mc.thePlayer!!)
