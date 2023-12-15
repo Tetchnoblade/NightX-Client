@@ -24,8 +24,8 @@ import java.awt.Color
  */
 @ElementInfo(name = "TargetHud", disableScale = true, retrieveDamage = true)
 class TargetHud(
-    x: Double = 229.0, y: Double = 157.0, scale: Float = 1F,
-    side: Side = Side(Side.Horizontal.LEFT, Side.Vertical.UP)
+    x: Double = 58.0, y: Double = -14.0, scale: Float = 1F,
+    side: Side = Side(Side.Horizontal.MIDDLE, Side.Vertical.MIDDLE)
 ) : Element(x, y, scale, side) {
 
     val styleList = mutableListOf<TargetStyle>()
@@ -79,6 +79,7 @@ class TargetHud(
             "Style", addStyles(
                 NightX(this),
                 AstolfoNew(this),
+                AstolfoOld(this),
                 Exhibition(this),
                 LiquidBounce(this),
                 Chill(this),
