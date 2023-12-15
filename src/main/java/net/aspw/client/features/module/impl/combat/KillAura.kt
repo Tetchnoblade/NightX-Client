@@ -131,6 +131,7 @@ class KillAura : Module() {
         100
     ) { !rotations.get().equals("none", true) }
 
+    private val bypassSomeChecks = BoolValue("BypassSomeChecks", true)
     private val noInventoryAttackValue = BoolValue("NoInvAttack", false)
     private val checkSprintValue = BoolValue("StopSprint", false)
     private val throughWallsValue = BoolValue(
@@ -838,7 +839,7 @@ class KillAura : Module() {
         if (silentRotationValue.get()) {
             RotationUtils.setTargetRotation(
                 defRotation,
-                0
+                if (bypassSomeChecks.get()) 8 else 0
             )
         } else {
             defRotation.toPlayer(mc.thePlayer!!)
