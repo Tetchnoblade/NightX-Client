@@ -31,7 +31,7 @@ class AstolfoNew(inst: TargetHud) : TargetStyle("AstolfoNew", inst, true) {
         updateAnim(entity.health)
 
         // Draw rect box
-        RenderUtils.drawRect(-4F, -1F, width - 3F, 42F, targetHudInstance.bgColor.rgb)
+        RenderUtils.drawRect(2F, -1F, width - 3F, 42F, targetHudInstance.bgColor.rgb)
 
         // Health bar
         val healthLength = (entity.health / entity.maxHealth).coerceIn(0F, 1F)
@@ -62,7 +62,7 @@ class AstolfoNew(inst: TargetHud) : TargetStyle("AstolfoNew", inst, true) {
 
         GlStateManager.resetColor()
         GlStateManager.color(1.0f, 1.0f, 1.0f)
-        RenderUtils.drawEntityOnScreen(16, 40, 20, entity)
+        RenderUtils.drawEntityOnScreen(19, 38, 19, entity)
         GlStateManager.resetColor()
 
         lastTarget = entity
@@ -76,7 +76,7 @@ class AstolfoNew(inst: TargetHud) : TargetStyle("AstolfoNew", inst, true) {
         GlStateManager.enableBlend()
         GlStateManager.disableTexture2D()
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0)
-        RenderUtils.quickDrawRect(-4F, -1F, width - 3F, 42F)
+        RenderUtils.quickDrawRect(2F, -1F, width - 3F, 42F)
         GlStateManager.enableTexture2D()
         GlStateManager.disableBlend()
     }
@@ -88,7 +88,7 @@ class AstolfoNew(inst: TargetHud) : TargetStyle("AstolfoNew", inst, true) {
             .coerceAtLeast(118)
             .toFloat()
 
-        RenderUtils.newDrawRect(-4F, -1F, width - 3F, 42F, shadowOpaque.rgb)
+        RenderUtils.newDrawRect(2F, -1F, width - 3F, 42F, shadowOpaque.rgb)
     }
 
     override fun getBorder(entity: EntityPlayer?): Border {
@@ -96,6 +96,6 @@ class AstolfoNew(inst: TargetHud) : TargetStyle("AstolfoNew", inst, true) {
         val width = (38 + Fonts.minecraftFont.getStringWidth(entity.name))
             .coerceAtLeast(118)
             .toFloat()
-        return Border(-4F, -1F, width - 3F, 42F)
+        return Border(2F, -1F, width - 3F, 42F)
     }
 }

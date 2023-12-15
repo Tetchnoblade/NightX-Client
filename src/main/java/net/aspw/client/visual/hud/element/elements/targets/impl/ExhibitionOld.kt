@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11
 import java.awt.Color
 import kotlin.math.abs
 
-class NightX(inst: TargetHud) : TargetStyle("NightX", inst, true) {
+class ExhibitionOld(inst: TargetHud) : TargetStyle("ExhibitionOld", inst, true) {
     private var lastTarget: EntityPlayer? = null
 
     override fun drawTarget(entity: EntityPlayer) {
@@ -65,7 +65,7 @@ class NightX(inst: TargetHud) : TargetStyle("NightX", inst, true) {
 
         GlStateManager.resetColor()
         GlStateManager.color(1.0f, 1.0f, 1.0f)
-        RenderUtils.drawEntityOnScreen(20, 42, 19, entity)
+        RenderUtils.drawEntityOnScreen(19, 45, 23, entity)
         GlStateManager.resetColor()
 
         GL11.glPushMatrix()

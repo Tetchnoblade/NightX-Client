@@ -218,7 +218,7 @@ class KillAura : Module() {
 
     // Visuals
     private val waterParticleValue = BoolValue("WaterParticles", true)
-    private val espValue = BoolValue("Rounded-ESP", true)
+    private val espValue = BoolValue("ESP", true)
     private val circleValue = BoolValue("Circle", false)
 
     /**
@@ -549,7 +549,7 @@ class KillAura : Module() {
             GL11.glColor3f(0F, 0F, 0F)
             GL11.glBegin(GL11.GL_LINE_LOOP)
 
-            for (i in 0..360 step 60 - 20) { // You can change circle accuracy  (60 - accuracy)
+            for (i in 0..360 step 60 - 14) { // You can change circle accuracy  (60 - accuracy)
                 GL11.glVertex2f(
                     cos(i * Math.PI / 180.0).toFloat() * 0.8f,
                     (sin(i * Math.PI / 180.0).toFloat() * 0.8f)
@@ -561,7 +561,7 @@ class KillAura : Module() {
             GL11.glLineWidth(3f)
             GL11.glBegin(GL11.GL_LINE_LOOP)
 
-            for (i in 0..360 step 60 - 20) { // You can change circle accuracy  (60 - accuracy)
+            for (i in 0..360 step 60 - 14) { // You can change circle accuracy  (60 - accuracy)
                 GL11.glColor3f(
                     0 / 255.0f,
                     255 / 255.0f,

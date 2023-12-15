@@ -40,7 +40,7 @@ class AstolfoOld(inst: TargetHud) : TargetStyle("AstolfoOld", inst, true) {
             36F + (easingHealth / entity.maxHealth).coerceIn(0F, entity.maxHealth) * (healthLength + 74F),
             26F,
             Color(
-                entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + 85,
+                245,
                 entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + 91,
                 1
             ).rgb
@@ -57,7 +57,7 @@ class AstolfoOld(inst: TargetHud) : TargetStyle("AstolfoOld", inst, true) {
             64.5F,
             17F,
             Color(
-                entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + 85,
+                245,
                 entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + entity.health.toInt() + 91,
                 1
             ).rgb

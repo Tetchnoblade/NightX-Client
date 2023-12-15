@@ -944,19 +944,40 @@ public final class RenderUtils extends MinecraftInstance {
         GlStateManager.pushMatrix();
         GlStateManager.enableColorMaterial();
 
+        float renderYawOffset = entity.renderYawOffset;
+        float rotationYaw = entity.rotationYaw;
+        float rotationPitch = entity.rotationPitch;
+        float prevRotationYawHead = entity.prevRotationYawHead;
+        float rotationYawHead = entity.rotationYawHead;
+
         GlStateManager.translate(posX, posY, 50.0);
         GlStateManager.scale((-scale), scale, scale);
         GlStateManager.rotate(180F, 0F, 0F, 1F);
         GlStateManager.rotate(135F, 0F, 1F, 0F);
         RenderHelper.enableStandardItemLighting();
         GlStateManager.rotate(-135F, 0F, 1F, 0F);
+
+        glRotatef((float) (-atan(0F / 40F) * 20f), 1F, 0F, 0F);
         GlStateManager.translate(0.0, 0.0, 0.0);
+        entity.renderYawOffset = (float) (atan(30F / 40F) * 20F);
+        entity.rotationYaw = (float) (atan(30F / 40F) * 40F);
+        entity.rotationPitch = (float) (-atan(0F / 40F) * 20F);
+        entity.rotationYawHead = entity.rotationYaw;
+        entity.prevRotationYawHead = entity.rotationYaw;
+
+        glTranslatef(0F, 0F, 0F);
 
         RenderManager rendermanager = mc.getRenderManager();
         rendermanager.setPlayerViewY(180F);
         rendermanager.setRenderShadow(false);
         rendermanager.renderEntityWithPosYaw(entity, 0.0, 0.0, 0.0, 0F, 1F);
         rendermanager.setRenderShadow(true);
+
+        entity.renderYawOffset = renderYawOffset;
+        entity.rotationYaw = rotationYaw;
+        entity.rotationPitch = rotationPitch;
+        entity.prevRotationYawHead = prevRotationYawHead;
+        entity.rotationYawHead = rotationYawHead;
 
         GlStateManager.popMatrix();
         RenderHelper.disableStandardItemLighting();

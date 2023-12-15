@@ -77,16 +77,16 @@ class TargetHud(
     init {
         styleValue = ListValue(
             "Style", addStyles(
-                NightX(this),
                 AstolfoNew(this),
                 AstolfoOld(this),
-                Exhibition(this),
+                ExhibitionNew(this),
+                ExhibitionOld(this),
                 LiquidBounce(this),
                 Chill(this),
                 Rice(this),
                 Remix(this),
                 Slowly(this)
-            ).toTypedArray(), "NightX"
+            ).toTypedArray(), "AstolfoOld"
         )
     }
 
