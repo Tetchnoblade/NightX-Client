@@ -54,6 +54,7 @@ class AutoHeal : Module() {
     private var isRotating = false
     private var throwing = false
     private var rotated = false
+    private var potting = false
     private var potIndex = -1
     private var oldSlot = -1
 
@@ -73,7 +74,9 @@ class AutoHeal : Module() {
         get() = healthValue.get().toString() + "%"
 
     private fun resetAll() {
+        potting = false
         throwing = false
+        isRotating = false
         rotated = false
         throwTimer.reset()
         resetTimer.reset()
@@ -84,7 +87,9 @@ class AutoHeal : Module() {
     }
 
     override fun onDisable() {
-        isRotating = false
+        if (autoPotValue.get()) {
+            resetAll()
+        }
     }
 
     override fun onEnable() {
@@ -163,13 +168,18 @@ class AutoHeal : Module() {
                     if (potion != -1) {
                         potIndex = potion
                         throwing = true
-                        oldSlot = mc.thePlayer.inventory.currentItem
+                        potting = true
                         debug("found pot, queueing")
                     }
                 }
 
+                if (potting) {
+                    oldSlot = mc.thePlayer.inventory.currentItem
+                }
+
                 if (throwing && mc.thePlayer.onGround && !mc.thePlayer.isEating && MovementUtils.isRidingBlock() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
                     RotationUtils.reset()
+                    potting = false
                     event.pitch = if (customPitchValue.get()) customPitchAngle.get() else 80F
                     mc.thePlayer.inventory.currentItem = potIndex - 36
                     mc.playerController.updateController()
@@ -288,6 +298,7 @@ class AutoHeal : Module() {
                         potIndex = -1
                         mc.thePlayer.inventory.currentItem = oldSlot
                         mc.playerController.updateController()
+                        potting = false
                         throwing = false
                         tickTimer.reset()
                         debug("failed to retrieve potion info, retrying...")
