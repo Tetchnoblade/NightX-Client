@@ -84,13 +84,13 @@ class KillAura : Module() {
     }
 
     // Range
-    private val rangeValue: FloatValue = object : FloatValue("TargetRange", 4f, 0f, 8f, "m") {
+    private val rangeValue: FloatValue = object : FloatValue("Target-Range", 4.5f, 0f, 9f, "m") {
         override fun onChanged(oldValue: Float, newValue: Float) {
             val i = attackRangeValue.get()
             if (i > newValue) set(i)
         }
     }
-    private val attackRangeValue: FloatValue = object : FloatValue("AttackRange", 3f, 0f, 6f, "m") {
+    private val attackRangeValue: FloatValue = object : FloatValue("Attack-Range", 3f, 0f, 6f, "m") {
         override fun onChanged(oldValue: Float, newValue: Float) {
             val i = rangeValue.get()
             if (i < newValue) set(i)

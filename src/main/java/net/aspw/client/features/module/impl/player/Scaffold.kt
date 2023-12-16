@@ -368,8 +368,6 @@ class Scaffold : Module() {
         }
         if (faceBlock)
             place()
-        if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex)
-            mc.netHandler.addToSendQueue(C09PacketHeldItemChange(InventoryUtils.findAutoBlockBlock() - 36))
         if (allowTower.get() && GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && blocksAmount > 0 && MovementUtils.isRidingBlock() && (!MovementUtils.isMoving() && !towerMove.get() || towerMove.get())
         ) {
             canTower = true
@@ -1087,6 +1085,8 @@ class Scaffold : Module() {
      * Place target block
      */
     private fun place() {
+        if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex)
+            mc.netHandler.addToSendQueue(C09PacketHeldItemChange(InventoryUtils.findAutoBlockBlock() - 36))
         if ((targetPlace) == null) {
             if (placeableDelay.get()) delayTimer.reset()
             return

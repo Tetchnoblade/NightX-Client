@@ -8,6 +8,7 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.util.*
 import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.util.timer.TickTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -54,12 +55,14 @@ class AutoHeal : Module() {
     private var throwing = false
     private var rotated = false
     private var potIndex = -1
+    private var oldSlot = -1
 
     private var throwTimer = MSTimer()
     private var resetTimer = MSTimer()
     private var invTimer = MSTimer()
     private var timeoutTimer = MSTimer()
     private val timer = MSTimer()
+    private val tickTimer = TickTimer()
 
     private val throwQueue = arrayListOf<Int>()
 
@@ -76,6 +79,7 @@ class AutoHeal : Module() {
         resetTimer.reset()
         timeoutTimer.reset()
         invTimer.reset()
+        tickTimer.reset()
         throwQueue.clear()
     }
 
@@ -159,13 +163,17 @@ class AutoHeal : Module() {
                     if (potion != -1) {
                         potIndex = potion
                         throwing = true
+                        oldSlot = mc.thePlayer.inventory.currentItem
                         debug("found pot, queueing")
                     }
                 }
 
-                if (throwing && !mc.thePlayer.isEating && MovementUtils.isRidingBlock() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
+                if (throwing && mc.thePlayer.onGround && !mc.thePlayer.isEating && MovementUtils.isRidingBlock() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
                     RotationUtils.reset()
                     event.pitch = if (customPitchValue.get()) customPitchAngle.get() else 80F
+                    mc.thePlayer.inventory.currentItem = potIndex - 36
+                    mc.playerController.updateController()
+                    tickTimer.update()
                     debug("silent rotation")
                     isRotating = true
                 }
@@ -255,7 +263,7 @@ class AutoHeal : Module() {
                     && mc.thePlayer.onGround
                     && !mc.thePlayer.isEating
                     && MovementUtils.isRidingBlock()
-                    && (!noCombatValue.get() || !killAura?.state!! || killAura.target == null) && !scaffold?.state!!
+                    && tickTimer.hasTimePassed(2) && (!noCombatValue.get() || !killAura?.state!! || killAura.target == null) && !scaffold?.state!!
                 ) {
                     val potionEffects = getPotionFromSlot(potIndex)
                     if (potionEffects != null) {
@@ -264,19 +272,24 @@ class AutoHeal : Module() {
                         if (smartValue.get())
                             potionIds.filter { !throwQueue.contains(it) }.forEach { throwQueue.add(it) }
 
-                        mc.netHandler.addToSendQueue(C09PacketHeldItemChange(potIndex - 36))
                         mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.heldItem))
-                        mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
+
+                        mc.thePlayer.inventory.currentItem = oldSlot
+                        mc.playerController.updateController()
 
                         potIndex = -1
+                        oldSlot = -1
                         throwing = false
                         throwTimer.reset()
                         isRotating = false
+                        tickTimer.reset()
                         debug("thrown")
                     } else {
-                        // refind
                         potIndex = -1
+                        mc.thePlayer.inventory.currentItem = oldSlot
+                        mc.playerController.updateController()
                         throwing = false
+                        tickTimer.reset()
                         debug("failed to retrieve potion info, retrying...")
                     }
                 }
