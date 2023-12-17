@@ -28,16 +28,11 @@ class AutoHeal : Module() {
     // Auto Pot
     private val autoPotValue = BoolValue("AutoPot", true)
     private val healthValue = FloatValue("Health-Pot", 50F, 0F, 100F, "%") { autoPotValue.get() }
-    private val delayValue = IntegerValue("Delay-Pot", 300, 0, 5000, "ms") { autoPotValue.get() }
     private val regenValue = BoolValue("Heal-Pot", true) { autoPotValue.get() }
     private val utilityValue = BoolValue("Utility-Pot", true) { autoPotValue.get() }
-    private val smartValue = BoolValue("Smart-Pot", true) { autoPotValue.get() }
-    private val smartTimeoutValue =
-        IntegerValue("SmartTimeout-Pot", 500, 500, 5000, "ms") { smartValue.get() && autoPotValue.get() }
     private val spoofInvValue = BoolValue("InvSpoof-Pot", false) { autoPotValue.get() }
     private val spoofDelayValue =
         IntegerValue("InvDelay-Pot", 500, 500, 5000, "ms") { spoofInvValue.get() && autoPotValue.get() }
-    private val noCombatValue = BoolValue("NoCombat-Pot", true) { autoPotValue.get() }
     private val customPitchValue = BoolValue("Custom-Pitch-Pot", false) { autoPotValue.get() }
     private val customPitchAngle =
         FloatValue("Angle-Pot", 90F, -90F, 90F, "°") { customPitchValue.get() && autoPotValue.get() }
@@ -114,7 +109,7 @@ class AutoHeal : Module() {
     fun onMotion(event: MotionEvent) {
         if (autoPotValue.get()) {
             if (event.eventState == EventState.PRE) {
-                if (smartValue.get() && throwQueue.isNotEmpty()) {
+                if (throwQueue.isNotEmpty()) {
                     var foundPot = false
                     for (k in throwQueue.indices.reversed()) {
                         if (mc.thePlayer.isPotionActive(throwQueue[k])) {
@@ -123,7 +118,7 @@ class AutoHeal : Module() {
                             foundPot = true
                         }
                     }
-                    if (!foundPot && timeoutTimer.hasTimePassed(smartTimeoutValue.get().toLong())) {
+                    if (!foundPot && timeoutTimer.hasTimePassed(500.toLong())) {
                         debug("reached timeout, clearing queue")
                         throwQueue.clear()
                         timeoutTimer.reset()
@@ -161,7 +156,7 @@ class AutoHeal : Module() {
                     invTimer.reset()
 
                 if (mc.currentScreen !is GuiContainer && !throwing && throwTimer.hasTimePassed(
-                        delayValue.get().toLong()
+                        1000.toLong()
                     )
                 ) {
                     val potion = findPotion(36, 45)
@@ -273,14 +268,13 @@ class AutoHeal : Module() {
                     && mc.thePlayer.onGround
                     && !mc.thePlayer.isEating
                     && MovementUtils.isRidingBlock()
-                    && tickTimer.hasTimePassed(3) && (!noCombatValue.get() || !killAura?.state!! || killAura.target == null) && !scaffold?.state!!
+                    && tickTimer.hasTimePassed(3) && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!
                 ) {
                     val potionEffects = getPotionFromSlot(potIndex)
                     if (potionEffects != null) {
                         val potionIds = potionEffects.map { it.potionID }
 
-                        if (smartValue.get())
-                            potionIds.filter { !throwQueue.contains(it) }.forEach { throwQueue.add(it) }
+                        potionIds.filter { !throwQueue.contains(it) }.forEach { throwQueue.add(it) }
 
                         mc.itemRenderer.resetEquippedProgress()
                         mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.heldItem))
@@ -342,7 +336,7 @@ class AutoHeal : Module() {
                 if (potionEffect.potionID == Potion.heal.id)
                     return true
 
-            if (!mc.thePlayer.isPotionActive(Potion.regeneration) && (!smartValue.get() || !throwQueue.contains(Potion.regeneration.id)))
+            if (!mc.thePlayer.isPotionActive(Potion.regeneration) && !throwQueue.contains(Potion.regeneration.id))
                 for (potionEffect in itemPotion.getEffects(stack)) {
                     if (potionEffect.potionID == Potion.regeneration.id)
                         return true
@@ -365,6 +359,6 @@ class AutoHeal : Module() {
         ) {
             return false
         }
-        return !mc.thePlayer.isPotionActive(id) && (!smartValue.get() || !throwQueue.contains(id))
+        return !mc.thePlayer.isPotionActive(id) && !throwQueue.contains(id)
     }
 }
