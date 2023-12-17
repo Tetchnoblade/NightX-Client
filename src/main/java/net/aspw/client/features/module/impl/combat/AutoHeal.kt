@@ -273,7 +273,7 @@ class AutoHeal : Module() {
                     && mc.thePlayer.onGround
                     && !mc.thePlayer.isEating
                     && MovementUtils.isRidingBlock()
-                    && tickTimer.hasTimePassed(2) && (!noCombatValue.get() || !killAura?.state!! || killAura.target == null) && !scaffold?.state!!
+                    && tickTimer.hasTimePassed(3) && (!noCombatValue.get() || !killAura?.state!! || killAura.target == null) && !scaffold?.state!!
                 ) {
                     val potionEffects = getPotionFromSlot(potIndex)
                     if (potionEffects != null) {
@@ -282,6 +282,7 @@ class AutoHeal : Module() {
                         if (smartValue.get())
                             potionIds.filter { !throwQueue.contains(it) }.forEach { throwQueue.add(it) }
 
+                        mc.itemRenderer.resetEquippedProgress()
                         mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.heldItem))
 
                         mc.thePlayer.inventory.currentItem = oldSlot

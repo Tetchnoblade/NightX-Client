@@ -886,6 +886,8 @@ class Scaffold : Module() {
             }
         } else {
             faceBlock = false
+            if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex)
+                mc.netHandler.addToSendQueue(C09PacketHeldItemChange(InventoryUtils.findAutoBlockBlock() - 36))
             if (keepRotationValue.get()) {
                 when (preRotationValue.get().lowercase()) {
                     "lock" -> {
