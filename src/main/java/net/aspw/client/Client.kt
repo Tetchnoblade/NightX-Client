@@ -26,9 +26,11 @@ import kotlin.concurrent.thread
 object Client {
 
     // Client information
+    private const val isInDev = false
+
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightWare"
-    const val CLIENT_VERSION = "Beta B75"
+    const val CLIENT_VERSION = "Release B75"
     const val CLIENT_CREATOR = "As_pw"
     const val CLIENT_WEBSITE = "https://aspw-w.github.io/NightX-Web"
     const val CLIENT_ANNOUNCEMENT = "$CLIENT_WEBSITE/database/announcement.txt"
@@ -36,9 +38,8 @@ object Client {
     const val CLIENT_STATUS = "$CLIENT_WEBSITE/database/data.txt"
     const val CLIENT_CONFIGLIST = "$CLIENT_WEBSITE/configs/string/list.txt"
     const val CLIENT_CONFIGS = "$CLIENT_WEBSITE/configs/"
-    private const val isInDev = true
     val CLIENT_LATEST =
-        if (!isInDev) "$CLIENT_WEBSITE/database/currentversion.txt" else "$CLIENT_WEBSITE/database/betaversion.txt"
+        if (!isInDev) "$CLIENT_WEBSITE/database/latestversion.txt" else "$CLIENT_WEBSITE/database/betaversion.txt"
     //const val CLIENT_USERS = "$CLIENT_WEBSITE/users/list.txt"
 
     var isStarting = false
