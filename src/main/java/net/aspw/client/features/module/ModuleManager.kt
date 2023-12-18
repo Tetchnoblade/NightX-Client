@@ -7,7 +7,7 @@ import net.aspw.client.event.Listenable
 import net.aspw.client.features.command.impl.ModuleCommand
 import net.aspw.client.features.module.impl.combat.*
 import net.aspw.client.features.module.impl.exploit.*
-import net.aspw.client.features.module.impl.minigames.SnakeGame
+import net.aspw.client.features.module.impl.minigames.*
 import net.aspw.client.features.module.impl.movement.*
 import net.aspw.client.features.module.impl.other.*
 import net.aspw.client.features.module.impl.player.*
@@ -182,7 +182,8 @@ class ModuleManager : Listenable {
             NoJumpDelay::class.java,
             Manager::class.java,
             VulcanEatCore::class.java,
-            AntiObsidian::class.java
+            AntiObsidian::class.java,
+            HypixelStrafe::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")
