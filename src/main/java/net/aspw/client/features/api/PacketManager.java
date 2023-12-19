@@ -73,6 +73,9 @@ public class PacketManager extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onMotion(MotionEvent event) {
+        mc.leftClickCounter = 0;
+        if (Animations.sigmaHeld.get())
+            mc.thePlayer.renderArmPitch = mc.thePlayer.rotationPitch - 30;
         if (Animations.swingAnimValue.get().equals("Smooth") && event.getEventState() == EventState.PRE) {
             if (mc.thePlayer.swingProgressInt == 1) {
                 swing = 9;

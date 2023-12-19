@@ -2,7 +2,6 @@ package net.aspw.client.injection.forge.mixins.entity;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.JumpEvent;
-import net.aspw.client.features.module.impl.movement.AirJump;
 import net.aspw.client.features.module.impl.movement.Jesus;
 import net.aspw.client.features.module.impl.movement.NoJumpDelay;
 import net.aspw.client.features.module.impl.movement.Sprint;
@@ -242,19 +241,12 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @Inject(method = "onLivingUpdate", at = @At("HEAD"))
     private void headLiving(CallbackInfo callbackInfo) {
-        if (Client.moduleManager.getModule(NoJumpDelay.class).getState())
+        if (Objects.requireNonNull(Client.moduleManager.getModule(NoJumpDelay.class)).getState())
             jumpTicks = 0;
     }
 
     @Inject(method = "onLivingUpdate", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/EntityLivingBase;isJumping:Z", ordinal = 1))
     private void onJumpSection(CallbackInfo callbackInfo) {
-        final AirJump airJump = Objects.requireNonNull(Client.moduleManager.getModule(AirJump.class));
-
-        if (airJump.getState() && isJumping && this.jumpTicks == 0) {
-            this.jump();
-            this.jumpTicks = 10;
-        }
-
         final Jesus jesus = Objects.requireNonNull(Client.moduleManager.getModule(Jesus.class));
 
         if (jesus.getState() && !isJumping && !isSneaking() && isInWater() &&

@@ -81,6 +81,9 @@ class Animations : Module() {
         val tabAnimations = ListValue("Tab-Animation", arrayOf("None", "Zoom", "Slide"), "None")
 
         @JvmField
+        val sigmaHeld = BoolValue("SigmaHeld", false)
+
+        @JvmField
         val cancelEquip = BoolValue("CancelEquip", false)
 
         @JvmField

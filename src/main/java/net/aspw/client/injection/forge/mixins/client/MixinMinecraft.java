@@ -2,7 +2,6 @@ package net.aspw.client.injection.forge.mixins.client;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.*;
-import net.aspw.client.features.module.impl.combat.AutoClicker;
 import net.aspw.client.features.module.impl.other.FastPlace;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
 import net.aspw.client.protocol.ProtocolBase;
@@ -194,18 +193,12 @@ public abstract class MixinMinecraft {
     @Overwrite
     public void clickMouse() {
         CPSCounter.registerClick(CPSCounter.MouseButton.LEFT);
-        if (Objects.requireNonNull(Client.moduleManager.getModule(AutoClicker.class)).getState())
-            leftClickCounter = 0;
         if (this.leftClickCounter <= 0) {
             if (this.objectMouseOver != null && Objects.requireNonNull(this.objectMouseOver.typeOfHit) != MovingObjectPosition.MovingObjectType.ENTITY) {
                 this.thePlayer.swingItem();
             }
 
-            if (this.objectMouseOver == null) {
-                if (this.playerController.isNotCreative()) {
-                    this.leftClickCounter = 0;
-                }
-            } else {
+            if (this.objectMouseOver != null) {
                 switch (this.objectMouseOver.typeOfHit) {
                     case ENTITY:
                         AttackFixer.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);

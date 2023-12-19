@@ -5,12 +5,10 @@ import net.aspw.client.protocol.api.VFPlatform;
 import net.minecraft.client.Minecraft;
 import net.minecraft.realms.RealmsSharedConstants;
 import net.minecraft.util.Session;
-import net.minecraftforge.fml.common.Mod;
 import net.raphimc.vialegacy.protocols.release.protocol1_8to1_7_6_10.providers.GameProfileFetcher;
 
 import java.util.function.Supplier;
 
-@Mod(modid = "protocol")
 public class ProtocolMod implements VFPlatform {
 
     public static final ProtocolMod PLATFORM = new ProtocolMod();

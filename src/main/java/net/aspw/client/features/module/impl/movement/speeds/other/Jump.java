@@ -33,6 +33,7 @@ public class Jump extends SpeedMode {
         if (MovementUtils.isMoving() && mc.thePlayer.onGround && !(mc.thePlayer.isInWater() || mc.thePlayer.isInLava()) && mc.thePlayer.jumpTicks == 0) {
             mc.thePlayer.jump();
             mc.thePlayer.jumpTicks = 10;
+            mc.thePlayer.isAirBorne = true;
         }
         if (speed.jumpStrafe.get() && MovementUtils.isMoving() && !mc.thePlayer.onGround && !(mc.thePlayer.isInWater() || mc.thePlayer.isInLava()))
             MovementUtils.strafe();

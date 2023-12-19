@@ -25,10 +25,7 @@ import net.aspw.client.features.module.impl.movement.speeds.verus.VerusHop
 import net.aspw.client.features.module.impl.movement.speeds.verus.VerusLowHop
 import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanGround
 import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanYPort
-import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogBoost
-import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogCustom
-import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogOnGround
-import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogStable
+import net.aspw.client.features.module.impl.movement.speeds.watchdog.*
 import net.aspw.client.util.MovementUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -67,7 +64,8 @@ class Speed : Module() {
         AACHop438(),
         AACYPort(),
         AACYPort2(),
-        WatchdogOnGround(),
+        WatchdogStrafe(),
+        WatchdogGround(),
         WatchdogBoost(),
         WatchdogStable(),
         WatchdogCustom(),
@@ -253,8 +251,8 @@ class Speed : Module() {
 
     private val hypixelModeValue: ListValue = object : ListValue(
         "Watchdog-Mode",
-        arrayOf("OnGround", "Boost", "Stable", "Custom"),
-        "OnGround",
+        arrayOf("Strafe", "Ground", "Boost", "Stable", "Custom"),
+        "Strafe",
         { typeValue.get().equals("watchdog", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
@@ -505,7 +503,10 @@ class Speed : Module() {
             "watchdognew",
             ignoreCase = true
         ) && !modeName.equals(
-            "watchdogonground",
+            "watchdogground",
+            ignoreCase = true
+        ) && !modeName.equals(
+            "watchdogstrafe",
             ignoreCase = true
         ) && !modeName.equals(
             "watchdogcustom",
@@ -522,7 +523,10 @@ class Speed : Module() {
             "watchdognew",
             ignoreCase = true
         ) && !modeName.equals(
-            "watchdogonground",
+            "watchdogground",
+            ignoreCase = true
+        ) && !modeName.equals(
+            "watchdogstrafe",
             ignoreCase = true
         )
     }
@@ -533,7 +537,10 @@ class Speed : Module() {
             "watchdognew",
             ignoreCase = true
         ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
-            "watchdogonground",
+            "watchdogground",
+            ignoreCase = true
+        ) && !modeName.equals(
+            "watchdogstrafe",
             ignoreCase = true
         )
     }
@@ -544,7 +551,10 @@ class Speed : Module() {
             "watchdognew",
             ignoreCase = true
         ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
-            "watchdogonground",
+            "watchdogground",
+            ignoreCase = true
+        ) && !modeName.equals(
+            "watchdogstrafe",
             ignoreCase = true
         )
     }
@@ -555,7 +565,10 @@ class Speed : Module() {
             "watchdognew",
             ignoreCase = true
         ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
-            "watchdogonground",
+            "watchdogground",
+            ignoreCase = true
+        ) && !modeName.equals(
+            "watchdogstrafe",
             ignoreCase = true
         )
     }
@@ -566,7 +579,10 @@ class Speed : Module() {
             "watchdognew",
             ignoreCase = true
         ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
-            "watchdogonground",
+            "watchdogground",
+            ignoreCase = true
+        ) && !modeName.equals(
+            "watchdogstrafe",
             ignoreCase = true
         )
     }

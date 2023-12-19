@@ -1,13 +1,11 @@
 package net.aspw.client.features.module.impl.player
 
 import net.aspw.client.event.EventTarget
-import net.aspw.client.event.MoveEvent
 import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.timer.MSTimer
-import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
@@ -20,15 +18,13 @@ import java.util.*
 @ModuleInfo(name = "FastEat", spacedName = "Fast Eat", description = "", category = ModuleCategory.PLAYER)
 class FastEat : Module() {
 
-    private val modeValue = ListValue("Mode", arrayOf("NCP", "AAC", "CustomDelay", "AACv4_2"), "NCP")
+    private val modeValue = ListValue("Mode", arrayOf("NCP", "AAC", "AAC4", "Matrix", "Grim", "Delayed"), "NCP")
 
-    private val noMoveValue = BoolValue("NoMove", false)
-
-    private val delayValue = IntegerValue("CustomDelay", 0, 0, 300) { modeValue.get().equals("customdelay", true) }
+    private val delayValue = IntegerValue("CustomDelay", 0, 0, 300) { modeValue.get().equals("delayed", true) }
     private val customSpeedValue =
-        IntegerValue("CustomSpeed", 2, 0, 35, " packet") { modeValue.get().equals("customdelay", true) }
+        IntegerValue("CustomSpeed", 2, 0, 35, " packet") { modeValue.get().equals("delayed", true) }
     private val customTimer =
-        FloatValue("CustomTimer", 1.1f, 0.5f, 2f, "x") { modeValue.get().equals("customdelay", true) }
+        FloatValue("CustomTimer", 1.1f, 0.5f, 2f, "x") { modeValue.get().equals("delayed", true) }
 
     private val msTimer = MSTimer()
     private var usedTimer = false
@@ -60,12 +56,25 @@ class FastEat : Module() {
                     mc.playerController.onStoppedUsingItem(mc.thePlayer)
                 }
 
+                "grim" -> {
+                    mc.timer.timerSpeed = 0.3F
+                    usedTimer = true
+                    repeat(34) {
+                        mc.netHandler.addToSendQueue(C03PacketPlayer(mc.thePlayer.onGround))
+                    }
+                }
+
+                "matrix" -> {
+                    mc.timer.timerSpeed = 0.5f
+                    usedTimer = true
+                }
+
                 "aac" -> {
                     mc.timer.timerSpeed = 1.1F
                     usedTimer = true
                 }
 
-                "customdelay" -> {
+                "delayed" -> {
                     mc.timer.timerSpeed = customTimer.get()
                     usedTimer = true
 
@@ -78,8 +87,8 @@ class FastEat : Module() {
 
                     msTimer.reset()
                 }
-                //move while eating -> flag. recommend enable noMove
-                "aacv4_2" -> {
+
+                "aac4" -> {
                     mc.timer.timerSpeed = 0.49F
                     usedTimer = true
                     if (mc.thePlayer.itemInUseDuration > 13) {
@@ -92,16 +101,6 @@ class FastEat : Module() {
                 }
             }
         }
-    }
-
-    @EventTarget
-    fun onMove(event: MoveEvent?) {
-        if (event == null) return
-
-        if (!state || !mc.thePlayer.isUsingItem || !noMoveValue.get()) return
-        val usingItem = mc.thePlayer.itemInUse.item
-        if ((usingItem is ItemFood || usingItem is ItemBucketMilk || usingItem is ItemPotion))
-            event.zero()
     }
 
     override fun onDisable() {
