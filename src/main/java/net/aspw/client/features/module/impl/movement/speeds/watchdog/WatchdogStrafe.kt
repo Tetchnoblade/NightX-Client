@@ -26,15 +26,6 @@ class WatchdogStrafe : SpeedMode("WatchdogStrafe") {
             event.cancelEvent()
     }
 
-    override fun onPacket(event: PacketEvent) {
-        val packet = event.packet
-        if (strafing) {
-            if (packet is C03PacketPlayer) {
-                PacketUtils.sendPacketNoEvent(C0DPacketCloseWindow())
-            }
-        }
-    }
-
     override fun onMotion(eventMotion: MotionEvent) {
         Client.moduleManager.getModule(
             Speed::class.java
@@ -42,13 +33,9 @@ class WatchdogStrafe : SpeedMode("WatchdogStrafe") {
 
         if (MovementUtils.isMoving() && !mc.thePlayer.isInWater) {
             tickTimer.update()
-            if (!mc.thePlayer.onGround && tickTimer.hasTimePassed(7)) {
+            if (!mc.thePlayer.onGround && tickTimer.hasTimePassed(8)) {
                 strafing = true
-                if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                    MovementUtils.strafe(0.21f)
-                } else {
-                    MovementUtils.strafe(0.16f)
-                }
+                MovementUtils.strafe(0.13f)
                 tickTimer.reset()
             } else if (mc.thePlayer.onGround) {
                 strafing = false
@@ -59,7 +46,7 @@ class WatchdogStrafe : SpeedMode("WatchdogStrafe") {
                 if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
                     MovementUtils.strafe(0.57f)
                 } else {
-                    MovementUtils.strafe(0.425f)
+                    MovementUtils.strafe(0.42f)
                 }
             }
         } else {
