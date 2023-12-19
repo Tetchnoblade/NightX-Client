@@ -4,6 +4,7 @@ import net.aspw.client.Client;
 import net.aspw.client.event.JumpEvent;
 import net.aspw.client.event.MotionEvent;
 import net.aspw.client.event.MoveEvent;
+import net.aspw.client.event.PacketEvent;
 import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.util.MinecraftInstance;
 
@@ -68,6 +69,14 @@ public abstract class SpeedMode extends MinecraftInstance {
      * @param event the event
      */
     public void onJump(JumpEvent event) {
+    }
+
+    /**
+     * On packet.
+     *
+     * @param event the event
+     */
+    public void onPacket(PacketEvent event) {
     }
 
     /**

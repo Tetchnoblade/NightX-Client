@@ -54,7 +54,7 @@ class Matrix670 : SpeedMode("Matrix6.7.0") {
         }
     }
 
-    fun onPacket(event: PacketEvent) {
+    override fun onPacket(event: PacketEvent) {
         val packet = event.packet
         if (packet is S12PacketEntityVelocity) {
             if (mc.thePlayer == null || (mc.theWorld?.getEntityByID(packet.entityID) ?: return) != mc.thePlayer) {

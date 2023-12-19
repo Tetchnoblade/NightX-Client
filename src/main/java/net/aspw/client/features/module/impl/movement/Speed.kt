@@ -244,6 +244,13 @@ class Speed : Module() {
     }
 
     @EventTarget
+    fun onPacket(event: PacketEvent?) {
+        if (mc.thePlayer.isSneaking) return
+        val speedMode = mode
+        speedMode?.onPacket(event)
+    }
+
+    @EventTarget
     fun onJump(event: JumpEvent?) {
         val speedMode = mode
         speedMode?.onJump(event)

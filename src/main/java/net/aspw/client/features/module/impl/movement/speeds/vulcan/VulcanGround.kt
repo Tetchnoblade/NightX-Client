@@ -54,7 +54,7 @@ class VulcanGround : SpeedMode("VulcanGround") {
         mc.timer.timerSpeed = 1f
     }
 
-    fun onPacket(event: PacketEvent) {
+    override fun onPacket(event: PacketEvent) {
         val packet = event.packet
         if (packet is C03PacketPlayer) {
             packet.y += yMotion
