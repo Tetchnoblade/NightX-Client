@@ -7,7 +7,6 @@ import net.aspw.client.event.MotionEvent
 import net.aspw.client.event.MoveEvent
 import net.aspw.client.features.module.impl.movement.Speed
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode
-import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.util.MovementUtils
 import net.minecraft.potion.Potion
 import net.minecraft.stats.StatList
@@ -43,13 +42,6 @@ class WatchdogGround : SpeedMode("WatchdogGround") {
             Speed::class.java
         ) ?: return
         super.onEnable()
-    }
-
-    override fun onDisable() {
-        val scaffoldModule = Client.moduleManager.getModule(Scaffold::class.java)
-
-        if (!mc.thePlayer.isSneaking && !scaffoldModule!!.state)
-            MovementUtils.strafe(0.2f)
     }
 
     override fun onUpdate() {}
