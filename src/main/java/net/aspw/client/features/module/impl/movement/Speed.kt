@@ -25,7 +25,10 @@ import net.aspw.client.features.module.impl.movement.speeds.verus.VerusHop
 import net.aspw.client.features.module.impl.movement.speeds.verus.VerusLowHop
 import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanGround
 import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanYPort
-import net.aspw.client.features.module.impl.movement.speeds.watchdog.*
+import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogBoost
+import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogCustom
+import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogGround
+import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogStable
 import net.aspw.client.util.MovementUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -64,7 +67,6 @@ class Speed : Module() {
         AACHop438(),
         AACYPort(),
         AACYPort2(),
-        WatchdogStrafe(),
         WatchdogGround(),
         WatchdogBoost(),
         WatchdogStable(),
@@ -258,8 +260,8 @@ class Speed : Module() {
 
     private val hypixelModeValue: ListValue = object : ListValue(
         "Watchdog-Mode",
-        arrayOf("Strafe", "Ground", "Boost", "Stable", "Custom"),
-        "Strafe",
+        arrayOf("Ground", "Boost", "Stable", "Custom"),
+        "Ground",
         { typeValue.get().equals("watchdog", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
@@ -507,13 +509,7 @@ class Speed : Module() {
     @JvmField
     val sendJumpValue = BoolValue("SendJump", true) {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
-            "watchdognew",
-            ignoreCase = true
-        ) && !modeName.equals(
             "watchdogground",
-            ignoreCase = true
-        ) && !modeName.equals(
-            "watchdogstrafe",
             ignoreCase = true
         ) && !modeName.equals(
             "watchdogcustom",
@@ -527,13 +523,7 @@ class Speed : Module() {
             "watchdogcustom",
             ignoreCase = true
         ) && !modeName.equals(
-            "watchdognew",
-            ignoreCase = true
-        ) && !modeName.equals(
             "watchdogground",
-            ignoreCase = true
-        ) && !modeName.equals(
-            "watchdogstrafe",
             ignoreCase = true
         )
     }
@@ -541,13 +531,10 @@ class Speed : Module() {
     @JvmField
     val glideStrengthValue = FloatValue("GlideStrength", 0f, 0f, 0.05f) {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
-            "watchdognew",
-            ignoreCase = true
-        ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
-            "watchdogground",
+            "watchdogcustom",
             ignoreCase = true
         ) && !modeName.equals(
-            "watchdogstrafe",
+            "watchdogground",
             ignoreCase = true
         )
     }
@@ -555,13 +542,10 @@ class Speed : Module() {
     @JvmField
     val moveSpeedValue = FloatValue("MoveSpeed", 1.7f, 1f, 1.7f) {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
-            "watchdognew",
-            ignoreCase = true
-        ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
-            "watchdogground",
+            "watchdogcustom",
             ignoreCase = true
         ) && !modeName.equals(
-            "watchdogstrafe",
+            "watchdogground",
             ignoreCase = true
         )
     }
@@ -569,13 +553,10 @@ class Speed : Module() {
     @JvmField
     val jumpYValue = FloatValue("JumpY", 0.42f, 0f, 1f) {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
-            "watchdognew",
-            ignoreCase = true
-        ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
-            "watchdogground",
+            "watchdogcustom",
             ignoreCase = true
         ) && !modeName.equals(
-            "watchdogstrafe",
+            "watchdogground",
             ignoreCase = true
         )
     }
@@ -583,13 +564,10 @@ class Speed : Module() {
     @JvmField
     val baseStrengthValue = FloatValue("BaseMultiplier", 1f, 0.5f, 1f) {
         typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
-            "watchdognew",
-            ignoreCase = true
-        ) && !modeName.equals("watchdogcustom", ignoreCase = true) && !modeName.equals(
-            "watchdogground",
+            "watchdogcustom",
             ignoreCase = true
         ) && !modeName.equals(
-            "watchdogstrafe",
+            "watchdogground",
             ignoreCase = true
         )
     }
