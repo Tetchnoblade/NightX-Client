@@ -303,6 +303,10 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         super.keyTyped(typedChar, keyCode)
     }
 
+    override fun onGuiClosed() {
+        fileManager.saveConfig(fileManager.accountsConfig)
+    }
+
     override fun handleMouseInput() {
         super.handleMouseInput()
         altsList.handleMouseInput()

@@ -3,6 +3,8 @@ package net.aspw.client.features.api;
 import io.netty.buffer.Unpooled;
 import net.aspw.client.Client;
 import net.aspw.client.event.*;
+import net.aspw.client.features.module.impl.combat.KillAura;
+import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.other.ClientSpoof;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.Cape;
@@ -74,8 +76,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     @EventTarget
     public void onMotion(MotionEvent event) {
         mc.leftClickCounter = 0;
-        if (Animations.sigmaHeld.get())
-            mc.thePlayer.renderArmPitch = mc.thePlayer.rotationPitch - 30;
         if (Animations.swingAnimValue.get().equals("Smooth") && event.getEventState() == EventState.PRE) {
             if (mc.thePlayer.swingProgressInt == 1) {
                 swing = 9;
@@ -83,6 +83,18 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 swing = Math.max(0, swing - 1);
             }
         }
+        final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
+        final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
+        if (Animations.swingLimitOnlyBlocking.get()) {
+            if (mc.thePlayer.isBlocking() || (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking())) {
+                if (mc.thePlayer.swingProgress >= Animations.swingLimit.get())
+                    mc.thePlayer.isSwingInProgress = false;
+            }
+        } else if (mc.thePlayer.swingProgress >= Animations.swingLimit.get()) {
+            mc.thePlayer.isSwingInProgress = false;
+        }
+        if (Animations.sigmaHeld.get())
+            mc.thePlayer.renderArmPitch = mc.thePlayer.rotationPitch - 30;
     }
 
     @EventTarget

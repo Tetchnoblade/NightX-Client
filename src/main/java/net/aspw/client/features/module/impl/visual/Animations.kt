@@ -87,7 +87,7 @@ class Animations : Module() {
         val cancelEquip = BoolValue("CancelEquip", false)
 
         @JvmField
-        val blockingOnly = BoolValue("BlockingOnly", true) { cancelEquip.get() }
+        val blockingOnly = BoolValue("CancelEquip-BlockingOnly", true) { cancelEquip.get() }
 
         @JvmField
         val scale = FloatValue("Scale", 0f, -0.5f, 0.5f)
@@ -115,5 +115,11 @@ class Animations : Module() {
 
         @JvmField
         val SpeedSwing = IntegerValue("Swing-Speed", 0, -15, 4)
+
+        @JvmField
+        val swingLimit = FloatValue("Swing-Limit", 1f, 0.0f, 1f)
+
+        @JvmField
+        val swingLimitOnlyBlocking = BoolValue("SwingLimit-BlockingOnly", false)
     }
 }
