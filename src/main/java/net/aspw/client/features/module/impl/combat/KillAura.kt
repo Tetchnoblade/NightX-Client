@@ -98,7 +98,7 @@ class KillAura : Module() {
     }
 
     // Modes
-    val rotations = ListValue("RotationMode", arrayOf("Undetectable", "HvH", "Zero", "None"), "Undetectable")
+    val rotations = ListValue("RotationMode", arrayOf("Undetectable", "Standard", "Zero", "None"), "Undetectable")
 
     // Turn Speed
     private val maxTurnSpeed: FloatValue =
@@ -863,7 +863,7 @@ class KillAura : Module() {
 
     private fun getTargetRotation(entity: Entity): Rotation? {
         val boundingBox = entity.entityBoundingBox
-        if (rotations.get().equals("HvH", ignoreCase = true)) {
+        if (rotations.get().equals("Standard", ignoreCase = true)) {
             val limitedRotation = RotationUtils.serverRotation?.let {
                 RotationUtils.limitAngleChange(
                     it,

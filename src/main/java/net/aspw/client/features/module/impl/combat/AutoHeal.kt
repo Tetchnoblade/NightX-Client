@@ -176,8 +176,11 @@ class AutoHeal : Module() {
                     RotationUtils.reset()
                     potting = false
                     event.pitch = if (customPitchValue.get()) customPitchAngle.get() else 80F
-                    mc.thePlayer.inventory.currentItem = potIndex - 36
-                    mc.playerController.updateController()
+                    if (mc.thePlayer.inventory.currentItem != potIndex - 36) {
+                        mc.thePlayer.inventory.currentItem = potIndex - 36
+                        mc.playerController.updateController()
+                        debug("switches")
+                    }
                     tickTimer.update()
                     debug("silent rotation")
                     isRotating = true
@@ -268,7 +271,7 @@ class AutoHeal : Module() {
                     && mc.thePlayer.onGround
                     && !mc.thePlayer.isEating
                     && MovementUtils.isRidingBlock()
-                    && tickTimer.hasTimePassed(3) && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!
+                    && tickTimer.hasTimePassed(4) && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!
                 ) {
                     val potionEffects = getPotionFromSlot(potIndex)
                     if (potionEffects != null) {

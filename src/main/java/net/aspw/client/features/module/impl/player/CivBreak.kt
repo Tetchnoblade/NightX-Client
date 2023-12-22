@@ -28,6 +28,7 @@ class CivBreak : Module() {
     private var isBreaking = false
 
     private val modeValue = ListValue("Mode", arrayOf("Instant", "Legit"), "Instant")
+    private val delayValue = IntegerValue("Instant-Delay", 1, 1, 20) { modeValue.get().equals("instant", true) }
     private val range = FloatValue("Range", 5F, 1F, 6F)
     private val rotationsValue = BoolValue("Rotations", true)
     private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Packet")
@@ -96,20 +97,22 @@ class CivBreak : Module() {
                     "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
                 }
                 if (modeValue.get() == "Instant") {
-                    PacketUtils.sendPacketNoEvent(
-                        C07PacketPlayerDigging(
-                            C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                            blockPos,
-                            enumFacing
+                    if (mc.thePlayer.ticksExisted % delayValue.get() + 1 == 0) {
+                        PacketUtils.sendPacketNoEvent(
+                            C07PacketPlayerDigging(
+                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+                                blockPos,
+                                enumFacing
+                            )
                         )
-                    )
-                    PacketUtils.sendPacketNoEvent(
-                        C07PacketPlayerDigging(
-                            C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                            blockPos,
-                            enumFacing
+                        PacketUtils.sendPacketNoEvent(
+                            C07PacketPlayerDigging(
+                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+                                blockPos,
+                                enumFacing
+                            )
                         )
-                    )
+                    }
                 }
                 if (modeValue.get() == "Legit") {
                     mc.playerController.onPlayerDamageBlock(blockPos, enumFacing)

@@ -198,6 +198,7 @@ class Scaffold : Module() {
     private val customMoveSpeedValue = FloatValue("CustomMoveSpeed", 0.2f, 0f, 5f) { customSpeedValue.get() }
     private val packetFixValue1 = BoolValue("PacketFix1", true)
     private val packetFixValue2 = BoolValue("PacketFix2", true)
+    private val packetFixValue3 = BoolValue("PacketFix3", true)
     private val downValue = BoolValue("Down", true)
     private val noHitCheckValue = BoolValue("NoHitCheck", false)
     private val sameYValue = BoolValue("KeepY", false)
@@ -683,6 +684,20 @@ class Scaffold : Module() {
             }
         }
 
+        if (packetFixValue3.get() && packet is C08PacketPlayerBlockPlacement && !mc.isIntegratedServerRunning) {
+            event.cancelEvent()
+            PacketUtils.sendPacketNoEvent(
+                C08PacketPlayerBlockPlacement(
+                    packet.position,
+                    packet.placedBlockDirection,
+                    null,
+                    packet.placedBlockOffsetX,
+                    packet.placedBlockOffsetY,
+                    packet.placedBlockOffsetZ
+                )
+            )
+        }
+
         if (desyncValue.get()) {
             if (disableLogger) return
             if (packet is C03PacketPlayer)
@@ -1008,7 +1023,7 @@ class Scaffold : Module() {
         mc.playerController.onPlayerRightClick(
             mc.thePlayer,
             mc.theWorld,
-            mc.thePlayer.heldItem,
+            mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).stack,
             raytrace.blockPos,
             raytrace.sideHit,
             raytrace.hitVec
