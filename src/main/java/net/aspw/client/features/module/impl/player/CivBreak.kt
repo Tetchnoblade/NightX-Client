@@ -92,12 +92,12 @@ class CivBreak : Module() {
             }
 
             EventState.POST -> {
-                when (swingValue.get().lowercase(Locale.getDefault())) {
-                    "normal" -> mc.thePlayer.swingItem()
-                    "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
-                }
                 if (modeValue.get() == "Instant") {
-                    if (mc.thePlayer.ticksExisted % delayValue.get() + 1 == 0) {
+                    if (mc.thePlayer.ticksExisted % delayValue.get() == 0) {
+                        when (swingValue.get().lowercase(Locale.getDefault())) {
+                            "normal" -> mc.thePlayer.swingItem()
+                            "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
+                        }
                         PacketUtils.sendPacketNoEvent(
                             C07PacketPlayerDigging(
                                 C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
@@ -115,6 +115,10 @@ class CivBreak : Module() {
                     }
                 }
                 if (modeValue.get() == "Legit") {
+                    when (swingValue.get().lowercase(Locale.getDefault())) {
+                        "normal" -> mc.thePlayer.swingItem()
+                        "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
+                    }
                     mc.playerController.onPlayerDamageBlock(blockPos, enumFacing)
                 }
             }
