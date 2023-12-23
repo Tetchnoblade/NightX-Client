@@ -68,6 +68,8 @@ public abstract class MixinEntityRenderer {
     private boolean cloudFog;
     @Shadow
     private boolean lightmapUpdateNeeded;
+    @Shadow
+    private float fovModifierHandPrev;
 
     /**
      * Instantiates a new Mixin entity renderer.

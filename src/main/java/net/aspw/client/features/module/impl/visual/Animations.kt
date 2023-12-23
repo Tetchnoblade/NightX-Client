@@ -93,7 +93,7 @@ class Animations : Module() {
         val scale = FloatValue("Scale", 0f, -0.5f, 0.5f)
 
         @JvmField
-        val itemFov = FloatValue("Fov", 0f, -5f, 5f)
+        val itemFov = FloatValue("ItemFov", 0f, -5f, 5f)
 
         @JvmField
         val itemPosX = FloatValue("ItemPos-X", 0f, -1f, 1f)
@@ -117,7 +117,7 @@ class Animations : Module() {
         val SpeedSwing = IntegerValue("Swing-Speed", 0, -15, 4)
 
         @JvmField
-        val swingLimit = FloatValue("Swing-Limit", 1f, 0.0f, 1f)
+        val swingLimit = FloatValue("Swing-Limit", 1f, 0f, 1f)
 
         @JvmField
         val swingLimitOnlyBlocking = BoolValue("SwingLimit-BlockingOnly", false)

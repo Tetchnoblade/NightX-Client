@@ -251,9 +251,9 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
                                 float var3 = MathHelper.sin(f1 * f1 * (float) Math.PI);
                                 float var4 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
-                                GlStateManager.rotate(var3 * -25.0F, 0.0F, 0.0F, 0.0F);
-                                GlStateManager.rotate(var4 * -25.0F, 0.0F, 0.0F, 0.0F);
-                                GlStateManager.rotate(var4 * -25.0F, 0.0F, 0.0F, 0.0F);
+                                GlStateManager.rotate(var3 * -30.0F, 0.0F, 0.0F, 0.0F);
+                                GlStateManager.rotate(var4 * -30.0F, 0.0F, 0.0F, 0.0F);
+                                GlStateManager.rotate(var4 * -30.0F, 0.0F, 0.0F, 0.0F);
                                 this.func_178103_d();
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
@@ -303,6 +303,7 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Hide": {
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
                                 if (Animations.swingAnimValue.get().equals("1.7")) {
                                     if (f1 != 0.0F) {
                                         GlStateManager.scale(0.85F, 0.85F, 0.85F);

@@ -43,7 +43,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 break;
         }
 
-        if (mc.thePlayer.ticksExisted % 3 == 0)
+        if (mc.thePlayer.ticksExisted % 2 == 0)
             ticks++;
 
         if (ticks > maxFrames) {
@@ -86,6 +86,8 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
         final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
         if (Animations.swingLimitOnlyBlocking.get()) {
+            if (mc.thePlayer.swingProgress >= 1f)
+                mc.thePlayer.isSwingInProgress = false;
             if (mc.thePlayer.isBlocking() || (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking())) {
                 if (mc.thePlayer.swingProgress >= Animations.swingLimit.get())
                     mc.thePlayer.isSwingInProgress = false;

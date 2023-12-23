@@ -173,9 +173,13 @@ class AutoHeal : Module() {
                 }
 
                 if (throwing && mc.thePlayer.onGround && !mc.thePlayer.isEating && MovementUtils.isRidingBlock() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
-                    RotationUtils.reset()
                     potting = false
-                    event.pitch = if (customPitchValue.get()) customPitchAngle.get() else 80F
+                    RotationUtils.setTargetRotation(
+                        Rotation(
+                            mc.thePlayer.rotationYaw,
+                            if (customPitchValue.get()) customPitchAngle.get() else 80F
+                        )
+                    )
                     if (mc.thePlayer.inventory.currentItem != potIndex - 36) {
                         mc.thePlayer.inventory.currentItem = potIndex - 36
                         mc.playerController.updateController()

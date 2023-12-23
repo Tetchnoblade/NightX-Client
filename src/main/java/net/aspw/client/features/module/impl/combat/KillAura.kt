@@ -142,7 +142,13 @@ class KillAura : Module() {
         100
     ) { !rotations.get().equals("none", true) }
 
-    private val bypassSomeChecks = BoolValue("BypassSomeChecks", true)
+    private val resetDelay = IntegerValue(
+        "Reset-Delay",
+        0,
+        0,
+        40
+    ) { !rotations.get().equals("none", true) }
+
     private val noInventoryAttackValue = BoolValue("NoInvAttack", false)
     private val checkSprintValue = BoolValue("StopSprint", false)
     private val throughWallsValue = BoolValue(
@@ -614,8 +620,23 @@ class KillAura : Module() {
         if (multiCombo.get()) {
             event.targetEntity ?: return
             repeat(amountValue.get()) {
-                PacketUtils.sendPacketNoEvent(C0APacketAnimation())
-                PacketUtils.sendPacketNoEvent(C02PacketUseEntity(event.targetEntity, C02PacketUseEntity.Action.ATTACK))
+                if (ProtocolBase.getManager().targetVersion.protocol != VersionEnum.r1_8.protocol)
+                    mc.netHandler.addToSendQueue(
+                        C02PacketUseEntity(
+                            event.targetEntity,
+                            C02PacketUseEntity.Action.ATTACK
+                        )
+                    )
+
+                mc.netHandler.addToSendQueue(C0APacketAnimation())
+
+                if (ProtocolBase.getManager().targetVersion.protocol == VersionEnum.r1_8.protocol)
+                    mc.netHandler.addToSendQueue(
+                        C02PacketUseEntity(
+                            event.targetEntity,
+                            C02PacketUseEntity.Action.ATTACK
+                        )
+                    )
             }
         }
     }
@@ -852,7 +873,7 @@ class KillAura : Module() {
         if (silentRotationValue.get()) {
             RotationUtils.setTargetRotation(
                 defRotation,
-                if (bypassSomeChecks.get()) 12 else 0
+                resetDelay.get()
             )
         } else {
             defRotation.toPlayer(mc.thePlayer!!)
