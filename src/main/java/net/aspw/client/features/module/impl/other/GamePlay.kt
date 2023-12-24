@@ -27,13 +27,13 @@ class GamePlay : Module() {
         arrayOf("RedeSky", "BlocksMC", "Minemora", "Hypixel", "Jartex"),
         "Hypixel"
     )
-    private val delayValue = IntegerValue("JoinDelay", 3, 0, 7, " seconds")
+    private val delayValue = IntegerValue("JoinDelay", 3, 0, 7, "s")
 
     private var clicking = false
     private var queued = false
     private var waitForLobby = false
 
-    override fun onEnable() {
+    override fun onDisable() {
         clickState = 0
         clicking = false
         queued = false

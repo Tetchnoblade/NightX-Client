@@ -2,6 +2,7 @@ package net.aspw.client.features.module.impl.other
 
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.UpdateEvent
+import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
@@ -20,6 +21,17 @@ class Annoy : Module() {
 
     private var yaw = 0f
     private var pitch = 0f
+
+    override fun onDisable() {
+        yaw = 0f
+        pitch = 0f
+    }
+
+    @EventTarget
+    fun onWorld(event: WorldEvent) {
+        yaw = 0f
+        pitch = 0f
+    }
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {

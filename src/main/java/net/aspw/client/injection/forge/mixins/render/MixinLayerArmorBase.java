@@ -42,7 +42,7 @@ public class MixinLayerArmorBase {
         } else if (customModel.getState() && !customModel.getOnlySelf().get()) {
             ci.cancel();
         }
-        if (silentView.getState() && silentView.getRotationMode().get().equals("Silent") && entitylivingbaseIn == MinecraftInstance.mc.thePlayer && (RotationUtils.targetRotation != null && silentView.getRotatingCheckValue().get() || !silentView.getRotatingCheckValue().get())) {
+        if (silentView.getState() && silentView.getRotationMode().get().equals("Silent") && entitylivingbaseIn == MinecraftInstance.mc.thePlayer && RotationUtils.targetRotation != null) {
             ci.cancel();
         }
     }
