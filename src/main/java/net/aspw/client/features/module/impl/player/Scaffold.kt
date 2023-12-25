@@ -196,9 +196,6 @@ class Scaffold : Module() {
     private val speedSlowDown = FloatValue("SpeedPot-SlowDown", 0.8f, 0.0f, 0.9f) { noSpeedPotValue.get() }
     private val customSpeedValue = BoolValue("CustomSpeed", false)
     private val customMoveSpeedValue = FloatValue("CustomMoveSpeed", 0.2f, 0f, 5f) { customSpeedValue.get() }
-    private val packetFixValue1 = BoolValue("PacketFix1", true)
-    private val packetFixValue2 = BoolValue("PacketFix2", true)
-    private val packetFixValue3 = BoolValue("PacketFix3", true)
     private val downValue = BoolValue("Down", true)
     private val noHitCheckValue = BoolValue("NoHitCheck", false)
     private val sameYValue = BoolValue("KeepY", false)
@@ -284,7 +281,7 @@ class Scaffold : Module() {
     private var speenRotation: Rotation? = null
 
     // Auto block slot
-    private var slot = 0
+    var slot = 0
     private var lastSlot = 0
     private var prevSlot = -1
 
@@ -666,25 +663,21 @@ class Scaffold : Module() {
             }
         }
 
-        if (packetFixValue1.get()) {
-            if (!mc.isSingleplayer && packet is C09PacketHeldItemChange) {
-                if (packet.slotId == prevSlot) {
-                    event.cancelEvent()
-                } else {
-                    prevSlot = packet.slotId
-                }
+        if (!mc.isSingleplayer && packet is C09PacketHeldItemChange) {
+            if (packet.slotId == prevSlot) {
+                event.cancelEvent()
+            } else {
+                prevSlot = packet.slotId
             }
         }
 
-        if (packetFixValue2.get()) {
-            if (packet is C08PacketPlayerBlockPlacement) {
-                packet.facingX = packet.facingX.coerceIn(-1.00000F, 1.00000F)
-                packet.facingY = packet.facingY.coerceIn(-1.00000F, 1.00000F)
-                packet.facingZ = packet.facingZ.coerceIn(-1.00000F, 1.00000F)
-            }
+        if (packet is C08PacketPlayerBlockPlacement) {
+            packet.facingX = packet.facingX.coerceIn(-1.00000F, 1.00000F)
+            packet.facingY = packet.facingY.coerceIn(-1.00000F, 1.00000F)
+            packet.facingZ = packet.facingZ.coerceIn(-1.00000F, 1.00000F)
         }
 
-        if (packetFixValue3.get() && packet is C08PacketPlayerBlockPlacement && !mc.isIntegratedServerRunning) {
+        if (packet is C08PacketPlayerBlockPlacement && !mc.isIntegratedServerRunning) {
             event.cancelEvent()
             PacketUtils.sendPacketNoEvent(
                 C08PacketPlayerBlockPlacement(
@@ -901,10 +894,8 @@ class Scaffold : Module() {
             }
         } else {
             faceBlock = false
-            if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex) {
-                mc.thePlayer.inventory.currentItem = InventoryUtils.findAutoBlockBlock() - 36
-                mc.playerController.updateController()
-            }
+            if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex)
+                mc.netHandler.addToSendQueue(C09PacketHeldItemChange(InventoryUtils.findAutoBlockBlock() - 36))
             if (keepRotationValue.get()) {
                 when (preRotationValue.get().lowercase()) {
                     "lock" -> {
@@ -1104,10 +1095,8 @@ class Scaffold : Module() {
      * Place target block
      */
     private fun place() {
-        if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex) {
-            mc.thePlayer.inventory.currentItem = InventoryUtils.findAutoBlockBlock() - 36
-            mc.playerController.updateController()
-        }
+        if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex)
+            mc.netHandler.addToSendQueue(C09PacketHeldItemChange(InventoryUtils.findAutoBlockBlock() - 36))
         if ((targetPlace) == null) {
             if (placeableDelay.get()) delayTimer.reset()
             return
