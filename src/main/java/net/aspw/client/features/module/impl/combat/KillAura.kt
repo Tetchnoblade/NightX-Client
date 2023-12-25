@@ -620,7 +620,7 @@ class KillAura : Module() {
         if (multiCombo.get()) {
             event.targetEntity ?: return
             repeat(amountValue.get()) {
-                if (ProtocolBase.getManager().targetVersion.protocol != VersionEnum.r1_8.protocol)
+                if (ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
                     mc.netHandler.addToSendQueue(
                         C02PacketUseEntity(
                             event.targetEntity,
@@ -630,7 +630,7 @@ class KillAura : Module() {
 
                 mc.netHandler.addToSendQueue(C0APacketAnimation())
 
-                if (ProtocolBase.getManager().targetVersion.protocol == VersionEnum.r1_8.protocol)
+                if (!ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
                     mc.netHandler.addToSendQueue(
                         C02PacketUseEntity(
                             event.targetEntity,
@@ -810,7 +810,7 @@ class KillAura : Module() {
         markEntity = entity
 
         // Attack target
-        if (ProtocolBase.getManager().targetVersion.protocol != VersionEnum.r1_8.protocol)
+        if (ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
             mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         when (swingValue.get().lowercase(Locale.getDefault())) {
@@ -824,7 +824,7 @@ class KillAura : Module() {
             "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
         }
 
-        if (ProtocolBase.getManager().targetVersion.protocol == VersionEnum.r1_8.protocol)
+        if (!ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
             mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         when (particleValue.get().lowercase()) {
@@ -988,7 +988,7 @@ class KillAura : Module() {
             }
 
             "1.9+" -> {
-                if (ProtocolBase.getManager().targetVersion.protocol !== VersionEnum.r1_8.protocol) {
+                if (ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8)) {
                     val useItem =
                         PacketWrapper.create(29, null, Via.getManager().connectionManager.connections.iterator().next())
                     useItem.write(Type.VAR_INT, 1)

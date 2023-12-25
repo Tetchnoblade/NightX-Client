@@ -357,12 +357,12 @@ public abstract class MixinEntity implements ICommandSender {
         final HitBox hitBoxes = Objects.requireNonNull(Client.moduleManager.getModule(HitBox.class));
 
         if (hitBoxes.getState() && EntityUtils.isSelected(((Entity) ((Object) this)), true)) {
-            if (ProtocolBase.getManager().getTargetVersion().getProtocol() != VersionEnum.r1_8.getProtocol() && !MinecraftInstance.mc.isIntegratedServerRunning()) {
+            if (ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning()) {
                 callbackInfoReturnable.setReturnValue(hitBoxes.getSizeValue().get());
             } else {
                 callbackInfoReturnable.setReturnValue(0.1F + hitBoxes.getSizeValue().get());
             }
-        } else if (ProtocolBase.getManager().getTargetVersion().getProtocol() != VersionEnum.r1_8.getProtocol() && !MinecraftInstance.mc.isIntegratedServerRunning()) {
+        } else if (ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning()) {
             callbackInfoReturnable.setReturnValue(0.0F);
         }
     }

@@ -53,7 +53,7 @@ class AntiFireBall : Module() {
                     )
                 }
 
-                if (ProtocolBase.getManager().targetVersion.protocol != VersionEnum.r1_8.protocol)
+                if (ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
                     mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
                 when (swingValue.get().lowercase(Locale.getDefault())) {
@@ -61,7 +61,7 @@ class AntiFireBall : Module() {
                     "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
                 }
 
-                if (ProtocolBase.getManager().targetVersion.protocol == VersionEnum.r1_8.protocol)
+                if (!ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
                     mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
                 timer.reset()

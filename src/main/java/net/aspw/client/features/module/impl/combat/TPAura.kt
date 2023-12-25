@@ -147,7 +147,7 @@ class TPAura : Module() {
 
             lastTarget = it
 
-            if (ProtocolBase.getManager().targetVersion.protocol != VersionEnum.r1_8.protocol)
+            if (ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
                 mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             when (swingValue.get().lowercase(Locale.getDefault())) {
@@ -155,7 +155,7 @@ class TPAura : Module() {
                 "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
             }
 
-            if (ProtocolBase.getManager().targetVersion.protocol == VersionEnum.r1_8.protocol)
+            if (!ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
                 mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             path.reverse()

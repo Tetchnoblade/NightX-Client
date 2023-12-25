@@ -16,7 +16,7 @@ public abstract class MixinBlockLadder extends MixinBlock {
 
     @ModifyConstant(method = "setBlockBoundsBasedOnState", constant = @Constant(floatValue = 0.125F))
     private float ViaVersion_LadderBB(float constant) {
-        if (ProtocolBase.getManager().getTargetVersion().getProtocol() != VersionEnum.r1_8.getProtocol() && !MinecraftInstance.mc.isIntegratedServerRunning())
+        if (ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning())
             return 0.1875F;
         return 0.125F;
     }
