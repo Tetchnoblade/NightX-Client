@@ -284,7 +284,7 @@ class Scaffold : Module() {
     private var speenRotation: Rotation? = null
 
     // Auto block slot
-    var slot = 0
+    private var slot = 0
     private var lastSlot = 0
     private var prevSlot = -1
 
@@ -901,8 +901,10 @@ class Scaffold : Module() {
             }
         } else {
             faceBlock = false
-            if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex)
-                mc.netHandler.addToSendQueue(C09PacketHeldItemChange(InventoryUtils.findAutoBlockBlock() - 36))
+            if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex) {
+                mc.thePlayer.inventory.currentItem = InventoryUtils.findAutoBlockBlock() - 36
+                mc.playerController.updateController()
+            }
             if (keepRotationValue.get()) {
                 when (preRotationValue.get().lowercase()) {
                     "lock" -> {
@@ -1102,8 +1104,10 @@ class Scaffold : Module() {
      * Place target block
      */
     private fun place() {
-        if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex)
-            mc.netHandler.addToSendQueue(C09PacketHeldItemChange(InventoryUtils.findAutoBlockBlock() - 36))
+        if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex) {
+            mc.thePlayer.inventory.currentItem = InventoryUtils.findAutoBlockBlock() - 36
+            mc.playerController.updateController()
+        }
         if ((targetPlace) == null) {
             if (placeableDelay.get()) delayTimer.reset()
             return

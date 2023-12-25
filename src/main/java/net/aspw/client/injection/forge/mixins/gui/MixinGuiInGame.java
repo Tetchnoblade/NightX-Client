@@ -3,7 +3,6 @@ package net.aspw.client.injection.forge.mixins.gui;
 import net.aspw.client.Client;
 import net.aspw.client.event.Render2DEvent;
 import net.aspw.client.features.module.impl.minigames.SnakeGame;
-import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.features.module.impl.visual.Crosshair;
 import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.features.module.impl.visual.VisualAbilities;
@@ -106,9 +105,6 @@ public abstract class MixinGuiInGame extends MixinGui {
         EntityPlayer entityPlayer = (EntityPlayer) mc.getRenderViewEntity();
 
         int slot = entityPlayer.inventory.currentItem;
-        Scaffold scaffold = Client.moduleManager.getModule(Scaffold.class);
-        if (scaffold != null && scaffold.getState())
-            slot = scaffold.getSlot();
 
         final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
 
