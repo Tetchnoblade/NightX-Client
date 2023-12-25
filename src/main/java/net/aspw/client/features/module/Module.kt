@@ -69,16 +69,16 @@ abstract class Module : MinecraftInstance(), Listenable {
                             1000L
                         )
                     )
+            }
 
-                // Call on enabled or disabled
-                if (value) {
-                    if (!onlyEnable) field = true
-                    onEnable()
+            // Call on enabled or disabled
+            if (value) {
+                if (!onlyEnable) field = true
+                onEnable()
 
-                } else {
-                    field = false
-                    onDisable()
-                }
+            } else {
+                field = false
+                onDisable()
             }
         }
 
