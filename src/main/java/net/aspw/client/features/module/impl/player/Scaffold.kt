@@ -283,7 +283,6 @@ class Scaffold : Module() {
     // Auto block slot
     var slot = 0
     private var lastSlot = 0
-    private var prevSlot = -1
 
     // Zitter Smooth
     private var zitterDirection = false
@@ -660,14 +659,6 @@ class Scaffold : Module() {
                     packet.onGround = true
                     wdSpoof = false
                 }
-            }
-        }
-
-        if (!mc.isSingleplayer && packet is C09PacketHeldItemChange) {
-            if (packet.slotId == prevSlot) {
-                event.cancelEvent()
-            } else {
-                prevSlot = packet.slotId
             }
         }
 

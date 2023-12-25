@@ -44,6 +44,16 @@ abstract class Module : MinecraftInstance(), Listenable {
         set(value) {
             if (field == value || !canEnable) return
 
+            // Call on enabled or disabled
+            if (value) {
+                if (!onlyEnable) field = true
+                onEnable()
+
+            } else {
+                field = false
+                onDisable()
+            }
+
             // Call toggle
             onToggle(value)
 
@@ -69,16 +79,6 @@ abstract class Module : MinecraftInstance(), Listenable {
                             1000L
                         )
                     )
-            }
-
-            // Call on enabled or disabled
-            if (value) {
-                if (!onlyEnable) field = true
-                onEnable()
-
-            } else {
-                field = false
-                onDisable()
             }
         }
 

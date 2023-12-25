@@ -26,11 +26,11 @@ import kotlin.concurrent.thread
 object Client {
 
     // Client information
-    private const val isInDev = true
+    private const val isInDev = false
 
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightWare"
-    const val CLIENT_VERSION = "Beta B77"
+    const val CLIENT_VERSION = "Release B77"
     const val CLIENT_CREATOR = "As_pw"
     const val CLIENT_WEBSITE = "https://aspw-w.github.io/NightX-Web"
     const val CLIENT_ANNOUNCEMENT = "$CLIENT_WEBSITE/database/announcement.txt"

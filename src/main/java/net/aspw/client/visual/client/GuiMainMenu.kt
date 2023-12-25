@@ -106,15 +106,15 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             -1
         )
         FontLoaders.SF20.drawStringWithShadow(
-            "Welcome!",
-            width - 4F - FontLoaders.SF20.getStringWidth("Welcome!")
+            "Made by As_pw.",
+            width - 4F - FontLoaders.SF20.getStringWidth("Made by As_pw.")
                 .toDouble(),
             height - 23F.toDouble(),
             -1
         )
         FontLoaders.SF20.drawStringWithShadow(
             "Your currently build is §e" + Client.CLIENT_VERSION,
-            width - 4F - FontLoaders.SF20.getStringWidth("Your currently build is §e" + Client.CLIENT_VERSION)
+            width - 4F - FontLoaders.SF20.getStringWidth("Your currently build is §e" + Client.CLIENT_VERSION + "§r!")
                 .toDouble(),
             height - 12F.toDouble(),
             -1
