@@ -147,7 +147,6 @@ class ModuleManager : Listenable {
             JumpCircle::class.java,
             AntiDesync::class.java,
             FreeLook::class.java,
-            CameraNoClip::class.java,
             CustomModel::class.java,
             InfiniteDurability::class.java,
             Breaker::class.java,

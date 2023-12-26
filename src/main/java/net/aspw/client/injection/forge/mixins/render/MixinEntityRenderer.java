@@ -6,9 +6,9 @@ import net.aspw.client.event.Render3DEvent;
 import net.aspw.client.features.module.impl.combat.Reach;
 import net.aspw.client.features.module.impl.other.FreeLook;
 import net.aspw.client.features.module.impl.other.InfiniteReach;
-import net.aspw.client.features.module.impl.visual.CameraNoClip;
 import net.aspw.client.features.module.impl.visual.FullBright;
 import net.aspw.client.features.module.impl.visual.NoHurtCam;
+import net.aspw.client.features.module.impl.visual.VisualAbilities;
 import net.aspw.client.features.module.impl.visual.XRay;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -160,10 +160,10 @@ public abstract class MixinEntityRenderer {
 
     @Inject(method = "orientCamera", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Vec3;distanceTo(Lnet/minecraft/util/Vec3;)D"), cancellable = true)
     private void cameraClip(float partialTicks, CallbackInfo callbackInfo) {
-        final CameraNoClip cameraNoClip = Objects.requireNonNull(Client.moduleManager.getModule(CameraNoClip.class));
+        final VisualAbilities visualAbilities = Objects.requireNonNull(Client.moduleManager.getModule(VisualAbilities.class));
         final FreeLook freeLook = Objects.requireNonNull(Client.moduleManager.getModule(FreeLook.class));
 
-        if (cameraNoClip.getState() && !freeLook.getState()) {
+        if (visualAbilities.getState() && visualAbilities.getCameraClip().get() && !freeLook.getState()) {
             callbackInfo.cancel();
 
             Entity entity = this.mc.getRenderViewEntity();

@@ -1,4 +1,4 @@
-package net.aspw.client.features.module.impl.visual;
+package net.aspw.client.features.module.impl.other;
 
 import net.aspw.client.features.module.Module;
 import net.aspw.client.features.module.ModuleCategory;
@@ -10,7 +10,7 @@ import net.aspw.client.value.ListValue;
 /**
  * The type Enchant color.
  */
-@ModuleInfo(name = "EnchantColor", spacedName = "Enchant Color", description = "", category = ModuleCategory.VISUAL)
+@ModuleInfo(name = "EnchantColor", spacedName = "Enchant Color", description = "", category = ModuleCategory.OTHER)
 public class EnchantColor extends Module {
     /**
      * The Red value.

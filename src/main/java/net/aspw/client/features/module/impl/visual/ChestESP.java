@@ -48,9 +48,6 @@ public class ChestESP extends Module {
         try {
             final String mode = modeValue.get();
 
-            float gamma = mc.gameSettings.gammaSetting;
-            mc.gameSettings.gammaSetting = 100000.0F;
-
             for (final TileEntity tileEntity : mc.theWorld.loadedTileEntityList) {
                 Color color = null;
 
@@ -143,7 +140,6 @@ public class ChestESP extends Module {
                 }
 
             RenderUtils.glColor(new Color(255, 255, 255, 255));
-            mc.gameSettings.gammaSetting = gamma;
         } catch (Exception ignored) {
         }
     }
