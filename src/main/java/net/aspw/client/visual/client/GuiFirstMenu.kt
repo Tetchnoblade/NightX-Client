@@ -32,6 +32,7 @@ class GuiFirstMenu(private val prevGui: GuiScreen) : GuiScreen() {
         //password.text = LoginID.password
         //password.maxStringLength = 20
         buttonList.add(GuiButton(0, width / 2 - 100, height / 4 + 105, "Login"))
+        buttonList.add(GuiButton(20, width / 2 - 100, height / 4 + 145, "Exit"))
         //buttonList.add(GuiButton(5, width / 2 - 100, height / 4 + 145, "Copy HWID"))
     }
 
@@ -91,6 +92,10 @@ class GuiFirstMenu(private val prevGui: GuiScreen) : GuiScreen() {
 
                 //Access.getUserList()
                 //authenticate(Access.userList, username.text, password.text, LoginID.currentHWID, uid.text)
+            }
+
+            20 -> {
+                mc.shutdown()
             }
 
             5 -> {

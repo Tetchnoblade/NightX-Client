@@ -14,8 +14,6 @@ import kotlin.concurrent.thread
 
 class DiscordRPC : MinecraftInstance() {
 
-    var showRichPresenceValue = true
-
     // IPC Client
     private var ipcClient: IPCClient? = null
 

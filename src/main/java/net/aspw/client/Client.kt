@@ -21,7 +21,6 @@ import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.hud.HUD
 import net.aspw.client.visual.hud.HUD.Companion.createDefault
 import net.minecraft.util.ResourceLocation
-import kotlin.concurrent.thread
 
 object Client {
 
@@ -65,7 +64,7 @@ object Client {
     var playTimeStart: Long = 0
 
     // Discord RPC
-    private lateinit var discordRPC: DiscordRPC
+    lateinit var discordRPC: DiscordRPC
 
     /**
      * Execute if client will be started
@@ -122,6 +121,7 @@ object Client {
             ClientUtils.getLogger().info("Setting up default modules...")
             moduleManager.getModule(Interface::class.java)?.state = true
             moduleManager.getModule(SilentView::class.java)?.state = true
+            moduleManager.getModule(net.aspw.client.features.module.impl.other.DiscordRPC::class.java)?.state = true
             moduleManager.getModule(ThunderNotifier::class.java)?.state = true
             moduleManager.getModule(Trajectories::class.java)?.state = true
             moduleManager.getModule(MoreParticles::class.java)?.state = true
@@ -149,17 +149,6 @@ object Client {
         // Set HUD
         hud = createDefault()
         fileManager.loadConfig(fileManager.hudConfig)
-
-        // Setup Discord RPC
-        if (discordRPC.showRichPresenceValue) {
-            thread {
-                try {
-                    discordRPC.setup()
-                } catch (throwable: Throwable) {
-                    ClientUtils.getLogger().error("Failed to setup Discord RPC.", throwable)
-                }
-            }
-        }
 
         ClientUtils.getLogger().info("Loaded!")
 

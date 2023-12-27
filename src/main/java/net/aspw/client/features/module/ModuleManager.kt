@@ -180,7 +180,8 @@ class ModuleManager : Listenable {
             NoJumpDelay::class.java,
             Manager::class.java,
             VulcanEatCore::class.java,
-            AntiObsidian::class.java
+            AntiObsidian::class.java,
+            DiscordRPC::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")
