@@ -10,7 +10,6 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.features.module.impl.other.FreeLook
 import net.aspw.client.features.module.impl.player.Freecam
 import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.features.module.impl.targets.AntiBots
@@ -225,8 +224,6 @@ class KillAura : Module() {
 
     // Bypass
     private val silentRotationValue = BoolValue("SilentRotation", true) { !rotations.get().equals("none", true) }
-    private val toggleFreeLook =
-        BoolValue("ToggleFreeLook", false) { !rotations.get().equals("none", true) && !silentRotationValue.get() }
 
     private val fovValue = FloatValue("FOV", 180f, 0f, 180f)
 
@@ -287,8 +284,6 @@ class KillAura : Module() {
         prevTargetEntities.clear()
         attackTimer.reset()
         clicks = 0
-        if (toggleFreeLook.get() && target != null)
-            Client.moduleManager.getModule(FreeLook::class.java)!!.state = false
 
         stopBlocking()
         if (verusBlocking && !blockingStatus && !mc.thePlayer.isBlocking) {
@@ -320,11 +315,6 @@ class KillAura : Module() {
             if (autoBlockModeValue.get().equals("AfterTick", true) && canBlock)
                 startBlocking(currentTarget!!, hitable)
         }
-
-        if (toggleFreeLook.get() && !silentRotationValue.get() && target != null && !rotations.get()
-                .equals("none", true)
-        )
-            Client.moduleManager.getModule(FreeLook::class.java)!!.state = true
     }
 
     fun update() {
@@ -1103,8 +1093,6 @@ class KillAura : Module() {
                     )
                 )
             }
-            if (toggleFreeLook.get() && Client.moduleManager.getModule(FreeLook::class.java)?.state!!)
-                Client.moduleManager.getModule(FreeLook::class.java)!!.state = false
             endTimer.reset()
         }
     }

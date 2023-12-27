@@ -4,21 +4,29 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.MinecraftInstance
+import net.aspw.client.value.BoolValue
+import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.Display
 
 @ModuleInfo(
     name = "FreeLook",
     spacedName = "Free Look",
     description = "",
-    category = ModuleCategory.OTHER
+    category = ModuleCategory.OTHER,
+    keyBind = Keyboard.KEY_F10
 )
 class FreeLook : Module() {
+    private val thirdPerson = BoolValue("ThirdPerson", true)
+    val reverse = BoolValue("Reverse", true)
+
     override fun onEnable() {
         perspectiveToggled = !perspectiveToggled
         cameraYaw = mc.thePlayer.rotationYaw
         cameraPitch = mc.thePlayer.rotationPitch
         if (perspectiveToggled) {
             previousPerspective = mc.gameSettings.thirdPersonView
+            if (thirdPerson.get())
+                mc.gameSettings.thirdPersonView = 1
         } else {
             mc.gameSettings.thirdPersonView = previousPerspective
         }

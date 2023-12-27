@@ -24,6 +24,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.Display;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -113,6 +114,9 @@ public abstract class MixinEntityRenderer {
 
     @Shadow
     private float fovModifierHand;
+
+    @Shadow
+    protected abstract void updateTorchFlicker();
 
     @Inject(method = "renderStreamIndicator", at = @At("HEAD"), cancellable = true)
     private void cancelStreamIndicator(CallbackInfo ci) {
@@ -349,7 +353,11 @@ public abstract class MixinEntityRenderer {
      */
     @Redirect(method = "updateCameraAndRender", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;inGameHasFocus:Z", opcode = GETFIELD))
     public boolean updateCameraAndRender(Minecraft minecraft) {
-        return FreeLook.overrideMouse();
+        if (Objects.requireNonNull(Client.moduleManager.getModule(FreeLook.class)).getState()) {
+            if (!Objects.requireNonNull(Client.moduleManager.getModule(FreeLook.class)).getReverse().get())
+                return FreeLook.overrideMouse();
+            else return true;
+        } else return mc.inGameHasFocus && Display.isActive();
     }
 
     /**

@@ -635,10 +635,8 @@ class Flight : Module() {
                     sendAAC5Packets()
             }
         }
-        mc.thePlayer.capabilities.isFlying = false
-        mc.thePlayer.capabilities.allowFlying = false
-        if (mc.thePlayer.capabilities.isCreativeMode)
-            mc.thePlayer.capabilities.allowFlying = true
+        mc.thePlayer.capabilities.isFlying = mc.thePlayer.isSpectator
+        mc.thePlayer.capabilities.allowFlying = mc.thePlayer.capabilities.isCreativeMode || mc.thePlayer.isSpectator
         mc.timer.timerSpeed = 1f
     }
 
