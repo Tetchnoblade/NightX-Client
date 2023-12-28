@@ -11,6 +11,7 @@ object Access {
     //var userList = ""
     var canConnect = false
     var announcement = ""
+    var latestVersion = ""
     var discord = ""
     var discordApp = ""
     var appClientID = ""
@@ -61,6 +62,7 @@ object Access {
             EntityUtils.consume(entity)
             response.close()
             httpClient.close()
+            latestVersion = content
             isLatest = content == Client.CLIENT_VERSION
             canConnect = true
         } catch (e: Exception) {

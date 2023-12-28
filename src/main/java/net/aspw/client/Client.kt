@@ -31,7 +31,7 @@ import net.minecraft.util.ResourceLocation
 object Client {
 
     // Client information
-    private const val isInDev = true
+    const val isInDev = true
 
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightWare"

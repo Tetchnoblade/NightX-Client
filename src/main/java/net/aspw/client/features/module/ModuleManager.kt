@@ -181,7 +181,8 @@ class ModuleManager : Listenable {
             Manager::class.java,
             VulcanEatCore::class.java,
             AntiObsidian::class.java,
-            DiscordRPC::class.java
+            DiscordRPC::class.java,
+            HeldBlockESP::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")

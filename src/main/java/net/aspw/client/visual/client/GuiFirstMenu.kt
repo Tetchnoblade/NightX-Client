@@ -42,6 +42,31 @@ class GuiFirstMenu(private val prevGui: GuiScreen) : GuiScreen() {
             ResourceLocation("client/background/portal.png"), 0, 0,
             width, height
         )
+        this.drawCenteredString(
+            mc.fontRendererObj,
+            "Latest Version: §e" + Access.latestVersion,
+            width / 2,
+            72,
+            0xffffff
+        )
+        this.drawCenteredString(
+            mc.fontRendererObj,
+            "Current Version: §e" + Client.CLIENT_VERSION,
+            width / 2,
+            84,
+            0xffffff
+        )
+        if (Access.isLatest) {
+            if (Client.isInDev)
+                this.drawCenteredString(mc.fontRendererObj, "Your Client is §eLatest Beta!", width / 2, 96, 0xffffff)
+            else this.drawCenteredString(
+                mc.fontRendererObj,
+                "Your Client is §eLatest Release!",
+                width / 2,
+                96,
+                0xffffff
+            )
+        } else this.drawCenteredString(mc.fontRendererObj, "Your Client is §cOutdated!", width / 2, 96, 0xffffff)
         //this.drawCenteredString(mc.fontRendererObj, "Login with your account", width / 2, 12, 0xffffff)
         //this.drawCenteredString(
         //    mc.fontRendererObj,

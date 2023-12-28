@@ -32,7 +32,6 @@ class CivBreak : Module() {
     private val range = FloatValue("Range", 5F, 1F, 6F)
     private val rotationsValue = BoolValue("Rotations", true)
     private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Packet")
-    private val airNoSlow = BoolValue("Air-NoSlow", false)
     private val airResetValue = BoolValue("Air-Reset", false)
     private val rangeResetValue = BoolValue("Range-Reset", false)
     private val redValue = IntegerValue("R", 255, 0, 255)
@@ -60,6 +59,51 @@ class CivBreak : Module() {
     }
 
     @EventTarget
+    fun onUpdate(event: UpdateEvent) {
+        if (blockPos !== null) {
+            when (modeValue.get().lowercase()) {
+                "instant" -> {
+                    if (mc.thePlayer.ticksExisted % delayValue.get() == 0) {
+                        PacketUtils.sendPacketNoEvent(
+                            C07PacketPlayerDigging(
+                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+                                blockPos,
+                                enumFacing
+                            )
+                        )
+                        PacketUtils.sendPacketNoEvent(
+                            C07PacketPlayerDigging(
+                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+                                blockPos,
+                                enumFacing
+                            )
+                        )
+                        PacketUtils.sendPacketNoEvent(
+                            C07PacketPlayerDigging(
+                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+                                blockPos,
+                                enumFacing
+                            )
+                        )
+                        when (swingValue.get().lowercase(Locale.getDefault())) {
+                            "normal" -> mc.thePlayer.swingItem()
+                            "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
+                        }
+                    }
+                }
+
+                "legit" -> {
+                    mc.playerController.onPlayerDamageBlock(blockPos, enumFacing)
+                    when (swingValue.get().lowercase(Locale.getDefault())) {
+                        "normal" -> mc.thePlayer.swingItem()
+                        "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
+                    }
+                }
+            }
+        }
+    }
+
+    @EventTarget
     fun onMotion(event: MotionEvent) {
         val pos = blockPos ?: return
 
@@ -78,49 +122,15 @@ class CivBreak : Module() {
 
         if (blockPos !== null) {
             isBreaking = true
-            if (airNoSlow.get())
-                event.onGround = true
         }
 
         if (blockPos == null) {
             isBreaking = false
         }
 
-        when (event.eventState) {
-            EventState.PRE -> if (rotationsValue.get()) {
+        if (event.eventState == EventState.PRE) {
+            if (rotationsValue.get()) {
                 RotationUtils.setTargetRotation((RotationUtils.faceBlock(pos) ?: return).rotation)
-            }
-
-            EventState.POST -> {
-                if (modeValue.get() == "Instant") {
-                    if (mc.thePlayer.ticksExisted % delayValue.get() == 0) {
-                        when (swingValue.get().lowercase(Locale.getDefault())) {
-                            "normal" -> mc.thePlayer.swingItem()
-                            "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
-                        }
-                        PacketUtils.sendPacketNoEvent(
-                            C07PacketPlayerDigging(
-                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                                blockPos,
-                                enumFacing
-                            )
-                        )
-                        PacketUtils.sendPacketNoEvent(
-                            C07PacketPlayerDigging(
-                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                                blockPos,
-                                enumFacing
-                            )
-                        )
-                    }
-                }
-                if (modeValue.get() == "Legit") {
-                    when (swingValue.get().lowercase(Locale.getDefault())) {
-                        "normal" -> mc.thePlayer.swingItem()
-                        "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
-                    }
-                    mc.playerController.onPlayerDamageBlock(blockPos, enumFacing)
-                }
             }
         }
     }

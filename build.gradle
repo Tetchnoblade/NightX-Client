@@ -34,7 +34,14 @@ minecraft {
     runDir = "run"
     mappings = "stable_22"
     makeObfSourceJar = false
-    clientJvmArgs += ["-Dfml.coreMods.load=net.aspw.client.injection.forge.MixinLoader", "-Ddev-mode", "-javaagent:${"${project.rootDir.absolutePath}\\libs\\SpongePowered-Mixin-0.7.11-SNAPSHOT.jar"}", "-Dmixin.hotSwap=true"]
+    def args = [
+            '-Dfml.coreMods.load=net.aspw.client.injection.forge.MixinLoader',
+            '-Ddev-mode',
+            '-javaagent:C:\\Users\\0kcab\\Documents\\GitHub\\NightX-Client\\libs\\SpongePowered-Mixin-0.7.11-SNAPSHOT.jar',
+            '-Dmixin.hotSwap=true',
+            '-Dmixin.checks.interfaces=true'
+    ]
+    clientJvmArgs.addAll(args)
 }
 
 configurations {
