@@ -1,4 +1,4 @@
-package net.aspw.client.features.api
+package net.aspw.client.features.api.inventory
 
 import net.aspw.client.util.item.ItemUtils
 import net.minecraft.creativetab.CreativeTabs

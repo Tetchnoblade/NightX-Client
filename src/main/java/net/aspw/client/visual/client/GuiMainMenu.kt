@@ -106,8 +106,8 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             -1
         )
         FontLoaders.SF20.drawStringWithShadow(
-            "Made by As_pw.",
-            width - 4F - FontLoaders.SF20.getStringWidth("Made by As_pw.")
+            "Made by " + Client.CLIENT_CREATOR,
+            width - 4F - FontLoaders.SF20.getStringWidth("Made by " + Client.CLIENT_CREATOR)
                 .toDouble(),
             height - 23F.toDouble(),
             -1

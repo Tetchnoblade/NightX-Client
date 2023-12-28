@@ -34,7 +34,7 @@ minecraft {
     runDir = "run"
     mappings = "stable_22"
     makeObfSourceJar = false
-    clientJvmArgs += ["-Dfml.coreMods.load=net.aspw.client.injection.forge.MixinLoader", "-Ddev-mode"]
+    clientJvmArgs += ["-Dfml.coreMods.load=net.aspw.client.injection.forge.MixinLoader", "-Ddev-mode", "-javaagent:${"${project.rootDir.absolutePath}\\libs\\SpongePowered-Mixin-0.7.11-SNAPSHOT.jar"}", "-Dmixin.hotSwap=true"]
 }
 
 configurations {

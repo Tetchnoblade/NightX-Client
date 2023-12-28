@@ -28,6 +28,7 @@
     "entity.MixinEntityPlayerSP",
     "entity.MixinEntityXPOrb",
     "entity.MixinPlayerControllerMP",
+    "fml.MixinFMLClientHandler",
     "gui.MixinGui",
     "gui.MixinGuiButton",
     "gui.MixinGuiButtonExt",

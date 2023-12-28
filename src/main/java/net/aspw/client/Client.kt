@@ -3,7 +3,13 @@ package net.aspw.client
 import net.aspw.client.config.FileManager
 import net.aspw.client.event.ClientShutdownEvent
 import net.aspw.client.event.EventManager
-import net.aspw.client.features.api.*
+import net.aspw.client.features.api.CombatManager
+import net.aspw.client.features.api.DiscordRPC
+import net.aspw.client.features.api.MacroManager
+import net.aspw.client.features.api.PacketManager
+import net.aspw.client.features.api.inventory.EnchantItems
+import net.aspw.client.features.api.inventory.ModItems
+import net.aspw.client.features.api.inventory.StackItems
 import net.aspw.client.features.command.CommandManager
 import net.aspw.client.features.module.ModuleManager
 import net.aspw.client.features.module.impl.other.HackerDetect
