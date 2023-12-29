@@ -1,4 +1,4 @@
-package net.aspw.client.injection.forge.mixins.performance;
+package net.aspw.client.injection.forge.mixins.packets;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.server.S14PacketEntity;

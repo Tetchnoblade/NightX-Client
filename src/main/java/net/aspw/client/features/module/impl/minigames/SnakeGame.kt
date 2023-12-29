@@ -21,7 +21,7 @@ import java.awt.Color
     spacedName = "Snake Game",
     description = "",
     category = ModuleCategory.MINIGAMES,
-    keyBind = Keyboard.KEY_F9
+    keyBind = Keyboard.KEY_F10
 )
 class SnakeGame : Module() {
     private var snake = mutableListOf(Position(0, 0))

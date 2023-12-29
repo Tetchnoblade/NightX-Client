@@ -8,6 +8,7 @@ import net.aspw.client.features.module.impl.visual.ColorMixer.Companion.getMixed
 import net.aspw.client.util.render.ColorUtils.LiquidSlowly
 import net.aspw.client.util.render.ColorUtils.fade
 import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
@@ -33,6 +34,8 @@ class Gui : Module() {
         "DropDown"
     ) {
     }
+
+    val guiBlur = BoolValue("Blur", true)
 
     @JvmField
     val animationValue: ListValue =

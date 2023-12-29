@@ -13,7 +13,7 @@ import org.lwjgl.opengl.Display
     spacedName = "Free Look",
     description = "",
     category = ModuleCategory.OTHER,
-    keyBind = Keyboard.KEY_F10
+    keyBind = Keyboard.KEY_F9
 )
 class FreeLook : Module() {
     private val thirdPerson = BoolValue("ThirdPerson", true)
