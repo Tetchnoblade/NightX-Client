@@ -17,7 +17,7 @@ import java.awt.Color
 
 @ModuleInfo(name = "HeldBlockESP", description = "", category = ModuleCategory.VISUAL)
 class HeldBlockESP : Module() {
-    private val rangeValue = IntegerValue("Range", 20, 1, 20, "m")
+    private val rangeValue = IntegerValue("Range", 10, 1, 10, "m")
     private var pos: BlockPos? = null
 
     override fun onDisable() {

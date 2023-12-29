@@ -61,43 +61,11 @@ class CivBreak : Module() {
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         if (blockPos !== null) {
-            when (modeValue.get().lowercase()) {
-                "instant" -> {
-                    if (mc.thePlayer.ticksExisted % delayValue.get() == 0) {
-                        PacketUtils.sendPacketNoEvent(
-                            C07PacketPlayerDigging(
-                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                                blockPos,
-                                enumFacing
-                            )
-                        )
-                        PacketUtils.sendPacketNoEvent(
-                            C07PacketPlayerDigging(
-                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                                blockPos,
-                                enumFacing
-                            )
-                        )
-                        PacketUtils.sendPacketNoEvent(
-                            C07PacketPlayerDigging(
-                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                                blockPos,
-                                enumFacing
-                            )
-                        )
-                        when (swingValue.get().lowercase(Locale.getDefault())) {
-                            "normal" -> mc.thePlayer.swingItem()
-                            "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
-                        }
-                    }
-                }
-
-                "legit" -> {
-                    mc.playerController.onPlayerDamageBlock(blockPos, enumFacing)
-                    when (swingValue.get().lowercase(Locale.getDefault())) {
-                        "normal" -> mc.thePlayer.swingItem()
-                        "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
-                    }
+            if (modeValue.get().equals("legit", true)) {
+                mc.playerController.onPlayerDamageBlock(blockPos, enumFacing)
+                when (swingValue.get().lowercase(Locale.getDefault())) {
+                    "normal" -> mc.thePlayer.swingItem()
+                    "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
                 }
             }
         }
@@ -128,9 +96,36 @@ class CivBreak : Module() {
             isBreaking = false
         }
 
-        if (event.eventState == EventState.PRE) {
-            if (rotationsValue.get()) {
-                RotationUtils.setTargetRotation((RotationUtils.faceBlock(pos) ?: return).rotation)
+        when (event.eventState) {
+            EventState.PRE -> {
+                if (rotationsValue.get()) {
+                    RotationUtils.setTargetRotation((RotationUtils.faceBlock(pos) ?: return).rotation)
+                }
+            }
+
+            EventState.POST -> {
+                if (modeValue.get().equals("instant", true)) {
+                    if (mc.thePlayer.ticksExisted % delayValue.get() == 0) {
+                        when (swingValue.get().lowercase(Locale.getDefault())) {
+                            "normal" -> mc.thePlayer.swingItem()
+                            "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
+                        }
+                        PacketUtils.sendPacketNoEvent(
+                            C07PacketPlayerDigging(
+                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+                                blockPos,
+                                enumFacing
+                            )
+                        )
+                        PacketUtils.sendPacketNoEvent(
+                            C07PacketPlayerDigging(
+                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+                                blockPos,
+                                enumFacing
+                            )
+                        )
+                    }
+                }
             }
         }
     }
