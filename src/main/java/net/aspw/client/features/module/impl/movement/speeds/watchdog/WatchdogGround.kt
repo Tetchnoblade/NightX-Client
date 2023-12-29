@@ -29,7 +29,7 @@ class WatchdogGround : SpeedMode("WatchdogGround") {
                 mc.thePlayer.isAirBorne = true
                 mc.thePlayer.triggerAchievement(StatList.jumpStat)
                 if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                    MovementUtils.strafe(0.57f)
+                    MovementUtils.strafe(0.58f)
                 } else {
                     MovementUtils.strafe(0.47f)
                 }
