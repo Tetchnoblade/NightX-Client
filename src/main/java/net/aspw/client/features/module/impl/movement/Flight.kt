@@ -49,7 +49,6 @@ class Flight : Module() {
             "Motion",
             "NoClip",
             "Creative",
-            "Vanilla",
             "Water",
             "Pearl",
             "Packet",
@@ -637,7 +636,6 @@ class Flight : Module() {
             }
         }
         mc.thePlayer.capabilities.isFlying = mc.thePlayer.isSpectator
-        mc.thePlayer.capabilities.allowFlying = mc.thePlayer.capabilities.isCreativeMode || mc.thePlayer.isSpectator
         mc.timer.timerSpeed = 1f
     }
 
@@ -831,10 +829,6 @@ class Flight : Module() {
                         mc.thePlayer.motionZ = 0.0
                     }
                 }
-            }
-
-            "vanilla" -> {
-                mc.thePlayer.capabilities.allowFlying = true
             }
 
             "desync" -> {
