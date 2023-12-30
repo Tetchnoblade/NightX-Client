@@ -213,6 +213,7 @@ class Flight : Module() {
 
     // Visuals
     private val lagCheck = BoolValue("LagCheck", false)
+    private val worldCheck = BoolValue("WorldCheck", true)
     private val fakeDmgValue = BoolValue("FakeDamage", false)
     val fakeYValue = BoolValue("FakeY", false)
     private val viewBobbingValue = BoolValue("ViewBobbing", false)
@@ -643,7 +644,7 @@ class Flight : Module() {
     @EventTarget
     fun onWorld(event: WorldEvent) {
         packetLol.clear()
-        if (!lagCheck.get()) {
+        if (worldCheck.get()) {
             state = false
             Client.hud.addNotification(
                 Notification(

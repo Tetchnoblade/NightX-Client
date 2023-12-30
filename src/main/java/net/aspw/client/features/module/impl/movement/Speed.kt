@@ -137,7 +137,7 @@ class Speed : Module() {
     fun onUpdate(event: UpdateEvent?) {
         if (mc.thePlayer.isSneaking) return
         val speedMode = mode
-        if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !mc.thePlayer.isInWater && !mc.thePlayer.isInLava && MovementUtils.isMoving())
+        if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !mc.thePlayer.isInWater && !mc.thePlayer.isInLava && !mc.thePlayer.capabilities.isFlying && MovementUtils.isMoving())
             mc.gameSettings.keyBindJump.pressed = false
         speedMode?.onUpdate()
     }
@@ -214,7 +214,7 @@ class Speed : Module() {
 
     @EventTarget
     fun onWorld(event: WorldEvent) {
-        if (!lagCheck.get()) {
+        if (worldCheck.get()) {
             state = false
             Client.hud.addNotification(
                 Notification(
@@ -605,6 +605,7 @@ class Speed : Module() {
         FloatValue("CubeCraft-PortLength", 1f, 0.1f, 2f) { modeName.equals("teleportcubecraft", ignoreCase = true) }
 
     private val lagCheck = BoolValue("LagCheck", true)
+    private val worldCheck = BoolValue("WorldCheck", true)
 
     @JvmField
     val noBob = BoolValue("NoBob", false)

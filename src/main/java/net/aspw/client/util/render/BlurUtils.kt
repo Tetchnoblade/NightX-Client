@@ -138,7 +138,6 @@ object BlurUtils : MinecraftInstance() {
         worldrenderer.pos(0.0, 0.0, 0.0).tex(0.0, f3).color(255, 255, 255, 255).endVertex()
         tessellator.draw()
         frbuffer.unbindFramebufferTexture()
-        mc.framebuffer.bindFramebuffer(false)
         GlStateManager.enableDepth()
         GlStateManager.depthMask(true)
         GlStateManager.colorMask(true, true, true, true)

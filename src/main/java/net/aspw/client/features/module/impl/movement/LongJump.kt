@@ -106,6 +106,7 @@ class LongJump : Module() {
     private val verusHighHeightValue =
         FloatValue("VerusHigh-Height", 10f, 0.05f, 10f) { modeValue.get().equals("verushigh", ignoreCase = true) }
     private val lagCheck = BoolValue("LagCheck", true)
+    private val worldCheck = BoolValue("WorldCheck", true)
     private val autoDisableValue = BoolValue("AutoDisable", true)
     private val fakeDmgValue = BoolValue("FakeDamage", false)
     val fakeYValue = BoolValue("FakeY", false)
@@ -507,7 +508,7 @@ class LongJump : Module() {
 
     @EventTarget
     fun onWorld(event: WorldEvent) {
-        if (!lagCheck.get()) {
+        if (worldCheck.get()) {
             state = false
             Client.hud.addNotification(
                 Notification(
