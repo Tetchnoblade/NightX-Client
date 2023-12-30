@@ -6,7 +6,6 @@ import net.aspw.client.event.PacketEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.ClientUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.network.play.server.S2CPacketSpawnGlobalEntity
@@ -32,7 +31,7 @@ class ThunderNotifier : Module() {
             val dist = mc.thePlayer.getDistance(x, mc.thePlayer.entityBoundingBox.minY, z).roundToInt()
 
             if (chatValue.get())
-                ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§fDetected thunder at ${x.toInt()} ${y.toInt()} ${z.toInt()} ($dist blocks away)")
+                chat("§fDetected thunder at ${x.toInt()} ${y.toInt()} ${z.toInt()} ($dist blocks away)")
             if (notifyValue.get())
                 Client.hud.addNotification(
                     Notification(

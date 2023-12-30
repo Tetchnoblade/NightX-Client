@@ -134,7 +134,7 @@ public final class ESP extends Module {
 
                     if (living && tagsValue.get()) {
                         entityLivingBase = (EntityLivingBase) entity;
-                        String entName = entityLivingBase.getName();
+                        String entName = entityLivingBase.getDisplayName().getFormattedText();
                         drawScaledCenteredString(entName, posX + (endPosX - posX) / 2F, posY - 1F - mc.fontRendererObj.FONT_HEIGHT * fontScaleValue.get(), fontScaleValue.get(), -1);
                     }
                 }
