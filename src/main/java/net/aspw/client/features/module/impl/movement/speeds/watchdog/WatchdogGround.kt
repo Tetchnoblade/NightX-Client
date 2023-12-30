@@ -31,7 +31,7 @@ class WatchdogGround : SpeedMode("WatchdogGround") {
                 if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
                     MovementUtils.strafe(0.58f)
                 } else {
-                    MovementUtils.strafe(0.47f)
+                    MovementUtils.strafe(0.466f)
                 }
             }
         }

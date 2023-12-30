@@ -30,7 +30,7 @@ class AntiSuffocation : Module() {
     private val swingValue = ListValue(
         "Swing",
         arrayOf("Normal", "Packet", "None"),
-        "Packet"
+        "Normal"
     ) { modeValue.get().equals("legit", ignoreCase = true) }
 
     override val tag: String

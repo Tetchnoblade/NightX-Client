@@ -144,18 +144,49 @@ public final class MovementUtils extends MinecraftInstance {
         return mc.thePlayer.motionX != 0D && mc.thePlayer.motionZ != 0D && mc.thePlayer.motionY != 0D;
     }
 
+    private static float getMoveYaw() {
+        EntityPlayerSP player = mc.thePlayer;
+        float moveYaw = player.rotationYaw;
+
+        if (player.moveForward != 0F && player.moveStrafing == 0F) {
+            moveYaw += (player.moveForward > 0) ? 0 : 180;
+        } else if (player.moveForward != 0F) {
+            if (player.moveForward > 0) {
+                moveYaw += (player.moveStrafing > 0) ? -45 : 45;
+            } else {
+                moveYaw -= (player.moveStrafing > 0) ? -45 : 45;
+            }
+            moveYaw += (player.moveForward > 0) ? 0 : 180;
+        } else if (player.moveStrafing != 0F) {
+            moveYaw += (player.moveStrafing > 0) ? -90 : 90;
+        }
+
+        return moveYaw;
+    }
+
     /**
      * Strafe.
      *
      * @param speed the speed
      */
     public static void strafe(final float speed) {
-        if (!isMoving())
-            return;
+        double shotSpeed = Math.sqrt((mc.thePlayer.motionX * mc.thePlayer.motionX) + (mc.thePlayer.motionZ * mc.thePlayer.motionZ));
+        double fixSpeed = (shotSpeed * 1);
+        double motionX = (mc.thePlayer.motionX * (0));
+        double motionZ = (mc.thePlayer.motionZ * (0));
 
-        final double yaw = getDirection();
-        mc.thePlayer.motionX = -Math.sin(yaw) * speed;
-        mc.thePlayer.motionZ = Math.cos(yaw) * speed;
+        if (!isMoving()) {
+            mc.thePlayer.motionX = 0.0;
+            mc.thePlayer.motionZ = 0.0;
+            return;
+        }
+
+        float yaw = getMoveYaw();
+        mc.thePlayer.motionX = (((-Math.sin(Math.toRadians(yaw)) * fixSpeed) + motionX));
+        mc.thePlayer.motionZ = (((Math.cos(Math.toRadians(yaw)) * fixSpeed) + motionZ));
+
+        mc.thePlayer.motionX = -Math.sin(getDirection()) * speed;
+        mc.thePlayer.motionZ = Math.cos(getDirection()) * speed;
     }
 
     /**

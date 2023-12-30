@@ -31,7 +31,7 @@ class CivBreak : Module() {
     private val delayValue = IntegerValue("Instant-Delay", 1, 1, 20) { modeValue.get().equals("instant", true) }
     private val range = FloatValue("Range", 5F, 1F, 6F)
     private val rotationsValue = BoolValue("Rotations", true)
-    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Packet")
+    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Normal")
     private val airResetValue = BoolValue("Air-Reset", false)
     private val rangeResetValue = BoolValue("Range-Reset", false)
     private val redValue = IntegerValue("R", 255, 0, 255)

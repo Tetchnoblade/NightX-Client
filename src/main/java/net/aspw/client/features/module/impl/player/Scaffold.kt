@@ -144,7 +144,7 @@ class Scaffold : Module() {
             .equals("aac", ignoreCase = true)
     }
     private val preRotationValue = ListValue("WaitRotationMode", arrayOf("Normal", "Lock", "None"), "Normal")
-    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Packet")
+    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Normal")
 
     // Delay
     private val placeableDelay = BoolValue("PlaceableDelay", false)

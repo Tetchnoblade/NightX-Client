@@ -172,22 +172,26 @@ class AutoHeal : Module() {
                     oldSlot = mc.thePlayer.inventory.currentItem
                 }
 
-                if (throwing && mc.thePlayer.onGround && !mc.thePlayer.isEating && MovementUtils.isRidingBlock() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
-                    potting = false
-                    RotationUtils.setTargetRotation(
-                        Rotation(
-                            mc.thePlayer.rotationYaw,
-                            if (customPitchValue.get()) customPitchAngle.get() else 80F
+                if (throwing && !mc.thePlayer.isEating && MovementUtils.isRidingBlock() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
+                    if (mc.thePlayer.onGround) {
+                        potting = false
+                        RotationUtils.setTargetRotation(
+                            Rotation(
+                                mc.thePlayer.rotationYaw,
+                                if (customPitchValue.get()) customPitchAngle.get() else 80F
+                            )
                         )
-                    )
-                    if (mc.thePlayer.inventory.currentItem != potIndex - 36) {
-                        mc.thePlayer.inventory.currentItem = potIndex - 36
-                        mc.playerController.updateController()
-                        debug("switches")
+                        if (tickTimer.hasTimePassed(1) && mc.thePlayer.inventory.currentItem != potIndex - 36) {
+                            mc.thePlayer.inventory.currentItem = potIndex - 36
+                            mc.playerController.updateController()
+                            debug("switch")
+                        }
+                        tickTimer.update()
+                        debug("silent rotation")
+                        isRotating = true
+                    } else {
+                        potting = false
                     }
-                    tickTimer.update()
-                    debug("silent rotation")
-                    isRotating = true
                 }
             }
         }
@@ -271,8 +275,16 @@ class AutoHeal : Module() {
     fun onMotionPost(event: MotionEvent) {
         if (autoPotValue.get()) {
             if (event.eventState == EventState.POST) {
+                if (tickTimer.hasTimePassed(1) && !tickTimer.hasTimePassed(2))
+                    oldSlot = mc.thePlayer.inventory.currentItem
+                if (tickTimer.hasTimePassed(2) && !tickTimer.hasTimePassed(3) && !mc.thePlayer.onGround) {
+                    if (mc.thePlayer.inventory.currentItem == potIndex - 36) {
+                        mc.thePlayer.inventory.currentItem = oldSlot
+                        mc.playerController.updateController()
+                        debug("switch back")
+                    }
+                }
                 if (throwing && mc.currentScreen !is GuiContainer
-                    && mc.thePlayer.onGround
                     && !mc.thePlayer.isEating
                     && MovementUtils.isRidingBlock()
                     && tickTimer.hasTimePassed(4) && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!
