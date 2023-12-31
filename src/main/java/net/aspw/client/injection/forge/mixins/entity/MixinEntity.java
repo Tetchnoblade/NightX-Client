@@ -5,7 +5,6 @@ import net.aspw.client.event.StrafeEvent;
 import net.aspw.client.features.module.impl.combat.HitBox;
 import net.aspw.client.features.module.impl.movement.AntiWaterPush;
 import net.aspw.client.features.module.impl.movement.Flight;
-import net.aspw.client.features.module.impl.other.InfinitePitch;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.util.EntityUtils;
 import net.aspw.client.util.MinecraftInstance;
@@ -374,20 +373,6 @@ public abstract class MixinEntity implements ICommandSender {
     @Overwrite
     public boolean isSneaking() {
         return this.getFlag(1);
-    }
-
-    @Inject(method = "setAngles", at = @At("HEAD"), cancellable = true)
-    private void setAngles(final float yaw, final float pitch, final CallbackInfo callbackInfo) {
-        if (Objects.requireNonNull(Client.moduleManager.getModule(InfinitePitch.class)).getState()) {
-            callbackInfo.cancel();
-
-            float f = this.rotationPitch;
-            float f1 = this.rotationYaw;
-            this.rotationYaw = (float) ((double) this.rotationYaw + (double) yaw * 0.15D);
-            this.rotationPitch = (float) ((double) this.rotationPitch - (double) pitch * 0.15D);
-            this.prevRotationPitch += this.rotationPitch - f;
-            this.prevRotationYaw += this.rotationYaw - f1;
-        }
     }
 
     /**

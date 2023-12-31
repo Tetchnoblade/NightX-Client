@@ -158,7 +158,6 @@ class ModuleManager : Listenable {
             Cape::class.java,
             HudEditor::class.java,
             Gui::class.java,
-            InfinitePitch::class.java,
             HackerDetect::class.java,
             EntityJump::class.java,
             ConsoleSpammer::class.java,
