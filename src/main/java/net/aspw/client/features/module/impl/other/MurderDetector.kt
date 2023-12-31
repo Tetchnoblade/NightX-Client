@@ -120,12 +120,12 @@ class MurderDetector : Module() {
         GL11.glBegin(GL11.GL_LINES)
 
         for (player in mc.theWorld.playerEntities) {
-            if (player == murder1 && player != mc.thePlayer) {
+            if (player == murder1 && player != mc.thePlayer && player != null) {
                 var dist = (mc.thePlayer.getDistanceToEntity(murder1) * 2).toInt()
                 if (dist > 255) dist = 255
                 drawTraces(murder1, Color(255, 255, 255, 240), true)
             }
-            if (player == murder2 && player != mc.thePlayer) {
+            if (player == murder2 && player != mc.thePlayer && player != null) {
                 var dist = (mc.thePlayer.getDistanceToEntity(murder2) * 2).toInt()
                 if (dist > 255) dist = 255
                 drawTraces(murder2, Color(255, 255, 255, 240), true)
