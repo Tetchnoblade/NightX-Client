@@ -114,7 +114,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         )
         FontLoaders.SF20.drawStringWithShadow(
             "Your currently build is §e" + Client.CLIENT_VERSION,
-            width - 4F - FontLoaders.SF20.getStringWidth("Your currently build is §e" + Client.CLIENT_VERSION + "§r!")
+            width - 4F - FontLoaders.SF20.getStringWidth("Your currently build is §e" + Client.CLIENT_VERSION)
                 .toDouble(),
             height - 12F.toDouble(),
             -1
