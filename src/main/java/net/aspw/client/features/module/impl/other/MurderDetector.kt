@@ -6,23 +6,18 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Items
 import net.minecraft.item.Item
-import net.minecraft.util.Vec3
-import org.lwjgl.opengl.GL11
 import java.awt.Color
 
 @ModuleInfo(name = "MurderDetector", spacedName = "Murder Detector", description = "", category = ModuleCategory.OTHER)
 class MurderDetector : Module() {
     private val showText = BoolValue("Murder-ShowText", true)
-    private val showTracer = BoolValue("Murder-ShowTracer", true)
     private val chatValue = BoolValue("Murder-Chat", true)
     private val notifyValue = BoolValue("Murder-Notification", true)
 
@@ -149,63 +144,6 @@ class MurderDetector : Module() {
                 Color(255, 255, 255).rgb,
                 true
             )
-        }
-    }
-
-    @EventTarget
-    fun onRender3D(event: Render3DEvent) {
-        if (!showTracer.get()) return
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-        GL11.glEnable(GL11.GL_BLEND)
-        GL11.glEnable(GL11.GL_LINE_SMOOTH)
-        GL11.glLineWidth(1f)
-        GL11.glDisable(GL11.GL_TEXTURE_2D)
-        GL11.glDisable(GL11.GL_DEPTH_TEST)
-        GL11.glDepthMask(false)
-
-        GL11.glBegin(GL11.GL_LINES)
-
-        if (murder1 != null && murder1 != mc.thePlayer)
-            drawTraces(murder1, Color(255, 255, 255, 240), true)
-
-        if (murder2 != null && murder2 != mc.thePlayer)
-            drawTraces(murder2, Color(255, 255, 255, 240), true)
-
-        GL11.glEnd()
-
-        GL11.glEnable(GL11.GL_TEXTURE_2D)
-        GL11.glDisable(GL11.GL_LINE_SMOOTH)
-        GL11.glEnable(GL11.GL_DEPTH_TEST)
-        GL11.glDepthMask(true)
-        GL11.glDisable(GL11.GL_BLEND)
-        GlStateManager.resetColor()
-    }
-
-    private fun drawTraces(entity: EntityPlayer?, color: Color, drawHeight: Boolean) {
-        val x = (entity?.lastTickPosX!! + (entity.posX - entity.lastTickPosX) * mc.timer.renderPartialTicks
-                - mc.renderManager.renderPosX)
-        val y = (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * mc.timer.renderPartialTicks
-                - mc.renderManager.renderPosY)
-        val z = (entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * mc.timer.renderPartialTicks
-                - mc.renderManager.renderPosZ)
-
-        val eyeVector = Vec3(0.0, 0.0, 1.0)
-            .rotatePitch((-Math.toRadians(mc.thePlayer.rotationPitch.toDouble())).toFloat())
-            .rotateYaw((-Math.toRadians(mc.thePlayer.rotationYaw.toDouble())).toFloat())
-
-        RenderUtils.glColor(color)
-
-        GL11.glVertex3d(
-            eyeVector.xCoord,
-            mc.thePlayer.getEyeHeight().toDouble() + eyeVector.yCoord - 2,
-            eyeVector.zCoord
-        )
-        if (drawHeight) {
-            GL11.glVertex3d(x, y, z)
-            GL11.glVertex3d(x, y, z)
-            GL11.glVertex3d(x, y + entity.height, z)
-        } else {
-            GL11.glVertex3d(x, y + entity.height / 2.0, z)
         }
     }
 }
