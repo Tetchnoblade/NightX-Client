@@ -36,7 +36,7 @@ class HeldBlockESP : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        if (pos != null && mc.thePlayer.ticksExisted % 2 == 0)
+        if (pos != null && mc.thePlayer.ticksExisted % 3 == 0)
             pos = null
         if (pos == null || BlockUtils.getCenterDistance(pos!!) > rangeValue.get())
             pos = find()

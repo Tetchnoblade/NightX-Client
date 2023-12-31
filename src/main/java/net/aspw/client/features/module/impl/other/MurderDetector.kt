@@ -13,8 +13,8 @@ import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.Blocks
 import net.minecraft.init.Items
+import net.minecraft.item.Item
 import net.minecraft.util.Vec3
 import org.lwjgl.opengl.GL11
 import java.awt.Color
@@ -28,6 +28,49 @@ class MurderDetector : Module() {
 
     private var murder1: EntityPlayer? = null
     private var murder2: EntityPlayer? = null
+
+    private val murderBlocks = mutableListOf(
+        76,   // Blocks.redstone_torch,
+        32,   // Blocks.deadbush,
+        19,   // Blocks.sponge,
+        122,  // Blocks.dragon_egg,
+        175,  // Blocks.double_plant,
+        405,  // Blocks.nether_brick,
+        130   // Blocks.ender_chest
+    )
+
+    private val murderItems = mutableListOf<Item>(
+        Items.iron_sword,
+        Items.stone_sword,
+        Items.iron_shovel,
+        Items.stick,
+        Items.wooden_axe,
+        Items.wooden_sword,
+        Items.stone_shovel,
+        Items.blaze_rod,
+        Items.diamond_shovel,
+        Items.shears,
+        Items.pumpkin_pie,
+        Items.golden_pickaxe,
+        Items.carrot_on_a_stick,
+        Items.cookie,
+        Items.diamond_axe,
+        Items.golden_sword,
+        Items.diamond_sword,
+        Items.diamond_hoe,
+        Items.name_tag,
+        Items.boat,
+        Items.prismarine_shard,
+        Items.fish,
+        Items.cooked_beef,
+        Items.speckled_melon,
+        Items.dye,
+        Items.book,
+        Items.quartz,
+        Items.golden_carrot,
+        Items.apple,
+        Items.record_blocks
+    )
 
     override fun onDisable() {
         murder1 = null
@@ -45,7 +88,10 @@ class MurderDetector : Module() {
         if (event.eventState == EventState.PRE) {
             for (player in mc.theWorld.playerEntities) {
                 if (mc.thePlayer.ticksExisted % 2 == 0) return
-                if (player.heldItem != null && (player.heldItem.displayName.contains("Knife", ignoreCase = true) || player.heldItem.item == Items.iron_sword || player.heldItem.item == Items.stone_sword || player.heldItem.item == Items.iron_shovel || player.heldItem.item == Items.stick || player.heldItem.item == Items.wooden_axe || player.heldItem.item == Items.wooden_sword || player.heldItem.item == Items.stone_shovel || player.heldItem.item == Items.blaze_rod || player.heldItem.item == Items.diamond_shovel || player.heldItem.item == Items.shears || player.heldItem.item == Items.pumpkin_pie || player.heldItem.item == Items.golden_pickaxe || player.heldItem.item == Items.carrot_on_a_stick || player.heldItem.item == Items.cookie || player.heldItem.item == Items.diamond_axe || player.heldItem.item == Items.golden_sword || player.heldItem.item == Items.diamond_sword || player.heldItem.item == Items.diamond_hoe || player.heldItem.item == Items.shears || player.heldItem.item == Blocks.redstone_torch || player.heldItem.item == Blocks.deadbush || player.heldItem.item == Items.name_tag || player.heldItem.item == Blocks.sponge || player.heldItem.item == Items.boat || player.heldItem.item == Blocks.dragon_egg || player.heldItem.item == Items.prismarine_shard || player.heldItem.item == Items.fish || player.heldItem.item == Blocks.double_plant || player.heldItem.item == Blocks.nether_brick || player.heldItem.item == Items.cooked_beef || player.heldItem.item == Items.speckled_melon || player.heldItem.item == Items.dye || player.heldItem.item == Items.book || player.heldItem.item == Items.quartz || player.heldItem.item == Items.golden_carrot || player.heldItem.item == Items.apple || player.heldItem.item == Items.record_blocks || player.heldItem.item == Blocks.ender_chest)
+                if (player.heldItem != null && (player.heldItem.displayName.contains(
+                        "Knife",
+                        ignoreCase = true
+                    ) || murderItems.contains(player.heldItem.item) || murderBlocks.contains(Item.getIdFromItem(player.heldItem.item)))
                 ) {
                     if (murder1 == null) {
                         if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
@@ -119,18 +165,11 @@ class MurderDetector : Module() {
 
         GL11.glBegin(GL11.GL_LINES)
 
-        for (player in mc.theWorld.loadedEntityList) {
-            if (player == murder1 && player != mc.thePlayer && player != null) {
-                var dist = (mc.thePlayer.getDistanceToEntity(murder1) * 2).toInt()
-                if (dist > 255) dist = 255
-                drawTraces(murder1, Color(255, 255, 255, 240), true)
-            }
-            if (player == murder2 && player != mc.thePlayer && player != null) {
-                var dist = (mc.thePlayer.getDistanceToEntity(murder2) * 2).toInt()
-                if (dist > 255) dist = 255
-                drawTraces(murder2, Color(255, 255, 255, 240), true)
-            }
-        }
+        if (murder1 != null && murder1 != mc.thePlayer)
+            drawTraces(murder1, Color(255, 255, 255, 240), true)
+
+        if (murder2 != null && murder2 != mc.thePlayer)
+            drawTraces(murder2, Color(255, 255, 255, 240), true)
 
         GL11.glEnd()
 
