@@ -499,7 +499,6 @@ class Text(
             "mcps",
             "rcps",
             "watchdogLastMin",
-            "staffLastMin",
             "wdStatus",
             "sessionTime",
             "worldTime"

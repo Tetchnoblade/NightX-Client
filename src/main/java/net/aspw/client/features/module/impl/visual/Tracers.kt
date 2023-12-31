@@ -30,6 +30,7 @@ class Tracers : Module() {
     private val colorRedValue = IntegerValue("R", 200, 0, 255)
     private val colorGreenValue = IntegerValue("G", 0, 0, 255)
     private val colorBlueValue = IntegerValue("B", 255, 0, 255)
+    private val alphaValue = IntegerValue("Alpha", 255, 0, 255)
 
     private val directLineValue = BoolValue("Directline", false)
     private val fovModeValue = ListValue("FOV-Mode", arrayOf("All", "Back", "Front"), "All")
@@ -61,17 +62,17 @@ class Tracers : Module() {
 
                 val colorMode = colorMode.get().lowercase(Locale.getDefault())
                 val color = when {
-                    EntityUtils.isFriend(entity) -> Color(0, 0, 255, 150)
+                    EntityUtils.isFriend(entity) -> Color(0, 0, 255, 180)
                     colorMode == "custom" -> Color(
                         colorRedValue.get(),
                         colorGreenValue.get(),
                         colorBlueValue.get(),
-                        150
+                        alphaValue.get()
                     )
 
-                    colorMode == "distancecolor" -> Color(255 - dist, dist, 0, 150)
+                    colorMode == "distancecolor" -> Color(255 - dist, dist, 0, alphaValue.get())
                     colorMode == "rainbow" -> ColorUtils.rainbow()
-                    else -> Color(255, 255, 255, 150)
+                    else -> Color(255, 255, 255, alphaValue.get())
                 }
 
                 drawTraces(entity, color, !directLineValue.get())
@@ -88,7 +89,7 @@ class Tracers : Module() {
         GlStateManager.resetColor()
     }
 
-    fun drawTraces(entity: Entity, color: Color, drawHeight: Boolean) {
+    private fun drawTraces(entity: Entity, color: Color, drawHeight: Boolean) {
         val x = (entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * mc.timer.renderPartialTicks
                 - mc.renderManager.renderPosX)
         val y = (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * mc.timer.renderPartialTicks

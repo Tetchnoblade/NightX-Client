@@ -353,10 +353,8 @@ public abstract class MixinEntityRenderer {
      */
     @Redirect(method = "updateCameraAndRender", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;inGameHasFocus:Z", opcode = GETFIELD))
     public boolean updateCameraAndRender(Minecraft minecraft) {
-        if (Objects.requireNonNull(Client.moduleManager.getModule(FreeLook.class)).getState()) {
-            if (!Objects.requireNonNull(Client.moduleManager.getModule(FreeLook.class)).getReverse().get())
-                return FreeLook.overrideMouse();
-            else return true;
+        if (Objects.requireNonNull(Client.moduleManager.getModule(FreeLook.class)).getState() && !Objects.requireNonNull(Client.moduleManager.getModule(FreeLook.class)).getReverse().get()) {
+            return FreeLook.overrideMouse();
         } else return mc.inGameHasFocus && Display.isActive();
     }
 

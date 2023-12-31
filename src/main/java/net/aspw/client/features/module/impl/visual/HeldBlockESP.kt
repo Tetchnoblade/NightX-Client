@@ -15,7 +15,7 @@ import net.minecraft.item.Item
 import net.minecraft.util.BlockPos
 import java.awt.Color
 
-@ModuleInfo(name = "HeldBlockESP", description = "", category = ModuleCategory.VISUAL)
+@ModuleInfo(name = "HeldBlockESP", spacedName = "Held Block ESP", description = "", category = ModuleCategory.VISUAL)
 class HeldBlockESP : Module() {
     private val rangeValue = IntegerValue("Range", 10, 1, 10, "m")
     private var pos: BlockPos? = null
@@ -56,6 +56,8 @@ class HeldBlockESP : Module() {
                         mc.thePlayer.posZ.toInt() + z
                     )
                     val block = BlockUtils.getBlock(blockPos) ?: continue
+
+                    if (mc.thePlayer.heldItem == null) return null
 
                     if (Block.getIdFromBlock(block) != Item.getIdFromItem(mc.thePlayer.heldItem.item)) continue
 
