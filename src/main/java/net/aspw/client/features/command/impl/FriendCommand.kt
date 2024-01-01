@@ -80,7 +80,7 @@ class FriendCommand : Command("friend", arrayOf("friends")) {
         if (args.isEmpty()) return emptyList()
 
         return when (args.size) {
-            1 -> listOf("add", "addall", "remove", "removeall", "list", "clear").filter { it.startsWith(args[0], true) }
+            1 -> listOf("add", "remove", "list", "clear").filter { it.startsWith(args[0], true) }
             2 -> {
                 when (args[0].lowercase(Locale.getDefault())) {
                     "add" -> {

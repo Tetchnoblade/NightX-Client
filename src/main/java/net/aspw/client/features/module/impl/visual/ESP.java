@@ -1,11 +1,15 @@
 package net.aspw.client.features.module.impl.visual;
 
+import net.aspw.client.Client;
 import net.aspw.client.event.EventTarget;
 import net.aspw.client.event.Render2DEvent;
 import net.aspw.client.features.module.Module;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.ModuleInfo;
+import net.aspw.client.features.module.impl.other.MurderDetector;
 import net.aspw.client.features.module.impl.targets.AntiBots;
+import net.aspw.client.features.module.impl.targets.AntiTeams;
+import net.aspw.client.util.EntityUtils;
 import net.aspw.client.util.render.BlendUtils;
 import net.aspw.client.util.render.RenderUtils;
 import net.aspw.client.value.BoolValue;
@@ -32,6 +36,7 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @ModuleInfo(name = "ESP", description = "", category = ModuleCategory.VISUAL)
 public final class ESP extends Module {
@@ -133,8 +138,21 @@ public final class ESP extends Module {
                     }
 
                     if (living && tagsValue.get()) {
+                        final MurderDetector murderDetector = Objects.requireNonNull(Client.moduleManager.getModule(MurderDetector.class));
+                        final AntiTeams antiTeams = Objects.requireNonNull(Client.moduleManager.getModule(AntiTeams.class));
                         entityLivingBase = (EntityLivingBase) entity;
-                        String entName = entityLivingBase.getDisplayName().getFormattedText();
+                        String entName;
+                        if (entity == murderDetector.getMurder1() || entity == murderDetector.getMurder2()) {
+                            entName = "§c[Murder] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
+                        } else if (EntityUtils.isFriend(entity)) {
+                            entName = "§e[Friend] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
+                        } else if (AntiBots.isBot(entityLivingBase)) {
+                            entName = "§c[Bot] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
+                        } else if (antiTeams.isInYourTeam(entityLivingBase)) {
+                            entName = "§e[Team] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
+                        } else {
+                            entName = entityLivingBase.getDisplayName().getFormattedText();
+                        }
                         drawScaledCenteredString(entName, posX + (endPosX - posX) / 2F, posY - 1F - mc.fontRendererObj.FONT_HEIGHT * fontScaleValue.get(), fontScaleValue.get(), -1);
                     }
                 }

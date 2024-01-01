@@ -20,8 +20,8 @@ class MurderDetector : Module() {
     private val chatValue = BoolValue("Chat", true)
     private val notifyValue = BoolValue("Notification", true)
 
-    private var murder1: EntityPlayer? = null
-    private var murder2: EntityPlayer? = null
+    var murder1: EntityPlayer? = null
+    var murder2: EntityPlayer? = null
 
     private val murderItems = mutableListOf(
         267,  // Items.iron_sword,
