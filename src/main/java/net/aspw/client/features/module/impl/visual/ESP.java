@@ -142,7 +142,7 @@ public final class ESP extends Module {
                         final AntiTeams antiTeams = Objects.requireNonNull(Client.moduleManager.getModule(AntiTeams.class));
                         entityLivingBase = (EntityLivingBase) entity;
                         String entName;
-                        if (entity == murderDetector.getMurder1() || entity == murderDetector.getMurder2()) {
+                        if (murderDetector.getState() && (entity == murderDetector.getMurder1() || entity == murderDetector.getMurder2())) {
                             entName = "§c[Murder] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
                         } else if (EntityUtils.isFriend(entity)) {
                             entName = "§e[Friend] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
