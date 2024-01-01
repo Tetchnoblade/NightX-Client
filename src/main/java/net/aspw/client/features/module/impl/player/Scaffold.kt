@@ -458,8 +458,13 @@ class Scaffold : Module() {
                     if (mc.thePlayer.onGround) {
                         if (towerTick == 0 || towerTick == 5) {
                             if (watchdogTowerBoostValue.get()) {
-                                mc.thePlayer.motionX *= 1.71
-                                mc.thePlayer.motionZ *= 1.71
+                                if (!mc.thePlayer.isSprinting) {
+                                    mc.thePlayer.motionX *= 1.71
+                                    mc.thePlayer.motionZ *= 1.71
+                                } else {
+                                    mc.thePlayer.motionX *= 1.51
+                                    mc.thePlayer.motionZ *= 1.51
+                                }
                             }
                             mc.thePlayer.motionY = 0.42
                             towerTick = 1

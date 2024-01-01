@@ -31,7 +31,6 @@ class Jesus : Module() {
             "AACFly",
             "AAC3.3.11",
             "AAC4.2.1",
-            "Horizon1.4.6",
             "Twillight",
             "MatrixFast",
             "MatrixDolphin",
@@ -107,14 +106,6 @@ class Jesus : Module() {
                     mc.thePlayer.jumpMovementFactor = 0.08f
                     if (mc.thePlayer.fallDistance > 0) return else if (mc.thePlayer.isInWater) mc.gameSettings.keyBindJump.pressed =
                         true
-                }
-            }
-
-            "horizon1.4.6" -> if (mc.thePlayer.isInWater) {
-                MovementUtils.strafe()
-                mc.gameSettings.keyBindJump.pressed = true
-                if (MovementUtils.isMoving()) if (!mc.thePlayer.onGround) {
-                    mc.thePlayer.motionY += 0.13
                 }
             }
 
