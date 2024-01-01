@@ -11,20 +11,49 @@ import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.Items
 import net.minecraft.item.Item
 import java.awt.Color
 
 @ModuleInfo(name = "MurderDetector", spacedName = "Murder Detector", description = "", category = ModuleCategory.OTHER)
 class MurderDetector : Module() {
-    private val showText = BoolValue("Murder-ShowText", true)
-    private val chatValue = BoolValue("Murder-Chat", true)
-    private val notifyValue = BoolValue("Murder-Notification", true)
+    private val showText = BoolValue("ShowText", true)
+    private val chatValue = BoolValue("Chat", true)
+    private val notifyValue = BoolValue("Notification", true)
 
     private var murder1: EntityPlayer? = null
     private var murder2: EntityPlayer? = null
 
-    private val murderBlocks = mutableListOf(
+    private val murderItems = mutableListOf(
+        267,  // Items.iron_sword,
+        272,  // Items.stone_sword,
+        256,  // Items.iron_shovel,
+        280,  // Items.stick,
+        271,  // Items.wooden_axe,
+        268,  // Items.wooden_sword,
+        273,  // Items.stone_shovel,
+        369,  // Items.blaze_rod,
+        277,  // Items.diamond_shovel,
+        359,  // Items.shears,
+        400,  // Items.pumpkin_pie,
+        285,  // Items.golden_pickaxe,
+        398,  // Items.carrot_on_a_stick,
+        357,  // Items.cookie,
+        279,  // Items.diamond_axe,
+        283,  // Items.golden_sword,
+        276,  // Items.diamond_sword,
+        293,  // Items.diamond_hoe,
+        421,  // Items.name_tag,
+        333,  // Items.boat,
+        409,  // Items.prismarine_shard,
+        349,  // Items.fish,
+        364,  // Items.cooked_beef,
+        382,  // Items.speckled_melon,
+        351,  // Items.dye,
+        340,  // Items.book,
+        406,  // Items.quartz,
+        396,  // Items.golden_carrot,
+        260,  // Items.apple,
+        2258, // Items.record_blocks
         76,   // Blocks.redstone_torch,
         32,   // Blocks.deadbush,
         19,   // Blocks.sponge,
@@ -32,39 +61,6 @@ class MurderDetector : Module() {
         175,  // Blocks.double_plant,
         405,  // Blocks.nether_brick,
         130   // Blocks.ender_chest
-    )
-
-    private val murderItems = mutableListOf<Item>(
-        Items.iron_sword,
-        Items.stone_sword,
-        Items.iron_shovel,
-        Items.stick,
-        Items.wooden_axe,
-        Items.wooden_sword,
-        Items.stone_shovel,
-        Items.blaze_rod,
-        Items.diamond_shovel,
-        Items.shears,
-        Items.pumpkin_pie,
-        Items.golden_pickaxe,
-        Items.carrot_on_a_stick,
-        Items.cookie,
-        Items.diamond_axe,
-        Items.golden_sword,
-        Items.diamond_sword,
-        Items.diamond_hoe,
-        Items.name_tag,
-        Items.boat,
-        Items.prismarine_shard,
-        Items.fish,
-        Items.cooked_beef,
-        Items.speckled_melon,
-        Items.dye,
-        Items.book,
-        Items.quartz,
-        Items.golden_carrot,
-        Items.apple,
-        Items.record_blocks
     )
 
     override fun onDisable() {
@@ -86,7 +82,7 @@ class MurderDetector : Module() {
                 if (player.heldItem != null && (player.heldItem.displayName.contains(
                         "Knife",
                         ignoreCase = true
-                    ) || murderItems.contains(player.heldItem.item) || murderBlocks.contains(Item.getIdFromItem(player.heldItem.item)))
+                    ) || murderItems.contains(Item.getIdFromItem(player.heldItem.item)))
                 ) {
                     if (murder1 == null) {
                         if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
