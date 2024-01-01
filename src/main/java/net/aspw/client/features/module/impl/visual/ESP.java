@@ -140,15 +140,12 @@ public final class ESP extends Module {
                     if (living && tagsValue.get()) {
                         final MurderDetector murderDetector = Objects.requireNonNull(Client.moduleManager.getModule(MurderDetector.class));
                         final AntiTeams antiTeams = Objects.requireNonNull(Client.moduleManager.getModule(AntiTeams.class));
-                        final AntiBots antiBots = Objects.requireNonNull(Client.moduleManager.getModule(AntiBots.class));
                         entityLivingBase = (EntityLivingBase) entity;
                         String entName;
                         if (entity == murderDetector.getMurder1() || entity == murderDetector.getMurder2()) {
                             entName = "§c[Murder] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
                         } else if (EntityUtils.isFriend(entity)) {
                             entName = "§e[Friend] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
-                        } else if (antiBots.getState() && AntiBots.isBot(entityLivingBase)) {
-                            entName = "§c[Bot] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
                         } else if (antiTeams.getState() && antiTeams.isInYourTeam(entityLivingBase)) {
                             entName = "§e[Team] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
                         } else {
