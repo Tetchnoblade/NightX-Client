@@ -64,6 +64,8 @@ class Scaffold : Module() {
         ), "ConstantMotion"
     ) { allowTower.get() }
     private val towerTimerValue = FloatValue("TowerTimer", 1f, 0.1f, 1.4f) { allowTower.get() }
+    private val watchdogTowerBoostValue =
+        BoolValue("WatchdogTowerBoost", true) { allowTower.get() && towerModeValue.get().equals("Watchdog", true) }
 
     // Jump mode
     private val jumpMotionValue = FloatValue("JumpMotion", 0.42f, 0.3681289f, 0.79f) {
@@ -363,6 +365,11 @@ class Scaffold : Module() {
             faceBlock = false
             return
         }
+        if (!canTower && towerModeValue.get().equals("watchdog", true) && mc.thePlayer.ticksExisted % 2 == 0) {
+            wdTick = 5
+            towerTick = 0
+            wdSpoof = false
+        }
         if (faceBlock)
             place()
         if (allowTower.get() && GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && blocksAmount > 0 && MovementUtils.isRidingBlock() && (!MovementUtils.isMoving() && !towerMove.get() || towerMove.get())
@@ -450,26 +457,34 @@ class Scaffold : Module() {
                     }
                     if (mc.thePlayer.onGround) {
                         if (towerTick == 0 || towerTick == 5) {
+                            if (watchdogTowerBoostValue.get()) {
+                                mc.thePlayer.motionX *= 1.71
+                                mc.thePlayer.motionZ *= 1.71
+                            }
                             mc.thePlayer.motionY = 0.42
                             towerTick = 1
                         }
-                    } else if (mc.thePlayer.motionY > -0.0784000015258789) {
-                        val n = Math.round(mc.thePlayer.posY % 1.0 * 100.0).toInt()
-                        when (n) {
-                            42 -> {
-                                mc.thePlayer.motionY = 0.33
-                            }
+                    }
+                    if (mc.thePlayer.motionY > -0.0784000015258789) {
+                        if (!mc.thePlayer.onGround) {
+                            val n = Math.round(mc.thePlayer.posY % 1.0 * 100.0).toInt()
+                            when (n) {
+                                42 -> {
+                                    mc.thePlayer.motionY = 0.33
+                                }
 
-                            75 -> {
-                                mc.thePlayer.motionY = 1.0 - mc.thePlayer.posY % 1.0
-                                wdSpoof = true
-                            }
+                                75 -> {
+                                    mc.thePlayer.motionY = 1.0 - mc.thePlayer.posY % 1.0
+                                    wdSpoof = true
+                                }
 
-                            0 -> {
-                                mc.thePlayer.motionY = -0.0784000015258789
+                                0 -> {
+                                    if (MovementUtils.isRidingBlock())
+                                        mc.thePlayer.motionY = -0.0484000015258789
+                                }
                             }
                         }
-                    }
+                    } else mc.thePlayer.jump()
                 }
 
                 "blocksmc" -> {
@@ -1224,7 +1239,6 @@ class Scaffold : Module() {
      * @return
      */
     private fun search(blockPosition: BlockPos, checks: Boolean): Boolean {
-        faceBlock = false
         if (!isReplaceable(blockPosition)) return false
         val staticYawMode = rotationLookupValue.get().equals("AAC", ignoreCase = true) || rotationLookupValue.get()
             .equals("same", ignoreCase = true) && (rotationModeValue.get()
