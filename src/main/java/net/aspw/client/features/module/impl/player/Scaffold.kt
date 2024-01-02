@@ -485,7 +485,7 @@ class Scaffold : Module() {
 
                                 0 -> {
                                     if (MovementUtils.isRidingBlock())
-                                        mc.thePlayer.motionY = -0.0484000015258789
+                                        mc.thePlayer.motionY = -0.0784000015258789
                                 }
                             }
                         }
