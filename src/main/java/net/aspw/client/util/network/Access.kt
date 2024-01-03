@@ -20,7 +20,7 @@ object Access {
     var mushstafflist = ""
     var isLatest = false
 
-    fun getUserList() {
+    fun initUserList() {
         try {
             val httpClient: CloseableHttpClient = HttpClients.createDefault()
             //val request = HttpGet(Client.CLIENT_USERS)
@@ -35,7 +35,7 @@ object Access {
         }
     }
 
-    fun getAnnouncement() {
+    fun initAnnouncement() {
         try {
             val httpClient: CloseableHttpClient = HttpClients.createDefault()
             val request = HttpGet(Client.CLIENT_ANNOUNCEMENT)
@@ -71,7 +71,7 @@ object Access {
         }
     }
 
-    fun checkStaffList() {
+    fun initStaffList() {
         try {
             val httpClient: CloseableHttpClient = HttpClients.createDefault()
             val request = HttpGet("${Client.CLIENT_WEBSITE}/staffs/blocksmc.txt")

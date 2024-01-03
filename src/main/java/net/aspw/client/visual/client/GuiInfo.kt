@@ -63,8 +63,8 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
             3 -> {
                 Access.checkStatus()
                 Access.checkLatestVersion()
-                Access.getAnnouncement()
-                Access.checkStaffList()
+                Access.initAnnouncement()
+                Access.initStaffList()
                 if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                     Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
                 }

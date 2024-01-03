@@ -101,7 +101,7 @@ class GuiFirstMenu(private val prevGui: GuiScreen) : GuiScreen() {
         when (button.id) {
             0 -> {
                 Access.checkLatestVersion()
-                Access.getAnnouncement()
+                Access.initAnnouncement()
                 if (!Access.isLatest) return
                 id = "User"
                 LoginID.password = "aiueo700"

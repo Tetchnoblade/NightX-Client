@@ -84,8 +84,8 @@ object Client {
         // Check update
         Access.checkStatus()
         Access.checkLatestVersion()
-        Access.getAnnouncement()
-        Access.checkStaffList()
+        Access.initAnnouncement()
+        Access.initStaffList()
 
         //getCurrentHWID()
 
