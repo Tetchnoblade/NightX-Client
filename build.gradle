@@ -5,6 +5,7 @@ plugins {
     id "com.github.johnrengelman.shadow" version "6.1.0"
     id "net.minecraftforge.gradle.forge"
     id "org.spongepowered.mixin"
+    id "maven-publish"
 }
 
 repositories {
@@ -37,7 +38,7 @@ minecraft {
     def args = [
             '-Dfml.coreMods.load=net.aspw.client.injection.forge.MixinLoader',
             '-Ddev-mode',
-            '-javaagent:C:\\Users\\0kcab\\Documents\\GitHub\\NightX-Client\\libs\\SpongePowered-Mixin-0.7.11-SNAPSHOT.jar',
+            "-javaagent:${project.rootDir}\\libs\\SpongePowered-Mixin-0.7.11-SNAPSHOT.jar",
             '-Dmixin.hotSwap=true',
             '-Dmixin.checks.interfaces=true'
     ]
@@ -156,7 +157,8 @@ jar {
             "FMLAT": "client_at.cfg",
     )
 
-    enabled = false
+    setArchiveClassifier("dev")
+    enabled = true
 }
 
 mixin {
@@ -171,12 +173,6 @@ reobf {
     }
 }
 
-tasks.reobfShadowJar.mustRunAfter shadowJar
-
-tasks.reobfJar.dependsOn(shadowJar)
-
-jar.dependsOn("shadowJar")
-
 configurations {
     compileClasspath {
         attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
@@ -185,3 +181,18 @@ configurations {
         attributes.attribute(Attribute.of("org.gradle.jvm.environment", String), "standard-jvm")
     }
 }
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = archivesBaseName
+            version = version
+
+            from components.java
+        }
+    }
+}
+
+tasks.reobfShadowJar.mustRunAfter shadowJar
+tasks.reobfJar.dependsOn(shadowJar)
