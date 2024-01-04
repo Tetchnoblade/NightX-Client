@@ -183,8 +183,7 @@ class ModuleManager : Listenable {
             DiscordRPC::class.java,
             HeldBlockESP::class.java,
             MurderDetector::class.java,
-            SmartRange::class.java,
-            AutoRod::class.java
+            SmartRange::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")

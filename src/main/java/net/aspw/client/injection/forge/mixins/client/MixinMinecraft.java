@@ -102,6 +102,11 @@ public abstract class MixinMinecraft {
         ProtocolBase.init(ProtocolMod.PLATFORM);
     }
 
+    @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER), remap = false)
+    private void createDisplay(CallbackInfo callbackInfo) {
+        Display.setTitle(Client.CLIENT_BEST + " Client | " + Client.CLIENT_VERSION);
+    }
+
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
     private void clearLoadedMaps(WorldClient worldClientIn, String loadingMessage, CallbackInfo ci) {
         if (worldClientIn != this.theWorld) {
