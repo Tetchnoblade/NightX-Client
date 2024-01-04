@@ -102,7 +102,7 @@ public abstract class MixinMinecraft {
         ProtocolBase.init(ProtocolMod.PLATFORM);
     }
 
-    @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER), remap = false)
+    @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER))
     private void createDisplay(CallbackInfo callbackInfo) {
         Display.setTitle(Client.CLIENT_BEST + " Client | " + Client.CLIENT_VERSION);
     }
