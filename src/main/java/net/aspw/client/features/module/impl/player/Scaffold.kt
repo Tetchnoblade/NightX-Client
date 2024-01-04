@@ -472,8 +472,7 @@ class Scaffold : Module() {
                     }
                     if (mc.thePlayer.motionY > -0.0784000015258789) {
                         if (!mc.thePlayer.onGround) {
-                            val n = Math.round(mc.thePlayer.posY % 1.0 * 100.0).toInt()
-                            when (n) {
+                            when ((mc.thePlayer.posY % 1.0 * 100.0).roundToInt()) {
                                 42 -> {
                                     mc.thePlayer.motionY = 0.33
                                 }
@@ -933,7 +932,7 @@ class Scaffold : Module() {
         val mode = modeValue.get()
         val eventState = event.eventState
 
-        // i think patches should be here instead
+        // I think patches should be here instead
         for (i in 0..7) {
             if (mc.thePlayer.inventory.mainInventory[i] != null
                 && mc.thePlayer.inventory.mainInventory[i].stackSize <= 0
@@ -1098,7 +1097,13 @@ class Scaffold : Module() {
                 if (search(blockPosition.add(x * i, 0, z * i), false)) return
             }
         } else {
-            for (x in -1..1) for (z in -1..1) if (search(blockPosition.add(x, 0, z), !shouldGoDown)) return
+            for (x in -1..1) {
+                for (z in -1..1) {
+                    if (search(blockPosition.add(x, 0, z), !shouldGoDown)) {
+                        return
+                    }
+                }
+            }
         }
     }
 

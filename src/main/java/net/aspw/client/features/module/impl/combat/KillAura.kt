@@ -28,7 +28,6 @@ import net.aspw.client.value.ListValue
 import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.client.settings.KeyBinding
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
@@ -203,8 +202,6 @@ class KillAura : Module() {
                 "1.9+",
                 "AfterTick",
                 "NCP",
-                "HurtTime",
-                "Click",
                 "OldHypixel",
                 "OldIntave",
                 "Fake",
@@ -954,75 +951,7 @@ class KillAura : Module() {
 
 
     private fun startBlocking(interactEntity: Entity, interact: Boolean) {
-        when (autoBlockModeValue.get().lowercase()) {
-            "none" -> {
-                fakeBlock = false
-            }
-
-            "fake" -> {
-                fakeBlock = true
-            }
-
-            "ncp" -> {
-                PacketUtils.sendPacketNoEvent(
-                    C08PacketPlayerBlockPlacement(
-                        BlockPos(-1, -1, -1),
-                        255,
-                        null,
-                        0.0f,
-                        0.0f,
-                        0.0f
-                    )
-                )
-                blockingStatus = true
-            }
-
-            "1.9+" -> {
-                if (ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8)) {
-                    val useItem =
-                        PacketWrapper.create(29, null, Via.getManager().connectionManager.connections.iterator().next())
-                    useItem.write(Type.VAR_INT, 1)
-                    PacketUtil.sendToServer(useItem, Protocol1_8To1_9::class.java, true, true)
-                }
-            }
-
-            "click" -> {
-                KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, true)
-            }
-
-            "oldintave" -> {
-                mc.netHandler.addToSendQueue(C09PacketHeldItemChange((mc.thePlayer.inventory.currentItem + 1) % 9))
-                mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
-            }
-
-            "hurttime" -> {
-                if (mc.thePlayer.hurtTime > 0) {
-                    if (!mc.thePlayer.onGround)
-                        KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, true)
-                } else {
-                    KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
-                }
-            }
-
-            "packet" -> {
-                mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
-                blockingStatus = true
-            }
-
-            "oldhypixel" -> {
-                PacketUtils.sendPacketNoEvent(
-                    C08PacketPlayerBlockPlacement(
-                        BlockPos(-1, -1, -1),
-                        255,
-                        mc.thePlayer.inventory.getCurrentItem(),
-                        0.0f,
-                        0.0f,
-                        0.0f
-                    )
-                )
-                blockingStatus = true
-            }
-        }
+        if (blockingStatus) return
 
         if (interact) {
             val positionEye = mc.renderViewEntity?.getPositionEyes(1F)
@@ -1055,6 +984,63 @@ class KillAura : Module() {
             )
             mc.netHandler.addToSendQueue(C02PacketUseEntity(interactEntity, C02PacketUseEntity.Action.INTERACT))
         }
+
+        when (autoBlockModeValue.get().lowercase()) {
+            "none" -> {
+                fakeBlock = false
+            }
+
+            "fake" -> {
+                fakeBlock = true
+            }
+
+            "ncp" -> {
+                PacketUtils.sendPacketNoEvent(
+                    C08PacketPlayerBlockPlacement(
+                        BlockPos(-1, -1, -1),
+                        255,
+                        null,
+                        0.0f,
+                        0.0f,
+                        0.0f
+                    )
+                )
+                blockingStatus = true
+            }
+
+            "1.9+" -> {
+                if (ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8)) {
+                    val useItem =
+                        PacketWrapper.create(29, null, Via.getManager().connectionManager.connections.iterator().next())
+                    useItem.write(Type.VAR_INT, 1)
+                    PacketUtil.sendToServer(useItem, Protocol1_8To1_9::class.java, true, true)
+                }
+            }
+
+            "oldintave" -> {
+                mc.netHandler.addToSendQueue(C09PacketHeldItemChange((mc.thePlayer.inventory.currentItem + 1) % 9))
+                mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
+            }
+
+            "packet" -> {
+                mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
+                blockingStatus = true
+            }
+
+            "oldhypixel" -> {
+                PacketUtils.sendPacketNoEvent(
+                    C08PacketPlayerBlockPlacement(
+                        BlockPos(-1, -1, -1),
+                        255,
+                        mc.thePlayer.inventory.getCurrentItem(),
+                        0.0f,
+                        0.0f,
+                        0.0f
+                    )
+                )
+                blockingStatus = true
+            }
+        }
     }
 
     /**
@@ -1066,10 +1052,6 @@ class KillAura : Module() {
         currentTarget = null
         if (endTimer.hasTimePassed(2)) {
             when (autoBlockModeValue.get().lowercase()) {
-                "click", "hurttime" -> {
-                    KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.keyCode, false)
-                }
-
                 "oldhypixel" -> {
                     PacketUtils.sendPacketNoEvent(
                         C07PacketPlayerDigging(

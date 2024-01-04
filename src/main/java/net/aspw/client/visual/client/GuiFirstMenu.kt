@@ -57,7 +57,7 @@ class GuiFirstMenu(private val prevGui: GuiScreen) : GuiScreen() {
             0xffffff
         )
         if (Access.isLatest) {
-            if (Client.isInDev)
+            if (Client.isInDevelopment)
                 this.drawCenteredString(mc.fontRendererObj, "Your Client is §eLatest Beta!", width / 2, 96, 0xffffff)
             else this.drawCenteredString(
                 mc.fontRendererObj,

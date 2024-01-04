@@ -11,6 +11,9 @@ import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 
+fun Float.toRadians() = this * 0.017453292f
+fun Double.toRadians() = this * 0.017453292
+
 /**
  * Allows to get the distance between the current entity and [entity] from the nearest corner of the bounding box
  */

@@ -10,7 +10,7 @@ object Access {
 
     //var userList = ""
     var canConnect = false
-    var announcement = ""
+    var announcementText = ""
     var latestVersion = ""
     var discord = ""
     var discordApp = ""
@@ -42,7 +42,7 @@ object Access {
             val response = httpClient.execute(request)
             val entity = response.entity
             val content = EntityUtils.toString(entity)
-            announcement = content
+            announcementText = content
             EntityUtils.consume(entity)
             response.close()
             httpClient.close()

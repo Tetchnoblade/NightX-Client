@@ -31,7 +31,7 @@ import net.minecraft.util.ResourceLocation
 object Client {
 
     // Client information
-    const val isInDev = true
+    const val isInDevelopment = true
 
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightWare"
@@ -44,7 +44,7 @@ object Client {
     const val CLIENT_CONFIGLIST = "$CLIENT_WEBSITE/configs/string/list.txt"
     const val CLIENT_CONFIGS = "$CLIENT_WEBSITE/configs/"
     val CLIENT_LATEST =
-        if (!isInDev) "$CLIENT_WEBSITE/database/latestversion.txt" else "$CLIENT_WEBSITE/database/betaversion.txt"
+        if (!isInDevelopment) "$CLIENT_WEBSITE/database/latestversion.txt" else "$CLIENT_WEBSITE/database/betaversion.txt"
     //const val CLIENT_USERS = "$CLIENT_WEBSITE/users/list.txt"
 
     var isStarting = false

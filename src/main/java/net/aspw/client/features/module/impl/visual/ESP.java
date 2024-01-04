@@ -143,13 +143,13 @@ public final class ESP extends Module {
                         entityLivingBase = (EntityLivingBase) entity;
                         String entName;
                         if (murderDetector.getState() && (entity == murderDetector.getMurder1() || entity == murderDetector.getMurder2())) {
-                            entName = "§c[Murder] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
+                            entName = "§c[Murder] §7- §r" + entityLivingBase.getName();
                         } else if (EntityUtils.isFriend(entity)) {
-                            entName = "§e[Friend] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
+                            entName = "§e[Friend] §7- §r" + entityLivingBase.getName();
                         } else if (antiTeams.getState() && antiTeams.isInYourTeam(entityLivingBase)) {
-                            entName = "§e[Team] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
+                            entName = "§e[Team] §7- §r" + entityLivingBase.getName();
                         } else {
-                            entName = entityLivingBase.getDisplayName().getFormattedText();
+                            entName = entityLivingBase.getName();
                         }
                         drawScaledCenteredString(entName, posX + (endPosX - posX) / 2F, posY - 1F - mc.fontRendererObj.FONT_HEIGHT * fontScaleValue.get(), fontScaleValue.get(), -1);
                     }

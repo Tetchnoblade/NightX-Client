@@ -191,8 +191,7 @@ class DropDown : Style() {
                             moduleElement.settingsWidth && mouseY >= yPos + 2 && mouseY <= yPos + 14
                         ) {
                             if (Mouse.isButtonDown(0) && moduleElement.isntPressed()) {
-                                val boolValue = value
-                                boolValue.set(!boolValue.get())
+                                value.set(!value.get())
                             }
                         }
                         GlStateManager.resetColor()
@@ -202,7 +201,6 @@ class DropDown : Style() {
                         )
                         yPos += 12
                     } else if (value is ListValue) {
-                        val listValue = value
                         val text = value.name
                         val textWidth = Fonts.fontSFUI37.getStringWidth(text).toFloat()
                         if (moduleElement.settingsWidth < textWidth + 16) moduleElement.settingsWidth = textWidth + 16
@@ -215,15 +213,15 @@ class DropDown : Style() {
                         )
                         GlStateManager.resetColor()
                         Fonts.fontSFUI37.drawString(
-                            "§c" + text,
+                            "§c$text",
                             moduleElement.width + 6,
                             yPos + 4,
                             0xffffff
                         )
                         Fonts.fontSFUI37.drawString(
-                            if (listValue.openList) "-" else "+",
+                            if (value.openList) "-" else "+",
                             (moduleElement.width +
-                                    moduleElement.settingsWidth - if (listValue.openList) 5 else 6).toInt(),
+                                    moduleElement.settingsWidth - if (value.openList) 5 else 6).toInt(),
                             yPos + 4,
                             0xffffff
                         )
@@ -231,15 +229,15 @@ class DropDown : Style() {
                             moduleElement.settingsWidth && mouseY >= yPos + 2 && mouseY <= yPos + 14
                         ) {
                             if (Mouse.isButtonDown(0) && moduleElement.isntPressed()) {
-                                listValue.openList = !listValue.openList
+                                value.openList = !value.openList
                             }
                         }
                         yPos += 12
-                        for (valueOfList in listValue.values) {
+                        for (valueOfList in value.values) {
                             val textWidth2 = Fonts.fontSFUI37.getStringWidth(">$valueOfList").toFloat()
                             if (moduleElement.settingsWidth < textWidth2 + 12) moduleElement.settingsWidth =
                                 textWidth2 + 12
-                            if (listValue.openList) {
+                            if (value.openList) {
                                 RenderUtils.drawRect(
                                     (moduleElement.width + 4).toFloat(),
                                     (yPos + 2).toFloat(),
@@ -251,7 +249,7 @@ class DropDown : Style() {
                                     moduleElement.settingsWidth && mouseY >= yPos + 2 && mouseY <= yPos + 14
                                 ) {
                                     if (Mouse.isButtonDown(0) && moduleElement.isntPressed()) {
-                                        listValue.set(valueOfList)
+                                        value.set(valueOfList)
                                     }
                                 }
                                 GlStateManager.resetColor()
@@ -260,7 +258,7 @@ class DropDown : Style() {
                                     valueOfList.uppercase(Locale.getDefault()),
                                     moduleElement.width + 14,
                                     yPos + 4,
-                                    if (listValue.get() != null && listValue.get()
+                                    if (value.get()
                                             .equals(valueOfList, ignoreCase = true)
                                     ) guiColor else Int.MAX_VALUE
                                 )
@@ -268,8 +266,7 @@ class DropDown : Style() {
                             }
                         }
                     } else if (value is FloatValue) {
-                        val floatValue = value
-                        val text = value.name + "§f: §c" + round(floatValue.get())
+                        val text = value.name + "§f: §c" + round(value.get())
                         val textWidth = Fonts.fontSFUI37.getStringWidth(text).toFloat()
                         if (moduleElement.settingsWidth < textWidth + 8) moduleElement.settingsWidth = textWidth + 8
                         RenderUtils.drawRect(
@@ -284,7 +281,7 @@ class DropDown : Style() {
                             moduleElement.width + moduleElement.settingsWidth - 4, (yPos + 19).toFloat(), Int.MAX_VALUE
                         )
                         val sliderValue = moduleElement.width + (moduleElement.settingsWidth - 12) *
-                                (floatValue.get() - floatValue.minimum) / (floatValue.maximum - floatValue.minimum)
+                                (value.get() - value.minimum) / (value.maximum - value.minimum)
                         RenderUtils.drawRect(
                             8 + sliderValue, (yPos + 15).toFloat(), sliderValue + 11, (yPos + 21).toFloat(),
                             guiColor
@@ -296,7 +293,7 @@ class DropDown : Style() {
                                     0.0,
                                     1.0
                                 )
-                                floatValue.set(round((floatValue.minimum + (floatValue.maximum - floatValue.minimum) * i).toFloat()).toFloat())
+                                value.set(round((value.minimum + (value.maximum - value.minimum) * i).toFloat()).toFloat())
                             }
                         }
                         GlStateManager.resetColor()
@@ -308,9 +305,8 @@ class DropDown : Style() {
                         )
                         yPos += 22
                     } else if (value is IntegerValue) {
-                        val integerValue = value
                         val text =
-                            value.name + "§f: §c" + if (value is BlockValue) getBlockName(integerValue.get()) + " (" + integerValue.get() + ")" else integerValue.get()
+                            value.name + "§f: §c" + if (value is BlockValue) getBlockName(value.get()) + " (" + value.get() + ")" else value.get()
                         val textWidth = Fonts.fontSFUI37.getStringWidth(text).toFloat()
                         if (moduleElement.settingsWidth < textWidth + 8) moduleElement.settingsWidth = textWidth + 8
                         RenderUtils.drawRect(
@@ -328,7 +324,7 @@ class DropDown : Style() {
                             Int.MAX_VALUE
                         )
                         val sliderValue = moduleElement.width + (moduleElement.settingsWidth - 12) *
-                                (integerValue.get() - integerValue.minimum) / (integerValue.maximum - integerValue.minimum)
+                                (value.get() - value.minimum) / (value.maximum - value.minimum)
                         RenderUtils.drawRect(
                             8 + sliderValue,
                             (yPos + 15).toFloat(),
@@ -344,7 +340,7 @@ class DropDown : Style() {
                                     ((mouseX - moduleElement.width - 8) /
                                             (moduleElement.settingsWidth - 12)).toDouble(), 0.0, 1.0
                                 )
-                                integerValue.set((integerValue.minimum + (integerValue.maximum - integerValue.minimum) * i).toInt())
+                                value.set((value.minimum + (value.maximum - value.minimum) * i).toInt())
                             }
                         }
                         GlStateManager.resetColor()
@@ -356,8 +352,7 @@ class DropDown : Style() {
                         )
                         yPos += 22
                     } else if (value is FontValue) {
-                        val fontValue = value
-                        val fontRenderer = fontValue.get()
+                        val fontRenderer = value.get()
                         RenderUtils.drawRect(
                             (moduleElement.width + 4).toFloat(),
                             (yPos + 2).toFloat(),
@@ -367,9 +362,8 @@ class DropDown : Style() {
                         )
                         var displayString = "Font: Unknown"
                         if (fontRenderer is GameFontRenderer) {
-                            val liquidFontRenderer = fontRenderer
                             displayString =
-                                "Font: " + liquidFontRenderer.defaultFont.font.name + " - " + liquidFontRenderer.defaultFont.font.size
+                                "Font: " + fontRenderer.defaultFont.font.name + " - " + fontRenderer.defaultFont.font.size
                         } else if (fontRenderer === Fonts.minecraftFont) displayString = "Font: Minecraft" else {
                             val objects = Fonts.getFontDetails(fontRenderer)
                             if (objects != null) {
@@ -397,7 +391,7 @@ class DropDown : Style() {
                                     if (font === fontRenderer) {
                                         i++
                                         if (i >= fonts.size) i = 0
-                                        fontValue.set(fonts[i])
+                                        value.set(fonts[i])
                                         break
                                     }
                                     i++
@@ -410,7 +404,7 @@ class DropDown : Style() {
                                         i--
                                         if (i >= fonts.size) i = 0
                                         if (i < 0) i = fonts.size - 1
-                                        fontValue.set(fonts[i])
+                                        value.set(fonts[i])
                                         break
                                     }
                                     i--
@@ -456,7 +450,7 @@ class DropDown : Style() {
     }
 
     private fun round(f: Float): BigDecimal {
-        var bd = BigDecimal(java.lang.Float.toString(f))
+        var bd = BigDecimal(f.toString())
         bd = bd.setScale(2, 4)
         return bd
     }
@@ -465,6 +459,6 @@ class DropDown : Style() {
         val r = color.red - hover * 2
         val g = color.green - hover * 2
         val b = color.blue - hover * 2
-        return Color(Math.max(r, 0), Math.max(g, 0), Math.max(b, 0), color.alpha)
+        return Color(r.coerceAtLeast(0), g.coerceAtLeast(0), b.coerceAtLeast(0), color.alpha)
     }
 }

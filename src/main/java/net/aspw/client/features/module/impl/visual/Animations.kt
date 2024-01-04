@@ -66,7 +66,7 @@ class Animations : Module() {
                 "1.8",
                 "Flux",
                 "Smooth"
-            ), "1.7"
+            ), "1.8"
         )
 
         @JvmField

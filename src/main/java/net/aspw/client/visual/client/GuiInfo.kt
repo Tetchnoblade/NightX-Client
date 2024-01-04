@@ -39,8 +39,8 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
             -1
         )
         Fonts.minecraftFont.drawString(
-            Access.announcement,
-            width - 4 - Fonts.minecraftFont.getStringWidth(Access.announcement),
+            Access.announcementText,
+            width - 4 - Fonts.minecraftFont.getStringWidth(Access.announcementText),
             13,
             -1
         )
