@@ -278,6 +278,7 @@ class KillAura : Module() {
         prevTargetEntities.clear()
         attackTimer.reset()
         clicks = 0
+        reBlockTimer.reset()
         stopBlocking()
     }
 
@@ -295,7 +296,8 @@ class KillAura : Module() {
                 }
                 if (reBlockTimer.hasTimePassed(25))
                     reBlockTimer.reset()
-            } else reBlockTimer.reset()
+            } else if (reBlockTimer.hasTimePassed(1))
+                reBlockTimer.reset()
         }
 
         if (event.eventState == EventState.POST) {
@@ -763,7 +765,7 @@ class KillAura : Module() {
 
         markEntity = entity
 
-        if (autoBlockModeValue.get().equals("vanilla", true)) {
+        if (autoBlockModeValue.get().equals("vanilla", true) || autoBlockModeValue.get().equals("1.9+", true)) {
             if (blockingStatus && canBlock && endTimer.hasTimePassed(2)) {
                 blockingStatus = false
                 PacketUtils.sendPacketNoEvent(
