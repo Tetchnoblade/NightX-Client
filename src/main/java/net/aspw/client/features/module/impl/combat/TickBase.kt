@@ -1,71 +1,56 @@
 package net.aspw.client.features.module.impl.combat
 
-import net.aspw.client.event.AttackEvent
-import net.aspw.client.event.EventTarget
-import net.aspw.client.event.UpdateEvent
-import net.aspw.client.event.WorldEvent
+import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.EntityUtils
 import net.aspw.client.util.extensions.getDistanceToEntityBox
+import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
-import net.aspw.client.value.ListValue
-import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.network.play.server.S08PacketPlayerPosLook
+import net.minecraft.network.play.server.S12PacketEntityVelocity
 import kotlin.random.Random
 
 @ModuleInfo(
-    name = "SmartRange", spacedName = "Smart Range", description = "",
+    name = "TickBase", spacedName = "Tick Base", description = "",
     category = ModuleCategory.COMBAT
 )
-class SmartRange : Module() {
+class TickBase : Module() {
+
     private var playerTicks = 0
     private var smartTick = 0
     private var cooldownTick = 0
 
-    // Condition to confirm
-    private var confirmTick = false
-    private var confirmMove = false
-
     // Condition to prevent getting timer speed stuck
     private var confirmAttack = false
 
-    private val timerBoostMode = ListValue("TimerMode", arrayOf("Normal", "Smart"), "Normal")
+    // Condition to makesure timer isn't reset on lagback, when not attacking
+    private var confirmLagBack = false
 
-    private val ticksValue = IntegerValue("Ticks", 10, 1, 20)
-    private val timerBoostValue = FloatValue("TimerBoost", 1.5f, 0.01f, 35f)
+    // Condition to makesure timer isn't reset on knockback, when timer isn't changed
+    private var confirmKnockback = false
+
+    private val ticksValue = IntegerValue("Ticks", 10, 1, 20, "x")
+    private val timerBoostValue = FloatValue("TimerBoost", 1.5f, 0.01f, 35f, "x")
     private val timerChargedValue = FloatValue("TimerCharged", 0.45f, 0.05f, 5f)
 
     // Normal Mode Settings
-    private val rangeValue = FloatValue("Range", 3.5f, 1f, 5f) { timerBoostMode.get() == "Normal" }
-    private val cooldownTickValue = IntegerValue("CooldownTick", 10, 1, 50) { timerBoostMode.get() == "Normal" }
+    private val rangeValue = FloatValue("Range", 3.5f, 1f, 5f)
+    private val cooldownTickValue = IntegerValue("CooldownTick", 10, 1, 50)
 
-    // Smart Mode Settings
-    private val minRange = FloatValue("MinRange", 1f, 1f, 5f) { timerBoostMode.get() != "Normal" }
-    private val maxRange = FloatValue("MaxRange", 5f, 1f, 5f) { timerBoostMode.get() != "Normal" }
+    // Optional
+    private val resetOnlagBack = BoolValue("ResetOnLagback", false)
+    private val resetOnKnockback = BoolValue("ResetOnKnockback", false)
+    private val chatDebug = BoolValue("ChatDebug", true) { resetOnlagBack.get() || resetOnKnockback.get() }
 
-    private val minTickDelay: IntegerValue =
-        object : IntegerValue("MinTickDelay", 50, 1, 500, { timerBoostMode.get() != "Normal" }) {
-            override fun onChanged(oldValue: Int, newValue: Int) {
-                newValue.coerceAtMost(maxTickDelay.get())
-            }
-        }
-
-    private val maxTickDelay: IntegerValue =
-        object : IntegerValue("MinTickDelay", 100, 1, 500, { timerBoostMode.get() != "Normal" }) {
-            override fun onChanged(oldValue: Int, newValue: Int) {
-                newValue.coerceAtLeast(minTickDelay.get())
-            }
-        }
+    override val tag: String
+        get() = timerBoostValue.get().toString() + "x"
 
     private fun timerReset() {
         mc.timer.timerSpeed = 1f
     }
-
-    override val tag: String
-        get() = timerBoostMode.get()
 
     override fun onEnable() {
         timerReset()
@@ -76,9 +61,9 @@ class SmartRange : Module() {
         smartTick = 0
         cooldownTick = 0
         playerTicks = 0
-        confirmTick = false
-        confirmMove = false
         confirmAttack = false
+        confirmLagBack = false
+        confirmKnockback = false
     }
 
     @EventTarget
@@ -87,9 +72,9 @@ class SmartRange : Module() {
         smartTick = 0
         cooldownTick = 0
         playerTicks = 0
-        confirmTick = false
-        confirmMove = false
         confirmAttack = false
+        confirmLagBack = false
+        confirmKnockback = false
     }
 
     /**
@@ -106,21 +91,22 @@ class SmartRange : Module() {
 
         val targetEntity = event.targetEntity
         val entityDistance = mc.thePlayer.getDistanceToEntityBox(targetEntity)
-        val randomTickDelay = Random.nextInt(minTickDelay.get(), maxTickDelay.get())
-        val randomRange = Random.nextDouble(minRange.get().toDouble(), maxRange.get().toDouble())
 
         smartTick++
         cooldownTick++
 
-        val shouldSlowed = when (timerBoostMode.get()) {
-            "Normal" -> cooldownTick >= cooldownTickValue.get() && entityDistance <= rangeValue.get()
-            "Smart" -> smartTick >= randomTickDelay && entityDistance <= randomRange
-            else -> false
-        }
+        val shouldSlowed = cooldownTick >= cooldownTickValue.get() && entityDistance <= rangeValue.get()
 
         if (shouldSlowed && confirmAttack) {
             confirmAttack = false
             playerTicks = ticksValue.get()
+
+            if (resetOnKnockback.get()) {
+                confirmKnockback = true
+            }
+            if (resetOnlagBack.get()) {
+                confirmLagBack = true
+            }
             cooldownTick = 0
             smartTick = 0
         } else {
@@ -158,12 +144,10 @@ class SmartRange : Module() {
     }
 
     /**
-     * Get all entities in the world.
+     * Check if player is moving
      */
-    private fun getAllEntities(): List<Entity> {
-        return mc.theWorld.loadedEntityList
-            .filter { EntityUtils.isSelected(it, true) }
-            .toList()
+    private fun isPlayerMoving(): Boolean {
+        return mc.thePlayer.moveForward != 0f || mc.thePlayer.moveStrafing != 0f
     }
 
     /**
@@ -175,5 +159,41 @@ class SmartRange : Module() {
                 || mc.thePlayer.isInWater || mc.thePlayer.isInLava
                 || mc.thePlayer.isInWeb || mc.thePlayer.isOnLadder
                 || mc.thePlayer.isRiding)
+    }
+
+    /**
+     * Lagback Reset is Inspired from Nextgen TimerRange
+     * Reset Timer on Lagback & Knockback.
+     */
+    @EventTarget
+    fun onPacket(event: PacketEvent) {
+        val packet = event.packet
+
+        if (isPlayerMoving() && !shouldResetTimer()
+            && mc.timer.timerSpeed > 1.0 || mc.timer.timerSpeed < 1.0
+        ) {
+
+            // Check for lagback
+            if (resetOnlagBack.get() && confirmLagBack) {
+                if (packet is S08PacketPlayerPosLook) {
+                    confirmLagBack = false
+                    timerReset()
+                    if (chatDebug.get())
+                        chat("Lagback Received | Timer Reset")
+                }
+            }
+
+            // Check for knockback
+            if (resetOnKnockback.get() && confirmKnockback) {
+                if (packet is S12PacketEntityVelocity && mc.thePlayer.entityId == packet.entityID
+                    && packet.motionY > 0 && (packet.motionX.toDouble() != 0.0 || packet.motionZ.toDouble() != 0.0)
+                ) {
+                    confirmKnockback = false
+                    timerReset()
+                    if (chatDebug.get())
+                        chat("Knockback Received | Timer Reset")
+                }
+            }
+        }
     }
 }

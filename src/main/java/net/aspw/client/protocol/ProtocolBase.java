@@ -29,6 +29,11 @@ public class ProtocolBase {
             return;
         }
 
+        final VersionEnum version = VersionEnum.fromProtocolId(platform.getGameVersion());
+        if (version == VersionEnum.UNKNOWN) {
+            throw new IllegalArgumentException("Unknown Version " + platform.getGameVersion());
+        }
+
         manager = new ProtocolBase(platform);
 
         ViaLoader.init(new ViaVersionPlatformImpl(null), new ProtocolVLLoader(platform), new ProtocolVLInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new, ViaLegacyPlatformImpl::new, ViaAprilFoolsPlatformImpl::new);
