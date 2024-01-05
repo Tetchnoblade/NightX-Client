@@ -198,12 +198,10 @@ class KillAura : Module() {
         ListValue(
             "AutoBlock",
             arrayOf(
-                "Packet",
+                "Vanilla",
+                "ReBlock",
                 "1.9+",
-                "AfterTick",
-                "NCP",
-                "OldHypixel",
-                "OldIntave",
+                "Verus",
                 "Fake",
                 "None"
             ),
@@ -213,11 +211,10 @@ class KillAura : Module() {
     private val interactAutoBlockValue = BoolValue(
         "InteractAutoBlock",
         false
-    ) { !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true) }
-    private val verusAutoBlockValue = BoolValue(
-        "Protect-Blocking",
-        false
-    ) { !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true) }
+    ) {
+        !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get()
+            .equals("None", true) && !autoBlockModeValue.get().equals("ReBlock", true)
+    }
 
     // Bypass
     private val silentRotationValue = BoolValue("SilentRotation", true) { !rotations.get().equals("none", true) }
@@ -246,6 +243,7 @@ class KillAura : Module() {
     private var markEntity: EntityLivingBase? = null
 
     // Attack delay
+    private val reBlockTimer = TickTimer()
     private val attackTimer = MSTimer()
     private val endTimer = TickTimer()
     private var failedHit = false
@@ -285,7 +283,7 @@ class KillAura : Module() {
         stopBlocking()
         if (verusBlocking && !blockingStatus && !mc.thePlayer.isBlocking) {
             verusBlocking = false
-            if (verusAutoBlockValue.get())
+            if (autoBlockModeValue.get().equals("verus", true))
                 PacketUtils.sendPacketNoEvent(
                     C07PacketPlayerDigging(
                         C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
@@ -301,16 +299,36 @@ class KillAura : Module() {
      */
     @EventTarget
     fun onMotion(event: MotionEvent) {
+        if (autoBlockModeValue.get().equals("reblock", true)) {
+            if (blockingStatus) {
+                reBlockTimer.update()
+                if (reBlockTimer.hasTimePassed(10) && !reBlockTimer.hasTimePassed(20)) {
+                    chat("reblock")
+                    hitable = false
+                    stopBlocking()
+                    if (verusBlocking && !blockingStatus && !mc.thePlayer.isBlocking) {
+                        verusBlocking = false
+                        if (autoBlockModeValue.get().equals("verus", true))
+                            PacketUtils.sendPacketNoEvent(
+                                C07PacketPlayerDigging(
+                                    C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
+                                    BlockPos.ORIGIN,
+                                    EnumFacing.DOWN
+                                )
+                            )
+                    }
+                }
+                if (reBlockTimer.hasTimePassed(20))
+                    reBlockTimer.reset()
+            } else reBlockTimer.reset()
+        }
+
         if (event.eventState == EventState.POST) {
             target ?: return
             currentTarget ?: return
 
             // Update hitable
             updateHitable()
-
-            // AutoBlock
-            if (autoBlockModeValue.get().equals("AfterTick", true) && canBlock)
-                startBlocking(currentTarget!!, hitable)
         }
     }
 
@@ -342,7 +360,7 @@ class KillAura : Module() {
             && ((packet is C07PacketPlayerDigging
                     && packet.status == C07PacketPlayerDigging.Action.RELEASE_USE_ITEM)
                     || packet is C08PacketPlayerBlockPlacement)
-            && verusAutoBlockValue.get()
+            && autoBlockModeValue.get().equals("verus", true)
         )
             event.cancelEvent()
 
@@ -414,7 +432,7 @@ class KillAura : Module() {
             verusBlocking = true
         else if (verusBlocking) {
             verusBlocking = false
-            if (verusAutoBlockValue.get())
+            if (autoBlockModeValue.get().equals("verus", true))
                 PacketUtils.sendPacketNoEvent(
                     C07PacketPlayerDigging(
                         C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
@@ -789,12 +807,28 @@ class KillAura : Module() {
      * Attack [entity]
      */
     private fun attackEntity(entity: EntityLivingBase) {
-        if (mc.thePlayer!!.getDistanceToEntityBox(entity) >= attackRangeValue.get()) return
+        if (mc.thePlayer!!.getDistanceToEntityBox(entity) >= attackRangeValue.get() || reBlockTimer.hasTimePassed(10) && !reBlockTimer.hasTimePassed(
+                20
+            )
+        ) return
 
         // Call attack event
         Client.eventManager.callEvent(AttackEvent(entity))
 
         markEntity = entity
+
+        if (autoBlockModeValue.get().equals("vanilla", true)) {
+            if (blockingStatus && canBlock && endTimer.hasTimePassed(2)) {
+                blockingStatus = false
+                PacketUtils.sendPacketNoEvent(
+                    C07PacketPlayerDigging(
+                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
+                        BlockPos.ORIGIN,
+                        EnumFacing.DOWN
+                    )
+                )
+            }
+        }
 
         // Attack target
         if (ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
@@ -839,9 +873,7 @@ class KillAura : Module() {
             mc.thePlayer.attackTargetEntityWithCurrentItem(entity)
 
         // Start blocking after attack
-        if (!autoBlockModeValue.get()
-                .equals("AfterTick", true) && (mc.thePlayer.isBlocking || canBlock)
-        )
+        if (mc.thePlayer.isBlocking || canBlock)
             startBlocking(entity, interactAutoBlockValue.get())
     }
 
@@ -949,11 +981,12 @@ class KillAura : Module() {
      * Start blocking
      */
 
-
     private fun startBlocking(interactEntity: Entity, interact: Boolean) {
         if (blockingStatus) return
 
-        if (interact) {
+        if (interact && !autoBlockModeValue.get().equals("None", true) && !autoBlockModeValue.get()
+                .equals("Fake", true) && !autoBlockModeValue.get().equals("ReBlock", true)
+        ) {
             val positionEye = mc.renderViewEntity?.getPositionEyes(1F)
 
             val expandSize = interactEntity.collisionBorderSize.toDouble()
@@ -994,17 +1027,13 @@ class KillAura : Module() {
                 fakeBlock = true
             }
 
-            "ncp" -> {
-                PacketUtils.sendPacketNoEvent(
-                    C08PacketPlayerBlockPlacement(
-                        BlockPos(-1, -1, -1),
-                        255,
-                        null,
-                        0.0f,
-                        0.0f,
-                        0.0f
-                    )
-                )
+            "verus" -> {
+                mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
+                blockingStatus = false
+            }
+
+            "reblock", "vanilla" -> {
+                mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
                 blockingStatus = true
             }
 
@@ -1014,31 +1043,8 @@ class KillAura : Module() {
                         PacketWrapper.create(29, null, Via.getManager().connectionManager.connections.iterator().next())
                     useItem.write(Type.VAR_INT, 1)
                     PacketUtil.sendToServer(useItem, Protocol1_8To1_9::class.java, true, true)
+                    blockingStatus = true
                 }
-            }
-
-            "oldintave" -> {
-                mc.netHandler.addToSendQueue(C09PacketHeldItemChange((mc.thePlayer.inventory.currentItem + 1) % 9))
-                mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
-            }
-
-            "packet" -> {
-                mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
-                blockingStatus = true
-            }
-
-            "oldhypixel" -> {
-                PacketUtils.sendPacketNoEvent(
-                    C08PacketPlayerBlockPlacement(
-                        BlockPos(-1, -1, -1),
-                        255,
-                        mc.thePlayer.inventory.getCurrentItem(),
-                        0.0f,
-                        0.0f,
-                        0.0f
-                    )
-                )
-                blockingStatus = true
             }
         }
     }
@@ -1050,30 +1056,19 @@ class KillAura : Module() {
         fakeBlock = false
         blockingStatus = false
         currentTarget = null
-        if (endTimer.hasTimePassed(2)) {
-            when (autoBlockModeValue.get().lowercase()) {
-                "oldhypixel" -> {
+        if (endTimer.hasTimePassed(1)) {
+            if (canBlock || mc.thePlayer.isBlocking) {
+                if (!autoBlockModeValue.get().equals("fake", true) && !autoBlockModeValue.get()
+                        .equals("none", true)
+                ) {
                     PacketUtils.sendPacketNoEvent(
                         C07PacketPlayerDigging(
                             C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                            BlockPos(1.0, 1.0, 1.0),
+                            BlockPos.ORIGIN,
                             EnumFacing.DOWN
                         )
                     )
                 }
-            }
-            if (!autoBlockModeValue.get().equals("fake", true) && !autoBlockModeValue.get()
-                    .equals("none", true)
-                && !autoBlockModeValue.get()
-                    .equals("oldhypixel", true)
-            ) {
-                PacketUtils.sendPacketNoEvent(
-                    C07PacketPlayerDigging(
-                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                        BlockPos.ORIGIN,
-                        EnumFacing.DOWN
-                    )
-                )
             }
             endTimer.reset()
         }
