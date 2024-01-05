@@ -19,6 +19,9 @@ class FastBridge : Module() {
     private val speedValue = IntegerValue("Place-Speed", 0, 0, 20)
     private val tickTimer = TickTimer()
 
+    override val tag: String
+        get() = modeValue.get()
+
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         tickTimer.update()
