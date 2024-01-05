@@ -15,7 +15,6 @@ import net.aspw.client.value.ListValue
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C03PacketPlayer.*
-import net.minecraft.network.play.client.C0FPacketConfirmTransaction
 import net.minecraft.network.play.server.S12PacketEntityVelocity
 import net.minecraft.network.play.server.S27PacketExplosion
 import net.minecraft.network.play.server.S32PacketConfirmTransaction
@@ -56,7 +55,6 @@ class AntiVelocity : Module() {
                 "Minemen",
                 "YMotion",
                 "Vulcan",
-                "Grim",
                 "GrimReverse",
                 "MatrixReduce",
                 "MatrixSimple",
@@ -204,7 +202,7 @@ class AntiVelocity : Module() {
                 }
             }
 
-            "grim" -> {
+            "vulcan" -> {
                 if (resetPersec > 0) {
                     if (updates >= 0) {
                         updates = 0
@@ -411,7 +409,7 @@ class AntiVelocity : Module() {
         val killAura = Client.moduleManager[KillAura::class.java] as KillAura
 
         when (modeValue.get().lowercase(Locale.getDefault())) {
-            "grim" -> {
+            "vulcan" -> {
                 if (packet is S32PacketConfirmTransaction && grimTCancel > 0) {
                     event.cancelEvent()
                     grimTCancel--
@@ -435,15 +433,6 @@ class AntiVelocity : Module() {
                     }
                 }
             }
-
-            "vulcan" -> {
-                if (packet is C0FPacketConfirmTransaction) {
-                    val transUID = (packet.uid).toInt()
-                    if (transUID >= -31767 && transUID <= -30769) {
-                        event.cancelEvent()
-                    }
-                }
-            }
         }
 
         if (packet is S12PacketEntityVelocity) {
@@ -457,8 +446,7 @@ class AntiVelocity : Module() {
             velocityTimer.reset()
 
             when (modeValue.get().lowercase(Locale.getDefault())) {
-                "cancel",
-                "vulcan" -> event.cancelEvent()
+                "cancel" -> event.cancelEvent()
 
                 "simple" -> {
                     val horizontal = horizontalValue.get()
@@ -493,7 +481,7 @@ class AntiVelocity : Module() {
                     }
                 }
 
-                "grim" -> {
+                "vulcan" -> {
                     if (packet.entityID == mc.thePlayer.entityId) {
                         event.cancelEvent()
                         grimTCancel = cancelPacket
