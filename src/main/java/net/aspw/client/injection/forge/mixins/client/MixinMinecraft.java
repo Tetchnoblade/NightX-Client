@@ -30,7 +30,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.MinecraftForgeClient;
 import org.apache.commons.lang3.SystemUtils;
-import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.objectweb.asm.Opcodes;
@@ -75,7 +74,7 @@ public abstract class MixinMinecraft {
     private boolean fullscreen;
     @Shadow
     public int leftClickCounter;
-    private long lastFrame = getTime();
+    private long lastFrame = Minecraft.getSystemTime();
 
     @Shadow
     public abstract IResourceManager getResourceManager();
@@ -102,9 +101,9 @@ public abstract class MixinMinecraft {
         ProtocolBase.init(ProtocolMod.PLATFORM);
     }
 
-    @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER))
-    private void createDisplay(CallbackInfo callbackInfo) {
-        Display.setTitle(Client.CLIENT_BEST + " Client | " + Client.CLIENT_VERSION);
+    @ModifyArg(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", remap = false))
+    private String setTitle(String newTitle) {
+        return Client.CLIENT_BEST + " Client | " + Client.CLIENT_VERSION;
     }
 
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
@@ -157,15 +156,11 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "runGameLoop", at = @At("HEAD"))
     private void runGameLoop(final CallbackInfo callbackInfo) {
-        final long currentTime = getTime();
+        final long currentTime = Minecraft.getSystemTime();
         final int deltaTime = (int) (currentTime - lastFrame);
         lastFrame = currentTime;
 
         RenderUtils.deltaTime = deltaTime;
-    }
-
-    public long getTime() {
-        return (Sys.getTime() * 1000) / Sys.getTimerResolution();
     }
 
     @Inject(method = "runTick", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;joinPlayerCounter:I", shift = At.Shift.BEFORE))

@@ -34,7 +34,10 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityArmorStand
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemSword
-import net.minecraft.network.play.client.*
+import net.minecraft.network.play.client.C02PacketUseEntity
+import net.minecraft.network.play.client.C07PacketPlayerDigging
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
+import net.minecraft.network.play.client.C0APacketAnimation
 import net.minecraft.potion.Potion
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
@@ -47,7 +50,6 @@ import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sin
-
 
 @ModuleInfo(
     name = "KillAura", spacedName = "Kill Aura", description = "",
@@ -201,7 +203,6 @@ class KillAura : Module() {
                 "Vanilla",
                 "ReBlock",
                 "1.9+",
-                "Verus",
                 "Fake",
                 "None"
             ),
@@ -255,7 +256,6 @@ class KillAura : Module() {
 
     // Fake block status
     var blockingStatus = false
-    private var verusBlocking = false
     var fakeBlock = false
 
     /**
@@ -266,7 +266,6 @@ class KillAura : Module() {
         mc.theWorld ?: return
 
         updateTarget()
-        verusBlocking = false
     }
 
     /**
@@ -279,19 +278,7 @@ class KillAura : Module() {
         prevTargetEntities.clear()
         attackTimer.reset()
         clicks = 0
-
         stopBlocking()
-        if (verusBlocking && !blockingStatus && !mc.thePlayer.isBlocking) {
-            verusBlocking = false
-            if (autoBlockModeValue.get().equals("verus", true))
-                PacketUtils.sendPacketNoEvent(
-                    C07PacketPlayerDigging(
-                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                        BlockPos.ORIGIN,
-                        EnumFacing.DOWN
-                    )
-                )
-        }
     }
 
     /**
@@ -302,22 +289,11 @@ class KillAura : Module() {
         if (autoBlockModeValue.get().equals("reblock", true)) {
             if (blockingStatus) {
                 reBlockTimer.update()
-                if (reBlockTimer.hasTimePassed(15) && !reBlockTimer.hasTimePassed(30)) {
+                if (reBlockTimer.hasTimePassed(10) && !reBlockTimer.hasTimePassed(25)) {
                     hitable = false
                     stopBlocking()
-                    if (verusBlocking && !blockingStatus && !mc.thePlayer.isBlocking) {
-                        verusBlocking = false
-                        if (autoBlockModeValue.get().equals("verus", true))
-                            PacketUtils.sendPacketNoEvent(
-                                C07PacketPlayerDigging(
-                                    C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                                    BlockPos.ORIGIN,
-                                    EnumFacing.DOWN
-                                )
-                            )
-                    }
                 }
-                if (reBlockTimer.hasTimePassed(20))
+                if (reBlockTimer.hasTimePassed(25))
                     reBlockTimer.reset()
             } else reBlockTimer.reset()
         }
@@ -350,21 +326,6 @@ class KillAura : Module() {
 
         if (!targetModeValue.get().equals("Switch", ignoreCase = true) && isEnemy(currentTarget))
             target = currentTarget
-    }
-
-    @EventTarget
-    fun onPacket(event: PacketEvent) {
-        val packet = event.packet
-        if (verusBlocking
-            && ((packet is C07PacketPlayerDigging
-                    && packet.status == C07PacketPlayerDigging.Action.RELEASE_USE_ITEM)
-                    || packet is C08PacketPlayerBlockPlacement)
-            && autoBlockModeValue.get().equals("verus", true)
-        )
-            event.cancelEvent()
-
-        if (packet is C09PacketHeldItemChange)
-            verusBlocking = false
     }
 
     @EventTarget
@@ -426,20 +387,6 @@ class KillAura : Module() {
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         updateKA()
-
-        if (mc.thePlayer.isBlocking || blockingStatus || target != null)
-            verusBlocking = true
-        else if (verusBlocking) {
-            verusBlocking = false
-            if (autoBlockModeValue.get().equals("verus", true))
-                PacketUtils.sendPacketNoEvent(
-                    C07PacketPlayerDigging(
-                        C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                        BlockPos.ORIGIN,
-                        EnumFacing.DOWN
-                    )
-                )
-        }
     }
 
     private fun updateKA() {
@@ -806,8 +753,8 @@ class KillAura : Module() {
      * Attack [entity]
      */
     private fun attackEntity(entity: EntityLivingBase) {
-        if (mc.thePlayer!!.getDistanceToEntityBox(entity) >= attackRangeValue.get() || reBlockTimer.hasTimePassed(15) && !reBlockTimer.hasTimePassed(
-                30
+        if (mc.thePlayer!!.getDistanceToEntityBox(entity) >= attackRangeValue.get() || reBlockTimer.hasTimePassed(10) && !reBlockTimer.hasTimePassed(
+                25
             )
         ) return
 
@@ -1024,11 +971,6 @@ class KillAura : Module() {
 
             "fake" -> {
                 fakeBlock = true
-            }
-
-            "verus" -> {
-                mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
-                blockingStatus = false
             }
 
             "reblock", "vanilla" -> {
