@@ -5,11 +5,9 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.util.extensions.getDistanceToEntityBox
-import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.network.play.server.S12PacketEntityVelocity
 import kotlin.random.Random
 
@@ -23,13 +21,8 @@ class TickBase : Module() {
     private var smartTick = 0
     private var cooldownTick = 0
 
-    // Condition to prevent getting timer speed stuck
     private var confirmAttack = false
 
-    // Condition to makesure timer isn't reset on lagback, when not attacking
-    private var confirmLagBack = false
-
-    // Condition to makesure timer isn't reset on knockback, when timer isn't changed
     private var confirmKnockback = false
 
     private val ticksValue = IntegerValue("Ticks", 10, 1, 20, "x")
@@ -39,11 +32,6 @@ class TickBase : Module() {
     // Normal Mode Settings
     private val rangeValue = FloatValue("Range", 3.5f, 1f, 5f)
     private val cooldownTickValue = IntegerValue("CooldownTick", 10, 1, 50)
-
-    // Optional
-    private val resetOnlagBack = BoolValue("ResetOnLagback", false)
-    private val resetOnKnockback = BoolValue("ResetOnKnockback", false)
-    private val chatDebug = BoolValue("ChatDebug", true) { resetOnlagBack.get() || resetOnKnockback.get() }
 
     override val tag: String
         get() = timerBoostValue.get().toString() + "x"
@@ -62,7 +50,6 @@ class TickBase : Module() {
         cooldownTick = 0
         playerTicks = 0
         confirmAttack = false
-        confirmLagBack = false
         confirmKnockback = false
     }
 
@@ -73,7 +60,6 @@ class TickBase : Module() {
         cooldownTick = 0
         playerTicks = 0
         confirmAttack = false
-        confirmLagBack = false
         confirmKnockback = false
     }
 
@@ -101,12 +87,7 @@ class TickBase : Module() {
             confirmAttack = false
             playerTicks = ticksValue.get()
 
-            if (resetOnKnockback.get()) {
-                confirmKnockback = true
-            }
-            if (resetOnlagBack.get()) {
-                confirmLagBack = true
-            }
+            confirmKnockback = true
             cooldownTick = 0
             smartTick = 0
         } else {
@@ -173,25 +154,13 @@ class TickBase : Module() {
             && mc.timer.timerSpeed > 1.0 || mc.timer.timerSpeed < 1.0
         ) {
 
-            // Check for lagback
-            if (resetOnlagBack.get() && confirmLagBack) {
-                if (packet is S08PacketPlayerPosLook) {
-                    confirmLagBack = false
-                    timerReset()
-                    if (chatDebug.get())
-                        chat("Lagback Received | Timer Reset")
-                }
-            }
-
             // Check for knockback
-            if (resetOnKnockback.get() && confirmKnockback) {
+            if (confirmKnockback) {
                 if (packet is S12PacketEntityVelocity && mc.thePlayer.entityId == packet.entityID
                     && packet.motionY > 0 && (packet.motionX.toDouble() != 0.0 || packet.motionZ.toDouble() != 0.0)
                 ) {
                     confirmKnockback = false
                     timerReset()
-                    if (chatDebug.get())
-                        chat("Knockback Received | Timer Reset")
                 }
             }
         }
