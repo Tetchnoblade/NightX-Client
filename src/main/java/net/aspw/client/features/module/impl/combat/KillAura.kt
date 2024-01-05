@@ -302,8 +302,7 @@ class KillAura : Module() {
         if (autoBlockModeValue.get().equals("reblock", true)) {
             if (blockingStatus) {
                 reBlockTimer.update()
-                if (reBlockTimer.hasTimePassed(10) && !reBlockTimer.hasTimePassed(20)) {
-                    chat("reblock")
+                if (reBlockTimer.hasTimePassed(15) && !reBlockTimer.hasTimePassed(30)) {
                     hitable = false
                     stopBlocking()
                     if (verusBlocking && !blockingStatus && !mc.thePlayer.isBlocking) {
@@ -807,8 +806,8 @@ class KillAura : Module() {
      * Attack [entity]
      */
     private fun attackEntity(entity: EntityLivingBase) {
-        if (mc.thePlayer!!.getDistanceToEntityBox(entity) >= attackRangeValue.get() || reBlockTimer.hasTimePassed(10) && !reBlockTimer.hasTimePassed(
-                20
+        if (mc.thePlayer!!.getDistanceToEntityBox(entity) >= attackRangeValue.get() || reBlockTimer.hasTimePassed(15) && !reBlockTimer.hasTimePassed(
+                30
             )
         ) return
 
