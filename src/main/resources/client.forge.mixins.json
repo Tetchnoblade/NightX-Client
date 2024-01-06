@@ -63,6 +63,7 @@
     "network.MixinNetworkManager_5",
     "network.MixinNetworkPlayerInfo",
     "network.MixinServerData",
+    "network.MixinServerPinger",
     "packets.MixinC00Handshake",
     "packets.MixinC17PacketCustomPayload",
     "packets.MixinEntityPackets",

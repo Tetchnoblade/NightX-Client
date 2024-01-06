@@ -148,6 +148,7 @@ class TickBase : Module() {
      */
     @EventTarget
     fun onPacket(event: PacketEvent) {
+        if (mc.thePlayer == null || mc.theWorld == null) return
         val packet = event.packet
 
         if (isPlayerMoving() && !shouldResetTimer()

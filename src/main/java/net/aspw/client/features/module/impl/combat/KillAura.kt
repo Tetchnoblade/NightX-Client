@@ -288,25 +288,36 @@ class KillAura : Module() {
      */
     @EventTarget
     fun onMotion(event: MotionEvent) {
-        if (autoBlockModeValue.get().equals("reblock", true)) {
-            if (blockingStatus) {
-                reBlockTimer.update()
-                if (reBlockTimer.hasTimePassed(reBlockDelayValue.get()) && !reBlockTimer.hasTimePassed(reBlockDelayValue.get() + 10)) {
-                    hitable = false
-                    stopBlocking()
-                }
-                if (reBlockTimer.hasTimePassed(reBlockDelayValue.get() + 10))
-                    reBlockTimer.reset()
-            } else if (reBlockTimer.hasTimePassed(1))
-                reBlockTimer.reset()
-        }
-
         if (event.eventState == EventState.POST) {
             target ?: return
             currentTarget ?: return
 
             // Update hitable
             updateHitable()
+
+            when (autoBlockModeValue.get().lowercase()) {
+                "reblock" -> {
+                    if (blockingStatus) {
+                        reBlockTimer.update()
+                        if (reBlockTimer.hasTimePassed(reBlockDelayValue.get()) && !reBlockTimer.hasTimePassed(
+                                reBlockDelayValue.get() + 12
+                            )
+                        ) {
+                            hitable = false
+                            stopBlocking()
+                        }
+                        if (reBlockTimer.hasTimePassed(reBlockDelayValue.get() + 10))
+                            reBlockTimer.reset()
+                    } else if (reBlockTimer.hasTimePassed(1)) {
+                        reBlockTimer.reset()
+                    }
+                }
+
+                "vanilla", "1.9+" -> {
+                    if (mc.thePlayer.isBlocking || canBlock)
+                        startBlocking(target!!, interactAutoBlockValue.get())
+                }
+            }
         }
     }
 
