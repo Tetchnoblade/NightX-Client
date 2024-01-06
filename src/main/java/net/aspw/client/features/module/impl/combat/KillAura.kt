@@ -34,10 +34,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityArmorStand
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemSword
-import net.minecraft.network.play.client.C02PacketUseEntity
-import net.minecraft.network.play.client.C07PacketPlayerDigging
-import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
-import net.minecraft.network.play.client.C0APacketAnimation
+import net.minecraft.network.play.client.*
 import net.minecraft.potion.Potion
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
@@ -202,12 +199,16 @@ class KillAura : Module() {
             arrayOf(
                 "Vanilla",
                 "ReBlock",
+                "Verus",
                 "1.9+",
                 "Fake",
                 "None"
             ),
             "Fake"
         )
+
+    private val reBlockDelayValue =
+        IntegerValue("ReBlock-Delay", 10, 1, 100) { autoBlockModeValue.get().equals("reblock", true) }
 
     private val interactAutoBlockValue = BoolValue(
         "InteractAutoBlock",
@@ -290,11 +291,11 @@ class KillAura : Module() {
         if (autoBlockModeValue.get().equals("reblock", true)) {
             if (blockingStatus) {
                 reBlockTimer.update()
-                if (reBlockTimer.hasTimePassed(10) && !reBlockTimer.hasTimePassed(20)) {
+                if (reBlockTimer.hasTimePassed(reBlockDelayValue.get()) && !reBlockTimer.hasTimePassed(reBlockDelayValue.get() + 10)) {
                     hitable = false
                     stopBlocking()
                 }
-                if (reBlockTimer.hasTimePassed(20))
+                if (reBlockTimer.hasTimePassed(reBlockDelayValue.get() + 10))
                     reBlockTimer.reset()
             } else if (reBlockTimer.hasTimePassed(1))
                 reBlockTimer.reset()
@@ -336,6 +337,21 @@ class KillAura : Module() {
             mc.thePlayer.isSprinting = false
             event.yaw = RotationUtils.serverRotation?.yaw!!
         }
+    }
+
+    @EventTarget
+    fun onPacket(event: PacketEvent) {
+        val packet = event.packet
+        if (!autoBlockModeValue.get().equals("verus", true)) return
+        if (blockingStatus
+            && ((packet is C07PacketPlayerDigging
+                    && packet.status == C07PacketPlayerDigging.Action.RELEASE_USE_ITEM)
+                    || packet is C08PacketPlayerBlockPlacement)
+        )
+            event.cancelEvent()
+
+        if (packet is C09PacketHeldItemChange)
+            blockingStatus = false
     }
 
     /**
@@ -755,8 +771,10 @@ class KillAura : Module() {
      * Attack [entity]
      */
     private fun attackEntity(entity: EntityLivingBase) {
-        if (mc.thePlayer!!.getDistanceToEntityBox(entity) >= attackRangeValue.get() || reBlockTimer.hasTimePassed(10) && !reBlockTimer.hasTimePassed(
-                20
+        if (mc.thePlayer!!.getDistanceToEntityBox(entity) >= attackRangeValue.get() || reBlockTimer.hasTimePassed(
+                reBlockDelayValue.get()
+            ) && !reBlockTimer.hasTimePassed(
+                reBlockDelayValue.get() + 10
             )
         ) return
 
@@ -967,15 +985,7 @@ class KillAura : Module() {
         }
 
         when (autoBlockModeValue.get().lowercase()) {
-            "none" -> {
-                fakeBlock = false
-            }
-
-            "fake" -> {
-                fakeBlock = true
-            }
-
-            "reblock", "vanilla" -> {
+            "reblock", "vanilla", "verus" -> {
                 mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
                 blockingStatus = true
             }
@@ -988,6 +998,14 @@ class KillAura : Module() {
                     PacketUtil.sendToServer(useItem, Protocol1_8To1_9::class.java, true, true)
                     blockingStatus = true
                 }
+            }
+
+            "fake" -> {
+                fakeBlock = true
+            }
+
+            "none" -> {
+                fakeBlock = false
             }
         }
     }
