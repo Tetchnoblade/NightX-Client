@@ -199,6 +199,7 @@ class KillAura : Module() {
             arrayOf(
                 "Vanilla",
                 "ReBlock",
+                "Hypixel",
                 "Verus",
                 "1.9+",
                 "Fake",
@@ -353,16 +354,17 @@ class KillAura : Module() {
     @EventTarget
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
-        if (!autoBlockModeValue.get().equals("verus", true)) return
-        if (blockingStatus
-            && ((packet is C07PacketPlayerDigging
-                    && packet.status == C07PacketPlayerDigging.Action.RELEASE_USE_ITEM)
-                    || packet is C08PacketPlayerBlockPlacement)
-        )
-            event.cancelEvent()
+        if (autoBlockModeValue.get().equals("verus", true) || autoBlockModeValue.get().equals("hypixel", true)) {
+            if (blockingStatus
+                && ((packet is C07PacketPlayerDigging
+                        && packet.status == C07PacketPlayerDigging.Action.RELEASE_USE_ITEM)
+                        || packet is C08PacketPlayerBlockPlacement)
+            )
+                event.cancelEvent()
 
-        if (packet is C09PacketHeldItemChange)
-            blockingStatus = false
+            if (packet is C09PacketHeldItemChange)
+                blockingStatus = false
+        }
     }
 
     /**
@@ -996,7 +998,7 @@ class KillAura : Module() {
         }
 
         when (autoBlockModeValue.get().lowercase()) {
-            "reblock", "vanilla", "verus" -> {
+            "reblock", "vanilla", "verus", "hypixel" -> {
                 mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
                 blockingStatus = true
             }
