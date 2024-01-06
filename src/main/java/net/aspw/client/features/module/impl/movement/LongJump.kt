@@ -5,6 +5,7 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.util.ClientUtils
 import net.aspw.client.util.MovementUtils
 import net.aspw.client.util.PacketUtils
@@ -280,6 +281,13 @@ class LongJump : Module() {
     @EventTarget
     fun onUpdate(event: UpdateEvent?) {
         if (modeValue.get().equals("verushigh", true)) {
+            if (Client.moduleManager.getModule(
+                    KillAura::class.java
+                )!!.state
+            ) {
+                Client.moduleManager.getModule(KillAura::class.java)!!.state = false
+                Client.hud.addNotification(Notification("KillAura was disabled!", Notification.Type.WARNING))
+            }
             if (stage < 4 && verusHighTimerValue.get())
                 mc.timer.timerSpeed = 2f
             else mc.timer.timerSpeed = 1f

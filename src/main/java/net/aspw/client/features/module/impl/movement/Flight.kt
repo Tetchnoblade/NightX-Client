@@ -5,6 +5,7 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.util.*
 import net.aspw.client.util.render.RenderUtils
 import net.aspw.client.util.timer.MSTimer
@@ -753,6 +754,13 @@ class Flight : Module() {
             "verussmooth" -> {
                 if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
                     mc.gameSettings.keyBindSneak.pressed = false
+                }
+                if (Client.moduleManager.getModule(
+                        KillAura::class.java
+                    )!!.state
+                ) {
+                    Client.moduleManager.getModule(KillAura::class.java)!!.state = false
+                    Client.hud.addNotification(Notification("KillAura was disabled!", Notification.Type.WARNING))
                 }
             }
 
