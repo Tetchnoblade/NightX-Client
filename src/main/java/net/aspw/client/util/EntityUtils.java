@@ -1,8 +1,7 @@
 package net.aspw.client.util;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.impl.targets.AntiBots;
-import net.aspw.client.features.module.impl.targets.AntiTeams;
+import net.aspw.client.features.module.impl.targets.*;
 import net.aspw.client.util.render.ColorUtils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -31,23 +30,23 @@ public final class EntityUtils extends MinecraftInstance {
     /**
      * The constant targetInvisible.
      */
-    public static boolean targetInvisible = true;
+    public static boolean targetInvisible = Objects.requireNonNull(Client.moduleManager.getModule(Invisible.class)).getState();
     /**
      * The constant targetPlayer.
      */
-    public static boolean targetPlayer = true;
+    public static boolean targetPlayer = Objects.requireNonNull(Client.moduleManager.getModule(Players.class)).getState();
     /**
      * The constant targetMobs.
      */
-    public static boolean targetMobs = true;
+    public static boolean targetMobs = Objects.requireNonNull(Client.moduleManager.getModule(Mobs.class)).getState();
     /**
      * The constant targetAnimals.
      */
-    public static boolean targetAnimals = true;
+    public static boolean targetAnimals = Objects.requireNonNull(Client.moduleManager.getModule(Animals.class)).getState();
     /**
      * The constant targetDead.
      */
-    public static boolean targetDead = false;
+    public static boolean targetDead = Objects.requireNonNull(Client.moduleManager.getModule(Dead.class)).getState();
 
     /**
      * Is selected boolean.
