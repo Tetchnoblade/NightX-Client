@@ -5,6 +5,7 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.impl.movement.Speed
 import net.aspw.client.util.MovementUtils
 import net.aspw.client.util.timer.MSTimer
 import net.aspw.client.value.BoolValue
@@ -85,6 +86,11 @@ class Step : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
+        if (Client.moduleManager.getModule(Speed::class.java)?.state!!) {
+            mc.thePlayer.stepHeight = 0.5F
+            return
+        }
+
         if (usedTimer) {
             mc.timer.timerSpeed = 1F
             usedTimer = false
@@ -140,6 +146,11 @@ class Step : Module() {
 
     @EventTarget
     fun onMove(event: MoveEvent) {
+        if (Client.moduleManager.getModule(Speed::class.java)?.state!!) {
+            mc.thePlayer.stepHeight = 0.5F
+            return
+        }
+
         val mode = modeValue.get()
 
         // Motion steps
@@ -179,6 +190,11 @@ class Step : Module() {
     fun onStep(event: StepEvent) {
         mc.thePlayer ?: return
 
+        if (Client.moduleManager.getModule(Speed::class.java)?.state!!) {
+            mc.thePlayer.stepHeight = 0.5F
+            return
+        }
+
         val mode = modeValue.get()
 
         // Set step to default in some cases
@@ -211,6 +227,11 @@ class Step : Module() {
     fun onStepConfirm(event: StepConfirmEvent) {
         if (mc.thePlayer == null || !isStep) // Check if step
             return
+
+        if (Client.moduleManager.getModule(Speed::class.java)?.state!!) {
+            mc.thePlayer.stepHeight = 0.5F
+            return
+        }
 
         if (mc.thePlayer.entityBoundingBox.minY - stepY > 0.8) {
             if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && modeValue.get() != "Matrix"
