@@ -4,7 +4,6 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.MovementUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.ListValue
 import net.minecraft.client.gui.GuiChat
@@ -20,7 +19,6 @@ class InvMove : Module() {
 
     val modeValue = ListValue("Mode", arrayOf("Vanilla", "Silent", "Blink"), "Silent")
     private val noDetectableValue = BoolValue("NoDetectable", false)
-    private val noMoveClicksValue = BoolValue("NoMoveClicks", false)
 
     private val playerPackets = mutableListOf<C03PacketPlayer>()
 
@@ -45,12 +43,6 @@ class InvMove : Module() {
             playerPackets.forEach { mc.netHandler.addToSendQueue(it) }
             playerPackets.clear()
         }
-    }
-
-    @EventTarget
-    fun onClick(event: ClickWindowEvent) {
-        if (noMoveClicksValue.get() && MovementUtils.isMoving())
-            event.cancelEvent()
     }
 
     @EventTarget
