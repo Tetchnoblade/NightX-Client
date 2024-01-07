@@ -6,7 +6,6 @@ import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.other.ClientSpoof;
-import net.aspw.client.features.module.impl.targets.*;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.Cape;
 import net.aspw.client.protocol.ProtocolBase;
@@ -77,13 +76,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     @EventTarget
     public void onMotion(MotionEvent event) {
         mc.leftClickCounter = 0;
-        if (mc.thePlayer.ticksExisted % 10 == 0) {
-            EntityUtils.targetInvisible = Objects.requireNonNull(Client.moduleManager.getModule(Invisible.class)).getState();
-            EntityUtils.targetPlayer = Objects.requireNonNull(Client.moduleManager.getModule(Players.class)).getState();
-            EntityUtils.targetMobs = Objects.requireNonNull(Client.moduleManager.getModule(Mobs.class)).getState();
-            EntityUtils.targetAnimals = Objects.requireNonNull(Client.moduleManager.getModule(Animals.class)).getState();
-            EntityUtils.targetDead = Objects.requireNonNull(Client.moduleManager.getModule(Dead.class)).getState();
-        }
         if (Animations.swingAnimValue.get().equals("Smooth") && event.getEventState() == EventState.PRE) {
             if (mc.thePlayer.swingProgressInt == 1) {
                 swing = 9;
