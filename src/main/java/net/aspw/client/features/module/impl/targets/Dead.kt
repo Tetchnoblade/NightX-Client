@@ -14,4 +14,9 @@ class Dead : Module() {
     override fun onDisable() {
         EntityUtils.targetDead = false
     }
+
+    init {
+        if (EntityUtils.targetDead != state)
+            EntityUtils.targetDead = false
+    }
 }
