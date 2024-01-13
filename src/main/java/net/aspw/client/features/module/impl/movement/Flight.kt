@@ -68,7 +68,7 @@ class Flight : Module() {
             "FakeGround",
             "Minemora",
             "Sentinel",
-            "Funcraft",
+            "Mospixel",
             "NeruxVace",
             "Verus",
             "VerusLowHop",
@@ -502,7 +502,7 @@ class Flight : Module() {
                 mc.netHandler.addToSendQueue(C0APacketAnimation())
             }
 
-            "funcraft" -> {
+            "mospixel" -> {
                 moveSpeed = if (mc.thePlayer.onGround) {
                     mc.thePlayer.jump()
                     1.61
@@ -1507,12 +1507,12 @@ class Flight : Module() {
                 }
             }
 
-            "funcraft" -> {
+            "mospixel" -> {
                 event.onGround = true
                 mc.thePlayer.capabilities.isFlying = false
                 mc.thePlayer.motionY = 0.0
                 if (MovementUtils.isMoving() && !mc.thePlayer.onGround) {
-                    mc.timer.timerSpeed = 1.65f
+                    mc.timer.timerSpeed = 1.1f
                 }
                 if (!MovementUtils.isMoving() || mc.thePlayer.isCollidedHorizontally) moveSpeed = 0.25
                 if (moveSpeed > 0.25) moveSpeed -= moveSpeed / 169
@@ -2148,7 +2148,7 @@ class Flight : Module() {
     fun onJump(e: JumpEvent) {
         val mode = modeValue.get()
         if (mode.equals(
-                "funcraft",
+                "mospixel",
                 ignoreCase = true
             ) && moveSpeed > 0 || mode.equals("exploit", ignoreCase = true) && wdState >= 1 || mode.equals(
                 "slime",
@@ -2161,7 +2161,7 @@ class Flight : Module() {
     fun onStep(e: StepEvent) {
         val mode = modeValue.get()
         if (mode.equals(
-                "funcraft",
+                "mospixel",
                 ignoreCase = true
             ) || mode.equals("exploit", ignoreCase = true) && wdState > 2 || mode.equals("slime", ignoreCase = true)
         ) e.stepHeight = 0f
