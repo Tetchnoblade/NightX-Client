@@ -141,7 +141,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
             flagged = false;
         }
 
-        if (ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_9_3tor1_9_4)) {
+        if (ProtocolBase.getManager().getTargetVersion().isNewerThanOrEqualTo(VersionEnum.r1_10)) {
             if (packet instanceof C08PacketPlayerBlockPlacement) {
                 ((C08PacketPlayerBlockPlacement) packet).facingX = 0.5F;
                 ((C08PacketPlayerBlockPlacement) packet).facingY = 0.5F;

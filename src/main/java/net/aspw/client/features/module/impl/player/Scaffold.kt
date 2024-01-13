@@ -47,7 +47,8 @@ class Scaffold : Module() {
      */
     // Global settings
     private val allowTower = BoolValue("EnableTower", true)
-    private val towerMove = BoolValue("TowerMove", true) { allowTower.get() }
+    private val towerMove =
+        ListValue("TowerWhen", arrayOf("Always", "Moving", "Standing"), "Always") { allowTower.get() }
     private val towerModeValue = ListValue(
         "TowerMode", arrayOf(
             "Jump",
@@ -146,7 +147,7 @@ class Scaffold : Module() {
             .equals("aac", ignoreCase = true)
     }
     private val preRotationValue = ListValue("WaitRotationMode", arrayOf("Normal", "Lock", "None"), "Normal")
-    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Normal")
+    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Packet")
 
     // Delay
     private val placeableDelay = BoolValue("PlaceableDelay", false)
@@ -200,7 +201,6 @@ class Scaffold : Module() {
     private val customMoveSpeedValue = FloatValue("CustomMoveSpeed", 0.2f, 0f, 5f) { customSpeedValue.get() }
     private val downValue = BoolValue("Down", true)
     private val noHitCheckValue = BoolValue("NoHitCheck", false)
-    private val sameYValue = BoolValue("KeepY", false)
     private val autoJumpValue = BoolValue("AutoJump", false)
     private val smartSpeedValue = BoolValue("SpeedKeepY", true)
     private val safeWalkValue = BoolValue("SafeWalk", false)
@@ -372,7 +372,9 @@ class Scaffold : Module() {
         }
         if (faceBlock)
             place()
-        if (allowTower.get() && GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && blocksAmount > 0 && MovementUtils.isRidingBlock() && (!MovementUtils.isMoving() && !towerMove.get() || towerMove.get())
+        if (allowTower.get() && GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && blocksAmount > 0 && MovementUtils.isRidingBlock() && (towerMove.get()
+                .equals("always", true) || !MovementUtils.isMoving() && towerMove.get()
+                .equals("standing", true) || MovementUtils.isMoving() && towerMove.get().equals("moving", true))
         ) {
             canTower = true
             when (towerModeValue.get().lowercase(Locale.getDefault())) {
@@ -652,7 +654,7 @@ class Scaffold : Module() {
         // Auto Jump thingy
         if (shouldGoDown) {
             launchY = mc.thePlayer.posY.toInt() - 1
-        } else if (!sameYValue.get()) {
+        } else {
             if (!autoJumpValue.get() && !(smartSpeedValue.get() && Client.moduleManager.getModule(
                     Speed::class.java
                 )!!.state) || GameSettings.isKeyDown(mc.gameSettings.keyBindJump) || mc.thePlayer.posY < launchY
@@ -847,7 +849,7 @@ class Scaffold : Module() {
     @EventTarget
     fun onMotion(event: MotionEvent) {
         if (blocksAmount <= 0) return
-        if (canTower && event.eventState == EventState.POST && !towerMove.get()) {
+        if (canTower && !MovementUtils.isMoving() && event.eventState == EventState.POST) {
             mc.thePlayer.motionX = 0.0
             mc.thePlayer.motionZ = 0.0
         }
@@ -1076,7 +1078,7 @@ class Scaffold : Module() {
             mc.thePlayer.posZ
         ) else BlockPos(
             mc.thePlayer.posX, mc.thePlayer.posY - 0.6, mc.thePlayer.posZ
-        ).down()) else if (!canTower && (sameYValue.get() || (autoJumpValue.get() || smartSpeedValue.get() && Client.moduleManager.getModule(
+        ).down()) else if (!canTower && ((autoJumpValue.get() || smartSpeedValue.get() && Client.moduleManager.getModule(
                 Speed::class.java
             )!!.state) && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) && launchY <= mc.thePlayer.posY
         ) BlockPos(
@@ -1117,7 +1119,7 @@ class Scaffold : Module() {
             if (placeableDelay.get()) delayTimer.reset()
             return
         }
-        if (!canTower && (!delayTimer.hasTimePassed(delay) || (sameYValue.get() || (autoJumpValue.get() || smartSpeedValue.get() && Client.moduleManager.getModule(
+        if (!canTower && (!delayTimer.hasTimePassed(delay) || ((autoJumpValue.get() || smartSpeedValue.get() && Client.moduleManager.getModule(
                 Speed::class.java
             )!!.state) && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) && launchY - 1 != (targetPlace)!!.vec3.yCoord.toInt())
         ) return

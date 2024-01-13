@@ -26,26 +26,21 @@ class WatchdogCustom : SpeedMode("WatchdogCustom") {
         val thePlayer = mc.thePlayer ?: return
 
         val speedModule = Client.moduleManager.getModule(Speed::class.java)!!
-        val scaffoldModule = Client.moduleManager.getModule(Scaffold::class.java)
         val timer = Client.moduleManager.getModule(Timer::class.java)
 
         if (isMoving()) {
             when {
                 thePlayer.onGround && thePlayer.isCollidedVertically -> {
                     thePlayer.motionY = getJumpBoostModifier(
-                        if (scaffoldModule!!.state) 0.41999 else speedModule.motionYValue.get().toDouble(), true
+                        speedModule.motionYValue.get().toDouble(), true
                     )
 
-                    if (scaffoldModule.state) {
-                        strafe(0.37F)
-                    } else {
-                        strafe(
-                            (max(
-                                speedModule.customSpeedValue.get() + getSpeedEffect() * 0.1,
-                                getBaseMoveSpeed(0.2873)
-                            )).toFloat()
-                        )
-                    }
+                    strafe(
+                        (max(
+                            speedModule.customSpeedValue.get() + getSpeedEffect() * 0.1,
+                            getBaseMoveSpeed(0.2873)
+                        )).toFloat()
+                    )
                 }
 
                 else -> {

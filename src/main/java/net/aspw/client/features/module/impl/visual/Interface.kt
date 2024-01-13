@@ -14,14 +14,12 @@ import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.client.clickgui.tab.NewUi
 import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.font.smooth.FontLoaders
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.inventory.GuiInventory
 import net.minecraft.network.play.client.C14PacketTabComplete
 import net.minecraft.network.play.server.S2EPacketCloseWindow
 import net.minecraft.network.play.server.S3APacketTabComplete
 import net.minecraft.network.play.server.S45PacketTitle
-import java.awt.Color
 
 @ModuleInfo(name = "Interface", description = "", category = ModuleCategory.VISUAL, array = false)
 class Interface : Module() {
@@ -55,13 +53,12 @@ class Interface : Module() {
             val inputString = clientNameValue.get()
             val firstChar = inputString[0]
             val restOfString = inputString.substring(1)
-            val showName =
-                if (Access.canConnect) "$firstChar§d$restOfString" + " §b[" + Client.CLIENT_VERSION + "] | FPS: " + Minecraft.getDebugFPS() else "$firstChar§d$restOfString" + " §b[" + Client.CLIENT_VERSION + "] | FPS: " + Minecraft.getDebugFPS()
+            val showName = "§l$firstChar§r§f$restOfString" + if (!Access.canConnect) " - Disconnected" else ""
             FontLoaders.SF20.drawStringWithShadow(
                 showName,
                 2.0,
                 3.0,
-                Color(169, 0, 170).rgb
+                RenderUtils.skyRainbow(0, 0.5f, 1.0f).rgb
             )
         }
     }

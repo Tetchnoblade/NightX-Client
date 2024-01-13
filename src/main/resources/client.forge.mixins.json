@@ -51,6 +51,7 @@
     "item.MixinNBTTagCompound",
     "network.MixinBlockedServers",
     "network.MixinGuiConnecting_1",
+    "network.MixinNetHandlerLoginClient",
     "network.MixinNetHandlerPlayClient",
     "network.MixinNetworkManager",
     "network.MixinNetworkManager_5",

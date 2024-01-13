@@ -33,7 +33,7 @@ class WatchdogGround : SpeedMode("WatchdogGround") {
                 } else {
                     MovementUtils.strafe(0.46f)
                 }
-            } else if (mc.thePlayer.fallDistance > 0.1 && mc.thePlayer.hurtTime != 0) {
+            } else if (mc.thePlayer.fallDistance > 0.1 && mc.thePlayer.hurtTime != 0 && speed.semiStrafeValue.get()) {
                 if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
                     MovementUtils.strafe(0.175f)
                 } else {

@@ -60,7 +60,7 @@ public class Crosshair extends Module {
     /**
      * The Size val.
      */
-    public FloatValue sizeVal = new FloatValue("Size/Length", 9, 0.25F, 15);
+    public FloatValue sizeVal = new FloatValue("Size/Length", 8, 0.25F, 15);
     /**
      * The Gap val.
      */

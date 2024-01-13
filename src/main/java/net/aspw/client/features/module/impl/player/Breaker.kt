@@ -36,7 +36,7 @@ class Breaker : Module() {
     private val rangeValue = FloatValue("Range", 5F, 1F, 7F, "m")
     private val actionValue = ListValue("Action", arrayOf("Destroy", "Use"), "Destroy")
     private val instantValue = BoolValue("Instant", false)
-    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Normal")
+    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Packet")
     private val rotationsValue = BoolValue("Rotations", true)
     private val movementFix = BoolValue("MovementFix", true) { rotationsValue.get() }
     private val surroundingsValue = BoolValue("Surroundings", false)
