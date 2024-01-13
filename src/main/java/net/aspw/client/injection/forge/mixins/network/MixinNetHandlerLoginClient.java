@@ -24,7 +24,7 @@ public class MixinNetHandlerLoginClient {
     @Final
     private NetworkManager networkManager;
 
-    @Redirect(method = "handleEncryptionRequest", at = @At(value = "INVOKE", target = "Lcom/mojang/authlib/minecraft/MinecraftSessionService;joinServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/lang/String;)V"), remap = false)
+    @Redirect(method = "handleEncryptionRequest", at = @At(value = "INVOKE", target = "Lcom/mojang/authlib/minecraft/MinecraftSessionService;joinServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/lang/String;)V"))
     public void onlyJoinServerIfPremium(MinecraftSessionService instance, GameProfile profile, String authenticationToken, String serverId) throws AuthenticationException {
         if (ProtocolBase.getManager().getPlatform().isSingleplayer().get()) return;
         if (ProtocolBase.getManager().getTargetVersion().isOlderThanOrEqualTo(VersionEnum.r1_6_4)) {
