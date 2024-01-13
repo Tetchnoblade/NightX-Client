@@ -5,7 +5,6 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.protocol.ProtocolBase
 import net.aspw.client.util.AnimationUtils
 import net.aspw.client.util.network.Access
 import net.aspw.client.util.render.RenderUtils
@@ -57,7 +56,7 @@ class Interface : Module() {
             val firstChar = inputString[0]
             val restOfString = inputString.substring(1)
             val showName =
-                if (Access.canConnect) "$firstChar§d$restOfString" + " §b[" + Client.CLIENT_VERSION + "] | FPS: " + Minecraft.getDebugFPS() + " | version: " + ProtocolBase.getManager().targetVersion.getName() else "$firstChar§d$restOfString" + " §b[" + Client.CLIENT_VERSION + "] | FPS: " + Minecraft.getDebugFPS() + " | version: " + ProtocolBase.getManager().targetVersion.getName() + " | Disconnected"
+                if (Access.canConnect) "$firstChar§d$restOfString" + " §b[" + Client.CLIENT_VERSION + "] | FPS: " + Minecraft.getDebugFPS() else "$firstChar§d$restOfString" + " §b[" + Client.CLIENT_VERSION + "] | FPS: " + Minecraft.getDebugFPS()
             FontLoaders.SF20.drawStringWithShadow(
                 showName,
                 2.0,

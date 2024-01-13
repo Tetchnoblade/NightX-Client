@@ -3,7 +3,6 @@ package net.aspw.client.injection.forge.mixins.block;
 import net.aspw.client.Client;
 import net.aspw.client.event.BlockBBEvent;
 import net.aspw.client.features.module.impl.combat.Criticals;
-import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.exploit.NoMouseIntersect;
 import net.aspw.client.features.module.impl.movement.NoFall;
 import net.aspw.client.features.module.impl.visual.XRay;
@@ -120,9 +119,8 @@ public abstract class MixinBlock {
     @Inject(method = "isCollidable", at = @At("HEAD"), cancellable = true)
     private void isCollidable(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         final NoMouseIntersect noMouseIntersect = Objects.requireNonNull(Client.moduleManager.getModule(NoMouseIntersect.class));
-        final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
 
-        if (noMouseIntersect.getState() && !(noMouseIntersect.getBlockValue().get() == Block.getIdFromBlock((Block) (Object) this)) || killAura.getState() && killAura.getTarget() != null)
+        if (noMouseIntersect.getState() && !(noMouseIntersect.getBlockValue().get() == Block.getIdFromBlock((Block) (Object) this)))
             callbackInfoReturnable.setReturnValue(false);
     }
 

@@ -42,7 +42,7 @@ public class CustomSplashProgress {
     private static volatile boolean done = false;
     private static Thread thread;
     private static volatile Throwable threadError;
-    private static int angle = 0;
+    private static final int angle = 0;
     private static final Lock lock = new ReentrantLock(true);
     private static CustomSplashProgress.SplashFontRenderer fontRenderer;
     private static final IResourcePack mcPack;
@@ -97,7 +97,7 @@ public class CustomSplashProgress {
             r = new FileReader(configFile);
             config.load(r);
         } catch (IOException var24) {
-            FMLLog.info("Could not load splash.properties, will create a default one", new Object[0]);
+            FMLLog.info("Could not load splash.properties, will create a default one");
         } finally {
             IOUtils.closeQuietly(r);
         }
@@ -125,7 +125,7 @@ public class CustomSplashProgress {
             w = new FileWriter(configFile);
             config.store(w, "Splash screen properties");
         } catch (IOException var22) {
-            FMLLog.log(Level.ERROR, var22, "Could not save the splash.properties file", new Object[0]);
+            FMLLog.log(Level.ERROR, var22, "Could not save the splash.properties file");
         } finally {
             IOUtils.closeQuietly(w);
         }
@@ -182,13 +182,13 @@ public class CustomSplashProgress {
                     CustomSplashProgress.fontRenderer = new CustomSplashProgress.SplashFontRenderer();
                     GL11.glDisable(3553);
 
-                    for(; !CustomSplashProgress.done; Display.sync(100)) {
+                    for (; !CustomSplashProgress.done; Display.sync(100)) {
                         ProgressManager.ProgressBar first = null;
                         ProgressManager.ProgressBar penult = null;
                         ProgressManager.ProgressBar last = null;
                         Iterator<ProgressManager.ProgressBar> i = ProgressManager.barIterator();
 
-                        while(i.hasNext()) {
+                        while (i.hasNext()) {
                             if (first == null) {
                                 first = i.next();
                             } else {
@@ -298,7 +298,7 @@ public class CustomSplashProgress {
                 }
 
                 private void setColor(int color) {
-                    GL11.glColor3ub((byte)(color >> 16 & 255), (byte)(color >> 8 & 255), (byte)(color & 255));
+                    GL11.glColor3ub((byte) (color >> 16 & 255), (byte) (color >> 8 & 255), (byte) (color & 255));
                 }
 
                 private void drawBox(int w, int h) {
@@ -367,7 +367,7 @@ public class CustomSplashProgress {
                 }
             });
             thread.setUncaughtExceptionHandler((t, e) -> {
-                FMLLog.log(Level.ERROR, e, "Splash thread Exception", new Object[0]);
+                FMLLog.log(Level.ERROR, e, "Splash thread Exception");
                 CustomSplashProgress.threadError = e;
             });
             thread.start();
@@ -379,8 +379,8 @@ public class CustomSplashProgress {
         if (max_texture_size != -1) {
             return max_texture_size;
         } else {
-            for(int i = 16384; i > 0; i >>= 1) {
-                GL11.glTexImage2D(32868, 0, 6408, i, i, 0, 6408, 5121, (ByteBuffer)null);
+            for (int i = 16384; i > 0; i >>= 1) {
+                GL11.glTexImage2D(32868, 0, 6408, i, i, 0, 6408, 5121, (ByteBuffer) null);
                 if (GL11.glGetTexLevelParameteri(32868, 0, 4096) != 0) {
                     max_texture_size = i;
                     return i;
@@ -397,7 +397,9 @@ public class CustomSplashProgress {
         }
     }
 
-    /** @deprecated */
+    /**
+     * @deprecated
+     */
     @Deprecated
     public static void pause() {
         if (enabled) {
@@ -415,7 +417,9 @@ public class CustomSplashProgress {
         }
     }
 
-    /** @deprecated */
+    /**
+     * @deprecated
+     */
     @Deprecated
     public static void resume() {
         if (enabled) {
@@ -492,7 +496,7 @@ public class CustomSplashProgress {
             config.store(w, "Splash screen properties");
             return true;
         } catch (IOException var8) {
-            FMLLog.log(Level.ERROR, var8, "Could not save the splash.properties file", new Object[0]);
+            FMLLog.log(Level.ERROR, var8, "Could not save the splash.properties file");
             var4 = false;
         } finally {
             IOUtils.closeQuietly(w);
@@ -502,7 +506,7 @@ public class CustomSplashProgress {
     }
 
     private static IResourcePack createResourcePack(File file) {
-        return (IResourcePack)(file.isDirectory() ? new FolderResourcePack(file) : new FileResourcePack(file));
+        return file.isDirectory() ? new FolderResourcePack(file) : new FileResourcePack(file);
     }
 
     public static void drawVanillaScreen(TextureManager renderEngine) throws LWJGLException {
@@ -586,7 +590,7 @@ public class CustomSplashProgress {
                     BufferedImage[] images = new BufferedImage[this.frames];
 
                     int size;
-                    for(size = 0; size < this.frames; ++size) {
+                    for (size = 0; size < this.frames; ++size) {
                         images[size] = reader.read(size);
                     }
 
@@ -594,29 +598,29 @@ public class CustomSplashProgress {
                     size = 1;
                     this.width = images[0].getWidth();
 
-                    for(this.height = images[0].getHeight(); size / this.width * (size / this.height) < this.frames; size *= 2) {
+                    for (this.height = images[0].getHeight(); size / this.width * (size / this.height) < this.frames; size *= 2) {
                     }
 
                     this.size = size;
                     GL11.glEnable(3553);
                     Class var8 = CustomSplashProgress.class;
-                    synchronized(CustomSplashProgress.class) {
+                    synchronized (CustomSplashProgress.class) {
                         this.name = GL11.glGenTextures();
                         GL11.glBindTexture(3553, this.name);
                     }
 
                     GL11.glTexParameteri(3553, 10241, 9728);
                     GL11.glTexParameteri(3553, 10240, 9728);
-                    GL11.glTexImage2D(3553, 0, 6408, size, size, 0, 32993, 33639, (IntBuffer)null);
+                    GL11.glTexImage2D(3553, 0, 6408, size, size, 0, 32993, 33639, (IntBuffer) null);
                     CustomSplashProgress.checkGLError("Texture creation");
 
-                    for(int i = 0; i * (size / this.width) < this.frames; ++i) {
-                        for(int j = 0; i * (size / this.width) + j < this.frames && j < size / this.width; ++j) {
+                    for (int i = 0; i * (size / this.width) < this.frames; ++i) {
+                        for (int j = 0; i * (size / this.width) + j < this.frames && j < size / this.width; ++j) {
                             CustomSplashProgress.buf.clear();
                             BufferedImage image = images[i * (size / this.width) + j];
 
-                            for(int k = 0; k < this.height; ++k) {
-                                for(int l = 0; l < this.width; ++l) {
+                            for (int k = 0; k < this.height; ++k) {
+                                for (int l = 0; l < this.width; ++l) {
                                     CustomSplashProgress.buf.put(image.getRGB(l, k));
                                 }
                             }
@@ -671,11 +675,11 @@ public class CustomSplashProgress {
         }
 
         public float getU(int frame, float u) {
-            return (float)this.width * ((float)(frame % (this.size / this.width)) + u) / (float)this.size;
+            return (float) this.width * ((float) (frame % (this.size / this.width)) + u) / (float) this.size;
         }
 
         public float getV(int frame, float v) {
-            return (float)this.height * ((float)(frame / (this.size / this.width)) + v) / (float)this.size;
+            return (float) this.height * ((float) (frame / (this.size / this.width)) + v) / (float) this.size;
         }
 
         public void texCoord(int frame, float u, float v) {

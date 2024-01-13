@@ -7,7 +7,6 @@ import net.aspw.client.event.Listenable
 import net.aspw.client.features.command.impl.ModuleCommand
 import net.aspw.client.features.module.impl.combat.*
 import net.aspw.client.features.module.impl.exploit.*
-import net.aspw.client.features.module.impl.other.SnakeGame
 import net.aspw.client.features.module.impl.movement.*
 import net.aspw.client.features.module.impl.other.*
 import net.aspw.client.features.module.impl.player.*

@@ -2,9 +2,7 @@ package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.visual.CustomModel;
-import net.aspw.client.features.module.impl.visual.SilentView;
 import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.util.RotationUtils;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.entity.EntityLivingBase;
 import org.spongepowered.asm.mixin.Mixin;

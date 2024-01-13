@@ -3,7 +3,6 @@ package net.aspw.client.injection.forge.mixins.entity;
 import net.aspw.client.Client;
 import net.aspw.client.event.StrafeEvent;
 import net.aspw.client.features.module.impl.combat.HitBox;
-import net.aspw.client.features.module.impl.movement.Flight;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.util.EntityUtils;
 import net.aspw.client.util.MinecraftInstance;

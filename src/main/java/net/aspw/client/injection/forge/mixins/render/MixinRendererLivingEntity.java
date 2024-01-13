@@ -3,21 +3,14 @@ package net.aspw.client.injection.forge.mixins.render;
 import net.aspw.client.Client;
 import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.visual.ESP;
-import net.aspw.client.features.module.impl.visual.SilentView;
 import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.util.RotationUtils;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EnumPlayerModelParts;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MathHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -163,37 +156,6 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
      */
     @Shadow
     protected abstract <T extends EntityLivingBase> void renderLayers(T entitylivingbaseIn, float p_177093_2_, float p_177093_3_, float partialTicks, float p_177093_5_, float p_177093_6_, float p_177093_7_, float p_177093_8_);
-
-    /**
-     * Rotate corpse.
-     *
-     * @param <T>               the type parameter
-     * @param p_rotateCorpse_1_ the p rotate corpse 1
-     * @param p_rotateCorpse_2_ the p rotate corpse 2
-     * @param p_rotateCorpse_3_ the p rotate corpse 3
-     * @param p_rotateCorpse_4_ the p rotate corpse 4
-     * @author As_pw
-     * @reason RotateCorpse
-     */
-    @Overwrite
-    protected <T extends EntityLivingBase> void rotateCorpse(T p_rotateCorpse_1_, float p_rotateCorpse_2_, float p_rotateCorpse_3_, float p_rotateCorpse_4_) {
-        GlStateManager.rotate(180.0F - p_rotateCorpse_3_, 0.0F, 1.0F, 0.0F);
-        if (p_rotateCorpse_1_.deathTime > 0) {
-            float f = ((float) p_rotateCorpse_1_.deathTime + p_rotateCorpse_4_ - 1.0F) / 20.0F * 1.6F;
-            f = MathHelper.sqrt_float(f);
-            if (f > 1.0F) {
-                f = 1.0F;
-            }
-
-            GlStateManager.rotate(f * this.getDeathMaxRotation(p_rotateCorpse_1_), 0.0F, 0.0F, 1.0F);
-        } else {
-            String s = EnumChatFormatting.getTextWithoutFormattingCodes(p_rotateCorpse_1_.getName());
-            if (s != null && ((EntityPlayer) p_rotateCorpse_1_).isWearing(EnumPlayerModelParts.CAPE)) {
-                GlStateManager.translate(0.0F, p_rotateCorpse_1_.height - 1.8F, 0.0F);
-                GlStateManager.rotate(0.0F, 0.0F, 0.0F, 1.0F);
-            }
-        }
-    }
 
     @Inject(method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V", at = @At("HEAD"), cancellable = true)
     private <T extends EntityLivingBase> void injectChamsPre(T entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo callbackInfo) {

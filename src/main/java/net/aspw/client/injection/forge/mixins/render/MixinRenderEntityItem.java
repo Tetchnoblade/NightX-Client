@@ -63,14 +63,14 @@ public abstract class MixinRenderEntityItem extends Render<EntityItem> {
             GlStateManager.translate((float) p_177077_2_, (float) p_177077_4_ + f1 + 0.25F * f2, (float) p_177077_6_);
 
             if (flag || this.renderManager.options != null) {
-                float f3 = (((float) itemIn.getAge() + p_177077_8_) / 20.0F + itemIn.hoverStart) * (180F / (float) Math.PI);
+                float f3 = (((float) itemIn.getAge() + p_177077_8_) / 16.0F + itemIn.hoverStart) * (180F / (float) Math.PI);
                 if (itemPhysics.getState()) {
                     if (itemIn.onGround) {
                         GL11.glRotatef(itemIn.rotationYaw, 0.0f, 1.0f, 0.0f);
                         GL11.glRotatef(itemIn.rotationPitch + 90.0f, 1.0f, 0.0f, 0.0f);
                     } else {
                         for (int a = 0; a < 10; ++a) {
-                            GL11.glRotatef(f3, 3.0f, 0.8f, 3.0f);
+                            GL11.glRotatef(f3, 2.0f, 1.0f, 2.0f);
                         }
                     }
                 } else {

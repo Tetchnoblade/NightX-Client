@@ -29,9 +29,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -163,21 +161,21 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
     protected float updateDistance(float p_1101461, float p_1101462) {
         float rotationYaw = this.rotationYaw;
         final SilentView silentView = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
-        if ((silentView.getRotationMode().get().equals("Normal") || silentView.getRotationMode().get().equals("Old")) && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP) {
-            if (this.swingProgress > 0F && !silentView.getBodyLockValue().get()) {
+        if (silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP) {
+            if (this.swingProgress > 0F && !silentView.getBodyLocked()) {
                 p_1101461 = silentView.getPlayerYaw();
             }
             rotationYaw = silentView.getPlayerYaw();
             rotationYawHead = silentView.getPlayerYaw();
         }
         float f = MathHelper.wrapAngleTo180_float(p_1101461 - this.renderYawOffset);
-        if ((silentView.getRotationMode().get().equals("Normal") || silentView.getRotationMode().get().equals("Old")) && silentView.getBodyLockValue().get() && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP)
+        if (silentView.getBodyLocked() && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP)
             this.renderYawOffset += f;
         else this.renderYawOffset += f * 0.3F;
         float f1 = MathHelper.wrapAngleTo180_float(rotationYaw - this.renderYawOffset);
         boolean flag = f1 < 90.0F || f1 >= 90.0F;
 
-        if ((silentView.getRotationMode().get().equals("Normal") || silentView.getRotationMode().get().equals("Old")) && silentView.getBodyLockValue().get() && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP) {
+        if (silentView.getBodyLocked() && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP) {
             f1 = 0.0F;
         }
 

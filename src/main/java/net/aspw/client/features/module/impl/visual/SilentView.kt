@@ -17,11 +17,13 @@ import net.aspw.client.value.ListValue
     array = false
 )
 class SilentView : Module() {
-    val rotationMode = ListValue("Mode", arrayOf("Normal", "Old"), "Normal")
-    val rotatingCheckValue = BoolValue("RotatingCheck", false)
-    val bodyLockValue = BoolValue("BodyLock", false)
+    private val rotationMode = ListValue("Mode", arrayOf("Fast", "Smooth"), "Fast")
+    private val bodyLockValue = BoolValue("BodyLock", false) { rotationMode.get().equals("smooth", true) }
 
     var playerYaw: Float? = null
+    var pitchRotating = false
+    var bodyLocked = false
+    var oldRotating = false
 
     companion object {
         @JvmStatic
@@ -36,24 +38,44 @@ class SilentView : Module() {
         }
     }
 
+    override fun onDisable() {
+        playerYaw = null
+        pitchRotating = false
+        bodyLocked = false
+        oldRotating = false
+        headPitch = 0f
+        prevHeadPitch = 0f
+    }
+
     @EventTarget
     fun onMotion(event: MotionEvent) {
-        if (mc.thePlayer == null) return
-        if (RotationUtils.targetRotation == null && rotatingCheckValue.get() || !rotatingCheckValue.get()) {
-            when (rotationMode.get().lowercase()) {
-                "normal" -> {
-                    prevHeadPitch = headPitch
-                    headPitch = RotationUtils.serverRotation?.pitch!!
-                    playerYaw = RotationUtils.serverRotation?.yaw!!
-                }
+        if (mc.thePlayer == null || RotationUtils.targetRotation == null) {
+            playerYaw = null
+            pitchRotating = false
+            bodyLocked = false
+            oldRotating = false
+            headPitch = 0f
+            prevHeadPitch = 0f
+            return
+        }
 
-                "old" -> {
-                    if (mc.thePlayer.ticksExisted % 10 == 0) {
-                        prevHeadPitch = headPitch
-                        headPitch = RotationUtils.serverRotation?.pitch!!
-                        playerYaw = RotationUtils.serverRotation?.yaw!!
-                    }
-                }
+        when (rotationMode.get().lowercase()) {
+            "fast" -> {
+                prevHeadPitch = headPitch
+                headPitch = RotationUtils.serverRotation?.pitch!!
+                pitchRotating = true
+                oldRotating = true
+                mc.thePlayer.renderYawOffset = RotationUtils.serverRotation?.yaw!!
+                mc.thePlayer.rotationYawHead = RotationUtils.serverRotation?.yaw!!
+            }
+
+            "smooth" -> {
+                prevHeadPitch = headPitch
+                headPitch = RotationUtils.serverRotation?.pitch!!
+                pitchRotating = true
+                if (bodyLockValue.get())
+                    bodyLocked = true
+                playerYaw = RotationUtils.serverRotation?.yaw!!
             }
         }
     }

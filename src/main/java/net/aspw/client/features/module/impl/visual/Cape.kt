@@ -25,6 +25,7 @@ class Cape : Module() {
         "Mode",
         arrayOf(
             "None",
+            "NightXSmooth",
             "NightX",
             "Delta",
             "Funny",
@@ -52,20 +53,11 @@ class Cape : Module() {
             "Minecon2016",
             "MojangDeveloper",
             "Migrator",
-            "Vanilla"
+            "Vanilla",
+            "CherryBlossom"
         ),
-        "NightX"
+        "NightXSmooth"
     ) { customCape.get() }
-
-    val movingModeValue = ListValue(
-        "MovingMode",
-        arrayOf(
-            "Smooth",
-            "Vanilla"
-        ),
-        "Smooth"
-    )
-
 
     private val capeCache = hashMapOf<String, CapeStyle>()
     fun getCapeLocation(value: String): ResourceLocation {
@@ -82,6 +74,7 @@ class Cape : Module() {
 
     enum class CapeStyle(val location: ResourceLocation) {
         NONE(ResourceLocation("client/cape/none.png")),
+        NIGHTXSMOOTH(ResourceLocation("client/cape/nightxsmooth.png")),
         NIGHTX(ResourceLocation("client/cape/animation/nightx/base.png")),
         DELTA(ResourceLocation("client/cape/delta.png")),
         FUNNY(ResourceLocation("client/cape/funny.png")),
@@ -108,7 +101,8 @@ class Cape : Module() {
         MINECON2016(ResourceLocation("client/cape/2016.png")),
         MOJANGDEVELOPER(ResourceLocation("client/cape/mojangdeveloper.png")),
         MIGRATOR(ResourceLocation("client/cape/migrator.png")),
-        VANILLA(ResourceLocation("client/cape/vanilla.png"))
+        VANILLA(ResourceLocation("client/cape/vanilla.png")),
+        CHERRYBLOSSOM(ResourceLocation("client/cape/cherryblossom.png"))
     }
 
     override val tag: String

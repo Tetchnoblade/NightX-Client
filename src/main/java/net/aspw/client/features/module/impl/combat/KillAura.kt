@@ -95,7 +95,7 @@ class KillAura : Module() {
     }
 
     // Modes
-    val rotations = ListValue("RotationMode", arrayOf("Undetectable", "Standard", "Zero", "None"), "Undetectable")
+    val rotations = ListValue("RotationMode", arrayOf("Standard", "Zero", "None"), "Standard")
 
     // Turn Speed
     private val maxTurnSpeed: FloatValue =
@@ -148,11 +148,6 @@ class KillAura : Module() {
 
     private val noInventoryAttackValue = BoolValue("NoInvAttack", false)
     private val checkSprintValue = BoolValue("StopSprint", false)
-    private val throughWallsValue = BoolValue(
-        "No-Walls",
-        false
-    ) { rotations.get().equals("undetectable", true) }
-    private val randomValue = BoolValue("Random", true) { rotations.get().equals("undetectable", true) }
     private val multiCombo = BoolValue("MultiCombo", false)
     private val amountValue = IntegerValue("Multi-Packet", 5, 0, 20, "x") { multiCombo.get() }
 
@@ -322,9 +317,7 @@ class KillAura : Module() {
     }
 
     fun update() {
-        if (cancelRun || (noInventoryAttackValue.get() && (mc.currentScreen is GuiContainer ||
-                    System.currentTimeMillis() - containerOpen < 200))
-        )
+        if (cancelRun)
             return
 
         // Update target
@@ -420,23 +413,13 @@ class KillAura : Module() {
     }
 
     private fun updateKA() {
-        if (clickOnly.get() && !mc.gameSettings.keyBindAttack.isKeyDown || mc.thePlayer.isRiding) return
+        if (clickOnly.get() && !mc.gameSettings.keyBindAttack.isKeyDown || mc.thePlayer.isRiding || noInventoryAttackValue.get() && mc.currentScreen is GuiContainer) return
 
         if (cancelRun) {
             target = null
             currentTarget = null
             hitable = false
             stopBlocking()
-            return
-        }
-
-        if (noInventoryAttackValue.get() && (mc.currentScreen is GuiContainer ||
-                    System.currentTimeMillis() - containerOpen < 200)
-        ) {
-            target = null
-            currentTarget = null
-            hitable = false
-            if (mc.currentScreen is GuiContainer) containerOpen = System.currentTimeMillis()
             return
         }
 
@@ -517,20 +500,10 @@ class KillAura : Module() {
             return
         }
 
-        if (noInventoryAttackValue.get() && (mc.currentScreen is GuiContainer ||
-                    System.currentTimeMillis() - containerOpen < 200)
-        ) {
-            target = null
-            currentTarget = null
-            hitable = false
-            if (mc.currentScreen is GuiContainer) containerOpen = System.currentTimeMillis()
-            return
-        }
-
         target ?: return
 
         if (espValue.get()) {
-            if (clickOnly.get() && !mc.gameSettings.keyBindAttack.isKeyDown || mc.thePlayer.isRiding) return
+            if (clickOnly.get() && !mc.gameSettings.keyBindAttack.isKeyDown || mc.thePlayer.isRiding || noInventoryAttackValue.get() && mc.currentScreen is GuiContainer) return
             GL11.glPushMatrix()
             GL11.glTranslated(
                 target!!.lastTickPosX + (target!!.posX - target!!.lastTickPosX) * mc.timer.renderPartialTicks - mc.renderManager.renderPosX,
@@ -859,7 +832,7 @@ class KillAura : Module() {
      * Update killaura rotations to enemy
      */
     private fun updateRotations(entity: Entity): Boolean {
-        if (clickOnly.get() && !mc.gameSettings.keyBindAttack.isKeyDown || mc.thePlayer.isRiding) return false
+        if (clickOnly.get() && !mc.gameSettings.keyBindAttack.isKeyDown || mc.thePlayer.isRiding || noInventoryAttackValue.get() && mc.currentScreen is GuiContainer) return false
         if (rotations.get().equals("none", true)) return true
 
         val defRotation = getTargetRotation(entity) ?: return false
@@ -882,6 +855,9 @@ class KillAura : Module() {
     private fun getTargetRotation(entity: Entity): Rotation? {
         val boundingBox = entity.entityBoundingBox
         if (rotations.get().equals("Standard", ignoreCase = true)) {
+            if (maxTurnSpeed.get() <= 0F)
+                return RotationUtils.serverRotation
+
             val limitedRotation = RotationUtils.serverRotation?.let {
                 RotationUtils.limitAngleChange(
                     it,
@@ -889,7 +865,7 @@ class KillAura : Module() {
                         boundingBox,
                         RotationUtils.getCenter(entity.entityBoundingBox),
                         false,
-                        mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get(),
+                        true,
                         maxRange
                     ), (Math.random() * (maxTurnSpeed.get() - minTurnSpeed.get()) + minTurnSpeed.get()).toFloat()
                 )
@@ -897,31 +873,9 @@ class KillAura : Module() {
 
             return limitedRotation
         }
-        if (rotations.get().equals("Undetectable", ignoreCase = true)) {
+        if (rotations.get().equals("Zero", ignoreCase = true)) {
             if (maxTurnSpeed.get() <= 0F)
                 return RotationUtils.serverRotation
-
-            val (_, rotation) = RotationUtils.searchCenter(
-                boundingBox,
-                false,
-                true,
-                false,
-                if (!throughWallsValue.get()) mc.thePlayer!!.getDistanceToEntityBox(entity) < rangeValue.get() else false,
-                maxRange,
-                if (randomValue.get()) 0.5F else 0F,
-                false
-            ) ?: return null
-
-            val limitedRotation = RotationUtils.serverRotation?.let {
-                RotationUtils.limitAngleChange(
-                    it, rotation,
-                    (Math.random() * (maxTurnSpeed.get() - minTurnSpeed.get()) + minTurnSpeed.get()).toFloat()
-                )
-            }
-
-            return limitedRotation
-        }
-        if (rotations.get().equals("Zero", ignoreCase = true)) {
             return RotationUtils.calculate(getNearestPointBB(mc.thePlayer.getPositionEyes(1F), boundingBox))
         }
         return RotationUtils.serverRotation
@@ -1071,10 +1025,7 @@ class KillAura : Module() {
      * Range
      */
     private val maxRange: Float
-        get() = if (!noHitCheck.get()) max(
-            rangeValue.get(),
-            if (!throughWallsValue.get()) rangeValue.get() else 0.0f
-        ) else max(rangeValue.get(), if (!throughWallsValue.get()) rangeValue.get() else 0.0f)
+        get() = max(rangeValue.get(), rangeValue.get())
 
     /**
      * HUD Tag

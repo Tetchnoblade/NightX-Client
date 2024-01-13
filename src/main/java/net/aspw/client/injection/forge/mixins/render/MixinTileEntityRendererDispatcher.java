@@ -2,7 +2,6 @@ package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.module.impl.visual.XRay;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.tileentity.TileEntity;
 import org.spongepowered.asm.mixin.Mixin;

@@ -121,7 +121,11 @@ class RotationUtils : MinecraftInstance(), Listenable {
                         }
                         if (throughWalls || isVisible(vec3)) {
                             val currentVec = VecRotation(vec3, rotation)
-                            if (vecRotation == null) vecRotation = currentVec
+                            if (vecRotation == null || getRotationDifference(currentVec.rotation) < getRotationDifference(
+                                    vecRotation.rotation
+                                )
+                            )
+                                vecRotation = currentVec
                         }
                         zSearch += 0.1
                     }

@@ -1,6 +1,5 @@
 package net.aspw.client.features.module.impl.player
 
-import net.aspw.client.Client
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.event.Render3DEvent
@@ -19,7 +18,6 @@ import net.minecraft.network.play.client.*
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
 import org.lwjgl.opengl.GL11
-import java.awt.Color
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 

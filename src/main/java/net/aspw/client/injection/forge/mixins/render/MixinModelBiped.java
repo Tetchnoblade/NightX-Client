@@ -7,7 +7,6 @@ import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.SilentView;
 import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.util.RotationUtils;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -100,7 +99,7 @@ public abstract class MixinModelBiped {
         final SilentView silentView = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
         final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
         final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
-        if (p_setRotationAngles7 instanceof EntityPlayer && p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer) && (silentView.getRotationMode().get().equals("Normal") || silentView.getRotationMode().get().equals("Old")) && silentView.getState() && (RotationUtils.targetRotation != null && silentView.getRotatingCheckValue().get() || !silentView.getRotatingCheckValue().get())) {
+        if (p_setRotationAngles7 instanceof EntityPlayer && p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer) && silentView.getState() && silentView.getPitchRotating()) {
             bipedHead.rotateAngleX = (float) Math.toRadians(SilentView.lerp(MinecraftInstance.mc.timer.renderPartialTicks, SilentView.getPrevHeadPitch(), SilentView.getHeadPitch()));
         }
         if (heldItemRight == 3) {
