@@ -2,7 +2,6 @@ package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
 import net.aspw.client.features.api.PacketManager;
-import net.aspw.client.features.module.impl.other.PlayerEdit;
 import net.aspw.client.features.module.impl.visual.ESP;
 import net.aspw.client.features.module.impl.visual.SilentView;
 import net.aspw.client.util.MinecraftInstance;
@@ -178,7 +177,6 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
      */
     @Overwrite
     protected <T extends EntityLivingBase> void rotateCorpse(T p_rotateCorpse_1_, float p_rotateCorpse_2_, float p_rotateCorpse_3_, float p_rotateCorpse_4_) {
-        final PlayerEdit playerEdit = Objects.requireNonNull(Client.moduleManager.getModule(PlayerEdit.class));
         GlStateManager.rotate(180.0F - p_rotateCorpse_3_, 0.0F, 1.0F, 0.0F);
         if (p_rotateCorpse_1_.deathTime > 0) {
             float f = ((float) p_rotateCorpse_1_.deathTime + p_rotateCorpse_4_ - 1.0F) / 20.0F * 1.6F;
@@ -190,9 +188,9 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
             GlStateManager.rotate(f * this.getDeathMaxRotation(p_rotateCorpse_1_), 0.0F, 0.0F, 1.0F);
         } else {
             String s = EnumChatFormatting.getTextWithoutFormattingCodes(p_rotateCorpse_1_.getName());
-            if (s != null && (PlayerEdit.rotatePlayer.get() && p_rotateCorpse_1_.equals(MinecraftInstance.mc.thePlayer) && playerEdit.getState()) && (!(p_rotateCorpse_1_ instanceof EntityPlayer) || ((EntityPlayer) p_rotateCorpse_1_).isWearing(EnumPlayerModelParts.CAPE))) {
-                GlStateManager.translate(0.0F, p_rotateCorpse_1_.height + PlayerEdit.yPos.get() - 1.8F, 0.0F);
-                GlStateManager.rotate(PlayerEdit.xRot.get(), 0.0F, 0.0F, 1.0F);
+            if (s != null && ((EntityPlayer) p_rotateCorpse_1_).isWearing(EnumPlayerModelParts.CAPE)) {
+                GlStateManager.translate(0.0F, p_rotateCorpse_1_.height - 1.8F, 0.0F);
+                GlStateManager.rotate(0.0F, 0.0F, 0.0F, 1.0F);
             }
         }
     }
@@ -211,138 +209,14 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
 
     /**
      * @author As_pw
-     * @reason Rotations
-     */
-    @Inject(method = "doRender(Lnet/minecraft/entity/EntityLivingBase;DDDFF)V", at = @At("HEAD"))
-    private <T extends EntityLivingBase> void injectFakeBody(T entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
-        boolean shouldSit;
-        SilentView rotations = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
-        GlStateManager.pushMatrix();
-        GlStateManager.disableCull();
-        this.mainModel.swingProgress = this.getSwingProgress(entity, partialTicks);
-        this.mainModel.isRiding = shouldSit = entity.isRiding() && entity.ridingEntity != null
-                && entity.ridingEntity.shouldRiderSit();
-        this.mainModel.isChild = entity.isChild();
-
-        try {
-            float f = this.interpolateRotation(entity.prevRenderYawOffset, entity.renderYawOffset, partialTicks);
-            float f1 = this.interpolateRotation(entity.prevRotationYawHead, entity.rotationYawHead, partialTicks);
-            float f8 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
-            float f2 = f1 - f;
-            if (shouldSit && entity.ridingEntity instanceof EntityLivingBase) {
-                float f3;
-                EntityLivingBase entitylivingbase = (EntityLivingBase) entity.ridingEntity;
-                f = this.interpolateRotation(entitylivingbase.prevRenderYawOffset, entitylivingbase.renderYawOffset,
-                        partialTicks);
-                if ((f3 = MathHelper.wrapAngleTo180_float(f2 = f1 - f)) < -85.0f) {
-                    f3 = -85.0f;
-                }
-                if (f3 >= 85.0f) {
-                    f3 = 85.0f;
-                }
-                f = f1 - f3;
-                if (f3 * f3 > 2500.0f) {
-                    f += f3 * 0.2f;
-                }
-            }
-
-            renderLivingAt(entity, x, y, z);
-            float f7 = this.handleRotationFloat(entity, partialTicks);
-            float f5 = entity.prevLimbSwingAmount
-                    + (entity.limbSwingAmount - entity.prevLimbSwingAmount) * partialTicks;
-            float f6 = entity.limbSwing - entity.limbSwingAmount * (1.0F - partialTicks);
-            boolean flag = this.setDoRenderBrightness(entity, partialTicks);
-
-            rotateCorpse(entity, f7, f, partialTicks);
-            GlStateManager.enableRescaleNormal();
-            GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-            preRenderCallback(entity, partialTicks);
-            GlStateManager.translate(0.0F, -1.5078125F, 0.0F);
-
-            if (entity.isChild())
-                f6 *= 3.0F;
-
-            if (f5 > 1.0F)
-                f5 = 1.0F;
-
-            GlStateManager.enableAlpha();
-            this.mainModel.setLivingAnimations(entity, f6, f5, partialTicks);
-            this.mainModel.setRotationAngles(f6, f5, f7, f2, f8, 0.0625F, entity);
-
-            if (this.renderOutlines) {
-                boolean flag1 = setScoreTeamColor(entity);
-                renderModel(entity, f6, f5, f7, f2, f8, 0.0625F);
-
-                if (flag1)
-                    unsetScoreTeamColor();
-            } else {
-                renderModel(entity, f6, f5, f7, f2, f8, 0.0625F);
-                if (flag)
-                    unsetBrightness();
-
-                GlStateManager.depthMask(true);
-
-                if (!(entity instanceof EntityPlayer) || !((EntityPlayer) entity).isSpectator()) {
-                    renderLayers(entity, f6, f5, partialTicks, f7, f2, f8, 0.0625F);
-                }
-            }
-
-            float renderpitch = (MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && rotations.getState() && rotations.getRotationMode().get().equals("Silent") && entity == MinecraftInstance.mc.thePlayer) ? (entity.prevRotationPitch + (((RotationUtils.serverRotation.getPitch() != 0.0f) ? RotationUtils.serverRotation.getPitch() : entity.rotationPitch) - entity.prevRotationPitch)) : (entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks);
-            float renderyaw = (MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && rotations.getState() && rotations.getRotationMode().get().equals("Silent") && entity == MinecraftInstance.mc.thePlayer) ? (entity.prevRotationYaw + (((RotationUtils.serverRotation.getYaw() != 0.0f) ? RotationUtils.serverRotation.getYaw() : entity.rotationYaw) - entity.prevRotationYaw)) : (entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks);
-
-            if (rotations.getState() && rotations.getRotationMode().get().equals("Silent") && RotationUtils.targetRotation != null && entity.equals(MinecraftInstance.mc.thePlayer)) {
-                GL11.glPushMatrix();
-                GL11.glPushAttrib(1048575);
-                GL11.glDisable(2929);
-                GL11.glDisable(3553);
-                GL11.glDisable(3553);
-                GL11.glEnable(3042);
-                GL11.glBlendFunc(770, 771);
-                GL11.glDisable(2896);
-                GL11.glPolygonMode(1032, 6914);
-                if (MinecraftInstance.mc.thePlayer.hurtTime > 0)
-                    GL11.glColor4f(255, 0, 0, 8);
-                else GL11.glColor4f(255, 200, 0, 8f);
-                GL11.glRotatef(renderyaw - f, 0, 0.001f, 0);
-                this.mainModel.render(MinecraftInstance.mc.thePlayer, f6, f5, renderpitch, f2, renderpitch, 0.0625F);
-                GL11.glEnable(2896);
-                GL11.glDisable(3042);
-                GL11.glEnable(3553);
-                GL11.glEnable(2929);
-                GL11.glColor3d(1, 1, 1);
-                GL11.glPopAttrib();
-                GL11.glPopMatrix();
-            }
-
-            GlStateManager.disableRescaleNormal();
-
-        } catch (Exception exception) {
-            logger.error("Couldn't render entity", exception);
-        }
-
-        GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-        GlStateManager.enableTexture2D();
-        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
-        GlStateManager.enableCull();
-        GlStateManager.popMatrix();
-
-        if (!this.renderOutlines) {
-            super.doRenders(entity, x, y, z, entityYaw, partialTicks);
-        }
-    }
-
-    /**
-     * @author As_pw
      * @reason Fix Renderer
      */
-
     @Overwrite
     protected <T extends EntityLivingBase> void renderModel(T entitylivingbaseIn, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float scaleFactor) {
         boolean visible = !entitylivingbaseIn.isInvisible();
         boolean semiVisible = !visible && (!entitylivingbaseIn.isInvisibleToPlayer(MinecraftInstance.mc.thePlayer));
-        boolean silent = entitylivingbaseIn == MinecraftInstance.mc.thePlayer && Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class)).getState() && Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class)).getRotationMode().get().equals("Silent") && RotationUtils.targetRotation != null;
 
-        if (visible || semiVisible || silent) {
+        if (visible || semiVisible) {
             if (!this.bindEntityTexture(entitylivingbaseIn))
                 return;
 
@@ -355,27 +229,11 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
                 GlStateManager.alphaFunc(516, 0.003921569F);
             }
 
-            if (silent) {
-                GlStateManager.pushMatrix();
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 0.2F);
-                GlStateManager.depthMask(false);
-                GlStateManager.enableBlend();
-                GlStateManager.blendFunc(770, 771);
-                GlStateManager.alphaFunc(516, 0.003921569F);
-            }
-
             this.mainModel.render(entitylivingbaseIn, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, scaleFactor);
 
             if (semiVisible) {
                 GlStateManager.disableBlend();
                 GlStateManager.alphaFunc(516, 0.1F);
-                GlStateManager.popMatrix();
-                GlStateManager.depthMask(true);
-            }
-
-            if (silent) {
-                GlStateManager.disableBlend();
-                GlStateManager.alphaFunc(516, 0.15F);
                 GlStateManager.popMatrix();
                 GlStateManager.depthMask(true);
             }

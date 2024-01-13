@@ -20,23 +20,26 @@ public class Jump extends SpeedMode {
 
     @Override
     public void onMotion() {
-
-    }
-
-    @Override
-    public void onUpdate() {
+        if (mc.thePlayer.isInWater())
+            return;
 
         final Speed speed = Client.moduleManager.getModule(Speed.class);
 
         if (speed == null)
             return;
-        if (MovementUtils.isMoving() && mc.thePlayer.onGround && !(mc.thePlayer.isInWater() || mc.thePlayer.isInLava()) && mc.thePlayer.jumpTicks == 0) {
-            mc.thePlayer.jump();
-            mc.thePlayer.jumpTicks = 10;
-            mc.thePlayer.isAirBorne = true;
+
+        if (MovementUtils.isMoving()) {
+            if (mc.thePlayer.onGround && mc.thePlayer.jumpTicks == 0) {
+                mc.thePlayer.jump();
+                mc.thePlayer.jumpTicks = 10;
+            }
+            if (speed.jumpStrafe.get() && !mc.thePlayer.onGround)
+                MovementUtils.strafe();
         }
-        if (speed.jumpStrafe.get() && MovementUtils.isMoving() && !mc.thePlayer.onGround && !(mc.thePlayer.isInWater() || mc.thePlayer.isInLava()))
-            MovementUtils.strafe();
+    }
+
+    @Override
+    public void onUpdate() {
     }
 
     @Override

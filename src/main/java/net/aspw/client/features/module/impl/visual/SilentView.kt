@@ -17,9 +17,9 @@ import net.aspw.client.value.ListValue
     array = false
 )
 class SilentView : Module() {
-    val rotationMode = ListValue("Mode", arrayOf("Normal", "Silent"), "Normal")
-    val rotatingCheckValue = BoolValue("RotatingCheck", false) { rotationMode.get().equals("normal", true) }
-    val bodyLockValue = BoolValue("BodyLock", false) { rotationMode.get().equals("normal", true) }
+    val rotationMode = ListValue("Mode", arrayOf("Normal", "Old"), "Normal")
+    val rotatingCheckValue = BoolValue("RotatingCheck", false)
+    val bodyLockValue = BoolValue("BodyLock", false)
 
     var playerYaw: Float? = null
 
@@ -38,15 +38,23 @@ class SilentView : Module() {
 
     @EventTarget
     fun onMotion(event: MotionEvent) {
-        val thePlayer = mc.thePlayer
-        if (thePlayer == null || RotationUtils.targetRotation == null && rotatingCheckValue.get()) {
-            playerYaw = null
-            headPitch = 0f
-            prevHeadPitch = 0f
-            return
+        if (mc.thePlayer == null) return
+        if (RotationUtils.targetRotation == null && rotatingCheckValue.get() || !rotatingCheckValue.get()) {
+            when (rotationMode.get().lowercase()) {
+                "normal" -> {
+                    prevHeadPitch = headPitch
+                    headPitch = RotationUtils.serverRotation?.pitch!!
+                    playerYaw = RotationUtils.serverRotation?.yaw!!
+                }
+
+                "old" -> {
+                    if (mc.thePlayer.ticksExisted % 10 == 0) {
+                        prevHeadPitch = headPitch
+                        headPitch = RotationUtils.serverRotation?.pitch!!
+                        playerYaw = RotationUtils.serverRotation?.yaw!!
+                    }
+                }
+            }
         }
-        prevHeadPitch = headPitch
-        headPitch = RotationUtils.serverRotation?.pitch!!
-        playerYaw = RotationUtils.serverRotation?.yaw!!
     }
 }

@@ -12,7 +12,6 @@ import net.aspw.client.features.api.inventory.ModItems
 import net.aspw.client.features.api.inventory.StackItems
 import net.aspw.client.features.command.CommandManager
 import net.aspw.client.features.module.ModuleManager
-import net.aspw.client.features.module.impl.other.HackerDetect
 import net.aspw.client.features.module.impl.other.ThunderNotifier
 import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.features.module.impl.visual.MoreParticles
@@ -131,7 +130,6 @@ object Client {
             moduleManager.getModule(ThunderNotifier::class.java)?.state = true
             moduleManager.getModule(Trajectories::class.java)?.state = true
             moduleManager.getModule(MoreParticles::class.java)?.state = true
-            moduleManager.getModule(HackerDetect::class.java)?.state = true
         }
 
         // Register commands

@@ -172,7 +172,7 @@ class AutoHeal : Module() {
                     oldSlot = mc.thePlayer.inventory.currentItem
                 }
 
-                if (throwing && !mc.thePlayer.isEating && MovementUtils.isRidingBlock() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
+                if (throwing && !mc.thePlayer.isEating && !mc.thePlayer.isInWater && MovementUtils.isRidingBlock() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
                     if (mc.thePlayer.onGround) {
                         potting = false
                         RotationUtils.setTargetRotation(
@@ -287,6 +287,7 @@ class AutoHeal : Module() {
                 if (throwing && mc.currentScreen !is GuiContainer
                     && !mc.thePlayer.isEating
                     && MovementUtils.isRidingBlock()
+                    && !mc.thePlayer.isInWater
                     && tickTimer.hasTimePassed(4) && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!
                 ) {
                     val potionEffects = getPotionFromSlot(potIndex)

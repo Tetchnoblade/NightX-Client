@@ -50,7 +50,6 @@ class Flight : Module() {
             "Motion",
             "NoClip",
             "Creative",
-            "Water",
             "Pearl",
             "Packet",
             "Desync",
@@ -576,9 +575,6 @@ class Flight : Module() {
                 ignoreCase = true
             ) && !mode.equals("vanilla", ignoreCase = true) && !mode.equals(
                 "creative",
-                ignoreCase = true
-            ) && !mode.equals(
-                "water",
                 ignoreCase = true
             ) && !mode.equals("vanilla", ignoreCase = true) && !mode.equals(
                 "newspartan",

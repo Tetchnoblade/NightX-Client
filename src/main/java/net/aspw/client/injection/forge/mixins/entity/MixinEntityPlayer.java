@@ -169,25 +169,6 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
         }
     }
 
-    /**
-     * @author As_pw
-     * @reason Improves
-     */
-    @Inject(method = "dropItem", at = @At("HEAD"))
-    private void dropItem(ItemStack p_dropItem_1_, boolean p_dropItem_2_, boolean p_dropItem_3_, CallbackInfoReturnable<EntityItem> cir) {
-        for (int i = 0; i < this.mainInventory.length; ++i) {
-            if (this.mainInventory[i] != null) {
-                this.mainInventory[i] = null;
-            }
-        }
-
-        for (int j = 0; j < this.armorInventory.length; ++j) {
-            if (this.armorInventory[j] != null) {
-                this.armorInventory[j] = null;
-            }
-        }
-    }
-
     @Inject(method = "onUpdate", at = @At("RETURN"))
     private void injectCooldown(final CallbackInfo callbackInfo) {
         if (getGameProfile() == MinecraftInstance.mc.thePlayer.getGameProfile()) {

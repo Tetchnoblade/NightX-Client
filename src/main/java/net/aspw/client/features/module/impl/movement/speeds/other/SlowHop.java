@@ -32,7 +32,6 @@ public class SlowHop extends SpeedMode {
 
     @Override
     public void onUpdate() {
-
     }
 
     @Override

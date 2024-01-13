@@ -51,8 +51,6 @@ class NoSlow : Module() {
     private val consumeStrafeMultiplier = FloatValue("ConsumeStrafeMultiplier", 1.0F, 0.2F, 1.0F, "x")
     private val bowForwardMultiplier = FloatValue("BowForwardMultiplier", 1.0F, 0.2F, 1.0F, "x")
     private val bowStrafeMultiplier = FloatValue("BowStrafeMultiplier", 1.0F, 0.2F, 1.0F, "x")
-    val sneakForwardMultiplier = FloatValue("SneakForwardMultiplier", 0.3F, 0.3F, 1.0F, "x")
-    val sneakStrafeMultiplier = FloatValue("SneakStrafeMultiplier", 0.3F, 0.3F, 1.0F, "x")
     private val customRelease = BoolValue("CustomReleasePacket", false) { modeValue.get().equals("custom", true) }
     private val customPlace = BoolValue("CustomPlacePacket", false) { modeValue.get().equals("custom", true) }
     private val customOnGround = BoolValue("CustomOnGround", false) { modeValue.get().equals("custom", true) }

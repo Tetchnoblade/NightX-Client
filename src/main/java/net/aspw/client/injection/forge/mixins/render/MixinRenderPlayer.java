@@ -1,7 +1,6 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Client;
-import net.aspw.client.features.module.impl.other.PlayerEdit;
 import net.aspw.client.features.module.impl.visual.CustomModel;
 import net.aspw.client.util.MinecraftInstance;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -24,24 +23,6 @@ public class MixinRenderPlayer {
     private final ResourceLocation rabbit = new ResourceLocation("client/models/rabbit.png");
     private final ResourceLocation fred = new ResourceLocation("client/models/freddy.png");
     private final ResourceLocation imposter = new ResourceLocation("client/models/imposter.png");
-
-    /**
-     * Render living at.
-     *
-     * @param entityLivingBaseIn the entity living base in
-     * @param x                  the x
-     * @param y                  the y
-     * @param z                  the z
-     * @param callbackInfo       the callback info
-     */
-    @Inject(method = "renderLivingAt", at = @At("HEAD"))
-    protected void renderLivingAt(AbstractClientPlayer entityLivingBaseIn, double x, double y, double z, CallbackInfo callbackInfo) {
-        final PlayerEdit playerEdit = Objects.requireNonNull(Client.moduleManager.getModule(PlayerEdit.class));
-
-        if (playerEdit.getState() & entityLivingBaseIn.equals(MinecraftInstance.mc.thePlayer) && PlayerEdit.editPlayerSizeValue.get()) {
-            GlStateManager.scale(PlayerEdit.playerSizeValue.get(), PlayerEdit.playerSizeValue.get(), PlayerEdit.playerSizeValue.get());
-        }
-    }
 
     /**
      * Gets entity texture.

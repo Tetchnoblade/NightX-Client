@@ -3,7 +3,6 @@ package net.aspw.client.injection.forge.mixins.entity;
 import net.aspw.client.Client;
 import net.aspw.client.event.StrafeEvent;
 import net.aspw.client.features.module.impl.combat.HitBox;
-import net.aspw.client.features.module.impl.movement.AntiWaterPush;
 import net.aspw.client.features.module.impl.movement.Flight;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.util.EntityUtils;
@@ -412,28 +411,6 @@ public abstract class MixinEntity implements ICommandSender {
             float f2 = MathHelper.cos(rotationYaw * (float) Math.PI / 180.0F);
             this.motionX += strafe * f2 - forward * f1;
             this.motionZ += forward * f2 + strafe * f1;
-        }
-    }
-
-    @Inject(method = "isInWater", at = @At("HEAD"), cancellable = true)
-    private void isInWater(final CallbackInfoReturnable<Boolean> cir) {
-        final AntiWaterPush antiWaterPush = Objects.requireNonNull(Client.moduleManager.getModule(AntiWaterPush.class));
-        final Flight flight = Objects.requireNonNull(Client.moduleManager.getModule(Flight.class));
-
-        if (antiWaterPush.getState() && antiWaterPush.getWaterValue().get()) {
-            cir.setReturnValue(false);
-            return;
-        }
-        if (flight.getState() && flight.modeValue.get().contains("Water"))
-            cir.setReturnValue(true);
-    }
-
-    @Inject(method = "isInLava", at = @At("HEAD"), cancellable = true)
-    private void isInLava(final CallbackInfoReturnable<Boolean> cir) {
-        final AntiWaterPush antiWaterPush = Objects.requireNonNull(Client.moduleManager.getModule(AntiWaterPush.class));
-
-        if (antiWaterPush.getState() && antiWaterPush.getLavaValue().get()) {
-            cir.setReturnValue(false);
         }
     }
 

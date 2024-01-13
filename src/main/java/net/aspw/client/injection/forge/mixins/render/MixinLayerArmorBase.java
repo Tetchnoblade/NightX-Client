@@ -35,14 +35,10 @@ public class MixinLayerArmorBase {
     @Inject(method = {"doRenderLayer"}, at = {@At("HEAD")}, cancellable = true)
     public void doRenderLayer(final EntityLivingBase entitylivingbaseIn, final float limbSwing, final float limbSwingAmount, final float partialTicks, final float ageInTicks, final float netHeadYaw, final float headPitch, final float scale, final CallbackInfo ci) {
         final CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
-        final SilentView silentView = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
 
         if (customModel.getState() && customModel.getOnlySelf().get() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer) {
             ci.cancel();
         } else if (customModel.getState() && !customModel.getOnlySelf().get()) {
-            ci.cancel();
-        }
-        if (silentView.getState() && silentView.getRotationMode().get().equals("Silent") && entitylivingbaseIn == MinecraftInstance.mc.thePlayer && RotationUtils.targetRotation != null) {
             ci.cancel();
         }
     }

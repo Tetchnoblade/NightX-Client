@@ -2,7 +2,6 @@ package net.aspw.client.util
 
 import net.aspw.client.Client
 import net.aspw.client.features.api.MacroManager
-import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.impl.exploit.Debugger
 import net.aspw.client.features.module.impl.exploit.Plugins
 import net.aspw.client.features.module.impl.other.*
@@ -148,7 +147,7 @@ object SettingsUtils {
         MacroManager.macroMapping.filter { it.key != 0 }
             .forEach { stringBuilder.append("macro ${it.key} ${it.value}").append("\n") }
 
-        Client.moduleManager.modules.filter { it.category !== ModuleCategory.MINIGAMES && it !is SilentView && it !is Gui && it !is Cape && it !is Trajectories && it !is Debugger && it !is HackerDetect && it !is HudEditor && it !is XRay && it !is MotionBlur && it !is Wings && it !is BlockOverlay && it !is ChestESP && it !is DiscordRPC && it !is Crosshair && it !is CustomModel && it !is EnchantColor && it !is MoreParticles && it !is HeldBlockESP && it !is ItemESP && it !is ItemPhysics && it !is JumpCircle && it !is PlayerEdit && it !is PointerESP && it !is ViewBobbing && it !is ChinaHat && it !is StreamerMode && it !is Tracers && it !is Trails && it !is Freecam && it !is FreeLook && it !is Plugins && it !is ThunderNotifier && it !is Interface && it !is Animations }
+        Client.moduleManager.modules.filter { it !is SnakeGame && it !is SilentView && it !is Gui && it !is Cape && it !is Trajectories && it !is Debugger && it !is HudEditor && it !is XRay && it !is MotionBlur && it !is DiscordRPC && it !is Crosshair && it !is CustomModel && it !is EnchantColor && it !is MoreParticles && it !is ItemPhysics && it !is StreamerMode && it !is Tracers && it !is Freecam && it !is FreeLook && it !is Plugins && it !is ThunderNotifier && it !is Interface && it !is Animations }
             .forEach {
                 if (values)
                     it.values.forEach { value ->

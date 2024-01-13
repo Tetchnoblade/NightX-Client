@@ -2,7 +2,7 @@ package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.Client;
 import net.aspw.client.event.Render2DEvent;
-import net.aspw.client.features.module.impl.minigames.SnakeGame;
+import net.aspw.client.features.module.impl.other.SnakeGame;
 import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.features.module.impl.visual.Crosshair;
 import net.aspw.client.features.module.impl.visual.Interface;
@@ -11,6 +11,7 @@ import net.aspw.client.util.MinecraftInstance;
 import net.aspw.client.util.render.RenderUtils;
 import net.aspw.client.visual.font.semi.AWTFontRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
 import net.minecraft.client.gui.ScaledResolution;
@@ -36,7 +37,7 @@ import java.util.Objects;
  * The type Mixin gui in game.
  */
 @Mixin(GuiIngame.class)
-public abstract class MixinGuiInGame extends MixinGui {
+public abstract class MixinGuiInGame extends Gui {
 
     /**
      * The constant widgetsTexPath.

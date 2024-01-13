@@ -4,9 +4,7 @@ import net.aspw.client.Client;
 import net.aspw.client.event.*;
 import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.exploit.AntiDesync;
-import net.aspw.client.features.module.impl.exploit.AntiHunger;
 import net.aspw.client.features.module.impl.exploit.PortalMenu;
-import net.aspw.client.features.module.impl.movement.Flight;
 import net.aspw.client.features.module.impl.movement.NoSlow;
 import net.aspw.client.features.module.impl.movement.SilentSneak;
 import net.aspw.client.features.module.impl.movement.Sprint;
@@ -186,9 +184,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
      */
     @Overwrite
     protected boolean isCurrentViewEntity() {
-        final Flight flight = Objects.requireNonNull(Client.moduleManager.getModule(Flight.class));
-
-        return (mc.getRenderViewEntity() != null && mc.getRenderViewEntity().equals(this)) || (Client.moduleManager != null && flight.getState());
+        return (mc.getRenderViewEntity() != null && mc.getRenderViewEntity().equals(this));
     }
 
     @Redirect(method = "onUpdateWalkingPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/NetHandlerPlayClient;addToSendQueue(Lnet/minecraft/network/Packet;)V", ordinal = 7))
@@ -220,10 +216,8 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
             PacketManager.update();
 
-            final AntiHunger antiHunger = Objects.requireNonNull(Client.moduleManager.getModule(AntiHunger.class));
-
             final SilentSneak sneak = Objects.requireNonNull(Client.moduleManager.getModule(SilentSneak.class));
-            final boolean fakeSprint = antiHunger.getState() || (sneak.getState() && (!MovementUtils.isMoving()));
+            final boolean fakeSprint = sneak.getState() && (!MovementUtils.isMoving());
 
             ActionEvent actionEvent = new ActionEvent(this.isSprinting() && !fakeSprint, this.isSneaking());
 

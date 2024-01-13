@@ -61,8 +61,7 @@ class AntiVelocity : Module() {
                 "MatrixReverse",
                 "MatrixSpoof",
                 "MatrixGround",
-                "Legit",
-                "AEMine"
+                "Legit"
             ),
             "Cancel"
         )
@@ -375,21 +374,6 @@ class AntiVelocity : Module() {
             "matrixground" -> {
                 if (mc.thePlayer.onGround && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
                     mc.thePlayer.onGround = false
-            }
-
-            "aemine" -> {
-                if (mc.thePlayer.hurtTime <= 0) {
-                    return
-                }
-                if (mc.thePlayer.hurtTime >= 6) {
-                    mc.thePlayer.motionX *= 0.605001
-                    mc.thePlayer.motionZ *= 0.605001
-                    mc.thePlayer.motionY *= 0.727
-                } else if (!mc.thePlayer.onGround) {
-                    mc.thePlayer.motionX *= 0.305001
-                    mc.thePlayer.motionZ *= 0.305001
-                    mc.thePlayer.motionY -= 0.095
-                }
             }
 
             "grimreverse" -> {

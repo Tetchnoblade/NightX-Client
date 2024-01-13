@@ -62,7 +62,7 @@ class TargetStrafe : Module() {
             }
         }
 
-        if (event.eventState == EventState.PRE && (MovementUtils.isAroundBlock() || mc.thePlayer.isCollidedHorizontally || safewalk.get() && checkVoid() && !flight!!.state))
+        if (event.eventState == EventState.PRE && (mc.thePlayer.isCollidedHorizontally || safewalk.get() && checkVoid() && !flight!!.state))
             this.direction = -this.direction
     }
 

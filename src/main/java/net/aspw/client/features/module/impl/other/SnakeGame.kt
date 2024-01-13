@@ -1,4 +1,4 @@
-package net.aspw.client.features.module.impl.minigames
+package net.aspw.client.features.module.impl.other
 
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.KeyEvent
@@ -20,7 +20,7 @@ import java.awt.Color
     name = "SnakeGame",
     spacedName = "Snake Game",
     description = "",
-    category = ModuleCategory.MINIGAMES,
+    category = ModuleCategory.OTHER,
     keyBind = Keyboard.KEY_F10
 )
 class SnakeGame : Module() {

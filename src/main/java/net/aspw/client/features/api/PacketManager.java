@@ -16,6 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.*;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.raphimc.vialoader.util.VersionEnum;
@@ -28,6 +29,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     public static String selectedCape;
     public static int swing;
     public static boolean isVisualBlocking = false;
+    private static boolean flagged = false;
 
     public static void update() {
         int maxFrames = 40;
@@ -49,6 +51,16 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         if (ticks > maxFrames) {
             ticks = 1;
         }
+    }
+
+    @EventTarget
+    public void onWorld(WorldEvent event) {
+        flagged = false;
+    }
+
+    @EventTarget
+    public void onTeleport(TeleportEvent event) {
+        flagged = true;
     }
 
     @EventTarget
@@ -103,6 +115,31 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     public void onPacket(PacketEvent event) {
         final Packet<?> packet = event.getPacket();
         final ClientSpoof clientSpoof = Client.moduleManager.getModule(ClientSpoof.class);
+
+        if (packet instanceof C03PacketPlayer && flagged) {
+            event.cancelEvent();
+            PacketUtils.sendPacketNoEvent(
+                    new C03PacketPlayer.C06PacketPlayerPosLook(
+                            ((C03PacketPlayer) packet).x,
+                            ((C03PacketPlayer) packet).y,
+                            ((C03PacketPlayer) packet).z,
+                            ((C03PacketPlayer) packet).yaw,
+                            ((C03PacketPlayer) packet).pitch,
+                            ((C03PacketPlayer) packet).onGround
+                    )
+            );
+            PacketUtils.sendPacketNoEvent(
+                    new C03PacketPlayer.C06PacketPlayerPosLook(
+                            mc.thePlayer.posX,
+                            mc.thePlayer.posY,
+                            mc.thePlayer.posZ,
+                            mc.thePlayer.rotationYaw,
+                            mc.thePlayer.rotationPitch,
+                            mc.thePlayer.onGround
+                    )
+            );
+            flagged = false;
+        }
 
         if (ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_9_3tor1_9_4)) {
             if (packet instanceof C08PacketPlayerBlockPlacement) {

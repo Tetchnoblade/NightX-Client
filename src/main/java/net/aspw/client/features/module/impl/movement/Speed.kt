@@ -7,8 +7,6 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode
 import net.aspw.client.features.module.impl.movement.speeds.aac.*
-import net.aspw.client.features.module.impl.movement.speeds.intave.IntaveHop
-import net.aspw.client.features.module.impl.movement.speeds.kauri.KauriLowHop
 import net.aspw.client.features.module.impl.movement.speeds.matrix.Matrix670
 import net.aspw.client.features.module.impl.movement.speeds.matrix.Matrix692
 import net.aspw.client.features.module.impl.movement.speeds.matrix.MatrixHop
@@ -16,19 +14,13 @@ import net.aspw.client.features.module.impl.movement.speeds.matrix.MatrixYPort
 import net.aspw.client.features.module.impl.movement.speeds.ncp.*
 import net.aspw.client.features.module.impl.movement.speeds.other.*
 import net.aspw.client.features.module.impl.movement.speeds.spartan.SpartanYPort
-import net.aspw.client.features.module.impl.movement.speeds.spectre.SpectreBHop
-import net.aspw.client.features.module.impl.movement.speeds.spectre.SpectreLowHop
-import net.aspw.client.features.module.impl.movement.speeds.spectre.SpectreOnGround
 import net.aspw.client.features.module.impl.movement.speeds.vanillabhop.VanillaBhop
 import net.aspw.client.features.module.impl.movement.speeds.verus.VerusFloat
 import net.aspw.client.features.module.impl.movement.speeds.verus.VerusHop
 import net.aspw.client.features.module.impl.movement.speeds.verus.VerusLowHop
-import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanGround
 import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanYPort
-import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogBoost
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogCustom
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogGround
-import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogStable
 import net.aspw.client.util.MovementUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -68,18 +60,12 @@ class Speed : Module() {
         AACYPort(),
         AACYPort2(),
         WatchdogGround(),
-        WatchdogBoost(),
-        WatchdogStable(),
         WatchdogCustom(),
         VanillaBhop(),
         SpartanYPort(),
-        SpectreBHop(),
-        SpectreLowHop(),
-        SpectreOnGround(),
         SlowHop(),
         Custom(),
         Jump(),
-        AEMine(),
         NCPSemiStrafe(),
         NCPBoost(),
         NCPFrame(),
@@ -87,21 +73,15 @@ class Speed : Module() {
         NCPOnGround(),
         YPort(),
         YPort2(),
-        HiveHop(),
         Minemen(),
-        RedeskyHop(),
-        TeleportCubeCraft(),
         VerusHop(),
         VerusLowHop(),
         VerusFloat(),
         VulcanYPort(),
-        VulcanGround(),
         MatrixHop(),
         MatrixYPort(),
         Matrix670(),
-        Matrix692(),
-        KauriLowHop(),
-        IntaveHop()
+        Matrix692()
     )
     val typeValue: ListValue = object : ListValue(
         "Type",
@@ -109,13 +89,10 @@ class Speed : Module() {
             "NCP",
             "AAC",
             "Spartan",
-            "Spectre",
             "Watchdog",
             "Verus",
             "Vulcan",
             "Matrix",
-            "Kauri",
-            "Intave",
             "Custom",
             "VanillaBhop",
             "Other"
@@ -260,37 +237,9 @@ class Speed : Module() {
 
     private val hypixelModeValue: ListValue = object : ListValue(
         "Watchdog-Mode",
-        arrayOf("Ground", "Boost", "Stable", "Custom"),
+        arrayOf("Ground", "Custom"),
         "Ground",
         { typeValue.get().equals("watchdog", ignoreCase = true) }) {
-        override fun onChange(oldValue: String, newValue: String) {
-            if (state) onDisable()
-        }
-
-        override fun onChanged(oldValue: String, newValue: String) {
-            if (state) onEnable()
-        }
-    }
-
-    private val kauriModeValue: ListValue = object : ListValue(
-        "Kauri-Mode",
-        arrayOf("LowHop"),
-        "LowHop",
-        { typeValue.get().equals("kauri", ignoreCase = true) }) {
-        override fun onChange(oldValue: String, newValue: String) {
-            if (state) onDisable()
-        }
-
-        override fun onChanged(oldValue: String, newValue: String) {
-            if (state) onEnable()
-        }
-    }
-
-    private val intaveModeValue: ListValue = object : ListValue(
-        "Intave-Mode",
-        arrayOf("Hop"),
-        "Hop",
-        { typeValue.get().equals("intave", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
         }
@@ -319,20 +268,6 @@ class Speed : Module() {
         speedMode?.onDisable()
     }
 
-    private val spectreModeValue: ListValue = object : ListValue(
-        "Spectre-Mode",
-        arrayOf("BHop", "LowHop", "OnGround"),
-        "BHop",
-        { typeValue.get().equals("spectre", ignoreCase = true) }) {
-        override fun onChange(oldValue: String, newValue: String) {
-            if (state) onDisable()
-        }
-
-        override fun onChanged(oldValue: String, newValue: String) {
-            if (state) onEnable()
-        }
-    }
-
     override val tag: String
         get() = typeValue.get()
 
@@ -343,11 +278,7 @@ class Speed : Module() {
             "YPort2",
             "SlowHop",
             "Jump",
-            "AEMine",
-            "HiveHop",
-            "Minemen",
-            "RedeskyHop",
-            "TeleportCubeCraft"
+            "Minemen"
         ),
         "YPort",
         { typeValue.get().equals("other", ignoreCase = true) }) {
@@ -372,13 +303,10 @@ class Speed : Module() {
                 ) "OldAACBHop" else "AAC" + aacModeValue.get()
 
                 "Spartan" -> mode = "SpartanYPort"
-                "Spectre" -> mode = "Spectre" + spectreModeValue.get()
                 "Watchdog" -> mode = "Watchdog" + hypixelModeValue.get()
                 "Verus" -> mode = "Verus" + verusModeValue.get()
                 "Vulcan" -> mode = "Vulcan" + vulcanModeValue.get()
                 "Matrix" -> mode = "Matrix" + matrixModeValue.get()
-                "Kauri" -> mode = "Kauri" + kauriModeValue.get()
-                "Intave" -> mode = "Intave" + intaveModeValue.get()
                 "VanillaBhop" -> mode = "VanillaBhop"
                 "Custom" -> mode = "Custom"
                 "Other" -> mode = otherModeValue.get()
@@ -404,8 +332,7 @@ class Speed : Module() {
         }
     }
     private val vulcanModeValue: ListValue = object : ListValue("Vulcan-Mode", arrayOf(
-        "YPort",
-        "Ground"
+        "YPort"
     ), "YPort", { typeValue.get().equals("vulcan", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
@@ -451,12 +378,6 @@ class Speed : Module() {
     val motionYValue = FloatValue("MotionY", 0.42f, 0f, 2f) {
         modeName.equals("watchdogcustom", ignoreCase = true)
     }
-
-    @JvmField
-    val boostSpeedValue = BoolValue("Ground-Boost", true) { modeName.equals("vulcanground", ignoreCase = true) }
-
-    @JvmField
-    val boostDelayValue = IntegerValue("Boost-Delay", 8, 2, 15) { modeName.equals("vulcanground", ignoreCase = true) }
 
     @JvmField
     val speedValue = FloatValue("CustomSpeed", 1.0f, 0.2f, 2f) { typeValue.get().equals("custom", ignoreCase = true) }
@@ -507,89 +428,6 @@ class Speed : Module() {
     val jumpStrafe = BoolValue("JumpStrafe", false) { typeValue.get().equals("other", ignoreCase = true) }
 
     @JvmField
-    val sendJumpValue = BoolValue("SendJump", true) {
-        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
-            "watchdogground",
-            ignoreCase = true
-        ) && !modeName.equals(
-            "watchdogcustom",
-            ignoreCase = true
-        )
-    }
-
-    @JvmField
-    val recalcValue = BoolValue("ReCalculate", false) {
-        typeValue.get().equals("watchdog", ignoreCase = true) && sendJumpValue.get() && !modeName.equals(
-            "watchdogcustom",
-            ignoreCase = true
-        ) && !modeName.equals(
-            "watchdogground",
-            ignoreCase = true
-        )
-    }
-
-    @JvmField
-    val glideStrengthValue = FloatValue("GlideStrength", 0f, 0f, 0.05f) {
-        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
-            "watchdogcustom",
-            ignoreCase = true
-        ) && !modeName.equals(
-            "watchdogground",
-            ignoreCase = true
-        )
-    }
-
-    @JvmField
-    val moveSpeedValue = FloatValue("MoveSpeed", 1.7f, 1f, 1.7f) {
-        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
-            "watchdogcustom",
-            ignoreCase = true
-        ) && !modeName.equals(
-            "watchdogground",
-            ignoreCase = true
-        )
-    }
-
-    @JvmField
-    val jumpYValue = FloatValue("JumpY", 0.42f, 0f, 1f) {
-        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
-            "watchdogcustom",
-            ignoreCase = true
-        ) && !modeName.equals(
-            "watchdogground",
-            ignoreCase = true
-        )
-    }
-
-    @JvmField
-    val baseStrengthValue = FloatValue("BaseMultiplier", 1f, 0.5f, 1f) {
-        typeValue.get().equals("watchdog", ignoreCase = true) && !modeName.equals(
-            "watchdogcustom",
-            ignoreCase = true
-        ) && !modeName.equals(
-            "watchdogground",
-            ignoreCase = true
-        )
-    }
-
-    @JvmField
-    val baseTimerValue = FloatValue("BaseTimer", 1.5f, 1f, 3f) {
-        modeName.equals(
-            "watchdogboost",
-            ignoreCase = true
-        )
-    }
-
-    @JvmField
-    val baseMTimerValue =
-        FloatValue("BaseMultiplierTimer", 1f, 0f, 3f) {
-            modeName.equals(
-                "watchdogboost",
-                ignoreCase = true
-            )
-        }
-
-    @JvmField
     val portMax = FloatValue("AAC-PortLength", 1f, 1f, 20f) { typeValue.get().equals("aac", ignoreCase = true) }
 
     @JvmField
@@ -599,10 +437,6 @@ class Speed : Module() {
     @JvmField
     val vanillaBhopSpeed =
         FloatValue("Hop-Speed", 0.9f, 0.0f, 5f) { typeValue.get().equals("vanillabhop", ignoreCase = true) }
-
-    @JvmField
-    val cubecraftPortLengthValue =
-        FloatValue("CubeCraft-PortLength", 1f, 0.1f, 2f) { modeName.equals("teleportcubecraft", ignoreCase = true) }
 
     private val lagCheck = BoolValue("LagCheck", true)
     private val worldCheck = BoolValue("WorldCheck", true)

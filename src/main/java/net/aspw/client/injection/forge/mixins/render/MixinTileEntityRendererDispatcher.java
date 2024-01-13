@@ -25,10 +25,4 @@ public class MixinTileEntityRendererDispatcher {
         if (xray.getState() && !xray.getXrayBlocks().contains(tileentityIn.getBlockType()))
             callbackInfo.cancel();
     }
-
-    @Inject(method = "renderTileEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getCombinedLight(Lnet/minecraft/util/BlockPos;I)I"))
-    private void enableLighting(CallbackInfo ci) {
-        RenderHelper.enableStandardItemLighting();
-    }
-
 }
