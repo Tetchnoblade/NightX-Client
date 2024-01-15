@@ -14,6 +14,7 @@ import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.client.clickgui.tab.NewUi
 import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.font.smooth.FontLoaders
+import net.aspw.client.visual.hud.designer.GuiHudDesigner
 import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.inventory.GuiInventory
 import net.minecraft.network.play.client.C14PacketTabComplete
@@ -74,7 +75,7 @@ class Interface : Module() {
         }
 
         if (mc.theWorld == null || mc.thePlayer == null) return
-        if (noInvClose.get() && event.packet is S2EPacketCloseWindow && (mc.currentScreen is GuiInventory || mc.currentScreen is NewUi || mc.currentScreen is ClickGui || mc.currentScreen is GuiChat || mc.currentScreen is GuiTeleportation)) {
+        if (noInvClose.get() && event.packet is S2EPacketCloseWindow && (mc.currentScreen is GuiInventory || mc.currentScreen is NewUi || mc.currentScreen is ClickGui || mc.currentScreen is GuiChat || mc.currentScreen is GuiTeleportation || mc.currentScreen is GuiHudDesigner)) {
             event.cancelEvent()
         }
     }
