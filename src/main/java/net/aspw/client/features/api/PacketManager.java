@@ -128,16 +128,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                             ((C03PacketPlayer) packet).onGround
                     )
             );
-            PacketUtils.sendPacketNoEvent(
-                    new C03PacketPlayer.C06PacketPlayerPosLook(
-                            mc.thePlayer.posX,
-                            mc.thePlayer.posY,
-                            mc.thePlayer.posZ,
-                            mc.thePlayer.rotationYaw,
-                            mc.thePlayer.rotationPitch,
-                            mc.thePlayer.onGround
-                    )
-            );
             flagged = false;
         }
 
@@ -152,24 +142,35 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         if (!MinecraftInstance.mc.isIntegratedServerRunning()) {
             if (packet instanceof C17PacketCustomPayload) {
                 if (((C17PacketCustomPayload) event.getPacket()).getChannelName().equalsIgnoreCase("MC|Brand")) {
-                    if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("Vanilla"))
-                        PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("vanilla")));
-                    if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("Forge"))
-                        PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("FML")));
-                    if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("OptiFine"))
-                        PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("optifine")));
-                    if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("Fabric"))
-                        PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("fabric")));
-                    if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("LabyMod"))
-                        PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("LMC")));
-                    if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("CheatBreaker"))
-                        PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("CB")));
-                    if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("PvPLounge"))
-                        PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("PLC18")));
-                    if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("Geyser"))
-                        PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("eyser")));
-                    if (Objects.requireNonNull(clientSpoof).modeValue.get().equals("Lunar"))
-                        PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("REGISTER", (new PacketBuffer(Unpooled.buffer())).writeString("Lunar-Client")));
+                    switch (Objects.requireNonNull(clientSpoof).modeValue.get()) {
+                        case "Vanilla":
+                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("vanilla")));
+                            break;
+                        case "Forge":
+                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("FML")));
+                            break;
+                        case "OptiFine":
+                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("optifine")));
+                            break;
+                        case "Fabric":
+                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("fabric")));
+                            break;
+                        case "LabyMod":
+                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("LMC")));
+                            break;
+                        case "CheatBreaker":
+                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("CB")));
+                            break;
+                        case "PvPLounge":
+                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("PLC18")));
+                            break;
+                        case "Geyser":
+                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("eyser")));
+                            break;
+                        case "Lunar":
+                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("REGISTER", (new PacketBuffer(Unpooled.buffer())).writeString("Lunar-Client")));
+                            break;
+                    }
                 }
                 event.cancelEvent();
             }
