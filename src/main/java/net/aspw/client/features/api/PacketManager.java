@@ -82,7 +82,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 entity instanceof EntityItemFrame ||
                 entity instanceof EntityTNTPrimed ||
                 entity instanceof EntityArmorStand) &&
-                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 35.0f;
+                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 45.0f;
     }
 
     @EventTarget
@@ -120,12 +120,12 @@ public class PacketManager extends MinecraftInstance implements Listenable {
             event.cancelEvent();
             PacketUtils.sendPacketNoEvent(
                     new C03PacketPlayer.C06PacketPlayerPosLook(
-                            ((C03PacketPlayer) packet).x,
-                            ((C03PacketPlayer) packet).y,
-                            ((C03PacketPlayer) packet).z,
-                            ((C03PacketPlayer) packet).yaw,
-                            ((C03PacketPlayer) packet).pitch,
-                            ((C03PacketPlayer) packet).onGround
+                            mc.thePlayer.posX,
+                            mc.thePlayer.posY,
+                            mc.thePlayer.posZ,
+                            mc.thePlayer.rotationYaw,
+                            mc.thePlayer.rotationPitch,
+                            mc.thePlayer.onGround
                     )
             );
             flagged = false;
