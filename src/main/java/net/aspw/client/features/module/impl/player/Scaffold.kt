@@ -65,8 +65,13 @@ class Scaffold : Module() {
         ), "ConstantMotion"
     ) { allowTower.get() }
     private val towerTimerValue = FloatValue("TowerTimer", 1f, 0.1f, 1.4f) { allowTower.get() }
+
+    // Watchdog
     private val watchdogTowerBoostValue =
         BoolValue("WatchdogTowerBoost", true) { allowTower.get() && towerModeValue.get().equals("Watchdog", true) }
+    private val watchdogTowerSpeed = FloatValue("Watchdog-TowerSpeed", 1.7f, 1.5f, 2.5f, "x") {
+        allowTower.get() && towerModeValue.get().equals("Watchdog", true) && watchdogTowerBoostValue.get()
+    }
 
     // Jump mode
     private val jumpMotionValue = FloatValue("JumpMotion", 0.42f, 0.3681289f, 0.79f) {
@@ -196,7 +201,7 @@ class Scaffold : Module() {
     private val slowDownValue = BoolValue("SlowDown", false)
     private val xzMultiplier = FloatValue("XZ-Multiplier", 0.6f, 0f, 1.1f, "x") { slowDownValue.get() }
     private val noSpeedPotValue = BoolValue("NoSpeedPot", false)
-    private val speedSlowDown = FloatValue("SpeedPot-SlowDown", 0.8f, 0.0f, 0.9f) { noSpeedPotValue.get() }
+    private val speedSlowDown = FloatValue("SpeedPot-SlowDown", 0.8f, 0.0f, 1.1f, "x") { noSpeedPotValue.get() }
     private val customSpeedValue = BoolValue("CustomSpeed", false)
     private val customMoveSpeedValue = FloatValue("CustomMoveSpeed", 0.2f, 0f, 5f) { customSpeedValue.get() }
     private val downValue = BoolValue("Down", true)
@@ -460,13 +465,8 @@ class Scaffold : Module() {
                     if (mc.thePlayer.onGround) {
                         if (towerTick == 0 || towerTick == 5) {
                             if (watchdogTowerBoostValue.get()) {
-                                if (!mc.thePlayer.isSprinting) {
-                                    mc.thePlayer.motionX *= 1.71
-                                    mc.thePlayer.motionZ *= 1.71
-                                } else {
-                                    mc.thePlayer.motionX *= 1.51
-                                    mc.thePlayer.motionZ *= 1.51
-                                }
+                                mc.thePlayer.motionX *= watchdogTowerSpeed.get()
+                                mc.thePlayer.motionZ *= watchdogTowerSpeed.get()
                             }
                             mc.thePlayer.motionY = 0.42
                             towerTick = 1

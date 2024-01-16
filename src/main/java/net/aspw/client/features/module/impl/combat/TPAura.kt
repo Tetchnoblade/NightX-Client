@@ -43,6 +43,7 @@ class TPAura : Module() {
     private val rangeValue = IntegerValue("Range", 30, 10, 70, "m")
     private val fovValue = FloatValue("FOV", 180F, 0F, 180F, "°")
     private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Normal")
+    private val rotationValue = BoolValue("Rotations", true)
     private val autoBlock = BoolValue("AutoBlock", true)
 
     /*
@@ -83,8 +84,10 @@ class TPAura : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        if (!clickTimer.hasTimePassed(attackDelay)) return
+        if (lastTarget != null && rotationValue.get())
+            RotationUtils.faceLook(lastTarget!!, 80f, 120f)
 
+        if (!clickTimer.hasTimePassed(attackDelay)) return
         if (thread == null || !thread!!.isAlive) {
             tpVectors.clear()
             clickTimer.reset()

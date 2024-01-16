@@ -6,6 +6,7 @@ import net.aspw.client.event.Listenable
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.event.TickEvent
 import net.aspw.client.features.module.impl.combat.FastBow
+import net.aspw.client.util.misc.RandomUtils
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.network.play.client.C03PacketPlayer
@@ -205,6 +206,40 @@ class RotationUtils : MinecraftInstance(), Listenable {
                 xSearch += 0.1
             }
             return vecRotation
+        }
+
+        /**
+         * Face bow.
+         *
+         * @param target      the target
+         * @param silent      the silent
+         * @param predict     the predict
+         * @param predictSize the predict size
+         */
+        fun faceLook(target: Entity, minTurnSpeed: Float, maxTurnSpeed: Float) {
+            val player = mc.thePlayer
+            val posX: Double =
+                target.posX + 0.toDouble() - player.posX
+            val posY: Double =
+                target.entityBoundingBox.minY + target.eyeHeight - 0.15 - player.entityBoundingBox.minY - player.getEyeHeight()
+            val posZ: Double =
+                target.posZ + 0.toDouble() - player.posZ
+            val posSqrt = sqrt(posX * posX + posZ * posZ)
+            var velocity = 1f
+            velocity = (velocity * velocity + velocity * 2) / 3
+            if (velocity > 1) velocity = 1f
+            val rotation = Rotation(
+                (atan2(posZ, posX) * 180 / Math.PI).toFloat() - 90,
+                -Math.toDegrees(atan((velocity * velocity - sqrt(velocity * velocity * velocity * velocity - 0.006f * (0.006f * (posSqrt * posSqrt) + 2 * posY * (velocity * velocity)))) / (0.006f * posSqrt)))
+                    .toFloat()
+            )
+            setTargetRotation(
+                limitAngleChange(
+                    serverRotation!!,
+                    rotation,
+                    RandomUtils.nextFloat(minTurnSpeed, maxTurnSpeed)
+                )
+            )
         }
 
         /**

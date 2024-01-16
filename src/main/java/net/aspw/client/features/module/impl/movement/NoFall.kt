@@ -15,13 +15,15 @@ import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
 import net.minecraft.block.BlockLiquid
-import net.minecraft.network.play.client.C03PacketPlayer
+import net.minecraft.network.Packet
+import net.minecraft.network.play.client.*
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.network.play.server.S12PacketEntityVelocity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
 import java.util.*
+import java.util.concurrent.LinkedBlockingQueue
 import kotlin.math.roundToInt
 
 @ModuleInfo(name = "NoFall", spacedName = "No Fall", description = "", category = ModuleCategory.MOVEMENT)
@@ -57,7 +59,7 @@ class NoFall : Module() {
     ) { typeValue.get().equals("aac", true) }
     private val hypixelMode = ListValue(
         "Hypixel-Mode",
-        arrayOf("Default", "Packet", "New"),
+        arrayOf("Default", "Packet", "Blink"),
         "Default"
     ) { typeValue.get().equals("hypixel", true) }
     private val matrixMode =
@@ -79,6 +81,11 @@ class NoFall : Module() {
     private var aac5Check = false
     private var aac5Timer = 0
     private val aac4Packets = mutableListOf<C03PacketPlayer>()
+
+    private val packets = LinkedBlockingQueue<Packet<*>>()
+    private val positions = LinkedList<DoubleArray>()
+    private val pulseTimer = MSTimer()
+    private var disableLogger = false
 
     private var matrixFalling = false
     private var matrixCanSpoof = false
@@ -119,6 +126,7 @@ class NoFall : Module() {
     }
 
     override fun onDisable() {
+        blink()
         matrixSend = false
         aac4FlagCount = 0
         aac4Fakelag = false
@@ -450,6 +458,20 @@ class NoFall : Module() {
         if (!Client.moduleManager[Flight::class.java]!!.state && voidCheckValue.get() && !MovementUtils.isBlockUnder()) return
 
         val packet = event.packet
+        if (typeValue.get().equals("hypixel", true) && hypixelMode.get().equals("blink", true)) {
+            if (disableLogger) return
+            if (packet is C03PacketPlayer)
+                event.cancelEvent()
+            if (packet is C04PacketPlayerPosition || packet is C03PacketPlayer.C06PacketPlayerPosLook ||
+                packet is C08PacketPlayerBlockPlacement ||
+                packet is C0APacketAnimation ||
+                packet is C0BPacketEntityAction || packet is C02PacketUseEntity || packet is C0FPacketConfirmTransaction
+            ) {
+                event.cancelEvent()
+                packets.add(packet)
+            }
+        }
+
         if (packet is S12PacketEntityVelocity && typeValue.get().equals("aac", true) && aacMode.get()
                 .equals("4.4.x", true) && mc.thePlayer.fallDistance > 1.8
         )
@@ -528,9 +550,38 @@ class NoFall : Module() {
                         packet.onGround = mc.thePlayer.ticksExisted % 2 == 0
                     }
 
-                    "new" -> if (mc.thePlayer.fallDistance > 2.5F && mc.thePlayer.ticksExisted % 2 == 0) {
-                        packet.onGround = true
-                        packet.isMoving = false
+                    "blink" -> {
+                        if (mc.thePlayer.fallDistance > 1.5) {
+                            synchronized(positions) {
+                                positions.add(
+                                    doubleArrayOf(
+                                        mc.thePlayer.posX,
+                                        mc.thePlayer.entityBoundingBox.minY + mc.thePlayer.getEyeHeight() / 2,
+                                        mc.thePlayer.posZ
+                                    )
+                                )
+                                positions.add(
+                                    doubleArrayOf(
+                                        mc.thePlayer.posX,
+                                        mc.thePlayer.entityBoundingBox.minY,
+                                        mc.thePlayer.posZ
+                                    )
+                                )
+                            }
+                            packet.onGround = true
+                            synchronized(positions) {
+                                positions.add(
+                                    doubleArrayOf(
+                                        mc.thePlayer.posX,
+                                        mc.thePlayer.entityBoundingBox.minY,
+                                        mc.thePlayer.posZ
+                                    )
+                                )
+                            }
+                        } else {
+                            blink()
+                            pulseTimer.reset()
+                        }
                     }
                 }
             }
@@ -624,6 +675,20 @@ class NoFall : Module() {
                 }
             }
         }
+    }
+
+    private fun blink() {
+        try {
+            disableLogger = true
+            while (!packets.isEmpty()) {
+                mc.netHandler.networkManager.sendPacket(packets.take())
+            }
+            disableLogger = false
+        } catch (e: Exception) {
+            e.printStackTrace()
+            disableLogger = false
+        }
+        synchronized(positions) { positions.clear() }
     }
 
     @EventTarget

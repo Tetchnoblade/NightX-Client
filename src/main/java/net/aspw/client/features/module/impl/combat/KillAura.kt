@@ -147,6 +147,7 @@ class KillAura : Module() {
     ) { !rotations.get().equals("none", true) }
 
     private val noInventoryAttackValue = BoolValue("NoInvAttack", false)
+    private val wallCheckValue = BoolValue("WallCheck", false)
     private val checkSprintValue = BoolValue("StopSprint", false)
     private val multiCombo = BoolValue("MultiCombo", false)
     private val amountValue = IntegerValue("Multi-Packet", 5, 0, 20, "x") { multiCombo.get() }
@@ -413,7 +414,10 @@ class KillAura : Module() {
     }
 
     private fun updateKA() {
-        if (clickOnly.get() && !mc.gameSettings.keyBindAttack.isKeyDown || mc.thePlayer.isRiding || noInventoryAttackValue.get() && mc.currentScreen is GuiContainer) return
+        if (clickOnly.get() && !mc.gameSettings.keyBindAttack.isKeyDown || mc.thePlayer.isRiding || noInventoryAttackValue.get() && mc.currentScreen is GuiContainer || wallCheckValue.get() && !mc.thePlayer.canEntityBeSeen(
+                target
+            )
+        ) return
 
         if (cancelRun) {
             target = null
