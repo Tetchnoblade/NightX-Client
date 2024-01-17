@@ -207,6 +207,7 @@ class Scaffold : Module() {
     private val downValue = BoolValue("Down", true)
     private val noHitCheckValue = BoolValue("NoHitCheck", false)
     private val autoJumpValue = BoolValue("AutoJump", false)
+    private val normalJumpValue = BoolValue("NormalJump", false)
     private val smartSpeedValue = BoolValue("SpeedKeepY", true)
     private val safeWalkValue = BoolValue("SafeWalk", false)
     private val airSafeValue = BoolValue("AirSafe", false) { safeWalkValue.get() }
@@ -375,6 +376,8 @@ class Scaffold : Module() {
             towerTick = 0
             wdSpoof = false
         }
+        if (normalJumpValue.get() && faceBlock && mc.thePlayer.onGround && MovementUtils.isMoving() && !canTower)
+            mc.thePlayer.jump()
         if (faceBlock)
             place()
         if (allowTower.get() && GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && blocksAmount > 0 && MovementUtils.isRidingBlock() && (towerMove.get()
