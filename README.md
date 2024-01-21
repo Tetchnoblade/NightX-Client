@@ -3,6 +3,9 @@
 Due to the majority of features being skidded in FDPClient and a decline in development motivation, updates to the client will be halted. If you still wish to use it, please download the source code and run it. Although the likelihood of public release is low, development itself is continuing under the name "Radiate". Furthermore, as the NightX Client project does not generate any revenue whatsoever, there has been no profit for me either. Thank you for everything up to now.
 I have no plans to revive authentication, so if you wish to continue using it, please build it from the client's source code or use an older version.
 
+If you want to continue using a client like NightX with intave bypasses
+https://japanaltsreborn.mysellix.io/product/radiate-client-invite-key
+
 Access the official website to get more information & configs
 > https://aspw-w.github.io/NightX-Web
 
