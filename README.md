@@ -3,14 +3,11 @@
 Selling anything
 https://japanaltsreborn.mysellix.io
 
-Access the official website to get more information & configs
-> https://aspw-w.github.io/NightX-Web
-
-Join discord server to get more support!
+Join discord server
 > https://discord.gg/SGBccUXFK
 
 Developer youtube channel
-> https://www.youtube.com/@as_pw
+> https://www.youtube.com/@AspwDev
 
 # Installation Guide
 
@@ -20,7 +17,7 @@ Note: We only provide support for the official Minecraft Launcher
 
 2. Launch Forge once, then close Minecraft
 
-3. Put nightx-release.jar inside the mods folder located at `AppData\Roaming\.minecraft\mods`
+3. Put nightx.jar inside the mods folder located at `AppData\Roaming\.minecraft\mods`
 
 4. Relaunch Minecraft
 
