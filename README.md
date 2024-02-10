@@ -1,7 +1,7 @@
 # NightX Client
 
 Selling anything
-https://japanaltsreborn.mysellix.io
+> https://japanaltsreborn.mysellix.io
 
 Join discord server
 > https://discord.gg/SGBccUXFK
