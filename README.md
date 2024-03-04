@@ -7,7 +7,7 @@ Join discord server
 > https://discord.gg/SGBccUXFK
 
 Developer youtube channel
-> https://www.youtube.com/@AspwDev
+> https://www.youtube.com/@Aspw001
 
 # Installation Guide
 
@@ -28,8 +28,6 @@ Note: We only provide support for the official Minecraft Launcher
 If NightX fails to launch or provides an error:
 
 - Remove all mods except for NightX to see if it's an incompatibility issue
-- If NightX crashes / fails to start, open an issue on the [Github page](https://github.com/Aspw-w/NightX-Client/issues)
-  - The issue must provide your crash / error log
 
 # Configs
 Loading configs is done via the command `.config onlinelist` or `.config onlineload <config_name>`
