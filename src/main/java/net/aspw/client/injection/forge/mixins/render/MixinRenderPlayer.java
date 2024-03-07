@@ -1,8 +1,8 @@
 package net.aspw.client.injection.forge.mixins.render;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.visual.CustomModel;
-import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -30,7 +30,7 @@ public class MixinRenderPlayer {
      */
     @Inject(method = {"getEntityTexture"}, at = {@At("HEAD")}, cancellable = true)
     public void getEntityTexture(AbstractClientPlayer entity, CallbackInfoReturnable<ResourceLocation> ci) {
-        final CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
+        final CustomModel customModel = Objects.requireNonNull(Launch.moduleManager.getModule(CustomModel.class));
 
         if (customModel.getState() && (!customModel.getOnlySelf().get() || entity == MinecraftInstance.mc.thePlayer)) {
             if (customModel.getMode().get().contains("Rabbit")) {

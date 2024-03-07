@@ -1,9 +1,10 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+import net.aspw.client.Launch;
 import net.aspw.client.protocol.ProtocolBase;
+import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.gui.GuiOverlayDebug;
-import net.raphimc.vialegacy.api.LegacyProtocolVersion;
-import net.raphimc.vialoader.util.VersionEnum;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,18 +16,19 @@ import java.util.List;
 public class MixinGuiOverlayDebug {
 
     @Inject(method = "getDebugInfoRight", at = @At(value = "TAIL"))
-    public void addViaForgeVersion(CallbackInfoReturnable<List<String>> cir) {
-        final ProtocolBase common = ProtocolBase.getManager();
-        final VersionEnum version = ProtocolBase.getManager().getTargetVersion();
+    public void addProtocolVersion(CallbackInfoReturnable<List<String>> cir) {
+        final ProtocolVersion version = ProtocolBase.getManager().getTargetVersion();
 
         cir.getReturnValue().add("");
 
         int protocolVersion = version.getVersion();
-        if (version.isOlderThanOrEqualTo(VersionEnum.r1_6_4))
-            protocolVersion = LegacyProtocolVersion.getRealProtocolVersion(protocolVersion);
 
-        if (!common.getPlatform().isSingleplayer().get())
+        if (!MinecraftInstance.mc.isIntegratedServerRunning())
             cir.getReturnValue().add("Protocol: " + version.getName() + " (" + protocolVersion + ")");
         else cir.getReturnValue().add("Protocol: 1.8.x (47)");
+
+        cir.getReturnValue().add("");
+
+        cir.getReturnValue().add(Launch.CLIENT_BEST + " Client " + Launch.CLIENT_VERSION);
     }
 }

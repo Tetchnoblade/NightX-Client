@@ -1,16 +1,16 @@
 package net.aspw.client.features.module.impl.movement
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.player.Freecam
-import net.aspw.client.util.MovementUtils
-import net.aspw.client.util.PacketUtils
-import net.aspw.client.util.block.BlockUtils
-import net.aspw.client.util.timer.MSTimer
-import net.aspw.client.util.timer.TickTimer
+import net.aspw.client.utils.MovementUtils
+import net.aspw.client.utils.PacketUtils
+import net.aspw.client.utils.block.BlockUtils
+import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
@@ -24,7 +24,7 @@ import net.minecraft.util.BlockPos
 import java.util.*
 import kotlin.math.roundToInt
 
-@ModuleInfo(name = "NoFall", spacedName = "No Fall", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "NoFall", spacedName = "No Fall", category = ModuleCategory.MOVEMENT)
 class NoFall : Module() {
     val typeValue = ListValue(
         "Type",
@@ -153,12 +153,12 @@ class NoFall : Module() {
         if (mc.thePlayer.motionY > 0)
             jumped = true
 
-        if (!state || Client.moduleManager[Freecam::class.java]!!.state
+        if (!state || Launch.moduleManager[Freecam::class.java]!!.state
             || mc.thePlayer.isSpectator || mc.thePlayer.capabilities.allowFlying || mc.thePlayer.capabilities.disableDamage
         )
             return
 
-        if (!Client.moduleManager[Flight::class.java]!!.state && voidCheckValue.get() && !MovementUtils.isBlockUnder()) return
+        if (!Launch.moduleManager[Flight::class.java]!!.state && voidCheckValue.get() && !MovementUtils.isBlockUnder()) return
 
         if (BlockUtils.collideBlock(mc.thePlayer.entityBoundingBox) { it is BlockLiquid } || BlockUtils.collideBlock(
                 AxisAlignedBB(
@@ -404,7 +404,7 @@ class NoFall : Module() {
 
     @EventTarget
     fun onMotion(event: MotionEvent) {
-        if (!Client.moduleManager[Flight::class.java]!!.state && voidCheckValue.get() && !MovementUtils.isBlockUnder()) return
+        if (!Launch.moduleManager[Flight::class.java]!!.state && voidCheckValue.get() && !MovementUtils.isBlockUnder()) return
 
         if (typeValue.get().equals("aac", true) && aacMode.get()
                 .equals("4.x", true) && event.eventState == EventState.PRE
@@ -447,7 +447,7 @@ class NoFall : Module() {
     fun onPacket(event: PacketEvent) {
         mc.thePlayer ?: return
 
-        if (!Client.moduleManager[Flight::class.java]!!.state && voidCheckValue.get() && !MovementUtils.isBlockUnder()) return
+        if (!Launch.moduleManager[Flight::class.java]!!.state && voidCheckValue.get() && !MovementUtils.isBlockUnder()) return
 
         val packet = event.packet
 
@@ -624,7 +624,7 @@ class NoFall : Module() {
 
     @EventTarget
     fun onMove(event: MoveEvent) {
-        if (!Client.moduleManager[Flight::class.java]!!.state && voidCheckValue.get() && !MovementUtils.isBlockUnder()) return
+        if (!Launch.moduleManager[Flight::class.java]!!.state && voidCheckValue.get() && !MovementUtils.isBlockUnder()) return
 
         if (BlockUtils.collideBlock(mc.thePlayer.entityBoundingBox) { it is BlockLiquid } || BlockUtils.collideBlock(
                 AxisAlignedBB(

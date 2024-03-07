@@ -1,7 +1,7 @@
 package net.aspw.client.visual.client.altmanager.menus
 
 import net.aspw.client.auth.account.MinecraftAccount
-import net.aspw.client.util.MinecraftInstance
+import net.aspw.client.utils.MinecraftInstance
 import net.aspw.client.visual.client.altmanager.GuiAltManager.Companion.login
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.ScaledResolution

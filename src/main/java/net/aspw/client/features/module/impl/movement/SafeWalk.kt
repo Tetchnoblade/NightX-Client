@@ -7,7 +7,7 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.value.BoolValue
 
-@ModuleInfo(name = "SafeWalk", spacedName = "Safe Walk", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "SafeWalk", spacedName = "Safe Walk", category = ModuleCategory.MOVEMENT)
 class SafeWalk : Module() {
 
     private val airSafeValue = BoolValue("AirSafe", false)

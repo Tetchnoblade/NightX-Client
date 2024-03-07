@@ -1,7 +1,7 @@
 package net.aspw.client.features.command.impl
 
 import net.aspw.client.features.command.Command
-import net.aspw.client.util.misc.StringUtils
+import net.aspw.client.utils.misc.StringUtils
 
 class SayCommand : Command("say", emptyArray()) {
     /**

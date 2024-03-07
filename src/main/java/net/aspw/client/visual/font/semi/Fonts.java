@@ -1,7 +1,7 @@
 package net.aspw.client.visual.font.semi;
 
-import net.aspw.client.util.ClientUtils;
-import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.utils.ClientUtils;
+import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.gui.FontRenderer;
 
 import java.awt.*;

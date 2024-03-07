@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.render;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.visual.ItemPhysics;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -46,7 +46,7 @@ public abstract class MixinRenderEntityItem extends Render<EntityItem> {
      */
     @Overwrite
     private int func_177077_a(EntityItem itemIn, double p_177077_2_, double p_177077_4_, double p_177077_6_, float p_177077_8_, IBakedModel p_177077_9_) {
-        final ItemPhysics itemPhysics = Client.moduleManager.getModule(ItemPhysics.class);
+        final ItemPhysics itemPhysics = Launch.moduleManager.getModule(ItemPhysics.class);
         ItemStack itemstack = itemIn.getEntityItem();
         Item item = itemstack.getItem();
 

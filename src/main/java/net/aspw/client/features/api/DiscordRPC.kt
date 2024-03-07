@@ -4,10 +4,10 @@ import com.jagrosh.discordipc.IPCClient
 import com.jagrosh.discordipc.IPCListener
 import com.jagrosh.discordipc.entities.RichPresence
 import com.jagrosh.discordipc.entities.pipe.PipeStatus
-import net.aspw.client.Client
-import net.aspw.client.util.ClientUtils
-import net.aspw.client.util.MinecraftInstance
-import net.aspw.client.util.network.Access
+import net.aspw.client.Launch
+import net.aspw.client.utils.Access
+import net.aspw.client.utils.ClientUtils
+import net.aspw.client.utils.MinecraftInstance
 import org.json.JSONObject
 import java.time.OffsetDateTime
 import kotlin.concurrent.thread
@@ -82,13 +82,12 @@ class DiscordRPC : MinecraftInstance() {
         builder.setStartTimestamp(timestamp)
 
         // Check assets contains logo and set logo
-        if (assets.containsKey("logo"))
-            builder.setLargeImage(assets["logo"])
+        if (assets.containsKey("rpc"))
+            builder.setLargeImage(assets["rpc"])
 
         // Set display infos
-        builder.setDetails(Client.CLIENT_VERSION)
+        builder.setDetails(Launch.CLIENT_VERSION)
         builder.setState(Access.discord)
-        builder.setSmallImage(assets["icon"], "https://youtube.com/@as_pw")
 
         // Check ipc client is connected and send rpc
         if (ipcClient?.status == PipeStatus.CONNECTED)
@@ -112,7 +111,6 @@ class DiscordRPC : MinecraftInstance() {
 
     private fun loadConfiguration() {
         appID = Access.discordApp.toLong()
-        assets["logo"] = "logo"
-        assets["icon"] = "icon"
+        assets["rpc"] = "rpc"
     }
 }

@@ -1,66 +1,39 @@
 package net.aspw.client.features.api;
 
-import io.netty.buffer.Unpooled;
-import net.aspw.client.Client;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+import net.aspw.client.Launch;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.combat.TPAura;
-import net.aspw.client.features.module.impl.other.ClientSpoof;
+import net.aspw.client.features.module.impl.other.BrandSpoofer;
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.features.module.impl.visual.Cape;
+import net.aspw.client.features.module.impl.visual.BetterView;
+import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.protocol.ProtocolBase;
-import net.aspw.client.util.EntityUtils;
-import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.util.PacketUtils;
+import net.aspw.client.utils.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.*;
 import net.minecraft.network.Packet;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
-import net.minecraft.network.play.client.C17PacketCustomPayload;
-import net.raphimc.vialoader.util.VersionEnum;
 
 import java.util.Objects;
 
 public class PacketManager extends MinecraftInstance implements Listenable {
 
-    public static int ticks;
-    public static String selectedCape;
     public static int swing;
     public static boolean isVisualBlocking = false;
     private static boolean flagged = false;
-
-    public static void update() {
-        int maxFrames = 40;
-
-        switch (Objects.requireNonNull(Client.moduleManager.getModule(Cape.class)).getStyleValue().get()) {
-            case "Rise5":
-                selectedCape = "rise5";
-                maxFrames = 14;
-                break;
-            case "NightX":
-                selectedCape = "nightx";
-                maxFrames = 14;
-                break;
-        }
-
-        if (mc.thePlayer.ticksExisted % 2 == 0)
-            ticks++;
-
-        if (ticks > maxFrames) {
-            ticks = 1;
-        }
-    }
+    public static int flagTicks;
+    public static float eyeHeight;
+    public static float lastEyeHeight;
 
     @EventTarget
     public void onWorld(WorldEvent event) {
+        if (Objects.requireNonNull(Launch.moduleManager.getModule(BetterView.class)).getState())
+            RotationUtils.Companion.enableLook();
         flagged = false;
-    }
-
-    @EventTarget
-    public void onTeleport(TeleportEvent event) {
-        flagged = true;
+        flagTicks = 1;
     }
 
     @EventTarget
@@ -74,29 +47,36 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         }
     }
 
-    public static boolean shouldStopRender(Entity entity) {
-        return (EntityUtils.isMob(entity) ||
-                EntityUtils.isAnimal(entity) ||
-                entity instanceof EntityBoat ||
-                entity instanceof EntityMinecart ||
-                entity instanceof EntityItemFrame ||
-                entity instanceof EntityTNTPrimed ||
-                entity instanceof EntityArmorStand) &&
-                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 45.0f;
-    }
-
     @EventTarget
     public void onMotion(MotionEvent event) {
         mc.leftClickCounter = 0;
-        if (Animations.swingAnimValue.get().equals("Smooth") && event.getEventState() == EventState.PRE) {
+        mc.thePlayer.prevRenderArmYaw = mc.thePlayer.rotationYaw;
+        mc.thePlayer.prevRenderArmPitch = mc.thePlayer.rotationPitch;
+        mc.thePlayer.renderArmYaw = mc.thePlayer.rotationYaw;
+        mc.thePlayer.renderArmPitch = mc.thePlayer.rotationPitch;
+        float START_HEIGHT = 1.62f;
+        float END_HEIGHT = Animations.sneakLength.get() + 1.54f;
+        lastEyeHeight = eyeHeight;
+        if (mc.thePlayer.isSneaking()) {
+            eyeHeight = END_HEIGHT;
+        } else if (eyeHeight < START_HEIGHT) {
+            float delta = START_HEIGHT - eyeHeight;
+            delta *= 0.4;
+            eyeHeight = START_HEIGHT - delta;
+        }
+        if (!Objects.requireNonNull(Launch.moduleManager.getModule(BetterView.class)).getState())
+            Objects.requireNonNull(Launch.moduleManager.getModule(BetterView.class)).setState(true);
+        if (!Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).getState())
+            Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).setState(true);
+        if ((Animations.swingAnimValue.get().equals("Smooth") || Animations.swingAnimValue.get().equals("Dash")) && event.getEventState() == EventState.PRE) {
             if (mc.thePlayer.swingProgressInt == 1) {
                 swing = 9;
             } else {
                 swing = Math.max(0, swing - 1);
             }
         }
-        final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
-        final TPAura tpAura = Objects.requireNonNull(Client.moduleManager.getModule(TPAura.class));
+        final KillAura killAura = Objects.requireNonNull(Launch.moduleManager.getModule(KillAura.class));
+        final TPAura tpAura = Objects.requireNonNull(Launch.moduleManager.getModule(TPAura.class));
         if (Animations.swingLimitOnlyBlocking.get()) {
             if (mc.thePlayer.swingProgress >= 1f)
                 mc.thePlayer.isSwingInProgress = false;
@@ -107,74 +87,65 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         } else if (mc.thePlayer.swingProgress >= Animations.swingLimit.get()) {
             mc.thePlayer.isSwingInProgress = false;
         }
-        if (Animations.sigmaHeld.get())
-            mc.thePlayer.renderArmPitch = mc.thePlayer.rotationPitch - 30;
+        if (Animations.fankeyBobbing.get() && MovementUtils.isMoving() && mc.thePlayer.onGround && !mc.thePlayer.isSneaking()) {
+            mc.thePlayer.cameraYaw = 0.18f;
+            mc.thePlayer.cameraPitch = 0.0f;
+        }
+    }
+
+    @EventTarget
+    public void onTeleport(TeleportEvent event) {
+        flagged = true;
     }
 
     @EventTarget
     public void onPacket(PacketEvent event) {
         final Packet<?> packet = event.getPacket();
-        final ClientSpoof clientSpoof = Client.moduleManager.getModule(ClientSpoof.class);
 
         if (packet instanceof C03PacketPlayer && flagged) {
-            event.cancelEvent();
-            PacketUtils.sendPacketNoEvent(
-                    new C03PacketPlayer.C06PacketPlayerPosLook(
-                            mc.thePlayer.posX,
-                            mc.thePlayer.posY,
-                            mc.thePlayer.posZ,
-                            mc.thePlayer.rotationYaw,
-                            mc.thePlayer.rotationPitch,
-                            mc.thePlayer.onGround
-                    )
-            );
-            flagged = false;
+            if (mc.thePlayer.ticksExisted % 2 == 0)
+                flagTicks++;
+            if (flagTicks < 4) {
+                if (RotationUtils.targetRotation != null) {
+                    event.cancelEvent();
+                    PacketUtils.sendPacketNoEvent(
+                            new C03PacketPlayer.C06PacketPlayerPosLook(
+                                    mc.thePlayer.posX,
+                                    mc.thePlayer.posY,
+                                    mc.thePlayer.posZ,
+                                    mc.thePlayer.rotationYaw,
+                                    mc.thePlayer.rotationPitch,
+                                    mc.thePlayer.onGround
+                            )
+                    );
+                    RotationUtils.Companion.reset();
+                }
+            } else {
+                if (Objects.requireNonNull(Launch.moduleManager.getModule(Interface.class)).getState() && Objects.requireNonNull(Launch.moduleManager.getModule(Interface.class)).getTpDebugValue().get())
+                    ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "tp");
+                flagTicks = 1;
+                flagged = false;
+            }
         }
 
-        if (ProtocolBase.getManager().getTargetVersion().isNewerThanOrEqualTo(VersionEnum.r1_10)) {
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_10)) {
             if (packet instanceof C08PacketPlayerBlockPlacement) {
                 ((C08PacketPlayerBlockPlacement) packet).facingX = 0.5F;
                 ((C08PacketPlayerBlockPlacement) packet).facingY = 0.5F;
                 ((C08PacketPlayerBlockPlacement) packet).facingZ = 0.5F;
             }
         }
+    }
 
-        if (!MinecraftInstance.mc.isIntegratedServerRunning()) {
-            if (packet instanceof C17PacketCustomPayload) {
-                if (((C17PacketCustomPayload) event.getPacket()).getChannelName().equalsIgnoreCase("MC|Brand")) {
-                    switch (Objects.requireNonNull(clientSpoof).modeValue.get()) {
-                        case "Vanilla":
-                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("vanilla")));
-                            break;
-                        case "Forge":
-                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("FML")));
-                            break;
-                        case "OptiFine":
-                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("optifine")));
-                            break;
-                        case "Fabric":
-                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("fabric")));
-                            break;
-                        case "LabyMod":
-                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("LMC")));
-                            break;
-                        case "CheatBreaker":
-                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("CB")));
-                            break;
-                        case "PvPLounge":
-                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("PLC18")));
-                            break;
-                        case "Geyser":
-                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString("eyser")));
-                            break;
-                        case "Lunar":
-                            PacketUtils.sendPacketNoEvent(new C17PacketCustomPayload("REGISTER", (new PacketBuffer(Unpooled.buffer())).writeString("Lunar-Client")));
-                            break;
-                    }
-                }
-                event.cancelEvent();
-            }
-        }
+    public static boolean shouldStopRender(Entity entity) {
+        return (EntityUtils.isMob(entity) ||
+                EntityUtils.isAnimal(entity) ||
+                entity instanceof EntityBoat ||
+                entity instanceof EntityMinecart ||
+                entity instanceof EntityItemFrame ||
+                entity instanceof EntityTNTPrimed ||
+                entity instanceof EntityArmorStand) &&
+                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 35.0f;
     }
 
     @Override

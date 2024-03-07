@@ -1,19 +1,19 @@
 package net.aspw.client.visual.client.altmanager
 
 import com.thealtening.AltService
-import net.aspw.client.Client
-import net.aspw.client.Client.fileManager
+import net.aspw.client.Launch
+import net.aspw.client.Launch.fileManager
 import net.aspw.client.auth.account.CrackedAccount
 import net.aspw.client.auth.account.MicrosoftAccount
 import net.aspw.client.auth.account.MinecraftAccount
 import net.aspw.client.event.SessionEvent
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.util.ClientUtils
-import net.aspw.client.util.MinecraftInstance
-import net.aspw.client.util.login.LoginUtils
-import net.aspw.client.util.login.UserUtils.isValidTokenOffline
-import net.aspw.client.util.misc.RandomUtils
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.ClientUtils
+import net.aspw.client.utils.MinecraftInstance
+import net.aspw.client.utils.login.LoginUtils
+import net.aspw.client.utils.login.UserUtils.isValidTokenOffline
+import net.aspw.client.utils.misc.RandomUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.menus.GuiAddAccount
 import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening
 import net.aspw.client.visual.font.semi.Fonts
@@ -119,8 +119,8 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 status = if (altsList.selectedSlot != -1 && altsList.selectedSlot < altsList.size) {
                     fileManager.accountsConfig.removeAccount(altsList.accounts[altsList.selectedSlot])
                     fileManager.saveConfig(fileManager.accountsConfig)
-                    if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                    if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                        Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                     }
                     "§aThe account has been deleted."
                 } else {
@@ -138,13 +138,13 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     randomCracked.enabled = false
 
                     login(it, {
-                        if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                        if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                            Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                         }
                         status = "§aLogged successfully to ${mc.session.username}."
                     }, { exception ->
-                        if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                        if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                            Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                         }
                         status = "§cLogin failed to '${exception.message}'."
                     }, {
@@ -153,8 +153,8 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                         randomCracked.enabled = true
                     })
 
-                    if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                    if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                        Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                     }
                     "§aLogging in..."
                 } ?: "§cSelect an account."
@@ -170,8 +170,8 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     randomCracked.enabled = false
 
                     login(it, {
-                        if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                        if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                            Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                         }
                         status = "§aLogged successfully to ${mc.session.username}."
                     }, { exception ->
@@ -182,8 +182,8 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                         randomCracked.enabled = true
                     })
 
-                    if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                    if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                        Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                     }
                     "§aLogging in..."
                 } ?: "§cYou do not have any accounts."
@@ -203,8 +203,8 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 status = "§aGenerating..."
 
                 login(rand, {
-                    if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                    if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                        Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                     }
                     status = "§aLogged successfully to ${mc.session.username}."
                 }, { exception ->
@@ -224,8 +224,8 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 loginButton.enabled = false
                 randomButton.enabled = false
                 randomCracked.enabled = false
-                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                 }
                 status = "§aLogging in..."
 
@@ -370,8 +370,8 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     randomCracked.enabled = false
 
                     login(it, {
-                        if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                        if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                            Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                         }
                         status = "§aLogged successfully to ${mc.session.username}."
                     }, { exception ->
@@ -382,8 +382,8 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                         randomCracked.enabled = true
                     })
 
-                    if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                    if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                        Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                     }
                     "§aLogging in..."
                 } ?: "§cSelect an account."
@@ -434,7 +434,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     minecraftAccount.session.username,
                     minecraftAccount.session.uuid, minecraftAccount.session.token, "mojang"
                 )
-                Client.eventManager.callEvent(SessionEvent())
+                Launch.eventManager.callEvent(SessionEvent())
 
                 success()
             } catch (exception: Exception) {

@@ -1,6 +1,6 @@
 package net.aspw.client.features.command.impl
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.features.command.Command
@@ -26,8 +26,8 @@ class RemoteViewCommand : Command("remoteview", arrayOf("rv")) {
         for (entity in mc.theWorld.loadedEntityList) {
             if (targetName == entity.name) {
                 mc.renderViewEntity = entity
-                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                 }
                 chat("Now viewing perspective of §8${entity.name}§3.")
                 chat("Execute §8.remoteview §3again to go back to yours.")

@@ -2,8 +2,8 @@ package net.aspw.client.features.command.impl
 
 import net.aspw.client.features.api.MacroManager
 import net.aspw.client.features.command.Command
-import net.aspw.client.util.ClientUtils
-import net.aspw.client.util.misc.StringUtils
+import net.aspw.client.utils.ClientUtils
+import net.aspw.client.utils.misc.StringUtils
 import org.lwjgl.input.Keyboard
 import java.util.*
 

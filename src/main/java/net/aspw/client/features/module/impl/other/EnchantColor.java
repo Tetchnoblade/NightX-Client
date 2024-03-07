@@ -10,7 +10,7 @@ import net.aspw.client.value.ListValue;
 /**
  * The type Enchant color.
  */
-@ModuleInfo(name = "EnchantColor", spacedName = "Enchant Color", description = "", category = ModuleCategory.OTHER)
+@ModuleInfo(name = "EnchantColor", spacedName = "Enchant Color", category = ModuleCategory.OTHER)
 public class EnchantColor extends Module {
     /**
      * The Red value.
@@ -27,7 +27,7 @@ public class EnchantColor extends Module {
     /**
      * The Mode value.
      */
-    public ListValue modeValue = new ListValue("Mode", new String[]{"Custom", "Rainbow", "Sky", "Mixer"}, "Custom");
+    public ListValue modeValue = new ListValue("Mode", new String[]{"Custom", "Rainbow", "Sky"}, "Custom");
     /**
      * The Rainbow speed value.
      */

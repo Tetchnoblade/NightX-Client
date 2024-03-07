@@ -11,7 +11,7 @@ import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.play.client.C0BPacketEntityAction
 import java.util.*
 
-@ModuleInfo(name = "SilentSneak", spacedName = "Silent Sneak", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "SilentSneak", spacedName = "Silent Sneak", category = ModuleCategory.MOVEMENT)
 class SilentSneak : Module() {
     @JvmField
     val modeValue = ListValue("Mode", arrayOf("Normal", "Legit"), "Normal")

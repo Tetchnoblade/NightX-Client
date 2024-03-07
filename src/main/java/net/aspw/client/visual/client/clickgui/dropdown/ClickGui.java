@@ -1,12 +1,12 @@
 package net.aspw.client.visual.client.clickgui.dropdown;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.features.module.Module;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.impl.visual.Gui;
-import net.aspw.client.util.render.BlurUtils;
-import net.aspw.client.util.render.EaseUtils;
-import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.utils.render.BlurUtils;
+import net.aspw.client.utils.render.EaseUtils;
+import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.visual.client.clickgui.dropdown.elements.ButtonElement;
 import net.aspw.client.visual.client.clickgui.dropdown.elements.Element;
 import net.aspw.client.visual.client.clickgui.dropdown.elements.ModuleElement;
@@ -16,7 +16,6 @@ import net.aspw.client.visual.font.semi.AWTFontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -48,7 +47,7 @@ public class ClickGui extends GuiScreen {
 
                 @Override
                 public void setupItems() {
-                    for (Module module : Client.moduleManager.getModules())
+                    for (Module module : Launch.moduleManager.getModules())
                         if (module.getCategory() == category)
                             getElements().add(new ModuleElement(module));
                 }
@@ -67,20 +66,20 @@ public class ClickGui extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        if (Objects.requireNonNull(Client.moduleManager.getModule(Gui.class)).getGuiBlur().get()) {
+        if (Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).getGuiBlur().get()) {
             BlurUtils.blurArea(
                     0,
                     0,
                     this.width,
                     this.height,
-                    20
+                    10
             );
         }
         RenderUtils.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
         if (progress < 1) progress = (float) (System.currentTimeMillis() - lastMS) / (600F / 1.4F); // fully fps async
         else progress = 1;
 
-        switch (Objects.requireNonNull(Client.moduleManager.getModule(Gui.class)).animationValue.get().toLowerCase()) {
+        switch (Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).animationValue.get().toLowerCase()) {
             case "none": {
                 slide = 1;
                 break;
@@ -94,7 +93,7 @@ public class ClickGui extends GuiScreen {
         // Enable DisplayList optimization
         AWTFontRenderer.Companion.setAssumeNonVolatile(true);
 
-        final double scale = Objects.requireNonNull(Client.moduleManager.getModule(Gui.class)).scaleValue.get() - 0.1765;
+        final double scale = Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).scaleValue.get() - 0.1765;
 
         mouseX /= scale;
         mouseY /= scale;
@@ -105,7 +104,7 @@ public class ClickGui extends GuiScreen {
         GlStateManager.disableAlpha();
         GlStateManager.enableAlpha();
 
-        switch (Objects.requireNonNull(Client.moduleManager.getModule(Gui.class)).animationValue.get().toLowerCase()) {
+        switch (Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).animationValue.get().toLowerCase()) {
             case "none": {
                 GlStateManager.scale(scale, scale, scale);
                 break;
@@ -117,7 +116,6 @@ public class ClickGui extends GuiScreen {
             }
         }
 
-        RenderUtils.drawImage2(new ResourceLocation("client/images/" + Objects.requireNonNull(Client.moduleManager.getModule(Gui.class)).imageModeValue.getValue() + ".png"), width - 26F, height - 160F, 80, 80);
         GL11.glPushMatrix();
         GlStateManager.enableAlpha();
         GL11.glPopMatrix();
@@ -138,7 +136,7 @@ public class ClickGui extends GuiScreen {
         GlStateManager.disableLighting();
         RenderHelper.disableStandardItemLighting();
 
-        if (Objects.requireNonNull(Client.moduleManager.getModule(Gui.class)).animationValue.get().equalsIgnoreCase("zoom")) {
+        if (Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).animationValue.get().equalsIgnoreCase("zoom")) {
             GlStateManager.translate(-1 * (1.0 - slide) * (width / 2.0), -1 * (1.0 - slide) * (height / 2.0), 0);
         }
         GlStateManager.scale(1, 1, 1);
@@ -159,7 +157,7 @@ public class ClickGui extends GuiScreen {
 
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-        final double scale = Objects.requireNonNull(Client.moduleManager.getModule(Gui.class)).scaleValue.get() - 0.1765;
+        final double scale = Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).scaleValue.get() - 0.1765;
 
         mouseX /= scale;
         mouseY /= scale;
@@ -194,7 +192,7 @@ public class ClickGui extends GuiScreen {
 
     @Override
     protected void mouseReleased(int mouseX, int mouseY, int state) {
-        final double scale = Objects.requireNonNull(Client.moduleManager.getModule(Gui.class)).scaleValue.get() - 0.1765;
+        final double scale = Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).scaleValue.get() - 0.1765;
 
         mouseX /= scale;
         mouseY /= scale;

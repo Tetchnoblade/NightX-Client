@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.util.ServerUtils;
+import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.utils.ServerUtils;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;

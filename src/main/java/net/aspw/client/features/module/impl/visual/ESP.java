@@ -1,17 +1,17 @@
 package net.aspw.client.features.module.impl.visual;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.EventTarget;
 import net.aspw.client.event.Render2DEvent;
 import net.aspw.client.features.module.Module;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.ModuleInfo;
-import net.aspw.client.features.module.impl.other.MurderDetector;
+import net.aspw.client.features.module.impl.other.MurdererDetector;
 import net.aspw.client.features.module.impl.targets.AntiBots;
 import net.aspw.client.features.module.impl.targets.AntiTeams;
-import net.aspw.client.util.EntityUtils;
-import net.aspw.client.util.render.BlendUtils;
-import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.utils.EntityUtils;
+import net.aspw.client.utils.render.BlendUtils;
+import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.value.BoolValue;
 import net.aspw.client.value.FloatValue;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -38,7 +38,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-@ModuleInfo(name = "ESP", description = "", category = ModuleCategory.VISUAL)
+@ModuleInfo(name = "ESP", category = ModuleCategory.VISUAL)
 public final class ESP extends Module {
     public static List collectedEntities = new ArrayList();
     public final BoolValue tagsValue = new BoolValue("Tags", true);
@@ -138,12 +138,12 @@ public final class ESP extends Module {
                     }
 
                     if (living && tagsValue.get()) {
-                        final MurderDetector murderDetector = Objects.requireNonNull(Client.moduleManager.getModule(MurderDetector.class));
-                        final AntiTeams antiTeams = Objects.requireNonNull(Client.moduleManager.getModule(AntiTeams.class));
+                        final MurdererDetector murdererDetector = Objects.requireNonNull(Launch.moduleManager.getModule(MurdererDetector.class));
+                        final AntiTeams antiTeams = Objects.requireNonNull(Launch.moduleManager.getModule(AntiTeams.class));
                         entityLivingBase = (EntityLivingBase) entity;
                         String entName;
-                        if (murderDetector.getState() && (entity == murderDetector.getMurder1() || entity == murderDetector.getMurder2())) {
-                            entName = "§c[Murder] §7- §r" + entityLivingBase.getName();
+                        if (murdererDetector.getState() && (entity == murdererDetector.getMurderer1() || entity == murdererDetector.getMurderer2())) {
+                            entName = "§c[Murderer] §7- §r" + entityLivingBase.getName();
                         } else if (EntityUtils.isFriend(entity)) {
                             entName = "§e[Friend] §7- §r" + entityLivingBase.getName();
                         } else if (antiTeams.getState() && antiTeams.isInYourTeam(entityLivingBase)) {

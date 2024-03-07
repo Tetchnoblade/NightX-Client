@@ -1,13 +1,13 @@
 package net.aspw.client.features.module.impl.player
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.movement.Speed
-import net.aspw.client.util.MovementUtils
-import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.utils.MovementUtils
+import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -23,7 +23,7 @@ import kotlin.math.ceil
 import kotlin.math.cos
 import kotlin.math.sin
 
-@ModuleInfo(name = "Step", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "Step", category = ModuleCategory.PLAYER)
 class Step : Module() {
 
     /**
@@ -76,6 +76,8 @@ class Step : Module() {
     private val ncp1Values = arrayOf(0.425, 0.821, 0.699, 0.599, 1.022, 1.372, 1.652, 1.869, 2.019, 1.919)
     private val ncp2Values = arrayOf(0.42, 0.7532, 1.01, 1.093, 1.015)
 
+    private val speedModule = Launch.moduleManager.getModule(Speed::class.java)
+
     override fun onDisable() {
         mc.thePlayer ?: return
 
@@ -86,7 +88,10 @@ class Step : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        if (Client.moduleManager.getModule(Speed::class.java)?.state!!) {
+        if (speedModule?.state!! && (!speedModule.typeValue.get()
+                .equals("velocity", true) || speedModule.typeValue.get()
+                .equals("velocity", true) && speedModule.velocityBHop.get())
+        ) {
             mc.thePlayer.stepHeight = 0.5F
             return
         }
@@ -146,7 +151,10 @@ class Step : Module() {
 
     @EventTarget
     fun onMove(event: MoveEvent) {
-        if (Client.moduleManager.getModule(Speed::class.java)?.state!!) {
+        if (speedModule?.state!! && (!speedModule.typeValue.get()
+                .equals("velocity", true) || speedModule.typeValue.get()
+                .equals("velocity", true) && speedModule.velocityBHop.get())
+        ) {
             mc.thePlayer.stepHeight = 0.5F
             return
         }
@@ -190,7 +198,10 @@ class Step : Module() {
     fun onStep(event: StepEvent) {
         mc.thePlayer ?: return
 
-        if (Client.moduleManager.getModule(Speed::class.java)?.state!!) {
+        if (speedModule?.state!! && (!speedModule.typeValue.get()
+                .equals("velocity", true) || speedModule.typeValue.get()
+                .equals("velocity", true) && speedModule.velocityBHop.get())
+        ) {
             mc.thePlayer.stepHeight = 0.5F
             return
         }
@@ -228,17 +239,20 @@ class Step : Module() {
         if (mc.thePlayer == null || !isStep) // Check if step
             return
 
-        if (Client.moduleManager.getModule(Speed::class.java)?.state!!) {
+        if (speedModule?.state!! && (!speedModule.typeValue.get()
+                .equals("velocity", true) || speedModule.typeValue.get()
+                .equals("velocity", true) && speedModule.velocityBHop.get())
+        ) {
             mc.thePlayer.stepHeight = 0.5F
             return
         }
 
         if (mc.thePlayer.entityBoundingBox.minY - stepY > 0.8) {
-            if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && modeValue.get() != "Matrix"
+            if (Launch.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && modeValue.get() != "Matrix"
             ) {
                 mc.timer.timerSpeed = 0.7f
             }
-            if (Client.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && modeValue.get() == "Matrix"
+            if (Launch.moduleManager[Step::class.java]!!.state && useTimer.get() && mc.thePlayer.onGround && modeValue.get() == "Matrix"
             ) {
                 mc.timer.timerSpeed = 0.12f
             }

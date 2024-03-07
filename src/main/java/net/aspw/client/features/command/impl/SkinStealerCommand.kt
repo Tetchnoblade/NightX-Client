@@ -1,11 +1,10 @@
 package net.aspw.client.features.command.impl
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.targets.AntiBots
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.util.misc.MiscUtils
-import net.aspw.client.visual.hud.element.elements.Notification
+import net.aspw.client.utils.misc.MiscUtils
 
 class SkinStealerCommand : Command("skinstealer", arrayOf("steal")) {
     /**
@@ -16,15 +15,10 @@ class SkinStealerCommand : Command("skinstealer", arrayOf("steal")) {
             try {
                 val amount = args[1]
                 MiscUtils.showURL("https://minecraft.tools/download-skin/$amount")
-                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                 }
-                Client.hud.addNotification(
-                    Notification(
-                        "Open Web!",
-                        Notification.Type.SUCCESS
-                    )
-                )
+                chat("Opened Web!")
                 return
             } catch (ex: NumberFormatException) {
                 chatSyntaxError()

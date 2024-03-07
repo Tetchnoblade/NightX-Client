@@ -5,12 +5,12 @@ import net.aspw.client.event.EventTarget
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.MovementUtils
+import net.aspw.client.utils.MovementUtils
 import net.aspw.client.value.ListValue
 import net.minecraft.network.play.client.C0BPacketEntityAction
 
 @ModuleInfo(
-    name = "WTap", description = "",
+    name = "WTap",
     category = ModuleCategory.COMBAT
 )
 class WTap : Module() {

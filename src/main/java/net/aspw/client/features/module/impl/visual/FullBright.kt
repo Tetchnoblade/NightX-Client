@@ -7,5 +7,5 @@ import net.aspw.client.features.module.ModuleInfo
 /**
  * The type Full bright.
  */
-@ModuleInfo(name = "FullBright", spacedName = "Full Bright", description = "", category = ModuleCategory.VISUAL)
+@ModuleInfo(name = "FullBright", spacedName = "Full Bright", category = ModuleCategory.VISUAL)
 class FullBright : Module()

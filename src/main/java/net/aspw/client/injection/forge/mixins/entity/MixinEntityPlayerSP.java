@@ -1,19 +1,17 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
-import net.aspw.client.Client;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+import net.aspw.client.Launch;
 import net.aspw.client.event.*;
-import net.aspw.client.features.api.PacketManager;
-import net.aspw.client.features.module.impl.exploit.AntiDesync;
 import net.aspw.client.features.module.impl.exploit.PortalMenu;
 import net.aspw.client.features.module.impl.movement.NoSlow;
 import net.aspw.client.features.module.impl.movement.SilentSneak;
-import net.aspw.client.features.module.impl.movement.Sprint;
 import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.protocol.ProtocolBase;
-import net.aspw.client.util.*;
-import net.aspw.client.visual.client.GuiTeleportation;
+import net.aspw.client.utils.*;
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui;
+import net.aspw.client.visual.client.clickgui.smooth.SmoothClickGui;
 import net.aspw.client.visual.client.clickgui.tab.NewUi;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
@@ -35,7 +33,6 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.*;
-import net.raphimc.vialoader.util.VersionEnum;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -122,6 +119,14 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     private float lastReportedPitch;
     @Unique
     private boolean lastOnGround;
+    @Shadow
+    public float renderArmYaw;
+    @Shadow
+    public float renderArmPitch;
+    @Shadow
+    public float prevRenderArmYaw;
+    @Shadow
+    public float prevRenderArmPitch;
 
     /**
      * Play sound.
@@ -189,7 +194,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
     @Redirect(method = "onUpdateWalkingPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/NetHandlerPlayClient;addToSendQueue(Lnet/minecraft/network/Packet;)V", ordinal = 7))
     public void emulateIdlePacket(NetHandlerPlayClient instance, Packet p_addToSendQueue_1_) {
-        if (ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning()) {
+        if (ProtocolBase.getManager().getTargetVersion().newerThan(ProtocolVersion.v1_8) && !MinecraftInstance.mc.isIntegratedServerRunning()) {
             if (this.viaForge$prevOnGround == this.onGround) {
                 return;
             }
@@ -203,6 +208,25 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     }
 
     /**
+     * @author As_pw
+     * @reason Fix Arm
+     */
+    @Overwrite
+    public void updateEntityActionState() {
+        super.updateEntityActionState();
+
+        if (this.isCurrentViewEntity()) {
+            this.moveStrafing = this.movementInput.moveStrafe;
+            this.moveForward = this.movementInput.moveForward;
+            this.isJumping = this.movementInput.jump;
+            this.prevRenderArmYaw = this.renderArmYaw;
+            this.prevRenderArmPitch = this.renderArmPitch;
+            this.renderArmPitch = (float) ((double) this.renderArmPitch + (double) (this.rotationPitch - this.renderArmPitch) * 0.5D);
+            this.renderArmYaw = (float) ((double) this.renderArmYaw + (double) (this.rotationYaw - this.renderArmYaw) * 0.5D);
+        }
+    }
+
+    /**
      * On update walking player.
      *
      * @author As_pw
@@ -212,11 +236,9 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     public void onUpdateWalkingPlayer() {
         try {
             MotionEvent event = new MotionEvent(this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround);
-            Client.eventManager.callEvent(event);
+            Launch.eventManager.callEvent(event);
 
-            PacketManager.update();
-
-            final SilentSneak sneak = Objects.requireNonNull(Client.moduleManager.getModule(SilentSneak.class));
+            final SilentSneak sneak = Objects.requireNonNull(Launch.moduleManager.getModule(SilentSneak.class));
             final boolean fakeSprint = sneak.getState() && (!MovementUtils.isMoving());
 
             ActionEvent actionEvent = new ActionEvent(this.isSprinting() && !fakeSprint, this.isSneaking());
@@ -245,45 +267,43 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             if (this.isCurrentViewEntity()) {
                 float yaw = event.getYaw();
                 float pitch = event.getPitch();
-                float lastReportedYaw = RotationUtils.serverRotation.getYaw();
-                float lastReportedPitch = RotationUtils.serverRotation.getPitch();
+                final Rotation currentRotation = RotationUtils.targetRotation;
 
-                if (RotationUtils.targetRotation != null) {
-                    yaw = RotationUtils.targetRotation.getYaw();
-                    pitch = RotationUtils.targetRotation.getPitch();
+                if (currentRotation != null) {
+                    yaw = currentRotation.getYaw();
+                    pitch = currentRotation.getPitch();
                 }
 
-                final AntiDesync antiDesync = Objects.requireNonNull(Client.moduleManager.getModule(AntiDesync.class));
                 double xDiff = event.getX() - this.lastReportedPosX;
                 double yDiff = event.getY() - this.lastReportedPosY;
                 double zDiff = event.getZ() - this.lastReportedPosZ;
                 double yawDiff = yaw - lastReportedYaw;
                 double pitchDiff = pitch - lastReportedPitch;
-                boolean moved = xDiff * xDiff + yDiff * yDiff + zDiff * zDiff > (antiDesync.getState() ? 0D : 9.0E-4D) || this.positionUpdateTicks >= 20;
+                boolean moved = xDiff * xDiff + yDiff * yDiff + zDiff * zDiff > 9.0E-4 || this.positionUpdateTicks >= 20;
                 boolean rotated = yawDiff != 0.0D || pitchDiff != 0.0D;
 
                 if (this.ridingEntity == null) {
                     if (moved && rotated) {
-                        this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(event.getX(), event.getY(), event.getZ(), yaw, pitch, event.getOnGround()));
+                        sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(posX, getEntityBoundingBox().minY, posZ, yaw, pitch, onGround));
                     } else if (moved) {
-                        this.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(event.getX(), event.getY(), event.getZ(), event.getOnGround()));
+                        sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(posX, getEntityBoundingBox().minY, posZ, onGround));
                     } else if (rotated) {
-                        this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(yaw, pitch, event.getOnGround()));
+                        sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(yaw, pitch, onGround));
                     } else {
-                        this.sendQueue.addToSendQueue(new C03PacketPlayer(event.getOnGround()));
+                        sendQueue.addToSendQueue(new C03PacketPlayer(onGround));
                     }
                 } else {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D, this.motionZ, yaw, pitch, event.getOnGround()));
+                    sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(motionX, -999, motionZ, yaw, pitch, onGround));
                     moved = false;
                 }
 
                 ++this.positionUpdateTicks;
 
                 if (moved) {
-                    this.lastReportedPosX = event.getX();
-                    this.lastReportedPosY = event.getY();
-                    this.lastReportedPosZ = event.getZ();
-                    this.positionUpdateTicks = 0;
+                    lastReportedPosX = posX;
+                    lastReportedPosY = getEntityBoundingBox().minY;
+                    lastReportedPosZ = posZ;
+                    positionUpdateTicks = 0;
                 }
 
                 if (rotated) {
@@ -297,7 +317,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
             event.setEventState(EventState.POST);
 
-            Client.eventManager.callEvent(event);
+            Launch.eventManager.callEvent(event);
         } catch (final Exception e) {
             e.printStackTrace();
         }
@@ -306,8 +326,8 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     @Inject(method = "swingItem", at = @At("HEAD"))
     private void swingItem(CallbackInfo callbackInfo) {
         CooldownHelper.INSTANCE.resetLastAttackedTicks();
-        if (Objects.requireNonNull(Client.moduleManager.getModule(Interface.class)).getSwingSoundValue().get()) {
-            Client.tipSoundManager.getSwingSound().asyncPlay(Client.moduleManager.getSwingSoundPower());
+        if (Objects.requireNonNull(Launch.moduleManager.getModule(Interface.class)).getSwingSoundValue().get()) {
+            Launch.tipSoundManager.getSwingSound().asyncPlay(Launch.moduleManager.getSwingSoundPower());
         }
     }
 
@@ -315,7 +335,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     private void onPushOutOfBlocks(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         PushOutEvent event = new PushOutEvent();
         if (this.noClip) event.cancelEvent();
-        Client.eventManager.callEvent(event);
+        Launch.eventManager.callEvent(event);
 
         if (event.isCancelled())
             callbackInfoReturnable.setReturnValue(false);
@@ -327,8 +347,8 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
      */
     @Overwrite
     public void onLivingUpdate() {
-        Client.eventManager.callEvent(new UpdateEvent());
-        if (mc.currentScreen instanceof NewUi || mc.currentScreen instanceof ClickGui || mc.currentScreen instanceof GuiTeleportation) {
+        Launch.eventManager.callEvent(new UpdateEvent());
+        if (mc.currentScreen instanceof NewUi || mc.currentScreen instanceof ClickGui || mc.currentScreen instanceof SmoothClickGui) {
             mc.gameSettings.keyBindForward.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindForward);
             mc.gameSettings.keyBindBack.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindBack);
             mc.gameSettings.keyBindRight.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindRight);
@@ -351,7 +371,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
         this.prevTimeInPortal = this.timeInPortal;
 
-        final PortalMenu portalMenu = Objects.requireNonNull(Client.moduleManager.getModule(PortalMenu.class));
+        final PortalMenu portalMenu = Objects.requireNonNull(Launch.moduleManager.getModule(PortalMenu.class));
 
         if (this.inPortal) {
             if (this.mc.currentScreen != null && !this.mc.currentScreen.doesGuiPauseGame()
@@ -396,11 +416,11 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         boolean flag2 = this.movementInput.moveForward >= f;
         this.movementInput.updatePlayerMoveState();
 
-        final NoSlow noSlow = Objects.requireNonNull(Client.moduleManager.getModule(NoSlow.class));
+        final NoSlow noSlow = Objects.requireNonNull(Launch.moduleManager.getModule(NoSlow.class));
 
         if (getHeldItem() != null && (this.isUsingItem() || (getHeldItem().getItem() instanceof ItemSword && mc.thePlayer.isBlocking() && !this.isRiding()))) {
             final SlowDownEvent slowDownEvent = new SlowDownEvent(0.2F, 0.2F);
-            Client.eventManager.callEvent(slowDownEvent);
+            Launch.eventManager.callEvent(slowDownEvent);
             this.movementInput.moveStrafe *= slowDownEvent.getStrafe();
             this.movementInput.moveForward *= slowDownEvent.getForward();
             this.sprintToggleTimer = 0;
@@ -410,8 +430,6 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         this.pushOutOfBlocks(this.posX - (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D, this.posZ - (double) this.width * 0.35D);
         this.pushOutOfBlocks(this.posX + (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D, this.posZ - (double) this.width * 0.35D);
         this.pushOutOfBlocks(this.posX + (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D, this.posZ + (double) this.width * 0.35D);
-
-        final Sprint sprint = Objects.requireNonNull(Client.moduleManager.getModule(Sprint.class));
 
         boolean flag3 = (float) this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
 
@@ -426,12 +444,12 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         if (!this.isSprinting() && this.movementInput.moveForward >= f && flag3 && (noSlow.getState() || !this.isUsingItem()) && !this.isPotionActive(Potion.blindness) && this.mc.gameSettings.keyBindSprint.isKeyDown())
             this.setSprinting(true);
 
-        final Scaffold scaffold = Objects.requireNonNull(Client.moduleManager.getModule(Scaffold.class));
+        final Scaffold scaffold = Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class));
 
-        if ((scaffold.getState() && scaffold.getCanTower() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || (scaffold.getState() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || !sprint.getAllDirectionsValue().get() && RotationUtils.targetRotation != null && RotationUtils.getRotationDifference(new Rotation(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch)) > 30)
+        if ((scaffold.getState() && scaffold.getCanTower() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || (scaffold.getState() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || RotationUtils.targetRotation != null && RotationUtils.getRotationDifference(new Rotation(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch)) > 30)
             this.setSprinting(false);
 
-        if (this.isSprinting() && ((!(sprint.getState() && sprint.getAllDirectionsValue().get()) && this.movementInput.moveForward < f) || mc.thePlayer.isCollidedHorizontally || !flag3))
+        if (this.isSprinting() && (this.movementInput.moveForward < f || mc.thePlayer.isCollidedHorizontally || !flag3))
             this.setSprinting(false);
 
         if (this.capabilities.allowFlying) {
@@ -500,7 +518,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     @Override
     public void moveEntity(double x, double y, double z) {
         MoveEvent moveEvent = new MoveEvent(x, y, z);
-        Client.eventManager.callEvent(moveEvent);
+        Launch.eventManager.callEvent(moveEvent);
 
         if (moveEvent.isCancelled())
             return;
@@ -603,7 +621,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
             if (this.stepHeight > 0.0F && flag1 && (d3 != x || d5 != z)) {
                 StepEvent stepEvent = new StepEvent(this.stepHeight);
-                Client.eventManager.callEvent(stepEvent);
+                Launch.eventManager.callEvent(stepEvent);
                 double d11 = x;
                 double d7 = y;
                 double d8 = z;
@@ -683,7 +701,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
                     z = d8;
                     this.setEntityBoundingBox(axisalignedbb3);
                 } else {
-                    Client.eventManager.callEvent(new StepConfirmEvent());
+                    Launch.eventManager.callEvent(new StepConfirmEvent());
                 }
             }
 

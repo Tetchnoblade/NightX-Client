@@ -1,20 +1,22 @@
 package net.aspw.client.features.module.impl.combat
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.impl.player.LegitScaffold
 import net.aspw.client.features.module.impl.player.Scaffold
-import net.aspw.client.util.*
-import net.aspw.client.util.timer.MSTimer
-import net.aspw.client.util.timer.TickTimer
+import net.aspw.client.utils.*
+import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.gui.inventory.GuiInventory
+import net.minecraft.client.settings.KeyBinding
 import net.minecraft.init.Items
 import net.minecraft.item.ItemPotion
 import net.minecraft.network.play.client.*
@@ -22,20 +24,19 @@ import net.minecraft.potion.Potion
 import net.minecraft.potion.PotionEffect
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
+import org.lwjgl.opengl.Display
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
 
-@ModuleInfo(name = "AutoHeal", spacedName = "Auto Heal", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AutoHeal", spacedName = "Auto Heal", category = ModuleCategory.COMBAT)
 class AutoHeal : Module() {
     // Auto Pot
     private val autoPotValue = BoolValue("AutoPot", true)
     private val healthValue = FloatValue("Health-Pot", 50F, 0F, 100F, "%") { autoPotValue.get() }
     private val regenValue = BoolValue("Heal-Pot", true) { autoPotValue.get() }
     private val utilityValue = BoolValue("Utility-Pot", true) { autoPotValue.get() }
-    private val spoofInvValue = BoolValue("InvSpoof-Pot", false) { autoPotValue.get() }
-    private val spoofDelayValue =
-        IntegerValue("InvDelay-Pot", 500, 500, 5000, "ms") { spoofInvValue.get() && autoPotValue.get() }
-    private val customPitchValue = BoolValue("Custom-Pitch-Pot", false) { autoPotValue.get() }
-    private val customPitchAngle =
-        FloatValue("Angle-Pot", 90F, -90F, 90F, "°") { customPitchValue.get() && autoPotValue.get() }
+    private val spoofInvValue = BoolValue("Auto-Recharge", false) { autoPotValue.get() }
     private val debugValue = BoolValue("Debug-Pot", false) { autoPotValue.get() }
 
     // Auto Soup
@@ -62,11 +63,14 @@ class AutoHeal : Module() {
 
     private val throwQueue = arrayListOf<Int>()
 
-    val killAura = Client.moduleManager.getModule(KillAura::class.java)
-    val scaffold = Client.moduleManager.getModule(Scaffold::class.java)
+    val killAura = Launch.moduleManager.getModule(KillAura::class.java)
+    val scaffold = Launch.moduleManager.getModule(Scaffold::class.java)
+    private val legitScaffold = Launch.moduleManager.getModule(LegitScaffold::class.java)
+
+    private val decimalFormat = DecimalFormat("##0.00", DecimalFormatSymbols(Locale.ENGLISH))
 
     override val tag: String
-        get() = healthValue.get().toString() + "%"
+        get() = decimalFormat.format(healthValue.get()) + "%"
 
     private fun resetAll() {
         potting = false
@@ -102,7 +106,7 @@ class AutoHeal : Module() {
 
     private fun debug(s: String) {
         if (debugValue.get())
-            ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§3$s")
+            ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "§3$s")
     }
 
     @EventTarget(priority = 2)
@@ -127,25 +131,13 @@ class AutoHeal : Module() {
                     timeoutTimer.reset()
 
                 if (spoofInvValue.get() && mc.currentScreen !is GuiContainer && !throwing) {
-                    if (invTimer.hasTimePassed(spoofDelayValue.get().toLong())) {
+                    if (invTimer.hasTimePassed(800L)) {
                         val invPotion = findPotion(9, 36)
                         if (invPotion != -1) {
                             if (InventoryUtils.hasSpaceHotbar()) {
                                 InventoryHelper.openPacket()
                                 mc.playerController.windowClick(0, invPotion, 0, 1, mc.thePlayer)
                                 InventoryHelper.closePacket()
-                            } else {
-                                for (i in 36 until 45) {
-                                    val stack = mc.thePlayer.inventoryContainer.getSlot(i).stack
-                                    if (stack == null || stack.item !is ItemPotion || !ItemPotion.isSplash(stack.itemDamage))
-                                        continue
-
-                                    InventoryHelper.openPacket()
-                                    mc.playerController.windowClick(0, invPotion, 0, 0, mc.thePlayer)
-                                    mc.playerController.windowClick(0, i, 0, 0, mc.thePlayer)
-                                    InventoryHelper.closePacket()
-                                    break
-                                }
                             }
                             invTimer.reset()
                             debug("moved pot")
@@ -172,18 +164,19 @@ class AutoHeal : Module() {
                     oldSlot = mc.thePlayer.inventory.currentItem
                 }
 
-                if (throwing && !mc.thePlayer.isEating && !mc.thePlayer.isInWater && MovementUtils.isRidingBlock() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!) {
+                if (throwing && !mc.thePlayer.isEating && !mc.thePlayer.isInWater && MovementUtils.isRidingBlock() && mc.inGameHasFocus && Display.isActive() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!! && !legitScaffold?.state!!) {
                     if (mc.thePlayer.onGround) {
                         potting = false
                         RotationUtils.setTargetRotation(
                             Rotation(
                                 mc.thePlayer.rotationYaw,
-                                if (customPitchValue.get()) customPitchAngle.get() else 80F
+                                90F
                             )
                         )
                         if (tickTimer.hasTimePassed(1) && mc.thePlayer.inventory.currentItem != potIndex - 36) {
                             mc.thePlayer.inventory.currentItem = potIndex - 36
                             mc.playerController.updateController()
+                            KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
                             debug("switch")
                         }
                         tickTimer.update()
@@ -285,10 +278,11 @@ class AutoHeal : Module() {
                     }
                 }
                 if (throwing && mc.currentScreen !is GuiContainer
+                    && mc.inGameHasFocus && Display.isActive()
                     && !mc.thePlayer.isEating
                     && MovementUtils.isRidingBlock()
                     && !mc.thePlayer.isInWater
-                    && tickTimer.hasTimePassed(4) && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!!
+                    && tickTimer.hasTimePassed(4) && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!! && !legitScaffold?.state!!
                 ) {
                     val potionEffects = getPotionFromSlot(potIndex)
                     if (potionEffects != null) {
@@ -296,8 +290,7 @@ class AutoHeal : Module() {
 
                         potionIds.filter { !throwQueue.contains(it) }.forEach { throwQueue.add(it) }
 
-                        mc.itemRenderer.resetEquippedProgress()
-                        mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.heldItem))
+                        KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
 
                         mc.thePlayer.inventory.currentItem = oldSlot
                         mc.playerController.updateController()

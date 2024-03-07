@@ -1,10 +1,9 @@
 package net.aspw.client.features.command.impl
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.targets.AntiBots
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.network.play.server.S2CPacketSpawnGlobalEntity
 import kotlin.math.roundToInt
@@ -25,8 +24,8 @@ class SpotCommand : Command("spot", arrayOf("st")) {
 
             // Attempt to teleport to player's position.
             if (targetPlayer != null) {
-                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                 }
                 mc.netHandler.handleSpawnGlobalEntity(
                     S2CPacketSpawnGlobalEntity(
@@ -47,12 +46,7 @@ class SpotCommand : Command("spot", arrayOf("st")) {
                 )
                 return
             } else {
-                Client.hud.addNotification(
-                    Notification(
-                        "No players found!",
-                        Notification.Type.ERROR
-                    )
-                )
+                chat("No players found!")
                 return
             }
         }

@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.render;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.RenderEntityEvent;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -27,6 +27,6 @@ public abstract class MixinRender {
 
     @Inject(method = "doRender", at = @At("HEAD"))
     private void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo callbackInfo) {
-        Client.eventManager.callEvent(new RenderEntityEvent(entity, x, y, z, entityYaw, partialTicks));
+        Launch.eventManager.callEvent(new RenderEntityEvent(entity, x, y, z, entityYaw, partialTicks));
     }
 }

@@ -1,11 +1,11 @@
 package net.aspw.client.visual.font.semi
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.TextEvent
-import net.aspw.client.util.ClassUtils
-import net.aspw.client.util.MinecraftInstance
-import net.aspw.client.util.render.ColorUtils
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.ClassUtils
+import net.aspw.client.utils.MinecraftInstance
+import net.aspw.client.utils.render.ColorUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.resources.IResourceManager
@@ -51,7 +51,7 @@ class GameFontRenderer(font: Font) : FontRenderer(
         var currentText = text
 
         val event = TextEvent(currentText)
-        Client.eventManager.callEvent(event)
+        Launch.eventManager.callEvent(event)
         currentText = event.text ?: return 0
 
         val currY = y - 3F
@@ -184,7 +184,7 @@ class GameFontRenderer(font: Font) : FontRenderer(
         var currentText = text
 
         val event = TextEvent(currentText)
-        Client.eventManager.callEvent(event)
+        Launch.eventManager.callEvent(event)
         currentText = event.text ?: return 0
 
         return if (currentText.contains("§")) {

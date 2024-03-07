@@ -1,10 +1,10 @@
 package net.aspw.client.features.module.impl.movement.speeds.aac;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.util.MovementUtils;
+import net.aspw.client.utils.MovementUtils;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
 /**
@@ -28,7 +28,7 @@ public class AACGround extends SpeedMode {
         if (!MovementUtils.isMoving())
             return;
 
-        mc.timer.timerSpeed = Client.moduleManager.getModule(Speed.class).aacGroundTimerValue.get();
+        mc.timer.timerSpeed = Launch.moduleManager.getModule(Speed.class).aacGroundTimerValue.get();
         mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, true));
     }
 

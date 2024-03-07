@@ -1,6 +1,6 @@
 package net.aspw.client.features.module.impl.player
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.EventState
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.MotionEvent
@@ -12,8 +12,8 @@ import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.features.module.impl.movement.Flight
 import net.aspw.client.features.module.impl.movement.LongJump
 import net.aspw.client.features.module.impl.movement.Speed
-import net.aspw.client.util.MovementUtils
-import net.aspw.client.util.RotationUtils
+import net.aspw.client.utils.MovementUtils
+import net.aspw.client.utils.RotationUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
@@ -25,19 +25,19 @@ import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 
-@ModuleInfo(name = "TargetStrafe", spacedName = "Target Strafe", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "TargetStrafe", spacedName = "Target Strafe", category = ModuleCategory.PLAYER)
 class TargetStrafe : Module() {
-    val range = FloatValue("Range", 2.5f, 0.1f, 4.0f, "m") { !behind.get() }
+    val range = FloatValue("Range", 1.5f, 0.1f, 4.0f, "m") { !behind.get() }
     private val modeValue = ListValue("KeyMode", arrayOf("Jump", "None"), "Jump")
     private val safewalk = BoolValue("SafeWalk", true)
     private val behind = BoolValue("Behind", false)
     private val thirdPerson = BoolValue("ThirdPerson", false)
-    val killAura = Client.moduleManager.getModule(KillAura::class.java)
-    val speed = Client.moduleManager.getModule(Speed::class.java)
-    private val longJump = Client.moduleManager.getModule(LongJump::class.java)
-    val flight = Client.moduleManager.getModule(Flight::class.java)
+    val killAura = Launch.moduleManager.getModule(KillAura::class.java)
+    val speed = Launch.moduleManager.getModule(Speed::class.java)
+    private val longJump = Launch.moduleManager.getModule(LongJump::class.java)
+    val flight = Launch.moduleManager.getModule(Flight::class.java)
 
-    var direction = 1
+    private var direction = 1
     private var lastView = 0
     private var hasChangedThirdPerson = true
 

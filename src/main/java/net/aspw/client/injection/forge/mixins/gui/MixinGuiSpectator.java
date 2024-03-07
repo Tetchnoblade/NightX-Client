@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.Render2DEvent;
 import net.aspw.client.visual.font.semi.AWTFontRenderer;
 import net.minecraft.client.gui.GuiSpectator;
@@ -18,7 +18,7 @@ public class MixinGuiSpectator {
 
     @Inject(method = "renderTooltip", at = @At("RETURN"))
     private void renderTooltipPost(ScaledResolution p_175264_1_, float p_175264_2_, CallbackInfo callbackInfo) {
-        Client.eventManager.callEvent(new Render2DEvent(p_175264_2_));
+        Launch.eventManager.callEvent(new Render2DEvent(p_175264_2_));
         AWTFontRenderer.Companion.garbageCollectionTick();
     }
 }

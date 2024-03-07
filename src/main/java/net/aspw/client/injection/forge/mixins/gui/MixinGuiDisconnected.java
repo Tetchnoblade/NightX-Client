@@ -7,16 +7,16 @@ import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
 import com.thealtening.AltService;
 import com.thealtening.api.TheAltening;
 import com.thealtening.api.data.AccountData;
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.auth.account.CrackedAccount;
 import net.aspw.client.auth.account.MinecraftAccount;
 import net.aspw.client.event.SessionEvent;
 import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.protocol.api.ProtocolSelector;
-import net.aspw.client.util.ClientUtils;
-import net.aspw.client.util.ServerUtils;
-import net.aspw.client.util.SessionUtils;
-import net.aspw.client.util.misc.RandomUtils;
+import net.aspw.client.utils.ClientUtils;
+import net.aspw.client.utils.ServerUtils;
+import net.aspw.client.utils.SessionUtils;
+import net.aspw.client.utils.misc.RandomUtils;
 import net.aspw.client.visual.client.GuiMainMenu;
 import net.aspw.client.visual.client.altmanager.GuiAltManager;
 import net.aspw.client.visual.client.altmanager.menus.GuiLoginProgress;
@@ -76,11 +76,11 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
 
                         final YggdrasilUserAuthentication yggdrasilUserAuthentication = new YggdrasilUserAuthentication(new YggdrasilAuthenticationService(Proxy.NO_PROXY, ""), Agent.MINECRAFT);
                         yggdrasilUserAuthentication.setUsername(account.getToken());
-                        yggdrasilUserAuthentication.setPassword(Client.CLIENT_BEST);
+                        yggdrasilUserAuthentication.setPassword(Launch.CLIENT_BEST);
                         yggdrasilUserAuthentication.logIn();
 
                         mc.session = new Session(yggdrasilUserAuthentication.getSelectedProfile().getName(), yggdrasilUserAuthentication.getSelectedProfile().getId().toString(), yggdrasilUserAuthentication.getAuthenticatedToken(), "mojang");
-                        Client.eventManager.callEvent(new SessionEvent());
+                        Launch.eventManager.callEvent(new SessionEvent());
                         ServerUtils.connectToLastServer();
                         break;
                     } catch (final Throwable throwable) {
@@ -88,14 +88,14 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
                     }
                 }
 
-                final List<MinecraftAccount> accounts = Client.fileManager.accountsConfig.getAccounts();
+                final List<MinecraftAccount> accounts = Launch.fileManager.accountsConfig.getAccounts();
                 if (accounts.isEmpty())
                     break;
                 final MinecraftAccount minecraftAccount = accounts.get(new Random().nextInt(accounts.size()));
 
                 mc.displayGuiScreen(new GuiLoginProgress(minecraftAccount, () -> {
                     mc.addScheduledTask(() -> {
-                        Client.eventManager.callEvent(new SessionEvent());
+                        Launch.eventManager.callEvent(new SessionEvent());
                         ServerUtils.connectToLastServer();
                     });
                     return null;
@@ -112,15 +112,15 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
                 break;
             case 4:
                 final CrackedAccount crackedAccount = new CrackedAccount();
-                final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
+                final Interface anInterface = Objects.requireNonNull(Launch.moduleManager.getModule(Interface.class));
                 crackedAccount.setName(RandomUtils.randomString(RandomUtils.nextInt(5, 16)));
                 crackedAccount.update();
                 if (anInterface.getFlagSoundValue().get()) {
-                    Client.tipSoundManager.getPopSound().asyncPlay(Client.moduleManager.getPopSoundPower());
+                    Launch.tipSoundManager.getPopSound().asyncPlay(Launch.moduleManager.getPopSoundPower());
                 }
                 mc.session = new Session(crackedAccount.getSession().getUsername(), crackedAccount.getSession().getUuid(),
                         crackedAccount.getSession().getToken(), crackedAccount.getSession().getType());
-                Client.eventManager.callEvent(new SessionEvent());
+                Launch.eventManager.callEvent(new SessionEvent());
                 break;
             case 998:
                 mc.displayGuiScreen(new GuiAltManager((GuiScreen) (Object) this));

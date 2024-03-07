@@ -1,6 +1,6 @@
 package net.aspw.client.visual.client.clickgui.dropdown.elements;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.features.module.Module;
 import org.lwjgl.input.Mouse;
 
@@ -23,7 +23,7 @@ public class ModuleElement extends ButtonElement {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float button) {
-        Client.clickGui.style.drawModuleElement(mouseX, mouseY, this);
+        Launch.clickGui.style.drawModuleElement(mouseX, mouseY, this);
     }
 
     @Override

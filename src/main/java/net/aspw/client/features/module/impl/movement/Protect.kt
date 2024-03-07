@@ -9,7 +9,7 @@ import net.aspw.client.value.BoolValue
 import net.minecraft.init.Blocks
 import net.minecraft.util.AxisAlignedBB
 
-@ModuleInfo(name = "Protect", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Protect", category = ModuleCategory.MOVEMENT)
 class Protect : Module() {
     private val fire = BoolValue("Fire", true)
     private val cobweb = BoolValue("Cobweb", true)

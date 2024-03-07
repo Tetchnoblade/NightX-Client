@@ -5,14 +5,14 @@ import net.aspw.client.event.Render3DEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.CooldownHelper
-import net.aspw.client.util.timer.TickTimer
-import net.aspw.client.util.timer.TimeUtils
+import net.aspw.client.utils.CooldownHelper
+import net.aspw.client.utils.timer.TickTimer
+import net.aspw.client.utils.timer.TimeUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.IntegerValue
 import net.minecraft.client.settings.KeyBinding
 
-@ModuleInfo(name = "AutoClicker", spacedName = "Auto Clicker", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AutoClicker", spacedName = "Auto Clicker", category = ModuleCategory.COMBAT)
 class AutoClicker : Module() {
     private val coolDownCheck = BoolValue("Cooldown-Check", false)
     private val leftValue = BoolValue("Left", true)

@@ -1,9 +1,9 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.util.AnimationUtils;
-import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.utils.AnimationUtils;
+import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.renderer.GlStateManager;

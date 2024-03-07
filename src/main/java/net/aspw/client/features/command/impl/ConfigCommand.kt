@@ -1,11 +1,10 @@
 package net.aspw.client.features.command.impl
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.util.SettingsUtils
-import net.aspw.client.util.misc.StringUtils
-import net.aspw.client.visual.hud.element.elements.Notification
+import net.aspw.client.utils.SettingsUtils
+import net.aspw.client.utils.misc.StringUtils
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.CloseableHttpClient
 import org.apache.http.impl.client.HttpClients
@@ -24,21 +23,15 @@ class ConfigCommand : Command("config", arrayOf("c")) {
             when {
                 args[1].equals("load", ignoreCase = true) || args[1].equals("l", ignoreCase = true) -> {
                     if (args.size > 2) {
-                        val scriptFile = File(Client.fileManager.settingsDir, args[2])
+                        val scriptFile = File(Launch.fileManager.settingsDir, args[2])
                         if (scriptFile.exists()) {
                             try {
                                 val settings = scriptFile.readText()
                                 SettingsUtils.executeScript(settings)
-                                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                                 }
                                 chat("§6Config updated successfully!")
-                                Client.hud.addNotification(
-                                    Notification(
-                                        "Config updated successfully!",
-                                        Notification.Type.SUCCESS
-                                    )
-                                )
                             } catch (e: IOException) {
                                 e.printStackTrace()
                             }
@@ -53,7 +46,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                 args[1].equals("onlineload", ignoreCase = true) -> {
                     if (args.size > 2) {
                         val httpClient: CloseableHttpClient = HttpClients.createDefault()
-                        val request = HttpGet(Client.CLIENT_CONFIGS + args[2])
+                        val request = HttpGet(Launch.CLIENT_CONFIGS + args[2])
                         val response = httpClient.execute(request)
                         val entity = response.entity
                         val content = EntityUtils.toString(entity)
@@ -61,16 +54,10 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                         response.close()
                         httpClient.close()
                         SettingsUtils.executeScript(content)
-                        if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                        if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                            Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                         }
                         chat("§6Config updated successfully!")
-                        Client.hud.addNotification(
-                            Notification(
-                                "Config updated successfully!",
-                                Notification.Type.SUCCESS
-                            )
-                        )
                         return
                     }
                     chatSyntax("config onlineload <name>")
@@ -79,7 +66,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
 
                 args[1].equals("save", ignoreCase = true) || args[1].equals("s", ignoreCase = true) -> {
                     if (args.size > 2) {
-                        val scriptFile = File(Client.fileManager.settingsDir, args[2])
+                        val scriptFile = File(Launch.fileManager.settingsDir, args[2])
 
                         try {
                             if (scriptFile.exists())
@@ -100,16 +87,10 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                             }
                             val settingsScript = SettingsUtils.generateScript(values, binds, states)
                             scriptFile.writeText(settingsScript)
-                            if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                                Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                            if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                                Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                             }
                             chat("§aSuccessfully saved new config!")
-                            Client.hud.addNotification(
-                                Notification(
-                                    "Config saved successfully!",
-                                    Notification.Type.SUCCESS
-                                )
-                            )
                         } catch (_: Throwable) {
                         }
                         return
@@ -120,20 +101,14 @@ class ConfigCommand : Command("config", arrayOf("c")) {
 
                 args[1].equals("delete", ignoreCase = true) || args[1].equals("d", ignoreCase = true) -> {
                     if (args.size > 2) {
-                        val scriptFile = File(Client.fileManager.settingsDir, args[2])
+                        val scriptFile = File(Launch.fileManager.settingsDir, args[2])
 
                         if (scriptFile.exists()) {
                             scriptFile.delete()
-                            if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                                Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                            if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                                Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                             }
                             chat("§6Config deleted successfully!")
-                            Client.hud.addNotification(
-                                Notification(
-                                    "Config deleted successfully!",
-                                    Notification.Type.SUCCESS
-                                )
-                            )
                             return
                         }
                         chatSyntax("config delete <name>")
@@ -145,7 +120,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
 
                 args[1].equals("fix", ignoreCase = true) -> {
                     if (args.size > 2) {
-                        val scriptFile = File(Client.fileManager.settingsDir, args[2])
+                        val scriptFile = File(Launch.fileManager.settingsDir, args[2])
 
                         if (scriptFile.exists()) {
                             try {
@@ -174,8 +149,8 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                                 }
                                 val settingsScript = SettingsUtils.generateScript(values, binds, states)
                                 scriptFile.writeText(settingsScript)
-                                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                                 }
                                 chat("§6Config fixed successfully!")
                             } catch (_: Throwable) {
@@ -199,7 +174,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
 
                 args[1].equals("onlinelist", ignoreCase = true) -> {
                     val httpClient: CloseableHttpClient = HttpClients.createDefault()
-                    val request = HttpGet(Client.CLIENT_CONFIGLIST)
+                    val request = HttpGet(Launch.CLIENT_CONFIGLIST)
                     val response = httpClient.execute(request)
                     val entity = response.entity
                     val content = EntityUtils.toString(entity)
@@ -212,7 +187,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                 }
 
                 args[1].equals("folder", ignoreCase = true) -> {
-                    Desktop.getDesktop().open(Client.fileManager.settingsDir)
+                    Desktop.getDesktop().open(Launch.fileManager.settingsDir)
                     chat("Successfully opened configs folder.")
                     return
                 }
@@ -221,13 +196,13 @@ class ConfigCommand : Command("config", arrayOf("c")) {
         chatSyntax("config <load/save/list/delete/fix/folder/onlineload/onlinelist>")
     }
 
-    private fun getLocalSettings(): Array<File>? = Client.fileManager.settingsDir.listFiles()
+    private fun getLocalSettings(): Array<File>? = Launch.fileManager.settingsDir.listFiles()
 
     override fun tabComplete(args: Array<String>): List<String> {
         if (args.isEmpty()) return emptyList()
 
         return when (args.size) {
-            1 -> listOf("delete", "list", "load", "l", "save", "fix", "onlineload", "onlinelist").filter {
+            1 -> listOf("delete", "list", "load", "l", "save", "fix", "folder", "onlineload", "onlinelist").filter {
                 it.startsWith(
                     args[0],
                     true

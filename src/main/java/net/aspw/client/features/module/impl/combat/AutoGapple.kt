@@ -1,25 +1,23 @@
 package net.aspw.client.features.module.impl.combat
 
-import net.aspw.client.Client
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.InventoryUtils
-import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.utils.InventoryUtils
+import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
-import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.init.Items
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
 import net.minecraft.network.play.client.C09PacketHeldItemChange
 import java.util.*
 
-@ModuleInfo(name = "AutoGapple", spacedName = "Auto Gapple", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AutoGapple", spacedName = "Auto Gapple", category = ModuleCategory.COMBAT)
 class AutoGapple : Module() {
     // Auto Mode
     val modeValue = ListValue("Mode", arrayOf("Auto", "Once", "Head"), "Auto")
@@ -77,7 +75,7 @@ class AutoGapple : Module() {
             }
             mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
         } else if (warn)
-            Client.hud.addNotification(Notification("No Gapple were found in hotbar.", Notification.Type.ERROR))
+            chat("No gapple were found in hotbar")
     }
 
     override val tag: String

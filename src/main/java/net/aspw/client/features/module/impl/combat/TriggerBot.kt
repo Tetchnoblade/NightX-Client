@@ -5,13 +5,13 @@ import net.aspw.client.event.Render3DEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.CooldownHelper
-import net.aspw.client.util.EntityUtils
-import net.aspw.client.util.timer.TimeUtils
+import net.aspw.client.utils.CooldownHelper
+import net.aspw.client.utils.EntityUtils
+import net.aspw.client.utils.timer.TimeUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.IntegerValue
 
-@ModuleInfo(name = "TriggerBot", spacedName = "Trigger Bot", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "TriggerBot", spacedName = "Trigger Bot", category = ModuleCategory.COMBAT)
 class TriggerBot : Module() {
     private val coolDownCheck = BoolValue("Cooldown-Check", false)
     private val maxCPS: IntegerValue = object : IntegerValue("MaxCPS", 12, 1, 20, { !coolDownCheck.get() }) {

@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.aspw.client.Client;
-import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.Launch;
+import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -118,7 +118,7 @@ public abstract class MixinGuiScreen {
         if (msg.startsWith(".") && addToChat) {
             this.mc.ingameGUI.getChatGUI().addToSentMessages(msg);
 
-            Client.commandManager.executeCommands(msg);
+            Launch.commandManager.executeCommands(msg);
             callbackInfo.cancel();
         }
     }

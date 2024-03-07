@@ -1,7 +1,7 @@
 package net.aspw.client.visual.client.clickgui.dropdown.elements;
 
 
-import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.utils.MinecraftInstance;
 
 public class Element extends MinecraftInstance {
 

@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.network;
 
 import com.mojang.patchy.BlockedServers;
-import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.utils.MinecraftInstance;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 

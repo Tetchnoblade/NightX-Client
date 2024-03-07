@@ -1,6 +1,6 @@
 package net.aspw.client.visual.client.clickgui.dropdown.elements;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 
 public class ButtonElement extends Element {
 
@@ -19,7 +19,7 @@ public class ButtonElement extends Element {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float button) {
-        Client.clickGui.style.drawButtonElement(mouseX, mouseY, this);
+        Launch.clickGui.style.drawButtonElement(mouseX, mouseY, this);
         super.drawScreen(mouseX, mouseY, button);
     }
 

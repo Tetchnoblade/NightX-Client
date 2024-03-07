@@ -7,8 +7,8 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.misc.RandomUtils
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.misc.RandomUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
@@ -19,9 +19,8 @@ import java.awt.Color
 @ModuleInfo(
     name = "SnakeGame",
     spacedName = "Snake Game",
-    description = "",
     category = ModuleCategory.OTHER,
-    keyBind = Keyboard.KEY_F10
+    keyBind = Keyboard.KEY_F9
 )
 class SnakeGame : Module() {
     private var snake = mutableListOf(Position(0, 0))

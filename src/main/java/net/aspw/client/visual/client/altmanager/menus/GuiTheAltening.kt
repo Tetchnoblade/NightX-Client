@@ -6,13 +6,13 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication
 import com.thealtening.AltService
 import com.thealtening.api.TheAltening
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.SessionEvent
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.util.ClientUtils
-import net.aspw.client.util.misc.MiscUtils
-import net.aspw.client.util.misc.RandomUtils
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.ClientUtils
+import net.aspw.client.utils.misc.MiscUtils
+import net.aspw.client.utils.misc.RandomUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.GuiPasswordField
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.minecraft.client.gui.GuiButton
@@ -116,14 +116,14 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
 
                 val altening = TheAltening(apiKey)
                 val asynchronous = TheAltening.Asynchronous(altening)
-                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                 }
                 status = "§cGenerating account..."
 
                 asynchronous.accountData.thenAccept { account ->
-                    if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                    if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                        Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                     }
                     status = "§aGenerated account: §b§l${account.username}"
 
@@ -133,8 +133,8 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                         // Change Alt Service
                         GuiAltManager.altService.switchService(AltService.EnumAltService.THEALTENING)
 
-                        if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                        if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                            Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                         }
                         status = "§cLogging in..."
 
@@ -152,7 +152,7 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                                     .selectedProfile.id.toString(),
                                 yggdrasilUserAuthentication.authenticatedToken, "mojang"
                             )
-                            Client.eventManager.callEvent(SessionEvent())
+                            Launch.eventManager.callEvent(SessionEvent())
 
                             prevGui.status =
                                 "§aYour name is now §b§l${yggdrasilUserAuthentication.selectedProfile.name}§c."
@@ -165,8 +165,8 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                             "§cFailed to login: ${e.message}"
                         }
                     } catch (throwable: Throwable) {
-                        if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                        if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                            Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                         }
                         status = "§cFailed to login. Unknown error."
                         ClientUtils.getLogger().error("Failed to login.", throwable)
@@ -193,8 +193,8 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
 
                         // Change Alt Service
                         GuiAltManager.altService.switchService(AltService.EnumAltService.THEALTENING)
-                        if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                        if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                            Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                         }
                         status = "§cLogging in..."
 
@@ -202,7 +202,7 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                         val yggdrasilUserAuthentication =
                             YggdrasilUserAuthentication(YggdrasilAuthenticationService(NO_PROXY, ""), MINECRAFT)
                         yggdrasilUserAuthentication.setUsername(tokenField.text)
-                        yggdrasilUserAuthentication.setPassword(Client.CLIENT_BEST)
+                        yggdrasilUserAuthentication.setPassword(Launch.CLIENT_BEST)
 
                         status = try {
                             yggdrasilUserAuthentication.logIn()
@@ -212,7 +212,7 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                                     .selectedProfile.id.toString(),
                                 yggdrasilUserAuthentication.authenticatedToken, "mojang"
                             )
-                            Client.eventManager.callEvent(SessionEvent())
+                            Launch.eventManager.callEvent(SessionEvent())
 
                             prevGui.status =
                                 "§aYour name is now §b§l${yggdrasilUserAuthentication.selectedProfile.name}§c."
@@ -225,8 +225,8 @@ class GuiTheAltening(private val prevGui: GuiAltManager) : GuiScreen() {
                             "§cFailed to login: ${e.message}"
                         }
                     } catch (throwable: Throwable) {
-                        if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                            Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                        if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                            Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                         }
                         ClientUtils.getLogger().error("Failed to login.", throwable)
                         status = "§cFailed to login. Unknown error."

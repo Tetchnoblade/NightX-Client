@@ -1,20 +1,18 @@
 package net.aspw.client.features.module.impl.movement
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.features.module.impl.combat.KillAura
-import net.aspw.client.util.*
-import net.aspw.client.util.render.RenderUtils
-import net.aspw.client.util.timer.MSTimer
-import net.aspw.client.util.timer.TickTimer
+import net.aspw.client.utils.*
+import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
-import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.block.BlockAir
 import net.minecraft.block.BlockSlime
 import net.minecraft.client.gui.ScaledResolution
@@ -42,13 +40,14 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 
-@ModuleInfo(name = "Flight", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Flight", category = ModuleCategory.MOVEMENT)
 class Flight : Module() {
     @JvmField
     val modeValue = ListValue(
         "Mode", arrayOf(
             "Motion",
             "NoClip",
+            "FakeWater",
             "Creative",
             "Pearl",
             "Packet",
@@ -59,7 +58,6 @@ class Flight : Module() {
             "AAC3.0.5",
             "AAC3.1.6",
             "AAC3.3.12",
-            "AAC3.3.13",
             "AAC5-Vanilla",
             "Exploit",
             "Zoom",
@@ -84,7 +82,6 @@ class Flight : Module() {
             "Float",
             "Jetpack",
             "KeepAlive",
-            "Flag",
             "Clip"
         ), "Motion"
     )
@@ -103,11 +100,8 @@ class Flight : Module() {
             .equals("noclip", ignoreCase = true) || modeValue.get()
             .equals("blockdrop", ignoreCase = true) || modeValue.get()
             .equals("desync", ignoreCase = true) || modeValue.get()
-            .equals("bugspartan", ignoreCase = true) || modeValue.get().equals("keepalive", ignoreCase = true)
-    }
-    private val vanillaMotionYValue = FloatValue("Y-Motion", 0f, -1f, 1f) {
-        modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
-            .equals("noclip", ignoreCase = true)
+            .equals("bugspartan", ignoreCase = true) || modeValue.get()
+            .equals("keepalive", ignoreCase = true) || modeValue.get().equals("pearl", ignoreCase = true)
     }
     private val groundSpoofValue = BoolValue("SpoofGround", false) {
         modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
@@ -197,11 +191,8 @@ class Flight : Module() {
     // AAC
     private val aacSpeedValue =
         FloatValue("AAC1.9.10-Speed", 0.3f, 0f, 1f) { modeValue.get().equals("aac1.9.10", ignoreCase = true) }
-    private val aacFast = BoolValue("AAC3.0.5-Fast", false) { modeValue.get().equals("aac3.0.5", ignoreCase = true) }
     private val aacMotion =
         FloatValue("AAC3.3.12-Motion", 8f, 0.1f, 10f) { modeValue.get().equals("aac3.3.12", ignoreCase = true) }
-    private val aacMotion2 =
-        FloatValue("AAC3.3.13-Motion", 8f, 0.1f, 10f) { modeValue.get().equals("aac3.3.13", ignoreCase = true) }
 
     private val neruxVaceTicks =
         IntegerValue("NeruxVace-Ticks", 6, 0, 20) { modeValue.get().equals("neruxvace", ignoreCase = true) }
@@ -528,7 +519,9 @@ class Flight : Module() {
             "slime" -> {
                 expectItemStack = slimeSlot
                 if (expectItemStack == -1) {
-                    Client.hud.addNotification(Notification("The fly requires slime blocks to be activated properly."))
+                    chat("The fly requires slime blocks to be activated properly")
+                    state = false
+                    return
                 }
                 if (mc.thePlayer.onGround) {
                     mc.thePlayer.jump()
@@ -554,7 +547,7 @@ class Flight : Module() {
     }
 
     override fun onDisable() {
-        val speed = Client.moduleManager.getModule(
+        val speed = Launch.moduleManager.getModule(
             Speed::class.java
         )
         mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
@@ -603,6 +596,18 @@ class Flight : Module() {
             ) && !mode.equals("vulcanglide", ignoreCase = true) && !mode.equals(
                 "matrix",
                 ignoreCase = true
+            ) && !mode.equals(
+                "slime",
+                ignoreCase = true
+            ) && !mode.equals(
+                "vulcanclip",
+                ignoreCase = true
+            ) && !mode.equals(
+                "aac3.1.6",
+                ignoreCase = true
+            ) && !mode.equals(
+                "fakewater",
+                ignoreCase = true
             )
         ) {
             if (speed?.state!!) {
@@ -641,12 +646,7 @@ class Flight : Module() {
         packetLol.clear()
         if (worldCheck.get()) {
             state = false
-            Client.hud.addNotification(
-                Notification(
-                    "Flight was disabled",
-                    Notification.Type.WARNING
-                )
-            )
+            chat("Flight was disabled")
         }
     }
 
@@ -734,7 +734,7 @@ class Flight : Module() {
 
             "motion" -> {
                 mc.thePlayer.capabilities.isFlying = false
-                mc.thePlayer.motionY = vanillaMotionYValue.get().toDouble()
+                mc.thePlayer.motionY = 0.0
                 mc.thePlayer.motionX = 0.0
                 mc.thePlayer.motionZ = 0.0
                 if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
@@ -750,13 +750,6 @@ class Flight : Module() {
             "verussmooth" -> {
                 if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
                     mc.gameSettings.keyBindSneak.pressed = false
-                }
-                if (Client.moduleManager.getModule(
-                        KillAura::class.java
-                    )!!.state
-                ) {
-                    Client.moduleManager.getModule(KillAura::class.java)!!.state = false
-                    Client.hud.addNotification(Notification("KillAura was disabled!", Notification.Type.WARNING))
                 }
             }
 
@@ -806,7 +799,7 @@ class Flight : Module() {
 
             "noclip" -> {
                 mc.thePlayer.capabilities.isFlying = false
-                mc.thePlayer.motionY = vanillaMotionYValue.get().toDouble()
+                mc.thePlayer.motionY = 0.0
                 mc.thePlayer.motionX = 0.0
                 mc.thePlayer.motionZ = 0.0
                 mc.thePlayer.noClip = true
@@ -1133,10 +1126,6 @@ class Flight : Module() {
 
             "aac3.0.5" -> {
                 if (aac3delay == 2) mc.thePlayer.motionY = 0.1 else if (aac3delay > 2) aac3delay = 0
-                if (aacFast.get()) {
-                    if (mc.thePlayer.movementInput.moveStrafe.toDouble() == 0.0) mc.thePlayer.jumpMovementFactor =
-                        0.08f else mc.thePlayer.jumpMovementFactor = 0f
-                }
                 aac3delay++
             }
 
@@ -1158,35 +1147,6 @@ class Flight : Module() {
                     )
                 )
                 if (mc.thePlayer.posY <= 0.0) noFlag = true
-            }
-
-            "flag" -> {
-                mc.netHandler.addToSendQueue(
-                    C06PacketPlayerPosLook(
-                        mc.thePlayer.posX + mc.thePlayer.motionX * 999,
-                        mc.thePlayer.posY + (if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) 1.5624 else 0.00000001) - if (mc.gameSettings.keyBindSneak.isKeyDown) 0.0624 else 0.00000002,
-                        mc.thePlayer.posZ + mc.thePlayer.motionZ * 999,
-                        mc.thePlayer.rotationYaw,
-                        mc.thePlayer.rotationPitch,
-                        true
-                    )
-                )
-                mc.netHandler.addToSendQueue(
-                    C06PacketPlayerPosLook(
-                        mc.thePlayer.posX + mc.thePlayer.motionX * 999,
-                        mc.thePlayer.posY - 6969,
-                        mc.thePlayer.posZ + mc.thePlayer.motionZ * 999,
-                        mc.thePlayer.rotationYaw,
-                        mc.thePlayer.rotationPitch,
-                        true
-                    )
-                )
-                mc.thePlayer.setPosition(
-                    mc.thePlayer.posX + mc.thePlayer.motionX * 11,
-                    mc.thePlayer.posY,
-                    mc.thePlayer.posZ + mc.thePlayer.motionZ * 11
-                )
-                mc.thePlayer.motionY = 0.0
             }
 
             "keepalive" -> {
@@ -1217,16 +1177,6 @@ class Flight : Module() {
 
             "aac3.3.12" -> {
                 if (mc.thePlayer.posY < -70) mc.thePlayer.motionY = aacMotion.get().toDouble()
-                mc.timer.timerSpeed = 1f
-            }
-
-            "aac3.3.13" -> {
-                if (mc.thePlayer.isDead) wasDead = true
-                if (wasDead || mc.thePlayer.onGround) {
-                    wasDead = false
-                    mc.thePlayer.motionY = aacMotion2.get().toDouble()
-                    mc.thePlayer.onGround = false
-                }
                 mc.timer.timerSpeed = 1f
             }
 
@@ -1264,12 +1214,7 @@ class Flight : Module() {
                 val enderPearlSlot = pearlSlot
                 if (pearlState == 0) {
                     if (enderPearlSlot == -1) {
-                        Client.hud.addNotification(
-                            Notification(
-                                "You don't have any ender pearl!",
-                                Notification.Type.ERROR
-                            )
-                        )
+                        chat("You don't have any ender pearl")
                         pearlState = -1
                         state = false
                         return
@@ -1304,10 +1249,10 @@ class Flight : Module() {
                 ) pearlState = 2
                 if (pearlState == 2) {
                     if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) {
-                        mc.thePlayer.motionY += vanillaSpeed.toDouble()
+                        mc.thePlayer.motionY += vanillaVSpeed.toDouble()
                     }
                     if (GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)) {
-                        mc.thePlayer.motionY -= vanillaSpeed.toDouble()
+                        mc.thePlayer.motionY -= vanillaVSpeed.toDouble()
                         mc.gameSettings.keyBindSneak.pressed = false
                     }
                     MovementUtils.strafe(vanillaSpeed)
@@ -1364,17 +1309,6 @@ class Flight : Module() {
 
                     if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, bb).isEmpty() && !starteds) {
                         starteds = true
-                        val pos = mc.thePlayer.position.add(0.0, -1.5, 0.0)
-                        PacketUtils.sendPacketNoEvent(
-                            C08PacketPlayerBlockPlacement(
-                                pos,
-                                1,
-                                ItemStack(Blocks.stone.getItem(mc.theWorld, pos)),
-                                0.0F,
-                                0.5F + Math.random().toFloat() * 0.44.toFloat(),
-                                0.0F
-                            )
-                        )
                         mc.thePlayer.jump()
                         MovementUtils.strafe(4.also { bmcSpeed = it.toDouble() }.toFloat())
                     }
@@ -1597,12 +1531,7 @@ class Flight : Module() {
     fun onTeleport(event: TeleportEvent) {
         if (lagCheck.get()) {
             state = false
-            Client.hud.addNotification(
-                Notification(
-                    "Disabling Flight due to lag back",
-                    Notification.Type.WARNING
-                )
-            )
+            chat("Disabling Flight due to lag back")
         }
     }
 
@@ -1839,10 +1768,10 @@ class Flight : Module() {
                 if (packet is S08PacketPlayerPosLook && wdState == 3) {
                     wdState = 4
                     if (boostTimer.hasTimePassed(8000L)) {
-                        Client.hud.addNotification(Notification("Exploit Activated!", Notification.Type.SUCCESS))
+                        chat("Exploit activated")
                         boostTimer.reset()
                     } else {
-                        Client.hud.addNotification(Notification("Exploit Activated!", Notification.Type.SUCCESS))
+                        chat("Exploit activated")
                     }
                     if (fakeDmgValue.get() && mc.thePlayer != null) mc.thePlayer.handleStatusUpdate(2.toByte())
                 }

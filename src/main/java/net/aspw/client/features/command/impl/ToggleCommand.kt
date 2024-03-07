@@ -1,6 +1,6 @@
 package net.aspw.client.features.command.impl
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
 import java.util.*
 
@@ -10,7 +10,7 @@ class ToggleCommand : Command("toggle", arrayOf("t")) {
      */
     override fun execute(args: Array<String>) {
         if (args.size > 1) {
-            val module = Client.moduleManager.getModule(args[1])
+            val module = Launch.moduleManager.getModule(args[1])
 
             if (module == null) {
                 chat("Module '${args[1]}' not found.")
@@ -43,7 +43,7 @@ class ToggleCommand : Command("toggle", arrayOf("t")) {
         val moduleName = args[0]
 
         return when (args.size) {
-            1 -> Client.moduleManager.modules
+            1 -> Launch.moduleManager.modules
                 .map { it.name }
                 .filter { it.startsWith(moduleName, true) }
                 .toList()

@@ -1,14 +1,14 @@
 package net.aspw.client.features.module.impl.movement
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.combat.KillAura
-import net.aspw.client.util.*
-import net.aspw.client.util.extensions.rayTraceCustom
-import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.utils.*
+import net.aspw.client.utils.extensions.rayTraceCustom
+import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -24,7 +24,7 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.MovingObjectPosition
 import java.util.*
 
-@ModuleInfo(name = "NoSlow", spacedName = "No Slow", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "NoSlow", spacedName = "No Slow", category = ModuleCategory.MOVEMENT)
 class NoSlow : Module() {
     private val msTimer = MSTimer()
     private val modeValue = ListValue(
@@ -159,7 +159,7 @@ class NoSlow : Module() {
     @EventTarget
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
-        val killAura = Client.moduleManager[KillAura::class.java]!!
+        val killAura = Launch.moduleManager[KillAura::class.java]!!
         if (modeValue.get().equals("hypixel", true)) {
             if (!mc.thePlayer.isEating) {
                 if (packet is C08PacketPlayerBlockPlacement) {
@@ -192,7 +192,7 @@ class NoSlow : Module() {
         ) {
             event.cancelEvent()
             if (debugValue.get())
-                ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "detected reset item packet")
+                ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "detected reset item packet")
         }
         if (modeValue.get().equals(
                 "blink",
@@ -210,14 +210,14 @@ class NoSlow : Module() {
                         packet.z = lastZ
                         packet.onGround = lastOnGround
                         if (debugValue.get())
-                            ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "pos update reached 20")
+                            ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "pos update reached 20")
                     } else {
                         event.cancelEvent()
                         if (packetTriggerValue.get().equals("postrelease", true))
                             PacketUtils.sendPacketNoEvent(C03PacketPlayer(lastOnGround))
                         blinkPackets.add(packet as Packet<INetHandlerPlayServer>)
                         if (debugValue.get())
-                            ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "packet player (movement) added at ${blinkPackets.size - 1}")
+                            ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "packet player (movement) added at ${blinkPackets.size - 1}")
                     }
                 } else if (packet is C05PacketPlayerLook) {
                     event.cancelEvent()
@@ -225,20 +225,20 @@ class NoSlow : Module() {
                         PacketUtils.sendPacketNoEvent(C03PacketPlayer(lastOnGround))
                     blinkPackets.add(packet as Packet<INetHandlerPlayServer>)
                     if (debugValue.get())
-                        ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "packet player (rotation) added at ${blinkPackets.size - 1}")
+                        ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "packet player (rotation) added at ${blinkPackets.size - 1}")
                 } else if (packet is C03PacketPlayer) {
                     if (packetTriggerValue.get().equals("prerelease", true) || packet.onGround != lastOnGround) {
                         event.cancelEvent()
                         blinkPackets.add(packet as Packet<INetHandlerPlayServer>)
                         if (debugValue.get())
-                            ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "packet player (idle) added at ${blinkPackets.size - 1}")
+                            ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "packet player (idle) added at ${blinkPackets.size - 1}")
                     }
                 }
                 if (packet is C0BPacketEntityAction) {
                     event.cancelEvent()
                     blinkPackets.add(packet as Packet<INetHandlerPlayServer>)
                     if (debugValue.get())
-                        ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "packet action added at ${blinkPackets.size - 1}")
+                        ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "packet action added at ${blinkPackets.size - 1}")
                 }
                 if (packet is C07PacketPlayerDigging && packetTriggerValue.get().equals("prerelease", true)) {
                     if (blinkPackets.size > 0) {
@@ -246,7 +246,7 @@ class NoSlow : Module() {
                             PacketUtils.sendPacketNoEvent(it)
                         }
                         if (debugValue.get())
-                            ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "sent ${blinkPackets.size} packets.")
+                            ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "sent ${blinkPackets.size} packets.")
                         blinkPackets.clear()
                     }
                 }
@@ -259,7 +259,7 @@ class NoSlow : Module() {
         if (!MovementUtils.isMoving() && !modeValue.get().equals("blink", true))
             return
 
-        val killAura = Client.moduleManager[KillAura::class.java]!!
+        val killAura = Launch.moduleManager[KillAura::class.java]!!
 
         when (modeValue.get().lowercase(Locale.getDefault())) {
             "validspoof" -> {
@@ -321,7 +321,7 @@ class NoSlow : Module() {
                             PacketUtils.sendPacketNoEvent(it)
                         }
                         if (debugValue.get())
-                            ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "sent ${blinkPackets.size} packets.")
+                            ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "sent ${blinkPackets.size} packets.")
                         blinkPackets.clear()
                     }
                 }

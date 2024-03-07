@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.block;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.visual.XRay;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.BlockModelRenderer;
@@ -23,7 +23,7 @@ public class MixinBlockModelRenderer {
 
     @Inject(method = "renderModelAmbientOcclusion", at = @At("HEAD"), cancellable = true)
     private void renderModelAmbientOcclusion(IBlockAccess blockAccessIn, IBakedModel modelIn, Block blockIn, BlockPos blockPosIn, WorldRenderer worldRendererIn, boolean checkSide, final CallbackInfoReturnable<Boolean> booleanCallbackInfoReturnable) {
-        final XRay xray = Objects.requireNonNull(Client.moduleManager.getModule(XRay.class));
+        final XRay xray = Objects.requireNonNull(Launch.moduleManager.getModule(XRay.class));
 
         if (xray.getState() && xray.getXrayBlocks().contains(this))
             booleanCallbackInfoReturnable.setReturnValue(false);
@@ -31,7 +31,7 @@ public class MixinBlockModelRenderer {
 
     @Inject(method = "renderModelStandard", at = @At("HEAD"), cancellable = true)
     private void renderModelStandard(IBlockAccess blockAccessIn, IBakedModel modelIn, Block blockIn, BlockPos blockPosIn, WorldRenderer worldRendererIn, boolean checkSides, final CallbackInfoReturnable<Boolean> booleanCallbackInfoReturnable) {
-        final XRay xray = Objects.requireNonNull(Client.moduleManager.getModule(XRay.class));
+        final XRay xray = Objects.requireNonNull(Launch.moduleManager.getModule(XRay.class));
 
         if (xray.getState() && !xray.getXrayBlocks().contains(this))
             booleanCallbackInfoReturnable.setReturnValue(false);

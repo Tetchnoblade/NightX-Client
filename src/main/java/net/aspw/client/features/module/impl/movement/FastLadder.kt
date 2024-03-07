@@ -6,8 +6,8 @@ import net.aspw.client.event.MoveEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.block.BlockUtils.collideBlockIntersects
-import net.aspw.client.util.block.BlockUtils.getBlock
+import net.aspw.client.utils.block.BlockUtils.collideBlockIntersects
+import net.aspw.client.utils.block.BlockUtils.getBlock
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
@@ -16,7 +16,7 @@ import net.minecraft.block.BlockVine
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 
-@ModuleInfo(name = "FastLadder", spacedName = "Fast Ladder", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "FastLadder", spacedName = "Fast Ladder", category = ModuleCategory.MOVEMENT)
 class FastLadder : Module() {
 
     val modeValue = ListValue(

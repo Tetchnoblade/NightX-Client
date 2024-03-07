@@ -5,10 +5,10 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.utils.timer.MSTimer
 import net.minecraft.item.ItemFishingRod
 
-@ModuleInfo(name = "AutoFish", spacedName = "Auto Fish", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "AutoFish", spacedName = "Auto Fish", category = ModuleCategory.PLAYER)
 class AutoFish : Module() {
 
     private val rodOutTimer = MSTimer()

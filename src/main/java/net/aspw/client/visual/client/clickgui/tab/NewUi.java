@@ -1,13 +1,13 @@
 package net.aspw.client.visual.client.clickgui.tab;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.impl.visual.Gui;
-import net.aspw.client.util.AnimationUtils;
-import net.aspw.client.util.MouseUtils;
-import net.aspw.client.util.render.BlurUtils;
-import net.aspw.client.util.render.RenderUtils;
-import net.aspw.client.util.render.Stencil;
+import net.aspw.client.utils.AnimationUtils;
+import net.aspw.client.utils.MouseUtils;
+import net.aspw.client.utils.render.BlurUtils;
+import net.aspw.client.utils.render.RenderUtils;
+import net.aspw.client.utils.render.Stencil;
 import net.aspw.client.visual.client.clickgui.tab.elements.CategoryElement;
 import net.aspw.client.visual.client.clickgui.tab.elements.ModuleElement;
 import net.aspw.client.visual.client.clickgui.tab.elements.SearchElement;
@@ -43,10 +43,6 @@ public class NewUi extends GuiScreen {
         return instance == null ? instance = new NewUi() : instance;
     }
 
-    public static void resetInstance() {
-        instance = new NewUi();
-    }
-
     public void initGui() {
         Keyboard.enableRepeatEvents(true);
         for (CategoryElement ce : categoryElements) {
@@ -68,17 +64,17 @@ public class NewUi extends GuiScreen {
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        drawFullSized(mouseX, mouseY, partialTicks, Gui.generateColor());
+        drawFullSized(mouseX, mouseY, partialTicks, Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).generateColor());
     }
 
     private void drawFullSized(int mouseX, int mouseY, float partialTicks, Color accentColor) {
-        if (Objects.requireNonNull(Client.moduleManager.getModule(Gui.class)).getGuiBlur().get()) {
+        if (Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).getGuiBlur().get()) {
             BlurUtils.blurArea(
                     0,
                     0,
                     this.width,
                     this.height,
-                    20
+                    10
             );
         }
         RenderUtils.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);

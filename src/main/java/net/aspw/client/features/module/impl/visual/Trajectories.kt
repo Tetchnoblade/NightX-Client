@@ -5,7 +5,7 @@ import net.aspw.client.event.Render3DEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
@@ -15,7 +15,7 @@ import net.minecraft.util.*
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
-@ModuleInfo(name = "Trajectories", description = "", category = ModuleCategory.VISUAL)
+@ModuleInfo(name = "Trajectories", category = ModuleCategory.VISUAL)
 class Trajectories : Module() {
     @EventTarget
     fun onRender3D(event: Render3DEvent) {

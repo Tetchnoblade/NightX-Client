@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.aspw.client.Client;
-import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.Launch;
+import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.IChatComponent;
@@ -52,7 +52,7 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
     @Inject(method = "keyTyped", at = @At("RETURN"))
     private void updateLength(CallbackInfo callbackInfo) {
         if (inputField.getText().startsWith((".")))
-            Client.commandManager.autoComplete(inputField.getText());
+            Launch.commandManager.autoComplete(inputField.getText());
         else inputField.setMaxStringLength(100);
     }
 
@@ -65,15 +65,15 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
     @Inject(method = "autocompletePlayerNames", at = @At("HEAD"))
     private void prioritizeClientFriends(final CallbackInfo callbackInfo) {
         foundPlayerNames.sort(
-                Comparator.comparing(s -> !Client.fileManager.friendsConfig.isFriend(s)));
+                Comparator.comparing(s -> !Launch.fileManager.friendsConfig.isFriend(s)));
     }
 
     @Inject(method = "sendAutocompleteRequest", at = @At("HEAD"), cancellable = true)
     private void handleClientCommandCompletion(String full, final String ignored, CallbackInfo callbackInfo) {
-        if (Client.commandManager.autoComplete(full)) {
+        if (Launch.commandManager.autoComplete(full)) {
             waitingOnAutocomplete = true;
 
-            String[] latestAutoComplete = Client.commandManager.getLatestAutoComplete();
+            String[] latestAutoComplete = Launch.commandManager.getLatestAutoComplete();
 
             if (full.toLowerCase().endsWith(latestAutoComplete[latestAutoComplete.length - 1].toLowerCase()))
                 return;
@@ -98,8 +98,8 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
         RenderUtils.drawRect(2F, this.height - fade, this.width - 2, this.height - fade + 12, Integer.MIN_VALUE);
         this.inputField.drawTextBox();
 
-        if (Client.commandManager.getLatestAutoComplete().length > 0 && !inputField.getText().isEmpty() && inputField.getText().startsWith(".")) {
-            String[] latestAutoComplete = Client.commandManager.getLatestAutoComplete();
+        if (Launch.commandManager.getLatestAutoComplete().length > 0 && !inputField.getText().isEmpty() && inputField.getText().startsWith(".")) {
+            String[] latestAutoComplete = Launch.commandManager.getLatestAutoComplete();
             String[] textArray = inputField.getText().split(" ");
             String trimmedString = latestAutoComplete[0].replaceFirst("(?i)" + textArray[textArray.length - 1], "");
 

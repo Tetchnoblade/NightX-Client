@@ -11,7 +11,6 @@ import net.minecraft.util.ResourceLocation
 @ModuleInfo(
     name = "MotionBlur",
     spacedName = "Motion Blur",
-    description = "",
     category = ModuleCategory.VISUAL
 )
 class MotionBlur : Module() {

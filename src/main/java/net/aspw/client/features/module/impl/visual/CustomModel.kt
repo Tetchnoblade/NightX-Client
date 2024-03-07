@@ -6,7 +6,7 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.ListValue
 
-@ModuleInfo(name = "CustomModel", spacedName = "Custom Model", description = "", category = ModuleCategory.VISUAL)
+@ModuleInfo(name = "CustomModel", spacedName = "Custom Model", category = ModuleCategory.VISUAL)
 class CustomModel : Module() {
     val mode = ListValue("Mode", arrayOf("Imposter", "Rabbit", "Freddy"), "Imposter")
     val onlySelf = BoolValue("OnlySelf", false)

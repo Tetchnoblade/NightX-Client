@@ -1,6 +1,6 @@
 package net.aspw.client.features.module.impl.player
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.MoveEvent
 import net.aspw.client.event.PacketEvent
@@ -8,11 +8,10 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.timer.MSTimer
-import net.aspw.client.util.timer.TimeUtils
+import net.aspw.client.utils.timer.MSTimer
+import net.aspw.client.utils.timer.TimeUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.IntegerValue
-import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraft.inventory.Slot
@@ -24,7 +23,7 @@ import net.minecraft.network.play.server.S30PacketWindowItems
 import net.minecraft.util.ResourceLocation
 import kotlin.random.Random
 
-@ModuleInfo(name = "Stealer", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "Stealer", category = ModuleCategory.PLAYER)
 class Stealer : Module() {
 
     /**
@@ -160,7 +159,7 @@ class Stealer : Module() {
             return
 
         // inventory cleaner
-        val inventoryCleaner = Client.moduleManager[Manager::class.java] as Manager
+        val inventoryCleaner = Launch.moduleManager[InvManager::class.java] as InvManager
 
         // Is empty?
         if (!isEmpty(screen) && !(closeOnFullValue.get() && fullInventory)) {
@@ -215,13 +214,6 @@ class Stealer : Module() {
             )
         ) {
             mc.thePlayer.closeScreen()
-
-            if (silenceValue.get() && !stillDisplayValue.get()) Client.hud.addNotification(
-                Notification(
-                    "Closed chest.",
-                    Notification.Type.INFO
-                )
-            )
             nextCloseDelay = TimeUtils.randomDelay(autoCloseMinDelayValue.get(), autoCloseMaxDelayValue.get())
 
             if (once) {
@@ -247,7 +239,7 @@ class Stealer : Module() {
     }
 
     private fun isEmpty(chest: GuiChest): Boolean {
-        val inventoryCleaner = Client.moduleManager[Manager::class.java] as Manager
+        val inventoryCleaner = Launch.moduleManager[InvManager::class.java] as InvManager
 
         for (i in 0 until chest.inventoryRows * 9) {
             val slot = chest.inventorySlots.inventorySlots[i]

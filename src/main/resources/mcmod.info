@@ -4,7 +4,6 @@
     "name": "NightX Client",
     "description": "A Minecraft Forge Mixin-Based Hacked Client.",
     "mcversion": "1.8.9",
-    "url": "https://www.youtube.com/@as_pw",
     "authorList": [
       "As_pw"
     ],

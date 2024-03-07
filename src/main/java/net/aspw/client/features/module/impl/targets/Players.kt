@@ -1,12 +1,12 @@
 package net.aspw.client.features.module.impl.targets
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.EntityUtils
+import net.aspw.client.utils.EntityUtils
 
-@ModuleInfo(name = "Players", description = "", category = ModuleCategory.TARGETS, array = false)
+@ModuleInfo(name = "Players", category = ModuleCategory.TARGETS, array = false)
 class Players : Module() {
     override fun onEnable() {
         EntityUtils.targetPlayer = true
@@ -19,7 +19,7 @@ class Players : Module() {
     init {
         if (EntityUtils.targetPlayer != state)
             EntityUtils.targetPlayer = false
-        if (!Client.fileManager.modulesConfig.hasConfig() || !Client.fileManager.valuesConfig.hasConfig())
+        if (!Launch.fileManager.modulesConfig.hasConfig() || !Launch.fileManager.valuesConfig.hasConfig())
             state = true
     }
 }

@@ -8,7 +8,7 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.value.BoolValue
 import net.minecraft.client.gui.GuiGameOver
 
-@ModuleInfo(name = "AutoRespawn", spacedName = "Auto Respawn", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "AutoRespawn", spacedName = "Auto Respawn", category = ModuleCategory.PLAYER)
 class AutoRespawn : Module() {
 
     private val instantValue = BoolValue("Instant", true)

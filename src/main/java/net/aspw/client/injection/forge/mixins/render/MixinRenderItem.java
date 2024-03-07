@@ -1,9 +1,8 @@
 package net.aspw.client.injection.forge.mixins.render;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.other.EnchantColor;
-import net.aspw.client.features.module.impl.visual.ColorMixer;
-import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -45,11 +44,10 @@ public abstract class MixinRenderItem {
 
     @Inject(method = "renderEffect", at = @At("HEAD"), cancellable = true)
     private void renderEffect(IBakedModel model, CallbackInfo callbackInfo) {
-        final EnchantColor enchantEffect = Objects.requireNonNull(Client.moduleManager.getModule(EnchantColor.class));
+        final EnchantColor enchantEffect = Objects.requireNonNull(Launch.moduleManager.getModule(EnchantColor.class));
         if (enchantEffect.getState()) {
             int rainbowColour = RenderUtils.getRainbowOpaque(enchantEffect.rainbowSpeedValue.get(), enchantEffect.rainbowSatValue.get(), enchantEffect.rainbowBrgValue.get(), ((int) Minecraft.getSystemTime() % 2) * (enchantEffect.rainbowDelayValue.get() * 10));
             int skyColor = RenderUtils.SkyRainbow(0, enchantEffect.rainbowSatValue.get(), enchantEffect.rainbowBrgValue.get());
-            int mixerColor = ColorMixer.getMixedColor(0, enchantEffect.rainbowSpeedValue.get()).getRGB();
             int currentColor = new Color(enchantEffect.redValue.get(), enchantEffect.greenValue.get(), enchantEffect.blueValue.get()).getRGB();
             GlStateManager.depthMask(false);
             GlStateManager.depthFunc(514);
@@ -71,8 +69,6 @@ public abstract class MixinRenderItem {
                     break;
                 case "sky":
                     this.renderModel(model, skyColor);
-                case "mixer":
-                    this.renderModel(model, mixerColor);
                     break;
             }
             GlStateManager.popMatrix();
@@ -90,8 +86,6 @@ public abstract class MixinRenderItem {
                     break;
                 case "sky":
                     this.renderModel(model, skyColor);
-                case "mixer":
-                    this.renderModel(model, mixerColor);
                     break;
             }
             GlStateManager.popMatrix();

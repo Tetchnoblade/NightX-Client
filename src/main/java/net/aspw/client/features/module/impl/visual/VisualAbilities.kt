@@ -8,11 +8,9 @@ import net.aspw.client.value.BoolValue
 @ModuleInfo(
     name = "VisualAbilities",
     spacedName = "Visual Abilities",
-    description = "",
     category = ModuleCategory.VISUAL
 )
 class VisualAbilities : Module() {
-    val cameraClip = BoolValue("CameraClip", true)
     val confusionEffect = BoolValue("Confusion", true)
     val pumpkinEffect = BoolValue("Pumpkin", true)
     val fireEffect = BoolValue("Fire", true)

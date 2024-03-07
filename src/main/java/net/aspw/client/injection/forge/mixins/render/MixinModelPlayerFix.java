@@ -1,10 +1,10 @@
 package net.aspw.client.injection.forge.mixins.render;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.UpdateModelEvent;
 import net.aspw.client.features.module.impl.visual.CustomModel;
-import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelPlayer;
@@ -265,7 +265,7 @@ public class MixinModelPlayerFix extends ModelBiped {
      */
     @Inject(method = {"render"}, at = {@At("HEAD")}, cancellable = true)
     public void renderHook(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale, CallbackInfo ci) {
-        CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
+        CustomModel customModel = Objects.requireNonNull(Launch.moduleManager.getModule(CustomModel.class));
         if (customModel.getState()) {
             ci.cancel();
             renderCustom(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
@@ -523,7 +523,7 @@ public class MixinModelPlayerFix extends ModelBiped {
         }
 
 
-        CustomModel customModel = Objects.requireNonNull(Client.moduleManager.getModule(CustomModel.class));
+        CustomModel customModel = Objects.requireNonNull(Launch.moduleManager.getModule(CustomModel.class));
         GlStateManager.pushMatrix();
         if ((!customModel.getOnlySelf().getValue() || entityIn == (MinecraftInstance.mc).thePlayer)) {
             if (customModel.getState() && customModel.getMode().get().contains("Rabbit")) {
@@ -631,6 +631,6 @@ public class MixinModelPlayerFix extends ModelBiped {
 
     @Inject(method = "setRotationAngles", at = @At("RETURN"))
     private void revertSwordAnimation(float p_setRotationAngles_1_, float p_setRotationAngles_2_, float p_setRotationAngles_3_, float p_setRotationAngles_4_, float p_setRotationAngles_5_, float p_setRotationAngles_6_, Entity p_setRotationAngles_7_, CallbackInfo callbackInfo) {
-        Client.eventManager.callEvent(new UpdateModelEvent((EntityPlayer) p_setRotationAngles_7_, (ModelPlayer) (Object) this));
+        Launch.eventManager.callEvent(new UpdateModelEvent((EntityPlayer) p_setRotationAngles_7_, (ModelPlayer) (Object) this));
     }
 }

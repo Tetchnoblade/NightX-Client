@@ -1,7 +1,7 @@
 package net.aspw.client.config.configs;
 
 import com.google.gson.*;
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.config.FileConfig;
 import net.aspw.client.config.FileManager;
 import net.aspw.client.features.module.Module;
@@ -34,7 +34,7 @@ public class ModulesConfig extends FileConfig {
         final Iterator<Map.Entry<String, JsonElement>> entryIterator = jsonElement.getAsJsonObject().entrySet().iterator();
         while (entryIterator.hasNext()) {
             final Map.Entry<String, JsonElement> entry = entryIterator.next();
-            final Module module = Client.moduleManager.getModule(entry.getKey());
+            final Module module = Launch.moduleManager.getModule(entry.getKey());
 
             if (module != null) {
                 final JsonObject jsonModule = (JsonObject) entry.getValue();
@@ -52,7 +52,7 @@ public class ModulesConfig extends FileConfig {
     protected void saveConfig() throws IOException {
         final JsonObject jsonObject = new JsonObject();
 
-        for (final Module module : Client.moduleManager.getModules()) {
+        for (final Module module : Launch.moduleManager.getModules()) {
             final JsonObject jsonMod = new JsonObject();
             jsonMod.addProperty("State", module.getState());
             jsonMod.addProperty("KeyBind", module.getKeyBind());

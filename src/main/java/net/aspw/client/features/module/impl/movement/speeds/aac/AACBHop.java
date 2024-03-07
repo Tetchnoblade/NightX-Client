@@ -2,7 +2,8 @@ package net.aspw.client.features.module.impl.movement.speeds.aac;
 
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.util.MovementUtils;
+import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.utils.RotationUtils;
 import net.minecraft.util.MathHelper;
 
 /**
@@ -26,7 +27,7 @@ public class AACBHop extends SpeedMode {
 
             if (mc.thePlayer.onGround) {
                 mc.thePlayer.motionY = 0.399D;
-                float f = mc.thePlayer.rotationYaw * 0.017453292F;
+                float f = RotationUtils.cameraYaw * 0.017453292F;
                 mc.thePlayer.motionX -= MathHelper.sin(f) * 0.2F;
                 mc.thePlayer.motionZ += MathHelper.cos(f) * 0.2F;
                 mc.timer.timerSpeed = 2F;

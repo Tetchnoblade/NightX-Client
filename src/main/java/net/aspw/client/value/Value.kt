@@ -3,7 +3,7 @@ package net.aspw.client.value
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
-import net.aspw.client.util.ClientUtils
+import net.aspw.client.utils.ClientUtils
 import net.aspw.client.visual.font.semi.Fonts
 import net.minecraft.client.gui.FontRenderer
 import java.util.*
@@ -245,6 +245,12 @@ open class ListValue(name: String, val values: Array<String>, value: String, dis
                 break
             }
         }
+    }
+
+    fun nextValue() {
+        var index = values.indexOf(value) + 1
+        if (index > values.size - 1) index = 0
+        value = values[index]
     }
 
     override fun toJson() = JsonPrimitive(value)

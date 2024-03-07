@@ -1,21 +1,17 @@
 package net.aspw.client.features.module.impl.movement
 
-import net.aspw.client.Client
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.features.module.impl.combat.KillAura
-import net.aspw.client.util.ClientUtils
-import net.aspw.client.util.MovementUtils
-import net.aspw.client.util.PacketUtils
-import net.aspw.client.util.PosLookInstance
-import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.utils.MovementUtils
+import net.aspw.client.utils.PacketUtils
+import net.aspw.client.utils.PosLookInstance
+import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
-import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemEnderPearl
@@ -25,13 +21,12 @@ import net.minecraft.network.play.client.C03PacketPlayer.*
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
 import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.network.play.client.C0BPacketEntityAction
-import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.network.play.server.S12PacketEntityVelocity
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import java.util.*
 
-@ModuleInfo(name = "LongJump", spacedName = "Long Jump", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "LongJump", spacedName = "Long Jump", category = ModuleCategory.MOVEMENT)
 class LongJump : Module() {
     val modeValue = ListValue(
         "Mode",
@@ -47,7 +42,6 @@ class LongJump : Module() {
             "RedeskyMaki",
             "Redesky",
             "InfiniteRedesky",
-            "MatrixFlag",
             "VerusHigh",
             "VerusDmg",
             "Pearl"
@@ -56,17 +50,6 @@ class LongJump : Module() {
     )
     private val ncpBoostValue =
         FloatValue("NCP-Boost", 20f, 10f, 40f) { modeValue.get().equals("ncp", ignoreCase = true) }
-    private val matrixBoostValue =
-        FloatValue("MatrixFlag-Boost", 2f, 0f, 3f) { modeValue.get().equals("matrixflag", ignoreCase = true) }
-    private val matrixHeightValue =
-        FloatValue("MatrixFlag-Height", 3f, 0f, 10f) { modeValue.get().equals("matrixflag", ignoreCase = true) }
-    private val matrixSilentValue =
-        BoolValue("MatrixFlag-Silent", false) { modeValue.get().equals("matrixflag", ignoreCase = true) }
-    private val matrixBypassModeValue = ListValue("MatrixFlag-BypassMode", arrayOf("Motion", "Clip", "None"), "Clip") {
-        modeValue.get().equals("matrixflag", ignoreCase = true)
-    }
-    private val matrixDebugValue =
-        BoolValue("MatrixFlag-Debug", false) { modeValue.get().equals("matrixflag", ignoreCase = true) }
     private val redeskyTimerBoostValue =
         BoolValue("Redesky-TimerBoost", false) { modeValue.get().equals("redesky", ignoreCase = true) }
     private val redeskyTimerBoostStartValue = FloatValue("Redesky-TimerBoostStart", 1.85f, 0.05f, 10f) {
@@ -129,19 +112,11 @@ class LongJump : Module() {
     private var damaged = false
     private var verusJumpTimes = 0
     private var pearlState = 0
-    private var lastMotX = 0.0
-    private var lastMotY = 0.0
     private var started = false
     private var stage = 0
     private var jumpWaiting = false
     private var fulljumped = false
-    private var lastMotZ = 0.0
     var y = 0.0
-    private var flagged = false
-    private var hasFell = false
-    private fun debug(message: String) {
-        if (matrixDebugValue.get()) ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§r" + message)
-    }
 
     @EventTarget
     fun onMotion(event: MotionEvent?) {
@@ -170,8 +145,6 @@ class LongJump : Module() {
         verusDmged = false
         hpxDamage = false
         damaged = false
-        flagged = false
-        hasFell = false
         pearlState = 0
         verusJumpTimes = 0
         dmgTimer.reset()
@@ -259,35 +232,11 @@ class LongJump : Module() {
                 }
             }
         }
-        if (modeValue.get().equals("matrixflag", ignoreCase = true)) {
-            if (matrixBypassModeValue.get().equals("none", ignoreCase = true)) {
-                debug("no less flag enabled.")
-                hasFell = true
-                return
-            }
-            if (mc.thePlayer.onGround) {
-                if (matrixBypassModeValue.get().equals("clip", ignoreCase = true)) {
-                    mc.thePlayer.setPosition(x, y + 0.01, z)
-                    debug("clipped")
-                }
-                if (matrixBypassModeValue.get().equals("motion", ignoreCase = true)) mc.thePlayer.jump()
-            } else if (mc.thePlayer.fallDistance > 0f) {
-                hasFell = true
-                debug("falling detected")
-            }
-        }
     }
 
     @EventTarget
     fun onUpdate(event: UpdateEvent?) {
         if (modeValue.get().equals("verushigh", true)) {
-            if (Client.moduleManager.getModule(
-                    KillAura::class.java
-                )!!.state
-            ) {
-                Client.moduleManager.getModule(KillAura::class.java)!!.state = false
-                Client.hud.addNotification(Notification("KillAura was disabled!", Notification.Type.WARNING))
-            }
             if (stage < 4 && verusHighTimerValue.get())
                 mc.timer.timerSpeed = 2f
             else mc.timer.timerSpeed = 1f
@@ -315,29 +264,6 @@ class LongJump : Module() {
             }
             mc.thePlayer.jump()
             hasJumped = true
-        }
-        if (modeValue.get().equals("matrixflag", ignoreCase = true)) {
-            if (hasFell) {
-                if (!flagged && !matrixSilentValue.get()) {
-                    MovementUtils.strafe(matrixBoostValue.get())
-                    mc.thePlayer.motionY = matrixHeightValue.get().toDouble()
-                    debug("triggering")
-                }
-            } else {
-                if (matrixBypassModeValue.get().equals("motion", ignoreCase = true)) {
-                    mc.thePlayer.motionX *= 0.2
-                    mc.thePlayer.motionZ *= 0.2
-                    if (mc.thePlayer.fallDistance > 0) {
-                        hasFell = true
-                        debug("activated")
-                    }
-                }
-                if (matrixBypassModeValue.get().equals("clip", ignoreCase = true) && mc.thePlayer.motionY < 0f) {
-                    hasFell = true
-                    debug("activated")
-                }
-            }
-            return
         }
         if (modeValue.get().equals("verusdmg", ignoreCase = true)) {
             if (mc.thePlayer.hurtTime > 0 && !verusDmged) {
@@ -367,12 +293,7 @@ class LongJump : Module() {
             val enderPearlSlot = pearlSlot
             if (pearlState == 0) {
                 if (enderPearlSlot == -1) {
-                    Client.hud.addNotification(
-                        Notification(
-                            "You don't have any ender pearl!",
-                            Notification.Type.ERROR
-                        )
-                    )
+                    chat("You don't have any ender pearl")
                     pearlState = -1
                     state = false
                     return
@@ -518,12 +439,7 @@ class LongJump : Module() {
     fun onWorld(event: WorldEvent) {
         if (worldCheck.get()) {
             state = false
-            Client.hud.addNotification(
-                Notification(
-                    "LongJump was disabled",
-                    Notification.Type.WARNING
-                )
-            )
+            chat("LongJump was disabled")
         }
     }
 
@@ -531,12 +447,7 @@ class LongJump : Module() {
     fun onTeleport(event: TeleportEvent) {
         if (lagCheck.get()) {
             state = false
-            Client.hud.addNotification(
-                Notification(
-                    "Disabling LongJump due to lag back",
-                    Notification.Type.WARNING
-                )
-            )
+            chat("Disabling LongJump due to lag back")
         }
     }
 
@@ -594,7 +505,6 @@ class LongJump : Module() {
             ) && !verusDmged
         ) event.zeroXZ()
         if (mode.equals("pearl", ignoreCase = true) && pearlState != 2) event.cancelEvent()
-        if (matrixSilentValue.get() && hasFell && !flagged) event.cancelEvent()
     }
 
     @EventTarget
@@ -627,43 +537,6 @@ class LongJump : Module() {
                     .equals("Jump", ignoreCase = true) && verusJumpTimes < 5
             ) {
                 packetPlayer.onGround = false
-            }
-            if (mode.equals("matrixflag", ignoreCase = true)) {
-                if (event.packet is C06PacketPlayerPosLook && posLookInstance.equalFlag(event.packet)) {
-                    posLookInstance.reset()
-                    mc.thePlayer.motionX = lastMotX
-                    mc.thePlayer.motionY = lastMotY
-                    mc.thePlayer.motionZ = lastMotZ
-                    debug("should be launched by now")
-                } else if (matrixSilentValue.get()) {
-                    if (hasFell && !flagged) {
-                        if (packetPlayer.isMoving) {
-                            debug("modifying packet: rotate false, onGround false, moving enabled, x, y, z set to expected speed")
-                            packetPlayer.onGround = false
-                            val data = MovementUtils.getXZDist(
-                                matrixBoostValue.get(),
-                                if (packetPlayer.rotating) packetPlayer.yaw else mc.thePlayer.rotationYaw
-                            )
-                            lastMotX = data[0]
-                            lastMotZ = data[1]
-                            lastMotY = matrixHeightValue.get().toDouble()
-                            packetPlayer.x += lastMotX
-                            packetPlayer.y += lastMotY
-                            packetPlayer.z += lastMotZ
-                        }
-                    }
-                }
-            }
-        }
-        if (event.packet is S08PacketPlayerPosLook && mode.equals("matrixflag", ignoreCase = true) && hasFell) {
-            debug("flag check started")
-            flagged = true
-            posLookInstance.set(event.packet)
-            if (!matrixSilentValue.get()) {
-                debug("data saved")
-                lastMotX = mc.thePlayer.motionX
-                lastMotY = mc.thePlayer.motionY
-                lastMotZ = mc.thePlayer.motionZ
             }
         }
     }

@@ -2,7 +2,8 @@ package net.aspw.client.features.module.impl.movement.speeds.aac;
 
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.util.MovementUtils;
+import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.utils.RotationUtils;
 
 /**
  * The type Aac 7 b hop.
@@ -33,7 +34,7 @@ public class AAC7BHop extends SpeedMode {
         }
 
         final double speed = MovementUtils.getSpeed() * 1.0072D;
-        final double yaw = Math.toRadians(mc.thePlayer.rotationYaw);
+        final double yaw = Math.toRadians(RotationUtils.cameraYaw);
         mc.thePlayer.motionX = -Math.sin(yaw) * speed;
         mc.thePlayer.motionZ = Math.cos(yaw) * speed;
     }

@@ -1,7 +1,7 @@
 package net.aspw.client.visual.client.clickgui.tab.value.impl
 
-import net.aspw.client.util.MouseUtils
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.MouseUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.value.FloatValue
 import net.aspw.client.visual.client.clickgui.tab.ColorManager
 import net.aspw.client.visual.client.clickgui.tab.components.Slider
@@ -37,16 +37,21 @@ class FloatElement(val savedValue: FloatValue) : ValueElement<Float>(savedValue)
                     savedValue.maximum
                 )
             )
-        FontLoaders.SF20.drawString(value.name, x + 10F, y + 10F - FontLoaders.SF20.height / 2F + 2F, -1)
-        FontLoaders.SF20.drawString(
-            "${savedValue.maximum}${savedValue.suffix}",
-            x + width - 10F - maxLength - valueDisplay,
-            y + 10F - FontLoaders.SF20.height / 2F + 2F, -1
+        FontLoaders.SF20.drawStringWithShadow(
+            value.name,
+            x + 10F.toDouble(),
+            y + 10F - FontLoaders.SF20.height / 2F + 2F.toDouble(),
+            -1
         )
-        FontLoaders.SF20.drawString(
+        FontLoaders.SF20.drawStringWithShadow(
+            "${savedValue.maximum}${savedValue.suffix}",
+            x + width - 10F - maxLength - valueDisplay.toDouble(),
+            y + 10F - FontLoaders.SF20.height / 2F + 2F.toDouble(), -1
+        )
+        FontLoaders.SF20.drawStringWithShadow(
             "${savedValue.minimum}${savedValue.suffix}",
-            x + width - 30F - sliderWidth - maxLength - minLength - valueDisplay,
-            y + 10F - FontLoaders.SF20.height / 2F + 2F, -1
+            x + width - 30F - sliderWidth - maxLength - minLength - valueDisplay.toDouble(),
+            y + 10F - FontLoaders.SF20.height / 2F + 2F.toDouble(), -1
         )
         slider.setValue(
             savedValue.get().coerceIn(savedValue.minimum, savedValue.maximum),
@@ -84,19 +89,24 @@ class FloatElement(val savedValue: FloatValue) : ValueElement<Float>(savedValue)
             4F,
             ColorManager.buttonOutline.rgb
         )
-        FontLoaders.SF20.drawString(
+        FontLoaders.SF20.drawStringWithShadow(
             "${round(savedValue.get())}${savedValue.suffix}",
-            x + width + 6F - valueDisplay,
-            y + 10F - FontLoaders.SF20.height / 2F + 2F,
+            x + width + 6F - valueDisplay.toDouble(),
+            y + 10F - FontLoaders.SF20.height / 2F + 2F.toDouble(),
             -1
         )
-        FontLoaders.SF20.drawString(
+        FontLoaders.SF20.drawStringWithShadow(
             "-",
-            x + width - 3F - valueDisplay,
-            y + 10F - FontLoaders.SF20.height / 2F + 2F,
+            x + width - 3F - valueDisplay.toDouble(),
+            y + 10F - FontLoaders.SF20.height / 2F + 2F.toDouble(),
             -1
         )
-        FontLoaders.SF20.drawString("+", x + width - 17F, y + 10F - FontLoaders.SF20.height / 2F + 2F, -1)
+        FontLoaders.SF20.drawStringWithShadow(
+            "+",
+            x + width - 17F.toDouble(),
+            y + 10F - FontLoaders.SF20.height / 2F + 2F.toDouble(),
+            -1
+        )
 
         return valueHeight
     }

@@ -17,11 +17,10 @@ import java.util.*
 @ModuleInfo(
     name = "AntiSuffocation",
     spacedName = "Anti Suffocation",
-    description = "",
     category = ModuleCategory.OTHER
 )
 class AntiSuffocation : Module() {
-    private val modeValue = ListValue("Mode", arrayOf("Legit", "Teleport", "GodMode"), "Legit")
+    private val modeValue = ListValue("Mode", arrayOf("Legit", "GodMode"), "Legit")
     private val breakPositionValue = ListValue(
         "BreakPosition",
         arrayOf("Normal", "Down"),
@@ -30,7 +29,7 @@ class AntiSuffocation : Module() {
     private val swingValue = ListValue(
         "Swing",
         arrayOf("Normal", "Packet", "None"),
-        "Normal"
+        "Packet"
     ) { modeValue.get().equals("legit", ignoreCase = true) }
 
     override val tag: String
@@ -63,10 +62,6 @@ class AntiSuffocation : Module() {
                         "normal" -> mc.thePlayer.swingItem()
                         "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
                     }
-                }
-
-                "teleport" -> {
-                    mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + 3, mc.thePlayer.posZ)
                 }
             }
         }

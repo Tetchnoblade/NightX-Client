@@ -1,13 +1,15 @@
 package net.aspw.client.features.module.impl.player
 
+import net.aspw.client.Launch
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.PacketUtils
-import net.aspw.client.util.RotationUtils
-import net.aspw.client.util.block.BlockUtils
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.features.module.impl.visual.BetterView
+import net.aspw.client.utils.PacketUtils
+import net.aspw.client.utils.RotationUtils
+import net.aspw.client.utils.block.BlockUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -20,7 +22,7 @@ import net.minecraft.util.EnumFacing
 import java.awt.Color
 import java.util.*
 
-@ModuleInfo(name = "CivBreak", spacedName = "Civ Break", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "CivBreak", spacedName = "Civ Break", category = ModuleCategory.PLAYER)
 class CivBreak : Module() {
 
     private var blockPos: BlockPos? = null
@@ -56,6 +58,24 @@ class CivBreak : Module() {
         blockPos ?: return
         blockPos = null
         isBreaking = false
+    }
+
+    @EventTarget
+    fun onJump(event: JumpEvent) {
+        if (blockPos != null && rotationsValue.get() && Launch.moduleManager.getModule(
+                BetterView::class.java
+            )?.state!! && Launch.moduleManager.getModule(BetterView::class.java)?.customStrafe?.get()!!
+        )
+            event.yaw = RotationUtils.cameraYaw
+    }
+
+    @EventTarget
+    fun onStrafe(event: StrafeEvent) {
+        if (blockPos != null && rotationsValue.get() && Launch.moduleManager.getModule(
+                BetterView::class.java
+            )?.state!! && Launch.moduleManager.getModule(BetterView::class.java)?.customStrafe?.get()!!
+        )
+            event.yaw = RotationUtils.cameraYaw
     }
 
     @EventTarget
@@ -99,7 +119,7 @@ class CivBreak : Module() {
         when (event.eventState) {
             EventState.PRE -> {
                 if (rotationsValue.get()) {
-                    RotationUtils.setTargetRotation((RotationUtils.faceBlock(pos) ?: return).rotation)
+                    RotationUtils.setTargetRotation(RotationUtils.faceBlock(pos)?.rotation!!)
                 }
             }
 

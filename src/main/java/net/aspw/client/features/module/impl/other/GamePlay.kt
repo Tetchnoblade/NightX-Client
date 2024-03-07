@@ -1,6 +1,5 @@
 package net.aspw.client.features.module.impl.other
 
-import net.aspw.client.Client
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.event.WorldEvent
@@ -9,7 +8,6 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
-import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.event.ClickEvent
 import net.minecraft.network.play.client.*
 import net.minecraft.network.play.server.S02PacketChat
@@ -19,7 +17,7 @@ import net.minecraft.util.IChatComponent
 import java.util.*
 import kotlin.concurrent.schedule
 
-@ModuleInfo(name = "GamePlay", spacedName = "Game Play", description = "", category = ModuleCategory.OTHER)
+@ModuleInfo(name = "GamePlay", spacedName = "Game Play", category = ModuleCategory.OTHER)
 class GamePlay : Module() {
     private var clickState = 0
     private val modeValue = ListValue(
@@ -134,13 +132,7 @@ class GamePlay : Module() {
 
                 "blocksmc" -> {
                     if (clickState == 1 && text.contains("Only VIP players can join full servers!", true)) {
-                        Client.hud.addNotification(
-                            Notification(
-                                "Join failed! trying again...",
-                                Notification.Type.WARNING,
-                                3000L
-                            )
-                        )
+                        chat("Join failed! try again...")
                         // connect failed so try to join again
                         Timer().schedule(1500L) {
                             mc.netHandler.addToSendQueue(C09PacketHeldItemChange(7))
@@ -198,13 +190,7 @@ class GamePlay : Module() {
                     runnable()
                 }
             }
-            Client.hud.addNotification(
-                Notification(
-                    "Sending you to next game in ${delayValue.get()}s...",
-                    Notification.Type.INFO,
-                    delayValue.get().toLong() * 1000L
-                )
-            )
+            chat("Sending you to next game...")
         }
     }
 

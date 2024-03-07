@@ -1,9 +1,9 @@
 package net.aspw.client.injection.forge.mixins.render;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.visual.ESP;
-import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
@@ -165,7 +165,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
 
     @Inject(method = "canRenderName(Lnet/minecraft/entity/EntityLivingBase;)Z", at = @At("HEAD"), cancellable = true)
     private <T extends EntityLivingBase> void canRenderName(T entity, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        if (Objects.requireNonNull(Client.moduleManager.getModule(ESP.class)).getState() && Objects.requireNonNull(Client.moduleManager.getModule(ESP.class)).tagsValue.get() && entity instanceof EntityPlayer)
+        if (Objects.requireNonNull(Launch.moduleManager.getModule(ESP.class)).getState() && Objects.requireNonNull(Launch.moduleManager.getModule(ESP.class)).tagsValue.get() && entity instanceof EntityPlayer)
             callbackInfoReturnable.setReturnValue(false);
     }
 

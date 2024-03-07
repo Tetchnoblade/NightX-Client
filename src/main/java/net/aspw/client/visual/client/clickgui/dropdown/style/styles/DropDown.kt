@@ -1,8 +1,9 @@
 package net.aspw.client.visual.client.clickgui.dropdown.style.styles
 
-import net.aspw.client.features.module.impl.visual.Gui.Companion.generateColor
-import net.aspw.client.util.block.BlockUtils.getBlockName
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.Launch
+import net.aspw.client.features.module.impl.visual.Gui
+import net.aspw.client.utils.block.BlockUtils.getBlockName
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.value.*
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.client.clickgui.dropdown.Panel
@@ -125,7 +126,8 @@ class DropDown : Style() {
             buttonElement.x + buttonElement.width + 1,
             buttonElement.y + buttonElement.height + 2,
             hoverColor(
-                if (buttonElement.color != Int.MAX_VALUE) generateColor() else Color(26, 26, 26),
+                if (buttonElement.color != Int.MAX_VALUE) Launch.moduleManager.getModule(Gui::class.java)
+                    ?.generateColor()!! else Color(26, 26, 26),
                 buttonElement.hoverTime
             ).rgb
         )
@@ -152,7 +154,7 @@ class DropDown : Style() {
                 ), moduleElement.hoverTime
             ).rgb
         )
-        val guiColor = generateColor().rgb
+        val guiColor = Launch.moduleManager.getModule(Gui::class.java)?.generateColor()!!.rgb
         GlStateManager.resetColor()
         Fonts.fontSFUI37.drawString(
             moduleElement.displayName.lowercase(Locale.getDefault()), moduleElement.x + 3,
@@ -423,15 +425,6 @@ class DropDown : Style() {
                 moduleElement.updatePressed()
                 mouseDown = Mouse.isButtonDown(0)
                 rightMouseDown = Mouse.isButtonDown(1)
-                if (moduleElement.settingsWidth > 0f && yPos > moduleElement.y + 4) RenderUtils.drawBorderedRect(
-                    (moduleElement.width + 4).toFloat(),
-                    (moduleElement.y + 6).toFloat(),
-                    moduleElement.width + moduleElement.settingsWidth,
-                    (yPos + 2).toFloat(),
-                    1f,
-                    Color(26, 26, 26).rgb,
-                    0
-                )
             } else {
                 Fonts.font72.drawString(
                     "+", moduleElement.x + moduleElement.width - 10,

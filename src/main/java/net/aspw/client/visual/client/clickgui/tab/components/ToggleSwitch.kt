@@ -1,7 +1,7 @@
 package net.aspw.client.visual.client.clickgui.tab.components
 
-import net.aspw.client.util.render.BlendUtils
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.render.BlendUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.clickgui.tab.extensions.animLinear
 import java.awt.Color
 

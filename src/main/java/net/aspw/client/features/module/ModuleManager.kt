@@ -1,6 +1,6 @@
 package net.aspw.client.features.module
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.KeyEvent
 import net.aspw.client.event.Listenable
@@ -13,7 +13,7 @@ import net.aspw.client.features.module.impl.player.*
 import net.aspw.client.features.module.impl.player.Timer
 import net.aspw.client.features.module.impl.targets.*
 import net.aspw.client.features.module.impl.visual.*
-import net.aspw.client.util.ClientUtils
+import net.aspw.client.utils.ClientUtils
 import java.util.*
 
 class ModuleManager : Listenable {
@@ -28,7 +28,7 @@ class ModuleManager : Listenable {
     var swingSoundPower = 75F
 
     init {
-        Client.eventManager.registerListener(this)
+        Launch.eventManager.registerListener(this)
     }
 
     /**
@@ -40,7 +40,6 @@ class ModuleManager : Listenable {
         registerModules(
             Protect::class.java,
             BowAura::class.java,
-            AimAssist::class.java,
             AutoProjectile::class.java,
             FastBow::class.java,
             Criticals::class.java,
@@ -53,7 +52,6 @@ class ModuleManager : Listenable {
             Jesus::class.java,
             Sprint::class.java,
             AntiTeams::class.java,
-            NoViewReset::class.java,
             AntiBots::class.java,
             Stealer::class.java,
             Scaffold::class.java,
@@ -81,7 +79,6 @@ class ModuleManager : Listenable {
             Crasher::class.java,
             Animations::class.java,
             VisualAbilities::class.java,
-            Reach::class.java,
             Interface::class.java,
             PackSpoofer::class.java,
             PortalMenu::class.java,
@@ -89,8 +86,8 @@ class ModuleManager : Listenable {
             EnchantColor::class.java,
             AutoAuth::class.java,
             AutoGapple::class.java,
+            LegitScaffold::class.java,
             Disabler::class.java,
-            Crosshair::class.java,
             AntiVoid::class.java,
             AntiFireBall::class.java,
             KeepSprint::class.java,
@@ -98,9 +95,8 @@ class ModuleManager : Listenable {
             BowJump::class.java,
             SafeWalk::class.java,
             NoMouseIntersect::class.java,
-            FastBridge::class.java,
             FastLadder::class.java,
-            Parkour::class.java,
+            AutoParkour::class.java,
             Spider::class.java,
             FakeLag::class.java,
             GamePlay::class.java,
@@ -110,7 +106,7 @@ class ModuleManager : Listenable {
             AntiAFK::class.java,
             AutoFish::class.java,
             GhostMode::class.java,
-            HorseJump::class.java,
+            PerfectHorseJump::class.java,
             LiquidInteract::class.java,
             Nuker::class.java,
             FastMine::class.java,
@@ -130,39 +126,34 @@ class ModuleManager : Listenable {
             Invisible::class.java,
             MoreParticles::class.java,
             CivBreak::class.java,
-            ClientSpoof::class.java,
+            BrandSpoofer::class.java,
             WTap::class.java,
-            AntiDesync::class.java,
-            FreeLook::class.java,
             CustomModel::class.java,
             InfiniteDurability::class.java,
             Breaker::class.java,
-            SilentView::class.java,
             XRay::class.java,
             Cape::class.java,
-            HudEditor::class.java,
             Gui::class.java,
-            EntityJump::class.java,
+            VehicleJump::class.java,
             ConsoleSpammer::class.java,
             AntiSuffocation::class.java,
-            FakeGhostBlock::class.java,
             SnakeGame::class.java,
             ESP::class.java,
             ExtendedPosition::class.java,
             InfiniteReach::class.java,
-            Debugger::class.java,
             MotionBlur::class.java,
             AntiFrozen::class.java,
             Trajectories::class.java,
-            ChatFilter::class.java,
             WTap::class.java,
             BackTrack::class.java,
             TriggerBot::class.java,
             NoJumpDelay::class.java,
-            Manager::class.java,
+            InvManager::class.java,
             DiscordRPC::class.java,
-            MurderDetector::class.java,
-            TickBase::class.java
+            MurdererDetector::class.java,
+            BetterView::class.java,
+            FireReducer::class.java,
+            NoBlockPush::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")
@@ -177,7 +168,7 @@ class ModuleManager : Listenable {
 
         module.onInitialize()
         generateCommand(module)
-        Client.eventManager.registerListener(module)
+        Launch.eventManager.registerListener(module)
     }
 
     /**
@@ -206,7 +197,7 @@ class ModuleManager : Listenable {
     fun unregisterModule(module: Module) {
         modules.remove(module)
         moduleClassMap.remove(module::class.java)
-        Client.eventManager.unregisterListener(module)
+        Launch.eventManager.unregisterListener(module)
     }
 
     /**
@@ -218,7 +209,7 @@ class ModuleManager : Listenable {
         if (values.isEmpty())
             return
 
-        Client.commandManager.registerCommand(ModuleCommand(module, values))
+        Launch.commandManager.registerCommand(ModuleCommand(module, values))
     }
 
     fun <T : Module> getModule(moduleClass: Class<T>): T? = moduleClassMap[moduleClass] as T?

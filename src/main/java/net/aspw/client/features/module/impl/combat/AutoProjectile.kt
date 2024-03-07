@@ -1,6 +1,6 @@
 package net.aspw.client.features.module.impl.combat
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
@@ -13,14 +13,14 @@ import net.minecraft.network.play.client.C07PacketPlayerDigging.Action
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 
-@ModuleInfo(name = "AutoProjectile", spacedName = "Auto Projectile", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "AutoProjectile", spacedName = "Auto Projectile", category = ModuleCategory.COMBAT)
 class AutoProjectile : Module() {
 
     private val waitForBowAimbot = BoolValue("WaitForBowAimAssist", true)
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        val bowAimbot = Client.moduleManager[BowAura::class.java] as BowAura
+        val bowAimbot = Launch.moduleManager[BowAura::class.java] as BowAura
 
         if (mc.thePlayer.isUsingItem && mc.thePlayer.heldItem?.item == Items.bow &&
             mc.thePlayer.itemInUseDuration > 20 && (!waitForBowAimbot.get() || !bowAimbot.state || bowAimbot.hasTarget())

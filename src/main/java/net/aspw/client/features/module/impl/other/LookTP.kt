@@ -1,6 +1,6 @@
 package net.aspw.client.features.module.impl.other
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.MoveEvent
 import net.aspw.client.event.PacketEvent
@@ -8,27 +8,29 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.util.PacketUtils
-import net.aspw.client.util.pathfinder.MainPathFinder
-import net.aspw.client.util.pathfinder.Vec3
-import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.utils.PacketUtils
+import net.aspw.client.utils.pathfinder.MainPathFinder
+import net.aspw.client.utils.pathfinder.Vec3
+import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.value.ListValue
-import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.block.BlockAir
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import org.lwjgl.input.Mouse
 import java.util.*
 
-@ModuleInfo(name = "LookTP", spacedName = "Look TP", description = "", category = ModuleCategory.OTHER)
+@ModuleInfo(name = "LookTP", spacedName = "Look TP", category = ModuleCategory.OTHER)
 class LookTP : Module() {
-    private val modeValue = ListValue("Mode", arrayOf("Vanilla", "Vulcan"), "Vanilla")
+    private val modeValue = ListValue("Mode", arrayOf("Vanilla", "Flag"), "Vanilla")
     private val buttonValue = ListValue("Button", arrayOf("Left", "Right", "Middle"), "Middle")
     private var countTicks = false
     private var startTeleport = false
     private var tpX = 0.0
     private var tpY = 0.0
     private var tpZ = 0.0
+    private var tpChatX = 0.0
+    private var tpChatY = 0.0
+    private var tpChatZ = 0.0
     private var ticks = 0
     private val timer = MSTimer()
 
@@ -42,6 +44,9 @@ class LookTP : Module() {
         tpX = 0.0
         tpY = 0.0
         tpZ = 0.0
+        tpChatX = 0.0
+        tpChatY = 0.0
+        tpChatZ = 0.0
     }
 
     override fun onEnable() {
@@ -59,6 +64,9 @@ class LookTP : Module() {
             val pos = mc.thePlayer.rayTrace(999.0, 1f).blockPos
             val tpPos = pos.up()
             if (mc.theWorld.getBlockState(pos).block is BlockAir || mc.theWorld.getBlockState(tpPos).block !is BlockAir) return
+            tpChatX = tpPos.x.toDouble()
+            tpChatY = tpPos.y.toDouble()
+            tpChatZ = tpPos.z.toDouble()
             tpX = tpPos.x.toDouble() + 0.5
             tpY = tpPos.y.toDouble()
             tpZ = tpPos.z.toDouble() + 0.5
@@ -79,35 +87,25 @@ class LookTP : Module() {
                         )
                         mc.thePlayer.setPosition(tpX, tpY, tpZ)
                     }.start()
-                    Client.hud.addNotification(
-                        Notification(
-                            "Successfully Teleported to X: $tpX, Y: $tpY, Z: $tpZ",
-                            Notification.Type.SUCCESS
-                        )
-                    )
+                    chat("Successfully Teleported to X: $tpChatX, Y: $tpChatY, Z: $tpChatZ")
                     if (Objects.requireNonNull(
-                            Client.moduleManager.getModule(
+                            Launch.moduleManager.getModule(
                                 Interface::class.java
                             )
                         )?.flagSoundValue?.get()!!
                     ) {
-                        Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                        Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                     }
                 }
 
-                "Vulcan" -> {
+                "Flag" -> {
                     startTeleport = true
-                    Client.hud.addNotification(
-                        Notification(
-                            "Teleporting to X: $tpX, Y: $tpY, Z: $tpZ soon",
-                            Notification.Type.INFO
-                        )
-                    )
+                    chat("Teleporting to X: $tpChatX, Y: $tpChatY, Z: $tpChatZ soon")
                 }
             }
             timer.reset()
         }
-        if (startTeleport && modeValue.get() == "Vulcan") {
+        if (startTeleport && modeValue.get() == "Flag") {
             if (countTicks) ticks++
             event.zero()
             mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY - 0.1, mc.thePlayer.posZ)
@@ -128,19 +126,14 @@ class LookTP : Module() {
                 }.start()
                 PacketUtils.sendPacketNoEvent(C04PacketPlayerPosition(tpX, tpY, tpZ + 0.1, true))
                 PacketUtils.sendPacketNoEvent(C04PacketPlayerPosition(tpX, tpY, tpZ - 0.1, true))
-                Client.hud.addNotification(
-                    Notification(
-                        "Successfully Teleported to X: $tpX, Y: $tpY, Z: $tpZ",
-                        Notification.Type.SUCCESS
-                    )
-                )
+                chat("Successfully Teleported to X: $tpChatX, Y: $tpChatY, Z: $tpChatZ")
                 if (Objects.requireNonNull(
-                        Client.moduleManager.getModule(
+                        Launch.moduleManager.getModule(
                             Interface::class.java
                         )
                     )?.flagSoundValue?.get()!!
                 ) {
-                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                 }
                 countTicks = false
                 ticks = 0
@@ -153,7 +146,7 @@ class LookTP : Module() {
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
-        if (modeValue.get() == "Vulcan") {
+        if (modeValue.get() == "Flag") {
             if (startTeleport && event.packet is S08PacketPlayerPosLook && mc.thePlayer.ticksExisted > 20) {
                 val s08 = event.packet
                 if (mc.thePlayer.getDistanceSq(s08.getX(), s08.getY(), s08.getZ()) < 2 * 2) {

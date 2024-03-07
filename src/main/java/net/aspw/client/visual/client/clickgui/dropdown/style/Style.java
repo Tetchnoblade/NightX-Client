@@ -1,6 +1,6 @@
 package net.aspw.client.visual.client.clickgui.dropdown.style;
 
-import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.visual.client.clickgui.dropdown.Panel;
 import net.aspw.client.visual.client.clickgui.dropdown.elements.ButtonElement;
 import net.aspw.client.visual.client.clickgui.dropdown.elements.ModuleElement;

@@ -1,10 +1,10 @@
 package net.aspw.client.visual.client.altmanager.menus
 
 import com.thealtening.AltService.EnumAltService
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.auth.account.CrackedAccount
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
@@ -125,7 +125,7 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
 
         account.name = usernameText
 
-        if (Client.fileManager.accountsConfig.accountExists(account)) {
+        if (Launch.fileManager.accountsConfig.accountExists(account)) {
             status = "§cThe account has already been added."
             return
         }
@@ -145,10 +145,10 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
                 return@thread
             }
 
-            Client.fileManager.accountsConfig.addAccount(account)
-            Client.fileManager.saveConfig(Client.fileManager.accountsConfig)
-            if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+            Launch.fileManager.accountsConfig.addAccount(account)
+            Launch.fileManager.saveConfig(Launch.fileManager.accountsConfig)
+            if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
             }
             status = "§aThe account has been added."
             prevGui.status = status

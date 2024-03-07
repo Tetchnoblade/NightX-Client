@@ -60,11 +60,6 @@ class ClientShutdownEvent : Event()
 data class EntityMovementEvent(val movedEntity: Entity) : Event()
 
 /**
- * Called when an entity receives damage
- */
-class EntityDamageEvent(val damagedEntity: Entity) : Event()
-
-/**
  * Called when a model updates
  */
 class UpdateModelEvent(val player: EntityPlayer, val model: ModelPlayer) : Event()

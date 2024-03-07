@@ -1,6 +1,5 @@
 package net.aspw.client.features.module.impl.movement
 
-import net.aspw.client.Client
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
@@ -12,24 +11,23 @@ import net.aspw.client.features.module.impl.movement.speeds.matrix.Matrix692
 import net.aspw.client.features.module.impl.movement.speeds.matrix.MatrixHop
 import net.aspw.client.features.module.impl.movement.speeds.matrix.MatrixYPort
 import net.aspw.client.features.module.impl.movement.speeds.ncp.*
-import net.aspw.client.features.module.impl.movement.speeds.other.*
+import net.aspw.client.features.module.impl.movement.speeds.server.*
 import net.aspw.client.features.module.impl.movement.speeds.spartan.SpartanYPort
-import net.aspw.client.features.module.impl.movement.speeds.vanillabhop.VanillaBhop
+import net.aspw.client.features.module.impl.movement.speeds.velocity.Velocity
 import net.aspw.client.features.module.impl.movement.speeds.verus.VerusFloat
 import net.aspw.client.features.module.impl.movement.speeds.verus.VerusHop
 import net.aspw.client.features.module.impl.movement.speeds.verus.VerusLowHop
 import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanYPort
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogCustom
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogGround
-import net.aspw.client.util.MovementUtils
+import net.aspw.client.utils.MovementUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
-import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.client.settings.GameSettings
 
-@ModuleInfo(name = "Speed", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Speed", category = ModuleCategory.MOVEMENT)
 class Speed : Module() {
     private var wasDown: Boolean = false
     private val speedModes = arrayOf(
@@ -61,7 +59,7 @@ class Speed : Module() {
         AACYPort2(),
         WatchdogGround(),
         WatchdogCustom(),
-        VanillaBhop(),
+        Velocity(),
         SpartanYPort(),
         SlowHop(),
         Custom(),
@@ -74,6 +72,7 @@ class Speed : Module() {
         YPort(),
         YPort2(),
         Minemen(),
+        NoRules(),
         VerusHop(),
         VerusLowHop(),
         VerusFloat(),
@@ -94,10 +93,10 @@ class Speed : Module() {
             "Vulcan",
             "Matrix",
             "Custom",
-            "VanillaBhop",
-            "Other"
+            "Velocity",
+            "Server"
         ),
-        "VanillaBhop"
+        "Velocity"
     ) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
@@ -114,9 +113,10 @@ class Speed : Module() {
     fun onUpdate(event: UpdateEvent?) {
         if (mc.thePlayer.isSneaking) return
         val speedMode = mode
+        speedMode?.onUpdate()
+        if (typeValue.get().equals("velocity", true) && !velocityBHop.get()) return
         if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !mc.thePlayer.isInWater && !mc.thePlayer.isInLava && !mc.thePlayer.capabilities.isFlying && MovementUtils.isMoving())
             mc.gameSettings.keyBindJump.pressed = false
-        speedMode?.onUpdate()
     }
 
     private val ncpModeValue: ListValue = object : ListValue(
@@ -193,12 +193,7 @@ class Speed : Module() {
     fun onWorld(event: WorldEvent) {
         if (worldCheck.get()) {
             state = false
-            Client.hud.addNotification(
-                Notification(
-                    "Speed was disabled",
-                    Notification.Type.WARNING
-                )
-            )
+            chat("Speed was disabled")
         }
     }
 
@@ -206,12 +201,7 @@ class Speed : Module() {
     fun onTeleport(event: TeleportEvent) {
         if (lagCheck.get()) {
             state = false
-            Client.hud.addNotification(
-                Notification(
-                    "Disabling Speed due to lag back",
-                    Notification.Type.WARNING
-                )
-            )
+            chat("Disabling Speed due to lag back")
         }
     }
 
@@ -271,17 +261,18 @@ class Speed : Module() {
     override val tag: String
         get() = typeValue.get()
 
-    private val otherModeValue: ListValue = object : ListValue(
-        "Other-Mode",
+    private val serverModeValue: ListValue = object : ListValue(
+        "Server-Mode",
         arrayOf(
             "YPort",
             "YPort2",
             "SlowHop",
             "Jump",
-            "Minemen"
+            "Minemen",
+            "NoRules"
         ),
         "YPort",
-        { typeValue.get().equals("other", ignoreCase = true) }) {
+        { typeValue.get().equals("server", ignoreCase = true) }) {
         override fun onChange(oldValue: String, newValue: String) {
             if (state) onDisable()
         }
@@ -307,9 +298,9 @@ class Speed : Module() {
                 "Verus" -> mode = "Verus" + verusModeValue.get()
                 "Vulcan" -> mode = "Vulcan" + vulcanModeValue.get()
                 "Matrix" -> mode = "Matrix" + matrixModeValue.get()
-                "VanillaBhop" -> mode = "VanillaBhop"
+                "Velocity" -> mode = "Velocity"
                 "Custom" -> mode = "Custom"
-                "Other" -> mode = otherModeValue.get()
+                "Server" -> mode = serverModeValue.get()
             }
             return mode
         }
@@ -362,12 +353,6 @@ class Speed : Module() {
             ignoreCase = true
         )
     }
-    val smoothStrafe = BoolValue("SmoothStrafe", true) {
-        modeName.equals(
-            "watchdogcustom",
-            ignoreCase = true
-        )
-    }
     val customSpeedValue =
         FloatValue("StrSpeed", 0.42f, 0.2f, 2f) {
             modeName.equals(
@@ -378,7 +363,7 @@ class Speed : Module() {
     val motionYValue = FloatValue("MotionY", 0.42f, 0f, 2f) {
         modeName.equals("watchdogcustom", ignoreCase = true)
     }
-    val semiStrafeValue = BoolValue("SemiStrafe", true) {
+    val lowHopValue = BoolValue("LowHop", true) {
         modeName.equals("watchdogground", ignoreCase = true)
     }
 
@@ -428,7 +413,9 @@ class Speed : Module() {
         BoolValue("CustomDoLaunchSpeed", false) { typeValue.get().equals("custom", ignoreCase = true) }
 
     @JvmField
-    val jumpStrafe = BoolValue("JumpStrafe", false) { typeValue.get().equals("other", ignoreCase = true) }
+    val jumpStrafe = BoolValue("JumpStrafe", false) {
+        typeValue.get().equals("server", ignoreCase = true) && serverModeValue.get().equals("jump", true)
+    }
 
     @JvmField
     val portMax = FloatValue("AAC-PortLength", 1f, 1f, 20f) { typeValue.get().equals("aac", ignoreCase = true) }
@@ -438,8 +425,11 @@ class Speed : Module() {
         FloatValue("AACGround-Timer", 3f, 1.1f, 10f) { typeValue.get().equals("aac", ignoreCase = true) }
 
     @JvmField
-    val vanillaBhopSpeed =
-        FloatValue("Hop-Speed", 0.9f, 0.0f, 5f) { typeValue.get().equals("vanillabhop", ignoreCase = true) }
+    val velocitySpeed =
+        FloatValue("Velocity-Speed", 0.9f, 0.0f, 5f) { typeValue.get().equals("velocity", ignoreCase = true) }
+
+    @JvmField
+    val velocityBHop = BoolValue("Velocity-BHop", true) { typeValue.get().equals("velocity", ignoreCase = true) }
 
     private val lagCheck = BoolValue("LagCheck", true)
     private val worldCheck = BoolValue("WorldCheck", true)

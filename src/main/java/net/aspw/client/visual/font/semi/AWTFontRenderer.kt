@@ -1,6 +1,6 @@
 package net.aspw.client.visual.font.semi
 
-import net.aspw.client.util.MinecraftInstance
+import net.aspw.client.utils.MinecraftInstance
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.texture.TextureUtil
 import org.lwjgl.opengl.GL11

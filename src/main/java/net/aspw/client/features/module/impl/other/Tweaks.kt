@@ -5,10 +5,10 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.timer.TickTimer
+import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.value.IntegerValue
 
-@ModuleInfo(name = "Tweaks", description = "", category = ModuleCategory.OTHER)
+@ModuleInfo(name = "Tweaks", category = ModuleCategory.OTHER)
 class Tweaks : Module() {
     private val speedValue = IntegerValue("Sneak-Speed", 0, 0, 20)
 

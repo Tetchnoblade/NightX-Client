@@ -1,12 +1,11 @@
 package net.aspw.client.features.command.impl
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.util.PacketUtils
-import net.aspw.client.util.pathfinder.MainPathFinder
-import net.aspw.client.util.pathfinder.Vec3
-import net.aspw.client.visual.hud.element.elements.Notification
+import net.aspw.client.utils.PacketUtils
+import net.aspw.client.utils.pathfinder.MainPathFinder
+import net.aspw.client.utils.pathfinder.Vec3
 import net.minecraft.network.play.client.C03PacketPlayer
 
 class VClipCommand : Command("vclip", emptyArray()) {
@@ -19,8 +18,8 @@ class VClipCommand : Command("vclip", emptyArray()) {
                 val y = args[1].toDouble()
                 val entity = if (mc.thePlayer.isRiding) mc.thePlayer.ridingEntity else mc.thePlayer
 
-                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                 }
                 Thread {
                     val path: ArrayList<Vec3> = MainPathFinder.computePath(
@@ -41,12 +40,7 @@ class VClipCommand : Command("vclip", emptyArray()) {
                     )
                     mc.thePlayer.setPosition(entity.posX, entity.posY + y, entity.posZ)
                 }.start()
-                Client.hud.addNotification(
-                    Notification(
-                        "Successfully Teleported!",
-                        Notification.Type.SUCCESS
-                    )
-                )
+                chat("Successfully Teleported!")
             } catch (ex: NumberFormatException) {
                 chatSyntaxError()
             }

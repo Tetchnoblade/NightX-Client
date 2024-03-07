@@ -1,11 +1,10 @@
 package net.aspw.client.features.module
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.Listenable
-import net.aspw.client.util.ClientUtils
-import net.aspw.client.util.MinecraftInstance
+import net.aspw.client.utils.ClientUtils
+import net.aspw.client.utils.MinecraftInstance
 import net.aspw.client.value.Value
-import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.client.audio.PositionedSoundRecord
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.input.Keyboard
@@ -15,7 +14,6 @@ abstract class Module : MinecraftInstance(), Listenable {
     // Module information
     var name: String
     var spacedName: String
-    var description: String
     var category: ModuleCategory
     var keyBind = Keyboard.CHAR_NONE
     var array = true
@@ -30,7 +28,6 @@ abstract class Module : MinecraftInstance(), Listenable {
 
         name = moduleInfo.name
         spacedName = if (moduleInfo.spacedName == "") name else moduleInfo.spacedName
-        description = moduleInfo.description
         category = moduleInfo.category
         keyBind = moduleInfo.keyBind
         array = moduleInfo.array
@@ -58,8 +55,8 @@ abstract class Module : MinecraftInstance(), Listenable {
             onToggle(value)
 
             // Play sound and add notification
-            if (!Client.isStarting && !forceNoSound) {
-                when (Client.moduleManager.toggleSoundMode) {
+            if (!Launch.isStarting && !forceNoSound) {
+                when (Launch.moduleManager.toggleSoundMode) {
                     1 -> mc.soundHandler.playSound(
                         PositionedSoundRecord.create(
                             ResourceLocation("random.click"),
@@ -67,18 +64,12 @@ abstract class Module : MinecraftInstance(), Listenable {
                         )
                     )
 
-                    2 -> (if (value) Client.tipSoundManager.enableSound else Client.tipSoundManager.disableSound).asyncPlay(
-                        Client.moduleManager.toggleVolume
+                    2 -> (if (value) Launch.tipSoundManager.enableSound else Launch.tipSoundManager.disableSound).asyncPlay(
+                        Launch.moduleManager.toggleVolume
                     )
                 }
-                if (Client.moduleManager.shouldNotify)
-                    Client.hud.addNotification(
-                        Notification(
-                            "${if (value) "Enabled" else "Disabled"} §r$name",
-                            if (value) Notification.Type.SUCCESS else Notification.Type.ERROR,
-                            1000L
-                        )
-                    )
+                if (Launch.moduleManager.shouldNotify)
+                    chat("${if (value) "Enabled" else "Disabled"} §r$name")
             }
         }
 
@@ -101,7 +92,7 @@ abstract class Module : MinecraftInstance(), Listenable {
     /**
      * Print [msg] to chat
      */
-    protected fun chat(msg: String) = ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§c$msg")
+    protected fun chat(msg: String) = ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "§c$msg")
 
     /**
      * Called when module toggled

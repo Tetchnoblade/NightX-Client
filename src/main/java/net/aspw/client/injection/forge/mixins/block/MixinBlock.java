@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.block;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.BlockBBEvent;
 import net.aspw.client.features.module.impl.combat.Criticals;
 import net.aspw.client.features.module.impl.exploit.NoMouseIntersect;
@@ -102,7 +102,7 @@ public abstract class MixinBlock {
     public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity) {
         AxisAlignedBB axisalignedbb = this.getCollisionBoundingBox(worldIn, pos, state);
         BlockBBEvent blockBBEvent = new BlockBBEvent(pos, blockState.getBlock(), axisalignedbb);
-        Client.eventManager.callEvent(blockBBEvent);
+        Launch.eventManager.callEvent(blockBBEvent);
         axisalignedbb = blockBBEvent.getBoundingBox();
         if (axisalignedbb != null && mask.intersectsWith(axisalignedbb))
             list.add(axisalignedbb);
@@ -110,7 +110,7 @@ public abstract class MixinBlock {
 
     @Inject(method = "shouldSideBeRendered", at = @At("HEAD"), cancellable = true)
     private void shouldSideBeRendered(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        final XRay xray = Objects.requireNonNull(Client.moduleManager.getModule(XRay.class));
+        final XRay xray = Objects.requireNonNull(Launch.moduleManager.getModule(XRay.class));
 
         if (xray.getState())
             callbackInfoReturnable.setReturnValue(xray.getXrayBlocks().contains(this));
@@ -118,7 +118,7 @@ public abstract class MixinBlock {
 
     @Inject(method = "isCollidable", at = @At("HEAD"), cancellable = true)
     private void isCollidable(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        final NoMouseIntersect noMouseIntersect = Objects.requireNonNull(Client.moduleManager.getModule(NoMouseIntersect.class));
+        final NoMouseIntersect noMouseIntersect = Objects.requireNonNull(Launch.moduleManager.getModule(NoMouseIntersect.class));
 
         if (noMouseIntersect.getState() && !(noMouseIntersect.getBlockValue().get() == Block.getIdFromBlock((Block) (Object) this)))
             callbackInfoReturnable.setReturnValue(false);
@@ -126,7 +126,7 @@ public abstract class MixinBlock {
 
     @Inject(method = "getAmbientOcclusionLightValue", at = @At("HEAD"), cancellable = true)
     private void getAmbientOcclusionLightValue(final CallbackInfoReturnable<Float> floatCallbackInfoReturnable) {
-        final XRay xray = Objects.requireNonNull(Client.moduleManager.getModule(XRay.class));
+        final XRay xray = Objects.requireNonNull(Launch.moduleManager.getModule(XRay.class));
 
         if (xray.getState())
             floatCallbackInfoReturnable.setReturnValue(1F);
@@ -144,8 +144,8 @@ public abstract class MixinBlock {
     public void modifyBreakSpeed(EntityPlayer playerIn, World worldIn, BlockPos pos, final CallbackInfoReturnable<Float> callbackInfo) {
         float f = callbackInfo.getReturnValue();
         if (playerIn.onGround) { // NoGround
-            final NoFall noFall = Objects.requireNonNull(Client.moduleManager.getModule(NoFall.class));
-            final Criticals criticals = Objects.requireNonNull(Client.moduleManager.getModule(Criticals.class));
+            final NoFall noFall = Objects.requireNonNull(Launch.moduleManager.getModule(NoFall.class));
+            final Criticals criticals = Objects.requireNonNull(Launch.moduleManager.getModule(Criticals.class));
 
             if (noFall.getState() && noFall.getTypeValue().get().equalsIgnoreCase("edit") && noFall.getEditMode().get().equalsIgnoreCase("noground") ||
                     criticals.getState() && criticals.getModeValue().get().equalsIgnoreCase("NoGround")) {

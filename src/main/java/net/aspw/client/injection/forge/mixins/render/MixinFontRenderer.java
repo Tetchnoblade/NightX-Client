@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.render;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.TextEvent;
 import net.minecraft.client.gui.FontRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,11 +36,11 @@ public abstract class MixinFontRenderer {
     private String renderString(final String string) {
         if (string == null)
             return null;
-        if (Client.eventManager == null)
+        if (Launch.eventManager == null)
             return string;
 
         final TextEvent textEvent = new TextEvent(string);
-        Client.eventManager.callEvent(textEvent);
+        Launch.eventManager.callEvent(textEvent);
 
         return textEvent.getText();
     }
@@ -49,11 +49,11 @@ public abstract class MixinFontRenderer {
     private String getStringWidth(final String string) {
         if (string == null)
             return null;
-        if (Client.eventManager == null)
+        if (Launch.eventManager == null)
             return string;
 
         final TextEvent textEvent = new TextEvent(string);
-        Client.eventManager.callEvent(textEvent);
+        Launch.eventManager.callEvent(textEvent);
         return textEvent.getText();
     }
 

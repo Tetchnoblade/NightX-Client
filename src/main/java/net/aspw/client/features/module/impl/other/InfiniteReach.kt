@@ -5,9 +5,9 @@ import net.aspw.client.event.PacketEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.PacketUtils
-import net.aspw.client.util.pathfinder.MainPathFinder
-import net.aspw.client.util.pathfinder.Vec3
+import net.aspw.client.utils.PacketUtils
+import net.aspw.client.utils.pathfinder.MainPathFinder
+import net.aspw.client.utils.pathfinder.Vec3
 import net.minecraft.network.play.client.C02PacketUseEntity
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C07PacketPlayerDigging
@@ -18,7 +18,6 @@ import kotlin.math.max
 @ModuleInfo(
     name = "InfiniteReach",
     spacedName = "Infinite Reach",
-    description = "",
     category = ModuleCategory.OTHER
 )
 class InfiniteReach : Module() {

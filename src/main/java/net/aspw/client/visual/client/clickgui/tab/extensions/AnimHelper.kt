@@ -1,7 +1,7 @@
 package net.aspw.client.visual.client.clickgui.tab.extensions
 
-import net.aspw.client.util.AnimationUtils
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.AnimationUtils
+import net.aspw.client.utils.render.RenderUtils
 
 fun Float.animSmooth(target: Float, speed: Float) =
     AnimationUtils.animate(

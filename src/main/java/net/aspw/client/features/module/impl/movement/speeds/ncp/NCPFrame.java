@@ -1,11 +1,11 @@
 package net.aspw.client.features.module.impl.movement.speeds.ncp;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
 import net.aspw.client.features.module.impl.player.Scaffold;
-import net.aspw.client.util.MovementUtils;
-import net.aspw.client.util.timer.TickTimer;
+import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.utils.timer.TickTimer;
 
 /**
  * The type Ncp frame.
@@ -59,7 +59,7 @@ public class NCPFrame extends SpeedMode {
 
     @Override
     public void onDisable() {
-        final Scaffold scaffold = Client.moduleManager.getModule(Scaffold.class);
+        final Scaffold scaffold = Launch.moduleManager.getModule(Scaffold.class);
 
         if (!mc.thePlayer.isSneaking() && !scaffold.getState()) {
             mc.thePlayer.motionX = 0.0;

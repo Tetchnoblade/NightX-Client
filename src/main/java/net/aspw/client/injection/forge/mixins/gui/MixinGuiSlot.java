@@ -1,7 +1,7 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import net.aspw.client.injection.access.IMixinGuiSlot;
-import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiSlot;

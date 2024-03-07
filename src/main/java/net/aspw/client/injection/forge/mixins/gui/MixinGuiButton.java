@@ -1,8 +1,8 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.visual.Interface;
-import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.visual.client.GuiMainMenu;
 import net.aspw.client.visual.font.semi.AWTFontRenderer;
 import net.aspw.client.visual.font.semi.Fonts;
@@ -111,7 +111,7 @@ public abstract class MixinGuiButton extends Gui {
             hovered = (mouseX >= this.xPosition && mouseY >= this.yPosition &&
                     mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height);
 
-            final Interface anInterface = Client.moduleManager.getModule(Interface.class);
+            final Interface anInterface = Launch.moduleManager.getModule(Interface.class);
 
             if (anInterface == null) return;
 

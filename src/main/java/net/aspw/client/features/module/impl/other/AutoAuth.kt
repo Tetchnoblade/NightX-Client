@@ -1,6 +1,5 @@
 package net.aspw.client.features.module.impl.other
 
-import net.aspw.client.Client
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.event.UpdateEvent
@@ -8,18 +7,17 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.PacketUtils
-import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.utils.PacketUtils
+import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.IntegerValue
-import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.network.play.client.C01PacketChatMessage
 import net.minecraft.network.play.server.S02PacketChat
 import net.minecraft.network.play.server.S45PacketTitle
 
 @ModuleInfo(
     name = "AutoAuth",
-    spacedName = "Auto Auth", description = "",
+    spacedName = "Auto Auth",
     category = ModuleCategory.OTHER
 )
 class AutoAuth : Module() {
@@ -44,7 +42,7 @@ class AutoAuth : Module() {
         else if (regTimer.hasTimePassed(delayValue.get().toLong())) {
             for (packet in registerPackets)
                 PacketUtils.sendPacketNoEvent(packet)
-            Client.hud.addNotification(Notification("Successfully registered.", Notification.Type.SUCCESS))
+            chat("Successfully registered!")
             registerPackets.clear()
             regTimer.reset()
         }
@@ -54,7 +52,7 @@ class AutoAuth : Module() {
         else if (logTimer.hasTimePassed(delayValue.get().toLong())) {
             for (packet in loginPackets)
                 PacketUtils.sendPacketNoEvent(packet)
-            Client.hud.addNotification(Notification("Successfully logined.", Notification.Type.SUCCESS))
+            chat("Successfully logged in!")
             loginPackets.clear()
             logTimer.reset()
         }

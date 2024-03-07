@@ -1,11 +1,11 @@
 package net.aspw.client.visual.client.clickgui.tab.elements
 
 import net.aspw.client.features.module.Module
-import net.aspw.client.util.MinecraftInstance
-import net.aspw.client.util.MouseUtils
-import net.aspw.client.util.render.BlendUtils
-import net.aspw.client.util.render.RenderUtils
-import net.aspw.client.util.render.Stencil
+import net.aspw.client.utils.MinecraftInstance
+import net.aspw.client.utils.MouseUtils
+import net.aspw.client.utils.render.BlendUtils
+import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.utils.render.Stencil
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -81,7 +81,12 @@ class ModuleElement(val module: Module) : MinecraftInstance() {
         )
         Stencil.erase(true)
         RenderUtils.newDrawRect(x + 10F, y + height - 5F, x + width - 10F, y + height - 4.5F, 4281348144L.toInt())
-        FontLoaders.SF20.drawString(module.name, x + 20F, y + height / 2F - FontLoaders.SF20.height + 3F, -1)
+        FontLoaders.SF20.drawStringWithShadow(
+            module.name,
+            x + 20F.toDouble(),
+            y + height / 2F - FontLoaders.SF20.height + 3F.toDouble(),
+            -1
+        )
 
         val keyName = if (listeningToKey) "Press key (esc to none)" else Keyboard.getKeyName(module.keyBind)
 

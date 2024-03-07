@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.aspw.client.util.StatisticsUtils;
+import net.aspw.client.utils.StatisticsUtils;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.resources.I18n;
 import org.spongepowered.asm.mixin.Mixin;

@@ -38,7 +38,6 @@ minecraft {
     def args = [
             '-Dfml.coreMods.load=net.aspw.client.injection.forge.MixinLoader',
             '-Ddev-mode',
-            "-javaagent:${project.rootDir}\\libs\\mixin-0.7.11-SNAPSHOT.jar",
             '-Dmixin.hotSwap=true',
             '-Dmixin.checks.interfaces=true'
     ]
@@ -60,7 +59,6 @@ def viaLibs = [
         "com.viaversion:viabackwards:${project.viabackwards_version}",
         "com.viaversion:viarewind-universal:${project.viarewind_version}",
         "net.raphimc:ViaLoader:${project.vialoader_version}",
-        "net.raphimc:ViaAprilFools:${project.viaaprilfools_version}",
         "org.yaml:snakeyaml:${project.snake_yml_version}",
         "org.slf4j:slf4j-api:${project.slf4j_version}"
 ]
@@ -78,10 +76,6 @@ dependencies {
 
     for (final def via in viaLibs) {
         include(via)
-    }
-
-    include ("net.raphimc:ViaLegacy:${project.vialegacy_version}") {
-        exclude group: "com.google.code.gson", module: "gson"
     }
 
     include('com.github.half-cambodian-hacker-man:Koffee:d8cee73') {

@@ -1,10 +1,10 @@
 package net.aspw.client.visual.client.clickgui.tab.elements
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.features.module.ModuleCategory
-import net.aspw.client.util.MinecraftInstance
-import net.aspw.client.util.MouseUtils
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.MinecraftInstance
+import net.aspw.client.utils.MouseUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.clickgui.tab.ColorManager
 import net.aspw.client.visual.client.clickgui.tab.extensions.animSmooth
 import net.aspw.client.visual.font.smooth.FontLoaders
@@ -23,7 +23,7 @@ class CategoryElement(val category: ModuleCategory) : MinecraftInstance() {
     val moduleElements = mutableListOf<ModuleElement>()
 
     init {
-        Client.moduleManager.modules.filter { it.category == category }
+        Launch.moduleManager.modules.filter { it.category == category }
             .forEach { moduleElements.add(ModuleElement(it)) }
     }
 
@@ -46,7 +46,12 @@ class CategoryElement(val category: ModuleCategory) : MinecraftInstance() {
                 3F,
                 ColorManager.border.rgb
             )
-        FontLoaders.SF20.drawString(name, x + 10F, y + height / 2F - FontLoaders.SF20.height / 2F + 2F, -1)
+        FontLoaders.SF20.drawStringWithShadow(
+            name,
+            x + 10F.toDouble(),
+            y + height / 2F - FontLoaders.SF20.height / 2F + 2F.toDouble(),
+            -1
+        )
     }
 
     fun drawPanel(mX: Int, mY: Int, x: Float, y: Float, width: Float, height: Float, wheel: Int, accentColor: Color) {

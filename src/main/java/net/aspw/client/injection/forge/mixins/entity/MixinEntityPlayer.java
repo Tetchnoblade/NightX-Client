@@ -1,13 +1,14 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
 import com.mojang.authlib.GameProfile;
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
+import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.movement.Flight;
 import net.aspw.client.features.module.impl.movement.LongJump;
 import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.features.module.impl.player.BowJump;
-import net.aspw.client.util.CooldownHelper;
-import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.utils.CooldownHelper;
+import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -117,8 +118,6 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
     public InventoryPlayer inventory;
     private ItemStack cooldownStack;
     private int cooldownStackSlot;
-    private final ItemStack[] mainInventory = new ItemStack[36];
-    private final ItemStack[] armorInventory = new ItemStack[4];
 
     /**
      * @author As_pw
@@ -127,44 +126,21 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
     @Overwrite
     public float getEyeHeight() {
         final Minecraft mc = MinecraftInstance.mc;
-        final LongJump longJump = Objects.requireNonNull(Client.moduleManager.getModule(LongJump.class));
-        final Flight flight = Objects.requireNonNull(Client.moduleManager.getModule(Flight.class));
-        final Speed speed = Objects.requireNonNull(Client.moduleManager.getModule(Speed.class));
-        final BowJump bowJump = Objects.requireNonNull(Client.moduleManager.getModule(BowJump.class));
-        if (longJump.getState() && longJump.getFakeYValue().get()) {
-            float f2 = 1.62F;
-            final double y = longJump.getY();
-            f2 = (float) (1.62F - (mc.thePlayer.lastTickPosY + (((mc.thePlayer.posY - mc.thePlayer.lastTickPosY) * mc.timer.renderPartialTicks)) - y));
-            return f2;
-        }
-        if (flight.getState() && flight.getFakeYValue().get()) {
-            float f2 = 1.62F;
-            final double y = flight.getY();
-            f2 = (float) (1.62F - (mc.thePlayer.lastTickPosY + (((mc.thePlayer.posY - mc.thePlayer.lastTickPosY) * mc.timer.renderPartialTicks)) - y));
-            return f2;
-        }
-        if (speed.getState() && speed.getFakeYValue().get()) {
-            float f2 = 1.62F;
-            final double y = speed.getY();
-            f2 = (float) (1.62F - (mc.thePlayer.lastTickPosY + (((mc.thePlayer.posY - mc.thePlayer.lastTickPosY) * mc.timer.renderPartialTicks)) - y));
-            return f2;
-        }
-        if (bowJump.getState() && bowJump.getFakeYValue().get()) {
-            float f2 = 1.62F;
-            final double y = bowJump.getY();
-            f2 = (float) (1.62F - (mc.thePlayer.lastTickPosY + (((mc.thePlayer.posY - mc.thePlayer.lastTickPosY) * mc.timer.renderPartialTicks)) - y));
-            return f2;
-        } else {
-            float f = this.getDefaultEyeHeight();
-            if (this.isPlayerSleeping()) {
-                f = 0.2F;
-            }
-
-            if (this.isSneaking()) {
-                f -= 0.08F;
-            }
-            return f;
-        }
+        final LongJump longJump = Objects.requireNonNull(Launch.moduleManager.getModule(LongJump.class));
+        final Flight flight = Objects.requireNonNull(Launch.moduleManager.getModule(Flight.class));
+        final Speed speed = Objects.requireNonNull(Launch.moduleManager.getModule(Speed.class));
+        final BowJump bowJump = Objects.requireNonNull(Launch.moduleManager.getModule(BowJump.class));
+        if (this.isPlayerSleeping())
+            return 0.2F;
+        if (flight.getState() && flight.getFakeYValue().get())
+            return (float) (1.62F - (mc.thePlayer.lastTickPosY + (((mc.thePlayer.posY - mc.thePlayer.lastTickPosY) * mc.timer.renderPartialTicks)) - flight.getY()));
+        if (speed.getState() && speed.getFakeYValue().get())
+            return (float) (1.62F - (mc.thePlayer.lastTickPosY + (((mc.thePlayer.posY - mc.thePlayer.lastTickPosY) * mc.timer.renderPartialTicks)) - speed.getY()));
+        if (longJump.getState() && longJump.getFakeYValue().get())
+            return (float) (1.62F - (mc.thePlayer.lastTickPosY + (((mc.thePlayer.posY - mc.thePlayer.lastTickPosY) * mc.timer.renderPartialTicks)) - longJump.getY()));
+        if (bowJump.getState() && bowJump.getFakeYValue().get())
+            return (float) (1.62F - (mc.thePlayer.lastTickPosY + (((mc.thePlayer.posY - mc.thePlayer.lastTickPosY) * mc.timer.renderPartialTicks)) - bowJump.getY()));
+        return PacketManager.lastEyeHeight + (PacketManager.eyeHeight - PacketManager.lastEyeHeight) * mc.timer.renderPartialTicks;
     }
 
     @Inject(method = "onUpdate", at = @At("RETURN"))

@@ -1,33 +1,21 @@
 package net.aspw.client.features.module.impl.movement
 
-import net.aspw.client.Client
-import net.aspw.client.event.*
+import net.aspw.client.event.EventTarget
+import net.aspw.client.event.PacketEvent
+import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.features.module.impl.combat.KillAura
-import net.aspw.client.util.MovementUtils
-import net.aspw.client.util.Rotation
-import net.aspw.client.util.RotationUtils
+import net.aspw.client.utils.MovementUtils
+import net.aspw.client.utils.Rotation
+import net.aspw.client.utils.RotationUtils
 import net.aspw.client.value.BoolValue
 import net.minecraft.network.play.client.C0BPacketEntityAction
 
-@ModuleInfo(name = "Sprint", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Sprint", category = ModuleCategory.MOVEMENT)
 class Sprint : Module() {
 
-    val allDirectionsValue = BoolValue("Multi", true)
     private val noPacketPatchValue = BoolValue("Silent", false)
-    private val rot = BoolValue("Rotations", false)
-
-    @EventTarget
-    fun onMotion(event: MotionEvent) {
-        if (rot.get() && event.eventState == EventState.PRE && MovementUtils.isMoving() && Client.moduleManager.getModule(
-                KillAura::class.java
-            )?.target == null
-        ) {
-            RotationUtils.setTargetRotation(Rotation(MovementUtils.getRawDirection(), mc.thePlayer.rotationPitch))
-        }
-    }
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
@@ -41,7 +29,7 @@ class Sprint : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        if (!MovementUtils.isMoving() || mc.thePlayer.isSneaking || !allDirectionsValue.get() && RotationUtils.targetRotation != null &&
+        if (!MovementUtils.isMoving() || mc.thePlayer.isSneaking || RotationUtils.targetRotation != null &&
             RotationUtils.getRotationDifference(
                 Rotation(
                     mc.thePlayer.rotationYaw,
@@ -53,7 +41,7 @@ class Sprint : Module() {
             return
         }
 
-        if (allDirectionsValue.get() || mc.thePlayer.movementInput.moveForward >= 0.8F)
+        if (mc.thePlayer.movementInput.moveForward >= 0.8F)
             mc.thePlayer.isSprinting = true
     }
 }

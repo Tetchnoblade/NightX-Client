@@ -56,8 +56,7 @@ class EventManager {
         targets.filter { it.eventClass.handleEvents() || it.isIgnoreCondition }.forEach {
             try {
                 it.method.invoke(it.eventClass, event)
-            } catch (throwable: Throwable) {
-                throwable.printStackTrace()
+            } catch (_: Throwable) {
             }
         }
     }

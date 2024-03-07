@@ -1,11 +1,10 @@
 package net.aspw.client.visual.client
 
-import net.aspw.client.Client
-import net.aspw.client.util.network.Access
-import net.aspw.client.util.network.LoginID
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.Launch
+import net.aspw.client.utils.Access
+import net.aspw.client.utils.misc.MiscUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
-import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.GlStateManager
@@ -21,68 +20,99 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     private val buttonHeight = 20
 
     override fun initGui() {
-        if (!LoginID.loggedIn)
-            mc.displayGuiScreen(GuiFirstMenu(this))
-        this.buttonList.add(
-            GuiButton(
-                0,
-                this.width / 2 - 55,
-                this.height / 2 - 80 + 70,
-                buttonWidth,
-                buttonHeight,
-                "SINGLE PLAYER"
+        if (Access.isLatest) {
+            this.buttonList.add(
+                GuiButton(
+                    0,
+                    this.width / 2 - 55,
+                    this.height / 2 - 80 + 70,
+                    buttonWidth,
+                    buttonHeight,
+                    "SINGLE PLAYER"
+                )
             )
-        )
-        this.buttonList.add(
-            GuiButton(
-                1,
-                this.width / 2 - 55,
-                this.height / 2 - 80 + 95 - 2,
-                buttonWidth,
-                buttonHeight,
-                "MULTI PLAYER"
+            this.buttonList.add(
+                GuiButton(
+                    1,
+                    this.width / 2 - 55,
+                    this.height / 2 - 80 + 95 - 2,
+                    buttonWidth,
+                    buttonHeight,
+                    "MULTI PLAYER"
+                )
             )
-        )
-        this.buttonList.add(
-            GuiButton(
-                2,
-                this.width / 2 - 55,
-                this.height / 2 - 80 + 120 - 4,
-                buttonWidth,
-                buttonHeight,
-                "ALT MANAGER"
+            this.buttonList.add(
+                GuiButton(
+                    2,
+                    this.width / 2 - 55,
+                    this.height / 2 - 80 + 120 - 4,
+                    buttonWidth,
+                    buttonHeight,
+                    "ALT MANAGER"
+                )
             )
-        )
-        this.buttonList.add(
-            GuiButton(
-                3,
-                this.width / 2 - 55,
-                this.height / 2 - 80 + 145 - 6,
-                buttonWidth,
-                buttonHeight,
-                "CONFIGURE"
+            this.buttonList.add(
+                GuiButton(
+                    3,
+                    this.width / 2 - 55,
+                    this.height / 2 - 80 + 145 - 6,
+                    buttonWidth,
+                    buttonHeight,
+                    "CONFIGURE"
+                )
             )
-        )
-        this.buttonList.add(
-            GuiButton(
-                4,
-                this.width / 2 - 55,
-                this.height / 2 - 80 + 170 - 8,
-                buttonWidth,
-                buttonHeight,
-                "OPTIONS"
+            this.buttonList.add(
+                GuiButton(
+                    4,
+                    this.width / 2 - 55,
+                    this.height / 2 - 80 + 170 - 8,
+                    buttonWidth,
+                    buttonHeight,
+                    "OPTIONS"
+                )
             )
-        )
-        this.buttonList.add(
-            GuiButton(
-                5,
-                this.width / 2 - 55,
-                this.height / 2 - 80 + 195 - 10,
-                buttonWidth,
-                buttonHeight,
-                "EXIT"
+            this.buttonList.add(
+                GuiButton(
+                    5,
+                    this.width / 2 - 55,
+                    this.height / 2 - 80 + 195 - 10,
+                    buttonWidth,
+                    buttonHeight,
+                    "EXIT"
+                )
             )
-        )
+        } else {
+            this.buttonList.add(
+                GuiButton(
+                    6,
+                    this.width / 2 - 55,
+                    this.height / 2 - 80 + 60,
+                    buttonWidth,
+                    buttonHeight,
+                    "RECONNECT"
+                )
+            )
+            this.buttonList.add(
+                GuiButton(
+                    7,
+                    this.width / 2 - 55,
+                    this.height / 2 - 80 + 85 - 2,
+                    buttonWidth,
+                    buttonHeight,
+                    "UPDATE LINK"
+                )
+            )
+            this.buttonList.add(
+                GuiButton(
+                    5,
+                    this.width / 2 - 55,
+                    this.height / 2 - 80 + 110 - 4,
+                    buttonWidth,
+                    buttonHeight,
+                    "EXIT"
+                )
+            )
+        }
         super.initGui()
     }
 
@@ -100,35 +130,23 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         )
         GlStateManager.enableAlpha()
         FontLoaders.SF20.drawStringWithShadow(
-            Client.CLIENT_BEST + " Client",
+            Launch.CLIENT_BEST + " Client",
             4F.toDouble(),
             height - 12F.toDouble(),
             -1
         )
         FontLoaders.SF20.drawStringWithShadow(
-            "Made by " + Client.CLIENT_CREATOR,
-            width - 4F - FontLoaders.SF20.getStringWidth("Made by " + Client.CLIENT_CREATOR)
+            "Made by " + Launch.CLIENT_CREATOR,
+            width - 4F - FontLoaders.SF20.getStringWidth("Made by " + Launch.CLIENT_CREATOR)
                 .toDouble(),
             height - 23F.toDouble(),
             -1
         )
         FontLoaders.SF20.drawStringWithShadow(
-            "Your currently build is §e" + Client.CLIENT_VERSION,
-            width - 4F - FontLoaders.SF20.getStringWidth("Your currently build is §e" + Client.CLIENT_VERSION)
+            "Your currently build is §e" + Launch.CLIENT_VERSION,
+            width - 4F - FontLoaders.SF20.getStringWidth("Your currently build is §e" + Launch.CLIENT_VERSION)
                 .toDouble(),
             height - 12F.toDouble(),
-            -1
-        )
-        Fonts.minecraftFont.drawString(
-            "< §cAnnouncement §r>",
-            width - 4 - Fonts.minecraftFont.getStringWidth("< §cAnnouncement §r>"),
-            4,
-            -1
-        )
-        Fonts.minecraftFont.drawString(
-            Access.announcementText,
-            width - 4 - Fonts.minecraftFont.getStringWidth(Access.announcementText),
-            13,
             -1
         )
         GlStateManager.disableAlpha()
@@ -145,6 +163,14 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             3 -> mc.displayGuiScreen(GuiInfo(this))
             4 -> mc.displayGuiScreen(GuiOptions(this, mc.gameSettings))
             5 -> mc.shutdown()
+
+            6 -> {
+                Access.checkStatus()
+                Access.checkLatestVersion()
+                mc.displayGuiScreen(GuiMainMenu())
+            }
+
+            7 -> MiscUtils.showURL(Access.clientGithub)
         }
     }
 

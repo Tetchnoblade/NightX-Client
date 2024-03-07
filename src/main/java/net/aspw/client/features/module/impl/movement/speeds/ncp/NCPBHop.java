@@ -1,10 +1,11 @@
 package net.aspw.client.features.module.impl.movement.speeds.ncp;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
 import net.aspw.client.features.module.impl.player.Scaffold;
-import net.aspw.client.util.MovementUtils;
+import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.utils.RotationUtils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.MovementInput;
@@ -38,7 +39,7 @@ public class NCPBHop extends SpeedMode {
         moveSpeed = getBaseMoveSpeed();
         level = 0;
 
-        final Scaffold scaffold = Client.moduleManager.getModule(Scaffold.class);
+        final Scaffold scaffold = Launch.moduleManager.getModule(Scaffold.class);
 
         if (!mc.thePlayer.isSneaking() && !scaffold.getState()) {
             mc.thePlayer.motionX = 0.0;
@@ -97,7 +98,7 @@ public class NCPBHop extends SpeedMode {
         final MovementInput movementInput = mc.thePlayer.movementInput;
         float forward = movementInput.moveForward;
         float strafe = movementInput.moveStrafe;
-        float yaw = mc.thePlayer.rotationYaw;
+        float yaw = RotationUtils.cameraYaw;
         if (forward == 0.0f && strafe == 0.0f) {
             event.setX(0.0);
             event.setZ(0.0);

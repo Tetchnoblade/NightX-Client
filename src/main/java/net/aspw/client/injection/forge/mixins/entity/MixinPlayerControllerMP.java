@@ -1,9 +1,9 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.AttackEvent;
 import net.aspw.client.event.ClickWindowEvent;
-import net.aspw.client.util.CooldownHelper;
+import net.aspw.client.utils.CooldownHelper;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,14 +25,14 @@ public class MixinPlayerControllerMP {
         if (targetEntity == null)
             return;
 
-        Client.eventManager.callEvent(new AttackEvent(targetEntity));
+        Launch.eventManager.callEvent(new AttackEvent(targetEntity));
         CooldownHelper.INSTANCE.resetLastAttackedTicks();
     }
 
     @Inject(method = "windowClick", at = @At("HEAD"))
     private void windowClick(int windowId, int slotId, int mouseButtonClicked, int mode, EntityPlayer playerIn, CallbackInfoReturnable<ItemStack> callbackInfo) {
         final ClickWindowEvent event = new ClickWindowEvent(windowId, slotId, mouseButtonClicked, mode);
-        Client.eventManager.callEvent(event);
+        Launch.eventManager.callEvent(event);
 
         if (event.isCancelled())
             callbackInfo.cancel();

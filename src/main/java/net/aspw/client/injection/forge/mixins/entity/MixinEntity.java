@@ -1,11 +1,13 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
-import net.aspw.client.Client;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+import net.aspw.client.Launch;
 import net.aspw.client.event.StrafeEvent;
 import net.aspw.client.features.module.impl.combat.HitBox;
+import net.aspw.client.features.module.impl.movement.Flight;
 import net.aspw.client.protocol.ProtocolBase;
-import net.aspw.client.util.EntityUtils;
-import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.utils.EntityUtils;
+import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.command.ICommandSender;
@@ -15,7 +17,6 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityDispatcher;
-import net.raphimc.vialoader.util.VersionEnum;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -351,22 +352,22 @@ public abstract class MixinEntity implements ICommandSender {
 
     @Inject(method = "getCollisionBorderSize", at = @At("HEAD"), cancellable = true)
     private void getCollisionBorderSize(final CallbackInfoReturnable<Float> callbackInfoReturnable) {
-        final HitBox hitBoxes = Objects.requireNonNull(Client.moduleManager.getModule(HitBox.class));
+        final HitBox hitBoxes = Objects.requireNonNull(Launch.moduleManager.getModule(HitBox.class));
 
         if (hitBoxes.getState() && EntityUtils.isSelected(((Entity) ((Object) this)), true)) {
-            if (ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning()) {
+            if (ProtocolBase.getManager().getTargetVersion().newerThan(ProtocolVersion.v1_8) && !MinecraftInstance.mc.isIntegratedServerRunning()) {
                 callbackInfoReturnable.setReturnValue(hitBoxes.getSizeValue().get());
             } else {
                 callbackInfoReturnable.setReturnValue(0.1F + hitBoxes.getSizeValue().get());
             }
-        } else if (ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning()) {
+        } else if (ProtocolBase.getManager().getTargetVersion().newerThan(ProtocolVersion.v1_8) && !MinecraftInstance.mc.isIntegratedServerRunning()) {
             callbackInfoReturnable.setReturnValue(0.0F);
         }
     }
 
     /**
      * @author As_pw
-     * @reason Sneaking Animation
+     * @reason Sneak
      */
     @Overwrite
     public boolean isSneaking() {
@@ -383,7 +384,7 @@ public abstract class MixinEntity implements ICommandSender {
         if ((Object) this == MinecraftInstance.mc.thePlayer) {
 
             final StrafeEvent strafeEvent = new StrafeEvent(strafe, forward, friction, rotationYaw);
-            Client.eventManager.callEvent(strafeEvent);
+            Launch.eventManager.callEvent(strafeEvent);
 
             if (strafeEvent.isCancelled())
                 return;
@@ -411,6 +412,14 @@ public abstract class MixinEntity implements ICommandSender {
             this.motionX += strafe * f2 - forward * f1;
             this.motionZ += forward * f2 + strafe * f1;
         }
+    }
+
+    @Inject(method = "isInWater", at = @At("HEAD"), cancellable = true)
+    private void isInWater(final CallbackInfoReturnable<Boolean> cir) {
+        final Flight flight = Objects.requireNonNull(Launch.moduleManager.getModule(Flight.class));
+
+        if (flight.getState() && flight.modeValue.get().contains("FakeWater"))
+            cir.setReturnValue(true);
     }
 
     /**

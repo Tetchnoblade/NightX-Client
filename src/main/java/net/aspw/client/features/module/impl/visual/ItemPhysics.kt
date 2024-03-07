@@ -4,5 +4,5 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 
-@ModuleInfo(name = "ItemPhysics", spacedName = "Item Physics", description = "", category = ModuleCategory.VISUAL)
+@ModuleInfo(name = "ItemPhysics", spacedName = "Item Physics", category = ModuleCategory.VISUAL)
 class ItemPhysics : Module()

@@ -5,10 +5,10 @@ import net.aspw.client.event.Render3DEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.EntityUtils
-import net.aspw.client.util.RotationUtils
-import net.aspw.client.util.render.ColorUtils
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.EntityUtils
+import net.aspw.client.utils.RotationUtils
+import net.aspw.client.utils.render.ColorUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.util.*
 
-@ModuleInfo(name = "Tracers", description = "", category = ModuleCategory.VISUAL, array = false)
+@ModuleInfo(name = "Tracers", category = ModuleCategory.VISUAL, array = false)
 class Tracers : Module() {
 
     private val colorMode = ListValue("Color", arrayOf("Custom", "DistanceColor", "Rainbow"), "Custom")
@@ -33,8 +33,8 @@ class Tracers : Module() {
     private val alphaValue = IntegerValue("Alpha", 255, 0, 255)
 
     private val directLineValue = BoolValue("Directline", false)
-    private val fovModeValue = ListValue("FOV-Mode", arrayOf("All", "Back", "Front"), "All")
-    private val fovValue = FloatValue("FOV", 180F, 0F, 180F) { !fovModeValue.get().equals("all", true) }
+    private val fovModeValue = ListValue("Fov-Mode", arrayOf("All", "Back", "Front"), "All")
+    private val fovValue = FloatValue("Fov", 180F, 0F, 180F) { !fovModeValue.get().equals("all", true) }
 
     @EventTarget
     fun onRender3D(event: Render3DEvent) {

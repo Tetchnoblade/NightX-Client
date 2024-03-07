@@ -4,9 +4,9 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.MovementUtils
-import net.aspw.client.util.block.BlockUtils.collideBlockIntersects
-import net.aspw.client.util.timer.TickTimer
+import net.aspw.client.utils.MovementUtils
+import net.aspw.client.utils.block.BlockUtils.collideBlockIntersects
+import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
 import net.minecraft.block.Block
@@ -16,7 +16,7 @@ import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.MathHelper
 import java.util.*
 
-@ModuleInfo(name = "Spider", spacedName = "Spider", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "Spider", spacedName = "Spider", category = ModuleCategory.PLAYER)
 class Spider : Module() {
     private val modeValue =
         ListValue(

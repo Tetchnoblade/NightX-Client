@@ -1,6 +1,6 @@
 package net.aspw.client.features.module.impl.combat
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.AttackEvent
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.PacketEvent
@@ -8,7 +8,7 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.movement.Flight
-import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -19,7 +19,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C07PacketPlayerDigging
 import java.util.*
 
-@ModuleInfo(name = "Criticals", description = "", category = ModuleCategory.COMBAT)
+@ModuleInfo(name = "Criticals", category = ModuleCategory.COMBAT)
 class Criticals : Module() {
 
     val modeValue = ListValue(
@@ -67,14 +67,14 @@ class Criticals : Module() {
 
     @EventTarget
     fun onAttack(event: AttackEvent) {
-        if (onlyAuraValue.get() && !Client.moduleManager[KillAura::class.java]!!.state && !Client.moduleManager[TPAura::class.java]!!.state) return
+        if (onlyAuraValue.get() && !Launch.moduleManager[KillAura::class.java]!!.state && !Launch.moduleManager[TPAura::class.java]!!.state) return
 
         if (event.targetEntity is EntityLivingBase) {
             val entity = event.targetEntity
 
             if (!mc.thePlayer.onGround || mc.thePlayer.isOnLadder || mc.thePlayer.isInWeb || mc.thePlayer.isInWater ||
                 mc.thePlayer.isInLava || mc.thePlayer.ridingEntity != null || entity.hurtTime > hurtTimeValue.get() ||
-                Client.moduleManager[Flight::class.java]!!.state || !msTimer.hasTimePassed(
+                Launch.moduleManager[Flight::class.java]!!.state || !msTimer.hasTimePassed(
                     delayValue.get().toLong()
                 )
             )
@@ -241,7 +241,7 @@ class Criticals : Module() {
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
-        if (onlyAuraValue.get() && !Client.moduleManager[KillAura::class.java]!!.state) return
+        if (onlyAuraValue.get() && !Launch.moduleManager[KillAura::class.java]!!.state) return
 
         val packet = event.packet
 

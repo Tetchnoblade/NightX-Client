@@ -1,8 +1,8 @@
 package net.aspw.client.features.command
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.features.command.impl.*
-import net.aspw.client.util.ClientUtils
+import net.aspw.client.utils.ClientUtils
 
 class CommandManager {
     val commands = mutableListOf<Command>()
@@ -29,17 +29,17 @@ class CommandManager {
         registerCommand(RemoteViewCommand())
         registerCommand(RenameCommand())
         registerCommand(IgnCommand())
-        registerCommand(ThemeCommand())
         registerCommand(LoginCommand())
         registerCommand(ClipCommand())
         registerCommand(RegisterCommand())
         registerCommand(RepeatCommand())
-        registerCommand(MagicTrickCommand())
         registerCommand(PluginsCommand())
         registerCommand(SkinStealerCommand())
         registerCommand(SpotCommand())
         registerCommand(HelpCommand())
         registerCommand(PayPayCommand())
+        registerCommand(PlaytimeCommand())
+        registerCommand(UnicodeCommand())
     }
 
     /**
@@ -63,7 +63,7 @@ class CommandManager {
             }
         }
 
-        ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§cUnknown command. Try .help for a list of commands.")
+        ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "§cUnknown command. Try .help for a list of commands.")
     }
 
     fun autoComplete(input: String): Boolean {

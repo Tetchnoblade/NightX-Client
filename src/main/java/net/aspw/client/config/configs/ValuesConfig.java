@@ -1,7 +1,7 @@
 package net.aspw.client.config.configs;
 
 import com.google.gson.*;
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.config.FileConfig;
 import net.aspw.client.config.FileManager;
 import net.aspw.client.features.api.MacroManager;
@@ -57,7 +57,7 @@ public class ValuesConfig extends FileConfig {
                     GuiTheAltening.Companion.setApiKey(jsonValue.get("API-Key").getAsString());
             } else {
 
-                final Module module = Client.moduleManager.getModule(entry.getKey());
+                final Module module = Launch.moduleManager.getModule(entry.getKey());
 
                 if (module != null) {
                     final JsonObject jsonModule = (JsonObject) entry.getValue();
@@ -92,7 +92,7 @@ public class ValuesConfig extends FileConfig {
         theAlteningObject.addProperty("API-Key", GuiTheAltening.Companion.getApiKey());
         jsonObject.add("thealtening", theAlteningObject);
 
-        Client.moduleManager.getModules().stream().filter(module -> !module.getValues().isEmpty()).forEach(module -> {
+        Launch.moduleManager.getModules().stream().filter(module -> !module.getValues().isEmpty()).forEach(module -> {
             final JsonObject jsonModule = new JsonObject();
             module.getValues().forEach(value -> jsonModule.add(value.getName(), value.toJson()));
             jsonObject.add(module.getName(), jsonModule);

@@ -1,8 +1,8 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.visual.Interface;
-import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
 import net.minecraft.client.gui.GuiNewChat;
@@ -111,7 +111,7 @@ public abstract class MixinGuiNewChat {
 
     private void checkHud() {
         if (anInterface == null)
-            anInterface = Client.moduleManager.getModule(Interface.class);
+            anInterface = Launch.moduleManager.getModule(Interface.class);
     }
 
     @Redirect(method = "deleteChatLine", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/ChatLine;getChatLineID()I"))
@@ -148,7 +148,6 @@ public abstract class MixinGuiNewChat {
     @Overwrite
     public void drawChat(int updateCounter) {
         checkHud();
-        boolean canFont = anInterface.getState() && anInterface.getFontChatValue().get();
         GlStateManager.pushMatrix();
         GlStateManager.translate(0, -12, 0);
 
@@ -225,9 +224,9 @@ public abstract class MixinGuiNewChat {
                                 String s = fixString(chatline.getChatComponent().getFormattedText());
                                 GlStateManager.enableBlend();
                                 if (anInterface.getState() && lineBeingDrawn <= newLines)
-                                    (canFont ? anInterface.getFontType().get() : this.mc.fontRendererObj).drawString(s, (float) i2, (float) (j2 - 8), new Color(1F, 1F, 1F, animationPercent * (float) d0).getRGB(), true);
+                                    this.mc.fontRendererObj.drawString(s, (float) i2, (float) (j2 - 8), new Color(1F, 1F, 1F, animationPercent * (float) d0).getRGB(), true);
                                 else
-                                    (canFont ? anInterface.getFontType().get() : this.mc.fontRendererObj).drawString(s, (float) i2, (float) (j2 - 8), 16777215 + (l1 << 24), true);
+                                    this.mc.fontRendererObj.drawString(s, (float) i2, (float) (j2 - 8), 16777215 + (l1 << 24), true);
                                 GlStateManager.disableAlpha();
                                 GlStateManager.disableBlend();
                             }
@@ -294,7 +293,6 @@ public abstract class MixinGuiNewChat {
     @Overwrite
     public IChatComponent getChatComponent(int p_146236_1_, int p_146236_2_) {
         checkHud();
-        boolean flagFont = anInterface.getState() && anInterface.getFontChatValue().get();
 
         if (!this.getChatOpen()) {
             return null;
@@ -308,15 +306,15 @@ public abstract class MixinGuiNewChat {
             mY = MathHelper.floor_float((float) mY / chatScale);
             if (mX >= 0 && mY >= 0) {
                 int lineCount = Math.min(this.getLineCount(), this.drawnChatLines.size());
-                if (mX <= MathHelper.floor_float((float) this.getChatWidth() / this.getChatScale()) && mY < (flagFont ? anInterface.getFontType().get() : this.mc.fontRendererObj).FONT_HEIGHT * lineCount + lineCount) {
-                    int line = mY / (flagFont ? anInterface.getFontType().get() : this.mc.fontRendererObj).FONT_HEIGHT + this.scrollPos;
+                if (mX <= MathHelper.floor_float((float) this.getChatWidth() / this.getChatScale()) && mY < this.mc.fontRendererObj.FONT_HEIGHT * lineCount + lineCount) {
+                    int line = mY / this.mc.fontRendererObj.FONT_HEIGHT + this.scrollPos;
                     if (line >= 0 && line < this.drawnChatLines.size()) {
                         ChatLine chatLine = this.drawnChatLines.get(line);
                         int maxWidth = 0;
 
                         for (IChatComponent iterator : chatLine.getChatComponent()) {
                             if (iterator instanceof ChatComponentText) {
-                                maxWidth += (flagFont ? anInterface.getFontType().get() : this.mc.fontRendererObj).getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText) iterator).getChatComponentText_TextValue(), false));
+                                maxWidth += this.mc.fontRendererObj.getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText) iterator).getChatComponentText_TextValue(), false));
                                 if (maxWidth > mX) {
                                     return iterator;
                                 }

@@ -1,10 +1,9 @@
 package net.aspw.client.features.command.impl
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.util.misc.StringUtils
-import net.aspw.client.visual.hud.element.elements.Notification
+import net.aspw.client.utils.misc.StringUtils
 
 class RepeatCommand : Command("repeat", arrayOf("rp")) {
     /**
@@ -16,15 +15,10 @@ class RepeatCommand : Command("repeat", arrayOf("rp")) {
                 val amount = args[1].toInt()
                 for (cnt in 1..amount)
                     mc.thePlayer.sendChatMessage(StringUtils.toCompleteString(args, 2))
-                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                 }
-                Client.hud.addNotification(
-                    Notification(
-                        "Sent Chat Successfully!",
-                        Notification.Type.SUCCESS
-                    )
-                )
+                chat("Sent Chat Successfully!")
                 return
             } catch (ex: NumberFormatException) {
                 chatSyntaxError()

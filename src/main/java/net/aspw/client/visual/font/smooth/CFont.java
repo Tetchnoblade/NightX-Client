@@ -110,10 +110,6 @@ public class CFont {
         GL11.glVertex2d(x + width, y);
     }
 
-    public int getStringHeight(String text) {
-        return this.getHeight();
-    }
-
     public int getHeight() {
         return (this.fontHeight - 8) / 2;
     }
@@ -125,7 +121,7 @@ public class CFont {
         int n2 = 0;
         while (n2 < n) {
             char c = arrc[n2];
-            if (c < this.charData.length && c >= '\u0000') {
+            if (c < this.charData.length) {
                 width += this.charData[c].width - 8 + this.charOffset;
             }
             ++n2;
@@ -133,19 +129,11 @@ public class CFont {
         return width / 2;
     }
 
-    public boolean isAntiAlias() {
-        return this.antiAlias;
-    }
-
     public void setAntiAlias(boolean antiAlias) {
         if (this.antiAlias != antiAlias) {
             this.antiAlias = antiAlias;
             this.tex = this.setupTexture(this.font, antiAlias, this.fractionalMetrics, this.charData);
         }
-    }
-
-    public boolean isFractionalMetrics() {
-        return this.fractionalMetrics;
     }
 
     public void setFractionalMetrics(boolean fractionalMetrics) {
@@ -164,7 +152,7 @@ public class CFont {
         this.tex = this.setupTexture(font, this.antiAlias, this.fractionalMetrics, this.charData);
     }
 
-    protected class CharData {
+    protected static class CharData {
         public int width;
         public int height;
         public int storedX;

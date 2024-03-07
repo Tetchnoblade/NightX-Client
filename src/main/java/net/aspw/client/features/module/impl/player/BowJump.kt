@@ -1,18 +1,16 @@
 package net.aspw.client.features.module.impl.player
 
-import net.aspw.client.Client
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.MovementUtils
-import net.aspw.client.util.PacketUtils
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.MovementUtils
+import net.aspw.client.utils.PacketUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.visual.font.smooth.FontLoaders
-import net.aspw.client.visual.hud.element.elements.Notification
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.init.Items
 import net.minecraft.item.ItemBow
@@ -25,7 +23,7 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import java.awt.Color
 
-@ModuleInfo(name = "BowJump", spacedName = "Bow Jump", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "BowJump", spacedName = "Bow Jump", category = ModuleCategory.PLAYER)
 class BowJump : Module() {
     private val boostValue = FloatValue("Boost", 0.96f, 0f, 10f, "x")
     private val heightValue = FloatValue("Height", 0.58f, 0f, 10f, "m")
@@ -81,12 +79,7 @@ class BowJump : Module() {
             0 -> {
                 val slot = bowSlot
                 if (slot < 0 || !mc.thePlayer.inventory.hasItem(Items.arrow)) {
-                    Client.hud.addNotification(
-                        Notification(
-                            "No arrows or bow found in your inventory!",
-                            Notification.Type.ERROR
-                        )
-                    )
+                    chat("No arrows or bow found in your inventory!")
                     forceDisable = true
                     bowState = 5
                 } else if (lastPlayerTick == -1L) {

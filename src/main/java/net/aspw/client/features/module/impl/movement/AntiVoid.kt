@@ -1,6 +1,6 @@
 package net.aspw.client.features.module.impl.movement
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.MoveEvent
 import net.aspw.client.event.PacketEvent
@@ -9,13 +9,13 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.player.Scaffold
-import net.aspw.client.util.MovementUtils
-import net.aspw.client.util.PacketUtils
-import net.aspw.client.util.block.BlockUtils.getBlock
-import net.aspw.client.util.misc.NewFallingPlayer
-import net.aspw.client.util.misc.RandomUtils
-import net.aspw.client.util.pathfinder.MainPathFinder
-import net.aspw.client.util.pathfinder.Vec3
+import net.aspw.client.utils.MovementUtils
+import net.aspw.client.utils.PacketUtils
+import net.aspw.client.utils.block.BlockUtils.getBlock
+import net.aspw.client.utils.misc.NewFallingPlayer
+import net.aspw.client.utils.misc.RandomUtils
+import net.aspw.client.utils.pathfinder.MainPathFinder
+import net.aspw.client.utils.pathfinder.Vec3
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -29,7 +29,7 @@ import net.minecraft.util.BlockPos
 import java.util.*
 import kotlin.math.abs
 
-@ModuleInfo(name = "AntiVoid", spacedName = "Anti Void", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "AntiVoid", spacedName = "Anti Void", category = ModuleCategory.MOVEMENT)
 class AntiVoid : Module() {
     private val voidDetectionAlgorithm = ListValue("Detect-Method", arrayOf("Collision", "Predict"), "Collision")
     private val setBackModeValue = ListValue(
@@ -69,7 +69,7 @@ class AntiVoid : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent?) {
-        if (Client.moduleManager.getModule(Flight::class.java)!!.state) return
+        if (Launch.moduleManager.getModule(Flight::class.java)!!.state) return
         detectedLocation = null
         if (voidDetectionAlgorithm.get().equals("collision", ignoreCase = true)) {
             if (mc.thePlayer.onGround && getBlock(
@@ -165,7 +165,7 @@ class AntiVoid : Module() {
                     if (!setBackModeValue.get()
                             .equals("StopMotion", ignoreCase = true)
                     ) mc.thePlayer.fallDistance = 0f
-                    if (scaffoldValue.get() && !Client.moduleManager.getModule(Scaffold::class.java)!!.state) Client.moduleManager.getModule(
+                    if (scaffoldValue.get() && !Launch.moduleManager.getModule(Scaffold::class.java)!!.state) Launch.moduleManager.getModule(
                         Scaffold::class.java
                     )!!.state = true
                 }
@@ -276,7 +276,7 @@ class AntiVoid : Module() {
                     if (!setBackModeValue.get()
                             .equals("StopMotion", ignoreCase = true)
                     ) mc.thePlayer.fallDistance = 0f
-                    if (scaffoldValue.get() && !Client.moduleManager.getModule(Scaffold::class.java)!!.state) Client.moduleManager.getModule(
+                    if (scaffoldValue.get() && !Launch.moduleManager.getModule(Scaffold::class.java)!!.state) Launch.moduleManager.getModule(
                         Scaffold::class.java
                     )!!.state = true
                 }
@@ -295,7 +295,7 @@ class AntiVoid : Module() {
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
-        if (Client.moduleManager.getModule(Flight::class.java)!!.state) return
+        if (Launch.moduleManager.getModule(Flight::class.java)!!.state) return
         if (setBackModeValue.get()
                 .equals("StopMotion", ignoreCase = true) && event.packet is S08PacketPlayerPosLook
         ) mc.thePlayer.fallDistance = 0f
@@ -317,7 +317,7 @@ class AntiVoid : Module() {
 
     @EventTarget
     fun onMove(event: MoveEvent) {
-        if (Client.moduleManager.getModule(Flight::class.java)!!.state) return
+        if (Launch.moduleManager.getModule(Flight::class.java)!!.state) return
         if (setBackModeValue.get().equals("StopMotion", ignoreCase = true) && shouldStopMotion) {
             event.zero()
         }

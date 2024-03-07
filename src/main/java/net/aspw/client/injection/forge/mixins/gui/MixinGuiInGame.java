@@ -1,14 +1,12 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.Render2DEvent;
 import net.aspw.client.features.module.impl.other.SnakeGame;
-import net.aspw.client.features.module.impl.player.Scaffold;
-import net.aspw.client.features.module.impl.visual.Crosshair;
 import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.features.module.impl.visual.VisualAbilities;
-import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.visual.font.semi.AWTFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -66,19 +64,17 @@ public abstract class MixinGuiInGame extends Gui {
 
     @Inject(method = "showCrosshair", at = @At("HEAD"), cancellable = true)
     private void injectCrosshair(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        final Crosshair crosshair = Objects.requireNonNull(Client.moduleManager.getModule(Crosshair.class));
-        final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
-        final SnakeGame snakeGame = Objects.requireNonNull(Client.moduleManager.getModule(SnakeGame.class));
+        final Interface anInterface = Objects.requireNonNull(Launch.moduleManager.getModule(Interface.class));
+        final SnakeGame snakeGame = Objects.requireNonNull(Launch.moduleManager.getModule(SnakeGame.class));
 
-        if (snakeGame.getState() || crosshair.getState() || MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && anInterface.getNof5crossHair().get())
+        if (snakeGame.getState() || MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && anInterface.getNof5crossHair().get())
             callbackInfoReturnable.setReturnValue(false);
     }
 
     @Inject(method = "renderScoreboard", at = @At("HEAD"), cancellable = true)
     private void renderScoreboard(ScoreObjective scoreObjective, ScaledResolution scaledResolution, CallbackInfo callbackInfo) {
-        final VisualAbilities visualAbilities = Objects.requireNonNull(Client.moduleManager.getModule(VisualAbilities.class));
-        final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
-        if (visualAbilities.getState() && visualAbilities.getScoreBoard().get() || anInterface.getState())
+        final VisualAbilities visualAbilities = Objects.requireNonNull(Launch.moduleManager.getModule(VisualAbilities.class));
+        if (visualAbilities.getState() && visualAbilities.getScoreBoard().get())
             callbackInfo.cancel();
     }
 
@@ -89,7 +85,7 @@ public abstract class MixinGuiInGame extends Gui {
 
     @Inject(method = "renderBossHealth", at = @At("HEAD"), cancellable = true)
     private void renderBossHealth(CallbackInfo callbackInfo) {
-        final VisualAbilities visualAbilities = Objects.requireNonNull(Client.moduleManager.getModule(VisualAbilities.class));
+        final VisualAbilities visualAbilities = Objects.requireNonNull(Launch.moduleManager.getModule(VisualAbilities.class));
         if (visualAbilities.getState() && visualAbilities.getBossHealth().get())
             callbackInfo.cancel();
     }
@@ -108,11 +104,7 @@ public abstract class MixinGuiInGame extends Gui {
 
         int slot = entityPlayer.inventory.currentItem;
 
-        Scaffold scaffold = Client.moduleManager.getModule(Scaffold.class);
-        if (scaffold != null && scaffold.getState())
-            slot = scaffold.getSlot();
-
-        final Interface anInterface = Objects.requireNonNull(Client.moduleManager.getModule(Interface.class));
+        final Interface anInterface = Objects.requireNonNull(Launch.moduleManager.getModule(Interface.class));
 
         if (anInterface.getState() && (anInterface.getBlackHotbarValue().get() || anInterface.getAnimHotbarValue().get())) {
             boolean blackHB = anInterface.getBlackHotbarValue().get();
@@ -152,7 +144,7 @@ public abstract class MixinGuiInGame extends Gui {
             GlStateManager.disableRescaleNormal();
             GlStateManager.disableBlend();
             GlStateManager.resetColor();
-            Client.eventManager.callEvent(new Render2DEvent(partialTicks));
+            Launch.eventManager.callEvent(new Render2DEvent(partialTicks));
             return;
         }
 
@@ -180,13 +172,13 @@ public abstract class MixinGuiInGame extends Gui {
         GlStateManager.disableRescaleNormal();
         GlStateManager.disableBlend();
 
-        Client.eventManager.callEvent(new Render2DEvent(partialTicks));
+        Launch.eventManager.callEvent(new Render2DEvent(partialTicks));
         AWTFontRenderer.Companion.garbageCollectionTick();
     }
 
     @Inject(method = "renderPumpkinOverlay", at = @At("HEAD"), cancellable = true)
     private void renderPumpkinOverlay(final CallbackInfo callbackInfo) {
-        final VisualAbilities visualAbilities = Objects.requireNonNull(Client.moduleManager.getModule(VisualAbilities.class));
+        final VisualAbilities visualAbilities = Objects.requireNonNull(Launch.moduleManager.getModule(VisualAbilities.class));
 
         if (visualAbilities.getState() && visualAbilities.getPumpkinEffect().get())
             callbackInfo.cancel();

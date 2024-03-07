@@ -1,9 +1,8 @@
 package net.aspw.client.features.command.impl
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.visual.hud.element.elements.Notification
 
 class ClipCommand : Command("clip", emptyArray()) {
     /**
@@ -15,16 +14,11 @@ class ClipCommand : Command("clip", emptyArray()) {
                 val y = args[1].toDouble()
                 val entity = if (mc.thePlayer.isRiding) mc.thePlayer.ridingEntity else mc.thePlayer
 
-                if (Client.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                    Client.tipSoundManager.popSound.asyncPlay(Client.moduleManager.popSoundPower)
+                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                 }
                 entity.setPosition(entity.posX, entity.posY + y, entity.posZ)
-                Client.hud.addNotification(
-                    Notification(
-                        "Successfully Teleported!",
-                        Notification.Type.SUCCESS
-                    )
-                )
+                chat("Successfully Teleported!")
             } catch (ex: NumberFormatException) {
                 chatSyntaxError()
             }

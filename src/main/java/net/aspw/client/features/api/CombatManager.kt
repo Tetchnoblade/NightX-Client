@@ -1,11 +1,11 @@
 package net.aspw.client.features.api
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.*
-import net.aspw.client.util.EntityUtils
-import net.aspw.client.util.MinecraftInstance
-import net.aspw.client.util.MovementUtilsFix
-import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.utils.EntityUtils
+import net.aspw.client.utils.MinecraftInstance
+import net.aspw.client.utils.MovementUtilsFix
+import net.aspw.client.utils.timer.MSTimer
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 
@@ -26,7 +26,7 @@ class CombatManager : Listenable, MinecraftInstance() {
         // bypass java.util.ConcurrentModificationException
         attackedEntityList.map { it }.forEach {
             if (it.isDead) {
-                Client.eventManager.callEvent(EntityKilledEvent(it))
+                Launch.eventManager.callEvent(EntityKilledEvent(it))
                 attackedEntityList.remove(it)
             }
         }

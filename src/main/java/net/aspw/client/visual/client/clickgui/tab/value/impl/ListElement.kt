@@ -1,7 +1,7 @@
 package net.aspw.client.visual.client.clickgui.tab.value.impl
 
-import net.aspw.client.util.MouseUtils
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.MouseUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.value.ListValue
 import net.aspw.client.visual.client.clickgui.tab.ColorManager
 import net.aspw.client.visual.client.clickgui.tab.extensions.animSmooth
@@ -34,7 +34,12 @@ class ListElement(val saveValue: ListValue) : ValueElement<String>(saveValue) {
     ): Float {
         expandHeight = expandHeight.animSmooth(if (expansion) 16F * (saveValue.values.size - 1F) else 0F, 0.5F)
         val percent = expandHeight / (16F * (saveValue.values.size - 1F))
-        FontLoaders.SF20.drawString(value.name, x + 10F, y + 10F - FontLoaders.SF20.height / 2F + 2F, -1)
+        FontLoaders.SF20.drawStringWithShadow(
+            value.name,
+            x + 10F.toDouble(),
+            y + 10F - FontLoaders.SF20.height / 2F + 2F.toDouble(),
+            -1
+        )
         RenderUtils.originalRoundedRect(
             x + width - 18F - maxSubWidth,
             y + 2F,
@@ -52,16 +57,21 @@ class ListElement(val saveValue: ListValue) : ValueElement<String>(saveValue) {
         RenderUtils.drawImage(expanding, -4, -4, 8, 8)
         glPopMatrix()
         glPopMatrix()
-        FontLoaders.SF20.drawString(value.get(), x + width - 14F - maxSubWidth, y + 6F, -1)
+        FontLoaders.SF20.drawStringWithShadow(
+            value.get(),
+            x + width - 14F - maxSubWidth.toDouble(),
+            y + 6F.toDouble(),
+            -1
+        )
         glPushMatrix()
         GlStateManager.translate(x + width - 14F - maxSubWidth, y + 7F, 0F)
         GlStateManager.scale(percent, percent, percent)
         var vertHeight = 0F
         if (percent > 0F) for (subV in unusedValues) {
-            FontLoaders.SF20.drawString(
+            FontLoaders.SF20.drawStringWithShadow(
                 subV,
-                0F,
-                (16F + vertHeight) * percent - 1F,
+                0F.toDouble(),
+                (16F + vertHeight) * percent - 1F.toDouble(),
                 Color(.5F, .5F, .5F, percent.coerceIn(0F, 1F)).rgb
             )
             vertHeight += 16F

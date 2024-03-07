@@ -1,6 +1,6 @@
 package net.aspw.client.visual.client.clickgui.tab.components
 
-import net.aspw.client.util.render.RenderUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.clickgui.tab.ColorManager
 import net.aspw.client.visual.client.clickgui.tab.extensions.animSmooth
 import java.awt.Color

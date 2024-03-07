@@ -1,10 +1,10 @@
 package net.aspw.client.features.api
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.KeyEvent
 import net.aspw.client.event.Listenable
-import net.aspw.client.util.MinecraftInstance
+import net.aspw.client.utils.MinecraftInstance
 
 object MacroManager : MinecraftInstance(), Listenable {
 
@@ -13,10 +13,10 @@ object MacroManager : MinecraftInstance(), Listenable {
     @EventTarget
     fun onKey(event: KeyEvent) {
         mc.thePlayer ?: return
-        Client.commandManager
+        Launch.commandManager
         macroMapping.filter { it.key == event.key }.forEach {
             if (it.value.startsWith("."))
-                Client.commandManager.executeCommands(it.value)
+                Launch.commandManager.executeCommands(it.value)
             else
                 mc.thePlayer.sendChatMessage(it.value)
         }

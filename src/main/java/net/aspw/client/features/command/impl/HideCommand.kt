@@ -1,10 +1,10 @@
 package net.aspw.client.features.command.impl
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.ClientUtils
+import net.aspw.client.utils.ClientUtils
 
 class HideCommand : Command("hide", emptyArray()) {
 
@@ -16,14 +16,14 @@ class HideCommand : Command("hide", emptyArray()) {
             when {
                 args[1].equals("list", true) -> {
                     chat("§c§lHidden")
-                    Client.moduleManager.modules.filter { !it.array }.forEach {
+                    Launch.moduleManager.modules.filter { !it.array }.forEach {
                         ClientUtils.displayChatMessage("§6> §c${it.name}")
                     }
                     return
                 }
 
                 args[1].equals("clear", true) -> {
-                    for (module in Client.moduleManager.modules)
+                    for (module in Launch.moduleManager.modules)
                         module.array = true
 
                     chat("Cleared hidden modules.")
@@ -31,7 +31,7 @@ class HideCommand : Command("hide", emptyArray()) {
                 }
 
                 args[1].equals("reset", true) -> {
-                    for (module in Client.moduleManager.modules)
+                    for (module in Launch.moduleManager.modules)
                         module.array = module::class.java.getAnnotation(ModuleInfo::class.java).array
 
                     chat("Reset hidden modules.")
@@ -42,13 +42,13 @@ class HideCommand : Command("hide", emptyArray()) {
                     if (args.size < 3) {
                         chatSyntax("hide category <name>")
                         return
-                    } else if (Client.moduleManager.modules.find {
+                    } else if (Launch.moduleManager.modules.find {
                             it.category.displayName.equals(
                                 args[2],
                                 true
                             )
                         } != null) {
-                        Client.moduleManager.modules.filter { it.category.displayName.equals(args[2], true) }
+                        Launch.moduleManager.modules.filter { it.category.displayName.equals(args[2], true) }
                             .forEach { it.array = false }
                         chat("All modules in category §7${args[2]}§3 is now §a§lhidden.")
                         return
@@ -60,7 +60,7 @@ class HideCommand : Command("hide", emptyArray()) {
 
                 else -> {
                     // Get module by name
-                    val module = Client.moduleManager.getModule(args[1])
+                    val module = Launch.moduleManager.getModule(args[1])
 
                     if (module == null) {
                         chat("Module §a§l${args[1]}§3 not found.")
@@ -86,7 +86,7 @@ class HideCommand : Command("hide", emptyArray()) {
         val moduleName = args[0]
         when (args.size) {
             1 -> {
-                val moduleList = Client.moduleManager.modules
+                val moduleList = Launch.moduleManager.modules
                     .map { it.name }
                     .filter { it.startsWith(moduleName, true) }
                     .toMutableList()

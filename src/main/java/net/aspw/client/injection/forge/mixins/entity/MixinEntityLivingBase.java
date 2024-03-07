@@ -1,16 +1,14 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
-import net.aspw.client.Client;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+import net.aspw.client.Launch;
 import net.aspw.client.event.JumpEvent;
 import net.aspw.client.features.module.impl.movement.Jesus;
 import net.aspw.client.features.module.impl.movement.NoJumpDelay;
-import net.aspw.client.features.module.impl.movement.Sprint;
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.features.module.impl.visual.SilentView;
 import net.aspw.client.features.module.impl.visual.VisualAbilities;
 import net.aspw.client.protocol.ProtocolBase;
-import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.util.MovementUtils;
+import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,7 +17,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
-import net.raphimc.vialoader.util.VersionEnum;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -39,21 +36,6 @@ import java.util.Objects;
 public abstract class MixinEntityLivingBase extends MixinEntity {
 
     /**
-     * The Swing progress int.
-     */
-    @Shadow
-    public int swingProgressInt;
-    /**
-     * The Is swing in progress.
-     */
-    @Shadow
-    public boolean isSwingInProgress;
-    /**
-     * The Swing progress.
-     */
-    @Shadow
-    public float swingProgress;
-    /**
      * The Is jumping.
      */
     @Shadow
@@ -63,6 +45,12 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
      */
     @Shadow
     public int jumpTicks;
+
+    @Shadow
+    public float moveStrafing;
+
+    @Shadow
+    public float moveForward;
 
     /**
      * Gets jump upwards motion.
@@ -130,74 +118,8 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
     @Shadow
     protected abstract void updateAITick();
 
-    /**
-     * The Render yaw offset.
-     */
     @Shadow
-    public float renderYawOffset;
-
-    /**
-     * The Rotation yaw head.
-     */
-    @Shadow
-    public float rotationYawHead;
-
-    @Shadow
-    public float prevRotationYawHead;
-
-    @Shadow
-    public float prevRenderYawOffset;
-
-    /**
-     * Update distance float.
-     *
-     * @param p_1101461 the p 1101461
-     * @param p_1101462 the p 1101462
-     * @return the float
-     * @author As_pw
-     * @reason SilentView
-     */
-    @Overwrite
-    protected float updateDistance(float p_1101461, float p_1101462) {
-        float rotationYaw = this.rotationYaw;
-        final SilentView silentView = Objects.requireNonNull(Client.moduleManager.getModule(SilentView.class));
-        if (silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP) {
-            if (this.swingProgress > 0F && !silentView.getBodyLocked()) {
-                p_1101461 = silentView.getPlayerYaw();
-            }
-            rotationYaw = silentView.getPlayerYaw();
-            rotationYawHead = silentView.getPlayerYaw();
-        }
-        float f = MathHelper.wrapAngleTo180_float(p_1101461 - this.renderYawOffset);
-        if (silentView.getBodyLocked() && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP)
-            this.renderYawOffset += f;
-        else this.renderYawOffset += f * 0.3F;
-        float f1 = MathHelper.wrapAngleTo180_float(rotationYaw - this.renderYawOffset);
-        boolean flag = f1 < 90.0F || f1 >= 90.0F;
-
-        if (silentView.getBodyLocked() && silentView.getState() && silentView.getPlayerYaw() != null && (EntityLivingBase) (Object) this instanceof EntityPlayerSP) {
-            f1 = 0.0F;
-        }
-
-        if (f1 < -75.0F) {
-            f1 = -75.0F;
-        }
-
-        if (f1 >= 75.0F) {
-            f1 = 75.0F;
-        }
-
-        this.renderYawOffset = rotationYaw - f1;
-
-        if (f1 * f1 > 2500.0F) {
-            this.renderYawOffset += f1 * 0.2F;
-        }
-
-        if (flag) {
-            p_1101462 *= -1.0F;
-        }
-
-        return p_1101462;
+    protected void updateEntityActionState() {
     }
 
     /**
@@ -209,7 +131,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
     @Overwrite
     protected void jump() {
         final JumpEvent jumpEvent = new JumpEvent(this.getJumpUpwardsMotion(), this.rotationYaw);
-        Client.eventManager.callEvent(jumpEvent);
+        Launch.eventManager.callEvent(jumpEvent);
         if (jumpEvent.isCancelled())
             return;
 
@@ -219,12 +141,10 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
             this.motionY += (float) (this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F;
 
         if (this.isSprinting()) {
-            final Sprint sprint = Objects.requireNonNull(Client.moduleManager.getModule(Sprint.class));
-            if (sprint.getState() && sprint.getAllDirectionsValue().get())
-                jumpEvent.setYaw(MovementUtils.getRawDirection());
-            float f = jumpEvent.getYaw() * ((float) Math.PI / 180F);
-            this.motionX -= MathHelper.sin(f) * 0.2F;
-            this.motionZ += MathHelper.cos(f) * 0.2F;
+            float f = jumpEvent.getYaw() * 0.017453292F;
+
+            this.motionX -= (MathHelper.sin(f) * 0.2F);
+            this.motionZ += (MathHelper.cos(f) * 0.2F);
         }
 
         this.isAirBorne = true;
@@ -232,13 +152,13 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @Inject(method = "onLivingUpdate", at = @At("HEAD"))
     private void headLiving(CallbackInfo callbackInfo) {
-        if (Objects.requireNonNull(Client.moduleManager.getModule(NoJumpDelay.class)).getState())
+        if (Objects.requireNonNull(Launch.moduleManager.getModule(NoJumpDelay.class)).getState())
             jumpTicks = 0;
     }
 
     @Inject(method = "onLivingUpdate", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/EntityLivingBase;isJumping:Z", ordinal = 1))
     private void onJumpSection(CallbackInfo callbackInfo) {
-        final Jesus jesus = Objects.requireNonNull(Client.moduleManager.getModule(Jesus.class));
+        final Jesus jesus = Objects.requireNonNull(Launch.moduleManager.getModule(Jesus.class));
 
         if (jesus.getState() && !isJumping && !isSneaking() && isInWater() &&
                 jesus.modeValue.get().equalsIgnoreCase("Swim")) {
@@ -248,7 +168,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @Inject(method = "isPotionActive(Lnet/minecraft/potion/Potion;)Z", at = @At("HEAD"), cancellable = true)
     private void isPotionActive(Potion p_isPotionActive_1_, final CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        final VisualAbilities visualAbilities = Objects.requireNonNull(Client.moduleManager.getModule(VisualAbilities.class));
+        final VisualAbilities visualAbilities = Objects.requireNonNull(Launch.moduleManager.getModule(VisualAbilities.class));
 
         if ((p_isPotionActive_1_ == Potion.confusion || p_isPotionActive_1_ == Potion.blindness) && visualAbilities.getState() && visualAbilities.getConfusionEffect().get())
             callbackInfoReturnable.setReturnValue(false);
@@ -256,7 +176,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @ModifyConstant(method = "onLivingUpdate", constant = @Constant(doubleValue = 0.005D))
     private double ViaVersion_MovementThreshold(double constant) {
-        if (ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning())
+        if (ProtocolBase.getManager().getTargetVersion().newerThan(ProtocolVersion.v1_8) && !MinecraftInstance.mc.isIntegratedServerRunning())
             return 0.003D;
         return 0.005D;
     }

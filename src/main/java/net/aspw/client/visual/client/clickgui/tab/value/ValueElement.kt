@@ -1,6 +1,6 @@
 package net.aspw.client.visual.client.clickgui.tab.value
 
-import net.aspw.client.util.MinecraftInstance
+import net.aspw.client.utils.MinecraftInstance
 import net.aspw.client.value.Value
 
 import java.awt.Color

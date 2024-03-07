@@ -9,7 +9,7 @@ import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 
 @ModuleInfo(
-    name = "Animations", description = "",
+    name = "Animations",
     category = ModuleCategory.VISUAL,
     forceNoSound = true,
     onlyEnable = true,
@@ -65,13 +65,15 @@ class Animations : Module() {
                 "1.7",
                 "1.8",
                 "Flux",
-                "Smooth"
+                "Smooth",
+                "Dash"
             ), "1.8"
         )
 
         @JvmField
         val thirdPersonBlockingValue = ListValue(
             "ThirdPerson-Blocking", arrayOf(
+                "Off",
                 "1.7",
                 "1.8"
             ), "1.8"
@@ -81,13 +83,16 @@ class Animations : Module() {
         val tabAnimations = ListValue("Tab-Animation", arrayOf("None", "Zoom", "Slide"), "None")
 
         @JvmField
-        val sigmaHeld = BoolValue("SigmaHeld", false)
+        val fankeyBobbing = BoolValue("FankeyBobbing", false)
 
         @JvmField
         val cancelEquip = BoolValue("CancelEquip", false)
 
         @JvmField
         val blockingOnly = BoolValue("CancelEquip-BlockingOnly", true) { cancelEquip.get() }
+
+        @JvmField
+        val sneakLength = FloatValue("Sneak-Length", 0f, -1f, 0f)
 
         @JvmField
         val scale = FloatValue("Scale", 0f, -0.5f, 0.5f)
@@ -114,7 +119,7 @@ class Animations : Module() {
         val blockPosZ = FloatValue("BlockPos-Z", 0f, -1f, 1f)
 
         @JvmField
-        val SpeedSwing = IntegerValue("Swing-Speed", 0, -15, 4)
+        val SpeedSwing = IntegerValue("Swing-Speed", 0, -15, 5)
 
         @JvmField
         val swingLimit = FloatValue("Swing-Limit", 1f, 0f, 1f)

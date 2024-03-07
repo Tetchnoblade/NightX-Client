@@ -1,12 +1,10 @@
 package net.aspw.client.injection.forge.mixins.network;
 
 import io.netty.buffer.Unpooled;
-import net.aspw.client.Client;
-import net.aspw.client.event.EntityDamageEvent;
+import net.aspw.client.Launch;
 import net.aspw.client.event.EntityMovementEvent;
 import net.aspw.client.event.TeleportEvent;
-import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.visual.client.GuiTeleportation;
+import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui;
 import net.aspw.client.visual.client.clickgui.tab.NewUi;
 import net.minecraft.client.ClientBrandRetriever;
@@ -114,7 +112,7 @@ public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient
 
     @Inject(method = "handleCloseWindow", at = @At("HEAD"), cancellable = true)
     private void handleCloseWindow(final S2EPacketCloseWindow packetIn, final CallbackInfo callbackInfo) {
-        if (this.gameController.currentScreen instanceof GuiChat || this.gameController.currentScreen instanceof NewUi || this.gameController.currentScreen instanceof ClickGui || this.gameController.currentScreen instanceof GuiTeleportation)
+        if (this.gameController.currentScreen instanceof GuiChat || this.gameController.currentScreen instanceof NewUi || this.gameController.currentScreen instanceof ClickGui)
             callbackInfo.cancel();
     }
 
@@ -144,25 +142,7 @@ public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient
         final Entity entity = packetIn.getEntity(this.clientWorldController);
 
         if (entity != null)
-            Client.eventManager.callEvent(new EntityMovementEvent(entity));
-    }
-
-    /**
-     * Handle damage packet.
-     *
-     * @param packetIn     the packet in
-     * @param callbackInfo the callback info
-     */
-    @Inject(method = "handleEntityStatus", at = @At("HEAD"))
-    public void handleDamagePacket(S19PacketEntityStatus packetIn, CallbackInfo callbackInfo) {
-        if (packetIn.getOpCode() == 2) {
-            Entity entity = packetIn.getEntity(this.clientWorldController);
-            if (entity != null) {
-                Client.eventManager.callEvent(new EntityDamageEvent(entity));
-                if (entity instanceof EntityPlayer)
-                    Client.hud.handleDamage((EntityPlayer) entity);
-            }
-        }
+            Launch.eventManager.callEvent(new EntityMovementEvent(entity));
     }
 
     @Redirect(
@@ -249,7 +229,7 @@ public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient
         float f1 = packetIn.getPitch();
 
         TeleportEvent event = new TeleportEvent(new C03PacketPlayer.C06PacketPlayerPosLook(entityplayer.posX, entityplayer.posY, entityplayer.posZ, entityplayer.rotationYaw, entityplayer.rotationPitch, false), d0, d1, d2, f, f1);
-        Client.eventManager.callEvent(event);
+        Launch.eventManager.callEvent(event);
 
         if (event.isCancelled()) {
             return;

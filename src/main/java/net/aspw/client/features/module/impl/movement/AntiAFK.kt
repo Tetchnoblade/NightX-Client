@@ -5,8 +5,9 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.misc.RandomUtils
-import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.utils.RotationUtils
+import net.aspw.client.utils.misc.RandomUtils
+import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -15,7 +16,7 @@ import net.minecraft.client.settings.GameSettings
 import net.minecraft.client.settings.KeyBinding
 import java.util.*
 
-@ModuleInfo(name = "AntiAFK", spacedName = "Anti AFK", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "AntiAFK", spacedName = "Anti AFK", category = ModuleCategory.MOVEMENT)
 class AntiAFK : Module() {
 
     private val swingDelayTimer = MSTimer()
@@ -42,7 +43,7 @@ class AntiAFK : Module() {
                 mc.gameSettings.keyBindForward.pressed = true
 
                 if (delayTimer.hasTimePassed(500)) {
-                    mc.thePlayer.rotationYaw += 180F
+                    RotationUtils.cameraYaw += 180F
                     delayTimer.reset()
                 }
             }
@@ -76,14 +77,14 @@ class AntiAFK : Module() {
                     }
 
                     4 -> {
-                        mc.thePlayer.rotationYaw += RandomUtils.nextFloat(-180.0F, 180.0F)
+                        RotationUtils.cameraYaw += RandomUtils.nextFloat(-180.0F, 180.0F)
                         delayTimer.reset()
                     }
 
                     5 -> {
-                        if (mc.thePlayer.rotationPitch <= -90 || mc.thePlayer.rotationPitch >= 90) mc.thePlayer.rotationPitch =
+                        if (RotationUtils.cameraPitch <= -90 || RotationUtils.cameraPitch >= 90) RotationUtils.cameraPitch =
                             0F
-                        mc.thePlayer.rotationPitch += RandomUtils.nextFloat(-10.0F, 10.0F)
+                        RotationUtils.cameraPitch += RandomUtils.nextFloat(-10.0F, 10.0F)
                         delayTimer.reset()
                     }
                 }
@@ -97,10 +98,10 @@ class AntiAFK : Module() {
                     mc.thePlayer.jump()
 
                 if (rotateValue.get() && delayTimer.hasTimePassed(rotationDelayValue.get().toLong())) {
-                    mc.thePlayer.rotationYaw += rotationAngleValue.get()
-                    if (mc.thePlayer.rotationPitch <= -90 || mc.thePlayer.rotationPitch >= 90) mc.thePlayer.rotationPitch =
+                    RotationUtils.cameraYaw += rotationAngleValue.get()
+                    if (RotationUtils.cameraPitch <= -90 || RotationUtils.cameraPitch >= 90) RotationUtils.cameraPitch =
                         0F
-                    mc.thePlayer.rotationPitch += RandomUtils.nextFloat(0F, 1F) * 2 - 1
+                    RotationUtils.cameraPitch += RandomUtils.nextFloat(0F, 1F) * 2 - 1
                     delayTimer.reset()
                 }
 

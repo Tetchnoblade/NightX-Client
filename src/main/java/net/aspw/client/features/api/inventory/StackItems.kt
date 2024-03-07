@@ -1,6 +1,6 @@
 package net.aspw.client.features.api.inventory
 
-import net.aspw.client.util.item.ItemUtils
+import net.aspw.client.utils.item.ItemUtils
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.init.Items
 import net.minecraft.item.Item

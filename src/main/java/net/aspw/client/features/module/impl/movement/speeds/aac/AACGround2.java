@@ -1,10 +1,10 @@
 package net.aspw.client.features.module.impl.movement.speeds.aac;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
-import net.aspw.client.util.MovementUtils;
+import net.aspw.client.utils.MovementUtils;
 
 /**
  * The type Aac ground 2.
@@ -27,7 +27,7 @@ public class AACGround2 extends SpeedMode {
         if (!MovementUtils.isMoving())
             return;
 
-        mc.timer.timerSpeed = Client.moduleManager.getModule(Speed.class).aacGroundTimerValue.get();
+        mc.timer.timerSpeed = Launch.moduleManager.getModule(Speed.class).aacGroundTimerValue.get();
         MovementUtils.strafe(0.02F);
     }
 

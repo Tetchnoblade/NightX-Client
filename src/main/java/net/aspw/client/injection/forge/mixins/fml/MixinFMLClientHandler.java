@@ -1,6 +1,6 @@
 package net.aspw.client.injection.forge.mixins.fml;
 
-import net.aspw.client.util.splash.CustomSplashProgress;
+import net.aspw.client.utils.splash.CustomSplashProgress;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

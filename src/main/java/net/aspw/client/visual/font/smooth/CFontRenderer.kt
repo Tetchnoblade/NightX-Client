@@ -1,6 +1,5 @@
 package net.aspw.client.visual.font.smooth
 
-import net.aspw.client.util.render.ColorUtils.stripColor
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.texture.DynamicTexture
 import org.lwjgl.opengl.GL11
@@ -22,21 +21,13 @@ class CFontRenderer(font: Font?, antiAlias: Boolean, fractionalMetrics: Boolean)
         setupBoldItalicIDs()
     }
 
-    fun drawString(text: String, x: Float, y: Float, color: Int): Float {
+    fun drawString(text: String?, x: Float, y: Float, color: Int): Float {
         return this.drawString(text, x.toDouble(), y.toDouble(), color, false)
     }
 
     fun drawStringWithShadow(text: String?, x: Double, y: Double, color: Int): Float {
         val shadowWidth = drawString(text, x + 0.5, y + 0.5, color, true)
         return Math.max(shadowWidth, drawString(text, x, y, color, false))
-    }
-
-    fun drawStringWithOutline(str: String?, x: Float, y: Float, color: Int, outline: Int) {
-        this.drawString(stripColor(str), (x - 1f).toDouble(), y.toDouble(), outline, false)
-        this.drawString(stripColor(str), (x + 1f).toDouble(), y.toDouble(), outline, false)
-        this.drawString(stripColor(str), x.toDouble(), (y + 1f).toDouble(), outline, false)
-        this.drawString(stripColor(str), x.toDouble(), (y - 1f).toDouble(), outline, false)
-        this.drawString(stripColor(str), x.toDouble(), y.toDouble(), color, false)
     }
 
     fun drawCenteredString(text: String, x: Float, y: Float, color: Int): Float {
@@ -50,10 +41,6 @@ class CFontRenderer(font: Font?, antiAlias: Boolean, fractionalMetrics: Boolean)
             y.toDouble(),
             color
         )
-    }
-
-    fun drawCenteredStringWithShadow(text: String, x: Double, y: Double, color: Int): Float {
-        return drawStringWithShadow(text, x - (getStringWidth(text) / 2).toDouble() - 1, y, color)
     }
 
     fun drawString(text: String?, x: Double, y: Double, color: Int, shadow: Boolean): Float {
@@ -259,73 +246,6 @@ class CFontRenderer(font: Font?, antiAlias: Boolean, fractionalMetrics: Boolean)
         GL11.glEnable(3553)
     }
 
-    fun wrapWords(text: String, width: Double): List<String> {
-        val finalWords = ArrayList<String>()
-        if (getStringWidth(text).toDouble() > width) {
-            val words = text.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            var currentWord = ""
-            var lastColorCode = 65535
-            val n = words.size
-            var n2 = 0
-            while (n2 < n) {
-                val word = words[n2]
-                var i = 0
-                while (i < word.toCharArray().size) {
-                    val c = word.toCharArray()[i]
-                    if (c == '\u00a7' && i < word.toCharArray().size - 1) {
-                        lastColorCode = word.toCharArray()[i + 1].code
-                    }
-                    ++i
-                }
-                currentWord = if (getStringWidth("$currentWord$word ").toDouble() < width) {
-                    "$currentWord$word "
-                } else {
-                    finalWords.add(currentWord)
-                    (167 + lastColorCode).toString() + word + " "
-                }
-                ++n2
-            }
-            if (currentWord.length > 0) {
-                if (getStringWidth(currentWord).toDouble() < width) {
-                    finalWords.add((167 + lastColorCode).toString() + currentWord + " ")
-                    currentWord = ""
-                } else {
-                    for (s in formatString(currentWord, width)) {
-                        finalWords.add(s)
-                    }
-                }
-            }
-        } else {
-            finalWords.add(text)
-        }
-        return finalWords
-    }
-
-    fun formatString(string: String, width: Double): List<String> {
-        val finalWords = ArrayList<String>()
-        var currentWord = ""
-        var lastColorCode = 65535
-        val chars = string.toCharArray()
-        var i = 0
-        while (i < chars.size) {
-            val c = chars[i]
-            if (c == '\u00a7' && i < chars.size - 1) {
-                lastColorCode = chars[i + 1].code
-            }
-            currentWord = if (getStringWidth(currentWord + c).toDouble() < width) {
-                currentWord + c
-            } else {
-                finalWords.add(currentWord)
-                (167 + lastColorCode).toString() + c.toString()
-            }
-            ++i
-        }
-        if (currentWord.length > 0) {
-            finalWords.add(currentWord)
-        }
-        return finalWords
-    }
-
     private fun setupMinecraftColorcodes() {
         var index = 0
         while (index < 32) {
@@ -344,42 +264,5 @@ class CFontRenderer(font: Font?, antiAlias: Boolean, fractionalMetrics: Boolean)
             colorCode[index] = red and 255 shl 16 or (green and 255 shl 8) or (blue and 255)
             ++index
         }
-    }
-
-    fun trimStringToWidth(text: CharSequence, width: Int, reverse: Boolean): String {
-        val builder = StringBuilder()
-        var f = 0.0f
-        val i = if (reverse) text.length - 1 else 0
-        val j = if (reverse) -1 else 1
-        var flag = false
-        var flag1 = false
-        var k = i
-        while (k >= 0 && k < text.length && f < width) {
-            val c0 = text[k]
-            val f1 = getStringWidth(c0.toString()).toFloat()
-            if (flag) {
-                flag = false
-                if (c0 != 'l' && c0 != 'L') {
-                    if (c0 == 'r' || c0 == 'R') {
-                        flag1 = false
-                    }
-                } else {
-                    flag1 = true
-                }
-            } else if (f1 < 0.0f) {
-                flag = true
-            } else {
-                f += f1
-                if (flag1) ++f
-            }
-            if (f > width) break
-            if (reverse) {
-                builder.insert(0, c0)
-            } else {
-                builder.append(c0)
-            }
-            k += j
-        }
-        return builder.toString()
     }
 }

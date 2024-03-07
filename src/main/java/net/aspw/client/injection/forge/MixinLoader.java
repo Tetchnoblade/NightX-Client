@@ -1,5 +1,6 @@
 package net.aspw.client.injection.forge;
 
+import net.aspw.client.injection.transformers.ForgeNetworkTransformer;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.MixinEnvironment;
@@ -24,7 +25,7 @@ public class MixinLoader implements IFMLLoadingPlugin {
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[0];
+        return new String[]{ForgeNetworkTransformer.class.getName()};
     }
 
     @Override

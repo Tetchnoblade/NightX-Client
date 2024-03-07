@@ -12,7 +12,6 @@ import net.minecraft.item.ItemArmor
 @ModuleInfo(
     name = "AntiTeams",
     spacedName = "Anti Teams",
-    description = "",
     category = ModuleCategory.TARGETS,
     array = false
 )

@@ -1,15 +1,15 @@
 package net.aspw.client.features.module.impl.player
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.RotationUtils
-import net.aspw.client.util.block.BlockUtils.getCenterDistance
-import net.aspw.client.util.block.BlockUtils.searchBlocks
-import net.aspw.client.util.timer.TickTimer
+import net.aspw.client.utils.RotationUtils
+import net.aspw.client.utils.block.BlockUtils.getCenterDistance
+import net.aspw.client.utils.block.BlockUtils.searchBlocks
+import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -24,7 +24,7 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.Vec3
 import kotlin.math.roundToInt
 
-@ModuleInfo(name = "Nuker", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "Nuker", category = ModuleCategory.PLAYER)
 class Nuker : Module() {
 
     /**
@@ -148,7 +148,7 @@ class Nuker : Module() {
                 attackedBlocks.add(blockPos)
 
                 // Call auto tool
-                val autoTool = Client.moduleManager.getModule(AutoTool::class.java) as AutoTool
+                val autoTool = Launch.moduleManager.getModule(AutoTool::class.java) as AutoTool
                 if (autoTool.state)
                     autoTool.switchSlot(blockPos)
 

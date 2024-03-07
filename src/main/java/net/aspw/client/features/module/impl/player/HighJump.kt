@@ -7,12 +7,12 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.MovementUtils
+import net.aspw.client.utils.MovementUtils
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
 import java.util.*
 
-@ModuleInfo(name = "HighJump", spacedName = "High Jump", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "HighJump", spacedName = "High Jump", category = ModuleCategory.PLAYER)
 class HighJump : Module() {
     private val heightValue = FloatValue("Height", 5f, 1.0f, 10f, "m")
     private val modeValue =

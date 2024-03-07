@@ -2,10 +2,13 @@ package net.aspw.client.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.aspw.client.Client;
-import net.aspw.client.config.configs.*;
-import net.aspw.client.util.ClientUtils;
-import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.Launch;
+import net.aspw.client.config.configs.AccountsConfig;
+import net.aspw.client.config.configs.FriendsConfig;
+import net.aspw.client.config.configs.ModulesConfig;
+import net.aspw.client.config.configs.ValuesConfig;
+import net.aspw.client.utils.ClientUtils;
+import net.aspw.client.utils.MinecraftInstance;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -22,7 +25,7 @@ public class FileManager extends MinecraftInstance {
     /**
      * The Dir.
      */
-    public File dir = new File(mc.mcDataDir, Client.CLIENT_FOLDER);
+    public File dir = new File(mc.mcDataDir, Launch.CLIENT_FOLDER);
     /**
      * The Settings dir.
      */
@@ -31,10 +34,6 @@ public class FileManager extends MinecraftInstance {
      * The Sounds dir.
      */
     public final File soundsDir = new File(dir, "sounds");
-    /**
-     * The Themes dir.
-     */
-    public final File themesDir = new File(dir, "themes");
     /**
      * The Modules config.
      */
@@ -51,10 +50,6 @@ public class FileManager extends MinecraftInstance {
      * The Friends config.
      */
     public final FriendsConfig friendsConfig = new FriendsConfig(new File(dir, "friends.json"));
-    /**
-     * The Hud config.
-     */
-    public final FileConfig hudConfig = new HudConfig(new File(dir, "hud.json"));
 
     /**
      * Instantiates a new File manager.
@@ -75,9 +70,6 @@ public class FileManager extends MinecraftInstance {
 
         if (!soundsDir.exists())
             soundsDir.mkdir();
-
-        if (!themesDir.exists())
-            themesDir.mkdir();
     }
 
     /**
@@ -141,7 +133,7 @@ public class FileManager extends MinecraftInstance {
     }
 
     private void saveConfig(final FileConfig config, final boolean ignoreStarting) {
-        if (!ignoreStarting && Client.INSTANCE.isStarting())
+        if (!ignoreStarting && Launch.INSTANCE.isStarting())
             return;
 
         try {

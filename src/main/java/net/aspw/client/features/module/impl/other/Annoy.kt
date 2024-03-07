@@ -6,18 +6,16 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.Rotation
-import net.aspw.client.util.RotationUtils
-import net.aspw.client.value.BoolValue
+import net.aspw.client.utils.Rotation
+import net.aspw.client.utils.RotationUtils
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 
-@ModuleInfo(name = "Annoy", description = "", category = ModuleCategory.OTHER)
+@ModuleInfo(name = "Annoy", category = ModuleCategory.OTHER)
 class Annoy : Module() {
     private val yawModeValue = ListValue("YawMove", arrayOf("None", "Jitter", "Spin", "Back"), "Spin")
     private val pitchModeValue = ListValue("PitchMode", arrayOf("None", "Down", "Up", "Jitter"), "Down")
     private val spinSpeed = IntegerValue("SpinSpeed", 20, 0, 40) { yawModeValue.get().equals("spin", true) }
-    private val rotateValue = BoolValue("SilentRotate", true)
 
     private var yaw = 0f
     private var pitch = 0f
@@ -37,7 +35,7 @@ class Annoy : Module() {
     fun onUpdate(event: UpdateEvent) {
         when (yawModeValue.get().lowercase()) {
             "none" -> {
-                yaw = mc.thePlayer.rotationYaw
+                yaw = RotationUtils.cameraYaw
             }
 
             "spin" -> {
@@ -50,17 +48,17 @@ class Annoy : Module() {
             }
 
             "jitter" -> {
-                yaw = mc.thePlayer.rotationYaw + if (mc.thePlayer.ticksExisted % 2 == 0) 90F else -90F
+                yaw = RotationUtils.cameraYaw + if (mc.thePlayer.ticksExisted % 2 == 0) 90F else -90F
             }
 
             "back" -> {
-                yaw = mc.thePlayer.rotationYaw + 180f
+                yaw = RotationUtils.cameraYaw + 180f
             }
         }
 
         when (pitchModeValue.get().lowercase()) {
             "none" -> {
-                pitch = mc.thePlayer.rotationPitch
+                pitch = RotationUtils.cameraPitch
             }
 
             "up" -> {
@@ -81,11 +79,6 @@ class Annoy : Module() {
             }
         }
 
-        if (rotateValue.get()) {
-            RotationUtils.setTargetRotation(Rotation(yaw, pitch))
-        } else {
-            mc.thePlayer.rotationYaw = yaw
-            mc.thePlayer.rotationPitch = pitch
-        }
+        RotationUtils.setTargetRotation(Rotation(yaw, pitch))
     }
 }

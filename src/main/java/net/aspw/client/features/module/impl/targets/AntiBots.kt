@@ -1,13 +1,13 @@
 package net.aspw.client.features.module.impl.targets
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.ClientUtils
-import net.aspw.client.util.EntityUtils
-import net.aspw.client.util.render.ColorUtils.stripColor
+import net.aspw.client.utils.ClientUtils
+import net.aspw.client.utils.EntityUtils
+import net.aspw.client.utils.render.ColorUtils.stripColor
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
@@ -27,7 +27,6 @@ import java.util.stream.Stream
 @ModuleInfo(
     name = "AntiBots",
     spacedName = "Anti Bots",
-    description = "",
     category = ModuleCategory.TARGETS,
     array = false
 )
@@ -91,7 +90,7 @@ class AntiBots : Module() {
             if (ent.isEmpty()) return
             for (e in ent) {
                 mc.theWorld.removeEntity(e)
-                if (debugValue.get()) ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§fRemoved §r" + e.name + " §fdue to it being a bot.")
+                if (debugValue.get()) ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "§fRemoved §r" + e.name + " §fdue to it being a bot.")
             }
         }
     }
@@ -109,7 +108,7 @@ class AntiBots : Module() {
                     if (!wasAdded) wasAdded =
                         data.profile.name == mc.thePlayer.name else if (!mc.thePlayer.isSpectator && !mc.thePlayer.capabilities.allowFlying && (!czechHekPingCheckValue.get() || data.ping != 0) && (!czechHekGMCheckValue.get() || data.gameMode != WorldSettings.GameType.NOT_SET)) {
                         event.cancelEvent()
-                        if (debugValue.get()) ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§fPrevented §r" + data.profile.name + " §ffrom spawning.")
+                        if (debugValue.get()) ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "§fPrevented §r" + data.profile.name + " §ffrom spawning.")
                     }
                 }
             }
@@ -171,7 +170,7 @@ class AntiBots : Module() {
         @JvmStatic
         fun isBot(entity: EntityLivingBase): Boolean {
             if (entity !is EntityPlayer || entity === mc.thePlayer) return false
-            val antiBots = Client.moduleManager.getModule(AntiBots::class.java)
+            val antiBots = Launch.moduleManager.getModule(AntiBots::class.java)
             if (antiBots == null || !antiBots.state) return false
             if (antiBots.experimentalNPCDetection.get() && (entity.getDisplayName().unformattedText.lowercase(Locale.getDefault())
                     .contains("npc") || entity.getDisplayName().unformattedText.lowercase(

@@ -3,7 +3,7 @@ package net.aspw.client.config.configs;
 import com.google.gson.*;
 import net.aspw.client.config.FileConfig;
 import net.aspw.client.config.FileManager;
-import net.aspw.client.util.ClientUtils;
+import net.aspw.client.utils.ClientUtils;
 
 import java.io.*;
 import java.util.ArrayList;

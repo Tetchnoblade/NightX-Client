@@ -8,7 +8,7 @@ import net.aspw.client.features.module.ModuleInfo
 import net.minecraft.network.play.server.S2DPacketOpenWindow
 import java.util.*
 
-@ModuleInfo(name = "AntiFrozen", spacedName = "Anti Frozen", description = "", category = ModuleCategory.OTHER)
+@ModuleInfo(name = "AntiFrozen", spacedName = "Anti Frozen", category = ModuleCategory.OTHER)
 class AntiFrozen : Module() {
 
     @EventTarget

@@ -1,22 +1,19 @@
 package net.aspw.client.injection.forge.mixins.client;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.other.FastPlace;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
-import net.aspw.client.protocol.ProtocolBase;
-import net.aspw.client.protocol.ProtocolMod;
-import net.aspw.client.protocol.api.AttackFixer;
-import net.aspw.client.util.CPSCounter;
-import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.protocol.api.ProtocolFixes;
+import net.aspw.client.utils.CPSCounter;
+import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.visual.client.GuiMainMenu;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.main.GameConfiguration;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.particle.EffectRenderer;
@@ -93,17 +90,12 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "startGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;checkGLError(Ljava/lang/String;)V", ordinal = 2, shift = At.Shift.AFTER))
     private void startGame(CallbackInfo callbackInfo) {
-        Client.INSTANCE.startClient();
-    }
-
-    @Inject(method = "<init>", at = @At("RETURN"))
-    public void startVia(GameConfiguration p_i45547_1_, CallbackInfo ci) {
-        ProtocolBase.init(ProtocolMod.PLATFORM);
+        Launch.INSTANCE.startClient();
     }
 
     @ModifyArg(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", remap = false))
     private String setTitle(String newTitle) {
-        return Client.CLIENT_BEST + " Client | " + Client.CLIENT_VERSION;
+        return Launch.CLIENT_BEST + " Client";
     }
 
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
@@ -151,7 +143,7 @@ public abstract class MixinMinecraft {
             skipRenderWorld = false;
         }
 
-        Client.eventManager.callEvent(new ScreenEvent(currentScreen));
+        Launch.eventManager.callEvent(new ScreenEvent(currentScreen));
     }
 
     @Inject(method = "runGameLoop", at = @At("HEAD"))
@@ -165,25 +157,25 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "runTick", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;joinPlayerCounter:I", shift = At.Shift.BEFORE))
     private void onTick(final CallbackInfo callbackInfo) {
-        Client.eventManager.callEvent(new TickEvent());
+        Launch.eventManager.callEvent(new TickEvent());
     }
 
     @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;dispatchKeypresses()V", shift = At.Shift.AFTER))
     private void onKey(CallbackInfo callbackInfo) {
         if (Keyboard.getEventKeyState() && currentScreen == null)
-            Client.eventManager.callEvent(new KeyEvent(Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey()));
+            Launch.eventManager.callEvent(new KeyEvent(Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey()));
     }
 
     @Inject(method = "sendClickBlockToController", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/MovingObjectPosition;getBlockPos()Lnet/minecraft/util/BlockPos;"))
     private void onClickBlock(CallbackInfo callbackInfo) {
         if (this.leftClickCounter == 0 && theWorld.getBlockState(objectMouseOver.getBlockPos()).getBlock().getMaterial() != Material.air) {
-            Client.eventManager.callEvent(new ClickBlockEvent(objectMouseOver.getBlockPos(), this.objectMouseOver.sideHit));
+            Launch.eventManager.callEvent(new ClickBlockEvent(objectMouseOver.getBlockPos(), this.objectMouseOver.sideHit));
         }
     }
 
     @Inject(method = "shutdown", at = @At("HEAD"))
     private void shutdown(CallbackInfo callbackInfo) {
-        Client.INSTANCE.stopClient();
+        Launch.INSTANCE.stopClient();
     }
 
     /**
@@ -201,7 +193,7 @@ public abstract class MixinMinecraft {
             if (this.objectMouseOver != null) {
                 switch (this.objectMouseOver.typeOfHit) {
                     case ENTITY:
-                        AttackFixer.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);
+                        ProtocolFixes.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);
                         break;
 
                     case BLOCK:
@@ -227,7 +219,7 @@ public abstract class MixinMinecraft {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;swingItem()V")
     )
     private void fixAttackOrder_VanillaSwing() {
-        AttackFixer.sendConditionalSwing(this.objectMouseOver);
+        ProtocolFixes.sendConditionalSwing(this.objectMouseOver);
     }
 
     @Inject(method = "middleClickMouse", at = @At("HEAD"))
@@ -239,7 +231,7 @@ public abstract class MixinMinecraft {
     private void rightClickMouse(final CallbackInfo callbackInfo) {
         CPSCounter.registerClick(CPSCounter.MouseButton.RIGHT);
 
-        final FastPlace fastPlace = Objects.requireNonNull(Client.moduleManager.getModule(FastPlace.class));
+        final FastPlace fastPlace = Objects.requireNonNull(Launch.moduleManager.getModule(FastPlace.class));
 
         if (fastPlace.getState())
             rightClickDelayTimer = fastPlace.getSpeedValue().get();
@@ -247,7 +239,7 @@ public abstract class MixinMinecraft {
 
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))
     private void loadWorld(WorldClient p_loadWorld_1_, String p_loadWorld_2_, final CallbackInfo callbackInfo) {
-        Client.eventManager.callEvent(new WorldEvent(p_loadWorld_1_));
+        Launch.eventManager.callEvent(new WorldEvent(p_loadWorld_1_));
     }
 
     @Inject(method = "toggleFullscreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setFullscreen(Z)V", remap = false))
@@ -280,7 +272,7 @@ public abstract class MixinMinecraft {
                     return;
 
                 if (this.leftClickCounter == 0)
-                    Client.eventManager.callEvent(new ClickBlockEvent(blockPos, this.objectMouseOver.sideHit));
+                    Launch.eventManager.callEvent(new ClickBlockEvent(blockPos, this.objectMouseOver.sideHit));
 
                 if (this.theWorld.getBlockState(blockPos).getBlock().getMaterial() != Material.air && this.playerController.onPlayerDamageBlock(blockPos, this.objectMouseOver.sideHit)) {
                     this.effectRenderer.addBlockHitEffects(blockPos, this.objectMouseOver.sideHit);

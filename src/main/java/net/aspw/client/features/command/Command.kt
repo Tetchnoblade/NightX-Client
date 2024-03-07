@@ -1,8 +1,8 @@
 package net.aspw.client.features.command
 
-import net.aspw.client.Client
-import net.aspw.client.util.ClientUtils
-import net.aspw.client.util.MinecraftInstance
+import net.aspw.client.Launch
+import net.aspw.client.utils.ClientUtils
+import net.aspw.client.utils.MinecraftInstance
 import java.util.*
 
 abstract class Command(val command: String, val alias: Array<String>) : MinecraftInstance() {
@@ -18,19 +18,19 @@ abstract class Command(val command: String, val alias: Array<String>) : Minecraf
     /**
      * Print [msg] to chat
      */
-    fun chat(msg: String) = ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§3$msg")
+    fun chat(msg: String) = ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + msg)
 
     /**
      * Print [syntax] of command to chat
      */
     protected fun chatSyntax(syntax: String) =
-        ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§r§cSyntax: §7.$syntax")
+        ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "§r§cSyntax: §7.$syntax")
 
     /**
      * Print [syntaxes] of command to chat
      */
     protected fun chatSyntax(syntaxes: Array<String>) {
-        ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§3Syntax:")
+        ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "§3Syntax:")
 
         for (syntax in syntaxes)
             ClientUtils.displayChatMessage(
@@ -45,5 +45,5 @@ abstract class Command(val command: String, val alias: Array<String>) : Minecraf
     /**
      * Print a syntax error to chat
      */
-    protected fun chatSyntaxError() = ClientUtils.displayChatMessage(Client.CLIENT_CHAT + "§3Syntax error")
+    protected fun chatSyntaxError() = ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "§3Syntax error")
 }

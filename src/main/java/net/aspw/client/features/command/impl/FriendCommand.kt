@@ -1,8 +1,8 @@
 package net.aspw.client.features.command.impl
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
-import net.aspw.client.util.misc.StringUtils
+import net.aspw.client.utils.misc.StringUtils
 import java.util.*
 
 class FriendCommand : Command("friend", arrayOf("friends")) {
@@ -11,7 +11,7 @@ class FriendCommand : Command("friend", arrayOf("friends")) {
      */
     override fun execute(args: Array<String>) {
         if (args.size > 1) {
-            val friendsConfig = Client.fileManager.friendsConfig
+            val friendsConfig = Launch.fileManager.friendsConfig
 
             when {
                 args[1].equals("add", ignoreCase = true) -> {
@@ -28,7 +28,7 @@ class FriendCommand : Command("friend", arrayOf("friends")) {
                                 StringUtils.toCompleteString(args, 3)
                             ) else friendsConfig.addFriend(name)
                         ) {
-                            Client.fileManager.saveConfig(friendsConfig)
+                            Launch.fileManager.saveConfig(friendsConfig)
                             chat("§a§l$name§3 was added to your friend list.")
                         } else
                             chat("The name is already in the list.")
@@ -43,7 +43,7 @@ class FriendCommand : Command("friend", arrayOf("friends")) {
                         val name = args[2]
 
                         if (friendsConfig.removeFriend(name)) {
-                            Client.fileManager.saveConfig(friendsConfig)
+                            Launch.fileManager.saveConfig(friendsConfig)
                             chat("§a§l$name§3 was removed from your friend list.")
                         } else
                             chat("This name is not in the list.")
@@ -56,7 +56,7 @@ class FriendCommand : Command("friend", arrayOf("friends")) {
                 args[1].equals("clear", ignoreCase = true) -> {
                     val friends = friendsConfig.friends.size
                     friendsConfig.clearFriends()
-                    Client.fileManager.saveConfig(friendsConfig)
+                    Launch.fileManager.saveConfig(friendsConfig)
                     chat("Removed $friends friend(s).")
                     return
                 }
@@ -90,7 +90,7 @@ class FriendCommand : Command("friend", arrayOf("friends")) {
                     }
 
                     "remove" -> {
-                        return Client.fileManager.friendsConfig.friends
+                        return Launch.fileManager.friendsConfig.friends
                             .map { it.playerName }
                             .filter { it.startsWith(args[1], true) }
                     }

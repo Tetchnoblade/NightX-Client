@@ -4,9 +4,9 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.MovementUtils
-import net.aspw.client.util.block.BlockUtils.collideBlock
-import net.aspw.client.util.block.BlockUtils.getBlock
+import net.aspw.client.utils.MovementUtils
+import net.aspw.client.utils.block.BlockUtils.collideBlock
+import net.aspw.client.utils.block.BlockUtils.getBlock
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
 import net.minecraft.block.Block
@@ -18,7 +18,7 @@ import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
 import java.util.*
 
-@ModuleInfo(name = "Jesus", spacedName = "Jesus", description = "", category = ModuleCategory.MOVEMENT)
+@ModuleInfo(name = "Jesus", spacedName = "Jesus", category = ModuleCategory.MOVEMENT)
 class Jesus : Module() {
     @JvmField
     val modeValue = ListValue(

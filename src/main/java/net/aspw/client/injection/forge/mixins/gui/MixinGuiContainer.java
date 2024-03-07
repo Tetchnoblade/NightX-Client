@@ -1,12 +1,12 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.combat.KillAura;
-import net.aspw.client.features.module.impl.player.Manager;
+import net.aspw.client.features.module.impl.player.InvManager;
 import net.aspw.client.features.module.impl.player.Stealer;
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.util.MinecraftInstance;
-import net.aspw.client.util.render.RenderUtils;
+import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -75,7 +75,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
         if (guiScreen instanceof GuiChest) {
             buttonList.add(killAuraButton = new GuiButton(1024576, 5, 5, 150, 20, "Disable KillAura"));
             buttonList.add(chestStealerButton = new GuiButton(727, 5, 27, 150, 20, "Disable Stealer"));
-            buttonList.add(invManagerButton = new GuiButton(321123, 5, 49, 150, 20, "Disable Manager"));
+            buttonList.add(invManagerButton = new GuiButton(321123, 5, 49, 150, 20, "Disable InvManager"));
         }
 
         lastMS = System.currentTimeMillis();
@@ -84,9 +84,9 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
     @Override
     protected void injectedActionPerformed(GuiButton button) {
-        final KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
-        final Manager invManager = Objects.requireNonNull(Client.moduleManager.getModule(Manager.class));
-        final Stealer stealer = Objects.requireNonNull(Client.moduleManager.getModule(Stealer.class));
+        final KillAura killAura = Objects.requireNonNull(Launch.moduleManager.getModule(KillAura.class));
+        final InvManager invManager = Objects.requireNonNull(Launch.moduleManager.getModule(InvManager.class));
+        final Stealer stealer = Objects.requireNonNull(Launch.moduleManager.getModule(Stealer.class));
         if (button.id == 1024576)
             killAura.setState(false);
         if (button.id == 321123)
@@ -97,9 +97,9 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
     @Inject(method = "drawScreen", at = @At("HEAD"), cancellable = true)
     private void drawScreenHead(CallbackInfo callbackInfo) {
-        Stealer stealer = Objects.requireNonNull(Client.moduleManager.getModule(Stealer.class));
-        KillAura killAura = Objects.requireNonNull(Client.moduleManager.getModule(KillAura.class));
-        Manager invManager = Objects.requireNonNull(Client.moduleManager.getModule(Manager.class));
+        Stealer stealer = Objects.requireNonNull(Launch.moduleManager.getModule(Stealer.class));
+        KillAura killAura = Objects.requireNonNull(Launch.moduleManager.getModule(KillAura.class));
+        InvManager invManager = Objects.requireNonNull(Launch.moduleManager.getModule(InvManager.class));
         final Minecraft mc = MinecraftInstance.mc;
 
         if (progress >= 1F) progress = 1F;
@@ -166,8 +166,8 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
      */
     @Inject(method = "drawScreen", at = @At("RETURN"))
     public void drawScreenReturn(CallbackInfo callbackInfo) {
-        final Animations animMod = Objects.requireNonNull(Client.moduleManager.getModule(Animations.class));
-        Stealer stealer = Objects.requireNonNull(Client.moduleManager.getModule(Stealer.class));
+        final Animations animMod = Objects.requireNonNull(Launch.moduleManager.getModule(Animations.class));
+        Stealer stealer = Objects.requireNonNull(Launch.moduleManager.getModule(Stealer.class));
         final Minecraft mc = MinecraftInstance.mc;
         boolean checkFullSilence = stealer.getState() && stealer.getSilenceValue().get() && !stealer.getStillDisplayValue().get();
 

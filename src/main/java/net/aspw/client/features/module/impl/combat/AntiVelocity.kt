@@ -1,14 +1,14 @@
 package net.aspw.client.features.module.impl.combat
 
-import net.aspw.client.Client
+import net.aspw.client.Launch
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.movement.Speed
-import net.aspw.client.util.MovementUtils
-import net.aspw.client.util.RotationUtils
-import net.aspw.client.util.timer.MSTimer
+import net.aspw.client.utils.MovementUtils
+import net.aspw.client.utils.RotationUtils
+import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
@@ -27,7 +27,6 @@ import kotlin.math.sin
 @ModuleInfo(
     name = "AntiVelocity",
     spacedName = "Anti Velocity",
-    description = "",
     category = ModuleCategory.COMBAT
 )
 
@@ -177,7 +176,7 @@ class AntiVelocity : Module() {
                     } else if (jumpResetMode.get() == "Reduce") {
                         mc.thePlayer.motionY = 0.0
 
-                        val yaw = mc.thePlayer.rotationYaw * 0.017453292F
+                        val yaw = RotationUtils.cameraYaw * 0.017453292F
                         mc.thePlayer.motionX -= MathHelper.sin(yaw) * 0.2
                         mc.thePlayer.motionZ += MathHelper.cos(yaw) * 0.2
 
@@ -330,7 +329,7 @@ class AntiVelocity : Module() {
                     if (
                         mc.thePlayer.hurtResistantTime > 0 &&
                         aacPushYReducerValue.get() &&
-                        !Client.moduleManager[Speed::class.java]!!.state
+                        !Launch.moduleManager[Speed::class.java]!!.state
                     )
                         mc.thePlayer.motionY -= 0.014999993
                 }
@@ -390,7 +389,7 @@ class AntiVelocity : Module() {
     @EventTarget
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
-        val killAura = Client.moduleManager[KillAura::class.java] as KillAura
+        val killAura = Launch.moduleManager[KillAura::class.java] as KillAura
 
         when (modeValue.get().lowercase(Locale.getDefault())) {
             "vulcan" -> {

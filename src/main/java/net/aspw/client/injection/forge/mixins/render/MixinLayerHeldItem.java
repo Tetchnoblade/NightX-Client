@@ -2,7 +2,7 @@ package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -65,16 +65,12 @@ public class MixinLayerHeldItem {
             final UUID uuid = entitylivingbaseIn.getUniqueID();
             final EntityPlayer entityplayer = Minecraft.getMinecraft().theWorld.getPlayerEntityByUUID(uuid);
 
-            if (entityplayer != null && Animations.thirdPersonBlockingValue.get().equals("1.7") && (entityplayer.isBlocking() || PacketManager.isVisualBlocking)) {
-                if (entitylivingbaseIn.isSneaking()) {
-                    ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0325F);
+            if (!Animations.thirdPersonBlockingValue.get().equals("Off") && entityplayer != null && Animations.thirdPersonBlockingValue.get().equals("1.7") && (entityplayer.isBlocking() || PacketManager.isVisualBlocking)) {
+                ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0325F);
+                if (entitylivingbaseIn.isSneaking())
                     GlStateManager.translate(-0.58F, 0.3F, -0.2F);
-                    GlStateManager.rotate(-24390.0F, 137290.0F, -2009900.0F, -2054900.0F);
-                } else {
-                    ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0325F);
-                    GlStateManager.translate(-0.48F, 0.2F, -0.2F);
-                    GlStateManager.rotate(-24390.0F, 137290.0F, -2009900.0F, -2054900.0F);
-                }
+                else GlStateManager.translate(-0.48F, 0.2F, -0.2F);
+                GlStateManager.rotate(-24390.0F, 137290.0F, -2009900.0F, -2054900.0F);
             } else {
                 ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0625F);
             }

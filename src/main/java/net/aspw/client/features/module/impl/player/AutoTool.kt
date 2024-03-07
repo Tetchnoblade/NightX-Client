@@ -4,17 +4,23 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.item.ItemUtils
+import net.aspw.client.utils.item.ItemUtils
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.item.ItemSword
 import net.minecraft.network.play.client.C02PacketUseEntity
 import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.util.BlockPos
 
-@ModuleInfo(name = "AutoTool", spacedName = "Auto Tool", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "AutoTool", spacedName = "Auto Tool", category = ModuleCategory.PLAYER)
 class AutoTool : Module() {
+
     private var attackEnemy = false
     private var spoofedSlot = 0
+
+    override fun onDisable() {
+        attackEnemy = false
+        spoofedSlot = 0
+    }
 
     @EventTarget
     fun onClick(event: ClickBlockEvent) {

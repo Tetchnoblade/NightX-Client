@@ -1,8 +1,8 @@
 package net.aspw.client.visual.client.clickgui.tab.elements
 
-import net.aspw.client.util.MouseUtils
-import net.aspw.client.util.render.RenderUtils
-import net.aspw.client.util.render.Stencil
+import net.aspw.client.utils.MouseUtils
+import net.aspw.client.utils.render.RenderUtils
+import net.aspw.client.utils.render.Stencil
 import net.aspw.client.visual.client.clickgui.tab.ColorManager
 import net.aspw.client.visual.client.clickgui.tab.extensions.animSmooth
 import net.minecraft.client.renderer.GlStateManager

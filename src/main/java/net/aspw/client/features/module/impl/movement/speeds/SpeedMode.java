@@ -1,12 +1,12 @@
 package net.aspw.client.features.module.impl.movement.speeds;
 
-import net.aspw.client.Client;
+import net.aspw.client.Launch;
 import net.aspw.client.event.JumpEvent;
 import net.aspw.client.event.MotionEvent;
 import net.aspw.client.event.MoveEvent;
 import net.aspw.client.event.PacketEvent;
 import net.aspw.client.features.module.impl.movement.Speed;
-import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.utils.MinecraftInstance;
 
 /**
  * The type Speed mode.
@@ -33,7 +33,7 @@ public abstract class SpeedMode extends MinecraftInstance {
      * @return the boolean
      */
     public boolean isActive() {
-        final Speed speed = Client.moduleManager.getModule(Speed.class);
+        final Speed speed = Launch.moduleManager.getModule(Speed.class);
 
         return speed != null && !mc.thePlayer.isSneaking() && speed.getState() && speed.getModeName().equals(modeName);
     }

@@ -7,16 +7,16 @@ import net.aspw.client.event.PacketEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.util.PacketUtils.sendPacketNoEvent
+import net.aspw.client.utils.PacketUtils.sendPacketNoEvent
 import net.aspw.client.value.FloatValue
 import net.minecraft.init.Blocks
 import net.minecraft.network.play.client.C07PacketPlayerDigging
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 
-@ModuleInfo(name = "FastMine", spacedName = "Fast Mine", description = "", category = ModuleCategory.OTHER)
+@ModuleInfo(name = "FastMine", spacedName = "Fast Mine", category = ModuleCategory.OTHER)
 class FastMine : Module() {
-    private val speed = FloatValue("Speed", 1.5f, 1f, 3f)
+    private val speed = FloatValue("Speed", 1.4f, 1f, 3f)
     private var facing: EnumFacing? = null
     private var pos: BlockPos? = null
     private var boost = false

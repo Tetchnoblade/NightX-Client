@@ -1,7 +1,7 @@
 package net.aspw.client.visual.client.clickgui.dropdown;
 
-import net.aspw.client.Client;
-import net.aspw.client.util.MinecraftInstance;
+import net.aspw.client.Launch;
+import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.visual.client.clickgui.dropdown.elements.Element;
 import net.minecraft.util.StringUtils;
 
@@ -23,7 +23,7 @@ public abstract class Panel extends MinecraftInstance {
     public boolean drag;
     private boolean scrollbar;
     private final List<Element> elements;
-    private boolean visible;
+    private final boolean visible;
 
     private float elementsHeight;
 
@@ -49,7 +49,7 @@ public abstract class Panel extends MinecraftInstance {
         if (!visible)
             return;
 
-        final int maxElements = 30;
+        final int maxElements = 100;
 
         if (drag) {
             int nx = x2 + mouseX;
@@ -66,7 +66,7 @@ public abstract class Panel extends MinecraftInstance {
         if (this.scrollbar != scrollbar)
             this.scrollbar = scrollbar;
 
-        Client.clickGui.style.drawPanel(mouseX, mouseY, this);
+        Launch.clickGui.style.drawPanel(mouseX, mouseY, this);
 
         int y = this.y + height - 2;
         int count = 0;
@@ -101,21 +101,20 @@ public abstract class Panel extends MinecraftInstance {
         return false;
     }
 
-    public boolean mouseReleased(int mouseX, int mouseY, int state) {
+    public void mouseReleased(int mouseX, int mouseY, int state) {
         if (!visible)
-            return false;
+            return;
 
         drag = false;
 
         if (!open)
-            return false;
+            return;
 
         for (final Element element : elements) {
             if (element.getY() <= getY() + fade && element.mouseReleased(mouseX, mouseY, state)) {
-                return true;
+                return;
             }
         }
-        return false;
     }
 
     public boolean handleScroll(int mouseX, int mouseY, int wheel) {
@@ -182,10 +181,6 @@ public abstract class Panel extends MinecraftInstance {
         return this.height;
     }
 
-    public boolean getScrollbar() {
-        return this.scrollbar;
-    }
-
     public void setOpen(boolean open) {
         this.open = open;
     }
@@ -194,24 +189,12 @@ public abstract class Panel extends MinecraftInstance {
         return this.open;
     }
 
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
-
-    public boolean isVisible() {
-        return visible;
-    }
-
     public List<Element> getElements() {
         return elements;
     }
 
     public int getFade() {
         return (int) fade;
-    }
-
-    public int getDragged() {
-        return dragged;
     }
 
     private int getElementsHeight() {

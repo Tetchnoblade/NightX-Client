@@ -4,9 +4,9 @@ import net.aspw.client.event.*;
 import net.aspw.client.features.module.Module;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.ModuleInfo;
-import net.aspw.client.util.MovementUtils;
-import net.aspw.client.util.block.BlockUtils;
-import net.aspw.client.util.timer.TickTimer;
+import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.utils.block.BlockUtils;
+import net.aspw.client.utils.timer.TickTimer;
 import net.aspw.client.value.ListValue;
 import net.minecraft.block.BlockAir;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -21,7 +21,7 @@ import net.minecraft.util.MathHelper;
 /**
  * The type Phase.
  */
-@ModuleInfo(name = "Phase", description = "", category = ModuleCategory.PLAYER)
+@ModuleInfo(name = "Phase", category = ModuleCategory.PLAYER)
 public class Phase extends Module {
 
     /**
