@@ -829,6 +829,7 @@ class KillAura : Module() {
         if (rotations.get().equals("Zero", ignoreCase = true)) {
             if (maxTurnSpeed.get() <= 0F)
                 return RotationUtils.serverRotation
+
             return RotationUtils.calculate(getNearestPointBB(mc.thePlayer.getPositionEyes(1F), boundingBox))
         }
         return RotationUtils.serverRotation

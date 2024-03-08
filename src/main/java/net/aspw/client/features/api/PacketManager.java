@@ -4,6 +4,7 @@ import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.combat.KillAura;
+import net.aspw.client.features.module.impl.combat.LegitAura;
 import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.other.BrandSpoofer;
 import net.aspw.client.features.module.impl.visual.Animations;
@@ -77,10 +78,11 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         }
         final KillAura killAura = Objects.requireNonNull(Launch.moduleManager.getModule(KillAura.class));
         final TPAura tpAura = Objects.requireNonNull(Launch.moduleManager.getModule(TPAura.class));
+        final LegitAura legitAura = Objects.requireNonNull(Launch.moduleManager.getModule(LegitAura.class));
         if (Animations.swingLimitOnlyBlocking.get()) {
             if (mc.thePlayer.swingProgress >= 1f)
                 mc.thePlayer.isSwingInProgress = false;
-            if (mc.thePlayer.isBlocking() || (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking())) {
+            if (mc.thePlayer.isBlocking() || (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking() || legitAura.getState() && legitAura.isBlocking())) {
                 if (mc.thePlayer.swingProgress >= Animations.swingLimit.get())
                     mc.thePlayer.isSwingInProgress = false;
             }

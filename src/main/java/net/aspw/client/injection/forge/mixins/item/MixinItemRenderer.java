@@ -2,6 +2,7 @@ package net.aspw.client.injection.forge.mixins.item;
 
 import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.combat.KillAura;
+import net.aspw.client.features.module.impl.combat.LegitAura;
 import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.VisualAbilities;
@@ -193,12 +194,13 @@ public abstract class MixinItemRenderer {
         if (this.itemToRender != null) {
             final KillAura killAura = Objects.requireNonNull(Launch.moduleManager.getModule(KillAura.class));
             final TPAura tpAura = Objects.requireNonNull(Launch.moduleManager.getModule(TPAura.class));
+            final LegitAura legitAura = Objects.requireNonNull(Launch.moduleManager.getModule(LegitAura.class));
 
             if (this.itemToRender.getItem() instanceof ItemMap) {
                 this.renderItemMap(abstractclientplayer, f2, f, f1);
             } else if (abstractclientplayer.getItemInUseCount() > 0
                     || (itemToRender.getItem() instanceof ItemSword && (killAura.getBlockingStatus() || killAura.getFakeBlock()) && !killAura.getAutoBlockModeValue().get().equals("None"))
-                    || itemToRender.getItem() instanceof ItemSword && tpAura.getState() && tpAura.isBlocking() || (itemToRender.getItem() instanceof ItemSword
+                    || itemToRender.getItem() instanceof ItemSword && (tpAura.getState() && tpAura.isBlocking() || legitAura.getState() && legitAura.isBlocking()) || (itemToRender.getItem() instanceof ItemSword
                     && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None"))) {
 
                 EnumAction enumaction = (killAura.getBlockingStatus()) ? EnumAction.BLOCK : this.itemToRender.getItemUseAction();
