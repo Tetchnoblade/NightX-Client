@@ -2,7 +2,6 @@ package net.aspw.client.features.module.impl.combat
 
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion
 import net.aspw.client.event.EventTarget
-import net.aspw.client.event.PacketEvent
 import net.aspw.client.event.UpdateEvent
 import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
@@ -22,7 +21,6 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.network.play.client.C02PacketUseEntity
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C0APacketAnimation
-import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.Vec3
 import java.util.*
 
@@ -49,7 +47,6 @@ class TPAura : Module() {
      */
     private val clickTimer = MSTimer()
     private var tpVectors = arrayListOf<Vec3>()
-    private var thread: Thread? = null
     var isBlocking = false
     private var lastTarget: EntityLivingBase? = null
 
@@ -75,13 +72,10 @@ class TPAura : Module() {
             RotationUtils.faceLook(lastTarget!!, 80f, 120f)
 
         if (!clickTimer.hasTimePassed(attackDelay)) return
-        if (thread == null || !thread!!.isAlive) {
-            tpVectors.clear()
-            clickTimer.reset()
-            thread = Thread { runAttack() }
-            thread!!.start()
-        } else
-            clickTimer.reset()
+
+        runAttack()
+        tpVectors.clear()
+        clickTimer.reset()
     }
 
     private fun runAttack() {
@@ -90,7 +84,7 @@ class TPAura : Module() {
         val targets = arrayListOf<EntityLivingBase>()
         var entityCount = 0
 
-        for (entity in mc.theWorld.loadedEntityList)
+        for (entity in mc.theWorld.loadedEntityList) {
             if (entity is EntityLivingBase && EntityUtils.isSelected(entity, true) && mc.thePlayer.getDistanceToEntity(
                     entity
                 ) <= rangeValue.get()
@@ -106,6 +100,7 @@ class TPAura : Module() {
                 targets.add(entity)
                 entityCount++
             }
+        }
 
         if (targets.isEmpty()) {
             lastTarget = null
@@ -159,12 +154,5 @@ class TPAura : Module() {
                 )
             )
         }
-    }
-
-    @EventTarget
-    fun onPacket(event: PacketEvent) {
-        val packet = event.packet
-        if (packet is S08PacketPlayerPosLook)
-            clickTimer.reset()
     }
 }
