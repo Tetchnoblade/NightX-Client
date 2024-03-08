@@ -66,7 +66,7 @@ class LegitAura : Module() {
     private val clickTimer = MSTimer()
     var isBlocking = false
     private var lastTarget: EntityLivingBase? = null
-
+    private var thread: Thread? = null
     private var attackDelay = 0L
 
     override fun onDisable() {
@@ -95,8 +95,11 @@ class LegitAura : Module() {
 
         if (!clickTimer.hasTimePassed(attackDelay)) return
 
-        runAttack()
-        clickTimer.reset()
+        if (thread == null || !thread!!.isAlive) {
+            thread = Thread { runAttack() }
+            thread!!.start()
+            clickTimer.reset()
+        } else clickTimer.reset()
     }
 
     private fun runAttack() {

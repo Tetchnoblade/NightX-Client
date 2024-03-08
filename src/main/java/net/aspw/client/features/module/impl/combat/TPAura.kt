@@ -47,6 +47,7 @@ class TPAura : Module() {
     private val clickTimer = MSTimer()
     var isBlocking = false
     private var lastTarget: EntityLivingBase? = null
+    private var thread: Thread? = null
 
     private val attackDelay: Long
         get() = 1000L / apsValue.get().toLong()
@@ -70,8 +71,11 @@ class TPAura : Module() {
 
         if (!clickTimer.hasTimePassed(attackDelay)) return
 
-        runAttack()
-        clickTimer.reset()
+        if (thread == null || !thread!!.isAlive) {
+            thread = Thread { runAttack() }
+            thread!!.start()
+            clickTimer.reset()
+        } else clickTimer.reset()
     }
 
     private fun runAttack() {
