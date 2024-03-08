@@ -140,6 +140,7 @@ public final class ESP extends Module {
                     if (living && tagsValue.get()) {
                         final MurdererDetector murdererDetector = Objects.requireNonNull(Launch.moduleManager.getModule(MurdererDetector.class));
                         final AntiTeams antiTeams = Objects.requireNonNull(Launch.moduleManager.getModule(AntiTeams.class));
+                        final AntiBots antiBots = Objects.requireNonNull(Launch.moduleManager.getModule(AntiBots.class));
                         entityLivingBase = (EntityLivingBase) entity;
                         String entName;
                         if (murdererDetector.getState() && (entity == murdererDetector.getMurderer1() || entity == murdererDetector.getMurderer2())) {
@@ -148,6 +149,8 @@ public final class ESP extends Module {
                             entName = "§e[Friend] §7- §r" + entityLivingBase.getName();
                         } else if (antiTeams.getState() && antiTeams.isInYourTeam(entityLivingBase)) {
                             entName = "§e[Team] §7- §r" + entityLivingBase.getName();
+                        } else if (antiBots.getState() && AntiBots.isBot(entityLivingBase)) {
+                            entName = "§c[Bot] §7- §r" + entityLivingBase.getName();
                         } else {
                             entName = entityLivingBase.getName();
                         }
@@ -182,7 +185,7 @@ public final class ESP extends Module {
 
         for (int playerEntitiesSize = playerEntities.size(); i < playerEntitiesSize; ++i) {
             Entity entity = (Entity) playerEntities.get(i);
-            if (entity instanceof EntityPlayer && !(entity instanceof EntityPlayerSP) && !entity.isInvisible() && !((EntityPlayer) entity).isSpectator() && !AntiBots.isBot((EntityPlayer) entity) || (localPlayer.get() && entity instanceof EntityPlayerSP && mc.gameSettings.thirdPersonView != 0)) {
+            if (entity instanceof EntityPlayer && !(entity instanceof EntityPlayerSP) && !entity.isInvisible() && !((EntityPlayer) entity).isSpectator() || (localPlayer.get() && entity instanceof EntityPlayerSP && mc.gameSettings.thirdPersonView != 0)) {
                 collectedEntities.add(entity);
             }
         }
