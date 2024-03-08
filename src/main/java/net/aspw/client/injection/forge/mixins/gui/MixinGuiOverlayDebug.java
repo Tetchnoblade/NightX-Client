@@ -21,11 +21,9 @@ public class MixinGuiOverlayDebug {
 
         cir.getReturnValue().add("");
 
-        int protocolVersion = version.getVersion();
-
         if (!MinecraftInstance.mc.isIntegratedServerRunning())
-            cir.getReturnValue().add("Protocol: " + version.getName() + " (" + protocolVersion + ")");
-        else cir.getReturnValue().add("Protocol: 1.8.x (47)");
+            cir.getReturnValue().add("Protocol: " + version.getName());
+        else cir.getReturnValue().add("Protocol: 1.8.x");
 
         cir.getReturnValue().add("");
 

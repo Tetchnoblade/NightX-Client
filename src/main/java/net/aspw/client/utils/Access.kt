@@ -16,6 +16,7 @@ object Access {
     var appClientSecret = ""
     var bmcstafflist = ""
     var mushstafflist = ""
+    var hypixelstafflist = ""
     var isLatest = false
 
     fun checkLatestVersion() {
@@ -63,6 +64,20 @@ object Access {
             response.close()
             httpClient.close()
             mushstafflist = content
+        } catch (e: Exception) {
+            canConnect = false
+        }
+
+        try {
+            val httpClient: CloseableHttpClient = HttpClients.createDefault()
+            val request = HttpGet("${Launch.CLIENT_WEBSITE}/staff/hypixel.txt")
+            val response = httpClient.execute(request)
+            val entity = response.entity
+            val content = EntityUtils.toString(entity)
+            EntityUtils.consume(entity)
+            response.close()
+            httpClient.close()
+            hypixelstafflist = content
         } catch (e: Exception) {
             canConnect = false
         }

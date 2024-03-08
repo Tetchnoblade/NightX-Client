@@ -12,9 +12,6 @@ import java.util.Objects;
 
 import static org.objectweb.asm.Opcodes.*;
 
-/**
- * Transform bytecode of classes
- */
 public class ForgeNetworkTransformer implements IClassTransformer {
 
     public static boolean returnMethod() {

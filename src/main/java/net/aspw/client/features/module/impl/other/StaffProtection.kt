@@ -22,7 +22,7 @@ import kotlin.concurrent.thread
     category = ModuleCategory.OTHER
 )
 class StaffProtection : Module() {
-    private val modeValue = ListValue("Mode", arrayOf("BlocksMC", "MushMC"), "BlocksMC")
+    private val modeValue = ListValue("Mode", arrayOf("Hypixel", "BlocksMC", "MushMC"), "Hypixel")
     private val leaveValue = BoolValue("Leave", true)
 
     private var obStaffs = "_"
@@ -33,6 +33,7 @@ class StaffProtection : Module() {
 
     private var blocksmcstaffs = mutableListOf<String>()
     private var mushmcstaffs = mutableListOf<String>()
+    private var hypixelstaffs = mutableListOf<String>()
 
     override val tag: String
         get() = modeValue.get()
@@ -42,6 +43,7 @@ class StaffProtection : Module() {
             totalCount = obStaffs.count { it.isWhitespace() }
             blocksmcstaffs.addAll(Access.bmcstafflist.split(","))
             mushmcstaffs.addAll(Access.mushstafflist.split(","))
+            hypixelstaffs.addAll(Access.hypixelstafflist.split(","))
         }
         detected = false
         staffsInWorld.clear()
@@ -71,6 +73,10 @@ class StaffProtection : Module() {
             "mushmc" -> {
                 return entity.name in mushmcstaffs || entity.displayName.unformattedText in mushmcstaffs
             }
+
+            "hypixel" -> {
+                return entity.name in hypixelstaffs || entity.displayName.unformattedText in hypixelstaffs
+            }
         }
 
         return false
@@ -90,6 +96,11 @@ class StaffProtection : Module() {
 
                 "mushmc" -> {
                     if (networkName in mushmcstaffs)
+                        warn(networkName)
+                }
+
+                "hypixel" -> {
+                    if (networkName in hypixelstaffs)
                         warn(networkName)
                 }
             }

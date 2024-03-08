@@ -73,8 +73,7 @@ public class MixinNetworkManager implements VFNetworkManager {
         if (extendedPosition.getState()) {
             try {
                 extendedPosition.onPacket(event);
-            } catch (Exception e) {
-                // nothing
+            } catch (Exception ignored) {
             }
         }
         Launch.eventManager.callEvent(event);
@@ -99,8 +98,7 @@ public class MixinNetworkManager implements VFNetworkManager {
         if (extendedPosition.getState()) {
             try {
                 extendedPosition.onPacket(event);
-            } catch (Exception e) {
-                // nothing
+            } catch (Exception ignored) {
             }
         }
         Launch.eventManager.callEvent(event);

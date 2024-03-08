@@ -13,6 +13,7 @@
     "block.MixinBlockModelRenderer",
     "block.MixinBlockSoulSand",
     "block.MixinWorld",
+    "client.MixinEnumFacing",
     "client.MixinGameSettings",
     "client.MixinMinecraft",
     "entity.MixinAbstractClientPlayer",
