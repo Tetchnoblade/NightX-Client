@@ -56,12 +56,6 @@ class TPAura : Module() {
     private val attackDelay: Long
         get() = 1000L / apsValue.get().toLong()
 
-    override fun onEnable() {
-        clickTimer.reset()
-        tpVectors.clear()
-        lastTarget = null
-    }
-
     override fun onDisable() {
         isBlocking = false
         clickTimer.reset()

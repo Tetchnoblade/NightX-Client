@@ -1,11 +1,15 @@
 package net.aspw.client.features.module.impl.combat
 
+import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.UpdateEvent
 import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.impl.player.Freecam
+import net.aspw.client.features.module.impl.player.LegitScaffold
+import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.utils.EntityUtils
 import net.aspw.client.utils.RotationUtils
 import net.aspw.client.utils.timer.MSTimer
@@ -65,11 +69,6 @@ class LegitAura : Module() {
 
     private var attackDelay = 0L
 
-    override fun onEnable() {
-        clickTimer.reset()
-        lastTarget = null
-    }
-
     override fun onDisable() {
         isBlocking = false
         clickTimer.reset()
@@ -84,6 +83,13 @@ class LegitAura : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
+        if (Launch.moduleManager[Freecam::class.java]!!.state || Launch.moduleManager[Scaffold::class.java]!!.state || Launch.moduleManager[LegitScaffold::class.java]!!.state) {
+            isBlocking = false
+            clickTimer.reset()
+            lastTarget = null
+            return
+        }
+
         if (lastTarget != null)
             RotationUtils.faceLook(lastTarget!!, minTurnSpeed.get(), maxTurnSpeed.get())
 
@@ -102,7 +108,7 @@ class LegitAura : Module() {
         for (entity in mc.theWorld.loadedEntityList) {
             if (entity is EntityLivingBase && EntityUtils.isSelected(entity, true) && mc.thePlayer.getDistanceToEntity(
                     entity
-                ) <= 3.6f
+                ) <= 4.5f
             ) {
                 if (fovValue.get() < 180F && RotationUtils.getRotationDifference(entity) > fovValue.get())
                     continue
