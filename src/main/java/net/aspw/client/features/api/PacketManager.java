@@ -107,7 +107,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         if (packet instanceof C03PacketPlayer && flagged) {
             if (mc.thePlayer.ticksExisted % 2 == 0)
                 flagTicks++;
-            if (flagTicks < 4) {
+            if (flagTicks < 3) {
                 if (RotationUtils.targetRotation != null) {
                     event.cancelEvent();
                     PacketUtils.sendPacketNoEvent(

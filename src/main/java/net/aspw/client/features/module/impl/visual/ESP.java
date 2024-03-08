@@ -147,10 +147,10 @@ public final class ESP extends Module {
                             entName = "§c[Murderer] §7- §r" + entityLivingBase.getName();
                         } else if (EntityUtils.isFriend(entity)) {
                             entName = "§e[Friend] §7- §r" + entityLivingBase.getName();
-                        } else if (antiTeams.getState() && antiTeams.isInYourTeam(entityLivingBase)) {
-                            entName = "§e[Team] §7- §r" + entityLivingBase.getName();
                         } else if (antiBots.getState() && AntiBots.isBot(entityLivingBase)) {
                             entName = "§c[Bot] §7- §r" + entityLivingBase.getName();
+                        } else if (antiTeams.getState() && antiTeams.isInYourTeam(entityLivingBase)) {
+                            entName = "§e[Team] §7- §r" + entityLivingBase.getName();
                         } else {
                             entName = entityLivingBase.getName();
                         }
