@@ -21,7 +21,6 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.network.play.client.C02PacketUseEntity
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C0APacketAnimation
-import net.minecraft.util.Vec3
 import java.util.*
 
 
@@ -46,7 +45,6 @@ class TPAura : Module() {
      * Variables
      */
     private val clickTimer = MSTimer()
-    private var tpVectors = arrayListOf<Vec3>()
     var isBlocking = false
     private var lastTarget: EntityLivingBase? = null
 
@@ -56,7 +54,6 @@ class TPAura : Module() {
     override fun onDisable() {
         isBlocking = false
         clickTimer.reset()
-        tpVectors.clear()
         lastTarget = null
     }
 
@@ -74,7 +71,6 @@ class TPAura : Module() {
         if (!clickTimer.hasTimePassed(attackDelay)) return
 
         runAttack()
-        tpVectors.clear()
         clickTimer.reset()
     }
 
