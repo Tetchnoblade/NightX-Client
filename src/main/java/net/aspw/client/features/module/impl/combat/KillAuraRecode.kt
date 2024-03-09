@@ -13,36 +13,21 @@ import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.utils.EntityUtils
 import net.aspw.client.utils.RotationUtils
 import net.aspw.client.utils.timer.MSTimer
-import net.aspw.client.utils.timer.TimeUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
+import net.aspw.client.value.ListValue
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.entity.EntityLivingBase
 
 
 @ModuleInfo(
-    name = "LegitAura", spacedName = "Legit Aura",
+    name = "KillAuraRecode", spacedName = "Kill Aura Recode",
     category = ModuleCategory.COMBAT
 )
-class LegitAura : Module() {
+class KillAuraRecode : Module() {
 
-    private val maxCPS: IntegerValue = object : IntegerValue("MaxCPS", 12, 1, 20) {
-        override fun onChanged(oldValue: Int, newValue: Int) {
-            val i = minCPS.get()
-            if (i > newValue) set(i)
-
-            attackDelay = TimeUtils.randomClickDelay(minCPS.get(), this.get())
-        }
-    }
-    private val minCPS: IntegerValue = object : IntegerValue("MinCPS", 10, 1, 20) {
-        override fun onChanged(oldValue: Int, newValue: Int) {
-            val i = maxCPS.get()
-            if (i < newValue) set(i)
-
-            attackDelay = TimeUtils.randomClickDelay(this.get(), maxCPS.get())
-        }
-    }
+    private val cpsValue = ListValue("CPSMode", arrayOf("Low", "Normal", "High"), "Normal")
 
     private val maxTurnSpeed: FloatValue = object : FloatValue("MaxTurnSpeed", 80f, 0f, 180f, "°") {
         override fun onChanged(oldValue: Float, newValue: Float) {
@@ -58,20 +43,33 @@ class LegitAura : Module() {
     }
 
     private val fovValue = FloatValue("Fov", 180F, 0F, 180F, "°")
-    private val autoBlock = BoolValue("FakeAutoBlock", true)
 
-    /*
-     * Variables
-     */
-    private val clickTimer = MSTimer()
-    var isBlocking = false
-    private var lastTarget: EntityLivingBase? = null
+    val modifiedReach = BoolValue("ModifiedReach", false)
+    val rangeValue = FloatValue("Range", 7f, 3f, 7f, "m") { modifiedReach.get() }
+
+    private val fakeAutoBlock = BoolValue("VisualAutoBlock", true)
+    private val realAutoBlock = BoolValue("RealAutoBlock", false)
+    private val autoBlockDelay = IntegerValue("AutoBlockTick", 5, 1, 20) { realAutoBlock.get() }
+
     private var thread: Thread? = null
-    private var attackDelay = 0L
+    private val clickTimer = MSTimer()
+    private var lastTarget: EntityLivingBase? = null
+    private val match = when (cpsValue.get().lowercase()) {
+        "low" -> 8
+        "normal" -> 12
+        "high" -> 20
+        else -> 0
+    }
+    private val attackDelay: Long get() = 1000L / match.toLong()
+    private var blockTick = 0
+    var isBlocking = false
+    var isTargeting = false
 
     override fun onDisable() {
         isBlocking = false
+        isTargeting = false
         clickTimer.reset()
+        blockTick = 0
         lastTarget = null
     }
 
@@ -85,7 +83,9 @@ class LegitAura : Module() {
     fun onUpdate(event: UpdateEvent) {
         if (Launch.moduleManager[Freecam::class.java]!!.state || Launch.moduleManager[Scaffold::class.java]!!.state || Launch.moduleManager[LegitScaffold::class.java]!!.state) {
             isBlocking = false
+            isTargeting = false
             clickTimer.reset()
+            blockTick = 0
             lastTarget = null
             return
         }
@@ -95,11 +95,14 @@ class LegitAura : Module() {
 
         if (!clickTimer.hasTimePassed(attackDelay)) return
 
-        if (thread == null || !thread!!.isAlive) {
-            thread = Thread { runAttack() }
-            thread!!.start()
-            clickTimer.reset()
-        } else clickTimer.reset()
+        try {
+            if (thread == null || !thread!!.isAlive) {
+                thread = Thread { runAttack() }
+                thread!!.start()
+                clickTimer.reset()
+            } else clickTimer.reset()
+        } catch (_: Exception) {
+        }
     }
 
     private fun runAttack() {
@@ -111,7 +114,7 @@ class LegitAura : Module() {
         for (entity in mc.theWorld.loadedEntityList) {
             if (entity is EntityLivingBase && EntityUtils.isSelected(entity, true) && mc.thePlayer.getDistanceToEntity(
                     entity
-                ) <= 4.5f
+                ) <= (if (modifiedReach.get()) rangeValue.get() + 1.1f else 4.5f)
             ) {
                 if (fovValue.get() < 180F && RotationUtils.getRotationDifference(entity) > fovValue.get())
                     continue
@@ -119,8 +122,9 @@ class LegitAura : Module() {
                 if (entityCount >= 1)
                     break
 
-                if (autoBlock.get())
+                if (fakeAutoBlock.get())
                     isBlocking = true
+                isTargeting = true
                 targets.add(entity)
                 entityCount++
             }
@@ -129,6 +133,8 @@ class LegitAura : Module() {
         if (targets.isEmpty()) {
             lastTarget = null
             isBlocking = false
+            isTargeting = false
+            blockTick = 0
             return
         }
 
@@ -139,8 +145,19 @@ class LegitAura : Module() {
 
             lastTarget = it
 
-            if (mc.thePlayer.getDistanceToEntity(lastTarget) <= 3.4f)
+            if (!mc.thePlayer.canEntityBeSeen(lastTarget)) return
+
+            if (mc.thePlayer.getDistanceToEntity(lastTarget) <= (if (modifiedReach.get()) rangeValue.get() - 0.6f else 3.4f)) {
                 KeyBinding.onTick(mc.gameSettings.keyBindAttack.keyCode)
+
+                if (realAutoBlock.get()) {
+                    blockTick += 1
+                    if (blockTick >= autoBlockDelay.get()) {
+                        KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
+                        blockTick = 0
+                    }
+                }
+            }
         }
     }
 }

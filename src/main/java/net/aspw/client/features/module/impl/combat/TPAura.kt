@@ -49,8 +49,7 @@ class TPAura : Module() {
     private var lastTarget: EntityLivingBase? = null
     private var thread: Thread? = null
 
-    private val attackDelay: Long
-        get() = 1000L / apsValue.get().toLong()
+    private val attackDelay: Long get() = 1000L / apsValue.get().toLong()
 
     override fun onDisable() {
         isBlocking = false
@@ -71,11 +70,14 @@ class TPAura : Module() {
 
         if (!clickTimer.hasTimePassed(attackDelay)) return
 
-        if (thread == null || !thread!!.isAlive) {
-            thread = Thread { runAttack() }
-            thread!!.start()
-            clickTimer.reset()
-        } else clickTimer.reset()
+        try {
+            if (thread == null || !thread!!.isAlive) {
+                thread = Thread { runAttack() }
+                thread!!.start()
+                clickTimer.reset()
+            } else clickTimer.reset()
+        } catch (_: Exception) {
+        }
     }
 
     private fun runAttack() {

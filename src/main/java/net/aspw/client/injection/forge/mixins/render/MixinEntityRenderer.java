@@ -3,6 +3,7 @@ package net.aspw.client.injection.forge.mixins.render;
 import com.google.common.base.Predicates;
 import net.aspw.client.Launch;
 import net.aspw.client.event.Render3DEvent;
+import net.aspw.client.features.module.impl.combat.KillAuraRecode;
 import net.aspw.client.features.module.impl.other.InfiniteReach;
 import net.aspw.client.features.module.impl.visual.FullBright;
 import net.aspw.client.features.module.impl.visual.XRay;
@@ -130,16 +131,21 @@ public abstract class MixinEntityRenderer {
             this.mc.pointedEntity = null;
 
             final InfiniteReach infiniteReach = Objects.requireNonNull(Launch.moduleManager.getModule(InfiniteReach.class));
+            final KillAuraRecode killAuraRecode = Objects.requireNonNull(Launch.moduleManager.getModule(KillAuraRecode.class));
 
             double d0;
             if (infiniteReach.getState()) {
                 d0 = infiniteReach.getMaxRange();
+            } else if (killAuraRecode.getState() && killAuraRecode.getModifiedReach().get() && killAuraRecode.isTargeting()) {
+                d0 = killAuraRecode.getRangeValue().get();
             } else {
                 d0 = this.mc.playerController.getBlockReachDistance();
             }
 
             if (infiniteReach.getState()) {
                 this.mc.objectMouseOver = entity.rayTrace(200, p_getMouseOver_1_);
+            } else if (killAuraRecode.getState() && killAuraRecode.getModifiedReach().get() && killAuraRecode.isTargeting()) {
+                this.mc.objectMouseOver = entity.rayTrace(killAuraRecode.getRangeValue().get(), p_getMouseOver_1_);
             } else {
                 this.mc.objectMouseOver = entity.rayTrace(d0, p_getMouseOver_1_);
             }
@@ -159,6 +165,9 @@ public abstract class MixinEntityRenderer {
 
             if (infiniteReach.getState()) {
                 final MovingObjectPosition movingObjectPosition = entity.rayTrace(200, p_getMouseOver_1_);
+                if (movingObjectPosition != null) d1 = movingObjectPosition.hitVec.distanceTo(vec3);
+            } else if (killAuraRecode.getState() && killAuraRecode.getModifiedReach().get() && killAuraRecode.isTargeting()) {
+                final MovingObjectPosition movingObjectPosition = entity.rayTrace(killAuraRecode.getRangeValue().get(), p_getMouseOver_1_);
                 if (movingObjectPosition != null) d1 = movingObjectPosition.hitVec.distanceTo(vec3);
             }
 
@@ -201,6 +210,8 @@ public abstract class MixinEntityRenderer {
                 double maxDistance;
                 if (infiniteReach.getState()) {
                     maxDistance = 200;
+                } else if (killAuraRecode.getState() && killAuraRecode.getModifiedReach().get() && killAuraRecode.isTargeting()) {
+                    maxDistance = killAuraRecode.getRangeValue().get();
                 } else {
                     maxDistance = 3.0D;
                 }
