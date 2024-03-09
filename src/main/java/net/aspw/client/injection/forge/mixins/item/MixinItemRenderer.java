@@ -167,6 +167,24 @@ public abstract class MixinItemRenderer {
         GlStateManager.translate(f, f1, f2);
     }
 
+    @Unique
+    private void tap1(float var2, float swingProgress) {
+        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
+        GlStateManager.translate(0.0F, var2 * -0.15F, 0.0F);
+        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate((swingProgress * 0.8f - (swingProgress * swingProgress) * 0.8f) * -90.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.scale(0.37F, 0.37F, 0.37F);
+    }
+
+    @Unique
+    private void tap2(float var2, float swing) {
+        GlStateManager.translate(0.56F, -0.42F, -0.71999997F);
+        GlStateManager.translate(0.0F, var2 * -0.15F, 0.0F);
+        GlStateManager.rotate(30, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(MathHelper.sin(MathHelper.sqrt_float(swing) * (float) Math.PI) * -30.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.scale(0.4F, 0.4F, 0.4F);
+    }
+
     /**
      * Render item in first person.
      *
@@ -260,6 +278,24 @@ public abstract class MixinItemRenderer {
                                 else transformFirstPersonItem(f / 1.4F, 0.0f);
                                 this.func_178103_d();
                                 GlStateManager.rotate(-var * 35.5F, 1.0F, 0.7F, -0.2F);
+                                GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
+                                break;
+                            }
+                            case "Tap1": {
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
+                                if (Animations.cancelEquip.get())
+                                    tap1(0.0F, f1);
+                                else tap1(f, f1);
+                                this.func_178103_d();
+                                GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
+                                break;
+                            }
+                            case "Tap2": {
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() - 0.1f, Animations.blockPosZ.get().doubleValue());
+                                if (Animations.cancelEquip.get())
+                                    tap2(0.0F, f1);
+                                else tap2(f, f1);
+                                this.func_178103_d();
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }

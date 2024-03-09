@@ -5,6 +5,7 @@ import net.aspw.client.event.Render3DEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.utils.RotationUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.Tessellator
@@ -65,8 +66,8 @@ class Trajectories : Module() {
         }
 
         // Yaw and pitch of player
-        val yaw = mc.thePlayer.rotationYaw
-        val pitch = mc.thePlayer.rotationPitch
+        val yaw = RotationUtils.cameraYaw
+        val pitch = RotationUtils.cameraPitch
 
         // Positions
         var posX = renderManager.renderPosX - MathHelper.cos(yaw / 180F * 3.1415927F) * 0.16F
@@ -95,7 +96,6 @@ class Trajectories : Module() {
         // Landing
         var landingPosition: MovingObjectPosition? = null
         var hasLanded = false
-        var hitEntity = false
 
         val tessellator = Tessellator.getInstance()
         val worldRenderer = tessellator.worldRenderer
@@ -150,7 +150,6 @@ class Trajectories : Module() {
                     val possibleEntityLanding = possibleEntityBoundingBox
                         .calculateIntercept(posBefore, posAfter) ?: continue
 
-                    hitEntity = true
                     hasLanded = true
                     landingPosition = possibleEntityLanding
                 }

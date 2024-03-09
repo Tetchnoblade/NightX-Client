@@ -3,7 +3,6 @@ package net.aspw.client.injection.forge.mixins.render;
 import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.visual.Cape;
 import net.aspw.client.utils.MinecraftInstance;
-import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
@@ -41,14 +40,7 @@ public class MixinLayerCape {
             if (entitylivingbaseIn == MinecraftInstance.mc.thePlayer) {
                 if (entitylivingbaseIn.getLocationCape() != null || cape.getCustomCape().get()) {
                     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                    if (cape.getCustomCape().get() && cape.getStyleValue().get().equals("NightX")) {
-                        int rgb = RenderUtils.skyRainbow(0, 0.55f, 1).getRGB();
-                        float red = (float) (rgb >> 16 & 255) / 255.0F;
-                        float green = (float) (rgb >> 8 & 255) / 255.0F;
-                        float blue = (float) (rgb & 255) / 255.0F;
-                        GL11.glColor4f(red, green, blue, 0.3F);
-                        this.playerRenderer.bindTexture(entitylivingbaseIn.getLocationCape());
-                    } else this.playerRenderer.bindTexture(entitylivingbaseIn.getLocationCape());
+                    this.playerRenderer.bindTexture(entitylivingbaseIn.getLocationCape());
                     GL11.glPushMatrix();
                     GL11.glTranslatef(0.0F, 0.0F, 0.125F);
                     double d0 = entitylivingbaseIn.prevChasingPosX + (entitylivingbaseIn.chasingPosX - entitylivingbaseIn.prevChasingPosX) * (double) partialTicks - (entitylivingbaseIn.prevPosX + (entitylivingbaseIn.posX - entitylivingbaseIn.prevPosX) * (double) partialTicks);

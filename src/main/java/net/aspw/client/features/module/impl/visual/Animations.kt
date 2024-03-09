@@ -53,6 +53,8 @@ class Animations : Module() {
                 "MoonPush",
                 "Smooth",
                 "Jigsaw",
+                "Tap1",
+                "Tap2",
                 "Sigma3",
                 "Sigma4",
                 "Spin"

@@ -78,7 +78,7 @@ class Interface : Module() {
                 showName,
                 2.0,
                 3.0,
-                RenderUtils.skyRainbow(0, 0.5f, 1.0f).rgb
+                RenderUtils.skyRainbow(0, 0.5f, 1f).rgb
             )
         }
 
