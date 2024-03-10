@@ -37,6 +37,7 @@ class Interface : Module() {
     private val watermarkFpsValue = BoolValue("WaterMark-ShowFPS", true)
     private val arrayListValue = BoolValue("ArrayList", true)
     private val arrayListSpeedValue = FloatValue("ArrayList-AnimationSpeed", 0.3F, 0F, 0.6F) { arrayListValue.get() }
+    val noAchievement = BoolValue("NoAchievement", true)
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
     val tpDebugValue = BoolValue("TP-Debug", false)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)

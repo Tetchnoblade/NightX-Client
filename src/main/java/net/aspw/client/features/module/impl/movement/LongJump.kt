@@ -584,7 +584,11 @@ class LongJump : Module() {
         }
         mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
         mc.timer.timerSpeed = 1.0f
-        if (!mc.thePlayer.isSneaking) {
+        if (!mc.thePlayer.isSneaking && (modeValue.get().equals("ncp", true) || modeValue.get()
+                .equals("mineplex1", true) || modeValue.get().equals("mineplex2", true) || modeValue.get()
+                .equals("mineplex3", true) || modeValue.get().equals("verusdmg", true) || modeValue.get()
+                .equals("pearl", true))
+        ) {
             mc.thePlayer.motionX = 0.0
             mc.thePlayer.motionZ = 0.0
         }

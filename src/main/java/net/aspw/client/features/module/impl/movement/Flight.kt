@@ -608,6 +608,9 @@ class Flight : Module() {
             ) && !mode.equals(
                 "fakewater",
                 ignoreCase = true
+            ) && !mode.equals(
+                "verussmooth",
+                ignoreCase = true
             )
         ) {
             if (speed?.state!!) {
