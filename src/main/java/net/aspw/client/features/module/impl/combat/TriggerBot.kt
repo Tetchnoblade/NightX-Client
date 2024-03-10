@@ -35,6 +35,10 @@ class TriggerBot : Module() {
     else TimeUtils.randomClickDelay(minCPS.get(), maxCPS.get())
     private var lastSwing = 0L
 
+    override fun onDisable() {
+        lastSwing = 0L
+    }
+
     @EventTarget
     fun onRender(event: Render3DEvent) {
         if (coolDownCheck.get() && CooldownHelper.getAttackCooldownProgress() < 1f)
