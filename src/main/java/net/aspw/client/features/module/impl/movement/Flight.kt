@@ -635,6 +635,8 @@ class Flight : Module() {
                 }
             }
 
+            "verussmooth" -> mc.thePlayer.motionY = 0.0
+
             "aac5-vanilla" -> {
                 if (!mc.isIntegratedServerRunning)
                     sendAAC5Packets()
