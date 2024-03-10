@@ -4,7 +4,6 @@ import com.viaversion.viarewind.protocol.protocol1_8to1_9.Protocol1_8To1_9
 import com.viaversion.viarewind.utils.PacketUtil
 import com.viaversion.viaversion.api.Via
 import com.viaversion.viaversion.api.protocol.packet.PacketWrapper
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion
 import com.viaversion.viaversion.api.type.Type
 import net.aspw.client.Launch
 import net.aspw.client.event.*
@@ -44,6 +43,7 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.Vec3
+import net.raphimc.vialoader.util.VersionEnum
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.util.*
@@ -534,7 +534,7 @@ class KillAura : Module() {
         if (multiCombo.get()) {
             event.targetEntity ?: return
             repeat(amountValue.get()) {
-                if (ProtocolBase.getManager().targetVersion.newerThan(ProtocolVersion.v1_8))
+                if (ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
                     mc.netHandler.addToSendQueue(
                         C02PacketUseEntity(
                             event.targetEntity,
@@ -544,7 +544,7 @@ class KillAura : Module() {
 
                 mc.netHandler.addToSendQueue(C0APacketAnimation())
 
-                if (!ProtocolBase.getManager().targetVersion.newerThan(ProtocolVersion.v1_8))
+                if (!ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
                     mc.netHandler.addToSendQueue(
                         C02PacketUseEntity(
                             event.targetEntity,
@@ -740,7 +740,7 @@ class KillAura : Module() {
         }
 
         // Attack target
-        if (ProtocolBase.getManager().targetVersion.newerThan(ProtocolVersion.v1_8))
+        if (ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
             mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         when (swingValue.get().lowercase(Locale.getDefault())) {
@@ -754,7 +754,7 @@ class KillAura : Module() {
             "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
         }
 
-        if (!ProtocolBase.getManager().targetVersion.newerThan(ProtocolVersion.v1_8))
+        if (!ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
             mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         when (particleValue.get().lowercase()) {
@@ -911,7 +911,7 @@ class KillAura : Module() {
             }
 
             "1.9+" -> {
-                if (ProtocolBase.getManager().targetVersion.newerThanOrEqualTo(ProtocolVersion.v1_9)) {
+                if (ProtocolBase.getManager().targetVersion.isNewerThanOrEqualTo(VersionEnum.r1_9)) {
                     val useItem =
                         PacketWrapper.create(29, null, Via.getManager().connectionManager.connections.iterator().next())
                     useItem.write(Type.VAR_INT, 1)

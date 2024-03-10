@@ -418,11 +418,16 @@ class Speed : Module() {
     }
 
     @JvmField
-    val portMax = FloatValue("AAC-PortLength", 1f, 1f, 20f) { typeValue.get().equals("aac", ignoreCase = true) }
+    val portMax = FloatValue("AAC-PortLength", 1f, 1f, 20f) {
+        typeValue.get().equals("aac", ignoreCase = true) && aacModeValue.get().equals("port", true)
+    }
 
     @JvmField
     val aacGroundTimerValue =
-        FloatValue("AACGround-Timer", 3f, 1.1f, 10f) { typeValue.get().equals("aac", ignoreCase = true) }
+        FloatValue("AACGround-Timer", 3f, 1.1f, 10f) {
+            typeValue.get().equals("aac", ignoreCase = true) && (aacModeValue.get()
+                .equals("ground", true) || aacModeValue.get().equals("ground2", true))
+        }
 
     @JvmField
     val velocitySpeed =

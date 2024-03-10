@@ -1,6 +1,5 @@
 package net.aspw.client.features.api;
 
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.combat.KillAura;
@@ -17,6 +16,7 @@ import net.minecraft.entity.item.*;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.raphimc.vialoader.util.VersionEnum;
 
 import java.util.Objects;
 
@@ -130,7 +130,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
             }
         }
 
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_10)) {
+        if (ProtocolBase.getManager().getTargetVersion().isNewerThanOrEqualTo(VersionEnum.r1_10)) {
             if (packet instanceof C08PacketPlayerBlockPlacement) {
                 ((C08PacketPlayerBlockPlacement) packet).facingX = 0.5F;
                 ((C08PacketPlayerBlockPlacement) packet).facingY = 0.5F;

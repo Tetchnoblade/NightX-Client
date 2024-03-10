@@ -1,6 +1,5 @@
 package net.aspw.client.features.module.impl.combat
 
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.UpdateEvent
 import net.aspw.client.event.WorldEvent
@@ -21,6 +20,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.network.play.client.C02PacketUseEntity
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C0APacketAnimation
+import net.raphimc.vialoader.util.VersionEnum
 import java.util.*
 
 
@@ -134,7 +134,7 @@ class TPAura : Module() {
 
             lastTarget = it
 
-            if (ProtocolBase.getManager().targetVersion.newerThan(ProtocolVersion.v1_8))
+            if (ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
                 mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             when (swingValue.get().lowercase(Locale.getDefault())) {
@@ -142,7 +142,7 @@ class TPAura : Module() {
                 "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
             }
 
-            if (!ProtocolBase.getManager().targetVersion.newerThan(ProtocolVersion.v1_8))
+            if (!ProtocolBase.getManager().targetVersion.isNewerThan(VersionEnum.r1_8))
                 mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             path.reverse()

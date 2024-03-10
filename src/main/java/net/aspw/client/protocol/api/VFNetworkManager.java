@@ -1,11 +1,11 @@
 package net.aspw.client.protocol.api;
 
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+import net.raphimc.vialoader.util.VersionEnum;
 
 public interface VFNetworkManager {
 
-    ProtocolVersion viaForge$getTrackedVersion();
+    VersionEnum viaForge$getTrackedVersion();
 
-    void viaForge$setTrackedVersion(final ProtocolVersion version);
+    void viaForge$setTrackedVersion(final VersionEnum version);
 
 }

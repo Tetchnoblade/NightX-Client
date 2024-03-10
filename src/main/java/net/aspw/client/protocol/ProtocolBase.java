@@ -1,7 +1,6 @@
 package net.aspw.client.protocol;
 
 import com.viaversion.viaversion.api.connection.UserConnection;
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.connection.UserConnectionImpl;
 import com.viaversion.viaversion.protocol.ProtocolPipelineImpl;
 import io.netty.channel.Channel;
@@ -14,10 +13,11 @@ import net.raphimc.vialoader.impl.platform.ViaBackwardsPlatformImpl;
 import net.raphimc.vialoader.impl.platform.ViaRewindPlatformImpl;
 import net.raphimc.vialoader.impl.platform.ViaVersionPlatformImpl;
 import net.raphimc.vialoader.netty.CompressionReorderEvent;
+import net.raphimc.vialoader.util.VersionEnum;
 
 public class ProtocolBase {
 
-    private ProtocolVersion targetVersion = ProtocolVersion.v1_8;
+    private VersionEnum targetVersion = VersionEnum.r1_8;
     public static final AttributeKey<UserConnection> LOCAL_VIA_USER = AttributeKey.valueOf("local_via_user");
     public static final AttributeKey<VFNetworkManager> VF_NETWORK_MANAGER = AttributeKey.valueOf("encryption_setup");
     private final VFPlatform platform;
@@ -34,9 +34,9 @@ public class ProtocolBase {
 
         ClientUtils.getLogger().info("Injecting ViaVersion...");
 
-        final ProtocolVersion version = ProtocolVersion.getProtocol(platform.getGameVersion());
+        final VersionEnum version = VersionEnum.fromProtocolId(platform.getGameVersion());
 
-        if (version == ProtocolVersion.unknown)
+        if (version == VersionEnum.UNKNOWN)
             throw new IllegalArgumentException("Unknown Version " + platform.getGameVersion());
 
         manager = new ProtocolBase(platform);
@@ -58,15 +58,15 @@ public class ProtocolBase {
         }
     }
 
-    public ProtocolVersion getTargetVersion() {
+    public VersionEnum getTargetVersion() {
         return targetVersion;
     }
 
-    public void setTargetVersionSilent(final ProtocolVersion targetVersion) {
+    public void setTargetVersionSilent(final VersionEnum targetVersion) {
         this.targetVersion = targetVersion;
     }
 
-    public void setTargetVersion(final ProtocolVersion targetVersion) {
+    public void setTargetVersion(final VersionEnum targetVersion) {
         this.targetVersion = targetVersion;
     }
 
