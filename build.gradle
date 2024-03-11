@@ -35,13 +35,7 @@ minecraft {
     runDir = "run"
     mappings = "stable_22"
     makeObfSourceJar = false
-    def args = [
-            '-Dfml.coreMods.load=net.aspw.client.injection.forge.MixinLoader',
-            '-Ddev-mode',
-            '-Dmixin.hotSwap=true',
-            '-Dmixin.checks.interfaces=true'
-    ]
-    clientJvmArgs.addAll(args)
+    clientJvmArgs += ["-Dfml.coreMods.load=net.aspw.client.injection.forge.TransformerLoader", "-Ddev-mode"]
 }
 
 configurations {
@@ -59,7 +53,8 @@ def viaLibs = [
         "com.viaversion:viabackwards:${project.viabackwards_version}",
         "com.viaversion:viarewind-universal:${project.viarewind_version}",
         "net.raphimc:ViaLoader:${project.vialoader_version}",
-        "org.yaml:snakeyaml:${project.snake_yml_version}"
+        "org.yaml:snakeyaml:${project.snake_yml_version}",
+        "org.slf4j:slf4j-api:${project.slf4j_version}"
 ]
 
 dependencies {
@@ -70,6 +65,7 @@ dependencies {
         exclude module: "gson"
         exclude module: "launchwrapper"
         exclude module: "log4j-core"
+        exclude module: "slf4j-api"
     }
 
     for (final def via in viaLibs) {
@@ -139,7 +135,7 @@ classes.dependsOn(moveResources)
 
 jar {
     manifest.attributes(
-            "FMLCorePlugin": "net.aspw.client.injection.forge.MixinLoader",
+            "FMLCorePlugin": "net.aspw.client.injection.forge.TransformerLoader",
             "FMLCorePluginContainsFMLMod": true,
             "ForceLoadAsMod": true,
             "MixinConfigs": "client.forge.mixins.json",

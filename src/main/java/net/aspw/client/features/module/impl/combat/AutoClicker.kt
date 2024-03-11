@@ -58,7 +58,7 @@ class AutoClicker : Module() {
     private val tickTimer = TickTimer()
 
     @EventTarget
-    fun onRender(event: Render3DEvent) {
+    fun onRender3D(event: Render3DEvent) {
         // Right click
         if (mc.gameSettings.keyBindUseItem.isKeyDown && !mc.thePlayer.isUsingItem && rightValue.get() &&
             System.currentTimeMillis() - rightLastSwing >= rightDelay

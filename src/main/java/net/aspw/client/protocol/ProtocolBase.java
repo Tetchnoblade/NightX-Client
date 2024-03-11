@@ -34,6 +34,9 @@ public class ProtocolBase {
 
         ClientUtils.getLogger().info("Injecting ViaVersion...");
 
+        VersionEnum.SORTED_VERSIONS.remove(VersionEnum.r1_7_2tor1_7_5);
+        VersionEnum.SORTED_VERSIONS.remove(VersionEnum.r1_7_6tor1_7_10);
+
         final VersionEnum version = VersionEnum.fromProtocolId(platform.getGameVersion());
 
         if (version == VersionEnum.UNKNOWN)

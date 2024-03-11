@@ -11,6 +11,7 @@ import net.aspw.client.features.module.impl.visual.BetterView;
 import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.utils.*;
+import net.aspw.client.utils.timer.MSTimer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.*;
 import net.minecraft.network.Packet;
@@ -28,6 +29,11 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     public static int flagTicks;
     public static float eyeHeight;
     public static float lastEyeHeight;
+    public static int sendPacketCounts;
+    public static int receivePacketCounts;
+    private int preSend = 0;
+    private int preReceive = 0;
+    private static final MSTimer packetCountTimer = new MSTimer();
 
     @EventTarget
     public void onWorld(WorldEvent event) {
@@ -55,9 +61,11 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         mc.thePlayer.prevRenderArmPitch = mc.thePlayer.rotationPitch;
         mc.thePlayer.renderArmYaw = mc.thePlayer.rotationYaw;
         mc.thePlayer.renderArmPitch = mc.thePlayer.rotationPitch;
+
         float START_HEIGHT = 1.62f;
         float END_HEIGHT = Animations.sneakLength.get() + 1.54f;
         lastEyeHeight = eyeHeight;
+
         if (mc.thePlayer.isSneaking()) {
             eyeHeight = END_HEIGHT;
         } else if (eyeHeight < START_HEIGHT) {
@@ -65,10 +73,12 @@ public class PacketManager extends MinecraftInstance implements Listenable {
             delta *= 0.4;
             eyeHeight = START_HEIGHT - delta;
         }
+
         if (!Objects.requireNonNull(Launch.moduleManager.getModule(BetterView.class)).getState())
             Objects.requireNonNull(Launch.moduleManager.getModule(BetterView.class)).setState(true);
         if (!Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).getState())
             Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).setState(true);
+
         if ((Animations.swingAnimValue.get().equals("Smooth") || Animations.swingAnimValue.get().equals("Dash")) && event.getEventState() == EventState.PRE) {
             if (mc.thePlayer.swingProgressInt == 1) {
                 swing = 9;
@@ -76,9 +86,11 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 swing = Math.max(0, swing - 1);
             }
         }
+
         final KillAura killAura = Objects.requireNonNull(Launch.moduleManager.getModule(KillAura.class));
         final TPAura tpAura = Objects.requireNonNull(Launch.moduleManager.getModule(TPAura.class));
         final KillAuraRecode killAuraRecode = Objects.requireNonNull(Launch.moduleManager.getModule(KillAuraRecode.class));
+
         if (Animations.swingLimitOnlyBlocking.get()) {
             if (mc.thePlayer.swingProgress >= 1f)
                 mc.thePlayer.isSwingInProgress = false;
@@ -89,6 +101,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         } else if (mc.thePlayer.swingProgress >= Animations.swingLimit.get()) {
             mc.thePlayer.isSwingInProgress = false;
         }
+
         if (Animations.fankeyBobbing.get() && MovementUtils.isMoving() && mc.thePlayer.onGround && !mc.thePlayer.isSneaking()) {
             mc.thePlayer.cameraYaw = 0.18f;
             mc.thePlayer.cameraPitch = 0.0f;
@@ -103,6 +116,19 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     @EventTarget
     public void onPacket(PacketEvent event) {
         final Packet<?> packet = event.getPacket();
+
+        if (packet.toString().startsWith("net.minecraft.network.play.client.C"))
+            preSend++;
+        if (packet.toString().startsWith("net.minecraft.network.play.server.S"))
+            preReceive++;
+
+        if (packetCountTimer.hasTimePassed(1000L)) {
+            sendPacketCounts = preSend;
+            receivePacketCounts = preReceive;
+            preSend = 0;
+            preReceive = 0;
+            packetCountTimer.reset();
+        }
 
         if (packet instanceof C03PacketPlayer && flagged) {
             if (mc.thePlayer.ticksExisted % 2 == 0)

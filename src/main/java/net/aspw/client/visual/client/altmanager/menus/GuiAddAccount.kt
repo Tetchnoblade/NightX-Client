@@ -25,7 +25,7 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
         Keyboard.enableRepeatEvents(true)
 
         // Login via Microsoft account
-        buttonList.add(GuiButton(3, width / 2 - 100, 143, "Microsoft"))
+        buttonList.add(GuiButton(3, width / 2 - 100, 143, "Microsoft Login"))
 
         // Add and back button
         buttonList.add(
@@ -55,6 +55,18 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
             mc.fontRendererObj, "Add Account",
             width / 2,
             34,
+            0xffffff
+        )
+        this.drawCenteredString(
+            mc.fontRendererObj, "Requires 64 bit java version 181 or higher to login microsoft account",
+            width / 2,
+            118,
+            0xffffff
+        )
+        this.drawCenteredString(
+            mc.fontRendererObj, "64 bit java: " + if (mc.isJava64bit) "§etrue" else "§cfalse",
+            width / 2,
+            128,
             0xffffff
         )
         this.drawCenteredString(mc.fontRendererObj, status, width / 2, height - 74, 0xffffff)

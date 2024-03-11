@@ -40,7 +40,7 @@ class TriggerBot : Module() {
     }
 
     @EventTarget
-    fun onRender(event: Render3DEvent) {
+    fun onRender3D(event: Render3DEvent) {
         if (coolDownCheck.get() && CooldownHelper.getAttackCooldownProgress() < 1f)
             return
         val objectMouseOver = mc.objectMouseOver

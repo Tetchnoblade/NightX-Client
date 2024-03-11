@@ -154,7 +154,8 @@ class ModuleManager : Listenable {
             BetterView::class.java,
             FireReducer::class.java,
             NoBlockPush::class.java,
-            KillAuraRecode::class.java
+            KillAuraRecode::class.java,
+            NoHurtCam::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")

@@ -67,7 +67,7 @@ class KillAuraRecode : Module() {
     private val realAutoBlock = BoolValue("RealAutoBlock", false)
     private val autoBlockDelay = IntegerValue("AutoBlockTick", 5, 1, 20) { realAutoBlock.get() }
 
-    private var lastTarget: EntityLivingBase? = null
+    var lastTarget: EntityLivingBase? = null
     private var delay = if (coolDownCheck.get()) TimeUtils.randomClickDelay(20, 20) else TimeUtils.randomClickDelay(
         minCPS.get(),
         maxCPS.get()
@@ -100,7 +100,7 @@ class KillAuraRecode : Module() {
     }
 
     @EventTarget
-    fun onRender(event: Render3DEvent) {
+    fun onRender3D(event: Render3DEvent) {
         if (mc.thePlayer == null || mc.theWorld == null || Launch.moduleManager[Freecam::class.java]!!.state || Launch.moduleManager[Scaffold::class.java]!!.state || Launch.moduleManager[LegitScaffold::class.java]!!.state) {
             isBlocking = false
             isTargeting = false

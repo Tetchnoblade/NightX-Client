@@ -95,7 +95,7 @@ public abstract class MixinMinecraft {
 
     @ModifyArg(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", remap = false))
     private String setTitle(String newTitle) {
-        return Launch.CLIENT_BEST + " Client";
+        return Launch.CLIENT_BEST + " Client 1.8.9";
     }
 
     @Inject(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At("HEAD"))

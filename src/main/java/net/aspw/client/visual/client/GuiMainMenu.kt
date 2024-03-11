@@ -130,7 +130,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         )
         GlStateManager.enableAlpha()
         FontLoaders.SF20.drawStringWithShadow(
-            Launch.CLIENT_BEST + " Client",
+            Launch.CLIENT_BEST + " Client - " + Launch.CLIENT_PROTOCOL_RANGE,
             4F.toDouble(),
             height - 12F.toDouble(),
             -1

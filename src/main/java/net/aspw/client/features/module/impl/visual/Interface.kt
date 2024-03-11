@@ -8,6 +8,9 @@ import net.aspw.client.event.TickEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.impl.combat.KillAura
+import net.aspw.client.features.module.impl.combat.KillAuraRecode
+import net.aspw.client.features.module.impl.combat.TPAura
 import net.aspw.client.utils.Access
 import net.aspw.client.utils.AnimationUtils
 import net.aspw.client.utils.render.ColorUtils
@@ -19,6 +22,7 @@ import net.aspw.client.value.TextValue
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.client.clickgui.smooth.SmoothClickGui
 import net.aspw.client.visual.client.clickgui.tab.NewUi
+import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiChat
@@ -29,6 +33,12 @@ import net.minecraft.network.play.client.C14PacketTabComplete
 import net.minecraft.network.play.server.S2EPacketCloseWindow
 import net.minecraft.network.play.server.S3APacketTabComplete
 import net.minecraft.network.play.server.S45PacketTitle
+import java.awt.Color
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
+import kotlin.math.abs
+import kotlin.math.pow
 
 @ModuleInfo(name = "Interface", category = ModuleCategory.VISUAL, array = false)
 class Interface : Module() {
@@ -37,7 +47,11 @@ class Interface : Module() {
     private val watermarkFpsValue = BoolValue("WaterMark-ShowFPS", true)
     private val arrayListValue = BoolValue("ArrayList", true)
     private val arrayListSpeedValue = FloatValue("ArrayList-AnimationSpeed", 0.3F, 0F, 0.6F) { arrayListValue.get() }
-    val noAchievement = BoolValue("NoAchievement", true)
+    private val targetHudValue = BoolValue("TargetHud", true)
+    private val targetHudSpeedValue = FloatValue("TargetHud-AnimationSpeed", 3F, 0F, 6F) { targetHudValue.get() }
+    private val targetHudXPosValue = FloatValue("TargetHud-XPos", 0F, -300F, 300F) { targetHudValue.get() }
+    private val targetHudYPosValue = FloatValue("TargetHud-YPos", 0F, -300F, 300F) { targetHudValue.get() }
+    val noAchievement = BoolValue("No-Achievements", true)
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
     val tpDebugValue = BoolValue("TP-Debug", false)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)
@@ -57,6 +71,7 @@ class Interface : Module() {
     val swingSoundValue = BoolValue("Swing-Sound", false)
 
     private var hotBarX = 0F
+    private var easingHealth = 0F
 
     private var modules = emptyList<Module>()
     private var sortedModules = emptyList<Module>()
@@ -136,6 +151,70 @@ class Interface : Module() {
             sortedModules =
                 Launch.moduleManager.modules.sortedBy { -fontRenderer.getStringWidth(getModName(it)) }.toList()
         }
+
+        if (targetHudValue.get()) {
+            val xPos = targetHudXPosValue.get() + 200F
+            val yPos = targetHudYPosValue.get() + 170F
+            val font = Fonts.minecraftFont
+            val killAura = Launch.moduleManager.getModule(KillAura::class.java)
+            val tpAura = Launch.moduleManager.getModule(TPAura::class.java)
+            val killAuraRecode = Launch.moduleManager.getModule(KillAuraRecode::class.java)
+            val decimalFormat = DecimalFormat("##0.0", DecimalFormatSymbols(Locale.ENGLISH))
+            val entity =
+                if (killAura?.state!! && killAura.currentTarget != null) killAura.currentTarget!! else if (tpAura?.state!! && tpAura.lastTarget != null) tpAura.lastTarget!! else if (killAuraRecode?.state!! && killAuraRecode.lastTarget != null) killAuraRecode.lastTarget!! else mc.thePlayer!!
+            val healthString = decimalFormat.format(entity.health)
+
+            if (easingHealth < 0 || easingHealth > entity.maxHealth || abs(easingHealth - entity.health) < 0.01)
+                easingHealth = entity.health
+
+            updateAnim(entity.health)
+
+            if (entity != mc.thePlayer || entity == mc.thePlayer && mc.currentScreen is GuiChat) {
+                RenderUtils.drawRect(xPos + 33F, yPos + 1F, xPos + 114F, yPos + 39.5F, Color(0, 0, 0, 120).rgb)
+
+                var healthColor = 91
+                repeat(8) {
+                    healthColor += entity.health.toInt()
+                }
+
+                val healthLength = (entity.health / entity.maxHealth).coerceIn(0F, 1F)
+                RenderUtils.drawRect(
+                    xPos + 36F,
+                    yPos + 26.5F,
+                    xPos + (36F + (easingHealth / entity.maxHealth).coerceIn(
+                        0F,
+                        entity.maxHealth
+                    ) * (healthLength + 74F)),
+                    yPos + 36F,
+                    Color(
+                        245,
+                        healthColor,
+                        1
+                    ).rgb
+                )
+
+                updateAnim(entity.health)
+
+                font.drawStringWithShadow(entity.name, xPos + 36F, yPos + 4F, Color(255, 255, 255).rgb)
+                font.drawStringWithShadow(
+                    mc.thePlayer.getDistanceToEntity(entity).toInt().toString() + " blocks away",
+                    xPos + 36F,
+                    yPos + 15F,
+                    Color(255, 255, 255).rgb
+                )
+
+                font.drawStringWithShadow(
+                    healthString,
+                    xPos + 64.5F,
+                    yPos + 27F,
+                    Color(
+                        245,
+                        healthColor,
+                        1
+                    ).rgb
+                )
+            } else if (easingHealth != 0F) easingHealth = 0F
+        }
     }
 
     @EventTarget
@@ -164,6 +243,10 @@ class Interface : Module() {
 
         if (Launch.moduleManager.toggleVolume != 83f)
             Launch.moduleManager.toggleVolume = 83f
+    }
+
+    private fun updateAnim(targetHealth: Float) {
+        easingHealth += ((targetHealth - easingHealth) / 2.0F.pow(10.0F - targetHudSpeedValue.get())) * RenderUtils.deltaTime
     }
 
     private fun getModName(mod: Module): String {

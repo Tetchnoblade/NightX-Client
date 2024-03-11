@@ -1,5 +1,6 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
+import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.ServerUtils;
@@ -36,5 +37,8 @@ public abstract class MixinGuiIngameMenu extends MixinGuiScreen {
         if (!MinecraftInstance.mc.isIntegratedServerRunning())
             Fonts.minecraftFont.drawStringWithShadow("§7Protocol: §d" + version.getName(), 6f, 16f, 0xffffff);
         else Fonts.minecraftFont.drawStringWithShadow("§7Protocol: §d1.8.x", 6f, 16f, 0xffffff);
+
+        Fonts.minecraftFont.drawStringWithShadow("§7Packet Sent: §d" + PacketManager.sendPacketCounts, 6f, 26f, 0xffffff);
+        Fonts.minecraftFont.drawStringWithShadow("§7Packet Received: §d" + PacketManager.receivePacketCounts, 6f, 36f, 0xffffff);
     }
 }

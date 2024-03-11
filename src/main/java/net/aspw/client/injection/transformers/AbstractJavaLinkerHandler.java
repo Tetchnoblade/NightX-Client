@@ -9,7 +9,7 @@ import org.objectweb.asm.tree.VarInsnNode;
 
 import static org.objectweb.asm.Opcodes.*;
 
-public class AbstractJavaLinkerTransformer implements IClassTransformer {
+public class AbstractJavaLinkerHandler implements IClassTransformer {
 
     /**
      * Transform a class
