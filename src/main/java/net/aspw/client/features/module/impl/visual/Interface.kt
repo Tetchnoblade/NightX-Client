@@ -5,6 +5,7 @@ import net.aspw.client.event.EventTarget
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.event.Render2DEvent
 import net.aspw.client.event.TickEvent
+import net.aspw.client.features.api.PacketManager
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
@@ -45,6 +46,7 @@ class Interface : Module() {
     private val watermarkValue = BoolValue("WaterMark", true)
     private val clientNameValue = TextValue("ClientName", "NightX") { watermarkValue.get() }
     private val watermarkFpsValue = BoolValue("WaterMark-ShowFPS", true)
+    private val watermarkPacketsValue = BoolValue("WaterMark-ShowPackets", true)
     private val arrayListValue = BoolValue("ArrayList", true)
     private val arrayListSpeedValue = FloatValue("ArrayList-AnimationSpeed", 0.3F, 0F, 0.6F) { arrayListValue.get() }
     private val targetHudValue = BoolValue("TargetHud", true)
@@ -83,13 +85,15 @@ class Interface : Module() {
             val inputString = clientNameValue.get()
             val connectChecks = if (!Access.canConnect) " - Disconnected" else ""
             val fpsChecks = if (watermarkFpsValue.get()) " [" + Minecraft.getDebugFPS() + " FPS]" else ""
+            val packetChecks =
+                if (watermarkPacketsValue.get()) " [Packets Sent: " + PacketManager.sendPacketCounts + "] [Packets Received: " + PacketManager.receivePacketCounts + "]" else ""
             var firstChar = ""
             var restOfString = ""
             if (inputString != "") {
                 firstChar = inputString[0].toString()
                 restOfString = inputString.substring(1)
             }
-            val showName = "$firstChar§r§f$restOfString$fpsChecks$connectChecks"
+            val showName = "$firstChar§r§f$restOfString$fpsChecks$packetChecks$connectChecks"
             fontRenderer.drawStringWithShadow(
                 showName,
                 2.0,

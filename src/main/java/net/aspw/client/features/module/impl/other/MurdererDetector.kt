@@ -76,7 +76,6 @@ class MurdererDetector : Module() {
     fun onMotion(event: MotionEvent) {
         if (event.eventState == EventState.PRE) {
             for (player in mc.theWorld.playerEntities) {
-                if (mc.thePlayer.ticksExisted % 2 == 0) return
                 if (player.heldItem != null && (player.heldItem.displayName.contains(
                         "Knife",
                         ignoreCase = true

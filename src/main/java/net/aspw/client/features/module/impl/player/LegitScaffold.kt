@@ -17,6 +17,7 @@ import net.aspw.client.value.IntegerValue
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.init.Blocks
+import net.minecraft.item.ItemBlock
 import net.minecraft.util.BlockPos
 
 @ModuleInfo(name = "LegitScaffold", spacedName = "Legit Scaffold", category = ModuleCategory.PLAYER)
@@ -93,7 +94,8 @@ class LegitScaffold : Module() {
             mc.gameSettings.keyBindSneak.pressed = shouldEagle
 
         if (shouldEagle && (tickTimer.hasTimePassed(delayValue.get()) || !mc.thePlayer.onGround)) {
-            KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
+            if (mc.thePlayer.heldItem != null && mc.thePlayer.heldItem.item is ItemBlock)
+                KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
             tickTimer.reset()
         }
     }

@@ -798,7 +798,8 @@ class Scaffold : Module() {
             val block = (mc.thePlayer.heldItem.item as ItemBlock).getBlock()
             if (InventoryUtils.BLOCK_BLACKLIST.contains(block) || !block.isFullCube || mc.thePlayer.heldItem.stackSize <= 0) return
         }
-        KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
+        if (mc.thePlayer.heldItem != null && mc.thePlayer.heldItem.item is ItemBlock)
+            KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
         delayTimer.reset()
         delay = if (!placeableDelay.get()) 0L else TimeUtils.randomDelay(minDelayValue.get(), maxDelayValue.get())
         if (mc.thePlayer.onGround && placeSlowDownValue.get()) {

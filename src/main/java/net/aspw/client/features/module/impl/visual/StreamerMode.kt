@@ -1,4 +1,4 @@
-package net.aspw.client.features.module.impl.other
+package net.aspw.client.features.module.impl.visual
 
 import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
@@ -10,7 +10,7 @@ import net.aspw.client.utils.misc.StringUtils
 import net.aspw.client.utils.render.ColorUtils.translateAlternateColorCodes
 import net.aspw.client.value.TextValue
 
-@ModuleInfo(name = "StreamerMode", spacedName = "Streamer Mode", category = ModuleCategory.OTHER)
+@ModuleInfo(name = "StreamerMode", spacedName = "Streamer Mode", category = ModuleCategory.VISUAL)
 class StreamerMode : Module() {
     private val fakeNameValue = TextValue("FakeName", "ElonMusk")
 

@@ -155,7 +155,8 @@ class ModuleManager : Listenable {
             FireReducer::class.java,
             NoBlockPush::class.java,
             KillAuraRecode::class.java,
-            NoHurtCam::class.java
+            NoHurtCam::class.java,
+            DrinkingAlert::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")
