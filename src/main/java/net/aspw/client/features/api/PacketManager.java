@@ -139,12 +139,13 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 flagTicks++;
             if (flagTicks < 4) {
                 if (RotationUtils.targetRotation != null) {
+                    boolean before = ((C03PacketPlayer.C05PacketPlayerLook) packet).onGround;
                     event.cancelEvent();
                     PacketUtils.sendPacketNoEvent(
                             new C03PacketPlayer.C05PacketPlayerLook(
                                     mc.thePlayer.rotationYaw,
                                     mc.thePlayer.rotationPitch,
-                                    mc.thePlayer.onGround
+                                    before
                             )
                     );
                     RotationUtils.Companion.reset();
