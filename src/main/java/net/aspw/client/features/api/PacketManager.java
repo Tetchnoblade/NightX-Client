@@ -132,7 +132,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
 
         final BetterView betterView = Objects.requireNonNull(Launch.moduleManager.getModule(BetterView.class));
 
-        if (packet instanceof C03PacketPlayer && flagged) {
+        if (packet instanceof C03PacketPlayer.C05PacketPlayerLook && flagged) {
             if (betterView.getCustomStrafe().get() && !betterView.getRotating())
                 betterView.setRotating(true);
             if (mc.thePlayer.ticksExisted % 2 == 0)
@@ -141,10 +141,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 if (RotationUtils.targetRotation != null) {
                     event.cancelEvent();
                     PacketUtils.sendPacketNoEvent(
-                            new C03PacketPlayer.C06PacketPlayerPosLook(
-                                    mc.thePlayer.posX,
-                                    mc.thePlayer.posY,
-                                    mc.thePlayer.posZ,
+                            new C03PacketPlayer.C05PacketPlayerLook(
                                     mc.thePlayer.rotationYaw,
                                     mc.thePlayer.rotationPitch,
                                     mc.thePlayer.onGround
