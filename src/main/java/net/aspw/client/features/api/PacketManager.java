@@ -130,11 +130,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
             packetCountTimer.reset();
         }
 
-        final BetterView betterView = Objects.requireNonNull(Launch.moduleManager.getModule(BetterView.class));
-
         if (packet instanceof C03PacketPlayer.C05PacketPlayerLook && flagged) {
-            if (betterView.getCustomStrafe().get() && !betterView.getRotating())
-                betterView.setRotating(true);
             if (mc.thePlayer.ticksExisted % 2 == 0)
                 flagTicks++;
             if (flagTicks < 4) {
