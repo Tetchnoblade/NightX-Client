@@ -1,5 +1,6 @@
 package net.aspw.client.utils.splash;
 
+import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -84,7 +85,7 @@ public class CustomSplashProgress {
     }
 
     public static void start() {
-        File configFile = new File(Minecraft.getMinecraft().mcDataDir, "config/splash.properties");
+        File configFile = new File(MinecraftInstance.mc.mcDataDir, "config/splash.properties");
         File parent = configFile.getParentFile();
         if (!parent.exists()) {
             parent.mkdirs();
@@ -118,7 +119,7 @@ public class CustomSplashProgress {
         final ResourceLocation logoLoc = new ResourceLocation(getString("logoTexture", "minecraft:textures/gui/title/mojang.png"));
         final ResourceLocation backgroundLoc = new ResourceLocation(getString("backgroundTexture", "client/background/splash.png"));
         final ResourceLocation forgeLoc = new ResourceLocation(getString("forgeTexture", "fml:textures/gui/forge.gif"));
-        File miscPackFile = new File(Minecraft.getMinecraft().mcDataDir, getString("resourcePackPath", "resources"));
+        File miscPackFile = new File(MinecraftInstance.mc.mcDataDir, getString("resourcePackPath", "resources"));
         FileWriter w = null;
 
         try {
@@ -345,7 +346,7 @@ public class CustomSplashProgress {
                 }
 
                 private void clearGL() {
-                    Minecraft mc = Minecraft.getMinecraft();
+                    Minecraft mc = MinecraftInstance.mc;
                     mc.displayWidth = Display.getWidth();
                     mc.displayHeight = Display.getHeight();
                     mc.resize(mc.displayWidth, mc.displayHeight);
@@ -480,7 +481,7 @@ public class CustomSplashProgress {
     }
 
     private static boolean disableSplash() {
-        File configFile = new File(Minecraft.getMinecraft().mcDataDir, "config/splash.properties");
+        File configFile = new File(MinecraftInstance.mc.mcDataDir, "config/splash.properties");
         File parent = configFile.getParentFile();
         if (!parent.exists()) {
             parent.mkdirs();
@@ -511,7 +512,7 @@ public class CustomSplashProgress {
 
     public static void drawVanillaScreen(TextureManager renderEngine) throws LWJGLException {
         if (!enabled) {
-            Minecraft.getMinecraft().drawSplashScreen(renderEngine);
+            MinecraftInstance.mc.drawSplashScreen(renderEngine);
         }
 
     }
@@ -539,7 +540,7 @@ public class CustomSplashProgress {
     }
 
     static {
-        mcPack = Minecraft.getMinecraft().mcDefaultResourcePack;
+        mcPack = MinecraftInstance.mc.mcDefaultResourcePack;
         fmlPack = createResourcePack(FMLSanityChecker.fmlLocation);
         mutex = new Semaphore(1);
         max_texture_size = -1;
@@ -548,7 +549,7 @@ public class CustomSplashProgress {
 
     private static class SplashFontRenderer extends FontRenderer {
         public SplashFontRenderer() {
-            super(Minecraft.getMinecraft().gameSettings, CustomSplashProgress.fontTexture.getLocation(), null, false);
+            super(MinecraftInstance.mc.gameSettings, CustomSplashProgress.fontTexture.getLocation(), null, false);
             super.onResourceManagerReload(null);
         }
 
@@ -561,7 +562,7 @@ public class CustomSplashProgress {
         }
 
         protected InputStream getResourceInputStream(ResourceLocation location) throws IOException {
-            return Minecraft.getMinecraft().mcDefaultResourcePack.getInputStream(location);
+            return MinecraftInstance.mc.mcDefaultResourcePack.getInputStream(location);
         }
     }
 

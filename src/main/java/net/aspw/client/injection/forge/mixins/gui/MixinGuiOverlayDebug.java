@@ -1,10 +1,10 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.gui.GuiOverlayDebug;
-import net.raphimc.vialoader.util.VersionEnum;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,7 +17,7 @@ public class MixinGuiOverlayDebug {
 
     @Inject(method = "getDebugInfoRight", at = @At(value = "TAIL"))
     public void addProtocolVersion(CallbackInfoReturnable<List<String>> cir) {
-        final VersionEnum version = ProtocolBase.getManager().getTargetVersion();
+        final ProtocolVersion version = ProtocolBase.getManager().getTargetVersion();
 
         cir.getReturnValue().add("");
 

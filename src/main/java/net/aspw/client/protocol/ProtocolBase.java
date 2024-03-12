@@ -1,6 +1,7 @@
 package net.aspw.client.protocol;
 
 import com.viaversion.viaversion.api.connection.UserConnection;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.connection.UserConnectionImpl;
 import com.viaversion.viaversion.protocol.ProtocolPipelineImpl;
 import io.netty.channel.Channel;
@@ -13,18 +14,15 @@ import net.raphimc.vialoader.impl.platform.ViaBackwardsPlatformImpl;
 import net.raphimc.vialoader.impl.platform.ViaRewindPlatformImpl;
 import net.raphimc.vialoader.impl.platform.ViaVersionPlatformImpl;
 import net.raphimc.vialoader.netty.CompressionReorderEvent;
-import net.raphimc.vialoader.util.VersionEnum;
 
 public class ProtocolBase {
 
-    private VersionEnum targetVersion = VersionEnum.r1_8;
+    private ProtocolVersion targetVersion = ProtocolVersion.v1_8;
     public static final AttributeKey<UserConnection> LOCAL_VIA_USER = AttributeKey.valueOf("local_via_user");
     public static final AttributeKey<VFNetworkManager> VF_NETWORK_MANAGER = AttributeKey.valueOf("encryption_setup");
-    private final VFPlatform platform;
     private static ProtocolBase manager;
 
-    public ProtocolBase(VFPlatform platform) {
-        this.platform = platform;
+    public ProtocolBase() {
     }
 
     public static void init(final VFPlatform platform) {
@@ -34,15 +32,12 @@ public class ProtocolBase {
 
         ClientUtils.getLogger().info("Injecting ViaVersion...");
 
-        VersionEnum.SORTED_VERSIONS.remove(VersionEnum.r1_7_2tor1_7_5);
-        VersionEnum.SORTED_VERSIONS.remove(VersionEnum.r1_7_6tor1_7_10);
+        final ProtocolVersion version = ProtocolVersion.getProtocol(platform.getGameVersion());
 
-        final VersionEnum version = VersionEnum.fromProtocolId(platform.getGameVersion());
-
-        if (version == VersionEnum.UNKNOWN)
+        if (version == ProtocolVersion.unknown)
             throw new IllegalArgumentException("Unknown Version " + platform.getGameVersion());
 
-        manager = new ProtocolBase(platform);
+        manager = new ProtocolBase();
 
         ViaLoader.init(new ViaVersionPlatformImpl(null), new ProtocolVLLoader(platform), new ProtocolVLInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new, null, null);
 
@@ -61,24 +56,20 @@ public class ProtocolBase {
         }
     }
 
-    public VersionEnum getTargetVersion() {
+    public ProtocolVersion getTargetVersion() {
         return targetVersion;
     }
 
-    public void setTargetVersionSilent(final VersionEnum targetVersion) {
+    public void setTargetVersionSilent(final ProtocolVersion targetVersion) {
         this.targetVersion = targetVersion;
     }
 
-    public void setTargetVersion(final VersionEnum targetVersion) {
+    public void setTargetVersion(final ProtocolVersion targetVersion) {
         this.targetVersion = targetVersion;
     }
 
     public void reorderCompression(final Channel channel) {
         channel.pipeline().fireUserEventTriggered(CompressionReorderEvent.INSTANCE);
-    }
-
-    public VFPlatform getPlatform() {
-        return platform;
     }
 
     public static ProtocolBase getManager() {

@@ -149,8 +149,8 @@ public abstract class MixinGuiInGame extends Gui {
         }
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        Minecraft.getMinecraft().getTextureManager().bindTexture(widgetsTexPath);
-        EntityPlayer lvt_3_1_ = (EntityPlayer) Minecraft.getMinecraft().getRenderViewEntity();
+        MinecraftInstance.mc.getTextureManager().bindTexture(widgetsTexPath);
+        EntityPlayer lvt_3_1_ = (EntityPlayer) MinecraftInstance.mc.getRenderViewEntity();
         int lvt_4_1_ = sr.getScaledWidth() / 2;
         float lvt_5_1_ = this.zLevel;
         this.zLevel = -90.0F;

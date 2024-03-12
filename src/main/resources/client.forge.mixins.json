@@ -50,7 +50,6 @@
     "item.MixinItemRenderer",
     "item.MixinItemStack",
     "item.MixinNBTTagCompound",
-    "network.MixinBlockedServers",
     "network.MixinGuiConnecting_1",
     "network.MixinNetHandlerPlayClient",
     "network.MixinNetworkManager",

@@ -3,8 +3,8 @@ package net.aspw.client.injection.transformers;
 import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.other.BrandSpoofer;
 import net.aspw.client.utils.ClassUtils;
+import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.NodeUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.tree.*;
 
@@ -13,10 +13,6 @@ import java.util.Objects;
 import static org.objectweb.asm.Opcodes.*;
 
 public class ForgeNetworkTransformer implements IClassTransformer {
-
-    public static boolean returnMethod() {
-        return Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).getState() && !Minecraft.getMinecraft().isIntegratedServerRunning();
-    }
 
     /**
      * Transform a class
@@ -75,5 +71,9 @@ public class ForgeNetworkTransformer implements IClassTransformer {
         }
 
         return basicClass;
+    }
+
+    public static boolean returnMethod() {
+        return Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).getState() && !MinecraftInstance.mc.isIntegratedServerRunning();
     }
 }

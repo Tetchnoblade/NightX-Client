@@ -63,7 +63,7 @@ public class MixinLayerHeldItem {
 
             Item item = itemstack.getItem();
             final UUID uuid = entitylivingbaseIn.getUniqueID();
-            final EntityPlayer entityplayer = Minecraft.getMinecraft().theWorld.getPlayerEntityByUUID(uuid);
+            final EntityPlayer entityplayer = MinecraftInstance.mc.theWorld.getPlayerEntityByUUID(uuid);
 
             if (!Animations.thirdPersonBlockingValue.get().equals("Off") && entityplayer != null && Animations.thirdPersonBlockingValue.get().equals("1.7") && (entityplayer.isBlocking() || PacketManager.isVisualBlocking)) {
                 ((ModelBiped) this.livingEntityRenderer.getMainModel()).postRenderArm(0.0325F);
