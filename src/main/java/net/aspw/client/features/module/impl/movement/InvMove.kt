@@ -1,6 +1,10 @@
 package net.aspw.client.features.module.impl.movement
 
-import net.aspw.client.event.*
+import net.aspw.client.event.EventState
+import net.aspw.client.event.EventTarget
+import net.aspw.client.event.MotionEvent
+import net.aspw.client.event.PacketEvent
+import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
@@ -12,7 +16,7 @@ import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C16PacketClientStatus
-import java.util.*
+import java.util.Locale
 
 @ModuleInfo(name = "InvMove", spacedName = "Inv Move", category = ModuleCategory.MOVEMENT)
 class InvMove : Module() {

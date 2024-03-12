@@ -42,12 +42,12 @@ public class MixinNetworkManager implements VFNetworkManager {
     private ProtocolVersion viaForge$targetVersion;
 
     @Inject(method = "func_181124_a", at = @At(value = "INVOKE", target = "Lio/netty/bootstrap/Bootstrap;group(Lio/netty/channel/EventLoopGroup;)Lio/netty/bootstrap/AbstractBootstrap;"), locals = LocalCapture.CAPTURE_FAILHARD, remap = false)
-    private static void trackSelfTarget(InetAddress address, int serverPort, boolean useNativeTransport, CallbackInfoReturnable<NetworkManager> cir, NetworkManager networkmanager, Class oclass, LazyLoadBase lazyloadbase) {
+    private static void trackSelfTarget(final InetAddress address, final int serverPort, final boolean useNativeTransport, final CallbackInfoReturnable<NetworkManager> cir, final NetworkManager networkmanager, final Class oclass, final LazyLoadBase lazyloadbase) {
         ((VFNetworkManager) networkmanager).viaForge$setTrackedVersion(ProtocolBase.getManager().getTargetVersion());
     }
 
     @Inject(method = "setCompressionTreshold", at = @At("RETURN"))
-    public void reorderPipeline(int p_setCompressionTreshold_1_, CallbackInfo ci) {
+    public void reorderPipeline(final int p_setCompressionTreshold_1_, final CallbackInfo ci) {
         ProtocolBase.getManager().reorderCompression(channel);
     }
 
@@ -57,7 +57,7 @@ public class MixinNetworkManager implements VFNetworkManager {
     }
 
     @Override
-    public void viaForge$setTrackedVersion(ProtocolVersion version) {
+    public void viaForge$setTrackedVersion(final ProtocolVersion version) {
         viaForge$targetVersion = version;
     }
 
@@ -66,14 +66,14 @@ public class MixinNetworkManager implements VFNetworkManager {
      * @reason Packet Tracking
      */
     @Overwrite
-    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) {
+    protected void channelRead0(final ChannelHandlerContext p_channelRead0_1_, final Packet p_channelRead0_2_) {
         final PacketEvent event = new PacketEvent(p_channelRead0_2_);
-        ExtendedPosition extendedPosition = Launch.moduleManager.getModule(ExtendedPosition.class);
+        final ExtendedPosition extendedPosition = Launch.moduleManager.getModule(ExtendedPosition.class);
         assert extendedPosition != null;
         if (extendedPosition.getState()) {
             try {
                 extendedPosition.onPacket(event);
-            } catch (Exception ignored) {
+            } catch (final Exception ignored) {
             }
         }
         Launch.eventManager.callEvent(event);
@@ -84,21 +84,21 @@ public class MixinNetworkManager implements VFNetworkManager {
         if (this.channel.isOpen()) {
             try {
                 p_channelRead0_2_.processPacket(this.packetListener);
-            } catch (ThreadQuickExitException ignored) {
+            } catch (final ThreadQuickExitException ignored) {
             }
         }
     }
 
     @Inject(method = "sendPacket(Lnet/minecraft/network/Packet;)V", at = @At("HEAD"), cancellable = true)
-    private void send(Packet<?> packet, CallbackInfo callback) {
+    private void send(final Packet<?> packet, final CallbackInfo callback) {
         if (PacketUtils.handleSendPacket(packet)) return;
         final PacketEvent event = new PacketEvent(packet);
-        ExtendedPosition extendedPosition = Launch.moduleManager.getModule(ExtendedPosition.class);
+        final ExtendedPosition extendedPosition = Launch.moduleManager.getModule(ExtendedPosition.class);
         assert extendedPosition != null;
         if (extendedPosition.getState()) {
             try {
                 extendedPosition.onPacket(event);
-            } catch (Exception ignored) {
+            } catch (final Exception ignored) {
             }
         }
         Launch.eventManager.callEvent(event);

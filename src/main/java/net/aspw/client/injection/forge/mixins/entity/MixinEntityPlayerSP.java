@@ -2,7 +2,15 @@ package net.aspw.client.injection.forge.mixins.entity;
 
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
-import net.aspw.client.event.*;
+import net.aspw.client.event.ActionEvent;
+import net.aspw.client.event.EventState;
+import net.aspw.client.event.MotionEvent;
+import net.aspw.client.event.MoveEvent;
+import net.aspw.client.event.PushOutEvent;
+import net.aspw.client.event.SlowDownEvent;
+import net.aspw.client.event.StepConfirmEvent;
+import net.aspw.client.event.StepEvent;
+import net.aspw.client.event.UpdateEvent;
 import net.aspw.client.features.module.impl.exploit.PortalMenu;
 import net.aspw.client.features.module.impl.movement.NoSlow;
 import net.aspw.client.features.module.impl.movement.SilentSneak;
@@ -35,8 +43,17 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.*;
-import org.spongepowered.asm.mixin.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovementInput;
+import net.minecraft.util.ReportedException;
+import net.minecraft.util.ResourceLocation;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -51,9 +68,6 @@ import java.util.Objects;
  */
 @Mixin(EntityPlayerSP.class)
 public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
-
-    @Unique
-    private boolean viaForge$prevOnGround;
 
     /**
      * The Server sprint state.
@@ -96,6 +110,16 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     @Shadow
     @Final
     public NetHandlerPlayClient sendQueue;
+    @Shadow
+    public int positionUpdateTicks;
+    @Shadow
+    public float renderArmYaw;
+    @Shadow
+    public float renderArmPitch;
+    @Shadow
+    public float prevRenderArmYaw;
+    @Shadow
+    public float prevRenderArmPitch;
     /**
      * The Sprint toggle timer.
      */
@@ -106,12 +130,12 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
      */
     @Shadow
     protected Minecraft mc;
+    @Unique
+    private boolean viaForge$prevOnGround;
     @Shadow
     private boolean serverSneakState;
     @Shadow
     private double lastReportedPosX;
-    @Shadow
-    public int positionUpdateTicks;
     @Shadow
     private double lastReportedPosY;
     @Shadow
@@ -122,14 +146,6 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     private float lastReportedPitch;
     @Unique
     private boolean lastOnGround;
-    @Shadow
-    public float renderArmYaw;
-    @Shadow
-    public float renderArmPitch;
-    @Shadow
-    public float prevRenderArmYaw;
-    @Shadow
-    public float prevRenderArmPitch;
 
     /**
      * Play sound.
@@ -180,6 +196,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     @Shadow
     public abstract boolean isRidingHorse();
 
+    @Override
     @Shadow
     public abstract boolean isSneaking();
 
@@ -199,6 +216,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
      * @author As_pw
      * @reason Fix Arm
      */
+    @Override
     @Overwrite
     public void updateEntityActionState() {
         super.updateEntityActionState();
@@ -215,7 +233,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     }
 
     @Redirect(method = "onUpdateWalkingPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/NetHandlerPlayClient;addToSendQueue(Lnet/minecraft/network/Packet;)V", ordinal = 7))
-    public void emulateIdlePacket(NetHandlerPlayClient instance, Packet p_addToSendQueue_1_) {
+    public void emulateIdlePacket(final NetHandlerPlayClient instance, final Packet<?> p_addToSendQueue_1_) {
         if (ProtocolBase.getManager().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
             if (this.viaForge$prevOnGround == this.onGround) {
                 return;
@@ -225,7 +243,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     }
 
     @Inject(method = "onUpdateWalkingPlayer", at = @At("RETURN"))
-    public void saveGroundState(CallbackInfo ci) {
+    public void saveGroundState(final CallbackInfo ci) {
         this.viaForge$prevOnGround = this.onGround;
     }
 
@@ -238,16 +256,16 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     @Overwrite
     public void onUpdateWalkingPlayer() {
         try {
-            MotionEvent event = new MotionEvent(this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround);
+            final MotionEvent event = new MotionEvent(this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround);
             Launch.eventManager.callEvent(event);
 
             final SilentSneak sneak = Objects.requireNonNull(Launch.moduleManager.getModule(SilentSneak.class));
             final boolean fakeSprint = sneak.getState() && (!MovementUtils.isMoving());
 
-            ActionEvent actionEvent = new ActionEvent(this.isSprinting() && !fakeSprint, this.isSneaking());
+            final ActionEvent actionEvent = new ActionEvent(this.isSprinting() && !fakeSprint, this.isSneaking());
 
-            boolean sprinting = actionEvent.getSprinting();
-            boolean sneaking = actionEvent.getSneaking();
+            final boolean sprinting = actionEvent.getSprinting();
+            final boolean sneaking = actionEvent.getSneaking();
 
             if (sprinting != this.serverSprintState) {
                 if (sprinting)
@@ -277,13 +295,13 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
                     pitch = currentRotation.getPitch();
                 }
 
-                double xDiff = event.getX() - this.lastReportedPosX;
-                double yDiff = event.getY() - this.lastReportedPosY;
-                double zDiff = event.getZ() - this.lastReportedPosZ;
-                double yawDiff = yaw - lastReportedYaw;
-                double pitchDiff = pitch - lastReportedPitch;
+                final double xDiff = event.getX() - this.lastReportedPosX;
+                final double yDiff = event.getY() - this.lastReportedPosY;
+                final double zDiff = event.getZ() - this.lastReportedPosZ;
+                final double yawDiff = yaw - lastReportedYaw;
+                final double pitchDiff = pitch - lastReportedPitch;
                 boolean moved = xDiff * xDiff + yDiff * yDiff + zDiff * zDiff > 9.0E-4 || this.positionUpdateTicks >= 20;
-                boolean rotated = yawDiff != 0.0D || pitchDiff != 0.0D;
+                final boolean rotated = yawDiff != 0.0D || pitchDiff != 0.0D;
 
                 if (this.ridingEntity == null) {
                     if (moved && rotated) {
@@ -327,7 +345,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     }
 
     @Inject(method = "swingItem", at = @At("HEAD"))
-    private void swingItem(CallbackInfo callbackInfo) {
+    private void swingItem(final CallbackInfo callbackInfo) {
         CooldownHelper.INSTANCE.resetLastAttackedTicks();
         if (Objects.requireNonNull(Launch.moduleManager.getModule(Interface.class)).getSwingSoundValue().get()) {
             Launch.tipSoundManager.getSwingSound().asyncPlay(Launch.moduleManager.getSwingSoundPower());
@@ -335,8 +353,8 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     }
 
     @Inject(method = "pushOutOfBlocks", at = @At("HEAD"), cancellable = true)
-    private void onPushOutOfBlocks(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        PushOutEvent event = new PushOutEvent();
+    private void onPushOutOfBlocks(final CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+        final PushOutEvent event = new PushOutEvent();
         if (this.noClip) event.cancelEvent();
         Launch.eventManager.callEvent(event);
 
@@ -348,6 +366,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
      * @author As_pw
      * @reason Fix Gui
      */
+    @Override
     @Overwrite
     public void onLivingUpdate() {
         Launch.eventManager.callEvent(new UpdateEvent());
@@ -413,10 +432,10 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             --this.timeUntilPortal;
         }
 
-        boolean flag = this.movementInput.jump;
-        boolean flag1 = this.movementInput.sneak;
-        float f = 0.8F;
-        boolean flag2 = this.movementInput.moveForward >= f;
+        final boolean flag = this.movementInput.jump;
+        final boolean flag1 = this.movementInput.sneak;
+        final float f = 0.8F;
+        final boolean flag2 = this.movementInput.moveForward >= f;
         this.movementInput.updatePlayerMoveState();
 
         final NoSlow noSlow = Objects.requireNonNull(Launch.moduleManager.getModule(NoSlow.class));
@@ -434,7 +453,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         this.pushOutOfBlocks(this.posX + (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D, this.posZ - (double) this.width * 0.35D);
         this.pushOutOfBlocks(this.posX + (double) this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D, this.posZ + (double) this.width * 0.35D);
 
-        boolean flag3 = (float) this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
+        final boolean flag3 = (float) this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
 
         if (this.onGround && !flag1 && !flag2 && this.movementInput.moveForward >= f && !this.isSprinting() && flag3 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness)) {
             if (this.sprintToggleTimer <= 0 && !this.mc.gameSettings.keyBindSprint.isKeyDown()) {
@@ -520,7 +539,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
     @Override
     public void moveEntity(double x, double y, double z) {
-        MoveEvent moveEvent = new MoveEvent(x, y, z);
+        final MoveEvent moveEvent = new MoveEvent(x, y, z);
         Launch.eventManager.callEvent(moveEvent);
 
         if (moveEvent.isCancelled())
@@ -537,9 +556,9 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             this.posZ = (this.getEntityBoundingBox().minZ + this.getEntityBoundingBox().maxZ) / 2.0D;
         } else {
             this.worldObj.theProfiler.startSection("move");
-            double d0 = this.posX;
-            double d1 = this.posY;
-            double d2 = this.posZ;
+            final double d0 = this.posX;
+            final double d1 = this.posY;
+            final double d2 = this.posZ;
 
             if (this.isInWeb) {
                 this.isInWeb = false;
@@ -552,12 +571,12 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             }
 
             double d3 = x;
-            double d4 = y;
+            final double d4 = y;
             double d5 = z;
-            boolean flag = this.onGround && this.isSneaking();
+            final boolean flag = this.onGround && this.isSneaking();
 
             if (flag || moveEvent.isSafeWalk()) {
-                double d6;
+                final double d6;
 
                 for (d6 = 0.05D; x != 0.0D && this.worldObj.getCollidingBoundingBoxes((Entity) (Object) this, this.getEntityBoundingBox().offset(x, -1.0D, 0.0D)).isEmpty(); d3 = x) {
                     if (x < d6 && x >= -d6) {
@@ -600,57 +619,57 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
                 }
             }
 
-            List<AxisAlignedBB> list1 = this.worldObj.getCollidingBoundingBoxes((Entity) (Object) this, this.getEntityBoundingBox().addCoord(x, y, z));
-            AxisAlignedBB axisalignedbb = this.getEntityBoundingBox();
+            final List<AxisAlignedBB> list1 = this.worldObj.getCollidingBoundingBoxes((Entity) (Object) this, this.getEntityBoundingBox().addCoord(x, y, z));
+            final AxisAlignedBB axisalignedbb = this.getEntityBoundingBox();
 
-            for (AxisAlignedBB axisalignedbb1 : list1) {
+            for (final AxisAlignedBB axisalignedbb1 : list1) {
                 y = axisalignedbb1.calculateYOffset(this.getEntityBoundingBox(), y);
             }
 
             this.setEntityBoundingBox(this.getEntityBoundingBox().offset(0.0D, y, 0.0D));
-            boolean flag1 = this.onGround || d4 != y && d4 < 0.0D;
+            final boolean flag1 = this.onGround || d4 != y && d4 < 0.0D;
 
-            for (AxisAlignedBB axisalignedbb2 : list1) {
+            for (final AxisAlignedBB axisalignedbb2 : list1) {
                 x = axisalignedbb2.calculateXOffset(this.getEntityBoundingBox(), x);
             }
 
             this.setEntityBoundingBox(this.getEntityBoundingBox().offset(x, 0.0D, 0.0D));
 
-            for (AxisAlignedBB axisalignedbb13 : list1) {
+            for (final AxisAlignedBB axisalignedbb13 : list1) {
                 z = axisalignedbb13.calculateZOffset(this.getEntityBoundingBox(), z);
             }
 
             this.setEntityBoundingBox(this.getEntityBoundingBox().offset(0.0D, 0.0D, z));
 
             if (this.stepHeight > 0.0F && flag1 && (d3 != x || d5 != z)) {
-                StepEvent stepEvent = new StepEvent(this.stepHeight);
+                final StepEvent stepEvent = new StepEvent(this.stepHeight);
                 Launch.eventManager.callEvent(stepEvent);
-                double d11 = x;
-                double d7 = y;
-                double d8 = z;
-                AxisAlignedBB axisalignedbb3 = this.getEntityBoundingBox();
+                final double d11 = x;
+                final double d7 = y;
+                final double d8 = z;
+                final AxisAlignedBB axisalignedbb3 = this.getEntityBoundingBox();
                 this.setEntityBoundingBox(axisalignedbb);
                 y = stepEvent.getStepHeight();
-                List<AxisAlignedBB> list = this.worldObj.getCollidingBoundingBoxes((Entity) (Object) this, this.getEntityBoundingBox().addCoord(d3, y, d5));
+                final List<AxisAlignedBB> list = this.worldObj.getCollidingBoundingBoxes((Entity) (Object) this, this.getEntityBoundingBox().addCoord(d3, y, d5));
                 AxisAlignedBB axisalignedbb4 = this.getEntityBoundingBox();
-                AxisAlignedBB axisalignedbb5 = axisalignedbb4.addCoord(d3, 0.0D, d5);
+                final AxisAlignedBB axisalignedbb5 = axisalignedbb4.addCoord(d3, 0.0D, d5);
                 double d9 = y;
 
-                for (AxisAlignedBB axisalignedbb6 : list) {
+                for (final AxisAlignedBB axisalignedbb6 : list) {
                     d9 = axisalignedbb6.calculateYOffset(axisalignedbb5, d9);
                 }
 
                 axisalignedbb4 = axisalignedbb4.offset(0.0D, d9, 0.0D);
                 double d15 = d3;
 
-                for (AxisAlignedBB axisalignedbb7 : list) {
+                for (final AxisAlignedBB axisalignedbb7 : list) {
                     d15 = axisalignedbb7.calculateXOffset(axisalignedbb4, d15);
                 }
 
                 axisalignedbb4 = axisalignedbb4.offset(d15, 0.0D, 0.0D);
                 double d16 = d5;
 
-                for (AxisAlignedBB axisalignedbb8 : list) {
+                for (final AxisAlignedBB axisalignedbb8 : list) {
                     d16 = axisalignedbb8.calculateZOffset(axisalignedbb4, d16);
                 }
 
@@ -658,27 +677,27 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
                 AxisAlignedBB axisalignedbb14 = this.getEntityBoundingBox();
                 double d17 = y;
 
-                for (AxisAlignedBB axisalignedbb9 : list) {
+                for (final AxisAlignedBB axisalignedbb9 : list) {
                     d17 = axisalignedbb9.calculateYOffset(axisalignedbb14, d17);
                 }
 
                 axisalignedbb14 = axisalignedbb14.offset(0.0D, d17, 0.0D);
                 double d18 = d3;
 
-                for (AxisAlignedBB axisalignedbb10 : list) {
+                for (final AxisAlignedBB axisalignedbb10 : list) {
                     d18 = axisalignedbb10.calculateXOffset(axisalignedbb14, d18);
                 }
 
                 axisalignedbb14 = axisalignedbb14.offset(d18, 0.0D, 0.0D);
                 double d19 = d5;
 
-                for (AxisAlignedBB axisalignedbb11 : list) {
+                for (final AxisAlignedBB axisalignedbb11 : list) {
                     d19 = axisalignedbb11.calculateZOffset(axisalignedbb14, d19);
                 }
 
                 axisalignedbb14 = axisalignedbb14.offset(0.0D, 0.0D, d19);
-                double d20 = d15 * d15 + d16 * d16;
-                double d10 = d18 * d18 + d19 * d19;
+                final double d20 = d15 * d15 + d16 * d16;
+                final double d10 = d18 * d18 + d19 * d19;
 
                 if (d20 > d10) {
                     x = d15;
@@ -692,7 +711,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
                     this.setEntityBoundingBox(axisalignedbb14);
                 }
 
-                for (AxisAlignedBB axisalignedbb12 : list) {
+                for (final AxisAlignedBB axisalignedbb12 : list) {
                     y = axisalignedbb12.calculateYOffset(this.getEntityBoundingBox(), y);
                 }
 
@@ -717,14 +736,14 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             this.isCollidedVertically = d4 != y;
             this.onGround = this.isCollidedVertically && d4 < 0.0D;
             this.isCollided = this.isCollidedHorizontally || this.isCollidedVertically;
-            int i = MathHelper.floor_double(this.posX);
-            int j = MathHelper.floor_double(this.posY - 0.20000000298023224D);
-            int k = MathHelper.floor_double(this.posZ);
+            final int i = MathHelper.floor_double(this.posX);
+            final int j = MathHelper.floor_double(this.posY - 0.20000000298023224D);
+            final int k = MathHelper.floor_double(this.posZ);
             BlockPos blockpos = new BlockPos(i, j, k);
             Block block1 = this.worldObj.getBlockState(blockpos).getBlock();
 
             if (block1.getMaterial() == Material.air) {
-                Block block = this.worldObj.getBlockState(blockpos.down()).getBlock();
+                final Block block = this.worldObj.getBlockState(blockpos.down()).getBlock();
 
                 if (block instanceof BlockFence || block instanceof BlockWall || block instanceof BlockFenceGate) {
                     block1 = block;
@@ -747,9 +766,9 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             }
 
             if (this.canTriggerWalking() && !flag && this.ridingEntity == null) {
-                double d12 = this.posX - d0;
+                final double d12 = this.posX - d0;
                 double d13 = this.posY - d1;
-                double d14 = this.posZ - d2;
+                final double d14 = this.posZ - d2;
 
                 if (block1 != Blocks.ladder) {
                     d13 = 0.0D;
@@ -781,14 +800,14 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
             try {
                 this.doBlockCollisions();
-            } catch (Throwable throwable) {
-                CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Checking entity block collision");
-                CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being checked for collision");
+            } catch (final Throwable throwable) {
+                final CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Checking entity block collision");
+                final CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being checked for collision");
                 this.addEntityCrashInfo(crashreportcategory);
                 throw new ReportedException(crashreport);
             }
 
-            boolean flag2 = this.isWet();
+            final boolean flag2 = this.isWet();
 
             if (this.worldObj.isFlammableWithin(this.getEntityBoundingBox().contract(0.001D, 0.001D, 0.001D))) {
                 this.dealFireDamage(1);

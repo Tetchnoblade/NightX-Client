@@ -38,7 +38,7 @@ import java.util.Objects;
 
 @ModuleInfo(name = "ESP", category = ModuleCategory.VISUAL)
 public final class ESP extends Module {
-    public static List collectedEntities = new ArrayList();
+    public static List<Entity> collectedEntities = new ArrayList<>();
     public final BoolValue localPlayer = new BoolValue("Local-Player", false);
     private final IntBuffer viewport;
     private final FloatBuffer modelview;
@@ -71,7 +71,7 @@ public final class ESP extends Module {
         int i = 0;
 
         for (int collectedEntitiesSize = collectedEntities.size(); i < collectedEntitiesSize; ++i) {
-            Entity entity = (Entity) collectedEntities.get(i);
+            Entity entity = collectedEntities.get(i);
             if (RenderUtils.isInViewFrustrum(entity)) {
                 double x = RenderUtils.interpolate(entity.posX, entity.lastTickPosX, partialTicks);
                 double y = RenderUtils.interpolate(entity.posY, entity.lastTickPosY, partialTicks);
@@ -79,12 +79,11 @@ public final class ESP extends Module {
                 double width = (double) entity.width / 1.5D;
                 double height = (double) entity.height + (entity.isSneaking() ? -0.3D : 0.2D);
                 AxisAlignedBB aabb = new AxisAlignedBB(x - width, y, z - width, x + width, y + height, z + width);
-                List vectors = Arrays.asList(new Vector3d(aabb.minX, aabb.minY, aabb.minZ), new Vector3d(aabb.minX, aabb.maxY, aabb.minZ), new Vector3d(aabb.maxX, aabb.minY, aabb.minZ), new Vector3d(aabb.maxX, aabb.maxY, aabb.minZ), new Vector3d(aabb.minX, aabb.minY, aabb.maxZ), new Vector3d(aabb.minX, aabb.maxY, aabb.maxZ), new Vector3d(aabb.maxX, aabb.minY, aabb.maxZ), new Vector3d(aabb.maxX, aabb.maxY, aabb.maxZ));
+                List<Vector3d> vectors = Arrays.asList(new Vector3d(aabb.minX, aabb.minY, aabb.minZ), new Vector3d(aabb.minX, aabb.maxY, aabb.minZ), new Vector3d(aabb.maxX, aabb.minY, aabb.minZ), new Vector3d(aabb.maxX, aabb.maxY, aabb.minZ), new Vector3d(aabb.minX, aabb.minY, aabb.maxZ), new Vector3d(aabb.minX, aabb.maxY, aabb.maxZ), new Vector3d(aabb.maxX, aabb.minY, aabb.maxZ), new Vector3d(aabb.maxX, aabb.maxY, aabb.maxZ));
                 entityRenderer.setupCameraTransform(partialTicks, 0);
                 Vector4d position = null;
 
-                for (Object o : vectors) {
-                    Vector3d vector = (Vector3d) o;
+                for (Vector3d vector : vectors) {
                     vector = this.project2D(scaleFactor, vector.x - renderMng.viewerPosX, vector.y - renderMng.viewerPosY, vector.z - renderMng.viewerPosZ);
                     if (vector != null && vector.z >= 0.0D && vector.z < 1.0D) {
                         if (position == null) {
@@ -150,11 +149,11 @@ public final class ESP extends Module {
 
     private void collectEntities() {
         collectedEntities.clear();
-        List playerEntities = mc.theWorld.loadedEntityList;
+        List<Entity> playerEntities = mc.theWorld.loadedEntityList;
         int i = 0;
 
         for (int playerEntitiesSize = playerEntities.size(); i < playerEntitiesSize; ++i) {
-            Entity entity = (Entity) playerEntities.get(i);
+            Entity entity = playerEntities.get(i);
             if (entity instanceof EntityPlayer && !(entity instanceof EntityPlayerSP) && !entity.isInvisible() && !((EntityPlayer) entity).isSpectator() || (localPlayer.get() && entity instanceof EntityPlayerSP && mc.gameSettings.thirdPersonView != 0)) {
                 collectedEntities.add(entity);
             }

@@ -5,7 +5,7 @@ import net.aspw.client.utils.item.ItemUtils
 import net.aspw.client.utils.misc.StringUtils
 import net.minecraft.item.Item
 import net.minecraft.network.play.client.C10PacketCreativeInventoryAction
-import java.util.*
+import java.util.Locale
 
 class GiveCommand : Command("give", arrayOf("item", "i", "get")) {
     /**

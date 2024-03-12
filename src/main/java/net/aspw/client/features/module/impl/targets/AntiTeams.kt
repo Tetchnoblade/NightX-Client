@@ -42,7 +42,7 @@ class AntiTeams : Module() {
 
 
                 val entityHead = entityPlayer.inventory.armorInventory[armorIndexValue.get()]
-                var entityItemArmor = myHead.item!! as ItemArmor
+                val entityItemArmor = myHead.item!! as ItemArmor
 
                 if (myItemArmor.getColor(myHead) == entityItemArmor.getColor(entityHead!!)) {
                     return true

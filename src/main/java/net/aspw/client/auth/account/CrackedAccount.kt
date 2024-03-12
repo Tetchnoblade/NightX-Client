@@ -4,7 +4,7 @@ import com.google.gson.JsonObject
 import net.aspw.client.auth.compat.Session
 import net.aspw.client.auth.utils.set
 import net.aspw.client.auth.utils.string
-import java.util.*
+import java.util.UUID
 
 class CrackedAccount : MinecraftAccount("Cracked") {
     override var name = "Player"

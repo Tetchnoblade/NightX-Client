@@ -1,6 +1,12 @@
 package net.aspw.client.features.module.impl.player
 
-import net.aspw.client.event.*
+import net.aspw.client.event.BlockBBEvent
+import net.aspw.client.event.EventState
+import net.aspw.client.event.EventTarget
+import net.aspw.client.event.JumpEvent
+import net.aspw.client.event.MotionEvent
+import net.aspw.client.event.MoveEvent
+import net.aspw.client.event.PacketEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
@@ -14,7 +20,7 @@ import net.minecraft.block.BlockAir
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.MathHelper
-import java.util.*
+import java.util.Locale
 
 @ModuleInfo(name = "Spider", spacedName = "Spider", category = ModuleCategory.PLAYER)
 class Spider : Module() {

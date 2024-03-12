@@ -3,7 +3,7 @@ package net.aspw.client.features.command.impl
 import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
 import net.aspw.client.utils.misc.StringUtils
-import java.util.*
+import java.util.Locale
 
 class FriendCommand : Command("friend", arrayOf("friends")) {
     /**

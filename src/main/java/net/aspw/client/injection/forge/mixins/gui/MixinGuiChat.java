@@ -9,11 +9,12 @@ import org.lwjgl.input.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Comparator;
 import java.util.List;
 
@@ -22,18 +23,19 @@ import java.util.List;
  */
 @Mixin(GuiChat.class)
 public abstract class MixinGuiChat extends MixinGuiScreen {
+    @Unique
+    private final float fade = 14;
     /**
      * The Input field.
      */
     @Shadow
     protected GuiTextField inputField;
-
     @Shadow
     private List<String> foundPlayerNames;
     @Shadow
     private boolean waitingOnAutocomplete;
+    @Unique
     private float yPosOfInputField;
-    private final float fade = 14;
 
     /**
      * On autocomplete response.
@@ -44,20 +46,20 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
     public abstract void onAutocompleteResponse(String[] p_onAutocompleteResponse_1_);
 
     @Inject(method = "initGui", at = @At("RETURN"))
-    private void init(CallbackInfo callbackInfo) {
+    private void init(final CallbackInfo callbackInfo) {
         inputField.yPosition = height + 1;
         yPosOfInputField = inputField.yPosition;
     }
 
     @Inject(method = "keyTyped", at = @At("RETURN"))
-    private void updateLength(CallbackInfo callbackInfo) {
+    private void updateLength(final CallbackInfo callbackInfo) {
         if (inputField.getText().startsWith((".")))
             Launch.commandManager.autoComplete(inputField.getText());
         else inputField.setMaxStringLength(100);
     }
 
     @Inject(method = "updateScreen", at = @At("HEAD"))
-    private void updateScreen(CallbackInfo callbackInfo) {
+    private void updateScreen(final CallbackInfo callbackInfo) {
         yPosOfInputField = height - 12;
         inputField.yPosition = (int) yPosOfInputField;
     }
@@ -69,11 +71,11 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
     }
 
     @Inject(method = "sendAutocompleteRequest", at = @At("HEAD"), cancellable = true)
-    private void handleClientCommandCompletion(String full, final String ignored, CallbackInfo callbackInfo) {
+    private void handleClientCommandCompletion(final String full, final String ignored, final CallbackInfo callbackInfo) {
         if (Launch.commandManager.autoComplete(full)) {
             waitingOnAutocomplete = true;
 
-            String[] latestAutoComplete = Launch.commandManager.getLatestAutoComplete();
+            final String[] latestAutoComplete = Launch.commandManager.getLatestAutoComplete();
 
             if (full.toLowerCase().endsWith(latestAutoComplete[latestAutoComplete.length - 1].toLowerCase()))
                 return;
@@ -94,19 +96,19 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
      * @reason Draw
      */
     @Overwrite
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
         RenderUtils.drawRect(2F, this.height - fade, this.width - 2, this.height - fade + 12, Integer.MIN_VALUE);
         this.inputField.drawTextBox();
 
         if (Launch.commandManager.getLatestAutoComplete().length > 0 && !inputField.getText().isEmpty() && inputField.getText().startsWith(".")) {
-            String[] latestAutoComplete = Launch.commandManager.getLatestAutoComplete();
-            String[] textArray = inputField.getText().split(" ");
-            String trimmedString = latestAutoComplete[0].replaceFirst("(?i)" + textArray[textArray.length - 1], "");
+            final String[] latestAutoComplete = Launch.commandManager.getLatestAutoComplete();
+            final String[] textArray = inputField.getText().split(" ");
+            final String trimmedString = latestAutoComplete[0].replaceFirst("(?i)" + textArray[textArray.length - 1], "");
 
             mc.fontRendererObj.drawStringWithShadow(trimmedString, inputField.xPosition + mc.fontRendererObj.getStringWidth(inputField.getText()), inputField.yPosition, new Color(165, 165, 165).getRGB());
         }
 
-        IChatComponent ichatcomponent =
+        final IChatComponent ichatcomponent =
                 this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
 
         if (ichatcomponent != null)

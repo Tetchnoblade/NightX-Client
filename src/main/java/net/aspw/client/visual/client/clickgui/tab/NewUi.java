@@ -18,7 +18,7 @@ import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class NewUi extends GuiScreen {
     private SearchElement searchElement;
 
     private NewUi() {
-        for (ModuleCategory c : ModuleCategory.values())
+        for (final ModuleCategory c : ModuleCategory.getEntries())
             categoryElements.add(new CategoryElement(c));
         categoryElements.get(0).setFocused(true);
     }
@@ -43,10 +43,11 @@ public class NewUi extends GuiScreen {
         return instance == null ? instance = new NewUi() : instance;
     }
 
+    @Override
     public void initGui() {
         Keyboard.enableRepeatEvents(true);
-        for (CategoryElement ce : categoryElements) {
-            for (ModuleElement me : ce.getModuleElements()) {
+        for (final CategoryElement ce : categoryElements) {
+            for (final ModuleElement me : ce.getModuleElements()) {
                 if (me.listeningKeybind())
                     me.resetState();
             }
@@ -55,19 +56,21 @@ public class NewUi extends GuiScreen {
         super.initGui();
     }
 
+    @Override
     public void onGuiClosed() {
-        for (CategoryElement ce : categoryElements) {
+        for (final CategoryElement ce : categoryElements) {
             if (ce.getFocused())
                 ce.handleMouseRelease(-1, -1, 0, 0, 0, 0, 0);
         }
         Keyboard.enableRepeatEvents(false);
     }
 
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    @Override
+    public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
         drawFullSized(mouseX, mouseY, partialTicks, Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).generateColor());
     }
 
-    private void drawFullSized(int mouseX, int mouseY, float partialTicks, Color accentColor) {
+    private void drawFullSized(final int mouseX, final int mouseY, final float partialTicks, final Color accentColor) {
         if (Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).getGuiBlur().get()) {
             BlurUtils.blurArea(
                     0,
@@ -114,12 +117,12 @@ public class NewUi extends GuiScreen {
 
         final float elementHeight = 24;
         float startY = 60F;
-        for (CategoryElement ce : categoryElements) {
+        for (final CategoryElement ce : categoryElements) {
             ce.drawLabel(mouseX, mouseY, 30F, startY, 200F, elementHeight);
             if (ce.getFocused()) {
-                float goY;
-                float goDelta = RenderUtils.deltaTime * 0.025F;
-                float goCondition = startYAnim - (startY + 5F);
+                final float goY;
+                final float goDelta = RenderUtils.deltaTime * 0.025F;
+                final float goCondition = startYAnim - (startY + 5F);
                 if (goCondition > 0) {
                     goY = AnimationUtils.animate(startY + 6F, startYAnim, 0.65F * goDelta);
                 } else {
@@ -127,9 +130,9 @@ public class NewUi extends GuiScreen {
                 }
                 startYAnim = goY;
 
-                float finishY;
-                float endDelta = RenderUtils.deltaTime * 0.025F;
-                float endCondition = endYAnim - (startY + elementHeight - 5F);
+                final float finishY;
+                final float endDelta = RenderUtils.deltaTime * 0.025F;
+                final float endCondition = endYAnim - (startY + elementHeight - 5F);
                 if (endCondition < 0) {
                     finishY = AnimationUtils.animate(startY + elementHeight - 6F, endYAnim, 0.65F * endDelta);
                 } else {
@@ -146,7 +149,8 @@ public class NewUi extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+    @Override
+    protected void mouseClicked(final int mouseX, final int mouseY, final int mouseButton) throws IOException {
         if (MouseUtils.mouseWithinBounds(mouseX, mouseY, this.width - 54F, 30F, this.width - 30F, 50F)) {
             mc.displayGuiScreen(null);
             return;
@@ -154,7 +158,7 @@ public class NewUi extends GuiScreen {
         final float elementHeight = 24;
         float startY = 60F;
         searchElement.handleMouseClick(mouseX, mouseY, mouseButton, 230, 50, width - 260, height - 80, categoryElements);
-        if (!searchElement.isTyping()) for (CategoryElement ce : categoryElements) {
+        if (!searchElement.isTyping()) for (final CategoryElement ce : categoryElements) {
             if (ce.getFocused())
                 ce.handleMouseClick(mouseX, mouseY, mouseButton, 230, 0, width - 260, height - 40);
             if (MouseUtils.mouseWithinBounds(mouseX, mouseY, 30F, startY, 230F, startY + elementHeight) && !searchElement.isTyping()) {
@@ -166,8 +170,9 @@ public class NewUi extends GuiScreen {
         }
     }
 
-    protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        for (CategoryElement ce : categoryElements) {
+    @Override
+    protected void keyTyped(final char typedChar, final int keyCode) throws IOException {
+        for (final CategoryElement ce : categoryElements) {
             if (ce.getFocused()) {
                 if (ce.handleKeyTyped(typedChar, keyCode))
                     return;
@@ -178,10 +183,11 @@ public class NewUi extends GuiScreen {
         super.keyTyped(typedChar, keyCode);
     }
 
-    protected void mouseReleased(int mouseX, int mouseY, int state) {
+    @Override
+    protected void mouseReleased(final int mouseX, final int mouseY, final int state) {
         searchElement.handleMouseRelease(mouseX, mouseY, state, 230, 50, width - 260, height - 80, categoryElements);
         if (!searchElement.isTyping())
-            for (CategoryElement ce : categoryElements) {
+            for (final CategoryElement ce : categoryElements) {
                 if (ce.getFocused())
                     ce.handleMouseRelease(mouseX, mouseY, state, 230, 50, width - 260, height - 80);
             }

@@ -3,7 +3,7 @@ package net.aspw.client.utils
 import net.minecraft.network.Packet
 import net.minecraft.network.play.INetHandlerPlayServer
 import java.math.BigInteger
-import java.util.*
+import java.util.LinkedList
 
 object BlinkUtils : MinecraftInstance() {
     private val playerBuffer = LinkedList<Packet<INetHandlerPlayServer>>()

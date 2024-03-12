@@ -1,6 +1,10 @@
 package net.aspw.client.features.module.impl.player
 
-import net.aspw.client.event.*
+import net.aspw.client.event.AttackEvent
+import net.aspw.client.event.ClickBlockEvent
+import net.aspw.client.event.EventTarget
+import net.aspw.client.event.PacketEvent
+import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo

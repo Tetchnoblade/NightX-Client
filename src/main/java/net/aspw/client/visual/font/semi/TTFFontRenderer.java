@@ -6,7 +6,11 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
@@ -54,15 +58,15 @@ public class TTFFontRenderer {
      */
     private final boolean fractionalMetrics;
 
-    public TTFFontRenderer(Font font) {
+    public TTFFontRenderer(final Font font) {
         this(font, 256);
     }
 
-    public TTFFontRenderer(Font font, int characterCount) {
+    public TTFFontRenderer(final Font font, final int characterCount) {
         this(font, characterCount, true);
     }
 
-    public TTFFontRenderer(Font font, int characterCount, boolean fractionalMetrics) {
+    public TTFFontRenderer(final Font font, final int characterCount, final boolean fractionalMetrics) {
         this.font = font;
         this.fractionalMetrics = fractionalMetrics;
 
@@ -78,44 +82,44 @@ public class TTFFontRenderer {
      * @param characterData The array of character data that should be filled.
      * @param type          The font type. (Regular, Bold, and Italics)
      */
-    private CharacterData[] setup(CharacterData[] characterData, int type) {
+    private CharacterData[] setup(final CharacterData[] characterData, final int type) {
         // Quickly generates the colors.
         generateColors();
 
         // Changes the type of the font to the given type.
-        Font font = this.font.deriveFont(type);
+        final Font font = this.font.deriveFont(type);
 
         // An image just to get font data.
-        BufferedImage utilityImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+        final BufferedImage utilityImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 
         // The graphics of the utility image.
-        Graphics2D utilityGraphics = (Graphics2D) utilityImage.getGraphics();
+        final Graphics2D utilityGraphics = (Graphics2D) utilityImage.getGraphics();
 
         // Sets the font of the utility image to the font.
         utilityGraphics.setFont(font);
 
         // The font metrics of the utility image.
-        FontMetrics fontMetrics = utilityGraphics.getFontMetrics();
+        final FontMetrics fontMetrics = utilityGraphics.getFontMetrics();
 
         // Iterates through all the characters in the character set of the font renderer.
         for (int index = 0; index < characterData.length; index++) {
             // The character at the current index.
-            char character = (char) index;
+            final char character = (char) index;
 
             // The width and height of the character according to the font.
-            Rectangle2D characterBounds = fontMetrics.getStringBounds(character + "", utilityGraphics);
+            final Rectangle2D characterBounds = fontMetrics.getStringBounds(character + "", utilityGraphics);
 
             // The width of the character texture.
-            float width = (float) characterBounds.getWidth() + (2 * MARGIN);
+            final float width = (float) characterBounds.getWidth() + (2 * MARGIN);
 
             // The height of the character texture.
-            float height = (float) characterBounds.getHeight();
+            final float height = (float) characterBounds.getHeight();
 
             // The image that the character will be rendered to.
-            BufferedImage characterImage = new BufferedImage(MathHelper.ceiling_double_int(width), MathHelper.ceiling_double_int(height), BufferedImage.TYPE_INT_ARGB);
+            final BufferedImage characterImage = new BufferedImage(MathHelper.ceiling_double_int(width), MathHelper.ceiling_double_int(height), BufferedImage.TYPE_INT_ARGB);
 
             // The graphics of the character image.
-            Graphics2D graphics = (Graphics2D) characterImage.getGraphics();
+            final Graphics2D graphics = (Graphics2D) characterImage.getGraphics();
 
             // Sets the font to the input font/
             graphics.setFont(font);
@@ -139,7 +143,7 @@ public class TTFFontRenderer {
             graphics.drawString(character + "", MARGIN, fontMetrics.getAscent());
 
             // Generates a new texture id.
-            int textureId = GlStateManager.generateTexture();
+            final int textureId = GlStateManager.generateTexture();
 
             // Allocates the texture in opengl.
             createTexture(textureId, characterImage);
@@ -158,22 +162,22 @@ public class TTFFontRenderer {
      * @param textureId The texture id to upload to.
      * @param image     The image to upload.
      */
-    private void createTexture(int textureId, BufferedImage image) {
+    private void createTexture(final int textureId, final BufferedImage image) {
         // Array of all the colors in the image.
-        int[] pixels = new int[image.getWidth() * image.getHeight()];
+        final int[] pixels = new int[image.getWidth() * image.getHeight()];
 
         // Fetches all the colors in the image.
         image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
 
         // Buffer that will store the texture data.
-        ByteBuffer buffer = BufferUtils.createByteBuffer(image.getWidth() * image.getHeight() * 4); //4 for RGBA, 3 for RGB
+        final ByteBuffer buffer = BufferUtils.createByteBuffer(image.getWidth() * image.getHeight() * 4); //4 for RGBA, 3 for RGB
 
         // Puts all the pixel data into the buffer.
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
 
                 // The pixel in the image.
-                int pixel = pixels[y * image.getWidth() + x];
+                final int pixel = pixels[y * image.getWidth() + x];
 
                 // Puts the data into the byte buffer.
                 buffer.put((byte) ((pixel >> 16) & 0xFF));
@@ -208,7 +212,7 @@ public class TTFFontRenderer {
      * @param y     The y position of the text.
      * @param color The color of the text.
      */
-    public void drawString(String text, float x, float y, int color) {
+    public void drawString(final String text, final float x, final float y, final int color) {
         renderString(text, x, y, color, false);
     }
 
@@ -220,7 +224,7 @@ public class TTFFontRenderer {
      * @param y     The y position of the text.
      * @param color The color of the text.
      */
-    public void drawStringWithShadow(String text, float x, float y, int color) {
+    public void drawStringWithShadow(final String text, final float x, final float y, final int color) {
         GL11.glTranslated(0.5, 0.5, 0);
         renderString(text, x, y, color, true);
         GL11.glTranslated(-0.5, -0.5, 0);
@@ -236,9 +240,9 @@ public class TTFFontRenderer {
      * @param shadow If the text should be rendered with the shadow color.
      * @param color  The color of the text.
      */
-    private void renderString(String text, float x, float y, int color, boolean shadow) {
+    private void renderString(final String text, float x, float y, final int color, final boolean shadow) {
         // Returns if the text is empty.
-        if (text.length() == 0) return;
+        if (text.isEmpty()) return;
 
         // Pushes the matrix to store gl values.
         GL11.glPushMatrix();
@@ -247,8 +251,8 @@ public class TTFFontRenderer {
         GlStateManager.scale(0.5, 0.5, 1);
 
         // Removes half the margin to render in the right spot.
-        x -= MARGIN / 2;
-        y -= MARGIN / 2;
+        x -= (float) MARGIN / 2;
+        y -= (float) MARGIN / 2;
 
         // Adds 0.5 to x and y.
         x += 0.5F;
@@ -267,15 +271,15 @@ public class TTFFontRenderer {
         boolean obfuscated = false;
 
         // The length of the text used for the draw loop.
-        int length = text.length();
+        final int length = text.length();
 
         // The multiplier.
-        float multiplier = (shadow ? 4 : 1);
+        final float multiplier = (shadow ? 4 : 1);
 
-        float a = (float) (color >> 24 & 255) / 255F;
-        float r = (float) (color >> 16 & 255) / 255F;
-        float g = (float) (color >> 8 & 255) / 255F;
-        float b = (float) (color & 255) / 255F;
+        final float a = (float) (color >> 24 & 255) / 255F;
+        final float r = (float) (color >> 16 & 255) / 255F;
+        final float g = (float) (color >> 8 & 255) / 255F;
+        final float b = (float) (color & 255) / 255F;
 
         GL11.glColor4f(r / multiplier, g / multiplier, b / multiplier, a);
 
@@ -285,7 +289,7 @@ public class TTFFontRenderer {
             char character = text.charAt(i);
 
             // The previous character.
-            char previous = i > 0 ? text.charAt(i - 1) : '.';
+            final char previous = i > 0 ? text.charAt(i - 1) : '.';
 
             // Continues if the previous color was the color invoker.
             if (previous == COLOR_INVOKER) continue;
@@ -313,7 +317,7 @@ public class TTFFontRenderer {
                     if (shadow) index += 16;
 
                     // Gets the text color from the color codes array.
-                    int textColor = this.colorCodes[index];
+                    final int textColor = this.colorCodes[index];
 
                     // Sets the current color.
                     GL11.glColor4d((textColor >> 16) / 255d, (textColor >> 8 & 255) / 255d, (textColor & 255) / 255d, a);
@@ -353,7 +357,7 @@ public class TTFFontRenderer {
                 drawChar(character, characterData, x, y);
 
                 // The character data for the given character.
-                CharacterData charData = characterData[character];
+                final CharacterData charData = characterData[character];
 
                 // Draws the strikethrough line if enabled.
                 if (strikethrough)
@@ -383,7 +387,7 @@ public class TTFFontRenderer {
      * @param text The text to get the width of.
      * @return The width of the given text.
      */
-    public float getWidth(String text) {
+    public float getWidth(final String text) {
 
         // The width of the string.
         float width = 0;
@@ -392,15 +396,15 @@ public class TTFFontRenderer {
         CharacterData[] characterData = regularData;
 
         // The length of the text.
-        int length = text.length();
+        final int length = text.length();
 
         // Loops through the text.
         for (int i = 0; i < length; i++) {
             // The character at the index of 'i'.
-            char character = text.charAt(i);
+            final char character = text.charAt(i);
 
             // The previous character.
-            char previous = i > 0 ? text.charAt(i - 1) : '.';
+            final char previous = i > 0 ? text.charAt(i - 1) : '.';
 
             // Continues if the previous color was the color invoker.
             if (previous == COLOR_INVOKER) continue;
@@ -409,7 +413,7 @@ public class TTFFontRenderer {
             if (character == COLOR_INVOKER && i < length) {
 
                 // The color index of the character after the current character.
-                int index = "0123456789abcdefklmnor".indexOf(text.toLowerCase(Locale.ENGLISH).charAt(i + 1));
+                final int index = "0123456789abcdefklmnor".indexOf(text.toLowerCase(Locale.ENGLISH).charAt(i + 1));
 
                 if (index == 17)
                     // Sets the character data to the bold type.
@@ -425,7 +429,7 @@ public class TTFFontRenderer {
                 if (character > 255) continue;
 
                 // The character data for the given character.
-                CharacterData charData = characterData[character];
+                final CharacterData charData = characterData[character];
 
                 // Adds to the offset.
                 width += (charData.width - (2 * MARGIN)) / 2;
@@ -433,7 +437,7 @@ public class TTFFontRenderer {
         }
 
         // Returns the width.
-        return width + MARGIN / 2;
+        return width + (float) MARGIN / 2;
     }
 
     /**
@@ -442,7 +446,7 @@ public class TTFFontRenderer {
      * @param text The text to get the height of.
      * @return The height of the given text.
      */
-    public float getHeight(String text) {
+    public float getHeight(final String text) {
 
         // The height of the string.
         float height = 0;
@@ -451,15 +455,15 @@ public class TTFFontRenderer {
         CharacterData[] characterData = regularData;
 
         // The length of the text.
-        int length = text.length();
+        final int length = text.length();
 
         // Loops through the text.
         for (int i = 0; i < length; i++) {
             // The character at the index of 'i'.
-            char character = text.charAt(i);
+            final char character = text.charAt(i);
 
             // The previous character.
-            char previous = i > 0 ? text.charAt(i - 1) : '.';
+            final char previous = i > 0 ? text.charAt(i - 1) : '.';
 
             // Continues if the previous color was the color invoker.
             if (previous == COLOR_INVOKER) continue;
@@ -468,7 +472,7 @@ public class TTFFontRenderer {
             if (character == COLOR_INVOKER && i < length) {
 
                 // The color index of the character after the current character.
-                int index = "0123456789abcdefklmnor".indexOf(text.toLowerCase(Locale.ENGLISH).charAt(i + 1));
+                final int index = "0123456789abcdefklmnor".indexOf(text.toLowerCase(Locale.ENGLISH).charAt(i + 1));
 
                 if (index == 17)
                     // Sets the character data to the bold type.
@@ -484,7 +488,7 @@ public class TTFFontRenderer {
                 if (character > 255) continue;
 
                 // The character data for the given character.
-                CharacterData charData = characterData[character];
+                final CharacterData charData = characterData[character];
 
                 // Sets the height if its bigger.
                 height = Math.max(height, charData.height);
@@ -492,7 +496,7 @@ public class TTFFontRenderer {
         }
 
         // Returns the height.
-        return height / 2 - MARGIN / 2;
+        return height / 2 - (float) MARGIN / 2;
     }
 
     /**
@@ -501,9 +505,9 @@ public class TTFFontRenderer {
      * @param character     The character to be drawn.
      * @param characterData The character texture set to be used.
      */
-    private void drawChar(char character, CharacterData[] characterData, float x, float y) {
+    private void drawChar(final char character, final CharacterData[] characterData, final float x, final float y) {
         // The char data that stores the character data.
-        CharacterData charData = characterData[character];
+        final CharacterData charData = characterData[character];
 
         // Binds the character data texture.
         charData.bind();
@@ -545,7 +549,7 @@ public class TTFFontRenderer {
      * @param end   The ending point of the line.
      * @param width The thickness of the line.
      */
-    private void drawLine(Vector2f start, Vector2f end, float width) {
+    private void drawLine(final Vector2f start, final Vector2f end, final float width) {
         // Disables textures so we can draw a solid line.
         GL11.glDisable(GL11.GL_TEXTURE_2D);
 
@@ -572,7 +576,7 @@ public class TTFFontRenderer {
         // Iterates through 32 colors.
         for (int i = 0; i < 32; i++) {
             // Not sure what this variable is.
-            int thingy = (i >> 3 & 1) * 85;
+            final int thingy = (i >> 3 & 1) * 85;
 
             // The red value of the color.
             int red = (i >> 2 & 1) * 170 + thingy;
@@ -581,7 +585,7 @@ public class TTFFontRenderer {
             int green = (i >> 1 & 1) * 170 + thingy;
 
             // The blue value of the color.
-            int blue = (i >> 0 & 1) * 170 + thingy;
+            int blue = (i & 1) * 170 + thingy;
 
             // Increments the red by 85, not sure why does this in minecraft's font renderer.
             if (i == 6) red += 85;
@@ -605,7 +609,7 @@ public class TTFFontRenderer {
     /**
      * Class that holds the data for each character.
      */
-    class CharacterData {
+    static class CharacterData {
 
         /**
          * The id of the character texture.
@@ -624,7 +628,7 @@ public class TTFFontRenderer {
          */
         public float height;
 
-        public CharacterData(char character, float width, float height, int textureId) {
+        public CharacterData(final char character, final float width, final float height, final int textureId) {
             this.character = character;
             this.width = width;
             this.height = height;

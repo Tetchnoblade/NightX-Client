@@ -104,7 +104,7 @@ public class YPort extends SpeedMode {
             double difference = 0.66D * (this.lastDist - getBaseMoveSpeed());
             this.moveSpeed = (this.lastDist - difference);
         } else {
-            if ((mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0.0D, mc.thePlayer.motionY, 0.0D)).size() > 0) || (mc.thePlayer.isCollidedVertically))
+            if ((!mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0.0D, mc.thePlayer.motionY, 0.0D)).isEmpty()) || (mc.thePlayer.isCollidedVertically))
                 this.level = 1;
             this.moveSpeed = (this.lastDist - this.lastDist / 159.0D);
         }

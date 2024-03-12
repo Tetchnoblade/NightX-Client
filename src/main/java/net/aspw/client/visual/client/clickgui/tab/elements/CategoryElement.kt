@@ -55,7 +55,7 @@ class CategoryElement(val category: ModuleCategory) : MinecraftInstance() {
     }
 
     fun drawPanel(mX: Int, mY: Int, x: Float, y: Float, width: Float, height: Float, wheel: Int, accentColor: Color) {
-        var mouseX = mX
+        val mouseX = mX
         var mouseY = mY
         lastHeight = 0F
         for (me in moduleElements)
@@ -115,7 +115,7 @@ class CategoryElement(val category: ModuleCategory) : MinecraftInstance() {
     }
 
     fun handleMouseClick(mX: Int, mY: Int, mouseButton: Int, x: Float, y: Float, width: Float, height: Float) {
-        var mouseX = mX
+        val mouseX = mX
         var mouseY = mY
         if (mouseY < y + 50F || mouseY >= y + height)
             mouseY = -1
@@ -128,7 +128,7 @@ class CategoryElement(val category: ModuleCategory) : MinecraftInstance() {
     }
 
     fun handleMouseRelease(mX: Int, mY: Int, mouseButton: Int, x: Float, y: Float, width: Float, height: Float) {
-        var mouseX = mX
+        val mouseX = mX
         var mouseY = mY
         if (mouseY < y + 50F || mouseY >= y + height)
             mouseY = -1

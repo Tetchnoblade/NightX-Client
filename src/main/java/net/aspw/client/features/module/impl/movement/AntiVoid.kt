@@ -26,7 +26,8 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.BlockPos
-import java.util.*
+import java.util.LinkedList
+import java.util.Locale
 import kotlin.math.abs
 
 @ModuleInfo(name = "AntiVoid", spacedName = "Anti Void", category = ModuleCategory.MOVEMENT)
@@ -340,7 +341,7 @@ class AntiVoid : Module() {
         lastY = lastZ
         lastX = lastY
         shouldRender = false
-        shouldStopMotion = shouldRender
+        shouldStopMotion = false
         synchronized(positions) { positions.clear() }
     }
 }

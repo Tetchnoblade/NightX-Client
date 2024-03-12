@@ -28,13 +28,11 @@ public class ClickGui extends GuiScreen {
 
     public final List<Panel> panels = new ArrayList<>();
     public Style style = new DropDown();
+    public double slide, progress = 0;
+    public long lastMS = System.currentTimeMillis();
     private Panel clickedPanel;
     private int mouseX;
     private int mouseY;
-
-    public double slide, progress = 0;
-
-    public long lastMS = System.currentTimeMillis();
 
     public ClickGui() {
         final int width = 100;
@@ -42,12 +40,12 @@ public class ClickGui extends GuiScreen {
 
         int xPos = 253;
 
-        for (final ModuleCategory category : ModuleCategory.values()) {
+        for (final ModuleCategory category : ModuleCategory.getEntries()) {
             panels.add(new Panel(category.getDisplayName(), xPos, 30, width, height, true) {
 
                 @Override
                 public void setupItems() {
-                    for (Module module : Launch.moduleManager.getModules())
+                    for (final Module module : Launch.moduleManager.getModules())
                         if (module.getCategory() == category)
                             getElements().add(new ModuleElement(module));
                 }
@@ -65,7 +63,7 @@ public class ClickGui extends GuiScreen {
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    public void drawScreen(int mouseX, int mouseY, final float partialTicks) {
         if (Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).getGuiBlur().get()) {
             BlurUtils.blurArea(
                     0,
@@ -95,8 +93,8 @@ public class ClickGui extends GuiScreen {
 
         final double scale = Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).scaleValue.get() - 0.1765;
 
-        mouseX /= scale;
-        mouseY /= scale;
+        mouseX /= (int) scale;
+        mouseY /= (int) scale;
 
         this.mouseX = mouseX;
         this.mouseY = mouseY;
@@ -146,21 +144,22 @@ public class ClickGui extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
+    @Override
     public void handleMouseInput() throws IOException {
         super.handleMouseInput();
 
-        int wheel = Mouse.getEventDWheel();
+        final int wheel = Mouse.getEventDWheel();
         for (int i = panels.size() - 1; i >= 0; i--)
             if (panels.get(i).handleScroll(mouseX, mouseY, wheel))
                 break;
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+    protected void mouseClicked(int mouseX, int mouseY, final int mouseButton) throws IOException {
         final double scale = Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).scaleValue.get() - 0.1765;
 
-        mouseX /= scale;
-        mouseY /= scale;
+        mouseX /= (int) scale;
+        mouseY /= (int) scale;
 
         for (int i = panels.size() - 1; i >= 0; i--) {
             if (panels.get(i).mouseClicked(mouseX, mouseY, mouseButton)) {
@@ -191,13 +190,13 @@ public class ClickGui extends GuiScreen {
     }
 
     @Override
-    protected void mouseReleased(int mouseX, int mouseY, int state) {
+    protected void mouseReleased(int mouseX, int mouseY, final int state) {
         final double scale = Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).scaleValue.get() - 0.1765;
 
-        mouseX /= scale;
-        mouseY /= scale;
+        mouseX /= (int) scale;
+        mouseY /= (int) scale;
 
-        for (Panel panel : panels) {
+        for (final Panel panel : panels) {
             panel.mouseReleased(mouseX, mouseY, state);
         }
         super.mouseReleased(mouseX, mouseY, state);

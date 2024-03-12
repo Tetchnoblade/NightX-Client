@@ -6,7 +6,7 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.minecraft.network.play.server.S2DPacketOpenWindow
-import java.util.*
+import java.util.Locale
 
 @ModuleInfo(name = "AntiFrozen", spacedName = "Anti Frozen", category = ModuleCategory.OTHER)
 class AntiFrozen : Module() {

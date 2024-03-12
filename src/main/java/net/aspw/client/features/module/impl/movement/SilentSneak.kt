@@ -9,7 +9,7 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.value.ListValue
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.play.client.C0BPacketEntityAction
-import java.util.*
+import java.util.Locale
 
 @ModuleInfo(name = "SilentSneak", spacedName = "Silent Sneak", category = ModuleCategory.MOVEMENT)
 class SilentSneak : Module() {

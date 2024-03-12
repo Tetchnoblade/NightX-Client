@@ -1,11 +1,21 @@
 package net.aspw.client.config.configs;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import net.aspw.client.config.FileConfig;
 import net.aspw.client.config.FileManager;
 import net.aspw.client.utils.ClientUtils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +45,11 @@ public class FriendsConfig extends FileConfig {
                 return;
 
             for (final JsonElement friendElement : jsonElement.getAsJsonArray()) {
-                JsonObject friendObject = friendElement.getAsJsonObject();
+                final JsonObject friendObject = friendElement.getAsJsonObject();
                 addFriend(friendObject.get("playerName").getAsString(), friendObject.get("alias").getAsString());
             }
 
-        } catch (JsonSyntaxException | IllegalStateException ex) {
+        } catch (final JsonSyntaxException | IllegalStateException ex) {
             //When the JSON Parse fail, the client try to load and update the old config
             ClientUtils.getLogger().info("[FileManager] Try to load old Friends config...");
 
@@ -51,7 +61,7 @@ public class FriendsConfig extends FileConfig {
                     line = line.replace(" ", "").replace("\"", "").replace(",", "");
 
                     if (line.contains(":")) {
-                        String[] data = line.split(":");
+                        final String[] data = line.split(":");
                         addFriend(data[0], data[1]);
                     } else
                         addFriend(line);
@@ -71,7 +81,7 @@ public class FriendsConfig extends FileConfig {
         final JsonArray jsonArray = new JsonArray();
 
         for (final Friend friend : getFriends()) {
-            JsonObject friendObject = new JsonObject();
+            final JsonObject friendObject = new JsonObject();
             friendObject.addProperty("playerName", friend.getPlayerName());
             friendObject.addProperty("alias", friend.getAlias());
             jsonArray.add(friendObject);
@@ -153,7 +163,7 @@ public class FriendsConfig extends FileConfig {
     /**
      * The type Friend.
      */
-    public class Friend {
+    public static class Friend {
 
         private final String playerName;
         private final String alias;

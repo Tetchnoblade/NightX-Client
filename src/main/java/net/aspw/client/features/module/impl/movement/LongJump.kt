@@ -1,6 +1,13 @@
 package net.aspw.client.features.module.impl.movement
 
-import net.aspw.client.event.*
+import net.aspw.client.event.EventTarget
+import net.aspw.client.event.JumpEvent
+import net.aspw.client.event.MotionEvent
+import net.aspw.client.event.MoveEvent
+import net.aspw.client.event.PacketEvent
+import net.aspw.client.event.TeleportEvent
+import net.aspw.client.event.UpdateEvent
+import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
@@ -17,14 +24,16 @@ import net.minecraft.init.Blocks
 import net.minecraft.item.ItemEnderPearl
 import net.minecraft.item.ItemStack
 import net.minecraft.network.play.client.C03PacketPlayer
-import net.minecraft.network.play.client.C03PacketPlayer.*
+import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
+import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook
+import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
 import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.network.play.client.C0BPacketEntityAction
 import net.minecraft.network.play.server.S12PacketEntityVelocity
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
-import java.util.*
+import java.util.Locale
 
 @ModuleInfo(name = "LongJump", spacedName = "Long Jump", category = ModuleCategory.MOVEMENT)
 class LongJump : Module() {
@@ -368,8 +377,8 @@ class LongJump : Module() {
                     var z = 0.0
                     when (horizontalFacing) {
                         EnumFacing.NORTH -> z = -value
-                        EnumFacing.EAST -> x = +value
-                        EnumFacing.SOUTH -> z = +value
+                        EnumFacing.EAST -> x = value
+                        EnumFacing.SOUTH -> z = value
                         EnumFacing.WEST -> x = -value
                         else -> {}
                     }

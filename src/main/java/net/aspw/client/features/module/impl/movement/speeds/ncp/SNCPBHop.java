@@ -63,7 +63,7 @@ public class SNCPBHop extends SpeedMode {
     }
 
     @Override
-    public void onMove(MoveEvent event) {
+    public void onMove(final MoveEvent event) {
         ++timerDelay;
         timerDelay %= 5;
         if (timerDelay != 0) {
@@ -98,20 +98,20 @@ public class SNCPBHop extends SpeedMode {
             moveSpeed *= 2.149;
         } else if (level == 3) {
             level = 4;
-            double difference = 0.66 * (lastDist - getBaseMoveSpeed());
+            final double difference = 0.66 * (lastDist - getBaseMoveSpeed());
             moveSpeed = lastDist - difference;
         } else if (level == 88) {
             moveSpeed = getBaseMoveSpeed();
             lastDist = 0;
             level = 89;
         } else if (level == 89) {
-            if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0.0, mc.thePlayer.motionY, 0.0)).size() > 0 || mc.thePlayer.isCollidedVertically)
+            if (!mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0.0, mc.thePlayer.motionY, 0.0)).isEmpty() || mc.thePlayer.isCollidedVertically)
                 level = 1;
             lastDist = 0;
             moveSpeed = getBaseMoveSpeed();
             return;
         } else {
-            if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0.0, mc.thePlayer.motionY, 0.0)).size() > 0 || mc.thePlayer.isCollidedVertically) {
+            if (!mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0.0, mc.thePlayer.motionY, 0.0)).isEmpty() || mc.thePlayer.isCollidedVertically) {
                 moveSpeed = getBaseMoveSpeed();
                 lastDist = 0;
                 level = 88;
@@ -165,7 +165,7 @@ public class SNCPBHop extends SpeedMode {
         return baseSpeed;
     }
 
-    private double round(double value) {
+    private double round(final double value) {
         BigDecimal bigDecimal = new BigDecimal(value);
         bigDecimal = bigDecimal.setScale(3, RoundingMode.HALF_UP);
         return bigDecimal.doubleValue();

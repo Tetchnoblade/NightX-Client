@@ -1,6 +1,10 @@
 package net.aspw.client.config.configs;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.aspw.client.Launch;
 import net.aspw.client.config.FileConfig;
 import net.aspw.client.config.FileManager;
@@ -9,8 +13,12 @@ import net.aspw.client.features.module.Module;
 import net.aspw.client.value.Value;
 import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening;
 
-import java.io.*;
-import java.util.Iterator;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 /**
@@ -36,22 +44,19 @@ public class ValuesConfig extends FileConfig {
 
         final JsonObject jsonObject = (JsonObject) jsonElement;
 
-        final Iterator<Map.Entry<String, JsonElement>> iterator = jsonObject.entrySet().iterator();
-        while (iterator.hasNext()) {
-            final Map.Entry<String, JsonElement> entry = iterator.next();
-
+        for (final Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
             if (entry.getKey().equalsIgnoreCase("macros")) {
-                JsonArray jsonValue = entry.getValue().getAsJsonArray();
+                final JsonArray jsonValue = entry.getValue().getAsJsonArray();
                 for (final JsonElement macroElement : jsonValue) {
-                    JsonObject macroObject = macroElement.getAsJsonObject();
-                    JsonElement keyValue = macroObject.get("key");
-                    JsonElement commandValue = macroObject.get("command");
+                    final JsonObject macroObject = macroElement.getAsJsonObject();
+                    final JsonElement keyValue = macroObject.get("key");
+                    final JsonElement commandValue = macroObject.get("command");
 
                     MacroManager.INSTANCE.addMacro(keyValue.getAsInt(), commandValue.getAsString());
                 }
             } else if (entry.getKey().equalsIgnoreCase("features")) {
             } else if (entry.getKey().equalsIgnoreCase("thealtening")) {
-                JsonObject jsonValue = (JsonObject) entry.getValue();
+                final JsonObject jsonValue = (JsonObject) entry.getValue();
 
                 if (jsonValue.has("API-Key"))
                     GuiTheAltening.Companion.setApiKey(jsonValue.get("API-Key").getAsString());
@@ -62,7 +67,7 @@ public class ValuesConfig extends FileConfig {
                 if (module != null) {
                     final JsonObject jsonModule = (JsonObject) entry.getValue();
 
-                    for (final Value moduleValue : module.getValues()) {
+                    for (final Value<?> moduleValue : module.getValues()) {
                         final JsonElement element = jsonModule.get(moduleValue.getName());
 
                         if (element != null) moduleValue.fromJson(element);

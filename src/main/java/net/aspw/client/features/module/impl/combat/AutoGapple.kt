@@ -15,7 +15,7 @@ import net.minecraft.init.Items
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
 import net.minecraft.network.play.client.C09PacketHeldItemChange
-import java.util.*
+import java.util.Locale
 
 @ModuleInfo(name = "AutoGapple", spacedName = "Auto Gapple", category = ModuleCategory.COMBAT)
 class AutoGapple : Module() {

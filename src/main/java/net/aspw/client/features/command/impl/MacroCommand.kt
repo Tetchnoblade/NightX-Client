@@ -5,7 +5,7 @@ import net.aspw.client.features.command.Command
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.misc.StringUtils
 import org.lwjgl.input.Keyboard
-import java.util.*
+import java.util.Locale
 
 class MacroCommand : Command("macro", emptyArray()) {
     /**
