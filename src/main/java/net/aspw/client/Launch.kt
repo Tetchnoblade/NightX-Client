@@ -38,7 +38,7 @@ object Launch {
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Client"
-    const val CLIENT_VERSION = "B95"
+    const val CLIENT_VERSION = "B96"
     const val CLIENT_PROTOCOL_RANGE = "1.8 to 24w09a"
     const val CLIENT_CREATOR = "As_pw"
     const val CLIENT_WEBSITE = "https://aspw-w.github.io/AspieAPI/NightX"
@@ -64,6 +64,10 @@ object Launch {
     var background: ResourceLocation? = null
 
     private var lastTick: Long = 0L
+
+    private val allowJavaRange = 181..Int.MAX_VALUE
+    private var javaVersion = System.getProperty("java.version")
+    var useAltManager = javaVersion in "1.8.0_$allowJavaRange" && MinecraftInstance.mc.isJava64bit
 
     // Discord RPC
     lateinit var discordRPC: DiscordRPC
