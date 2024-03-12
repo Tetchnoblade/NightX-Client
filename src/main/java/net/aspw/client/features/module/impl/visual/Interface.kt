@@ -12,8 +12,10 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.features.module.impl.combat.KillAuraRecode
 import net.aspw.client.features.module.impl.combat.TPAura
+import net.aspw.client.protocol.ProtocolBase
 import net.aspw.client.utils.Access
 import net.aspw.client.utils.AnimationUtils
+import net.aspw.client.utils.CooldownHelper
 import net.aspw.client.utils.render.ColorUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.value.BoolValue
@@ -26,14 +28,18 @@ import net.aspw.client.visual.client.clickgui.tab.NewUi
 import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.Gui
 import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.gui.inventory.GuiInventory
 import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.network.play.client.C14PacketTabComplete
 import net.minecraft.network.play.server.S2EPacketCloseWindow
 import net.minecraft.network.play.server.S3APacketTabComplete
 import net.minecraft.network.play.server.S45PacketTitle
+import net.minecraft.util.ResourceLocation
+import org.lwjgl.opengl.GL11.*
 import java.awt.Color
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -45,18 +51,20 @@ import kotlin.math.pow
 class Interface : Module() {
     private val watermarkValue = BoolValue("WaterMark", true)
     private val clientNameValue = TextValue("ClientName", "NightX") { watermarkValue.get() }
-    private val watermarkFpsValue = BoolValue("WaterMark-ShowFPS", true)
-    private val watermarkPacketsValue = BoolValue("WaterMark-ShowPackets", true)
+    private val watermarkFpsValue = BoolValue("WaterMark-ShowFPS", true) { watermarkValue.get() }
+    private val watermarkProtocolValue = BoolValue("WaterMark-ShowProtocol", true) { watermarkValue.get() }
     private val arrayListValue = BoolValue("ArrayList", true)
     private val arrayListSpeedValue = FloatValue("ArrayList-AnimationSpeed", 0.3F, 0F, 0.6F) { arrayListValue.get() }
     private val targetHudValue = BoolValue("TargetHud", true)
     private val targetHudSpeedValue = FloatValue("TargetHud-AnimationSpeed", 3F, 0F, 6F) { targetHudValue.get() }
     private val targetHudXPosValue = FloatValue("TargetHud-XPos", 0F, -300F, 300F) { targetHudValue.get() }
     private val targetHudYPosValue = FloatValue("TargetHud-YPos", 0F, -300F, 300F) { targetHudValue.get() }
+    private val informationValue = BoolValue("Information", true)
+    private val cooldownValue = BoolValue("Cooldown", true)
     val noAchievement = BoolValue("No-Achievements", true)
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
     val tpDebugValue = BoolValue("TP-Debug", false)
-    val animHotbarValue = BoolValue("Hotbar-Animation", false)
+    val animHotbarValue = BoolValue("Hotbar-Animations", false)
     private val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F) { animHotbarValue.get() }
     val blackHotbarValue = BoolValue("Black-Hotbar", false)
     private val noInvClose = BoolValue("NoInvClose", true)
@@ -65,7 +73,7 @@ class Interface : Module() {
     val customFov = BoolValue("CustomFov", false)
     val customFovModifier = FloatValue("Fov", 1.4F, 1F, 1.8F) { customFov.get() }
     val chatRectValue = BoolValue("ChatRect", true)
-    val chatAnimationValue = BoolValue("Chat-Animation", false)
+    val chatAnimationValue = BoolValue("Chat-Animations", true)
     val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.06F, 0.01F, 0.5F) { chatAnimationValue.get() }
     private val toggleMessageValue = BoolValue("Toggle-Notification", false)
     private val toggleSoundValue = ListValue("Toggle-Sound", arrayOf("None", "Default", "Custom"), "None")
@@ -85,15 +93,15 @@ class Interface : Module() {
             val inputString = clientNameValue.get()
             val connectChecks = if (!Access.canConnect) " - Disconnected" else ""
             val fpsChecks = if (watermarkFpsValue.get()) " [" + Minecraft.getDebugFPS() + " FPS]" else ""
-            val packetChecks =
-                if (watermarkPacketsValue.get()) " [Packets Sent: " + PacketManager.sendPacketCounts + "] [Packets Received: " + PacketManager.receivePacketCounts + "]" else ""
+            val protocolChecks =
+                if (watermarkProtocolValue.get()) " [version: " + ProtocolBase.getManager().targetVersion.getName() + "]" else ""
             var firstChar = ""
             var restOfString = ""
             if (inputString != "") {
                 firstChar = inputString[0].toString()
                 restOfString = inputString.substring(1)
             }
-            val showName = "$firstChar§r§f$restOfString$fpsChecks$packetChecks$connectChecks"
+            val showName = "$firstChar§r§f$restOfString$fpsChecks$protocolChecks$connectChecks"
             fontRenderer.drawStringWithShadow(
                 showName,
                 2.0,
@@ -157,8 +165,8 @@ class Interface : Module() {
         }
 
         if (targetHudValue.get()) {
-            val xPos = targetHudXPosValue.get() + 200F
-            val yPos = targetHudYPosValue.get() + 170F
+            val xPos = (ScaledResolution(mc).scaledWidth / 2) - 54f + targetHudXPosValue.get()
+            val yPos = (ScaledResolution(mc).scaledHeight / 2) + 10f + targetHudYPosValue.get()
             val font = Fonts.minecraftFont
             val killAura = Launch.moduleManager.getModule(KillAura::class.java)
             val tpAura = Launch.moduleManager.getModule(TPAura::class.java)
@@ -174,7 +182,7 @@ class Interface : Module() {
             updateAnim(entity.health)
 
             if (entity != mc.thePlayer || entity == mc.thePlayer && mc.currentScreen is GuiChat) {
-                RenderUtils.drawRect(xPos + 33F, yPos + 1F, xPos + 114F, yPos + 39.5F, Color(0, 0, 0, 120).rgb)
+                RenderUtils.drawRect(xPos - 3F, yPos + 1F, xPos + 114F, yPos + 39.5F, Color(0, 0, 0, 120).rgb)
 
                 var healthColor = 91
                 repeat(8) {
@@ -197,6 +205,12 @@ class Interface : Module() {
                     ).rgb
                 )
 
+                RenderUtils.newDrawRect(xPos - 1, yPos + 3, xPos + 33F, yPos + 37F, Color(150, 150, 150).rgb)
+                RenderUtils.newDrawRect(xPos - 1, yPos + 3, xPos + 33F, yPos + 37F, Color(0, 0, 0).rgb)
+
+                if (mc.netHandler.getPlayerInfo(entity.uniqueID) != null)
+                    drawHead(mc.netHandler.getPlayerInfo(entity.uniqueID).locationSkin, xPos.toInt(), yPos.toInt() + 4)
+
                 updateAnim(entity.health)
 
                 font.drawStringWithShadow(entity.name, xPos + 36F, yPos + 4F, Color(255, 255, 255).rgb)
@@ -218,6 +232,50 @@ class Interface : Module() {
                     ).rgb
                 )
             } else if (easingHealth != 0F) easingHealth = 0F
+        }
+
+        if (informationValue.get()) {
+            val xPos = ScaledResolution(mc).scaledWidth
+            val yPos = ScaledResolution(mc).scaledHeight
+
+            fontRenderer.drawStringWithShadow(
+                "Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms",
+                (xPos - 4f - fontRenderer.getStringWidth("Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms")).toDouble(),
+                (yPos - 34f).toDouble(),
+                Color.WHITE.rgb
+            )
+            fontRenderer.drawStringWithShadow(
+                "Packets Sent: " + PacketManager.sendPacketCounts,
+                (xPos - 4f - fontRenderer.getStringWidth("Packets Sent: " + PacketManager.sendPacketCounts)).toDouble(),
+                (yPos - 23f).toDouble(),
+                Color.WHITE.rgb
+            )
+            fontRenderer.drawStringWithShadow(
+                "Packets Received: " + PacketManager.receivePacketCounts,
+                (xPos - 4f - fontRenderer.getStringWidth("Packets Received: " + PacketManager.receivePacketCounts)).toDouble(),
+                (yPos - 12f).toDouble(),
+                Color.WHITE.rgb
+            )
+        }
+
+        if (cooldownValue.get()) {
+            val xPos = (ScaledResolution(mc).scaledWidth / 2f) - 130f
+            val yPos = ScaledResolution(mc).scaledHeight
+            val progress = CooldownHelper.getAttackCooldownProgress()
+
+            RenderUtils.newDrawRect(xPos - 26f, yPos - 13f, xPos + 26f, yPos - 8f, Color(150, 150, 150).rgb)
+            RenderUtils.newDrawRect(xPos - 26f, yPos - 13f, xPos + 26f, yPos - 8f, Color(0, 0, 0).rgb)
+
+            if (progress < 1.0 && !mc.isIntegratedServerRunning) {
+                RenderUtils.drawRect(xPos - 25f, yPos - 12f, xPos + 25f, yPos - 9f, Color(0, 0, 0, 150).rgb)
+                RenderUtils.drawRect(
+                    xPos - 25f,
+                    yPos - 12f,
+                    xPos + 25f - 50f * progress.toFloat(),
+                    yPos - 9f,
+                    Color(255, 255, 255, 200).rgb
+                )
+            } else RenderUtils.drawRect(xPos - 25f, yPos - 12f, xPos + 25f, yPos - 9f, Color(255, 255, 255, 200).rgb)
         }
     }
 
@@ -247,6 +305,22 @@ class Interface : Module() {
 
         if (Launch.moduleManager.toggleVolume != 83f)
             Launch.moduleManager.toggleVolume = 83f
+    }
+
+    private fun drawHead(skin: ResourceLocation, x: Int = 2, y: Int = 2) {
+        glDisable(GL_DEPTH_TEST)
+        glEnable(GL_BLEND)
+        glDepthMask(false)
+        OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO)
+        glColor4f(1.0F, 1.0F, 1.0F, 1.0F)
+        mc.textureManager.bindTexture(skin)
+        Gui.drawScaledCustomSizeModalRect(
+            x, y, 8F, 8F, 8, 8, 32, 32,
+            64F, 64F
+        )
+        glDepthMask(true)
+        glDisable(GL_BLEND)
+        glEnable(GL_DEPTH_TEST)
     }
 
     private fun updateAnim(targetHealth: Float) {

@@ -10,10 +10,9 @@ import net.aspw.client.features.module.impl.other.MurdererDetector;
 import net.aspw.client.features.module.impl.targets.AntiBots;
 import net.aspw.client.features.module.impl.targets.AntiTeams;
 import net.aspw.client.utils.EntityUtils;
-import net.aspw.client.utils.render.BlendUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.value.BoolValue;
-import net.aspw.client.value.FloatValue;
+import net.aspw.client.visual.font.smooth.FontLoaders;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -30,7 +29,6 @@ import org.lwjgl.util.glu.GLU;
 
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector4d;
-import java.awt.*;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
@@ -41,22 +39,17 @@ import java.util.Objects;
 @ModuleInfo(name = "ESP", category = ModuleCategory.VISUAL)
 public final class ESP extends Module {
     public static List collectedEntities = new ArrayList();
-    public final BoolValue tagsValue = new BoolValue("Tags", true);
-    public final BoolValue healthBar = new BoolValue("Health-Bar", true);
     public final BoolValue localPlayer = new BoolValue("Local-Player", false);
-    private final FloatValue fontScaleValue = new FloatValue("Font-Scale", 1F, 0F, 1F, "x");
     private final IntBuffer viewport;
     private final FloatBuffer modelview;
     private final FloatBuffer projection;
     private final FloatBuffer vector;
-    private final int backgroundColor;
 
     public ESP() {
         this.viewport = GLAllocation.createDirectIntBuffer(16);
         this.modelview = GLAllocation.createDirectFloatBuffer(16);
         this.projection = GLAllocation.createDirectFloatBuffer(16);
         this.vector = GLAllocation.createDirectFloatBuffer(4);
-        this.backgroundColor = new Color(0, 0, 0, 120).getRGB();
     }
 
     @Override
@@ -75,7 +68,6 @@ public final class ESP extends Module {
         GL11.glScaled(scaling, scaling, scaling);
         RenderManager renderMng = mc.getRenderManager();
         EntityRenderer entityRenderer = mc.entityRenderer;
-        boolean health = this.healthBar.get();
         int i = 0;
 
         for (int collectedEntitiesSize = collectedEntities.size(); i < collectedEntitiesSize; ++i) {
@@ -111,50 +103,28 @@ public final class ESP extends Module {
                     double posX = position.x;
                     double posY = position.y;
                     double endPosX = position.z;
-                    double endPosY = position.w;
 
                     boolean living = entity instanceof EntityLivingBase;
                     EntityLivingBase entityLivingBase;
-                    float armorValue;
-                    float itemDurability;
-                    double durabilityWidth;
-                    double textWidth;
+
                     if (living) {
-                        entityLivingBase = (EntityLivingBase) entity;
-                        if (health) {
-                            armorValue = entityLivingBase.getHealth();
-                            itemDurability = entityLivingBase.getMaxHealth();
-                            if (armorValue > itemDurability)
-                                armorValue = itemDurability;
-
-                            durabilityWidth = armorValue / itemDurability;
-                            textWidth = (endPosY - posY) * durabilityWidth;
-                            RenderUtils.newDrawRect(posX - 3.5D, posY - 0.5D, posX - 1.5D, endPosY + 0.5D, this.backgroundColor);
-                            if (armorValue > 0.0F) {
-                                int healthColor = BlendUtils.getHealthColor(armorValue, itemDurability).getRGB();
-                                RenderUtils.newDrawRect(posX - 3.0D, endPosY, posX - 2.0D, endPosY - textWidth, healthColor);
-                            }
-                        }
-                    }
-
-                    if (living && tagsValue.get()) {
                         final MurdererDetector murdererDetector = Objects.requireNonNull(Launch.moduleManager.getModule(MurdererDetector.class));
                         final AntiTeams antiTeams = Objects.requireNonNull(Launch.moduleManager.getModule(AntiTeams.class));
                         final AntiBots antiBots = Objects.requireNonNull(Launch.moduleManager.getModule(AntiBots.class));
                         entityLivingBase = (EntityLivingBase) entity;
                         String entName;
                         if (murdererDetector.getState() && (entity == murdererDetector.getMurderer1() || entity == murdererDetector.getMurderer2())) {
-                            entName = "§c[Murderer] §7- §r" + entityLivingBase.getName();
+                            entName = "§c[Murderer] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
                         } else if (EntityUtils.isFriend(entity)) {
-                            entName = "§e[Friend] §7- §r" + entityLivingBase.getName();
+                            entName = "§e[Friend] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
                         } else if (antiBots.getState() && AntiBots.isBot(entityLivingBase)) {
-                            entName = "§c[Bot] §7- §r" + entityLivingBase.getName();
+                            entName = "§c[Bot] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
                         } else if (antiTeams.getState() && antiTeams.isInYourTeam(entityLivingBase)) {
-                            entName = "§e[Team] §7- §r" + entityLivingBase.getName();
+                            entName = "§e[Team] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
                         } else {
-                            entName = entityLivingBase.getName();
+                            entName = entityLivingBase.getDisplayName().getFormattedText();
                         }
-                        drawScaledCenteredString(entName, posX + (endPosX - posX) / 2F, posY - 1F - mc.fontRendererObj.FONT_HEIGHT * fontScaleValue.get(), fontScaleValue.get(), -1);
+                        drawScaledCenteredString(entName, posX + (endPosX - posX) / 2F, posY - 1F - FontLoaders.SF21.getHeight() * 1F);
                     }
                 }
             }
@@ -166,16 +136,16 @@ public final class ESP extends Module {
         entityRenderer.setupOverlayRendering();
     }
 
-    private void drawScaledString(String text, double x, double y, double scale, int color) {
+    private void drawScaledString(String text, double x, double y) {
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, x);
-        GlStateManager.scale(scale, scale, scale);
-        mc.fontRendererObj.drawStringWithShadow(text, 0, 0, color);
+        GlStateManager.scale(1.0, 1.0, 1.0);
+        FontLoaders.SF21.drawStringWithShadow(text, 0, 0, -1);
         GlStateManager.popMatrix();
     }
 
-    private void drawScaledCenteredString(String text, double x, double y, double scale, int color) {
-        drawScaledString(text, x - mc.fontRendererObj.getStringWidth(text) / 2F * scale, y, scale, color);
+    private void drawScaledCenteredString(String text, double x, double y) {
+        drawScaledString(text, x - FontLoaders.SF21.getStringWidth(text) / 2F * 1.0, y);
     }
 
     private void collectEntities() {

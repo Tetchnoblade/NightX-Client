@@ -3,7 +3,6 @@ package net.aspw.client.injection.forge.mixins.entity;
 import net.aspw.client.Launch;
 import net.aspw.client.event.AttackEvent;
 import net.aspw.client.event.ClickWindowEvent;
-import net.aspw.client.utils.CooldownHelper;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +25,6 @@ public class MixinPlayerControllerMP {
             return;
 
         Launch.eventManager.callEvent(new AttackEvent(targetEntity));
-        CooldownHelper.INSTANCE.resetLastAttackedTicks();
     }
 
     @Inject(method = "windowClick", at = @At("HEAD"))

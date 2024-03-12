@@ -165,7 +165,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
 
     @Inject(method = "canRenderName(Lnet/minecraft/entity/EntityLivingBase;)Z", at = @At("HEAD"), cancellable = true)
     private <T extends EntityLivingBase> void canRenderName(T entity, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        if (Objects.requireNonNull(Launch.moduleManager.getModule(ESP.class)).getState() && Objects.requireNonNull(Launch.moduleManager.getModule(ESP.class)).tagsValue.get() && entity instanceof EntityPlayer)
+        if (Objects.requireNonNull(Launch.moduleManager.getModule(ESP.class)).getState() && entity instanceof EntityPlayer)
             callbackInfoReturnable.setReturnValue(false);
     }
 

@@ -65,5 +65,4 @@ object CooldownHelper {
     fun incrementLastAttackedTicks() {
         lastAttackedTicks++
     }
-
 }

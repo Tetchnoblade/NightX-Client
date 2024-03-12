@@ -4,7 +4,6 @@ import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.targets.AntiBots;
 import net.aspw.client.features.module.impl.targets.AntiTeams;
 import net.aspw.client.utils.render.ColorUtils;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,7 +18,6 @@ import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.ScorePlayerTeam;
-import net.minecraft.util.Vec3;
 
 import java.util.Objects;
 
@@ -86,32 +84,6 @@ public final class EntityUtils extends MinecraftInstance {
         return false;
     }
 
-    public static boolean isLookingOnEntities(Entity entity, double maxAngleDifference) {
-        EntityPlayerSP player = mc.thePlayer;
-        if (player == null) {
-            return false;
-        }
-
-        float playerRotation = player.rotationYawHead;
-        float playerPitch = player.rotationPitch;
-
-        double maxAngleDifferenceRadians = Math.toRadians(maxAngleDifference);
-
-        Vec3 lookVec = new Vec3(
-                -Math.sin(Math.toRadians(playerRotation)),
-                -Math.sin(Math.toRadians(playerPitch)),
-                Math.cos(Math.toRadians(playerRotation))
-        ).normalize();
-
-        Vec3 playerPos = player.getPositionEyes(0.0f);
-        Vec3 entityPos = entity.getPositionEyes(0.0f);
-
-        Vec3 directionToEntity = entityPos.subtract(playerPos).normalize();
-        double dotProductThreshold = lookVec.dotProduct(directionToEntity);
-
-        return dotProductThreshold > Math.cos(maxAngleDifferenceRadians);
-    }
-
     /**
      * Is friend boolean.
      *
@@ -154,20 +126,5 @@ public final class EntityUtils extends MinecraftInstance {
     public static String getName(final NetworkPlayerInfo networkPlayerInfoIn) {
         return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() :
                 ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
-    }
-
-    /**
-     * Gets ping.
-     *
-     * @param entityPlayer the entity player
-     * @return the ping
-     */
-    public static int getPing(final EntityPlayer entityPlayer) {
-        if (entityPlayer == null)
-            return 0;
-
-        final NetworkPlayerInfo networkPlayerInfo = mc.getNetHandler().getPlayerInfo(entityPlayer.getUniqueID());
-
-        return networkPlayerInfo == null ? 0 : networkPlayerInfo.getResponseTime();
     }
 }

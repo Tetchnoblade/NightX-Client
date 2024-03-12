@@ -38,7 +38,9 @@ public abstract class MixinGuiIngameMenu extends MixinGuiScreen {
             Fonts.minecraftFont.drawStringWithShadow("§7Protocol: §d" + version.getName(), 6f, 16f, 0xffffff);
         else Fonts.minecraftFont.drawStringWithShadow("§7Protocol: §d1.8.x", 6f, 16f, 0xffffff);
 
-        Fonts.minecraftFont.drawStringWithShadow("§7Packets Sent: §d" + PacketManager.sendPacketCounts, 6f, 26f, 0xffffff);
-        Fonts.minecraftFont.drawStringWithShadow("§7Packets Received: §d" + PacketManager.receivePacketCounts, 6f, 36f, 0xffffff);
+        Fonts.minecraftFont.drawStringWithShadow("§7Ping: §d" + mc.getNetHandler().getPlayerInfo(mc.thePlayer.getUniqueID()).getResponseTime() + "ms", 6f, 26f, 0xffffff);
+
+        Fonts.minecraftFont.drawStringWithShadow("§7Packets Sent: §d" + PacketManager.sendPacketCounts, 6f, 36f, 0xffffff);
+        Fonts.minecraftFont.drawStringWithShadow("§7Packets Received: §d" + PacketManager.receivePacketCounts, 6f, 46f, 0xffffff);
     }
 }
