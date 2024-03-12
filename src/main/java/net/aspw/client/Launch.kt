@@ -25,6 +25,7 @@ import net.aspw.client.utils.ClassUtils.hasForge
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.InventoryHelper
 import net.aspw.client.utils.InventoryUtils
+import net.aspw.client.utils.MinecraftInstance
 import net.aspw.client.utils.PacketUtils
 import net.aspw.client.utils.RotationUtils
 import net.aspw.client.utils.SessionUtils
