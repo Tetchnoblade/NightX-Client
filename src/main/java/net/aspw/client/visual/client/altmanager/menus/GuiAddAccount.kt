@@ -4,6 +4,7 @@ import com.thealtening.AltService.EnumAltService
 import net.aspw.client.Launch
 import net.aspw.client.auth.account.CrackedAccount
 import net.aspw.client.features.module.impl.visual.Interface
+import net.aspw.client.utils.misc.MiscUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.minecraft.client.gui.GuiButton
@@ -25,7 +26,9 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
         Keyboard.enableRepeatEvents(true)
 
         // Login via Microsoft account
-        buttonList.add(GuiButton(3, width / 2 - 100, 143, "Microsoft Login"))
+        if (Launch.useAltManager)
+            buttonList.add(GuiButton(3, width / 2 - 100, 133, "Microsoft Login"))
+        else buttonList.add(GuiButton(4, width / 2 - 100, 133, "Update Java for Microsoft Login"))
 
         // Add and back button
         buttonList.add(
@@ -57,21 +60,8 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
             34,
             0xffffff
         )
-        this.drawCenteredString(
-            mc.fontRendererObj, "Requires 64 bit java version 181 or higher to login microsoft account",
-            width / 2,
-            118,
-            0xffffff
-        )
-        this.drawCenteredString(
-            mc.fontRendererObj, "64 bit java: " + if (mc.isJava64bit) "§etrue" else "§cfalse",
-            width / 2,
-            128,
-            0xffffff
-        )
         this.drawCenteredString(mc.fontRendererObj, status, width / 2, height - 74, 0xffffff)
         username.drawTextBox()
-
         if (username.text.isEmpty() && !username.isFocused) {
             this.drawCenteredString(
                 mc.fontRendererObj, "§7Username (Cracked)",
@@ -92,11 +82,11 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
         when (button.id) {
             0 -> mc.displayGuiScreen(prevGui)
 
-            1 -> {
-                checkAndAddAccount(username.text, account = CrackedAccount())
-            }
+            1 -> checkAndAddAccount(username.text, account = CrackedAccount())
 
             3 -> mc.displayGuiScreen(GuiMicrosoftLogin(this))
+
+            4 -> MiscUtils.showURL("https://www.oracle.com/jp/java/technologies/javase/javase8-archive-downloads.html")
         }
     }
 
