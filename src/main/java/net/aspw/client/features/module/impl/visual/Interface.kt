@@ -94,7 +94,7 @@ class Interface : Module() {
             val connectChecks = if (!Access.canConnect) " - Disconnected" else ""
             val fpsChecks = if (watermarkFpsValue.get()) " [" + Minecraft.getDebugFPS() + " FPS]" else ""
             val protocolChecks =
-                if (watermarkProtocolValue.get()) " [version: " + ProtocolBase.getManager().targetVersion.getName() + "]" else ""
+                if (watermarkProtocolValue.get()) " [version: " + (if (!mc.isIntegratedServerRunning) ProtocolBase.getManager().targetVersion.name else "1.8.x") + "]" else ""
             var firstChar = ""
             var restOfString = ""
             if (inputString != "") {

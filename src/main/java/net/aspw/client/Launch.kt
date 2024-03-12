@@ -33,7 +33,7 @@ object Launch {
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Client"
     const val CLIENT_VERSION = "B95"
-    const val CLIENT_PROTOCOL_RANGE = "1.8 to 1.20.4"
+    const val CLIENT_PROTOCOL_RANGE = "1.8 to 24w09a"
     const val CLIENT_CREATOR = "As_pw"
     const val CLIENT_WEBSITE = "https://aspw-w.github.io/AspieAPI/NightX"
     const val CLIENT_CHAT = "§c$CLIENT_BEST: §r"
