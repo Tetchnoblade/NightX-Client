@@ -12,6 +12,7 @@ import net.aspw.client.auth.account.CrackedAccount;
 import net.aspw.client.auth.account.MinecraftAccount;
 import net.aspw.client.event.SessionEvent;
 import net.aspw.client.features.module.impl.visual.Interface;
+import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.protocol.api.ProtocolSelector;
 import net.aspw.client.utils.ClientUtils;
 import net.aspw.client.utils.ServerUtils;
@@ -28,6 +29,7 @@ import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.Session;
+import net.raphimc.vialoader.util.VersionEnum;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -133,10 +135,14 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
 
     @Inject(method = "drawScreen", at = @At("RETURN"))
     private void drawScreen(CallbackInfo callbackInfo) {
+        final VersionEnum version = ProtocolBase.getManager().getTargetVersion();
+
         Fonts.minecraftFont.drawStringWithShadow(
                 "§7Username: §d" + mc.getSession().getUsername(),
                 6f,
                 6f,
                 0xffffff);
+
+        Fonts.minecraftFont.drawStringWithShadow("§7Protocol: §d" + version.getName(), 6f, 16f, 0xffffff);
     }
 }
