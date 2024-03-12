@@ -1,4 +1,5 @@
 # NightX Client
+# Do Not Use FreeLook Mod (Incompatible)
 
 Selling
 > https://japanaltsreborn.mysellix.io
