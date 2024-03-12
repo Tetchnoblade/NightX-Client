@@ -21,7 +21,7 @@ import net.minecraft.client.settings.GameSettings
 import net.minecraft.entity.Entity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.MathHelper
-import java.util.*
+import java.util.Locale
 import kotlin.math.cos
 import kotlin.math.sin
 

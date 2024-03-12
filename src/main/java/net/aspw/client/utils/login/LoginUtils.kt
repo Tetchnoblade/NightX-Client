@@ -5,7 +5,7 @@ import net.aspw.client.Launch
 import net.aspw.client.event.SessionEvent
 import net.aspw.client.utils.MinecraftInstance
 import net.minecraft.util.Session
-import java.util.*
+import java.util.Base64
 
 object LoginUtils : MinecraftInstance() {
 

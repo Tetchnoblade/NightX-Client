@@ -1,7 +1,11 @@
 package net.aspw.client.features.module.impl.movement.speeds.aac;
 
 import net.aspw.client.Launch;
-import net.aspw.client.event.*;
+import net.aspw.client.event.EventState;
+import net.aspw.client.event.EventTarget;
+import net.aspw.client.event.Listenable;
+import net.aspw.client.event.MotionEvent;
+import net.aspw.client.event.MoveEvent;
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode;
 import net.aspw.client.utils.MovementUtils;
 

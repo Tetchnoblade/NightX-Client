@@ -6,7 +6,7 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.value.FloatValue
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.util.*
+import java.util.Locale
 
 @ModuleInfo(name = "HitBox", spacedName = "Hit Box", category = ModuleCategory.COMBAT)
 class HitBox : Module() {

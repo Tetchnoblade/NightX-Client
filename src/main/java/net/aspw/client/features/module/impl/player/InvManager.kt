@@ -23,7 +23,24 @@ import net.aspw.client.value.ListValue
 import net.minecraft.client.gui.inventory.GuiInventory
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.init.Blocks
-import net.minecraft.item.*
+import net.minecraft.item.Item
+import net.minecraft.item.ItemAppleGold
+import net.minecraft.item.ItemArmor
+import net.minecraft.item.ItemAxe
+import net.minecraft.item.ItemBed
+import net.minecraft.item.ItemBlock
+import net.minecraft.item.ItemBoat
+import net.minecraft.item.ItemBow
+import net.minecraft.item.ItemBucket
+import net.minecraft.item.ItemEnderPearl
+import net.minecraft.item.ItemFlintAndSteel
+import net.minecraft.item.ItemFood
+import net.minecraft.item.ItemMinecart
+import net.minecraft.item.ItemPickaxe
+import net.minecraft.item.ItemPotion
+import net.minecraft.item.ItemStack
+import net.minecraft.item.ItemSword
+import net.minecraft.item.ItemTool
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
 import net.minecraft.network.play.client.C09PacketHeldItemChange
 import java.util.stream.Collectors
@@ -59,7 +76,7 @@ class InvManager : Module() {
     private val itemDelayValue = IntegerValue("ItemDelay", 150, 0, 5000)
     private val onlySwordDamage = BoolValue("OnlySwordWeapon", false)
     private val nbtGoalValue =
-        ListValue("NBTGoal", ItemHelper.EnumNBTPriorityType.values().map { it.toString() }.toTypedArray(), "NONE")
+        ListValue("NBTGoal", ItemHelper.EnumNBTPriorityType.entries.map { it.toString() }.toTypedArray(), "NONE")
     private val nbtItemNotGarbage = BoolValue("NBTItemNotGarbage", true) { !nbtGoalValue.equals("NONE") }
     private val nbtArmorPriority = FloatValue("NBTArmorPriority", 0f, 0f, 5f) { !nbtGoalValue.equals("NONE") }
     private val nbtWeaponPriority = FloatValue("NBTWeaponPriority", 0f, 0f, 5f) { !nbtGoalValue.equals("NONE") }

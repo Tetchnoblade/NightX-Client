@@ -25,7 +25,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.Session
 import org.lwjgl.input.Keyboard
 import java.awt.Color
-import java.util.*
+import java.util.Locale
 import kotlin.concurrent.thread
 
 

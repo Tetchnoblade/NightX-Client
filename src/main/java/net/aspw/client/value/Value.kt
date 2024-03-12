@@ -6,7 +6,7 @@ import com.google.gson.JsonPrimitive
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.visual.font.semi.Fonts
 import net.minecraft.client.gui.FontRenderer
-import java.util.*
+import java.util.Arrays
 
 abstract class Value<T>(val name: String, var value: T, var canDisplay: () -> Boolean) {
 

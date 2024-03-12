@@ -31,7 +31,7 @@ public class NCPBHop extends SpeedMode {
 
     @Override
     public void onEnable() {
-        level = mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0.0, mc.thePlayer.motionY, 0.0)).size() > 0 || mc.thePlayer.isCollidedVertically ? 1 : 4;
+        level = !mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0.0, mc.thePlayer.motionY, 0.0)).isEmpty() || mc.thePlayer.isCollidedVertically ? 1 : 4;
     }
 
     @Override
@@ -49,8 +49,8 @@ public class NCPBHop extends SpeedMode {
 
     @Override
     public void onMotion() {
-        double xDist = mc.thePlayer.posX - mc.thePlayer.prevPosX;
-        double zDist = mc.thePlayer.posZ - mc.thePlayer.prevPosZ;
+        final double xDist = mc.thePlayer.posX - mc.thePlayer.prevPosX;
+        final double zDist = mc.thePlayer.posZ - mc.thePlayer.prevPosZ;
         lastDist = Math.sqrt(xDist * xDist + zDist * zDist);
     }
 
@@ -59,7 +59,7 @@ public class NCPBHop extends SpeedMode {
     }
 
     @Override
-    public void onMove(MoveEvent event) {
+    public void onMove(final MoveEvent event) {
         if (MovementUtils.isMoving()) {
             mc.thePlayer.motionX *= 1.0199999809265137;
             mc.thePlayer.motionZ *= 1.0199999809265137;
@@ -69,7 +69,7 @@ public class NCPBHop extends SpeedMode {
             level = 2;
 
         if (round(mc.thePlayer.posY - (double) ((int) mc.thePlayer.posY)) == round(0.138)) {
-            EntityPlayerSP thePlayer = mc.thePlayer;
+            final EntityPlayerSP thePlayer = mc.thePlayer;
             thePlayer.motionY -= 0.08;
             event.setY(event.getY() - 0.09316090325960147);
             thePlayer.posY -= 0.09316090325960147;
@@ -85,10 +85,10 @@ public class NCPBHop extends SpeedMode {
             moveSpeed *= 2.149;
         } else if (level == 3) {
             level = 4;
-            double difference = 0.66 * (lastDist - getBaseMoveSpeed());
+            final double difference = 0.66 * (lastDist - getBaseMoveSpeed());
             moveSpeed = lastDist - difference;
         } else {
-            if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0.0, mc.thePlayer.motionY, 0.0)).size() > 0 || mc.thePlayer.isCollidedVertically)
+            if (!mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, mc.thePlayer.getEntityBoundingBox().offset(0.0, mc.thePlayer.motionY, 0.0)).isEmpty() || mc.thePlayer.isCollidedVertically)
                 level = 1;
 
             moveSpeed = lastDist - lastDist / 159.0;
@@ -136,7 +136,7 @@ public class NCPBHop extends SpeedMode {
         return baseSpeed;
     }
 
-    private double round(double value) {
+    private double round(final double value) {
         BigDecimal bigDecimal = new BigDecimal(value);
         bigDecimal = bigDecimal.setScale(3, RoundingMode.HALF_UP);
         return bigDecimal.doubleValue();

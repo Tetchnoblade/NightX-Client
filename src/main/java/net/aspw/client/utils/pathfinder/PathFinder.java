@@ -1,7 +1,29 @@
 package net.aspw.client.utils.pathfinder;
 
 import net.aspw.client.utils.MinecraftInstance;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockBarrier;
+import net.minecraft.block.BlockBed;
+import net.minecraft.block.BlockCactus;
+import net.minecraft.block.BlockCarpet;
+import net.minecraft.block.BlockChest;
+import net.minecraft.block.BlockEndPortal;
+import net.minecraft.block.BlockEndPortalFrame;
+import net.minecraft.block.BlockEnderChest;
+import net.minecraft.block.BlockFence;
+import net.minecraft.block.BlockGlass;
+import net.minecraft.block.BlockLadder;
+import net.minecraft.block.BlockPane;
+import net.minecraft.block.BlockPistonBase;
+import net.minecraft.block.BlockPistonExtension;
+import net.minecraft.block.BlockPistonMoving;
+import net.minecraft.block.BlockSkull;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.block.BlockStainedGlass;
+import net.minecraft.block.BlockStairs;
+import net.minecraft.block.BlockTrapDoor;
+import net.minecraft.block.BlockWall;
+import net.minecraft.block.BlockWeb;
 import net.minecraft.util.BlockPos;
 
 import java.util.ArrayList;
@@ -12,13 +34,13 @@ import java.util.Objects;
  * The type Path finder.
  */
 public class PathFinder {
-    private final Vec3 startVec3Path;
-    private final Vec3 endVec3Path;
-    private ArrayList<Vec3> path = new ArrayList<>();
-    private final ArrayList<PathHub> pathHubs = new ArrayList<>();
-    private final ArrayList<PathHub> workingPathHubList = new ArrayList<>();
     private static final Vec3[] directions = new Vec3[]{new Vec3(1.0, 0.0, 0.0), new Vec3(-1.0, 0.0, 0.0),
             new Vec3(0.0, 0.0, 1.0), new Vec3(0.0, 0.0, -1.0)};
+    private final Vec3 startVec3Path;
+    private final Vec3 endVec3Path;
+    private final ArrayList<PathHub> pathHubs = new ArrayList<>();
+    private final ArrayList<PathHub> workingPathHubList = new ArrayList<>();
+    private ArrayList<Vec3> path = new ArrayList<>();
 
     /**
      * Instantiates a new Path finder.
@@ -29,77 +51,6 @@ public class PathFinder {
     public PathFinder(final Vec3 startVec3Path, final Vec3 endVec3Path) {
         this.startVec3Path = startVec3Path.addVector(0.0, 0.0, 0.0).floor();
         this.endVec3Path = endVec3Path.addVector(0.0, 0.0, 0.0).floor();
-    }
-
-    /**
-     * Gets path.
-     *
-     * @return the path
-     */
-    public ArrayList<Vec3> getPath() {
-        return this.path;
-    }
-
-    /**
-     * Compute.
-     */
-    public void compute() {
-        this.compute(1000, 4);
-    }
-
-    /**
-     * Compute.
-     *
-     * @param loops the loops
-     * @param depth the depth
-     */
-    public void compute(final int loops, final int depth) {
-        this.path.clear();
-        this.workingPathHubList.clear();
-
-        final ArrayList<Vec3> initPath = new ArrayList<>();
-        initPath.add(this.startVec3Path);
-
-        this.workingPathHubList
-                .add(new PathHub(this.startVec3Path, null, initPath, this.startVec3Path.squareDistanceTo(this.endVec3Path), 0.0, 0.0));
-
-        block0:
-        for (int i = 0; i < loops; ++i) {
-            this.workingPathHubList.sort(new CompareHub());
-            int j = 0;
-
-            if (this.workingPathHubList.size() == 0) {
-                break;
-            }
-
-            for (final PathHub pathHub : new ArrayList<>(this.workingPathHubList)) {
-                final Vec3 loc2;
-
-                if (++j > depth) {
-                    continue block0;
-                }
-
-                this.workingPathHubList.remove(pathHub);
-                this.pathHubs.add(pathHub);
-
-                for (final Vec3 direction : directions) {
-                    final Vec3 loc = pathHub.getLoc().add(direction).floor();
-                    if (isValid(loc, false) && this.putHub(pathHub, loc, 0.0)) {
-                        break block0;
-                    }
-                }
-
-                final Vec3 loc1 = pathHub.getLoc().addVector(0.0, 1.0, 0.0).floor();
-                if (isValid(loc1, false) && this.putHub(pathHub, loc1, 0.0)
-                        || isValid(loc2 = pathHub.getLoc().addVector(0.0, -1.0, 0.0).floor(), false)
-                        && this.putHub(pathHub, loc2, 0.0)) {
-                    break block0;
-                }
-            }
-        }
-
-        this.pathHubs.sort(new CompareHub());
-        this.path = this.pathHubs.get(0).getPathway();
     }
 
     /**
@@ -165,6 +116,77 @@ public class PathFinder {
                 block.getZ())).getBlock() instanceof BlockFence)
                 && !(MinecraftInstance.mc.theWorld.getBlockState(new BlockPos(block.getX(), block.getY(),
                 block.getZ())).getBlock() instanceof BlockWall);
+    }
+
+    /**
+     * Gets path.
+     *
+     * @return the path
+     */
+    public ArrayList<Vec3> getPath() {
+        return this.path;
+    }
+
+    /**
+     * Compute.
+     */
+    public void compute() {
+        this.compute(1000, 4);
+    }
+
+    /**
+     * Compute.
+     *
+     * @param loops the loops
+     * @param depth the depth
+     */
+    public void compute(final int loops, final int depth) {
+        this.path.clear();
+        this.workingPathHubList.clear();
+
+        final ArrayList<Vec3> initPath = new ArrayList<>();
+        initPath.add(this.startVec3Path);
+
+        this.workingPathHubList
+                .add(new PathHub(this.startVec3Path, null, initPath, this.startVec3Path.squareDistanceTo(this.endVec3Path), 0.0, 0.0));
+
+        block0:
+        for (int i = 0; i < loops; ++i) {
+            this.workingPathHubList.sort(new CompareHub());
+            int j = 0;
+
+            if (this.workingPathHubList.isEmpty()) {
+                break;
+            }
+
+            for (final PathHub pathHub : new ArrayList<>(this.workingPathHubList)) {
+                final Vec3 loc2;
+
+                if (++j > depth) {
+                    continue block0;
+                }
+
+                this.workingPathHubList.remove(pathHub);
+                this.pathHubs.add(pathHub);
+
+                for (final Vec3 direction : directions) {
+                    final Vec3 loc = pathHub.getLoc().add(direction).floor();
+                    if (isValid(loc, false) && this.putHub(pathHub, loc, 0.0)) {
+                        break block0;
+                    }
+                }
+
+                final Vec3 loc1 = pathHub.getLoc().addVector(0.0, 1.0, 0.0).floor();
+                if (isValid(loc1, false) && this.putHub(pathHub, loc1, 0.0)
+                        || isValid(loc2 = pathHub.getLoc().addVector(0.0, -1.0, 0.0).floor(), false)
+                        && this.putHub(pathHub, loc2, 0.0)) {
+                    break block0;
+                }
+            }
+        }
+
+        this.pathHubs.sort(new CompareHub());
+        this.path = this.pathHubs.get(0).getPathway();
     }
 
     /**

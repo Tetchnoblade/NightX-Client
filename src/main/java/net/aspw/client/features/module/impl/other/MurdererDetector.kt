@@ -1,7 +1,11 @@
 package net.aspw.client.features.module.impl.other
 
 import net.aspw.client.Launch
-import net.aspw.client.event.*
+import net.aspw.client.event.EventState
+import net.aspw.client.event.EventTarget
+import net.aspw.client.event.MotionEvent
+import net.aspw.client.event.Render2DEvent
+import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo

@@ -8,7 +8,6 @@ import net.aspw.client.visual.client.clickgui.tab.extensions.animSmooth
 import net.minecraft.client.renderer.GlStateManager
 import org.lwjgl.opengl.GL11
 import java.awt.Color
-import java.util.List
 import kotlin.math.abs
 
 class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val height: Float) {
@@ -58,7 +57,6 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
         ces: List<CategoryElement>,
         accentColor: Color
     ) {
-        var mouseX = mX
         var mouseY = mY
         lastHeight = 0F
         for (ce in ces) {
@@ -81,7 +79,7 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
                     if (startY + animScrollHeight > y + h || startY + animScrollHeight + 40F + me.animHeight < y + 50F)
                         startY += 40F + me.animHeight
                     else
-                        startY += me.drawElement(mouseX, mouseY, x, startY + animScrollHeight, w, 40F, accentColor)
+                        startY += me.drawElement(mX, mouseY, x, startY + animScrollHeight, w, 40F, accentColor)
                 }
             }
         }
@@ -131,7 +129,7 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
             searchBox.text = ""
             return
         }
-        var mouseX = mX
+        val mouseX = mX
         var mouseY = mY
         searchBox.mouseClicked(mouseX, mouseY, mouseButton)
         if (searchBox.text.length <= 0) return
@@ -156,9 +154,9 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
         h: Float,
         ces: List<CategoryElement>
     ) {
-        var mouseX = mX
+        val mouseX = mX
         var mouseY = mY
-        if (searchBox.text.length <= 0) return
+        if (searchBox.text.isEmpty()) return
         if (mouseY < y + 40F || mouseY >= y + h)
             mouseY = -1
         var startY = y + 40F

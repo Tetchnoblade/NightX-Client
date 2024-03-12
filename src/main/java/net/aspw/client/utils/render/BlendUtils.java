@@ -1,6 +1,6 @@
 package net.aspw.client.utils.render;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * The enum Blend utils.
@@ -24,7 +24,7 @@ public enum BlendUtils {
      */
     final String colorCode;
 
-    BlendUtils(String colorCode) {
+    BlendUtils(final String colorCode) {
         this.colorCode = colorCode;
     }
 
@@ -35,10 +35,10 @@ public enum BlendUtils {
      * @param maxHealth the max health
      * @return the health color
      */
-    public static Color getHealthColor(float health, float maxHealth) {
-        float[] fractions = new float[]{0.0F, 0.5F, 1.0F};
-        Color[] colors = new Color[]{new Color(108, 0, 0), new Color(255, 51, 0), Color.GREEN};
-        float progress = health / maxHealth;
+    public static Color getHealthColor(final float health, final float maxHealth) {
+        final float[] fractions = new float[]{0.0F, 0.5F, 1.0F};
+        final Color[] colors = new Color[]{new Color(108, 0, 0), new Color(255, 51, 0), Color.GREEN};
+        final float progress = health / maxHealth;
         return blendColors(fractions, colors, progress).brighter();
     }
 
@@ -50,14 +50,14 @@ public enum BlendUtils {
      * @param progress  the progress
      * @return the color
      */
-    public static Color blendColors(float[] fractions, Color[] colors, float progress) {
+    public static Color blendColors(final float[] fractions, final Color[] colors, final float progress) {
         if (fractions.length == colors.length) {
-            int[] indices = getFractionIndices(fractions, progress);
-            float[] range = new float[]{fractions[indices[0]], fractions[indices[1]]};
-            Color[] colorRange = new Color[]{colors[indices[0]], colors[indices[1]]};
-            float max = range[1] - range[0];
-            float value = progress - range[0];
-            float weight = value / max;
+            final int[] indices = getFractionIndices(fractions, progress);
+            final float[] range = new float[]{fractions[indices[0]], fractions[indices[1]]};
+            final Color[] colorRange = new Color[]{colors[indices[0]], colors[indices[1]]};
+            final float max = range[1] - range[0];
+            final float value = progress - range[0];
+            final float weight = value / max;
             return blend(colorRange[0], colorRange[1], 1.0F - weight);
         } else {
             throw new IllegalArgumentException("Fractions and colours must have equal number of elements");
@@ -71,8 +71,8 @@ public enum BlendUtils {
      * @param progress  the progress
      * @return the int [ ]
      */
-    public static int[] getFractionIndices(float[] fractions, float progress) {
-        int[] range = new int[2];
+    public static int[] getFractionIndices(final float[] fractions, final float progress) {
+        final int[] range = new int[2];
 
         int startPoint;
         for (startPoint = 0; startPoint < fractions.length && fractions[startPoint] <= progress; ++startPoint) {
@@ -95,11 +95,11 @@ public enum BlendUtils {
      * @param ratio  the ratio
      * @return the color
      */
-    public static Color blend(Color color1, Color color2, double ratio) {
-        float r = (float) ratio;
-        float ir = 1.0F - r;
-        float[] rgb1 = color1.getColorComponents(new float[3]);
-        float[] rgb2 = color2.getColorComponents(new float[3]);
+    public static Color blend(final Color color1, final Color color2, final double ratio) {
+        final float r = (float) ratio;
+        final float ir = 1.0F - r;
+        final float[] rgb1 = color1.getColorComponents(new float[3]);
+        final float[] rgb2 = color2.getColorComponents(new float[3]);
         float red = rgb1[0] * r + rgb2[0] * ir;
         float green = rgb1[1] * r + rgb2[1] * ir;
         float blue = rgb1[2] * r + rgb2[2] * ir;
@@ -125,7 +125,7 @@ public enum BlendUtils {
 
         try {
             color3 = new Color(red, green, blue);
-        } catch (IllegalArgumentException ignored) {
+        } catch (final IllegalArgumentException ignored) {
         }
 
         return color3;

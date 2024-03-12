@@ -21,7 +21,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -34,21 +38,19 @@ import java.util.Objects;
 @Mixin(ItemRenderer.class)
 public abstract class MixinItemRenderer {
 
+    private final TimerUtils rotateTimer = new TimerUtils();
     @Shadow
     private float prevEquippedProgress;
-
     @Shadow
     private float equippedProgress;
-
-
     @Shadow
     @Final
     private Minecraft mc;
     @Shadow
     private ItemStack itemToRender;
-
     private float delay = 0;
-    private final TimerUtils rotateTimer = new TimerUtils();
+    @Shadow
+    private int equippedItemSlot;
 
     /**
      * Rotate arround x and y.
@@ -148,9 +150,6 @@ public abstract class MixinItemRenderer {
     @Shadow
     protected abstract void renderPlayerArm(AbstractClientPlayer clientPlayer, float equipProgress, float swingProgress);
 
-    @Shadow
-    private int equippedItemSlot;
-
     @Unique
     private void func_178103_d() {
         GlStateManager.translate(-0.5F, 0.2F, 0.0F);
@@ -160,15 +159,15 @@ public abstract class MixinItemRenderer {
     }
 
     @Unique
-    private void func_178105_d(float p_178105_1_) {
-        float f = -0.4F * MathHelper.sin(MathHelper.sqrt_float(p_178105_1_) * (float) Math.PI);
-        float f1 = 0.2F * MathHelper.sin(MathHelper.sqrt_float(p_178105_1_) * (float) Math.PI * 2.0F);
-        float f2 = -0.2F * MathHelper.sin(p_178105_1_ * (float) Math.PI);
+    private void func_178105_d(final float p_178105_1_) {
+        final float f = -0.4F * MathHelper.sin(MathHelper.sqrt_float(p_178105_1_) * (float) Math.PI);
+        final float f1 = 0.2F * MathHelper.sin(MathHelper.sqrt_float(p_178105_1_) * (float) Math.PI * 2.0F);
+        final float f2 = -0.2F * MathHelper.sin(p_178105_1_ * (float) Math.PI);
         GlStateManager.translate(f, f1, f2);
     }
 
     @Unique
-    private void tap1(float var2, float swingProgress) {
+    private void tap1(final float var2, final float swingProgress) {
         GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
         GlStateManager.translate(0.0F, var2 * -0.15F, 0.0F);
         GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
@@ -177,7 +176,7 @@ public abstract class MixinItemRenderer {
     }
 
     @Unique
-    private void tap2(float var2, float swing) {
+    private void tap2(final float var2, final float swing) {
         GlStateManager.translate(0.56F, -0.42F, -0.71999997F);
         GlStateManager.translate(0.0F, var2 * -0.15F, 0.0F);
         GlStateManager.rotate(30, 0.0F, 1.0F, 0.0F);
@@ -193,12 +192,12 @@ public abstract class MixinItemRenderer {
      * @reason RenderItem
      */
     @Overwrite
-    public void renderItemInFirstPerson(float partialTicks) {
-        float f = 1.0F - (this.prevEquippedProgress + (this.equippedProgress - this.prevEquippedProgress) * partialTicks);
+    public void renderItemInFirstPerson(final float partialTicks) {
+        final float f = 1.0F - (this.prevEquippedProgress + (this.equippedProgress - this.prevEquippedProgress) * partialTicks);
         final EntityPlayerSP abstractclientplayer = this.mc.thePlayer;
-        float f1 = abstractclientplayer.getSwingProgress(partialTicks);
-        float f2 = abstractclientplayer.prevRotationPitch + (abstractclientplayer.rotationPitch - abstractclientplayer.prevRotationPitch) * partialTicks;
-        float f3 = abstractclientplayer.prevRotationYaw + (abstractclientplayer.rotationYaw - abstractclientplayer.prevRotationYaw) * partialTicks;
+        final float f1 = abstractclientplayer.getSwingProgress(partialTicks);
+        final float f2 = abstractclientplayer.prevRotationPitch + (abstractclientplayer.rotationPitch - abstractclientplayer.prevRotationPitch) * partialTicks;
+        final float f3 = abstractclientplayer.prevRotationYaw + (abstractclientplayer.rotationYaw - abstractclientplayer.prevRotationYaw) * partialTicks;
         final float f4 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
         GL11.glTranslated(Animations.itemPosX.get().doubleValue(), Animations.itemPosY.get().doubleValue(), Animations.itemPosZ.get().doubleValue());
         this.rotateArroundXAndY(f2, f3);
@@ -221,7 +220,7 @@ public abstract class MixinItemRenderer {
                     || itemToRender.getItem() instanceof ItemSword && (tpAura.getState() && tpAura.isBlocking() || killAuraRecode.getState() && killAuraRecode.isBlocking()) || (itemToRender.getItem() instanceof ItemSword
                     && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None"))) {
 
-                EnumAction enumaction = (killAura.getBlockingStatus()) ? EnumAction.BLOCK : this.itemToRender.getItemUseAction();
+                final EnumAction enumaction = (killAura.getBlockingStatus()) ? EnumAction.BLOCK : this.itemToRender.getItemUseAction();
 
                 switch (enumaction) {
                     case NONE:
@@ -243,7 +242,7 @@ public abstract class MixinItemRenderer {
                         switch (z) {
                             case "Astolfo": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
-                                float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
+                                final float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
                                 GL11.glTranslated(0.0D, 0.0D, 0.0D);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
@@ -261,8 +260,8 @@ public abstract class MixinItemRenderer {
                                     GlStateManager.translate(0.0F, 0.0f * -0.8F, 0.0F);
                                 else GlStateManager.translate(0.0F, f / 0.8f * -0.8F, 0.0F);
                                 GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
-                                float var3 = MathHelper.sin(f1 * f1 * (float) Math.PI);
-                                float var4 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
+                                final float var3 = MathHelper.sin(f1 * f1 * (float) Math.PI);
+                                final float var4 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
                                 GlStateManager.rotate(var3 * -27.0F, 0.0F, 0.0F, 0.0F);
                                 GlStateManager.rotate(var4 * -27.0F, 0.0F, 0.0F, 0.0F);
                                 GlStateManager.rotate(var4 * -27.0F, 0.0F, 0.0F, 0.0F);
@@ -323,8 +322,7 @@ public abstract class MixinItemRenderer {
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, f1);
                                 else this.transformFirstPersonItem(f / 2.3F, f1);
-                                float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
-                                var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                final float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                 GlStateManager.rotate(var9 * 50.0F / 9.0F, -var9, -0.0F, 90.0F);
                                 GlStateManager.rotate(var9 * 50.0F, 200.0F, -var9 / 2.0F, -0.0F);
                                 this.func_178103_d();
@@ -410,7 +408,7 @@ public abstract class MixinItemRenderer {
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
                                 else this.transformFirstPersonItem(f / 1.4f, 0.0f);
-                                float var91 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                final float var91 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                 this.func_178103_d();
                                 GlStateManager.translate(-0.36f, 0.25f, -0.06f);
                                 GlStateManager.rotate(-var91 * 35.0f, -8.0f, -0.0f, 9.0f);
@@ -465,7 +463,7 @@ public abstract class MixinItemRenderer {
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
                                 else this.transformFirstPersonItem(f / 1.5F, 0.0F);
-                                float var91 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                final float var91 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                 this.func_178103_d();
                                 GlStateManager.translate(-0.4f, 0.28f, 0.0f);
                                 GlStateManager.rotate(-var91 * 35.0f, -8.0f, -0.0f, 9.0f);
@@ -517,7 +515,7 @@ public abstract class MixinItemRenderer {
                             }
                             case "Dash": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
-                                float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
+                                final float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
                                 else transformFirstPersonItem(f / 2.4f, 0.0f);
@@ -555,7 +553,7 @@ public abstract class MixinItemRenderer {
                             }
                             case "Swank": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
-                                float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
+                                final float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, f1);
                                 else transformFirstPersonItem(f / 2.0f, f1);
@@ -567,7 +565,7 @@ public abstract class MixinItemRenderer {
                             }
                             case "Swonk": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.03, Animations.blockPosZ.get().doubleValue());
-                                float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
+                                final float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float) Math.PI);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
                                 else this.transformFirstPersonItem(f / 1.8f, 0.0f);
@@ -583,7 +581,7 @@ public abstract class MixinItemRenderer {
                                     this.transformFirstPersonItem(0.0F, 0.0F);
                                 else transformFirstPersonItem(f / 1.5f, 0.0f);
                                 doBlockTransformations();
-                                float sin = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                final float sin = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                 GlStateManager.scale(1.0F, 1.0F, 1.0F);
                                 GlStateManager.translate(-0.2F, 0.45F, 0.25F);
                                 GlStateManager.rotate(-sin * 20.0F, -5.0F, -5.0F, 9.0F);
@@ -608,7 +606,7 @@ public abstract class MixinItemRenderer {
                                     this.transformFirstPersonItem(0.0F, f1);
                                 else transformFirstPersonItem(f / 2.0f, f1);
                                 GL11.glTranslated(0.4D, -0.06D, -0.46D);
-                                float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                final float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                 GlStateManager.rotate(Swang * 25.0F / 2.0F, -Swang, -0.0F, 9.0F);
                                 GlStateManager.rotate(Swang * 15.0F, 1.0F, -Swang / 2.0F, -0.0F);
                                 doBlockTransformations();
@@ -617,7 +615,7 @@ public abstract class MixinItemRenderer {
                             }
                             case "Push": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
-                                float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
+                                final float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
                                 GL11.glTranslated(0.0D, 0.0D, 0.0D);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
@@ -630,7 +628,7 @@ public abstract class MixinItemRenderer {
                             }
                             case "Aqua": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
-                                float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
+                                final float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
                                 GL11.glTranslated(0.0D, 0.0D, 0.0D);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
@@ -643,7 +641,7 @@ public abstract class MixinItemRenderer {
                             }
                             case "Swang": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue() + 0.03, Animations.blockPosZ.get().doubleValue());
-                                float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
+                                final float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
                                 GL11.glTranslated(0.0D, 0.0D, 0.0D);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
@@ -656,7 +654,7 @@ public abstract class MixinItemRenderer {
                             }
                             case "Moon": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.08, Animations.blockPosY.get().doubleValue() + 0.06, Animations.blockPosZ.get().doubleValue());
-                                float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
+                                final float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
                                 GL11.glTranslated(0.0D, 0.0D, 0.0D);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
@@ -698,7 +696,7 @@ public abstract class MixinItemRenderer {
                             }
                             case "Invent": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
-                                float table = MathHelper.sin((float) (MathHelper.sqrt_float(f1) * Math.PI));
+                                final float table = MathHelper.sin((float) (MathHelper.sqrt_float(f1) * Math.PI));
                                 GlStateManager.rotate(-table * 30.0F, -8.0F, -0.2F, 9.0F);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
@@ -727,7 +725,7 @@ public abstract class MixinItemRenderer {
                                     this.transformFirstPersonItem(0.0F, f1);
                                 else transformFirstPersonItem(f / 1.4f, f1);
                                 GL11.glTranslated(0.0D, 0.0D, 0.0D);
-                                float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                final float Swang = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
                                 GlStateManager.rotate(Swang * 16.0F / 2.0F, -Swang, -0.0F, 2.0F);
                                 GlStateManager.rotate(Swang * 22.0F, 1.0F, -Swang / 3.0F, -0.0F);
                                 doBlockTransformations();

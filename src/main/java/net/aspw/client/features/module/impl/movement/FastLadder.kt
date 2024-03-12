@@ -69,8 +69,8 @@ class FastLadder : Module() {
 
                 when (mc.thePlayer.horizontalFacing) {
                     EnumFacing.NORTH -> z = -0.99
-                    EnumFacing.EAST -> x = +0.99
-                    EnumFacing.SOUTH -> z = +0.99
+                    EnumFacing.EAST -> x = 0.99
+                    EnumFacing.SOUTH -> z = 0.99
                     EnumFacing.WEST -> x = -0.99
                     else -> {}
                 }
@@ -179,8 +179,8 @@ class FastLadder : Module() {
                         var z = 0.0
                         when (mc.thePlayer.horizontalFacing) {
                             EnumFacing.NORTH -> z = -1.0
-                            EnumFacing.EAST -> x = +1.0
-                            EnumFacing.SOUTH -> z = +1.0
+                            EnumFacing.EAST -> x = 1.0
+                            EnumFacing.SOUTH -> z = 1.0
                             EnumFacing.WEST -> x = -1.0
                             else -> {}
                         }

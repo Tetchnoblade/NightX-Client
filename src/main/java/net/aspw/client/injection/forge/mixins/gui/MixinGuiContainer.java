@@ -69,8 +69,8 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
      * @param callbackInfo the callback info
      */
     @Inject(method = "initGui", at = @At("HEAD"))
-    public void injectInitGui(CallbackInfo callbackInfo) {
-        GuiScreen guiScreen = MinecraftInstance.mc.currentScreen;
+    public void injectInitGui(final CallbackInfo callbackInfo) {
+        final GuiScreen guiScreen = MinecraftInstance.mc.currentScreen;
 
         if (guiScreen instanceof GuiChest) {
             buttonList.add(killAuraButton = new GuiButton(1024576, 5, 5, 150, 20, "Disable KillAura"));
@@ -83,7 +83,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
     }
 
     @Override
-    protected void injectedActionPerformed(GuiButton button) {
+    protected void injectedActionPerformed(final GuiButton button) {
         final KillAura killAura = Objects.requireNonNull(Launch.moduleManager.getModule(KillAura.class));
         final InvManager invManager = Objects.requireNonNull(Launch.moduleManager.getModule(InvManager.class));
         final Stealer stealer = Objects.requireNonNull(Launch.moduleManager.getModule(Stealer.class));
@@ -96,10 +96,10 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
     }
 
     @Inject(method = "drawScreen", at = @At("HEAD"), cancellable = true)
-    private void drawScreenHead(CallbackInfo callbackInfo) {
-        Stealer stealer = Objects.requireNonNull(Launch.moduleManager.getModule(Stealer.class));
-        KillAura killAura = Objects.requireNonNull(Launch.moduleManager.getModule(KillAura.class));
-        InvManager invManager = Objects.requireNonNull(Launch.moduleManager.getModule(InvManager.class));
+    private void drawScreenHead(final CallbackInfo callbackInfo) {
+        final Stealer stealer = Objects.requireNonNull(Launch.moduleManager.getModule(Stealer.class));
+        final KillAura killAura = Objects.requireNonNull(Launch.moduleManager.getModule(KillAura.class));
+        final InvManager invManager = Objects.requireNonNull(Launch.moduleManager.getModule(InvManager.class));
         final Minecraft mc = MinecraftInstance.mc;
 
         if (progress >= 1F) progress = 1F;
@@ -112,7 +112,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
             RenderUtils.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
 
         try {
-            GuiScreen guiScreen = mc.currentScreen;
+            final GuiScreen guiScreen = mc.currentScreen;
 
             if (stealButton != null) stealButton.enabled = !stealer.getState();
             if (killAuraButton != null)
@@ -127,7 +127,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
 
                 //hide GUI
                 if (stealer.getShowStringValue().get() && !stealer.getStillDisplayValue().get()) {
-                    String tipString = "Stealing... Press Esc to stop.";
+                    final String tipString = "Stealing... Press Esc to stop.";
 
                     mc.fontRendererObj.drawString(tipString,
                             (width / 2F) - (mc.fontRendererObj.getStringWidth(tipString) / 2F) - 0.5F,
@@ -149,7 +149,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
                 if (!stealer.getOnce() && !stealer.getStillDisplayValue().get())
                     callbackInfo.cancel();
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             //e.printStackTrace();
         }
     }
@@ -165,18 +165,18 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
      * @param callbackInfo the callback info
      */
     @Inject(method = "drawScreen", at = @At("RETURN"))
-    public void drawScreenReturn(CallbackInfo callbackInfo) {
+    public void drawScreenReturn(final CallbackInfo callbackInfo) {
         final Animations animMod = Objects.requireNonNull(Launch.moduleManager.getModule(Animations.class));
-        Stealer stealer = Objects.requireNonNull(Launch.moduleManager.getModule(Stealer.class));
+        final Stealer stealer = Objects.requireNonNull(Launch.moduleManager.getModule(Stealer.class));
         final Minecraft mc = MinecraftInstance.mc;
-        boolean checkFullSilence = stealer.getState() && stealer.getSilenceValue().get() && !stealer.getStillDisplayValue().get();
+        final boolean checkFullSilence = stealer.getState() && stealer.getSilenceValue().get() && !stealer.getStillDisplayValue().get();
 
-        if (animMod != null && animMod.getState() && !(mc.currentScreen instanceof GuiChest && checkFullSilence))
+        if (animMod.getState() && !(mc.currentScreen instanceof GuiChest && checkFullSilence))
             GL11.glPopMatrix();
     }
 
     @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
-    private void checkCloseClick(int mouseX, int mouseY, int mouseButton, CallbackInfo ci) {
+    private void checkCloseClick(final int mouseX, final int mouseY, final int mouseButton, final CallbackInfo ci) {
         if (mouseButton - 100 == mc.gameSettings.keyBindInventory.getKeyCode()) {
             mc.thePlayer.closeScreen();
             ci.cancel();
@@ -184,12 +184,12 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
     }
 
     @Inject(method = "mouseClicked", at = @At("TAIL"))
-    private void checkHotbarClicks(int mouseX, int mouseY, int mouseButton, CallbackInfo ci) {
+    private void checkHotbarClicks(final int mouseX, final int mouseY, final int mouseButton, final CallbackInfo ci) {
         checkHotbarKeys(mouseButton - 100);
     }
 
     @Inject(method = "updateDragSplitting", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;copy()Lnet/minecraft/item/ItemStack;"), cancellable = true)
-    private void fixRemnants(CallbackInfo ci) {
+    private void fixRemnants(final CallbackInfo ci) {
         if (this.dragSplittingButton == 2) {
             this.dragSplittingRemnant = mc.thePlayer.inventory.getItemStack().getMaxStackSize();
             ci.cancel();

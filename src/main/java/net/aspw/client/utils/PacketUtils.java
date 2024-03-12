@@ -16,9 +16,9 @@ import java.util.ArrayList;
  */
 public class PacketUtils extends MinecraftInstance implements Listenable {
 
-    public static ArrayList<Packet> packets = new ArrayList<>();
     private static final MSTimer packetTimer = new MSTimer();
     private static final MSTimer wdTimer = new MSTimer();
+    public static ArrayList<Packet<?>> packets = new ArrayList<>();
     /**
      * The constant inBound.
      */
@@ -36,7 +36,7 @@ public class PacketUtils extends MinecraftInstance implements Listenable {
     private static int transCount = 0;
     private static int wdVL = 0;
 
-    private static boolean isInventoryAction(short action) {
+    private static boolean isInventoryAction(final short action) {
         return action > 0 && action < 100;
     }
 
@@ -49,7 +49,7 @@ public class PacketUtils extends MinecraftInstance implements Listenable {
         return wdVL >= 8;
     }
 
-    public static void handlePacket(Packet<?> packet) {
+    public static void handlePacket(final Packet<?> packet) {
         if (packet.getClass().getSimpleName().startsWith("C")) outBound++;
         else if (packet.getClass().getSimpleName().startsWith("S")) inBound++;
 
@@ -67,7 +67,7 @@ public class PacketUtils extends MinecraftInstance implements Listenable {
     /*
      * This code is from UnlegitMC/FDPClient. Please credit them when using this code in your repository.
      */
-    public static void sendPacketNoEvent(Packet<INetHandlerPlayServer> packet) {
+    public static void sendPacketNoEvent(final Packet<INetHandlerPlayServer> packet) {
         packets.add(packet);
         mc.getNetHandler().addToSendQueue(packet);
     }
@@ -77,7 +77,7 @@ public class PacketUtils extends MinecraftInstance implements Listenable {
      *
      * @param packet the packet
      */
-    public static void sendPacketSilent(Packet<INetHandlerPlayServer> packet) {
+    public static void sendPacketSilent(final Packet<INetHandlerPlayServer> packet) {
         packets.add(packet);
         mc.getNetHandler().getNetworkManager().sendPacket(packet);
     }
@@ -88,7 +88,7 @@ public class PacketUtils extends MinecraftInstance implements Listenable {
      * @param packet the packet
      * @return the boolean
      */
-    public static boolean handleSendPacket(Packet<?> packet) {
+    public static boolean handleSendPacket(final Packet<?> packet) {
         if (packets.contains(packet)) {
             packets.remove(packet);
             handlePacket(packet); // make sure not to skip silent packets.
@@ -103,7 +103,7 @@ public class PacketUtils extends MinecraftInstance implements Listenable {
      * @param event the event
      */
     @EventTarget
-    public void onPacket(PacketEvent event) {
+    public void onPacket(final PacketEvent event) {
         handlePacket(event.getPacket());
     }
 
@@ -113,7 +113,7 @@ public class PacketUtils extends MinecraftInstance implements Listenable {
      * @param event the event
      */
     @EventTarget
-    public void onTick(TickEvent event) {
+    public void onTick(final TickEvent event) {
         if (packetTimer.hasTimePassed(1000L)) {
             avgInBound = inBound;
             avgOutBound = outBound;

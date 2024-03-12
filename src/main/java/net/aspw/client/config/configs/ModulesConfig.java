@@ -1,13 +1,21 @@
 package net.aspw.client.config.configs;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.aspw.client.Launch;
 import net.aspw.client.config.FileConfig;
 import net.aspw.client.config.FileManager;
 import net.aspw.client.features.module.Module;
 
-import java.io.*;
-import java.util.Iterator;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 /**
@@ -31,9 +39,7 @@ public class ModulesConfig extends FileConfig {
         if (jsonElement instanceof JsonNull)
             return;
 
-        final Iterator<Map.Entry<String, JsonElement>> entryIterator = jsonElement.getAsJsonObject().entrySet().iterator();
-        while (entryIterator.hasNext()) {
-            final Map.Entry<String, JsonElement> entry = entryIterator.next();
+        for (final Map.Entry<String, JsonElement> entry : jsonElement.getAsJsonObject().entrySet()) {
             final Module module = Launch.moduleManager.getModule(entry.getKey());
 
             if (module != null) {

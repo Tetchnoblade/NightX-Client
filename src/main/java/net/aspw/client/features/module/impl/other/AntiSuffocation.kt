@@ -12,7 +12,7 @@ import net.minecraft.network.play.client.C0APacketAnimation
 import net.minecraft.network.play.client.C0BPacketEntityAction
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
-import java.util.*
+import java.util.Locale
 
 @ModuleInfo(
     name = "AntiSuffocation",

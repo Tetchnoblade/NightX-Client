@@ -1,7 +1,13 @@
 package net.aspw.client.features.module.impl.combat
 
 import net.aspw.client.Launch
-import net.aspw.client.event.*
+import net.aspw.client.event.EventState
+import net.aspw.client.event.EventTarget
+import net.aspw.client.event.JumpEvent
+import net.aspw.client.event.MotionEvent
+import net.aspw.client.event.PacketEvent
+import net.aspw.client.event.StrafeEvent
+import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
@@ -14,13 +20,15 @@ import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.play.client.C03PacketPlayer
-import net.minecraft.network.play.client.C03PacketPlayer.*
+import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
+import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook
+import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
 import net.minecraft.network.play.server.S12PacketEntityVelocity
 import net.minecraft.network.play.server.S27PacketExplosion
 import net.minecraft.network.play.server.S32PacketConfirmTransaction
 import net.minecraft.util.BlockPos
 import net.minecraft.util.MathHelper
-import java.util.*
+import java.util.Locale
 import kotlin.math.cos
 import kotlin.math.sin
 

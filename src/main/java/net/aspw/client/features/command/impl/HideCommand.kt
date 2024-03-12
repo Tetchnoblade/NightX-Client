@@ -102,7 +102,7 @@ class HideCommand : Command("hide", emptyArray()) {
 
             2 -> {
                 if (moduleName.equals("category", true))
-                    return ModuleCategory.values()
+                    return ModuleCategory.entries
                         .map { it.displayName }
                         .filter { it.startsWith(args[1], true) }
                         .toList()

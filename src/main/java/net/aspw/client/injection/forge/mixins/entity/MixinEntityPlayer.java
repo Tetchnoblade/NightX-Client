@@ -18,6 +18,7 @@ import net.minecraft.util.FoodStats;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -36,11 +37,21 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
     @Shadow
     public PlayerCapabilities capabilities;
     /**
+     * The Inventory.
+     */
+    @Shadow
+    public InventoryPlayer inventory;
+    /**
      * The Fly toggle timer.
      */
     @Shadow
     protected int flyToggleTimer;
+    @Unique
+    private ItemStack cooldownStack;
+    @Unique
+    private int cooldownStackSlot;
 
+    @Override
     @Shadow
     public abstract ItemStack getHeldItem();
 
@@ -112,17 +123,10 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
     public abstract float getDefaultEyeHeight();
 
     /**
-     * The Inventory.
-     */
-    @Shadow
-    public InventoryPlayer inventory;
-    private ItemStack cooldownStack;
-    private int cooldownStackSlot;
-
-    /**
      * @author As_pw
      * @reason FakeY
      */
+    @Override
     @Overwrite
     public float getEyeHeight() {
         final Minecraft mc = MinecraftInstance.mc;

@@ -2,7 +2,14 @@ package net.aspw.client.features.api;
 
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
-import net.aspw.client.event.*;
+import net.aspw.client.event.EventState;
+import net.aspw.client.event.EventTarget;
+import net.aspw.client.event.Listenable;
+import net.aspw.client.event.MotionEvent;
+import net.aspw.client.event.PacketEvent;
+import net.aspw.client.event.TeleportEvent;
+import net.aspw.client.event.UpdateEvent;
+import net.aspw.client.event.WorldEvent;
 import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.combat.KillAuraRecode;
 import net.aspw.client.features.module.impl.combat.TPAura;
@@ -11,10 +18,19 @@ import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.BetterView;
 import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.protocol.ProtocolBase;
-import net.aspw.client.utils.*;
+import net.aspw.client.utils.ClientUtils;
+import net.aspw.client.utils.EntityUtils;
+import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.utils.MovementUtils;
+import net.aspw.client.utils.PacketUtils;
+import net.aspw.client.utils.RotationUtils;
 import net.aspw.client.utils.timer.MSTimer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.*;
+import net.minecraft.entity.item.EntityArmorStand;
+import net.minecraft.entity.item.EntityBoat;
+import net.minecraft.entity.item.EntityItemFrame;
+import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
@@ -23,17 +39,28 @@ import java.util.Objects;
 
 public class PacketManager extends MinecraftInstance implements Listenable {
 
+    private static final MSTimer packetCountTimer = new MSTimer();
     public static int swing;
     public static boolean isVisualBlocking = false;
-    private static boolean flagged = false;
     public static int flagTicks;
     public static float eyeHeight;
     public static float lastEyeHeight;
     public static int sendPacketCounts;
     public static int receivePacketCounts;
+    private static boolean flagged = false;
     private int preSend = 0;
     private int preReceive = 0;
-    private static final MSTimer packetCountTimer = new MSTimer();
+
+    public static boolean shouldStopRender(Entity entity) {
+        return (EntityUtils.isMob(entity) ||
+                EntityUtils.isAnimal(entity) ||
+                entity instanceof EntityBoat ||
+                entity instanceof EntityMinecart ||
+                entity instanceof EntityItemFrame ||
+                entity instanceof EntityTNTPrimed ||
+                entity instanceof EntityArmorStand) &&
+                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 45.0f;
+    }
 
     @EventTarget
     public void onWorld(WorldEvent event) {
@@ -70,7 +97,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
             eyeHeight = END_HEIGHT;
         } else if (eyeHeight < START_HEIGHT) {
             float delta = START_HEIGHT - eyeHeight;
-            delta *= 0.4;
+            delta *= 0.4F;
             eyeHeight = START_HEIGHT - delta;
         }
 
@@ -163,17 +190,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 ((C08PacketPlayerBlockPlacement) packet).facingZ = 0.5F;
             }
         }
-    }
-
-    public static boolean shouldStopRender(Entity entity) {
-        return (EntityUtils.isMob(entity) ||
-                EntityUtils.isAnimal(entity) ||
-                entity instanceof EntityBoat ||
-                entity instanceof EntityMinecart ||
-                entity instanceof EntityItemFrame ||
-                entity instanceof EntityTNTPrimed ||
-                entity instanceof EntityArmorStand) &&
-                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 45.0f;
     }
 
     @Override

@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Objects;
 
 /**
@@ -199,40 +199,36 @@ public class MixinModelPlayerFix extends ModelBiped {
      * The Hand left.
      */
     public ModelRenderer handLeft;
-    @Shadow
-    private boolean smallArms;
     /**
      * The Biped left armwear.
      */
     @Shadow
     public ModelRenderer bipedLeftArmwear;
-
     /**
      * The Biped right armwear.
      */
     @Shadow
     public ModelRenderer bipedRightArmwear;
-
     /**
      * The Biped left legwear.
      */
     @Shadow
     public ModelRenderer bipedLeftLegwear;
-
     /**
      * The Biped right legwear.
      */
     @Shadow
     public ModelRenderer bipedRightLegwear;
-
     /**
      * The Biped body wear.
      */
     @Shadow
     public ModelRenderer bipedBodyWear;
+    @Shadow
+    private boolean smallArms;
 
     @ModifyConstant(method = "<init>", constant = @Constant(floatValue = 2.5F))
-    private float fixAlexArmHeight(float original) {
+    private float fixAlexArmHeight(final float original) {
         return 2F;
     }
 
@@ -240,8 +236,9 @@ public class MixinModelPlayerFix extends ModelBiped {
      * @author As_pw
      * @reason PostRender
      */
+    @Override
     @Overwrite
-    public void postRenderArm(float scale) {
+    public void postRenderArm(final float scale) {
         if (this.smallArms) {
             this.bipedRightArm.rotationPointX += 0.5F;
             this.bipedRightArm.postRender(scale);
@@ -264,8 +261,8 @@ public class MixinModelPlayerFix extends ModelBiped {
      * @param ci              the ci
      */
     @Inject(method = {"render"}, at = {@At("HEAD")}, cancellable = true)
-    public void renderHook(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale, CallbackInfo ci) {
-        CustomModel customModel = Objects.requireNonNull(Launch.moduleManager.getModule(CustomModel.class));
+    public void renderHook(final Entity entityIn, final float limbSwing, final float limbSwingAmount, final float ageInTicks, final float netHeadYaw, final float headPitch, final float scale, final CallbackInfo ci) {
+        final CustomModel customModel = Objects.requireNonNull(Launch.moduleManager.getModule(CustomModel.class));
         if (customModel.getState()) {
             ci.cancel();
             renderCustom(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
@@ -280,7 +277,7 @@ public class MixinModelPlayerFix extends ModelBiped {
      * @param y             the y
      * @param z             the z
      */
-    public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+    public void setRotationAngle(final ModelRenderer modelRenderer, final float x, final float y, final float z) {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
@@ -517,13 +514,13 @@ public class MixinModelPlayerFix extends ModelBiped {
      * @param headPitch       the head pitch
      * @param scale           the scale
      */
-    public void renderCustom(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+    public void renderCustom(final Entity entityIn, final float limbSwing, final float limbSwingAmount, final float ageInTicks, final float netHeadYaw, final float headPitch, final float scale) {
         if (left_leg == null) {
             generatemodel();
         }
 
 
-        CustomModel customModel = Objects.requireNonNull(Launch.moduleManager.getModule(CustomModel.class));
+        final CustomModel customModel = Objects.requireNonNull(Launch.moduleManager.getModule(CustomModel.class));
         GlStateManager.pushMatrix();
         if ((!customModel.getOnlySelf().getValue() || entityIn == (MinecraftInstance.mc).thePlayer)) {
             if (customModel.getState() && customModel.getMode().get().contains("Rabbit")) {
@@ -572,18 +569,16 @@ public class MixinModelPlayerFix extends ModelBiped {
                 this.bipedHead.rotateAngleY = netHeadYaw * 0.017453292F;
                 this.bipedHead.rotateAngleX = headPitch * 0.017453292F;
                 this.bipedBody.rotateAngleY = 0.0F;
-                float f = 1.0F;
-                if (f < 1.0F)
-                    f = 1.0F;
+                final float f = 1.0F;
                 this.right_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount / f;
                 this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 1.4F * limbSwingAmount / f;
                 this.right_leg.rotateAngleY = 0.0F;
                 this.left_leg.rotateAngleY = 0.0F;
                 this.right_leg.rotateAngleZ = 0.0F;
                 this.left_leg.rotateAngleZ = 0.0F;
-                int bodyCustomColor = new Color(197, 16, 17).getRGB();
-                int eyeCustomColor = new Color(254, 254, 254).getRGB();
-                int legsCustomColor = new Color(122, 7, 56).getRGB();
+                final int bodyCustomColor = new Color(197, 16, 17).getRGB();
+                final int eyeCustomColor = new Color(254, 254, 254).getRGB();
+                final int legsCustomColor = new Color(122, 7, 56).getRGB();
                 if (this.isChild) {
                     GlStateManager.scale(0.5F, 0.5F, 0.5F);
                     GlStateManager.translate(0.0F, 24.0F * scale, 0.0F);
@@ -608,7 +603,7 @@ public class MixinModelPlayerFix extends ModelBiped {
         } else {
             super.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
             if (isChild) {
-                float f = 2.0F;
+                final float f = 2.0F;
                 GlStateManager.scale(0.5F, 0.5F, 0.5F);
                 GlStateManager.translate(0.0F, 24.0F * scale, 0.0F);
                 bipedLeftLegwear.render(scale);
@@ -630,7 +625,7 @@ public class MixinModelPlayerFix extends ModelBiped {
     }
 
     @Inject(method = "setRotationAngles", at = @At("RETURN"))
-    private void revertSwordAnimation(float p_setRotationAngles_1_, float p_setRotationAngles_2_, float p_setRotationAngles_3_, float p_setRotationAngles_4_, float p_setRotationAngles_5_, float p_setRotationAngles_6_, Entity p_setRotationAngles_7_, CallbackInfo callbackInfo) {
+    private void revertSwordAnimation(final float p_setRotationAngles_1_, final float p_setRotationAngles_2_, final float p_setRotationAngles_3_, final float p_setRotationAngles_4_, final float p_setRotationAngles_5_, final float p_setRotationAngles_6_, final Entity p_setRotationAngles_7_, final CallbackInfo callbackInfo) {
         Launch.eventManager.callEvent(new UpdateModelEvent((EntityPlayer) p_setRotationAngles_7_, (ModelPlayer) (Object) this));
     }
 }

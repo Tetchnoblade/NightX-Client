@@ -14,7 +14,7 @@ import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.client.settings.KeyBinding
-import java.util.*
+import java.util.Locale
 
 @ModuleInfo(name = "AntiAFK", spacedName = "Anti AFK", category = ModuleCategory.MOVEMENT)
 class AntiAFK : Module() {

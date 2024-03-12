@@ -7,7 +7,11 @@ import net.aspw.client.visual.font.semi.Fonts;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -25,11 +29,14 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Timer;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.lang.Math.*;
+import static java.lang.Math.PI;
+import static java.lang.Math.atan;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 import static net.minecraft.client.renderer.GlStateManager.disableBlend;
 import static net.minecraft.client.renderer.GlStateManager.enableTexture2D;
 import static org.lwjgl.opengl.GL11.*;
@@ -100,11 +107,11 @@ public final class RenderUtils extends MinecraftInstance {
      * @param height   the height
      * @param zLevel   the z level
      */
-    public static void drawTexturedModalRect(int x, int y, int textureX, int textureY, int width, int height, float zLevel) {
-        float f = 0.00390625F;
-        float f1 = 0.00390625F;
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+    public static void drawTexturedModalRect(final int x, final int y, final int textureX, final int textureY, final int width, final int height, final float zLevel) {
+        final float f = 0.00390625F;
+        final float f1 = 0.00390625F;
+        final Tessellator tessellator = Tessellator.getInstance();
+        final WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
         worldrenderer.pos(x, y + height, zLevel).tex((float) (textureX) * f, (float) (textureY + height) * f1).endVertex();
         worldrenderer.pos(x + width, y + height, zLevel).tex((float) (textureX + width) * f, (float) (textureY + height) * f1).endVertex();
@@ -113,25 +120,25 @@ public final class RenderUtils extends MinecraftInstance {
         tessellator.draw();
     }
 
-    public static void drawRects(double left, double top, double right, double bottom, int color) {
+    public static void drawRects(double left, double top, double right, double bottom, final int color) {
         if (left < right) {
-            double i = left;
+            final double i = left;
             left = right;
             right = i;
         }
 
         if (top < bottom) {
-            double j = top;
+            final double j = top;
             top = bottom;
             bottom = j;
         }
 
-        float f3 = (float) (color >> 24 & 255) / 255.0F;
-        float f = (float) (color >> 16 & 255) / 255.0F;
-        float f1 = (float) (color >> 8 & 255) / 255.0F;
-        float f2 = (float) (color & 255) / 255.0F;
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        final float f3 = (float) (color >> 24 & 255) / 255.0F;
+        final float f = (float) (color >> 16 & 255) / 255.0F;
+        final float f1 = (float) (color >> 8 & 255) / 255.0F;
+        final float f2 = (float) (color & 255) / 255.0F;
+        final Tessellator tessellator = Tessellator.getInstance();
+        final WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -146,7 +153,7 @@ public final class RenderUtils extends MinecraftInstance {
         disableBlend();
     }
 
-    public static void drawRect(Rectangle rect, int color) {
+    public static void drawRect(final Rectangle rect, final int color) {
         drawRect(rect.getX(), rect.getY(), rect.getX() + rect.getWidth(), rect.getY() + rect.getHeight(), color);
     }
 
@@ -167,12 +174,12 @@ public final class RenderUtils extends MinecraftInstance {
      * @param entity the entity
      * @return the boolean
      */
-    public static boolean isInViewFrustrum(Entity entity) {
+    public static boolean isInViewFrustrum(final Entity entity) {
         return isInViewFrustrum(entity.getEntityBoundingBox()) || entity.ignoreFrustumCheck;
     }
 
-    private static boolean isInViewFrustrum(AxisAlignedBB bb) {
-        Entity current = mc.getRenderViewEntity();
+    private static boolean isInViewFrustrum(final AxisAlignedBB bb) {
+        final Entity current = mc.getRenderViewEntity();
         frustrum.setPosition(current.posX, current.posY, current.posZ);
         return frustrum.isBoundingBoxInFrustum(bb);
     }
@@ -185,7 +192,7 @@ public final class RenderUtils extends MinecraftInstance {
      * @param scale   the scale
      * @return the double
      */
-    public static double interpolate(double current, double old, double scale) {
+    public static double interpolate(final double current, final double old, final double scale) {
         return old + (current - old) * scale;
     }
 
@@ -197,7 +204,7 @@ public final class RenderUtils extends MinecraftInstance {
      * @param bright the bright
      * @return the int
      */
-    public static int SkyRainbow(int var2, float st, float bright) {
+    public static int SkyRainbow(final int var2, final float st, final float bright) {
         double v1 = Math.ceil(System.currentTimeMillis() + (var2 * 109L)) / 5;
         return Color.getHSBColor((double) ((float) ((v1 %= 360.0) / 360.0)) < 0.5 ? -((float) (v1 / 360.0)) : (float) (v1 / 360.0), st, bright).getRGB();
     }
@@ -210,7 +217,7 @@ public final class RenderUtils extends MinecraftInstance {
      * @param bright the bright
      * @return the color
      */
-    public static Color skyRainbow(int var2, float st, float bright) {
+    public static Color skyRainbow(final int var2, final float st, final float bright) {
         double v1 = Math.ceil(System.currentTimeMillis() + (var2 * 109L)) / 5;
         return Color.getHSBColor((double) ((float) ((v1 %= 360.0) / 360.0)) < 0.5 ? -((float) (v1 / 360.0)) : (float) (v1 / 360.0), st, bright);
     }
@@ -224,8 +231,8 @@ public final class RenderUtils extends MinecraftInstance {
      * @param index      the index
      * @return the rainbow opaque
      */
-    public static int getRainbowOpaque(int seconds, float saturation, float brightness, int index) {
-        float hue = ((System.currentTimeMillis() + index) % (seconds * 1000)) / (float) (seconds * 1000);
+    public static int getRainbowOpaque(final int seconds, final float saturation, final float brightness, final int index) {
+        final float hue = ((System.currentTimeMillis() + index) % (seconds * 1000)) / (float) (seconds * 1000);
         return Color.HSBtoRGB(hue, saturation, brightness);
     }
 
@@ -237,7 +244,7 @@ public final class RenderUtils extends MinecraftInstance {
      * @param brg   the brg
      * @return the normal rainbow
      */
-    public static int getNormalRainbow(int delay, float sat, float brg) {
+    public static int getNormalRainbow(final int delay, final float sat, final float brg) {
         double rainbowState = Math.ceil((System.currentTimeMillis() + delay) / 20.0);
         rainbowState %= 360;
         return Color.getHSBColor((float) (rainbowState / 360.0f), sat, brg).getRGB();
@@ -251,7 +258,7 @@ public final class RenderUtils extends MinecraftInstance {
      * @param x2 the x 2
      * @param y2 the y 2
      */
-    public static void drawExhiRect(float x, float y, float x2, float y2) {
+    public static void drawExhiRect(final float x, final float y, final float x2, final float y2) {
         drawRect(x - 3.5F, y - 3.5F, x2 + 3.5F, y2 + 3.5F, Color.black.getRGB());
         drawRect(x - 3F, y - 3F, x2 + 3F, y2 + 3F, new Color(50, 50, 50).getRGB());
         drawRect(x - 2.5F, y - 2.5F, x2 + 2.5F, y2 + 2.5F, new Color(26, 26, 26).getRGB());
@@ -268,7 +275,7 @@ public final class RenderUtils extends MinecraftInstance {
      * @param y2    the y 2
      * @param alpha the alpha
      */
-    public static void drawExhiRect(float x, float y, float x2, float y2, float alpha) {
+    public static void drawExhiRect(final float x, final float y, final float x2, final float y2, final float alpha) {
         drawRect(x - 3.5F, y - 3.5F, x2 + 3.5F, y2 + 3.5F, new Color(0, 0, 0, alpha).getRGB());
         drawRect(x - 3F, y - 3F, x2 + 3F, y2 + 3F, new Color(50F / 255F, 50F / 255F, 50F / 255F, alpha).getRGB());
         drawRect(x - 2.5F, y - 2.5F, x2 + 2.5F, y2 + 2.5F, new Color(26F / 255F, 26F / 255F, 26F / 255F, alpha).getRGB());
@@ -286,7 +293,7 @@ public final class RenderUtils extends MinecraftInstance {
      * @param radius      the radius
      * @param color       the color
      */
-    public static void drawRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius, int color) {
+    public static void drawRoundedRect(final float paramXStart, final float paramYStart, final float paramXEnd, final float paramYEnd, final float radius, final int color) {
         drawRoundedRect(paramXStart, paramYStart, paramXEnd, paramYEnd, radius, color, true);
     }
 
@@ -300,13 +307,13 @@ public final class RenderUtils extends MinecraftInstance {
      * @param radius      the radius
      * @param color       the color
      */
-    public static void originalRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius, int color) {
-        float alpha = (color >> 24 & 0xFF) / 255.0F;
-        float red = (color >> 16 & 0xFF) / 255.0F;
-        float green = (color >> 8 & 0xFF) / 255.0F;
-        float blue = (color & 0xFF) / 255.0F;
+    public static void originalRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, final float radius, final int color) {
+        final float alpha = (color >> 24 & 0xFF) / 255.0F;
+        final float red = (color >> 16 & 0xFF) / 255.0F;
+        final float green = (color >> 8 & 0xFF) / 255.0F;
+        final float blue = (color & 0xFF) / 255.0F;
 
-        float z = 0;
+        float z;
         if (paramXStart > paramXEnd) {
             z = paramXStart;
             paramXStart = paramXEnd;
@@ -319,13 +326,13 @@ public final class RenderUtils extends MinecraftInstance {
             paramYEnd = z;
         }
 
-        double x1 = paramXStart + radius;
-        double y1 = paramYStart + radius;
-        double x2 = paramXEnd - radius;
-        double y2 = paramYEnd - radius;
+        final double x1 = paramXStart + radius;
+        final double y1 = paramYStart + radius;
+        final double x2 = paramXEnd - radius;
+        final double y2 = paramYEnd - radius;
 
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        final Tessellator tessellator = Tessellator.getInstance();
+        final WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
@@ -333,7 +340,7 @@ public final class RenderUtils extends MinecraftInstance {
         GlStateManager.color(red, green, blue, alpha);
         worldrenderer.begin(GL_POLYGON, DefaultVertexFormats.POSITION);
 
-        double degree = Math.PI / 180;
+        final double degree = Math.PI / 180;
         for (double i = 0; i <= 90; i += 1)
             worldrenderer.pos(x2 + Math.sin(i * degree) * radius, y2 + Math.cos(i * degree) * radius, 0.0D).endVertex();
         for (double i = 90; i <= 180; i += 1)
@@ -357,25 +364,25 @@ public final class RenderUtils extends MinecraftInstance {
      * @param bottom the bottom
      * @param color  the color
      */
-    public static void newDrawRect(float left, float top, float right, float bottom, int color) {
+    public static void newDrawRect(float left, float top, float right, float bottom, final int color) {
         if (left < right) {
-            float i = left;
+            final float i = left;
             left = right;
             right = i;
         }
 
         if (top < bottom) {
-            float j = top;
+            final float j = top;
             top = bottom;
             bottom = j;
         }
 
-        float f3 = (float) (color >> 24 & 255) / 255.0F;
-        float f = (float) (color >> 16 & 255) / 255.0F;
-        float f1 = (float) (color >> 8 & 255) / 255.0F;
-        float f2 = (float) (color & 255) / 255.0F;
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        final float f3 = (float) (color >> 24 & 255) / 255.0F;
+        final float f = (float) (color >> 16 & 255) / 255.0F;
+        final float f1 = (float) (color >> 8 & 255) / 255.0F;
+        final float f2 = (float) (color & 255) / 255.0F;
+        final Tessellator tessellator = Tessellator.getInstance();
+        final WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -399,25 +406,25 @@ public final class RenderUtils extends MinecraftInstance {
      * @param bottom the bottom
      * @param color  the color
      */
-    public static void newDrawRect(double left, double top, double right, double bottom, int color) {
+    public static void newDrawRect(double left, double top, double right, double bottom, final int color) {
         if (left < right) {
-            double i = left;
+            final double i = left;
             left = right;
             right = i;
         }
 
         if (top < bottom) {
-            double j = top;
+            final double j = top;
             top = bottom;
             bottom = j;
         }
 
-        float f3 = (float) (color >> 24 & 255) / 255.0F;
-        float f = (float) (color >> 16 & 255) / 255.0F;
-        float f1 = (float) (color >> 8 & 255) / 255.0F;
-        float f2 = (float) (color & 255) / 255.0F;
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        final float f3 = (float) (color >> 24 & 255) / 255.0F;
+        final float f = (float) (color >> 16 & 255) / 255.0F;
+        final float f1 = (float) (color >> 8 & 255) / 255.0F;
+        final float f2 = (float) (color & 255) / 255.0F;
+        final Tessellator tessellator = Tessellator.getInstance();
+        final WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -443,13 +450,13 @@ public final class RenderUtils extends MinecraftInstance {
      * @param color       the color
      * @param popPush     the pop push
      */
-    public static void drawRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius, int color, boolean popPush) {
-        float alpha = (color >> 24 & 0xFF) / 255.0F;
-        float red = (color >> 16 & 0xFF) / 255.0F;
-        float green = (color >> 8 & 0xFF) / 255.0F;
-        float blue = (color & 0xFF) / 255.0F;
+    public static void drawRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, final float radius, final int color, final boolean popPush) {
+        final float alpha = (color >> 24 & 0xFF) / 255.0F;
+        final float red = (color >> 16 & 0xFF) / 255.0F;
+        final float green = (color >> 8 & 0xFF) / 255.0F;
+        final float blue = (color & 0xFF) / 255.0F;
 
-        float z = 0;
+        float z;
         if (paramXStart > paramXEnd) {
             z = paramXStart;
             paramXStart = paramXEnd;
@@ -462,10 +469,10 @@ public final class RenderUtils extends MinecraftInstance {
             paramYEnd = z;
         }
 
-        double x1 = paramXStart + radius;
-        double y1 = paramYStart + radius;
-        double x2 = paramXEnd - radius;
-        double y2 = paramYEnd - radius;
+        final double x1 = paramXStart + radius;
+        final double y1 = paramYStart + radius;
+        final double x2 = paramXEnd - radius;
+        final double y2 = paramYEnd - radius;
 
         if (popPush) glPushMatrix();
         glEnable(GL_BLEND);
@@ -477,7 +484,7 @@ public final class RenderUtils extends MinecraftInstance {
         glColor4f(red, green, blue, alpha);
         glBegin(GL_POLYGON);
 
-        double degree = Math.PI / 180;
+        final double degree = Math.PI / 180;
         for (double i = 0; i <= 90; i += 1)
             glVertex2d(x2 + Math.sin(i * degree) * radius, y2 + Math.cos(i * degree) * radius);
         for (double i = 90; i <= 180; i += 1)
@@ -508,13 +515,13 @@ public final class RenderUtils extends MinecraftInstance {
      * @param color       the color
      */
 // rTL = radius top left, rTR = radius top right, rBR = radius bottom right, rBL = radius bottom left
-    public static void customRounded(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float rTL, float rTR, float rBR, float rBL, int color) {
-        float alpha = (color >> 24 & 0xFF) / 255.0F;
-        float red = (color >> 16 & 0xFF) / 255.0F;
-        float green = (color >> 8 & 0xFF) / 255.0F;
-        float blue = (color & 0xFF) / 255.0F;
+    public static void customRounded(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, final float rTL, final float rTR, final float rBR, final float rBL, final int color) {
+        final float alpha = (color >> 24 & 0xFF) / 255.0F;
+        final float red = (color >> 16 & 0xFF) / 255.0F;
+        final float green = (color >> 8 & 0xFF) / 255.0F;
+        final float blue = (color & 0xFF) / 255.0F;
 
-        float z = 0;
+        float z;
         if (paramXStart > paramXEnd) {
             z = paramXStart;
             paramXStart = paramXEnd;
@@ -527,17 +534,17 @@ public final class RenderUtils extends MinecraftInstance {
             paramYEnd = z;
         }
 
-        double xTL = paramXStart + rTL;
-        double yTL = paramYStart + rTL;
+        final double xTL = paramXStart + rTL;
+        final double yTL = paramYStart + rTL;
 
-        double xTR = paramXEnd - rTR;
-        double yTR = paramYStart + rTR;
+        final double xTR = paramXEnd - rTR;
+        final double yTR = paramYStart + rTR;
 
-        double xBR = paramXEnd - rBR;
-        double yBR = paramYEnd - rBR;
+        final double xBR = paramXEnd - rBR;
+        final double yBR = paramYEnd - rBR;
 
-        double xBL = paramXStart + rBL;
-        double yBL = paramYEnd - rBL;
+        final double xBL = paramXStart + rBL;
+        final double yBL = paramYEnd - rBL;
 
         glPushMatrix();
         glEnable(GL_BLEND);
@@ -549,7 +556,7 @@ public final class RenderUtils extends MinecraftInstance {
         glColor4f(red, green, blue, alpha);
         glBegin(GL_POLYGON);
 
-        double degree = Math.PI / 180;
+        final double degree = Math.PI / 180;
         if (rBR <= 0)
             glVertex2d(xBR, yBR);
         else for (double i = 0; i <= 90; i += 1)
@@ -586,8 +593,8 @@ public final class RenderUtils extends MinecraftInstance {
      * @param paramYEnd   the param y end
      * @param radius      the radius
      */
-    public static void fastRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius) {
-        float z = 0;
+    public static void fastRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, final float radius) {
+        float z;
         if (paramXStart > paramXEnd) {
             z = paramXStart;
             paramXStart = paramXEnd;
@@ -600,17 +607,17 @@ public final class RenderUtils extends MinecraftInstance {
             paramYEnd = z;
         }
 
-        double x1 = paramXStart + radius;
-        double y1 = paramYStart + radius;
-        double x2 = paramXEnd - radius;
-        double y2 = paramYEnd - radius;
+        final double x1 = paramXStart + radius;
+        final double y1 = paramYStart + radius;
+        final double x2 = paramXEnd - radius;
+        final double y2 = paramYEnd - radius;
 
         glEnable(GL_LINE_SMOOTH);
         glLineWidth(1);
 
         glBegin(GL_POLYGON);
 
-        double degree = Math.PI / 180;
+        final double degree = Math.PI / 180;
         for (double i = 0; i <= 90; i += 1)
             glVertex2d(x2 + Math.sin(i * degree) * radius, y2 + Math.cos(i * degree) * radius);
         for (double i = 90; i <= 180; i += 1)
@@ -633,18 +640,18 @@ public final class RenderUtils extends MinecraftInstance {
      * @param color   the color
      * @param polygon the polygon
      */
-    public static void drawTriAngle(float cx, float cy, float r, float n, Color color, boolean polygon) {
-        cx *= 2.0;
-        cy *= 2.0;
-        double b = 6.2831852 / n;
-        double p = Math.cos(b);
-        double s = Math.sin(b);
-        r *= 2.0;
+    public static void drawTriAngle(float cx, float cy, float r, final float n, final Color color, final boolean polygon) {
+        cx *= 2.0F;
+        cy *= 2.0F;
+        final double b = 6.2831852 / n;
+        final double p = Math.cos(b);
+        final double s = Math.sin(b);
+        r *= 2.0F;
         double x = r;
         double y = 0.0;
 
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        final Tessellator tessellator = Tessellator.getInstance();
+        final WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         glLineWidth(1F);
         enableGlCap(GL_LINE_SMOOTH);
         GlStateManager.enableBlend();
@@ -657,7 +664,7 @@ public final class RenderUtils extends MinecraftInstance {
         int ii = 0;
         while (ii < n) {
             worldrenderer.pos(x + cx, y + cy, 0.0D).endVertex();
-            double t = x;
+            final double t = x;
             x = p * x - s * y;
             y = s * t + p * y;
             ii++;
@@ -719,23 +726,23 @@ public final class RenderUtils extends MinecraftInstance {
      * @param startColor the start color
      * @param endColor   the end color
      */
-    public static void drawGradientRect(int left, int top, int right, int bottom, int startColor, int endColor) {
-        float f = (float) (startColor >> 24 & 255) / 255.0F;
-        float f1 = (float) (startColor >> 16 & 255) / 255.0F;
-        float f2 = (float) (startColor >> 8 & 255) / 255.0F;
-        float f3 = (float) (startColor & 255) / 255.0F;
-        float f4 = (float) (endColor >> 24 & 255) / 255.0F;
-        float f5 = (float) (endColor >> 16 & 255) / 255.0F;
-        float f6 = (float) (endColor >> 8 & 255) / 255.0F;
-        float f7 = (float) (endColor & 255) / 255.0F;
+    public static void drawGradientRect(final int left, final int top, final int right, final int bottom, final int startColor, final int endColor) {
+        final float f = (float) (startColor >> 24 & 255) / 255.0F;
+        final float f1 = (float) (startColor >> 16 & 255) / 255.0F;
+        final float f2 = (float) (startColor >> 8 & 255) / 255.0F;
+        final float f3 = (float) (startColor & 255) / 255.0F;
+        final float f4 = (float) (endColor >> 24 & 255) / 255.0F;
+        final float f5 = (float) (endColor >> 16 & 255) / 255.0F;
+        final float f6 = (float) (endColor >> 8 & 255) / 255.0F;
+        final float f7 = (float) (endColor & 255) / 255.0F;
         GlStateManager.pushMatrix();
         GlStateManager.disableTexture2D();
         GlStateManager.enableBlend();
         GlStateManager.disableAlpha();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         GlStateManager.shadeModel(7425);
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        final Tessellator tessellator = Tessellator.getInstance();
+        final WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
         worldrenderer.pos(right, top, zLevel).color(f1, f2, f3, f).endVertex();
         worldrenderer.pos(left, top, zLevel).color(f1, f2, f3, f).endVertex();
@@ -804,9 +811,9 @@ public final class RenderUtils extends MinecraftInstance {
      *
      * @param boundingBox the bounding box
      */
-    public static void drawSelectionBoundingBox(AxisAlignedBB boundingBox) {
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+    public static void drawSelectionBoundingBox(final AxisAlignedBB boundingBox) {
+        final Tessellator tessellator = Tessellator.getInstance();
+        final WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 
         worldrenderer.begin(GL_LINE_STRIP, DefaultVertexFormats.POSITION);
 
@@ -984,11 +991,11 @@ public final class RenderUtils extends MinecraftInstance {
         GlStateManager.pushMatrix();
         GlStateManager.enableColorMaterial();
 
-        float renderYawOffset = entity.renderYawOffset;
-        float rotationYaw = entity.rotationYaw;
-        float rotationPitch = entity.rotationPitch;
-        float prevRotationYawHead = entity.prevRotationYawHead;
-        float rotationYawHead = entity.rotationYawHead;
+        final float renderYawOffset = entity.renderYawOffset;
+        final float rotationYaw = entity.rotationYaw;
+        final float rotationPitch = entity.rotationPitch;
+        final float prevRotationYawHead = entity.prevRotationYawHead;
+        final float rotationYawHead = entity.rotationYawHead;
 
         GlStateManager.translate(posX, posY, 50.0);
         GlStateManager.scale((-scale), scale, scale);
@@ -1007,7 +1014,7 @@ public final class RenderUtils extends MinecraftInstance {
 
         glTranslatef(0F, 0F, 0F);
 
-        RenderManager rendermanager = mc.getRenderManager();
+        final RenderManager rendermanager = mc.getRenderManager();
         rendermanager.setPlayerViewY(180F);
         rendermanager.setRenderShadow(false);
         rendermanager.renderEntityWithPosYaw(entity, 0.0, 0.0, 0.0, 0F, 1F);
@@ -1098,25 +1105,25 @@ public final class RenderUtils extends MinecraftInstance {
      * @param bottom the bottom
      * @param color  the color
      */
-    public static void drawRect(double left, double top, double right, double bottom, int color) {
+    public static void drawRect(double left, double top, double right, double bottom, final int color) {
         if (left < right) {
-            double i = left;
+            final double i = left;
             left = right;
             right = i;
         }
 
         if (top < bottom) {
-            double j = top;
+            final double j = top;
             top = bottom;
             bottom = j;
         }
 
-        float f3 = (float) (color >> 24 & 255) / 255.0F;
-        float f = (float) (color >> 16 & 255) / 255.0F;
-        float f1 = (float) (color >> 8 & 255) / 255.0F;
-        float f2 = (float) (color & 255) / 255.0F;
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        final float f3 = (float) (color >> 24 & 255) / 255.0F;
+        final float f = (float) (color >> 16 & 255) / 255.0F;
+        final float f1 = (float) (color >> 8 & 255) / 255.0F;
+        final float f2 = (float) (color & 255) / 255.0F;
+        final Tessellator tessellator = Tessellator.getInstance();
+        final WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -1171,7 +1178,7 @@ public final class RenderUtils extends MinecraftInstance {
      * @param width  the width
      * @param color1 the color 1
      */
-    public static void drawBorder(float x, float y, float x2, float y2, float width, int color1) {
+    public static void drawBorder(final float x, final float y, final float x2, final float y2, final float width, final int color1) {
         glEnable(GL_BLEND);
         glDisable(GL_TEXTURE_2D);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -1204,7 +1211,7 @@ public final class RenderUtils extends MinecraftInstance {
      * @param width  the width
      * @param color1 the color 1
      */
-    public static void drawRectBasedBorder(float x, float y, float x2, float y2, float width, int color1) {
+    public static void drawRectBasedBorder(final float x, final float y, final float x2, final float y2, final float width, final int color1) {
         drawRect(x - width / 2F, y - width / 2F, x2 + width / 2F, y + width / 2F, color1);
         drawRect(x - width / 2F, y + width / 2F, x + width / 2F, y2 + width / 2F, color1);
         drawRect(x2 - width / 2F, y + width / 2F, x2 + width / 2F, y2 + width / 2F, color1);
@@ -1222,7 +1229,7 @@ public final class RenderUtils extends MinecraftInstance {
      * @param end       the end
      * @param color     the color
      */
-    public static void drawCircle(float x, float y, float radius, float lineWidth, int start, int end, Color color) {
+    public static void drawCircle(final float x, final float y, final float radius, final float lineWidth, final int start, final int end, final Color color) {
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
         GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
@@ -1250,8 +1257,8 @@ public final class RenderUtils extends MinecraftInstance {
      * @param color  the color
      */
     public static void drawFilledCircle(final float xx, final float yy, final float radius, final Color color) {
-        int sections = 50;
-        double dAngle = 2 * Math.PI / sections;
+        final int sections = 50;
+        final double dAngle = 2 * Math.PI / sections;
         float x, y;
 
         glPushAttrib(GL_ENABLE_BIT);
@@ -1286,7 +1293,7 @@ public final class RenderUtils extends MinecraftInstance {
      * @param width  the width
      * @param height the height
      */
-    public static void drawImage(ResourceLocation image, int x, int y, int width, int height) {
+    public static void drawImage(final ResourceLocation image, final int x, final int y, final int width, final int height) {
         glDisable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
         glDepthMask(false);
@@ -1308,7 +1315,7 @@ public final class RenderUtils extends MinecraftInstance {
      * @param width  the width
      * @param height the height
      */
-    public static void drawImage2(ResourceLocation image, float x, float y, int width, int height) {
+    public static void drawImage2(final ResourceLocation image, final float x, final float y, final int width, final int height) {
         glDisable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
         glDepthMask(false);
@@ -1336,7 +1343,7 @@ public final class RenderUtils extends MinecraftInstance {
      * @param b      the b
      * @param al     the al
      */
-    public static void drawImage3(ResourceLocation image, float x, float y, int width, int height, float r, float g, float b, float al) {
+    public static void drawImage3(final ResourceLocation image, final float x, final float y, final int width, final int height, final float r, final float g, final float b, final float al) {
         glDisable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
         glDepthMask(false);
@@ -1358,16 +1365,16 @@ public final class RenderUtils extends MinecraftInstance {
      * @param x     the x
      * @param y     the y
      */
-    public static void drawExhiEnchants(ItemStack stack, float x, float y) {
+    public static void drawExhiEnchants(final ItemStack stack, final float x, float y) {
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableDepth();
         GlStateManager.disableBlend();
         GlStateManager.resetColor();
         final int darkBorder = 0xFF000000;
         if (stack.getItem() instanceof ItemArmor) {
-            int prot = EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, stack);
-            int unb = EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack);
-            int thorn = EnchantmentHelper.getEnchantmentLevel(Enchantment.thorns.effectId, stack);
+            final int prot = EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, stack);
+            final int unb = EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack);
+            final int thorn = EnchantmentHelper.getEnchantmentLevel(Enchantment.thorns.effectId, stack);
             if (prot > 0) {
                 drawExhiOutlined(prot + "", drawExhiOutlined("P", x, y, 0.35F, darkBorder, -1, true), y, 0.35F, getBorderColor(prot), getMainColor(prot), true);
                 y += 4;
@@ -1382,10 +1389,10 @@ public final class RenderUtils extends MinecraftInstance {
             }
         }
         if (stack.getItem() instanceof ItemBow) {
-            int power = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack);
-            int punch = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, stack);
-            int flame = EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, stack);
-            int unb = EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack);
+            final int power = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack);
+            final int punch = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, stack);
+            final int flame = EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, stack);
+            final int unb = EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack);
             if (power > 0) {
                 drawExhiOutlined(power + "", drawExhiOutlined("Pow", x, y, 0.35F, darkBorder, -1, true), y, 0.35F, getBorderColor(power), getMainColor(power), true);
                 y += 4;
@@ -1404,10 +1411,10 @@ public final class RenderUtils extends MinecraftInstance {
             }
         }
         if (stack.getItem() instanceof ItemSword) {
-            int sharp = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, stack);
-            int kb = EnchantmentHelper.getEnchantmentLevel(Enchantment.knockback.effectId, stack);
-            int fire = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, stack);
-            int unb = EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack);
+            final int sharp = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, stack);
+            final int kb = EnchantmentHelper.getEnchantmentLevel(Enchantment.knockback.effectId, stack);
+            final int fire = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, stack);
+            final int unb = EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack);
             if (sharp > 0) {
                 drawExhiOutlined(sharp + "", drawExhiOutlined("S", x, y, 0.35F, darkBorder, -1, true), y, 0.35F, getBorderColor(sharp), getMainColor(sharp), true);
                 y += 4;
@@ -1429,7 +1436,7 @@ public final class RenderUtils extends MinecraftInstance {
         RenderHelper.enableGUIStandardItemLighting();
     }
 
-    private static float drawExhiOutlined(String text, float x, float y, float borderWidth, int borderColor, int mainColor, boolean drawText) {
+    private static float drawExhiOutlined(final String text, final float x, final float y, final float borderWidth, final int borderColor, final int mainColor, final boolean drawText) {
         Fonts.fontTahomaSmall.drawString(text, x, y - borderWidth, borderColor);
         Fonts.fontTahomaSmall.drawString(text, x, y + borderWidth, borderColor);
         Fonts.fontTahomaSmall.drawString(text, x - borderWidth, y, borderColor);
@@ -1439,13 +1446,13 @@ public final class RenderUtils extends MinecraftInstance {
         return x + Fonts.fontTahomaSmall.getWidth(text) - 2F;
     }
 
-    private static int getMainColor(int level) {
+    private static int getMainColor(final int level) {
         if (level == 4)
             return 0xFFAA0000;
         return -1;
     }
 
-    private static int getBorderColor(int level) {
+    private static int getBorderColor(final int level) {
         if (level == 2)
             return 0x7055FF55;
         if (level == 3)

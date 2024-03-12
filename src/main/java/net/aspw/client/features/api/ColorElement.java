@@ -13,7 +13,7 @@ public class ColorElement extends IntegerValue {
      * @param counter the counter
      * @param m       the m
      */
-    public ColorElement(int counter, Material m) {
+    public ColorElement(final int counter, final Material m) {
         super("Color" + counter + "-" + m.getColorName(), 255, 0, 255);
     }
 
@@ -24,7 +24,7 @@ public class ColorElement extends IntegerValue {
     /**
      * The enum Material.
      */
-    enum Material {
+    public enum Material {
         /**
          * Red material.
          */
@@ -40,7 +40,7 @@ public class ColorElement extends IntegerValue {
 
         private final String colName;
 
-        Material(String name) {
+        Material(final String name) {
             this.colName = name;
         }
 
