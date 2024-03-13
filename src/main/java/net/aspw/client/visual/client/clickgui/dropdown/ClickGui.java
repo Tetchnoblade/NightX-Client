@@ -40,7 +40,7 @@ public class ClickGui extends GuiScreen {
 
         int xPos = 253;
 
-        for (final ModuleCategory category : ModuleCategory.getEntries()) {
+        for (final ModuleCategory category : ModuleCategory.values()) {
             panels.add(new Panel(category.getDisplayName(), xPos, 30, width, height, true) {
 
                 @Override
@@ -93,8 +93,8 @@ public class ClickGui extends GuiScreen {
 
         final double scale = Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).scaleValue.get() - 0.1765;
 
-        mouseX /= (int) scale;
-        mouseY /= (int) scale;
+        mouseX /= scale;
+        mouseY /= scale;
 
         this.mouseX = mouseX;
         this.mouseY = mouseY;

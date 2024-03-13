@@ -34,7 +34,7 @@ public class NewUi extends GuiScreen {
     private SearchElement searchElement;
 
     private NewUi() {
-        for (final ModuleCategory c : ModuleCategory.getEntries())
+        for (final ModuleCategory c : ModuleCategory.values())
             categoryElements.add(new CategoryElement(c));
         categoryElements.get(0).setFocused(true);
     }

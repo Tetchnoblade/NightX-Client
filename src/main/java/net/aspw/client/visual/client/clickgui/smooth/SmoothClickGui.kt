@@ -21,7 +21,7 @@ class SmoothClickGui : GuiScreen() {
 
     init {
         var xPos = 84f
-        for (cat in ModuleCategory.entries) {
+        for (cat in ModuleCategory.values()) {
             panels.add(CategoryPanel(xPos, 20f, cat, Color(200, 200, 200, 80)))
             xPos += SmoothConstants.PANEL_WIDTH.toInt() + 10
         }
