@@ -115,7 +115,6 @@ public abstract class MixinMinecraft {
         MinecraftForgeClient.getRenderPass();
         MinecraftForgeClientAccessor.getRegionCache().invalidateAll();
         MinecraftForgeClientAccessor.getRegionCache().cleanUp();
-        Runtime.getRuntime().gc();
     }
 
     @Redirect(
