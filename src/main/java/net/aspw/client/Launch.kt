@@ -56,8 +56,10 @@ object Launch {
 
     private var lastTick: Long = 0L
 
-    private var javaVersion = System.getProperty("java.version").substring(6, 9).toInt()
-    var useAltManager = javaVersion >= 181 && MinecraftInstance.mc.isJava64bit
+    private var javaVersion = System.getProperty("java.version")
+    private val regex = "\\d+".toRegex()
+    private val result = regex.find(javaVersion)?.value ?: ""
+    var useAltManager = result.toInt() >= 181 && MinecraftInstance.mc.isJava64bit
 
     // Discord RPC
     lateinit var discordRPC: DiscordRPC
