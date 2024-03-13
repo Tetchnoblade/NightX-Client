@@ -74,7 +74,9 @@
     "render.MixinRendererLivingEntity",
     "render.MixinRenderItem",
     "render.MixinRenderPlayer",
+    "render.MixinTileEntityRendererDispatcher",
     "render.MixinVisGraph",
-    "tweaks.MixinAnvilChunkLoader"
+    "tweaks.MixinAnvilChunkLoader",
+    "tweaks.MixinRegionRenderCache"
   ]
 }

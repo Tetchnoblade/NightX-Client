@@ -5,13 +5,10 @@ import net.aspw.client.Launch;
 import net.aspw.client.event.EntityMovementEvent;
 import net.aspw.client.event.TeleportEvent;
 import net.aspw.client.utils.MinecraftInstance;
-import net.aspw.client.visual.client.clickgui.dropdown.ClickGui;
-import net.aspw.client.visual.client.clickgui.tab.NewUi;
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiDownloadTerrain;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -108,12 +105,6 @@ public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient
             // ignore
         }
         callbackInfo.cancel();
-    }
-
-    @Inject(method = "handleCloseWindow", at = @At("HEAD"), cancellable = true)
-    private void handleCloseWindow(final S2EPacketCloseWindow packetIn, final CallbackInfo callbackInfo) {
-        if (this.gameController.currentScreen instanceof GuiChat || this.gameController.currentScreen instanceof NewUi || this.gameController.currentScreen instanceof ClickGui)
-            callbackInfo.cancel();
     }
 
     @Inject(method = "handleJoinGame", at = @At("HEAD"), cancellable = true)

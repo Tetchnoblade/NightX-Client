@@ -43,6 +43,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     public static boolean shouldStopRender(Entity entity) {
         return (EntityUtils.isMob(entity) ||
                 EntityUtils.isAnimal(entity) ||
+                entity.isInvisible() ||
                 entity instanceof EntityBoat ||
                 entity instanceof EntityMinecart ||
                 entity instanceof EntityItemFrame ||

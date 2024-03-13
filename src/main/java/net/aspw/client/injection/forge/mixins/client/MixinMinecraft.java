@@ -112,9 +112,10 @@ public abstract class MixinMinecraft {
     )
     private void clearRenderCache(CallbackInfo ci) {
         //noinspection ResultOfMethodCallIgnored
-        MinecraftForgeClient.getRenderPass(); // Ensure class is loaded, strange accessor issue
+        MinecraftForgeClient.getRenderPass();
         MinecraftForgeClientAccessor.getRegionCache().invalidateAll();
         MinecraftForgeClientAccessor.getRegionCache().cleanUp();
+        Runtime.getRuntime().gc();
     }
 
     @Redirect(

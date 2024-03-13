@@ -11,9 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 
-/**
- * The type Mixin tile entity renderer dispatcher.
- */
 @Mixin(TileEntityRendererDispatcher.class)
 public class MixinTileEntityRendererDispatcher {
 

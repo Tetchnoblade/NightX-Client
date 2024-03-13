@@ -56,9 +56,8 @@ object Launch {
 
     private var lastTick: Long = 0L
 
-    private val allowJavaRange = 181..Int.MAX_VALUE
-    private var javaVersion = System.getProperty("java.version")
-    var useAltManager = javaVersion in "1.8.0_$allowJavaRange" && MinecraftInstance.mc.isJava64bit
+    private var javaVersion = System.getProperty("java.version").substring(6, 9).toInt()
+    var useAltManager = javaVersion >= 181 && MinecraftInstance.mc.isJava64bit
 
     // Discord RPC
     lateinit var discordRPC: DiscordRPC
