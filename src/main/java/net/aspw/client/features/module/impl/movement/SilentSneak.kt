@@ -45,6 +45,7 @@ class SilentSneak : Module() {
     }
 
     override fun onDisable() {
+        sneaking = false
         if (mc.thePlayer == null) return
         when (modeValue.get().lowercase(Locale.getDefault())) {
             "legit" -> if (!GameSettings.isKeyDown(
