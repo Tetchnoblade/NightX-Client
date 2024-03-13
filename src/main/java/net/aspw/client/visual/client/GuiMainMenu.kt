@@ -6,12 +6,7 @@ import net.aspw.client.utils.misc.MiscUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.aspw.client.visual.font.smooth.FontLoaders
-import net.minecraft.client.gui.GuiButton
-import net.minecraft.client.gui.GuiMultiplayer
-import net.minecraft.client.gui.GuiOptions
-import net.minecraft.client.gui.GuiScreen
-import net.minecraft.client.gui.GuiSelectWorld
-import net.minecraft.client.gui.GuiYesNoCallback
+import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11

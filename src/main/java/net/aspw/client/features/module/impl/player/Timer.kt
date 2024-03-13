@@ -12,7 +12,7 @@ import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.util.Locale
+import java.util.*
 
 @ModuleInfo(name = "Timer", category = ModuleCategory.PLAYER)
 class Timer : Module() {

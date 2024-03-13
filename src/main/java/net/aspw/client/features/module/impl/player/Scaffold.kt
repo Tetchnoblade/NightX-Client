@@ -328,6 +328,15 @@ class Scaffold : Module() {
             towerTick = 0
             wdSpoof = false
         }
+        try {
+            if (faceBlock && !mc.thePlayer.onGround)
+                place()
+            else if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex) {
+                mc.thePlayer.inventory.currentItem = InventoryUtils.findAutoBlockBlock() - 36
+                mc.playerController.updateController()
+            }
+        } catch (ignored: Exception) {
+        }
         if (allowTower.get() && GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && blocksAmount > 0 && MovementUtils.isRidingBlock() && (towerMove.get()
                 .equals("always", true) || !MovementUtils.isMoving() && towerMove.get()
                 .equals("standing", true) || MovementUtils.isMoving() && towerMove.get().equals("moving", true))
@@ -663,12 +672,8 @@ class Scaffold : Module() {
 
         if (event.eventState == EventState.POST) {
             try {
-                if (faceBlock)
+                if (faceBlock && mc.thePlayer.onGround)
                     place()
-                else if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex) {
-                    mc.thePlayer.inventory.currentItem = InventoryUtils.findAutoBlockBlock() - 36
-                    mc.playerController.updateController()
-                }
             } catch (ignored: Exception) {
             }
         }
@@ -948,7 +953,7 @@ class Scaffold : Module() {
             mc.thePlayer.posZ
         )
         var placeRotation: PlaceRotation? = null
-        for (side in EnumFacing.entries) {
+        for (side in EnumFacing.VALUES) {
             val neighbor = blockPosition.offset(side)
             if (!canBeClicked(neighbor)) continue
             val dirVec = Vec3(side.directionVec)

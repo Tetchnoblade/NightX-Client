@@ -88,13 +88,19 @@ class Animations : Module() {
         val fankeyBobbing = BoolValue("FankeyBobbing", false)
 
         @JvmField
+        val olderPunching = BoolValue("1.7-BlockPunch", true)
+
+        @JvmField
+        val consoleEating = BoolValue("ConsoleEating-FirstPerson", true)
+
+        @JvmField
+        val bedrockEating = BoolValue("BedrockEating-ThirdPerson", true)
+
+        @JvmField
         val cancelEquip = BoolValue("CancelEquip", false)
 
         @JvmField
         val blockingOnly = BoolValue("CancelEquip-BlockingOnly", true) { cancelEquip.get() }
-
-        @JvmField
-        val sneakLength = FloatValue("Sneak-Length", 0f, -1f, 0f)
 
         @JvmField
         val scale = FloatValue("Scale", 0f, -0.5f, 0.5f)

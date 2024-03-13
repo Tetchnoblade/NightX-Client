@@ -35,7 +35,7 @@ class DrinkingAlert : Module() {
                     alertTimer.reset()
                 }
             }
-            if (alertTimer.hasTimePassed(2000L) && drinkers.isNotEmpty()) {
+            if (alertTimer.hasTimePassed(3000L) && drinkers.isNotEmpty()) {
                 clearDrag()
             }
         }

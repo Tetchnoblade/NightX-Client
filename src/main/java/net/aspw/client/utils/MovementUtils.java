@@ -221,6 +221,7 @@ public final class MovementUtils extends MinecraftInstance {
 
     /**
      * Gets raw direction rotation.
+     *
      * @return the raw direction rotation
      */
     public static float getRawDirection() {

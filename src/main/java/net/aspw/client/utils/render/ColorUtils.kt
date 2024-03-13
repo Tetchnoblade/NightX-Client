@@ -2,7 +2,7 @@ package net.aspw.client.utils.render
 
 import net.minecraft.util.ChatAllowedCharacters
 import java.awt.Color
-import java.util.Random
+import java.util.*
 import java.util.regex.Pattern
 import kotlin.math.abs
 

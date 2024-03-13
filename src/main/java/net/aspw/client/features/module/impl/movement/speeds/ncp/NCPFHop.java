@@ -21,13 +21,11 @@ public class NCPFHop extends SpeedMode {
     @Override
     public void onEnable() {
         mc.timer.timerSpeed = 1.0866F;
-        super.onEnable();
     }
 
     @Override
     public void onDisable() {
         mc.timer.timerSpeed = 1F;
-        super.onDisable();
 
         final Scaffold scaffold = Launch.moduleManager.getModule(Scaffold.class);
 

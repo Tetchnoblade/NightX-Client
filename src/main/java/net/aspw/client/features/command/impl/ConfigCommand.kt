@@ -12,7 +12,7 @@ import org.apache.http.util.EntityUtils
 import java.awt.Desktop
 import java.io.File
 import java.io.IOException
-import java.util.Locale
+import java.util.*
 
 class ConfigCommand : Command("config", arrayOf("c")) {
     /**

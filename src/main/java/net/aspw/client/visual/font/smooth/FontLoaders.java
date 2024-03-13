@@ -3,7 +3,7 @@ package net.aspw.client.visual.font.smooth;
 import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.util.ResourceLocation;
 
-import java.awt.Font;
+import java.awt.*;
 import java.io.InputStream;
 
 public abstract class FontLoaders {

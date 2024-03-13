@@ -22,11 +22,7 @@ import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.input.Keyboard
-import org.lwjgl.opengl.GL11.glColor4f
-import org.lwjgl.opengl.GL11.glPopMatrix
-import org.lwjgl.opengl.GL11.glPushMatrix
-import org.lwjgl.opengl.GL11.glRotatef
-import org.lwjgl.opengl.GL11.glTranslatef
+import org.lwjgl.opengl.GL11.*
 import java.awt.Color
 
 class ModuleElement(val module: Module) : MinecraftInstance() {

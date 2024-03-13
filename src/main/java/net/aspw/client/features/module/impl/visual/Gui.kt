@@ -16,7 +16,7 @@ import net.aspw.client.visual.client.clickgui.smooth.SmoothClickGui
 import net.aspw.client.visual.client.clickgui.tab.NewUi
 import org.lwjgl.input.Keyboard
 import java.awt.Color
-import java.util.Locale
+import java.util.*
 
 @ModuleInfo(
     name = "Gui",

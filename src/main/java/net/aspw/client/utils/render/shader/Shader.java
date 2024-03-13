@@ -3,11 +3,7 @@ package net.aspw.client.utils.render.shader;
 import net.aspw.client.utils.ClientUtils;
 import net.aspw.client.utils.MinecraftInstance;
 import org.apache.commons.io.IOUtils;
-import org.lwjgl.opengl.ARBFragmentShader;
-import org.lwjgl.opengl.ARBShaderObjects;
-import org.lwjgl.opengl.ARBVertexShader;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.*;
 
 import java.io.InputStream;
 import java.util.HashMap;

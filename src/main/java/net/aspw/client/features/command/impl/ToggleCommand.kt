@@ -2,7 +2,7 @@ package net.aspw.client.features.command.impl
 
 import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
-import java.util.Locale
+import java.util.*
 
 class ToggleCommand : Command("toggle", arrayOf("t")) {
     /**

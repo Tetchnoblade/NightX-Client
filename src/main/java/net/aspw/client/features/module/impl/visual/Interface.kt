@@ -39,20 +39,11 @@ import net.minecraft.network.play.server.S2EPacketCloseWindow
 import net.minecraft.network.play.server.S3APacketTabComplete
 import net.minecraft.network.play.server.S45PacketTitle
 import net.minecraft.util.ResourceLocation
-import org.lwjgl.opengl.GL11.GL_BLEND
-import org.lwjgl.opengl.GL11.GL_DEPTH_TEST
-import org.lwjgl.opengl.GL11.GL_ONE
-import org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA
-import org.lwjgl.opengl.GL11.GL_SRC_ALPHA
-import org.lwjgl.opengl.GL11.GL_ZERO
-import org.lwjgl.opengl.GL11.glColor4f
-import org.lwjgl.opengl.GL11.glDepthMask
-import org.lwjgl.opengl.GL11.glDisable
-import org.lwjgl.opengl.GL11.glEnable
+import org.lwjgl.opengl.GL11.*
 import java.awt.Color
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.util.Locale
+import java.util.*
 import kotlin.math.abs
 import kotlin.math.pow
 
@@ -174,8 +165,8 @@ class Interface : Module() {
         }
 
         if (targetHudValue.get()) {
-            val xPos = (ScaledResolution(mc).scaledWidth / 2) - 54f + targetHudXPosValue.get()
-            val yPos = (ScaledResolution(mc).scaledHeight / 2) + 10f + targetHudYPosValue.get()
+            val xPos = (ScaledResolution(mc).scaledWidth / 2) - 214f + targetHudXPosValue.get()
+            val yPos = (ScaledResolution(mc).scaledHeight / 2) - 90f + targetHudYPosValue.get()
             val font = Fonts.minecraftFont
             val killAura = Launch.moduleManager.getModule(KillAura::class.java)
             val tpAura = Launch.moduleManager.getModule(TPAura::class.java)

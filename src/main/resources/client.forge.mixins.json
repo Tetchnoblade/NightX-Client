@@ -7,6 +7,7 @@
   "mixins": [
     "accessors.MinecraftForgeClientAccessor",
     "block.MixinBlock",
+    "block.MixinBlockAnvil",
     "block.MixinBlockLadder",
     "block.MixinBlockLilyPad",
     "block.MixinBlockLiquid",
@@ -73,6 +74,7 @@
     "render.MixinRendererLivingEntity",
     "render.MixinRenderItem",
     "render.MixinRenderPlayer",
-    "render.MixinVisGraph"
+    "render.MixinVisGraph",
+    "tweaks.MixinAnvilChunkLoader"
   ]
 }

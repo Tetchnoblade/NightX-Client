@@ -17,7 +17,7 @@ import net.minecraft.block.BlockAir
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import org.lwjgl.input.Mouse
-import java.util.Objects
+import java.util.*
 
 @ModuleInfo(name = "LookTP", spacedName = "Look TP", category = ModuleCategory.OTHER)
 class LookTP : Module() {

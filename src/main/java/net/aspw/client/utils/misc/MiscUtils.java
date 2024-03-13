@@ -2,10 +2,8 @@ package net.aspw.client.utils.misc;
 
 import net.aspw.client.utils.MinecraftInstance;
 
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import java.awt.Desktop;
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;

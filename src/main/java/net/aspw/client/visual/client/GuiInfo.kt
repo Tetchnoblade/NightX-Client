@@ -14,10 +14,10 @@ import org.lwjgl.input.Keyboard
 class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
 
     override fun initGui() {
-        buttonList.add(GuiButton(1, width / 2 - 100, height / 4 + 44, "Open Website"))
-        buttonList.add(GuiButton(2, width / 2 - 100, height / 4 + 68, "Join Discord"))
-        buttonList.add(GuiButton(3, width / 2 - 100, height / 4 + 92, "Reload Data"))
-        buttonList.add(GuiButton(4, width / 2 - 100, height / 4 + 116, "Mod List"))
+        buttonList.add(GuiButton(1, width / 2 - 100, height / 4 + 44, "Open NightX Website"))
+        buttonList.add(GuiButton(2, width / 2 - 100, height / 4 + 68, "Join Discord Server"))
+        buttonList.add(GuiButton(3, width / 2 - 100, height / 4 + 92, "Reconnect Database"))
+        buttonList.add(GuiButton(4, width / 2 - 100, height / 4 + 116, "Forge Mod List"))
         buttonList.add(GuiButton(5, width / 2 - 100, height / 4 + 140, "Done"))
         super.initGui()
     }

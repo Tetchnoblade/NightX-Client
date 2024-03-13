@@ -26,8 +26,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.BlockPos
-import java.util.LinkedList
-import java.util.Locale
+import java.util.*
 import kotlin.math.abs
 
 @ModuleInfo(name = "AntiVoid", spacedName = "Anti Void", category = ModuleCategory.MOVEMENT)
@@ -326,12 +325,10 @@ class AntiVoid : Module() {
 
     override fun onDisable() {
         reset()
-        super.onDisable()
     }
 
     override fun onEnable() {
         reset()
-        super.onEnable()
     }
 
     private fun reset() {

@@ -8,26 +8,11 @@ import net.aspw.client.features.module.impl.other.EnchantColor
 import net.aspw.client.features.module.impl.other.SnakeGame
 import net.aspw.client.features.module.impl.other.ThunderNotifier
 import net.aspw.client.features.module.impl.player.Freecam
-import net.aspw.client.features.module.impl.visual.Animations
-import net.aspw.client.features.module.impl.visual.Cape
-import net.aspw.client.features.module.impl.visual.CustomModel
-import net.aspw.client.features.module.impl.visual.Gui
-import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.features.module.impl.visual.ItemPhysics
-import net.aspw.client.features.module.impl.visual.MoreParticles
-import net.aspw.client.features.module.impl.visual.MotionBlur
-import net.aspw.client.features.module.impl.visual.StreamerMode
-import net.aspw.client.features.module.impl.visual.Tracers
-import net.aspw.client.features.module.impl.visual.Trajectories
-import net.aspw.client.features.module.impl.visual.XRay
+import net.aspw.client.features.module.impl.visual.*
 import net.aspw.client.utils.misc.HttpUtils.get
 import net.aspw.client.utils.misc.StringUtils
 import net.aspw.client.utils.render.ColorUtils.translateAlternateColorCodes
-import net.aspw.client.value.BoolValue
-import net.aspw.client.value.FloatValue
-import net.aspw.client.value.IntegerValue
-import net.aspw.client.value.ListValue
-import net.aspw.client.value.TextValue
+import net.aspw.client.value.*
 import org.lwjgl.input.Keyboard
 
 object SettingsUtils {

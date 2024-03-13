@@ -13,7 +13,7 @@ import net.minecraft.item.ItemBucketMilk
 import net.minecraft.item.ItemFood
 import net.minecraft.item.ItemPotion
 import net.minecraft.network.play.client.C03PacketPlayer
-import java.util.Locale
+import java.util.*
 
 @ModuleInfo(name = "FastEat", spacedName = "Fast Eat", category = ModuleCategory.PLAYER)
 class FastEat : Module() {

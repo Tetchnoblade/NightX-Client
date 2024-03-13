@@ -1,11 +1,7 @@
 package net.aspw.client.features.module.impl.targets
 
 import net.aspw.client.Launch
-import net.aspw.client.event.AttackEvent
-import net.aspw.client.event.EventTarget
-import net.aspw.client.event.PacketEvent
-import net.aspw.client.event.UpdateEvent
-import net.aspw.client.event.WorldEvent
+import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
@@ -25,8 +21,7 @@ import net.minecraft.network.play.server.S14PacketEntity
 import net.minecraft.network.play.server.S38PacketPlayerListItem
 import net.minecraft.network.play.server.S41PacketServerDifficulty
 import net.minecraft.world.WorldSettings
-import java.util.LinkedList
-import java.util.Locale
+import java.util.*
 import java.util.stream.Stream
 
 @ModuleInfo(
@@ -81,7 +76,6 @@ class AntiBots : Module() {
     private var wasAdded = mc.thePlayer != null
     override fun onDisable() {
         clearAll()
-        super.onDisable()
     }
 
     @EventTarget

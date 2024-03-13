@@ -63,6 +63,7 @@ class KillAuraRecode : Module() {
     val modifiedReach = BoolValue("ModifiedReach", false)
     val rangeValue = FloatValue("Range", 7f, 3f, 7f, "m") { modifiedReach.get() }
 
+    private val antiBlinkValue = BoolValue("AntiBlink", false)
     private val fakeAutoBlock = BoolValue("VisualAutoBlock", true)
     private val realAutoBlock = BoolValue("RealAutoBlock", false)
     private val autoBlockDelay = IntegerValue("AutoBlockTick", 5, 1, 20) { realAutoBlock.get() }
@@ -93,7 +94,7 @@ class KillAuraRecode : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        if (mc.thePlayer == null || mc.theWorld == null || Launch.moduleManager[Freecam::class.java]!!.state || Launch.moduleManager[Scaffold::class.java]!!.state || Launch.moduleManager[LegitScaffold::class.java]!!.state) return
+        if (mc.thePlayer == null || mc.theWorld == null || Launch.moduleManager[Freecam::class.java]!!.state || Launch.moduleManager[Freecam::class.java]!!.state && antiBlinkValue.get() || Launch.moduleManager[Scaffold::class.java]!!.state || Launch.moduleManager[LegitScaffold::class.java]!!.state) return
 
         if (lastTarget != null && mc.thePlayer.canEntityBeSeen(lastTarget))
             RotationUtils.faceLook(lastTarget!!, minTurnSpeed.get(), maxTurnSpeed.get())

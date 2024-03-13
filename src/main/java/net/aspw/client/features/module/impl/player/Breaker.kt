@@ -26,7 +26,7 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.Vec3
 import java.awt.Color
-import java.util.Locale
+import java.util.*
 
 @ModuleInfo(name = "Breaker", category = ModuleCategory.PLAYER)
 class Breaker : Module() {

@@ -1,22 +1,13 @@
 package net.aspw.client.features.module.impl.combat
 
 import net.aspw.client.Launch
-import net.aspw.client.event.EventState
-import net.aspw.client.event.EventTarget
-import net.aspw.client.event.MotionEvent
-import net.aspw.client.event.UpdateEvent
-import net.aspw.client.event.WorldEvent
+import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.player.LegitScaffold
 import net.aspw.client.features.module.impl.player.Scaffold
-import net.aspw.client.utils.ClientUtils
-import net.aspw.client.utils.InventoryHelper
-import net.aspw.client.utils.InventoryUtils
-import net.aspw.client.utils.MovementUtils
-import net.aspw.client.utils.Rotation
-import net.aspw.client.utils.RotationUtils
+import net.aspw.client.utils.*
 import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.value.BoolValue
@@ -28,11 +19,7 @@ import net.minecraft.client.gui.inventory.GuiInventory
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.init.Items
 import net.minecraft.item.ItemPotion
-import net.minecraft.network.play.client.C07PacketPlayerDigging
-import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
-import net.minecraft.network.play.client.C09PacketHeldItemChange
-import net.minecraft.network.play.client.C0DPacketCloseWindow
-import net.minecraft.network.play.client.C16PacketClientStatus
+import net.minecraft.network.play.client.*
 import net.minecraft.potion.Potion
 import net.minecraft.potion.PotionEffect
 import net.minecraft.util.BlockPos
@@ -40,7 +27,7 @@ import net.minecraft.util.EnumFacing
 import org.lwjgl.opengl.Display
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.util.Locale
+import java.util.*
 
 @ModuleInfo(name = "AutoHeal", spacedName = "Auto Heal", category = ModuleCategory.COMBAT)
 class AutoHeal : Module() {

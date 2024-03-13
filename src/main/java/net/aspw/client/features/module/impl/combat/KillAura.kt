@@ -7,33 +7,20 @@ import com.viaversion.viaversion.api.protocol.packet.PacketWrapper
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion
 import com.viaversion.viaversion.api.type.Type
 import net.aspw.client.Launch
-import net.aspw.client.event.AttackEvent
-import net.aspw.client.event.EntityMovementEvent
-import net.aspw.client.event.EventState
-import net.aspw.client.event.EventTarget
-import net.aspw.client.event.MotionEvent
-import net.aspw.client.event.PacketEvent
-import net.aspw.client.event.Render3DEvent
-import net.aspw.client.event.StrafeEvent
-import net.aspw.client.event.UpdateEvent
-import net.aspw.client.event.WorldEvent
+import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.movement.Flight
 import net.aspw.client.features.module.impl.movement.LongJump
+import net.aspw.client.features.module.impl.player.Blink
 import net.aspw.client.features.module.impl.player.Freecam
 import net.aspw.client.features.module.impl.player.LegitScaffold
 import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.features.module.impl.targets.AntiBots
 import net.aspw.client.features.module.impl.targets.AntiTeams
 import net.aspw.client.protocol.ProtocolBase
-import net.aspw.client.utils.CooldownHelper
-import net.aspw.client.utils.EntityUtils
-import net.aspw.client.utils.PacketUtils
-import net.aspw.client.utils.RaycastUtils
-import net.aspw.client.utils.Rotation
-import net.aspw.client.utils.RotationUtils
+import net.aspw.client.utils.*
 import net.aspw.client.utils.extensions.getDistanceToEntityBox
 import net.aspw.client.utils.extensions.getNearestPointBB
 import net.aspw.client.utils.render.RenderUtils
@@ -52,11 +39,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityArmorStand
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemSword
-import net.minecraft.network.play.client.C02PacketUseEntity
-import net.minecraft.network.play.client.C07PacketPlayerDigging
-import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
-import net.minecraft.network.play.client.C09PacketHeldItemChange
-import net.minecraft.network.play.client.C0APacketAnimation
+import net.minecraft.network.play.client.*
 import net.minecraft.potion.Potion
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
@@ -64,8 +47,7 @@ import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.Vec3
 import org.lwjgl.opengl.GL11
 import java.awt.Color
-import java.util.Locale
-import java.util.Random
+import java.util.*
 import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.min
@@ -173,6 +155,7 @@ class KillAura : Module() {
     private val noInventoryAttackValue = BoolValue("NoInvAttack", false)
     private val wallCheckValue = BoolValue("WallCheck", false)
     private val checkSprintValue = BoolValue("StopSprint", false)
+    private val antiBlinkValue = BoolValue("AntiBlink", false)
     private val multiCombo = BoolValue("MultiCombo", false)
     private val amountValue = IntegerValue("Multi-Packet", 5, 0, 20, "x") { multiCombo.get() }
 
@@ -985,7 +968,7 @@ class KillAura : Module() {
             ) || Launch.moduleManager[LongJump::class.java]!!.state && Launch.moduleManager[LongJump::class.java]!!.modeValue.get()
             .equals("VerusHigh", true)
                 || Launch.moduleManager[Freecam::class.java]!!.state ||
-                Launch.moduleManager[Scaffold::class.java]!!.state || Launch.moduleManager[LegitScaffold::class.java]!!.state || clickOnly.get() && !mc.gameSettings.keyBindAttack.isKeyDown || mc.thePlayer.isRiding || noInventoryAttackValue.get() && mc.currentScreen is GuiContainer
+                Launch.moduleManager[Scaffold::class.java]!!.state || Launch.moduleManager[LegitScaffold::class.java]!!.state || Launch.moduleManager[Blink::class.java]!!.state && antiBlinkValue.get() || clickOnly.get() && !mc.gameSettings.keyBindAttack.isKeyDown || mc.thePlayer.isRiding || noInventoryAttackValue.get() && mc.currentScreen is GuiContainer
 
     /**
      * Check if [entity] is alive

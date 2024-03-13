@@ -8,12 +8,7 @@ import net.aspw.client.features.module.impl.movement.Speed
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode
 import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.features.module.impl.player.Timer
-import net.aspw.client.utils.MovementUtils.getBaseMoveSpeed
-import net.aspw.client.utils.MovementUtils.getJumpBoostModifier
-import net.aspw.client.utils.MovementUtils.getSpeed
-import net.aspw.client.utils.MovementUtils.getSpeedEffect
-import net.aspw.client.utils.MovementUtils.isMoving
-import net.aspw.client.utils.MovementUtils.strafe
+import net.aspw.client.utils.MovementUtils.*
 import kotlin.math.max
 
 class WatchdogCustom : SpeedMode("WatchdogCustom") {

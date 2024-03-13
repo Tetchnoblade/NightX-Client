@@ -46,7 +46,6 @@ class WatchdogGround : SpeedMode("WatchdogGround") {
         Launch.moduleManager.getModule(
             Speed::class.java
         ) ?: return
-        super.onEnable()
     }
 
     override fun onUpdate() {}

@@ -14,7 +14,7 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.util.Locale
+import java.util.*
 
 class FloatValueButton(x: Float, y: Float, width: Float, height: Float, var setting: FloatValue, var color: Color) :
     BaseValueButton(x, y, width, height, setting) {

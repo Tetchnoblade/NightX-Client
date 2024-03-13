@@ -9,37 +9,38 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.value.ListValue
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.play.client.C0BPacketEntityAction
-import java.util.Locale
+import java.util.*
 
 @ModuleInfo(name = "SilentSneak", spacedName = "Silent Sneak", category = ModuleCategory.MOVEMENT)
 class SilentSneak : Module() {
     @JvmField
     val modeValue = ListValue("Mode", arrayOf("Normal", "Legit"), "Normal")
 
-    private var sneaked = false
-    override fun onEnable() {
-        if (mc.thePlayer == null) return
-    }
+    private var sneaking = false
 
     override val tag: String
         get() = modeValue.get()
 
     @EventTarget
     fun onMotion(event: MotionEvent) {
-        sneaked = true
-        when (modeValue.get().lowercase(Locale.getDefault())) {
-            "legit" -> mc.gameSettings.keyBindSneak.pressed = true
+        if (mc.thePlayer.isSneaking)
+            sneaking = false
+        if (!sneaking && !mc.thePlayer.isSneaking) {
+            when (modeValue.get().lowercase(Locale.getDefault())) {
+                "legit" -> mc.gameSettings.keyBindSneak.pressed = true
 
-            "normal" -> {
-                if (event.eventState === EventState.PRE) {
-                    mc.netHandler.addToSendQueue(
-                        C0BPacketEntityAction(
-                            mc.thePlayer,
-                            C0BPacketEntityAction.Action.START_SNEAKING
+                "normal" -> {
+                    if (event.eventState === EventState.PRE) {
+                        mc.netHandler.addToSendQueue(
+                            C0BPacketEntityAction(
+                                mc.thePlayer,
+                                C0BPacketEntityAction.Action.START_SNEAKING
+                            )
                         )
-                    )
+                    }
                 }
             }
+            sneaking = true
         }
     }
 
@@ -58,6 +59,5 @@ class SilentSneak : Module() {
                 )
             )
         }
-        super.onDisable()
     }
 }

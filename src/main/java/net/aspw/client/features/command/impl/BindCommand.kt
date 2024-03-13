@@ -3,7 +3,7 @@ package net.aspw.client.features.command.impl
 import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
 import org.lwjgl.input.Keyboard
-import java.util.Locale
+import java.util.*
 
 class BindCommand : Command("bind", emptyArray()) {
     /**

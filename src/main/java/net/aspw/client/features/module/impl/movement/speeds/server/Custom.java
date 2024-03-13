@@ -82,13 +82,11 @@ public class Custom extends SpeedMode {
 
         if (speed.resetXZValue.get()) mc.thePlayer.motionX = mc.thePlayer.motionZ = 0D;
         if (speed.resetYValue.get()) mc.thePlayer.motionY = 0D;
-        super.onEnable();
     }
 
     @Override
     public void onDisable() {
         mc.timer.timerSpeed = 1F;
-        super.onDisable();
     }
 
     @Override

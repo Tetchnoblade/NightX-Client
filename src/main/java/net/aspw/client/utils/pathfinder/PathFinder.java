@@ -1,29 +1,7 @@
 package net.aspw.client.utils.pathfinder;
 
 import net.aspw.client.utils.MinecraftInstance;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockBarrier;
-import net.minecraft.block.BlockBed;
-import net.minecraft.block.BlockCactus;
-import net.minecraft.block.BlockCarpet;
-import net.minecraft.block.BlockChest;
-import net.minecraft.block.BlockEndPortal;
-import net.minecraft.block.BlockEndPortalFrame;
-import net.minecraft.block.BlockEnderChest;
-import net.minecraft.block.BlockFence;
-import net.minecraft.block.BlockGlass;
-import net.minecraft.block.BlockLadder;
-import net.minecraft.block.BlockPane;
-import net.minecraft.block.BlockPistonBase;
-import net.minecraft.block.BlockPistonExtension;
-import net.minecraft.block.BlockPistonMoving;
-import net.minecraft.block.BlockSkull;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStainedGlass;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.block.BlockTrapDoor;
-import net.minecraft.block.BlockWall;
-import net.minecraft.block.BlockWeb;
+import net.minecraft.block.*;
 import net.minecraft.util.BlockPos;
 
 import java.util.ArrayList;

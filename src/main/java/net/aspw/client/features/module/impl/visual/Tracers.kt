@@ -18,7 +18,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.util.Vec3
 import org.lwjgl.opengl.GL11
 import java.awt.Color
-import java.util.Locale
+import java.util.*
 
 @ModuleInfo(name = "Tracers", category = ModuleCategory.VISUAL, array = false)
 class Tracers : Module() {

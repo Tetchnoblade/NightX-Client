@@ -1,13 +1,7 @@
 package net.aspw.client.features.module.impl.movement
 
 import net.aspw.client.Launch
-import net.aspw.client.event.EventState
-import net.aspw.client.event.EventTarget
-import net.aspw.client.event.JumpEvent
-import net.aspw.client.event.MotionEvent
-import net.aspw.client.event.MoveEvent
-import net.aspw.client.event.PacketEvent
-import net.aspw.client.event.UpdateEvent
+import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
@@ -27,7 +21,7 @@ import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.network.play.server.S12PacketEntityVelocity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
-import java.util.Locale
+import java.util.*
 import kotlin.math.roundToInt
 
 @ModuleInfo(name = "NoFall", spacedName = "No Fall", category = ModuleCategory.MOVEMENT)

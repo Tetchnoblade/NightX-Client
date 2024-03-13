@@ -1,13 +1,7 @@
 package net.aspw.client.features.module.impl.player
 
 import net.aspw.client.Launch
-import net.aspw.client.event.EventState
-import net.aspw.client.event.EventTarget
-import net.aspw.client.event.JumpEvent
-import net.aspw.client.event.MotionEvent
-import net.aspw.client.event.MoveEvent
-import net.aspw.client.event.StrafeEvent
-import net.aspw.client.event.UpdateEvent
+import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo

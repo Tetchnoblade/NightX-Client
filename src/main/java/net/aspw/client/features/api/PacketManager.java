@@ -2,14 +2,7 @@ package net.aspw.client.features.api;
 
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
-import net.aspw.client.event.EventState;
-import net.aspw.client.event.EventTarget;
-import net.aspw.client.event.Listenable;
-import net.aspw.client.event.MotionEvent;
-import net.aspw.client.event.PacketEvent;
-import net.aspw.client.event.TeleportEvent;
-import net.aspw.client.event.UpdateEvent;
-import net.aspw.client.event.WorldEvent;
+import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.combat.KillAuraRecode;
 import net.aspw.client.features.module.impl.combat.TPAura;
@@ -18,22 +11,18 @@ import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.BetterView;
 import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.protocol.ProtocolBase;
-import net.aspw.client.utils.ClientUtils;
-import net.aspw.client.utils.EntityUtils;
-import net.aspw.client.utils.MinecraftInstance;
-import net.aspw.client.utils.MovementUtils;
-import net.aspw.client.utils.PacketUtils;
-import net.aspw.client.utils.RotationUtils;
+import net.aspw.client.utils.*;
 import net.aspw.client.utils.timer.MSTimer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityArmorStand;
-import net.minecraft.entity.item.EntityBoat;
-import net.minecraft.entity.item.EntityItemFrame;
-import net.minecraft.entity.item.EntityMinecart;
-import net.minecraft.entity.item.EntityTNTPrimed;
+import net.minecraft.entity.item.*;
+import net.minecraft.item.ItemBucketMilk;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemPotion;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.MovingObjectPosition;
 
 import java.util.Objects;
 
@@ -61,6 +50,12 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 entity instanceof EntityArmorStand) &&
                 entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 45.0f;
     }
+
+    private int getArmSwingAnimationEnd() {
+        return mc.thePlayer.isPotionActive(Potion.digSpeed) ? 5 - mc.thePlayer.getActivePotionEffect(Potion.digSpeed).getAmplifier() :
+                (mc.thePlayer.isPotionActive(Potion.digSlowdown) ? 8 + mc.thePlayer.getActivePotionEffect(Potion.digSlowdown).getAmplifier() * 2 : 6);
+    }
+
 
     @EventTarget
     public void onWorld(WorldEvent event) {
@@ -90,14 +85,27 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         mc.thePlayer.renderArmPitch = mc.thePlayer.rotationPitch;
 
         float START_HEIGHT = 1.62f;
-        float END_HEIGHT = Animations.sneakLength.get() + 1.54f;
+        float END_HEIGHT;
+
         lastEyeHeight = eyeHeight;
 
+        boolean isNewSneaking = ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning();
+
+        if (isNewSneaking)
+            END_HEIGHT = 1.32f;
+        else END_HEIGHT = 1.54f;
+
         if (mc.thePlayer.isSneaking()) {
-            eyeHeight = END_HEIGHT;
+            float delta = END_HEIGHT - eyeHeight;
+            if (isNewSneaking)
+                delta *= 0.68F;
+            else delta *= 0.4F;
+            eyeHeight = END_HEIGHT - delta;
         } else if (eyeHeight < START_HEIGHT) {
             float delta = START_HEIGHT - eyeHeight;
-            delta *= 0.4F;
+            if (isNewSneaking)
+                delta *= 0.68F;
+            else delta *= 0.4F;
             eyeHeight = START_HEIGHT - delta;
         }
 
@@ -105,6 +113,17 @@ public class PacketManager extends MinecraftInstance implements Listenable {
             Objects.requireNonNull(Launch.moduleManager.getModule(BetterView.class)).setState(true);
         if (!Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).getState())
             Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).setState(true);
+
+        int max = getArmSwingAnimationEnd();
+        if (Animations.olderPunching.get() && mc.gameSettings.keyBindAttack.isKeyDown() && mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+            if (!mc.thePlayer.isSwingInProgress || mc.thePlayer.swingProgressInt >= max >> 1 || mc.thePlayer.swingProgressInt < 0) {
+                mc.thePlayer.isSwingInProgress = true;
+                mc.thePlayer.swingProgressInt = -1;
+            }
+        }
+
+        if (Animations.consoleEating.get() && MinecraftInstance.mc.thePlayer.isUsingItem() && MinecraftInstance.mc.thePlayer.getHeldItem() != null && (MinecraftInstance.mc.thePlayer.getHeldItem().getItem() instanceof ItemFood || MinecraftInstance.mc.thePlayer.getHeldItem().getItem() instanceof ItemBucketMilk || MinecraftInstance.mc.thePlayer.getHeldItem().getItem() instanceof ItemPotion))
+            mc.getItemRenderer().resetEquippedProgress();
 
         if ((Animations.swingAnimValue.get().equals("Smooth") || Animations.swingAnimValue.get().equals("Dash")) && event.getEventState() == EventState.PRE) {
             if (mc.thePlayer.swingProgressInt == 1) {

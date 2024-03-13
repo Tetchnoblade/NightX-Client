@@ -6,9 +6,7 @@ import net.aspw.client.event.MotionEvent
 import net.aspw.client.event.MoveEvent
 import net.aspw.client.features.module.impl.movement.speeds.SpeedMode
 import net.aspw.client.features.module.impl.player.Scaffold
-import net.aspw.client.utils.MovementUtils.getBaseMoveSpeed
-import net.aspw.client.utils.MovementUtils.isMoving
-import net.aspw.client.utils.MovementUtils.strafe
+import net.aspw.client.utils.MovementUtils.*
 import kotlin.math.max
 
 class NoRules : SpeedMode("NoRules") {

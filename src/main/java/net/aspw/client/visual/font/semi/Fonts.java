@@ -4,7 +4,7 @@ import net.aspw.client.utils.ClientUtils;
 import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.gui.FontRenderer;
 
-import java.awt.Font;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.lang.reflect.Field;

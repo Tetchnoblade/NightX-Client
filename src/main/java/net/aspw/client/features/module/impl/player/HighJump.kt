@@ -10,7 +10,7 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.utils.MovementUtils
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
-import java.util.Locale
+import java.util.*
 
 @ModuleInfo(name = "HighJump", spacedName = "High Jump", category = ModuleCategory.PLAYER)
 class HighJump : Module() {

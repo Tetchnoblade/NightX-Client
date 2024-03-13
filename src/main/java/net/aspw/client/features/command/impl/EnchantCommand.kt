@@ -2,7 +2,7 @@ package net.aspw.client.features.command.impl
 
 import net.aspw.client.features.command.Command
 import net.minecraft.enchantment.Enchantment
-import java.util.Locale
+import java.util.*
 
 class EnchantCommand : Command("enchant", emptyArray()) {
     /**

@@ -4,16 +4,9 @@ import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.Module
 import net.aspw.client.utils.block.BlockUtils
 import net.aspw.client.utils.misc.StringUtils
-import net.aspw.client.value.BlockValue
-import net.aspw.client.value.BoolValue
-import net.aspw.client.value.FloatValue
-import net.aspw.client.value.FontValue
-import net.aspw.client.value.IntegerValue
-import net.aspw.client.value.ListValue
-import net.aspw.client.value.TextValue
-import net.aspw.client.value.Value
+import net.aspw.client.value.*
 import net.minecraft.block.Block
-import java.util.Locale
+import java.util.*
 
 /**
  * Module command

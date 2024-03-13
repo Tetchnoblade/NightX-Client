@@ -2,11 +2,7 @@ package net.aspw.client.utils;
 
 import com.google.common.base.Predicates;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 
 import java.util.List;
 import java.util.Objects;

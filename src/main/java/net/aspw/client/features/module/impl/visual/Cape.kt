@@ -6,7 +6,7 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.ListValue
 import net.minecraft.util.ResourceLocation
-import java.util.Locale
+import java.util.*
 
 @ModuleInfo(
     name = "Cape",

@@ -13,19 +13,7 @@ import net.aspw.client.utils.render.ColorUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.ListValue
 import net.minecraft.entity.Entity
-import net.minecraft.network.play.server.S01PacketJoinGame
-import net.minecraft.network.play.server.S04PacketEntityEquipment
-import net.minecraft.network.play.server.S0BPacketAnimation
-import net.minecraft.network.play.server.S0CPacketSpawnPlayer
-import net.minecraft.network.play.server.S14PacketEntity
-import net.minecraft.network.play.server.S18PacketEntityTeleport
-import net.minecraft.network.play.server.S19PacketEntityHeadLook
-import net.minecraft.network.play.server.S19PacketEntityStatus
-import net.minecraft.network.play.server.S1CPacketEntityMetadata
-import net.minecraft.network.play.server.S1DPacketEntityEffect
-import net.minecraft.network.play.server.S1EPacketRemoveEntityEffect
-import net.minecraft.network.play.server.S20PacketEntityProperties
-import net.minecraft.network.play.server.S49PacketUpdateEntityNBT
+import net.minecraft.network.play.server.*
 import kotlin.concurrent.thread
 
 @ModuleInfo(

@@ -1,6 +1,6 @@
 package net.aspw.client.utils.render;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  * The enum Blend utils.

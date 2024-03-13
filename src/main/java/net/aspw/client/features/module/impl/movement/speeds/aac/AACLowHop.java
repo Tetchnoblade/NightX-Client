@@ -20,7 +20,6 @@ public class AACLowHop extends SpeedMode {
     @Override
     public void onEnable() {
         legitJump = true;
-        super.onEnable();
     }
 
     @Override

@@ -14,21 +14,11 @@ import net.aspw.client.features.command.CommandManager
 import net.aspw.client.features.module.ModuleManager
 import net.aspw.client.features.module.impl.other.BrandSpoofer
 import net.aspw.client.features.module.impl.other.ThunderNotifier
-import net.aspw.client.features.module.impl.visual.BetterView
-import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.features.module.impl.visual.MoreParticles
-import net.aspw.client.features.module.impl.visual.Trajectories
+import net.aspw.client.features.module.impl.visual.*
 import net.aspw.client.protocol.ProtocolBase
 import net.aspw.client.protocol.ProtocolMod
-import net.aspw.client.utils.Access
+import net.aspw.client.utils.*
 import net.aspw.client.utils.ClassUtils.hasForge
-import net.aspw.client.utils.ClientUtils
-import net.aspw.client.utils.InventoryHelper
-import net.aspw.client.utils.InventoryUtils
-import net.aspw.client.utils.MinecraftInstance
-import net.aspw.client.utils.PacketUtils
-import net.aspw.client.utils.RotationUtils
-import net.aspw.client.utils.SessionUtils
 import net.aspw.client.utils.misc.sound.TipSoundManager
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.font.semi.Fonts
@@ -129,6 +119,7 @@ object Launch {
             moduleManager.getModule(BetterView::class.java)?.state = true
             moduleManager.getModule(BrandSpoofer::class.java)?.state = true
             moduleManager.getModule(net.aspw.client.features.module.impl.other.DiscordRPC::class.java)?.state = true
+            moduleManager.getModule(ItemPhysics::class.java)?.state = true
             moduleManager.getModule(ThunderNotifier::class.java)?.state = true
             moduleManager.getModule(Trajectories::class.java)?.state = true
             moduleManager.getModule(MoreParticles::class.java)?.state = true
