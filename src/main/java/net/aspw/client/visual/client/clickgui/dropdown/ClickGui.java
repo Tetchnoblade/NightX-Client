@@ -144,7 +144,6 @@ public class ClickGui extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    @Override
     public void handleMouseInput() throws IOException {
         super.handleMouseInput();
 
@@ -158,8 +157,8 @@ public class ClickGui extends GuiScreen {
     protected void mouseClicked(int mouseX, int mouseY, final int mouseButton) throws IOException {
         final double scale = Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).scaleValue.get() - 0.1765;
 
-        mouseX /= (int) scale;
-        mouseY /= (int) scale;
+        mouseX /= scale;
+        mouseY /= scale;
 
         for (int i = panels.size() - 1; i >= 0; i--) {
             if (panels.get(i).mouseClicked(mouseX, mouseY, mouseButton)) {
@@ -193,8 +192,8 @@ public class ClickGui extends GuiScreen {
     protected void mouseReleased(int mouseX, int mouseY, final int state) {
         final double scale = Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).scaleValue.get() - 0.1765;
 
-        mouseX /= (int) scale;
-        mouseY /= (int) scale;
+        mouseX /= scale;
+        mouseY /= scale;
 
         for (final Panel panel : panels) {
             panel.mouseReleased(mouseX, mouseY, state);

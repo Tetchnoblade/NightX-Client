@@ -41,24 +41,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     private int preSend = 0;
     private int preReceive = 0;
 
-    public static boolean shouldStopRender(Entity entity) {
-        return (EntityUtils.isMob(entity) ||
-                EntityUtils.isAnimal(entity) ||
-                entity.isInvisible() ||
-                entity instanceof EntityBoat ||
-                entity instanceof EntityMinecart ||
-                entity instanceof EntityItemFrame ||
-                entity instanceof EntityTNTPrimed ||
-                entity instanceof EntityArmorStand) &&
-                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 45.0f;
-    }
-
-    private int getArmSwingAnimationEnd() {
-        int speed = mc.thePlayer instanceof EntityPlayerSP ? 2 + (20 - Animations.SpeedSwing.get() - 16) : 6;
-        return mc.thePlayer.isPotionActive(Potion.digSpeed) ? speed - (1 + mc.thePlayer.getActivePotionEffect(Potion.digSpeed).getAmplifier()) : (mc.thePlayer.isPotionActive(Potion.digSlowdown) ? speed + (1 + mc.thePlayer.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : speed);
-    }
-
-
     @EventTarget
     public void onWorld(WorldEvent event) {
         if (Objects.requireNonNull(Launch.moduleManager.getModule(BetterView.class)).getState())
@@ -211,6 +193,23 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 ((C08PacketPlayerBlockPlacement) packet).facingZ = 0.5F;
             }
         }
+    }
+
+    public static boolean shouldStopRender(Entity entity) {
+        return (EntityUtils.isMob(entity) ||
+                EntityUtils.isAnimal(entity) ||
+                entity.isInvisible() ||
+                entity instanceof EntityBoat ||
+                entity instanceof EntityMinecart ||
+                entity instanceof EntityItemFrame ||
+                entity instanceof EntityTNTPrimed ||
+                entity instanceof EntityArmorStand) &&
+                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 45.0f;
+    }
+
+    private int getArmSwingAnimationEnd() {
+        int speed = mc.thePlayer instanceof EntityPlayerSP ? 2 + (20 - Animations.SpeedSwing.get() - 16) : 6;
+        return mc.thePlayer.isPotionActive(Potion.digSpeed) ? speed - (1 + mc.thePlayer.getActivePotionEffect(Potion.digSpeed).getAmplifier()) : (mc.thePlayer.isPotionActive(Potion.digSlowdown) ? speed + (1 + mc.thePlayer.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : speed);
     }
 
     @Override

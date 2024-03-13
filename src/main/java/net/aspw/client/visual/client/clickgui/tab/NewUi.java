@@ -43,7 +43,6 @@ public class NewUi extends GuiScreen {
         return instance == null ? instance = new NewUi() : instance;
     }
 
-    @Override
     public void initGui() {
         Keyboard.enableRepeatEvents(true);
         for (final CategoryElement ce : categoryElements) {
@@ -56,7 +55,6 @@ public class NewUi extends GuiScreen {
         super.initGui();
     }
 
-    @Override
     public void onGuiClosed() {
         for (final CategoryElement ce : categoryElements) {
             if (ce.getFocused())
@@ -65,7 +63,6 @@ public class NewUi extends GuiScreen {
         Keyboard.enableRepeatEvents(false);
     }
 
-    @Override
     public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {
         drawFullSized(mouseX, mouseY, partialTicks, Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).generateColor());
     }
@@ -149,7 +146,6 @@ public class NewUi extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    @Override
     protected void mouseClicked(final int mouseX, final int mouseY, final int mouseButton) throws IOException {
         if (MouseUtils.mouseWithinBounds(mouseX, mouseY, this.width - 54F, 30F, this.width - 30F, 50F)) {
             mc.displayGuiScreen(null);
@@ -170,7 +166,6 @@ public class NewUi extends GuiScreen {
         }
     }
 
-    @Override
     protected void keyTyped(final char typedChar, final int keyCode) throws IOException {
         for (final CategoryElement ce : categoryElements) {
             if (ce.getFocused()) {
@@ -183,7 +178,6 @@ public class NewUi extends GuiScreen {
         super.keyTyped(typedChar, keyCode);
     }
 
-    @Override
     protected void mouseReleased(final int mouseX, final int mouseY, final int state) {
         searchElement.handleMouseRelease(mouseX, mouseY, state, 230, 50, width - 260, height - 80, categoryElements);
         if (!searchElement.isTyping())

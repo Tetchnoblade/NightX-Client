@@ -7,6 +7,7 @@ import net.aspw.client.config.FileManager;
 import net.aspw.client.features.module.Module;
 
 import java.io.*;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -30,7 +31,9 @@ public class ModulesConfig extends FileConfig {
         if (jsonElement instanceof JsonNull)
             return;
 
-        for (final Map.Entry<String, JsonElement> entry : jsonElement.getAsJsonObject().entrySet()) {
+        final Iterator<Map.Entry<String, JsonElement>> entryIterator = jsonElement.getAsJsonObject().entrySet().iterator();
+        while (entryIterator.hasNext()) {
+            final Map.Entry<String, JsonElement> entry = entryIterator.next();
             final Module module = Launch.moduleManager.getModule(entry.getKey());
 
             if (module != null) {

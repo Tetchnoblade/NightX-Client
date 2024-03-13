@@ -33,7 +33,7 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
         if (searchBox.isFocused) {
             RenderUtils.newDrawRect(xPos, yPos + height - 1F, xPos + width, yPos + height, accentColor.rgb)
             searchBox.drawTextBox()
-        } else if (searchBox.text.length <= 0) {
+        } else if (searchBox.text.isEmpty()) {
             searchBox.text = "Search..."
             searchBox.drawTextBox()
             searchBox.text = ""
@@ -43,7 +43,7 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
         Stencil.dispose()
         GlStateManager.disableAlpha()
         GlStateManager.enableAlpha()
-        return searchBox.text.length > 0
+        return searchBox.text.isNotEmpty()
     }
 
     fun drawPanel(
@@ -76,10 +76,10 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
         for (ce in ces) {
             for (me in ce.moduleElements) {
                 if (me.module.name.startsWith(searchBox.text, true)) {
-                    if (startY + animScrollHeight > y + h || startY + animScrollHeight + 40F + me.animHeight < y + 50F)
-                        startY += 40F + me.animHeight
+                    startY += if (startY + animScrollHeight > y + h || startY + animScrollHeight + 40F + me.animHeight < y + 50F)
+                        40F + me.animHeight
                     else
-                        startY += me.drawElement(mX, mouseY, x, startY + animScrollHeight, w, 40F, accentColor)
+                        me.drawElement(mX, mouseY, x, startY + animScrollHeight, w, 40F, accentColor)
                 }
             }
         }
@@ -132,7 +132,7 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
         val mouseX = mX
         var mouseY = mY
         searchBox.mouseClicked(mouseX, mouseY, mouseButton)
-        if (searchBox.text.length <= 0) return
+        if (searchBox.text.isEmpty()) return
         if (mouseY < y + 40F || mouseY >= y + h)
             mouseY = -1
         var startY = y + 40F
@@ -178,7 +178,7 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
         ces: List<CategoryElement>
     ): Boolean {
         searchBox.textboxKeyTyped(typedChar, keyCode)
-        if (searchBox.text.length <= 0) return false
+        if (searchBox.text.isEmpty()) return false
         for (ce in ces)
             for (me in ce.moduleElements)
                 if (me.module.name.startsWith(searchBox.text, true))
@@ -187,6 +187,6 @@ class SearchElement(val xPos: Float, val yPos: Float, val width: Float, val heig
         return false
     }
 
-    fun isTyping(): Boolean = (searchBox.text.length > 0)
+    fun isTyping(): Boolean = (searchBox.text.isNotEmpty())
 
 }

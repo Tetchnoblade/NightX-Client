@@ -10,6 +10,7 @@ import net.aspw.client.value.Value;
 import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening;
 
 import java.io.*;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -35,7 +36,9 @@ public class ValuesConfig extends FileConfig {
 
         final JsonObject jsonObject = (JsonObject) jsonElement;
 
-        for (final Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+        final Iterator<Map.Entry<String, JsonElement>> iterator = jsonObject.entrySet().iterator();
+        while (iterator.hasNext()) {
+            final Map.Entry<String, JsonElement> entry = iterator.next();
             if (entry.getKey().equalsIgnoreCase("macros")) {
                 final JsonArray jsonValue = entry.getValue().getAsJsonArray();
                 for (final JsonElement macroElement : jsonValue) {
@@ -58,7 +61,7 @@ public class ValuesConfig extends FileConfig {
                 if (module != null) {
                     final JsonObject jsonModule = (JsonObject) entry.getValue();
 
-                    for (final Value<?> moduleValue : module.getValues()) {
+                    for (final Value moduleValue : module.getValues()) {
                         final JsonElement element = jsonModule.get(moduleValue.getName());
 
                         if (element != null) moduleValue.fromJson(element);
