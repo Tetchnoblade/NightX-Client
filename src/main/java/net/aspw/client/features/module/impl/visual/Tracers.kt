@@ -98,8 +98,8 @@ class Tracers : Module() {
                 - mc.renderManager.renderPosZ)
 
         val eyeVector = Vec3(0.0, 0.0, 1.0)
-            .rotatePitch((-Math.toRadians(mc.thePlayer.rotationPitch.toDouble())).toFloat())
-            .rotateYaw((-Math.toRadians(mc.thePlayer.rotationYaw.toDouble())).toFloat())
+            .rotatePitch((-Math.toRadians(RotationUtils.cameraPitch.toDouble())).toFloat())
+            .rotateYaw((-Math.toRadians(RotationUtils.cameraYaw.toDouble())).toFloat())
 
         RenderUtils.glColor(color)
 
