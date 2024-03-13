@@ -13,6 +13,7 @@ import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.utils.*;
 import net.aspw.client.utils.timer.MSTimer;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.*;
 import net.minecraft.item.ItemBucketMilk;
@@ -53,8 +54,8 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     }
 
     private int getArmSwingAnimationEnd() {
-        return mc.thePlayer.isPotionActive(Potion.digSpeed) ? 5 - mc.thePlayer.getActivePotionEffect(Potion.digSpeed).getAmplifier() :
-                (mc.thePlayer.isPotionActive(Potion.digSlowdown) ? 8 + mc.thePlayer.getActivePotionEffect(Potion.digSlowdown).getAmplifier() * 2 : 6);
+        int speed = mc.thePlayer instanceof EntityPlayerSP ? 2 + (20 - Animations.SpeedSwing.get() - 16) : 6;
+        return mc.thePlayer.isPotionActive(Potion.digSpeed) ? speed - (1 + mc.thePlayer.getActivePotionEffect(Potion.digSpeed).getAmplifier()) : (mc.thePlayer.isPotionActive(Potion.digSlowdown) ? speed + (1 + mc.thePlayer.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : speed);
     }
 
 
