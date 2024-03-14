@@ -71,6 +71,7 @@ public abstract class MixinModelBiped {
             this.bipedRightArm.rotateAngleX = swing;
             this.bipedLeftArm.rotateAngleY = swing;
             this.bipedRightArm.rotateAngleY = -swing;
+            this.isSneak = false;
         }
 
         if (Animations.bedrockEating.get()) {
