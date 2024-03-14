@@ -229,8 +229,8 @@ public abstract class MixinItemRenderer {
                     case DRINK:
                         this.performDrinking(abstractclientplayer, partialTicks);
                         if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
-                            this.transformFirstPersonItem(0.0F, f1);
-                        else this.transformFirstPersonItem(f, f1);
+                            this.transformFirstPersonItem(0.0F, 0.0F);
+                        else this.transformFirstPersonItem(f, 0.0F);
                         GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                         break;
                     case BLOCK:
@@ -732,8 +732,8 @@ public abstract class MixinItemRenderer {
                         break;
                     case BOW:
                         if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
-                            this.transformFirstPersonItem(0.0F, f1);
-                        else this.transformFirstPersonItem(f, f1);
+                            this.transformFirstPersonItem(0.0F, 0.0F);
+                        else this.transformFirstPersonItem(f, 0.0F);
                         this.doBowTransformations(partialTicks, abstractclientplayer);
                         GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                 }

@@ -3,6 +3,7 @@ package net.aspw.client.injection.forge.mixins.entity;
 import com.mojang.authlib.GameProfile;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
+import net.aspw.client.features.api.McUpdatesHandler;
 import net.aspw.client.features.api.PacketManager;
 import net.aspw.client.features.module.impl.combat.KeepSprint;
 import net.aspw.client.features.module.impl.movement.Flight;
@@ -144,6 +145,8 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
         final Flight flight = Objects.requireNonNull(Launch.moduleManager.getModule(Flight.class));
         final Speed speed = Objects.requireNonNull(Launch.moduleManager.getModule(Speed.class));
         final BowJump bowJump = Objects.requireNonNull(Launch.moduleManager.getModule(BowJump.class));
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning() && McUpdatesHandler.doingEyeRot)
+            return McUpdatesHandler.lastEyeHeight + (McUpdatesHandler.eyeHeight - McUpdatesHandler.lastEyeHeight) * mc.timer.renderPartialTicks;
         if (this.isPlayerSleeping())
             return 0.2F;
         if (flight.getState() && flight.getFakeYValue().get())

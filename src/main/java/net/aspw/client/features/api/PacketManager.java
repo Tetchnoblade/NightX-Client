@@ -13,7 +13,6 @@ import net.aspw.client.features.module.impl.visual.SilentRotations;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.utils.*;
 import net.aspw.client.utils.timer.MSTimer;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.*;
 import net.minecraft.item.ItemBucketMilk;
@@ -22,8 +21,6 @@ import net.minecraft.item.ItemPotion;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
-import net.minecraft.potion.Potion;
-import net.minecraft.util.MovingObjectPosition;
 
 import java.util.Objects;
 
@@ -101,14 +98,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
             Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).setState(true);
         if (!Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).getState())
             Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).setState(true);
-
-        int max = getArmSwingAnimationEnd();
-        if (Animations.olderPunching.get() && mc.gameSettings.keyBindAttack.isKeyDown() && mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-            if (!mc.thePlayer.isSwingInProgress || mc.thePlayer.swingProgressInt >= max >> 1 || mc.thePlayer.swingProgressInt < 0) {
-                mc.thePlayer.isSwingInProgress = true;
-                mc.thePlayer.swingProgressInt = -1;
-            }
-        }
 
         if (Animations.consoleEating.get() && MinecraftInstance.mc.thePlayer.isUsingItem() && MinecraftInstance.mc.thePlayer.getHeldItem() != null && (MinecraftInstance.mc.thePlayer.getHeldItem().getItem() instanceof ItemFood || MinecraftInstance.mc.thePlayer.getHeldItem().getItem() instanceof ItemBucketMilk || MinecraftInstance.mc.thePlayer.getHeldItem().getItem() instanceof ItemPotion))
             mc.getItemRenderer().resetEquippedProgress();
@@ -209,11 +198,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 entity instanceof EntityTNTPrimed ||
                 entity instanceof EntityArmorStand) &&
                 entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 45.0f;
-    }
-
-    private int getArmSwingAnimationEnd() {
-        int speed = mc.thePlayer instanceof EntityPlayerSP ? 2 + (20 - Animations.SpeedSwing.get() - 16) : 6;
-        return mc.thePlayer.isPotionActive(Potion.digSpeed) ? speed - (1 + mc.thePlayer.getActivePotionEffect(Potion.digSpeed).getAmplifier()) : (mc.thePlayer.isPotionActive(Potion.digSlowdown) ? speed + (1 + mc.thePlayer.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : speed);
     }
 
     @Override
