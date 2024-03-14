@@ -5,7 +5,7 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.features.module.impl.visual.BetterView
+import net.aspw.client.features.module.impl.visual.SilentRotations
 import net.aspw.client.utils.PacketUtils
 import net.aspw.client.utils.RotationUtils
 import net.aspw.client.utils.block.BlockUtils
@@ -63,8 +63,8 @@ class CivBreak : Module() {
     @EventTarget
     fun onJump(event: JumpEvent) {
         if (blockPos != null && rotationsValue.get() && Launch.moduleManager.getModule(
-                BetterView::class.java
-            )?.state!! && Launch.moduleManager.getModule(BetterView::class.java)?.customStrafe?.get()!!
+                SilentRotations::class.java
+            )?.state!! && Launch.moduleManager.getModule(SilentRotations::class.java)?.customStrafe?.get()!!
         )
             event.yaw = RotationUtils.cameraYaw
     }
@@ -72,8 +72,8 @@ class CivBreak : Module() {
     @EventTarget
     fun onStrafe(event: StrafeEvent) {
         if (blockPos != null && rotationsValue.get() && Launch.moduleManager.getModule(
-                BetterView::class.java
-            )?.state!! && Launch.moduleManager.getModule(BetterView::class.java)?.customStrafe?.get()!!
+                SilentRotations::class.java
+            )?.state!! && Launch.moduleManager.getModule(SilentRotations::class.java)?.customStrafe?.get()!!
         )
             event.yaw = RotationUtils.cameraYaw
     }

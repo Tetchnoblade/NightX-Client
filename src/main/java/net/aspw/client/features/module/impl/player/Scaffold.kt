@@ -6,7 +6,7 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.movement.Speed
-import net.aspw.client.features.module.impl.visual.BetterView
+import net.aspw.client.features.module.impl.visual.SilentRotations
 import net.aspw.client.utils.*
 import net.aspw.client.utils.block.BlockUtils
 import net.aspw.client.utils.block.BlockUtils.canBeClicked
@@ -605,12 +605,12 @@ class Scaffold : Module() {
     @EventTarget
     fun onStrafe(event: StrafeEvent) {
         if (blocksAmount <= 0 || RotationUtils.targetRotation == null) return
-        if (Launch.moduleManager.getModule(BetterView::class.java)?.state!! && !Launch.moduleManager.getModule(
-                BetterView::class.java
+        if (Launch.moduleManager.getModule(SilentRotations::class.java)?.state!! && !Launch.moduleManager.getModule(
+                SilentRotations::class.java
             )?.customStrafe?.get()!!
         ) {
-            if (Launch.moduleManager.getModule(BetterView::class.java)?.state!! && !Launch.moduleManager.getModule(
-                    BetterView::class.java
+            if (Launch.moduleManager.getModule(SilentRotations::class.java)?.state!! && !Launch.moduleManager.getModule(
+                    SilentRotations::class.java
                 )?.customStrafe?.get()!!
             ) {
                 event.yaw = RotationUtils.targetRotation?.yaw!! - 180f
@@ -867,12 +867,12 @@ class Scaffold : Module() {
     @EventTarget
     fun onJump(event: JumpEvent) {
         if (blocksAmount <= 0 || RotationUtils.targetRotation == null) return
-        if (Launch.moduleManager.getModule(BetterView::class.java)?.state!! && !Launch.moduleManager.getModule(
-                BetterView::class.java
+        if (Launch.moduleManager.getModule(SilentRotations::class.java)?.state!! && !Launch.moduleManager.getModule(
+                SilentRotations::class.java
             )?.customStrafe?.get()!!
         ) {
-            if (Launch.moduleManager.getModule(BetterView::class.java)?.state!! && !Launch.moduleManager.getModule(
-                    BetterView::class.java
+            if (Launch.moduleManager.getModule(SilentRotations::class.java)?.state!! && !Launch.moduleManager.getModule(
+                    SilentRotations::class.java
                 )?.customStrafe?.get()!!
             ) {
                 event.yaw = RotationUtils.targetRotation?.yaw!! - 180f

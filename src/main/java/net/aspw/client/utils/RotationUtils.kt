@@ -3,7 +3,7 @@ package net.aspw.client.utils
 import net.aspw.client.Launch
 import net.aspw.client.event.*
 import net.aspw.client.features.module.impl.combat.FastBow
-import net.aspw.client.features.module.impl.visual.BetterView
+import net.aspw.client.features.module.impl.visual.SilentRotations
 import net.aspw.client.utils.misc.RandomUtils
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
@@ -54,18 +54,18 @@ class RotationUtils : MinecraftInstance(), Listenable {
 
     @EventTarget
     fun onJump(event: JumpEvent) {
-        if (Launch.moduleManager.getModule(BetterView::class.java)?.rotating!! && Launch.moduleManager.getModule(
-                BetterView::class.java
-            )?.state!! && Launch.moduleManager.getModule(BetterView::class.java)?.customStrafe?.get()!!
+        if (Launch.moduleManager.getModule(SilentRotations::class.java)?.rotating!! && Launch.moduleManager.getModule(
+                SilentRotations::class.java
+            )?.state!! && Launch.moduleManager.getModule(SilentRotations::class.java)?.customStrafe?.get()!!
         )
             event.yaw = cameraYaw
     }
 
     @EventTarget
     fun onStrafe(event: StrafeEvent) {
-        if (Launch.moduleManager.getModule(BetterView::class.java)?.rotating!! && Launch.moduleManager.getModule(
-                BetterView::class.java
-            )?.state!! && Launch.moduleManager.getModule(BetterView::class.java)?.customStrafe?.get()!!
+        if (Launch.moduleManager.getModule(SilentRotations::class.java)?.rotating!! && Launch.moduleManager.getModule(
+                SilentRotations::class.java
+            )?.state!! && Launch.moduleManager.getModule(SilentRotations::class.java)?.customStrafe?.get()!!
         )
             event.yaw = cameraYaw
     }

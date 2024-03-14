@@ -103,6 +103,17 @@ class Flight : Module() {
             .equals("bugspartan", ignoreCase = true) || modeValue.get()
             .equals("keepalive", ignoreCase = true) || modeValue.get().equals("pearl", ignoreCase = true)
     }
+    private val sprintVanillaBoostValue = BoolValue("SprintKey-SpeedBoost", false)
+    private val sprintVanillaAmountValue = FloatValue("SprintKey-SpeedAmount", 1.3f, 0.1f, 5f) {
+        sprintVanillaBoostValue.get() && (modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
+            .equals("noclip", ignoreCase = true) || modeValue.get()
+            .equals("blockdrop", ignoreCase = true) || modeValue.get()
+            .equals("desync", ignoreCase = true) || modeValue.get()
+            .equals("pearl", ignoreCase = true) || modeValue.get()
+            .equals("aac5-vanilla", ignoreCase = true) || modeValue.get()
+            .equals("bugspartan", ignoreCase = true) || modeValue.get()
+            .equals("keepalive", ignoreCase = true))
+    }
     private val groundSpoofValue = BoolValue("SpoofGround", false) {
         modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
             .equals("noclip", ignoreCase = true) || modeValue.get().equals("creative", ignoreCase = true)
@@ -208,6 +219,9 @@ class Flight : Module() {
     val fakeYValue = BoolValue("FakeY", false)
     private val viewBobbingValue = BoolValue("ViewBobbing", false)
     private val bobbingAmountValue = FloatValue("BobbingAmount", 0.1f, 0f, 0.1f) { viewBobbingValue.get() }
+    private val sprintTimerBoostValue = BoolValue("SprintKey-TimerBoost", false)
+    private val sprintTimerAmountValue =
+        FloatValue("SprintKey-TimerAmount", 1.4f, 1.1f, 2.4f) { sprintTimerBoostValue.get() }
     private val flyTimer = MSTimer()
     private val boostTimer = MSTimer()
     private val spartanTimer = TickTimer()
@@ -656,9 +670,16 @@ class Flight : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent?) {
-        val vanillaSpeed = vanillaSpeedValue.get()
+        val vanillaSpeed =
+            if (sprintVanillaBoostValue.get() && GameSettings.isKeyDown(mc.gameSettings.keyBindSprint)) vanillaSpeedValue.get() + sprintVanillaAmountValue.get() else vanillaSpeedValue.get()
         val vanillaVSpeed = vanillaVSpeedValue.get()
         mc.thePlayer.noClip = false
+        if (sprintTimerBoostValue.get()) {
+            if (GameSettings.isKeyDown(mc.gameSettings.keyBindSprint))
+                mc.timer.timerSpeed = sprintTimerAmountValue.get()
+            else if (mc.timer.timerSpeed != 1f)
+                mc.timer.timerSpeed = 1f
+        }
         when (modeValue.get().lowercase(Locale.getDefault())) {
             "vulcanzoom" -> {
                 if (started && pog) {

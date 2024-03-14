@@ -29,7 +29,7 @@ object Launch {
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Client"
-    const val CLIENT_VERSION = "B97"
+    const val CLIENT_VERSION = "B98"
     const val CLIENT_PROTOCOL_RANGE = "1.8 to 24w09a"
     const val CLIENT_CREATOR = "As_pw"
     const val CLIENT_WEBSITE = "https://aspw-w.github.io/AspieAPI/NightX"
@@ -117,7 +117,7 @@ object Launch {
         if (!fileManager.modulesConfig.hasConfig() || !fileManager.valuesConfig.hasConfig()) {
             ClientUtils.getLogger().info("Setting up default modules...")
             moduleManager.getModule(Interface::class.java)?.state = true
-            moduleManager.getModule(BetterView::class.java)?.state = true
+            moduleManager.getModule(SilentRotations::class.java)?.state = true
             moduleManager.getModule(BrandSpoofer::class.java)?.state = true
             moduleManager.getModule(net.aspw.client.features.module.impl.other.DiscordRPC::class.java)?.state = true
             moduleManager.getModule(ItemPhysics::class.java)?.state = true

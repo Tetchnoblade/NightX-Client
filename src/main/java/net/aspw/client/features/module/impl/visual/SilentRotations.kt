@@ -3,7 +3,7 @@ package net.aspw.client.features.module.impl.visual
 import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.JumpEvent
-import net.aspw.client.event.MotionEvent
+import net.aspw.client.event.Render3DEvent
 import net.aspw.client.event.StrafeEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
@@ -15,12 +15,12 @@ import net.aspw.client.utils.RotationUtils
 import net.aspw.client.value.BoolValue
 
 @ModuleInfo(
-    name = "BetterView",
-    spacedName = "Better View",
+    name = "SilentRotations",
+    spacedName = "Silent Rotations",
     category = ModuleCategory.VISUAL,
     forceNoSound = true
 )
-class BetterView : Module() {
+class SilentRotations : Module() {
 
     val customStrafe = BoolValue("CustomStrafing", true)
 
@@ -69,7 +69,7 @@ class BetterView : Module() {
     }
 
     @EventTarget
-    fun onMotion(event: MotionEvent) {
+    fun onRender3D(event: Render3DEvent) {
         if (mc.thePlayer == null || RotationUtils.targetRotation == null) {
             if (rotating)
                 rotating = false

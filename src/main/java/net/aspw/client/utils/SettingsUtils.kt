@@ -4,7 +4,6 @@ import net.aspw.client.Launch
 import net.aspw.client.features.api.MacroManager
 import net.aspw.client.features.module.impl.exploit.Plugins
 import net.aspw.client.features.module.impl.other.DiscordRPC
-import net.aspw.client.features.module.impl.other.EnchantColor
 import net.aspw.client.features.module.impl.other.SnakeGame
 import net.aspw.client.features.module.impl.other.ThunderNotifier
 import net.aspw.client.features.module.impl.player.Freecam

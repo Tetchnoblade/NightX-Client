@@ -8,8 +8,8 @@ import net.aspw.client.features.module.impl.combat.KillAuraRecode;
 import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.other.BrandSpoofer;
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.features.module.impl.visual.BetterView;
 import net.aspw.client.features.module.impl.visual.Interface;
+import net.aspw.client.features.module.impl.visual.SilentRotations;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.utils.*;
 import net.aspw.client.utils.timer.MSTimer;
@@ -43,7 +43,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onWorld(WorldEvent event) {
-        if (Objects.requireNonNull(Launch.moduleManager.getModule(BetterView.class)).getState())
+        if (Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).getState())
             RotationUtils.Companion.enableLook();
         flagged = false;
         flagTicks = 1;
@@ -61,12 +61,16 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     }
 
     @EventTarget
-    public void onMotion(MotionEvent event) {
-        mc.leftClickCounter = 0;
+    public void onRender3D(Render3DEvent event) {
         mc.thePlayer.prevRenderArmYaw = mc.thePlayer.rotationYaw;
         mc.thePlayer.prevRenderArmPitch = mc.thePlayer.rotationPitch;
         mc.thePlayer.renderArmYaw = mc.thePlayer.rotationYaw;
         mc.thePlayer.renderArmPitch = mc.thePlayer.rotationPitch;
+    }
+
+    @EventTarget
+    public void onMotion(MotionEvent event) {
+        mc.leftClickCounter = 0;
 
         float START_HEIGHT = 1.62f;
         float END_HEIGHT;
@@ -93,8 +97,8 @@ public class PacketManager extends MinecraftInstance implements Listenable {
             eyeHeight = START_HEIGHT - delta;
         }
 
-        if (!Objects.requireNonNull(Launch.moduleManager.getModule(BetterView.class)).getState())
-            Objects.requireNonNull(Launch.moduleManager.getModule(BetterView.class)).setState(true);
+        if (!Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).getState())
+            Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).setState(true);
         if (!Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).getState())
             Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).setState(true);
 

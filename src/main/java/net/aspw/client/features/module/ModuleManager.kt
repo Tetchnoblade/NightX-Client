@@ -151,12 +151,13 @@ class ModuleManager : Listenable {
             InvManager::class.java,
             DiscordRPC::class.java,
             MurdererDetector::class.java,
-            BetterView::class.java,
+            SilentRotations::class.java,
             FireReducer::class.java,
             NoBlockPush::class.java,
             KillAuraRecode::class.java,
             NoHurtCam::class.java,
-            DrinkingAlert::class.java
+            DrinkingAlert::class.java,
+            AutoGetter::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")
