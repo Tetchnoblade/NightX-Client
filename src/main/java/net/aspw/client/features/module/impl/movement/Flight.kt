@@ -103,7 +103,14 @@ class Flight : Module() {
             .equals("bugspartan", ignoreCase = true) || modeValue.get()
             .equals("keepalive", ignoreCase = true) || modeValue.get().equals("pearl", ignoreCase = true)
     }
-    private val sprintVanillaBoostValue = BoolValue("SprintKey-SpeedBoost", false)
+    private val sprintVanillaBoostValue = BoolValue("SprintKey-SpeedBoost", false) {
+        modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
+            .equals("noclip", ignoreCase = true) || modeValue.get()
+            .equals("blockdrop", ignoreCase = true) || modeValue.get()
+            .equals("desync", ignoreCase = true) || modeValue.get()
+            .equals("bugspartan", ignoreCase = true) || modeValue.get()
+            .equals("keepalive", ignoreCase = true) || modeValue.get().equals("pearl", ignoreCase = true)
+    }
     private val sprintVanillaAmountValue = FloatValue("SprintKey-SpeedAmount", 1.3f, 0.1f, 5f) {
         sprintVanillaBoostValue.get() && (modeValue.get().equals("motion", ignoreCase = true) || modeValue.get()
             .equals("noclip", ignoreCase = true) || modeValue.get()
