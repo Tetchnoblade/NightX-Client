@@ -44,7 +44,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onPushOut(PushOutEvent event) {
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning() && (shouldAnimation() || mc.thePlayer.isSneaking()))
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning() && (shouldAnimation() || mc.thePlayer.isSneaking()))
             event.cancelEvent();
     }
 
@@ -55,7 +55,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onMotion(MotionEvent event) {
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning()) {
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning()) {
             float EYE_START_HEIGHT = 1.62f;
             float EYE_END_HEIGHT;
 
@@ -81,7 +81,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onUpdate(UpdateEvent event) {
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning()) {
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning()) {
             if (isSwimming()) {
                 if (mc.thePlayer.motionX < -0.4D) {
                     mc.thePlayer.motionX = -0.39F;
@@ -116,50 +116,58 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
                     mc.thePlayer.motionZ *= 1.11F;
                 }
             }
+        }
 
-            double d0 = mc.thePlayer.width / 2.0;
-            AxisAlignedBB box = mc.thePlayer.getEntityBoundingBox();
-            AxisAlignedBB setThrough = new AxisAlignedBB(mc.thePlayer.posX - d0, box.minY, mc.thePlayer.posZ - d0, mc.thePlayer.posX + d0, box.minY + mc.thePlayer.height, mc.thePlayer.posZ + d0);
-            AxisAlignedBB sneak = new AxisAlignedBB(box.minX, box.minY + 0.9, box.minZ, box.minX + 0.6, box.minY + 1.8, box.minZ + 0.6);
-            AxisAlignedBB crawl = new AxisAlignedBB(box.minX, box.minY + 0.9, box.minZ, box.minX + 0.6, box.minY + 1.5, box.minZ + 0.6);
+        float sneakLength;
 
-            float newHeight;
-            float newWidth;
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9) && ProtocolBase.getManager().getTargetVersion().olderThanOrEqualTo(ProtocolVersion.v1_13_2) && !mc.isIntegratedServerRunning())
+            sneakLength = 1.65f;
+        else if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning())
+            sneakLength = 1.5f;
+        else sneakLength = 1.8f;
 
-            if (isSwimmingOrCrawling && underWater() && mc.thePlayer.rotationPitch >= 0.0) {
-                newHeight = 0.6f;
-                newWidth = 0.6f;
-                isSwimmingOrCrawling = true;
-                mc.thePlayer.setEntityBoundingBox(setThrough);
-            } else if (isSwimming() && underWater() || !mc.theWorld.getCollisionBoxes(crawl).isEmpty()) {
-                newHeight = 0.6f;
-                newWidth = 0.6f;
-                isSwimmingOrCrawling = true;
-                mc.thePlayer.setEntityBoundingBox(setThrough);
-            } else if (mc.thePlayer.isSneaking() && !underWater()) {
-                newHeight = 1.5f;  // TODO: fix v1.8.x ~ v1.13.2 protocol sneaks (1.8 height everytime)
-                newWidth = 0.6f;
-                mc.thePlayer.setEntityBoundingBox(setThrough);
-            } else {
-                if (isSwimmingOrCrawling)
-                    isSwimmingOrCrawling = false;
-                newHeight = 1.8f;
-                newWidth = 0.6f;
-                mc.thePlayer.setEntityBoundingBox(setThrough);
-            }
+        double d0 = mc.thePlayer.width / 2.0;
+        AxisAlignedBB box = mc.thePlayer.getEntityBoundingBox();
+        AxisAlignedBB setThrough = new AxisAlignedBB(mc.thePlayer.posX - d0, box.minY, mc.thePlayer.posZ - d0, mc.thePlayer.posX + d0, box.minY + mc.thePlayer.height, mc.thePlayer.posZ + d0);
+        AxisAlignedBB sneak = new AxisAlignedBB(box.minX, box.minY + 0.9, box.minZ, box.minX + 0.6, box.minY + 1.8, box.minZ + 0.6);
+        AxisAlignedBB crawl = new AxisAlignedBB(box.minX, box.minY + 0.9, box.minZ, box.minX + 0.6, box.minY + 1.5, box.minZ + 0.6);
 
-            if (mc.thePlayer.onGround && !mc.thePlayer.isSneaking() && !underWater() && (mc.thePlayer.height == 1.5f || mc.thePlayer.height == 0.6F) && !mc.theWorld.getCollisionBoxes(sneak).isEmpty()) {
-                mc.gameSettings.keyBindSneak.pressed = true;
-            } else if (!GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && mc.theWorld.getCollisionBoxes(sneak).isEmpty()) {
-                mc.gameSettings.keyBindSneak.pressed = false;
-            }
+        float newHeight;
+        float newWidth;
 
-            try {
-                mc.thePlayer.height = newHeight;
-                mc.thePlayer.width = newWidth;
-            } catch (IllegalArgumentException ignored) {
-            }
-        } else resetAll();
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning() && isSwimmingOrCrawling && underWater() && mc.thePlayer.rotationPitch >= 0.0) {
+            newHeight = 0.6f;
+            newWidth = 0.6f;
+            isSwimmingOrCrawling = true;
+            mc.thePlayer.setEntityBoundingBox(setThrough);
+        } else if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning() && (isSwimming() && underWater() || !mc.theWorld.getCollisionBoxes(crawl).isEmpty())) {
+            newHeight = 0.6f;
+            newWidth = 0.6f;
+            isSwimmingOrCrawling = true;
+            mc.thePlayer.setEntityBoundingBox(setThrough);
+        } else if (mc.thePlayer.isSneaking() && !underWater()) {
+            newHeight = sneakLength;
+            newWidth = 0.6f;
+            mc.thePlayer.setEntityBoundingBox(setThrough);
+        } else {
+            if (isSwimmingOrCrawling)
+                isSwimmingOrCrawling = false;
+            newHeight = 1.8f;
+            newWidth = 0.6f;
+            mc.thePlayer.setEntityBoundingBox(setThrough);
+        }
+
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9) && !mc.isIntegratedServerRunning() && mc.thePlayer.onGround && !mc.thePlayer.isSneaking() && !underWater() && (mc.thePlayer.height == sneakLength || mc.thePlayer.height == 0.6F) && !mc.theWorld.getCollisionBoxes(sneak).isEmpty()) {
+            mc.gameSettings.keyBindSneak.pressed = true;
+        } else if (!GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && mc.theWorld.getCollisionBoxes(sneak).isEmpty()) {
+            mc.gameSettings.keyBindSneak.pressed = false;
+        }
+
+        try {
+            mc.thePlayer.height = newHeight;
+            mc.thePlayer.width = newWidth;
+        } catch (IllegalArgumentException ignored) {
+        }
     }
 
     @Override

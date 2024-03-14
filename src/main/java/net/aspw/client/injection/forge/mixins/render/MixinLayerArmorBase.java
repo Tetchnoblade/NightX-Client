@@ -37,7 +37,7 @@ public class MixinLayerArmorBase {
     public void doRenderLayer(final EntityLivingBase entitylivingbaseIn, final float limbSwing, final float limbSwingAmount, final float partialTicks, final float ageInTicks, final float netHeadYaw, final float headPitch, final float scale, final CallbackInfo ci) {
         final CustomModel customModel = Objects.requireNonNull(Launch.moduleManager.getModule(CustomModel.class));
 
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !MinecraftInstance.mc.isIntegratedServerRunning() && McUpdatesHandler.shouldAnimation() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer)
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !MinecraftInstance.mc.isIntegratedServerRunning() && McUpdatesHandler.shouldAnimation() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer)
             ci.cancel();
 
         if (customModel.getState() && customModel.getOnlySelf().get() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer) {

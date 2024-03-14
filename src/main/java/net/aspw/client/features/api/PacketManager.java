@@ -83,7 +83,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         if (mc.thePlayer.isSneaking()) {
             float delta = END_HEIGHT - eyeHeight;
             if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9) && ProtocolBase.getManager().getTargetVersion().olderThanOrEqualTo(ProtocolVersion.v1_13_2) && !mc.isIntegratedServerRunning())
-                delta *= 0.4f;
+                delta *= 0.53f;
             else if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning())
                 delta *= 0.68f;
             else delta *= 0.4f;
@@ -91,7 +91,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         } else if (eyeHeight < START_HEIGHT) {
             float delta = START_HEIGHT - eyeHeight;
             if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9) && ProtocolBase.getManager().getTargetVersion().olderThanOrEqualTo(ProtocolVersion.v1_13_2) && !mc.isIntegratedServerRunning())
-                delta *= 0.4f;
+                delta *= 0.53f;
             else if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning())
                 delta *= 0.68f;
             else delta *= 0.4f;

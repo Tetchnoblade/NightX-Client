@@ -145,7 +145,7 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
         final Flight flight = Objects.requireNonNull(Launch.moduleManager.getModule(Flight.class));
         final Speed speed = Objects.requireNonNull(Launch.moduleManager.getModule(Speed.class));
         final BowJump bowJump = Objects.requireNonNull(Launch.moduleManager.getModule(BowJump.class));
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning() && McUpdatesHandler.doingEyeRot)
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning() && McUpdatesHandler.doingEyeRot)
             return McUpdatesHandler.lastEyeHeight + (McUpdatesHandler.eyeHeight - McUpdatesHandler.lastEyeHeight) * mc.timer.renderPartialTicks;
         if (this.isPlayerSleeping())
             return 0.2F;
