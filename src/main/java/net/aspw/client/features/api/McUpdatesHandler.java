@@ -44,7 +44,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onPushOut(PushOutEvent event) {
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning() && (shouldAnimation() || mc.thePlayer.isSneaking()))
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning() && (shouldAnimation() || mc.thePlayer.isSneaking()))
             event.cancelEvent();
     }
 
@@ -55,7 +55,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onMotion(MotionEvent event) {
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning()) {
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning()) {
             float EYE_START_HEIGHT = 1.62f;
             float EYE_END_HEIGHT;
 
@@ -81,7 +81,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onUpdate(UpdateEvent event) {
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning()) {
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning()) {
             if (isSwimming()) {
                 if (mc.thePlayer.motionX < -0.4D) {
                     mc.thePlayer.motionX = -0.39F;
@@ -137,7 +137,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
                 isSwimmingOrCrawling = true;
                 mc.thePlayer.setEntityBoundingBox(setThrough);
             } else if (mc.thePlayer.isSneaking() && !underWater()) {
-                newHeight = 1.5f;
+                newHeight = 1.5f;  // TODO: fix v1.8.x ~ v1.13.2 protocol sneaks (1.8 height everytime)
                 newWidth = 0.6f;
                 mc.thePlayer.setEntityBoundingBox(setThrough);
             } else {

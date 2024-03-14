@@ -59,7 +59,7 @@ public abstract class MixinModelBiped {
         final KillAuraRecode killAuraRecode = Objects.requireNonNull(Launch.moduleManager.getModule(KillAuraRecode.class));
         final SilentSneak silentSneak = Objects.requireNonNull(Launch.moduleManager.getModule(SilentSneak.class));
 
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !MinecraftInstance.mc.isIntegratedServerRunning() && McUpdatesHandler.shouldAnimation() && p_setRotationAngles7 instanceof EntityPlayer && p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer)) {
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !MinecraftInstance.mc.isIntegratedServerRunning() && McUpdatesHandler.shouldAnimation() && p_setRotationAngles7 instanceof EntityPlayer && p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer)) {
             GlStateManager.rotate(45.0F, 1F, 0.0F, 0.0F);
             GlStateManager.translate(0.0F, 0.0F, -0.7F);
 
