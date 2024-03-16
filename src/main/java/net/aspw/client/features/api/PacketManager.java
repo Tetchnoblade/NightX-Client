@@ -12,6 +12,7 @@ import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.features.module.impl.visual.SilentRotations;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.utils.*;
+import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.utils.timer.MSTimer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.*;
@@ -80,23 +81,17 @@ public class PacketManager extends MinecraftInstance implements Listenable {
             END_HEIGHT = 1.32f;
         else END_HEIGHT = 1.54f;
 
-        if (mc.thePlayer.isSneaking()) {
-            float delta = END_HEIGHT - eyeHeight;
-            if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9) && ProtocolBase.getManager().getTargetVersion().olderThanOrEqualTo(ProtocolVersion.v1_13_2) && !mc.isIntegratedServerRunning())
-                delta *= 0.53f;
-            else if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning())
-                delta *= 0.68f;
-            else delta *= 0.4f;
-            eyeHeight = END_HEIGHT - delta;
-        } else if (eyeHeight < START_HEIGHT) {
-            float delta = START_HEIGHT - eyeHeight;
-            if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9) && ProtocolBase.getManager().getTargetVersion().olderThanOrEqualTo(ProtocolVersion.v1_13_2) && !mc.isIntegratedServerRunning())
-                delta *= 0.53f;
-            else if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning())
-                delta *= 0.68f;
-            else delta *= 0.4f;
-            eyeHeight = START_HEIGHT - delta;
-        }
+        float delta;
+        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9) && ProtocolBase.getManager().getTargetVersion().olderThanOrEqualTo(ProtocolVersion.v1_13_2) && !mc.isIntegratedServerRunning())
+            delta = 0.147f;
+        else if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning())
+            delta = 0.132f;
+        else delta = 0.154f;
+
+        if (mc.thePlayer.isSneaking())
+            eyeHeight = AnimationUtils.animate(END_HEIGHT, eyeHeight, RenderUtils.deltaTime * delta);
+        else if (eyeHeight < START_HEIGHT)
+            eyeHeight = AnimationUtils.animate(START_HEIGHT, eyeHeight, RenderUtils.deltaTime * delta);
 
         if (!Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).getState())
             Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).setState(true);

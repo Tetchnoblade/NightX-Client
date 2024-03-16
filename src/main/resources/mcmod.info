@@ -1,6 +1,6 @@
 [
   {
-    "modid": "nightx",
+    "modid": "NightX",
     "name": "NightX Client",
     "description": "A Minecraft Forge Mixin-Based Hacked Client. Equipped with ViaForge.",
     "version": "Release",

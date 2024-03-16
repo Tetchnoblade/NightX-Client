@@ -30,8 +30,6 @@ public class ProtocolBase {
             return;
         }
 
-        ClientUtils.getLogger().info("Injecting ViaVersion...");
-
         final ProtocolVersion version = ProtocolVersion.getProtocol(platform.getGameVersion());
 
         if (version == ProtocolVersion.unknown)
@@ -41,7 +39,7 @@ public class ProtocolBase {
 
         ViaLoader.init(new ViaVersionPlatformImpl(null), new ProtocolVLLoader(platform), new ProtocolVLInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new, null, null);
 
-        ClientUtils.getLogger().info("Injected!");
+        ClientUtils.getLogger().info("ViaVersion Injected");
     }
 
     public void inject(final Channel channel, final VFNetworkManager networkManager) {

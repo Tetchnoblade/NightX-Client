@@ -26,15 +26,14 @@ object Launch {
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Client"
-    const val CLIENT_VERSION = "B98"
+    const val CLIENT_VERSION = "B99"
     const val CLIENT_PROTOCOL_RANGE = "1.8 to 24w09a"
-    const val CLIENT_CREATOR = "As_pw"
     const val CLIENT_WEBSITE = "https://aspw-w.github.io/AspieAPI/NightX"
     const val CLIENT_CHAT = "§c$CLIENT_BEST: §r"
     const val CLIENT_STATUS = "$CLIENT_WEBSITE/database/data.txt"
+    const val CLIENT_STAFFS = "$CLIENT_WEBSITE/database/staffs.txt"
     const val CLIENT_CONFIGLIST = "$CLIENT_WEBSITE/configs/str/list.txt"
     const val CLIENT_CONFIGS = "$CLIENT_WEBSITE/configs/"
-    const val CLIENT_LATEST = "$CLIENT_WEBSITE/database/version.txt"
 
     var isStarting = false
 
@@ -73,9 +72,8 @@ object Launch {
         ProtocolBase.init(ProtocolMod.PLATFORM)
 
         // Check update
-        Access.checkStatus()
-        Access.checkLatestVersion()
         Access.checkStaffList()
+        Access.checkStatus()
 
         // Create file manager
         fileManager = FileManager()

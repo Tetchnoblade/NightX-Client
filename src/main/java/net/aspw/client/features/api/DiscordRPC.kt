@@ -67,7 +67,7 @@ class DiscordRPC : MinecraftInstance() {
             })
             ipcClient?.connect()
         } catch (e: Throwable) {
-            ClientUtils.getLogger().error("Failed to setup Discord RPC.", e)
+            ClientUtils.getLogger().error("Failed to setup Discord RPC")
         }
 
     }

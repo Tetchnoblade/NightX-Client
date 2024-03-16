@@ -61,10 +61,6 @@ public class Fonts {
     public static GameFontRenderer marks;
 
     public static void loadFonts() {
-        long l = System.currentTimeMillis();
-
-        ClientUtils.getLogger().info("Loading Fonts...");
-
         font35 = new GameFontRenderer(getRobotoMedium("Roboto-Medium.ttf", 35));
         font40 = new GameFontRenderer(getRobotoMedium("Roboto-Medium.ttf", 40));
         font72 = new GameFontRenderer(getRobotoMedium("Roboto-Medium.ttf", 72));
@@ -88,7 +84,7 @@ public class Fonts {
         icons = new GameFontRenderer(getIcons("Icons.ttf", 52));
         marks = new GameFontRenderer(getMarks("marks.ttf", 52));
 
-        ClientUtils.getLogger().info("Loaded Fonts. (" + (System.currentTimeMillis() - l) + "ms)");
+        ClientUtils.getLogger().info("Loaded Fonts");
     }
 
     public static FontRenderer getFontRenderer(final String name, final int size) {

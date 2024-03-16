@@ -59,7 +59,7 @@ class InvManager : Module() {
     private val itemDelayValue = IntegerValue("ItemDelay", 150, 0, 5000)
     private val onlySwordDamage = BoolValue("OnlySwordWeapon", false)
     private val nbtGoalValue =
-        ListValue("NBTGoal", ItemHelper.EnumNBTPriorityType.entries.map { it.toString() }.toTypedArray(), "NONE")
+        ListValue("NBTGoal", ItemHelper.EnumNBTPriorityType.values().map { it.toString() }.toTypedArray(), "NONE")
     private val nbtItemNotGarbage = BoolValue("NBTItemNotGarbage", true) { !nbtGoalValue.equals("NONE") }
     private val nbtArmorPriority = FloatValue("NBTArmorPriority", 0f, 0f, 5f) { !nbtGoalValue.equals("NONE") }
     private val nbtWeaponPriority = FloatValue("NBTWeaponPriority", 0f, 0f, 5f) { !nbtGoalValue.equals("NONE") }

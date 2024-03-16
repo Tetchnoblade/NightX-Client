@@ -3,7 +3,9 @@ package net.aspw.client.features.api;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.event.*;
 import net.aspw.client.protocol.ProtocolBase;
+import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.item.EntityBoat;
@@ -34,7 +36,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
         AxisAlignedBB box = mc.thePlayer.getEntityBoundingBox();
         AxisAlignedBB crawl = new AxisAlignedBB(box.minX, box.minY + 0.9, box.minZ, box.minX + 0.6, box.minY + 1.5, box.minZ + 0.6);
 
-        return isSwimmingOrCrawling && mc.thePlayer.isSprinting() && mc.thePlayer.isInWater() || isSwimmingOrCrawling && !mc.theWorld.getCollisionBoxes(crawl).isEmpty();
+        return !mc.thePlayer.noClip && (isSwimmingOrCrawling && mc.thePlayer.isSprinting() && mc.thePlayer.isInWater() || isSwimmingOrCrawling && !mc.theWorld.getCollisionBoxes(crawl).isEmpty());
     }
 
     private static void resetAll() {
@@ -56,25 +58,23 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
     @EventTarget
     public void onMotion(MotionEvent event) {
         if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning()) {
-            float EYE_START_HEIGHT = 1.62f;
-            float EYE_END_HEIGHT;
+            float START_HEIGHT = 1.62f;
+            float END_HEIGHT;
 
             lastEyeHeight = eyeHeight;
 
-            EYE_END_HEIGHT = 0.45f;
+            END_HEIGHT = 0.45f;
+
+            float delta;
+            delta = 0.085f;
 
             if (shouldAnimation()) {
-                float delta = EYE_END_HEIGHT - eyeHeight;
-                delta *= 0.85F;
-                eyeHeight = EYE_END_HEIGHT - delta;
+                eyeHeight = AnimationUtils.animate(END_HEIGHT, eyeHeight, RenderUtils.deltaTime * delta);
                 doingEyeRot = true;
-            } else if (eyeHeight < EYE_START_HEIGHT) {
-                float delta = EYE_START_HEIGHT - eyeHeight;
-                delta *= 0.85F;
-                eyeHeight = EYE_START_HEIGHT - delta;
-            }
+            } else if (eyeHeight < START_HEIGHT)
+                eyeHeight = AnimationUtils.animate(START_HEIGHT, eyeHeight, RenderUtils.deltaTime * delta);
 
-            if (eyeHeight > EYE_START_HEIGHT - 0.01f && doingEyeRot)
+            if (eyeHeight >= START_HEIGHT && doingEyeRot)
                 doingEyeRot = false;
         }
     }

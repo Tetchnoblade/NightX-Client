@@ -1,7 +1,6 @@
 package net.aspw.client.visual.client
 
 import net.aspw.client.Launch
-import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.utils.Access
 import net.aspw.client.utils.misc.MiscUtils
 import net.aspw.client.utils.render.RenderUtils
@@ -16,9 +15,8 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
     override fun initGui() {
         buttonList.add(GuiButton(1, width / 2 - 100, height / 4 + 44, "Open NightX Website"))
         buttonList.add(GuiButton(2, width / 2 - 100, height / 4 + 68, "Join Discord Server"))
-        buttonList.add(GuiButton(3, width / 2 - 100, height / 4 + 92, "Reconnect Database"))
-        buttonList.add(GuiButton(4, width / 2 - 100, height / 4 + 116, "Forge Mod List"))
-        buttonList.add(GuiButton(5, width / 2 - 100, height / 4 + 140, "Done"))
+        buttonList.add(GuiButton(3, width / 2 - 100, height / 4 + 92, "Forge Mods"))
+        buttonList.add(GuiButton(4, width / 2 - 100, height / 4 + 116, "Done"))
         super.initGui()
     }
 
@@ -44,20 +42,8 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
         when (button.id) {
             1 -> MiscUtils.showURL(Launch.CLIENT_WEBSITE)
             2 -> MiscUtils.showURL(Access.discord)
-            3 -> {
-                Access.checkStatus()
-                Access.checkLatestVersion()
-                Access.checkStaffList()
-                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
-                }
-            }
-
-            4 -> {
-                mc.displayGuiScreen(GuiModList(this))
-            }
-
-            5 -> mc.displayGuiScreen(prevGui)
+            3 -> mc.displayGuiScreen(GuiModList(this))
+            4 -> mc.displayGuiScreen(prevGui)
         }
     }
 }

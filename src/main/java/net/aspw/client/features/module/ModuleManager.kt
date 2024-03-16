@@ -35,8 +35,6 @@ class ModuleManager : Listenable {
      * Register all modules
      */
     fun registerModules() {
-        ClientUtils.getLogger().info("Loading modules...")
-
         registerModules(
             Protect::class.java,
             BowAura::class.java,
@@ -160,7 +158,7 @@ class ModuleManager : Listenable {
             AutoGetter::class.java
         )
 
-        ClientUtils.getLogger().info("Successfully loaded ${modules.size} modules.")
+        ClientUtils.getLogger().info("Successfully loaded modules")
     }
 
     /**

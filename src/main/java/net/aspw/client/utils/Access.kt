@@ -9,6 +9,7 @@ import org.apache.http.util.EntityUtils
 object Access {
 
     var canConnect = false
+    var isLatest = false
     var clientGithub = ""
     var discord = ""
     var discordApp = ""
@@ -17,12 +18,11 @@ object Access {
     var bmcstafflist = ""
     var mushstafflist = ""
     var hypixelstafflist = ""
-    var isLatest = false
 
-    fun checkLatestVersion() {
+    fun checkStaffList() {
         try {
             val httpClient: CloseableHttpClient = HttpClients.createDefault()
-            val request = HttpGet(Launch.CLIENT_LATEST)
+            val request = HttpGet(Launch.CLIENT_STAFFS)
             val response = httpClient.execute(request)
             val entity = response.entity
             val content = EntityUtils.toString(entity)
@@ -30,56 +30,12 @@ object Access {
             response.close()
             httpClient.close()
             val details = content.split("-")
-            if (details[0] == Launch.CLIENT_VERSION || details[1] == Launch.CLIENT_VERSION)
-                isLatest = true
-            canConnect = true
+            bmcstafflist = details[0]
+            mushstafflist = details[1]
+            hypixelstafflist = details[2]
+            ClientUtils.getLogger().info("Loaded Staff List")
         } catch (e: Exception) {
-            canConnect = false
-            isLatest = false
-        }
-    }
-
-    fun checkStaffList() {
-        try {
-            val httpClient: CloseableHttpClient = HttpClients.createDefault()
-            val request = HttpGet("${Launch.CLIENT_WEBSITE}/staff/blocksmc.txt")
-            val response = httpClient.execute(request)
-            val entity = response.entity
-            val content = EntityUtils.toString(entity)
-            EntityUtils.consume(entity)
-            response.close()
-            httpClient.close()
-            bmcstafflist = content
-        } catch (e: Exception) {
-            canConnect = false
-        }
-
-        try {
-            val httpClient: CloseableHttpClient = HttpClients.createDefault()
-            val request = HttpGet("${Launch.CLIENT_WEBSITE}/staff/mushmc.txt")
-            val response = httpClient.execute(request)
-            val entity = response.entity
-            val content = EntityUtils.toString(entity)
-            EntityUtils.consume(entity)
-            response.close()
-            httpClient.close()
-            mushstafflist = content
-        } catch (e: Exception) {
-            canConnect = false
-        }
-
-        try {
-            val httpClient: CloseableHttpClient = HttpClients.createDefault()
-            val request = HttpGet("${Launch.CLIENT_WEBSITE}/staff/hypixel.txt")
-            val response = httpClient.execute(request)
-            val entity = response.entity
-            val content = EntityUtils.toString(entity)
-            EntityUtils.consume(entity)
-            response.close()
-            httpClient.close()
-            hypixelstafflist = content
-        } catch (e: Exception) {
-            canConnect = false
+            ClientUtils.getLogger().info("Failed to load Staff List")
         }
     }
 
@@ -94,14 +50,17 @@ object Access {
             response.close()
             httpClient.close()
             val details = content.split("///")
+            isLatest = details[5] == Launch.CLIENT_VERSION
             clientGithub = details[4]
             discord = details[3]
             discordApp = details[2]
             appClientSecret = details[1]
             appClientID = details[0]
             canConnect = true
+            ClientUtils.getLogger().info("Loaded API")
         } catch (e: Exception) {
             canConnect = false
+            ClientUtils.getLogger().info("Failed to load API")
         }
     }
 }
