@@ -138,6 +138,8 @@ class RotationUtils : MinecraftInstance(), Listenable {
             if (!Launch.isStarting) {
                 perspectiveToggled = true
                 if (mc.thePlayer != null) {
+                    prevCameraYaw = mc.thePlayer.prevRotationYaw
+                    prevCameraPitch = mc.thePlayer.prevRotationPitch
                     cameraYaw = mc.thePlayer.rotationYaw
                     cameraPitch = mc.thePlayer.rotationPitch
                 }
@@ -148,6 +150,8 @@ class RotationUtils : MinecraftInstance(), Listenable {
             if (!Launch.isStarting) {
                 perspectiveToggled = false
                 if (mc.thePlayer != null) {
+                    mc.thePlayer.prevRotationYaw = prevCameraYaw
+                    mc.thePlayer.prevRotationPitch = prevCameraPitch
                     mc.thePlayer.rotationYaw = cameraYaw
                     mc.thePlayer.rotationPitch = cameraPitch
                 }
