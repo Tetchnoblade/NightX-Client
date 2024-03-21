@@ -23,13 +23,10 @@ import net.aspw.client.value.ListValue
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.block.BlockAir
 import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemBlock
-import net.minecraft.item.ItemStack
 import net.minecraft.network.Packet
 import net.minecraft.network.play.client.*
 import net.minecraft.potion.Potion
@@ -903,19 +900,6 @@ class Scaffold : Module() {
             (scaledResolution.scaledHeight / 2 - 30).toDouble(),
             -0x1111111
         )
-    }
-
-    private fun renderItemStack(stack: ItemStack, x: Int, y: Int) {
-        GlStateManager.pushMatrix()
-        GlStateManager.enableRescaleNormal()
-        GlStateManager.enableBlend()
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0)
-        RenderHelper.enableGUIStandardItemLighting()
-        mc.renderItem.renderItemAndEffectIntoGUI(stack, x, y)
-        RenderHelper.disableStandardItemLighting()
-        GlStateManager.disableRescaleNormal()
-        GlStateManager.disableBlend()
-        GlStateManager.popMatrix()
     }
 
     /**

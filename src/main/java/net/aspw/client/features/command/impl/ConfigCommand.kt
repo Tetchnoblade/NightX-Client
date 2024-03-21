@@ -45,19 +45,23 @@ class ConfigCommand : Command("config", arrayOf("c")) {
 
                 args[1].equals("onlineload", ignoreCase = true) -> {
                     if (args.size > 2) {
-                        val httpClient: CloseableHttpClient = HttpClients.createDefault()
-                        val request = HttpGet(Launch.CLIENT_CONFIGS + args[2])
-                        val response = httpClient.execute(request)
-                        val entity = response.entity
-                        val content = EntityUtils.toString(entity)
-                        EntityUtils.consume(entity)
-                        response.close()
-                        httpClient.close()
-                        SettingsUtils.executeScript(content)
-                        if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                            Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
+                        try {
+                            val httpClient: CloseableHttpClient = HttpClients.createDefault()
+                            val request = HttpGet(Launch.CLIENT_CONFIGS + args[2])
+                            val response = httpClient.execute(request)
+                            val entity = response.entity
+                            val content = EntityUtils.toString(entity)
+                            EntityUtils.consume(entity)
+                            response.close()
+                            httpClient.close()
+                            SettingsUtils.executeScript(content)
+                            if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                                Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
+                            }
+                            chat("§6Config updated successfully!")
+                        } catch (e: Exception) {
+                            chat("§cAPI Error!")
                         }
-                        chat("§6Config updated successfully!")
                         return
                     }
                     chatSyntax("config onlineload <name>")
@@ -173,16 +177,20 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                 }
 
                 args[1].equals("onlinelist", ignoreCase = true) -> {
-                    val httpClient: CloseableHttpClient = HttpClients.createDefault()
-                    val request = HttpGet(Launch.CLIENT_CONFIGLIST)
-                    val response = httpClient.execute(request)
-                    val entity = response.entity
-                    val content = EntityUtils.toString(entity)
-                    EntityUtils.consume(entity)
-                    response.close()
-                    httpClient.close()
-                    chat("§cOnlineConfigs:")
-                    chat(content)
+                    try {
+                        val httpClient: CloseableHttpClient = HttpClients.createDefault()
+                        val request = HttpGet(Launch.CLIENT_CONFIGLIST)
+                        val response = httpClient.execute(request)
+                        val entity = response.entity
+                        val content = EntityUtils.toString(entity)
+                        EntityUtils.consume(entity)
+                        response.close()
+                        httpClient.close()
+                        chat("§cOnlineConfigs:")
+                        chat(content)
+                    } catch (e: Exception) {
+                        chat("§cAPI Error!")
+                    }
                     return
                 }
 

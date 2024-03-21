@@ -15,7 +15,6 @@ import net.aspw.client.features.module.impl.movement.Speed
 import net.aspw.client.utils.MovementUtils
 import net.aspw.client.utils.RotationUtils
 import net.aspw.client.value.BoolValue
-import net.aspw.client.value.FloatValue
 import net.aspw.client.value.ListValue
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.entity.Entity
@@ -27,7 +26,6 @@ import kotlin.math.sin
 
 @ModuleInfo(name = "TargetStrafe", spacedName = "Target Strafe", category = ModuleCategory.PLAYER)
 class TargetStrafe : Module() {
-    val range = FloatValue("Range", 2.5f, 0f, 5f, "m") { !behind.get() }
     private val modeValue = ListValue("KeyMode", arrayOf("Jump", "None"), "Jump")
     private val safewalk = BoolValue("SafeWalk", true)
     private val behind = BoolValue("Behind", false)
@@ -99,7 +97,7 @@ class TargetStrafe : Module() {
                     .toFloat()
             ))
         } else {
-            if (mc.thePlayer.getDistanceToEntity(target) <= range.get())
+            if (mc.thePlayer.getDistanceToEntity(target) <= 2.5f)
                 MovementUtils.setSpeed(event, moveSpeed, rotYaw, direction.toDouble(), 0.0)
             else
                 MovementUtils.setSpeed(event, moveSpeed, rotYaw, direction.toDouble(), 1.0)

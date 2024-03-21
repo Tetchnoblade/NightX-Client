@@ -23,6 +23,7 @@ import net.aspw.client.value.BoolValue
 class SilentRotations : Module() {
 
     val customStrafe = BoolValue("CustomStrafing", true)
+    val bodyTweaks = BoolValue("BodyTweaks", true)
 
     var rotating = false
 

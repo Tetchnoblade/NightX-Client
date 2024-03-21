@@ -5,7 +5,6 @@ import net.aspw.client.event.EventTarget
 import net.aspw.client.event.PacketEvent
 import net.aspw.client.event.Render2DEvent
 import net.aspw.client.event.TickEvent
-import net.aspw.client.features.api.PacketManager
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
@@ -58,7 +57,7 @@ class Interface : Module() {
     private val targetHudSpeedValue = FloatValue("TargetHud-AnimationSpeed", 3F, 0F, 6F) { targetHudValue.get() }
     private val targetHudXPosValue = FloatValue("TargetHud-XPos", 0F, -300F, 300F) { targetHudValue.get() }
     private val targetHudYPosValue = FloatValue("TargetHud-YPos", 0F, -300F, 300F) { targetHudValue.get() }
-    private val informationValue = BoolValue("Information", true)
+    private val pingValue = BoolValue("Ping", true)
     val noAchievement = BoolValue("No-Achievements", true)
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
     val animHotbarValue = BoolValue("Hotbar-Animations", false)
@@ -236,25 +235,13 @@ class Interface : Module() {
                 } else if (easingHealth != 0F) easingHealth = 0F
             }
 
-            if (informationValue.get()) {
+            if (pingValue.get()) {
                 val xPos = ScaledResolution(mc).scaledWidth
                 val yPos = ScaledResolution(mc).scaledHeight
 
                 fontRenderer.drawStringWithShadow(
                     "Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms",
                     (xPos - 4f - fontRenderer.getStringWidth("Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms")).toDouble(),
-                    (yPos - 34f).toDouble(),
-                    Color.WHITE.rgb
-                )
-                fontRenderer.drawStringWithShadow(
-                    "Packets Sent: " + PacketManager.sendPacketCounts,
-                    (xPos - 4f - fontRenderer.getStringWidth("Packets Sent: " + PacketManager.sendPacketCounts)).toDouble(),
-                    (yPos - 23f).toDouble(),
-                    Color.WHITE.rgb
-                )
-                fontRenderer.drawStringWithShadow(
-                    "Packets Received: " + PacketManager.receivePacketCounts,
-                    (xPos - 4f - fontRenderer.getStringWidth("Packets Received: " + PacketManager.receivePacketCounts)).toDouble(),
                     (yPos - 12f).toDouble(),
                     Color.WHITE.rgb
                 )

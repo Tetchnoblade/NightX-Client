@@ -113,8 +113,8 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                 -1
             )
             FontLoaders.SF20.drawStringWithShadow(
-                "Every modules are working correctly",
-                (this.width - 10F - FontLoaders.SF20.getStringWidth("Every modules are working correctly")).toDouble(),
+                "Every modules, commands are working correctly",
+                (this.width - 10F - FontLoaders.SF20.getStringWidth("Every modules, commands are working correctly")).toDouble(),
                 42F.toDouble(),
                 -1
             )
@@ -126,8 +126,8 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                 -1
             )
             FontLoaders.SF20.drawStringWithShadow(
-                "Some modules are not working",
-                (this.width - 10F - FontLoaders.SF20.getStringWidth("Some modules are not working")).toDouble(),
+                "Some modules, commands are not working",
+                (this.width - 10F - FontLoaders.SF20.getStringWidth("Some modules, commands are not working")).toDouble(),
                 42F.toDouble(),
                 -1
             )

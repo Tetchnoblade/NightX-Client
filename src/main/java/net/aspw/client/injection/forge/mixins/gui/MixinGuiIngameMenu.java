@@ -43,6 +43,8 @@ public abstract class MixinGuiIngameMenu extends MixinGuiScreen {
 
             Fonts.minecraftFont.drawStringWithShadow("§7Packets Sent: §d" + PacketManager.sendPacketCounts, 6f, 36f, 0xffffff);
             Fonts.minecraftFont.drawStringWithShadow("§7Packets Received: §d" + PacketManager.receivePacketCounts, 6f, 46f, 0xffffff);
+
+            Fonts.minecraftFont.drawStringWithShadow("§7LastTPPos: §dX: " + PacketManager.lastTpX + ", Y: " + PacketManager.lastTpY + ", Z: " + PacketManager.lastTpZ, 6f, 56f, 0xffffff);
         } catch (final Exception ignored) {
         }
     }

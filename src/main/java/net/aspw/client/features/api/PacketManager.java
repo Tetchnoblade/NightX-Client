@@ -15,9 +15,6 @@ import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.utils.timer.MSTimer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.*;
-import net.minecraft.item.ItemBucketMilk;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemPotion;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 
@@ -34,6 +31,9 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     public static int receivePacketCounts;
     private int preSend = 0;
     private int preReceive = 0;
+    public static int lastTpX = 0;
+    public static int lastTpY = 0;
+    public static int lastTpZ = 0;
 
     @EventTarget
     public void onWorld(WorldEvent event) {
@@ -55,6 +55,10 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     @EventTarget
     public void onRender3D(Render3DEvent event) {
         if (RotationUtils.targetRotation != null) {
+            if (Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).getBodyTweaks().get()) {
+                mc.thePlayer.renderYawOffset = RotationUtils.targetRotation.getYaw();
+                mc.thePlayer.rotationYawHead = RotationUtils.targetRotation.getYaw();
+            }
             mc.thePlayer.prevRenderArmYaw = RotationUtils.targetRotation.getYaw();
             mc.thePlayer.prevRenderArmPitch = RotationUtils.targetRotation.getPitch();
             mc.thePlayer.renderArmYaw = RotationUtils.targetRotation.getYaw();
@@ -94,9 +98,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         if (!Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).getState())
             Objects.requireNonNull(Launch.moduleManager.getModule(BrandSpoofer.class)).setState(true);
 
-        if (Animations.consoleEating.get() && MinecraftInstance.mc.thePlayer.isUsingItem() && MinecraftInstance.mc.thePlayer.getHeldItem() != null && (MinecraftInstance.mc.thePlayer.getHeldItem().getItem() instanceof ItemFood || MinecraftInstance.mc.thePlayer.getHeldItem().getItem() instanceof ItemBucketMilk || MinecraftInstance.mc.thePlayer.getHeldItem().getItem() instanceof ItemPotion))
-            mc.getItemRenderer().resetEquippedProgress();
-
         if ((Animations.swingAnimValue.get().equals("Smooth") || Animations.swingAnimValue.get().equals("Dash")) && event.getEventState() == EventState.PRE) {
             if (mc.thePlayer.swingProgressInt == 1) {
                 swing = 9;
@@ -128,6 +129,10 @@ public class PacketManager extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onTeleport(TeleportEvent event) {
+        lastTpX = (int) event.getPosX();
+        lastTpY = (int) event.getPosY();
+        lastTpZ = (int) event.getPosZ();
+
         if (RotationUtils.targetRotation != null) {
             RotationUtils.targetRotation.setYaw(event.getYaw());
             RotationUtils.targetRotation.setPitch(event.getPitch());

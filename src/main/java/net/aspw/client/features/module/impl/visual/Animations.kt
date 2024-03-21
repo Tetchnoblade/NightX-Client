@@ -88,9 +88,6 @@ class Animations : Module() {
         val fankeyBobbing = BoolValue("FankeyBobbing", false)
 
         @JvmField
-        val consoleEating = BoolValue("ConsoleEating-FirstPerson", true)
-
-        @JvmField
         val bedrockEating = BoolValue("BedrockEating-ThirdPerson", true)
 
         @JvmField
