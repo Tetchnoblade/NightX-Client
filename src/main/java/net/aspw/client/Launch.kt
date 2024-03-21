@@ -3,7 +3,10 @@ package net.aspw.client
 import net.aspw.client.config.FileManager
 import net.aspw.client.event.ClientShutdownEvent
 import net.aspw.client.event.EventManager
-import net.aspw.client.features.api.*
+import net.aspw.client.features.api.DiscordRPC
+import net.aspw.client.features.api.MacroManager
+import net.aspw.client.features.api.McUpdatesHandler
+import net.aspw.client.features.api.PacketManager
 import net.aspw.client.features.api.inventory.EnchantItems
 import net.aspw.client.features.api.inventory.ModItems
 import net.aspw.client.features.api.inventory.StackItems
@@ -12,7 +15,6 @@ import net.aspw.client.features.module.ModuleManager
 import net.aspw.client.features.module.impl.other.BrandSpoofer
 import net.aspw.client.features.module.impl.other.ThunderNotifier
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.features.module.impl.visual.MoreParticles
 import net.aspw.client.features.module.impl.visual.SilentRotations
 import net.aspw.client.features.module.impl.visual.Trajectories
 import net.aspw.client.protocol.ProtocolBase
@@ -46,7 +48,6 @@ object Launch {
     lateinit var eventManager: EventManager
     lateinit var fileManager: FileManager
     lateinit var tipSoundManager: TipSoundManager
-    lateinit var combatManager: CombatManager
 
     lateinit var clickGui: ClickGui
 
@@ -83,7 +84,6 @@ object Launch {
 
         // Crate event manager
         eventManager = EventManager()
-        combatManager = CombatManager()
 
         // Register listeners
         eventManager.registerListener(RotationUtils())
@@ -94,7 +94,6 @@ object Launch {
         eventManager.registerListener(PacketUtils())
         eventManager.registerListener(SessionUtils())
         eventManager.registerListener(MacroManager)
-        eventManager.registerListener(combatManager)
 
         // Init Discord RPC
         discordRPC = DiscordRPC()
@@ -121,7 +120,6 @@ object Launch {
             moduleManager.getModule(net.aspw.client.features.module.impl.other.DiscordRPC::class.java)?.state = true
             moduleManager.getModule(ThunderNotifier::class.java)?.state = true
             moduleManager.getModule(Trajectories::class.java)?.state = true
-            moduleManager.getModule(MoreParticles::class.java)?.state = true
         }
 
         // Register commands

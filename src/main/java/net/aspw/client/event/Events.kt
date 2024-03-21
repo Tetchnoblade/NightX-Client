@@ -5,7 +5,6 @@ import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.model.ModelPlayer
 import net.minecraft.client.multiplayer.WorldClient
 import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.network.Packet
 import net.minecraft.network.play.client.C03PacketPlayer
@@ -19,8 +18,6 @@ import net.minecraft.util.EnumFacing
  * @param targetEntity Attacked entity
  */
 class AttackEvent(val targetEntity: Entity?) : Event()
-
-class EntityKilledEvent(val targetEntity: EntityLivingBase) : Event()
 
 /**
  * Called when minecraft get bounding box of block

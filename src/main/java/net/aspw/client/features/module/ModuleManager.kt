@@ -122,7 +122,6 @@ class ModuleManager : Listenable {
             Tweaks::class.java,
             Dead::class.java,
             Invisible::class.java,
-            MoreParticles::class.java,
             CivBreak::class.java,
             BrandSpoofer::class.java,
             WTap::class.java,

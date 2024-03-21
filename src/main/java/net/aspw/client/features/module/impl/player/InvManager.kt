@@ -6,6 +6,7 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.injection.access.IItemStack
 import net.aspw.client.utils.InventoryHelper
 import net.aspw.client.utils.InventoryUtils
@@ -128,9 +129,9 @@ class InvManager : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        if (noMoveValue.get() && MovementUtils.isMoving() ||
-            mc.thePlayer.openContainer != null && mc.thePlayer.openContainer.windowId != 0 ||
-            (Launch.combatManager.inCombat && noCombatValue.get())
+        if (noMoveValue.get() && MovementUtils.isMoving() || mc.thePlayer.openContainer != null && mc.thePlayer.openContainer.windowId != 0 || Launch.moduleManager.getModule(
+                KillAura::class.java
+            )?.state!! && Launch.moduleManager.getModule(KillAura::class.java)?.target != null && noCombatValue.get()
         ) {
             if (InventoryUtils.CLICK_TIMER.hasTimePassed(simulateDelayValue.get().toLong())) {
                 invOpened = false

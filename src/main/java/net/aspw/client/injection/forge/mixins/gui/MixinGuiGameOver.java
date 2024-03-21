@@ -1,6 +1,5 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
-import net.aspw.client.utils.StatisticsUtils;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.resources.I18n;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,7 +25,6 @@ public abstract class MixinGuiGameOver extends MixinGuiScreen implements GuiYesN
     public void actionPerformed(GuiButton button, CallbackInfo callbackInfo) {
         switch (button.id) {
             case 0:
-                StatisticsUtils.addDeaths();
                 this.mc.thePlayer.respawnPlayer();
                 this.mc.displayGuiScreen(null);
                 break;
@@ -43,12 +41,10 @@ public abstract class MixinGuiGameOver extends MixinGuiScreen implements GuiYesN
 
     public void confirmClicked(boolean p_confirmClicked_1_, int p_confirmClicked_2_, CallbackInfo ci) {
         if (p_confirmClicked_1_) {
-            StatisticsUtils.addDeaths();
             this.mc.theWorld.sendQuittingDisconnectingPacket();
             this.mc.loadWorld(null);
             this.mc.displayGuiScreen(new GuiMainMenu());
         } else {
-            StatisticsUtils.addDeaths();
             this.mc.thePlayer.respawnPlayer();
             this.mc.displayGuiScreen(null);
         }
