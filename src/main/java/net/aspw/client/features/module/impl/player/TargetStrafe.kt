@@ -27,7 +27,7 @@ import kotlin.math.sin
 
 @ModuleInfo(name = "TargetStrafe", spacedName = "Target Strafe", category = ModuleCategory.PLAYER)
 class TargetStrafe : Module() {
-    val range = FloatValue("Range", 1.5f, 0.1f, 4.0f, "m") { !behind.get() }
+    val range = FloatValue("Range", 2.5f, 0f, 5f, "m") { !behind.get() }
     private val modeValue = ListValue("KeyMode", arrayOf("Jump", "None"), "Jump")
     private val safewalk = BoolValue("SafeWalk", true)
     private val behind = BoolValue("Behind", false)

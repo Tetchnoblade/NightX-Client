@@ -20,7 +20,6 @@ import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
-import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.block.BlockAir
 import net.minecraft.client.gui.ScaledResolution
@@ -662,9 +661,10 @@ class Scaffold : Module() {
             faceBlock = true
 
         try {
-            if (faceBlock)
+            if (faceBlock) {
                 place()
-            else if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex) {
+                mc.thePlayer.isSwingInProgress = false
+            } else if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex) {
                 mc.thePlayer.inventory.currentItem = InventoryUtils.findAutoBlockBlock() - 36
                 mc.playerController.updateController()
             }
@@ -895,25 +895,12 @@ class Scaffold : Module() {
     @EventTarget
     fun onRender2D(event: Render2DEvent) {
         val scaledResolution = ScaledResolution(mc)
-        val infoWidth2 = Fonts.minecraftFont.getStringWidth("$blocksAmount Blocks")
-        val xPos = 110
-        val yPos = 30
-        val canRenderStack =
-            slot in 0..8 && mc.thePlayer.inventory.mainInventory[slot] != null && mc.thePlayer.inventory.mainInventory[slot].item != null && mc.thePlayer.inventory.mainInventory[slot].item is ItemBlock
-        if (canRenderStack) {
-            GlStateManager.pushMatrix()
-            renderItemStack(
-                mc.thePlayer.inventory.mainInventory[slot],
-                (scaledResolution.scaledWidth / 2 - infoWidth2 + xPos / 2),
-                (scaledResolution.scaledHeight / 2 + yPos)
-            )
-            GlStateManager.popMatrix()
-        }
-        GlStateManager.resetColor()
+        val counter = "$blocksAmount Blocks"
+        val infoWidth = FontLoaders.SF20.getStringWidth(counter)
         FontLoaders.SF20.drawStringWithShadow(
-            "$blocksAmount Blocks",
-            (scaledResolution.scaledWidth / 2 - infoWidth2 + (xPos + 40) / 2).toDouble(),
-            (scaledResolution.scaledHeight / 2 + (yPos + 5)).toDouble(),
+            counter,
+            (scaledResolution.scaledWidth / 2 - infoWidth + 21).toDouble(),
+            (scaledResolution.scaledHeight / 2 - 30).toDouble(),
             -0x1111111
         )
     }

@@ -1,6 +1,5 @@
 package net.aspw.client.visual.client.altmanager.menus
 
-import com.thealtening.AltService.EnumAltService
 import net.aspw.client.Launch
 import net.aspw.client.auth.account.CrackedAccount
 import net.aspw.client.features.module.impl.visual.Interface
@@ -135,18 +134,6 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
         addButton.enabled = false
 
         thread(name = "Account-Checking-Task") {
-            try {
-                val oldService = GuiAltManager.altService.currentService
-                if (oldService != EnumAltService.MOJANG) {
-                    GuiAltManager.altService.switchService(EnumAltService.MOJANG)
-                }
-            } catch (e: Exception) {
-                status = "§c" + e.message
-
-                addButton.enabled = true
-                return@thread
-            }
-
             Launch.fileManager.accountsConfig.addAccount(account)
             Launch.fileManager.saveConfig(Launch.fileManager.accountsConfig)
             if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {

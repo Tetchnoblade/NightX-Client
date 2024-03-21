@@ -8,7 +8,6 @@ import net.aspw.client.features.module.impl.combat.KillAuraRecode;
 import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.other.BrandSpoofer;
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.features.module.impl.visual.SilentRotations;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.utils.*;
@@ -20,7 +19,6 @@ import net.minecraft.item.ItemBucketMilk;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 
 import java.util.Objects;
@@ -30,12 +28,10 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     private static final MSTimer packetCountTimer = new MSTimer();
     public static int swing;
     public static boolean isVisualBlocking = false;
-    public static int flagTicks;
     public static float eyeHeight;
     public static float lastEyeHeight;
     public static int sendPacketCounts;
     public static int receivePacketCounts;
-    private static boolean flagged = false;
     private int preSend = 0;
     private int preReceive = 0;
 
@@ -43,8 +39,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     public void onWorld(WorldEvent event) {
         if (Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).getState())
             RotationUtils.Companion.enableLook();
-        flagged = false;
-        flagTicks = 1;
     }
 
     @EventTarget
@@ -60,10 +54,12 @@ public class PacketManager extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onRender3D(Render3DEvent event) {
-        mc.thePlayer.prevRenderArmYaw = mc.thePlayer.rotationYaw;
-        mc.thePlayer.prevRenderArmPitch = mc.thePlayer.rotationPitch;
-        mc.thePlayer.renderArmYaw = mc.thePlayer.rotationYaw;
-        mc.thePlayer.renderArmPitch = mc.thePlayer.rotationPitch;
+        if (RotationUtils.targetRotation != null) {
+            mc.thePlayer.prevRenderArmYaw = RotationUtils.targetRotation.getYaw();
+            mc.thePlayer.prevRenderArmPitch = RotationUtils.targetRotation.getPitch();
+            mc.thePlayer.renderArmYaw = RotationUtils.targetRotation.getYaw();
+            mc.thePlayer.renderArmPitch = RotationUtils.targetRotation.getPitch();
+        }
     }
 
     @EventTarget
@@ -132,7 +128,10 @@ public class PacketManager extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onTeleport(TeleportEvent event) {
-        flagged = true;
+        if (RotationUtils.targetRotation != null) {
+            RotationUtils.targetRotation.setYaw(event.getYaw());
+            RotationUtils.targetRotation.setPitch(event.getPitch());
+        }
     }
 
     @EventTarget
@@ -150,32 +149,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
             preSend = 0;
             preReceive = 0;
             packetCountTimer.reset();
-        }
-
-        if (packet instanceof C03PacketPlayer && flagged) {
-            if (mc.thePlayer.ticksExisted % 2 == 0)
-                flagTicks++;
-            if (flagTicks < 4) {
-                if (RotationUtils.targetRotation != null) {
-                    event.cancelEvent();
-                    PacketUtils.sendPacketNoEvent(
-                            new C03PacketPlayer.C06PacketPlayerPosLook(
-                                    mc.thePlayer.posX,
-                                    mc.thePlayer.posY,
-                                    mc.thePlayer.posZ,
-                                    mc.thePlayer.rotationYaw,
-                                    mc.thePlayer.rotationPitch,
-                                    mc.thePlayer.onGround
-                            )
-                    );
-                    RotationUtils.Companion.reset();
-                }
-            } else {
-                if (Objects.requireNonNull(Launch.moduleManager.getModule(Interface.class)).getState() && Objects.requireNonNull(Launch.moduleManager.getModule(Interface.class)).getTpDebugValue().get())
-                    ClientUtils.displayChatMessage(Launch.CLIENT_CHAT + "tp");
-                flagTicks = 1;
-                flagged = false;
-            }
         }
 
         if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_10)) {

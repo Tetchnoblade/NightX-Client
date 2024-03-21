@@ -11,7 +11,10 @@ import net.aspw.client.features.command.CommandManager
 import net.aspw.client.features.module.ModuleManager
 import net.aspw.client.features.module.impl.other.BrandSpoofer
 import net.aspw.client.features.module.impl.other.ThunderNotifier
-import net.aspw.client.features.module.impl.visual.*
+import net.aspw.client.features.module.impl.visual.Interface
+import net.aspw.client.features.module.impl.visual.MoreParticles
+import net.aspw.client.features.module.impl.visual.SilentRotations
+import net.aspw.client.features.module.impl.visual.Trajectories
 import net.aspw.client.protocol.ProtocolBase
 import net.aspw.client.protocol.ProtocolMod
 import net.aspw.client.utils.*
@@ -26,7 +29,7 @@ object Launch {
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Client"
-    const val CLIENT_VERSION = "B99"
+    const val CLIENT_VERSION = "B100"
     const val CLIENT_PROTOCOL_RANGE = "1.8 to 24w09a"
     const val CLIENT_WEBSITE = "https://aspw-w.github.io/AspieAPI/NightX"
     const val CLIENT_CHAT = "§c$CLIENT_BEST: §r"
@@ -116,7 +119,6 @@ object Launch {
             moduleManager.getModule(SilentRotations::class.java)?.state = true
             moduleManager.getModule(BrandSpoofer::class.java)?.state = true
             moduleManager.getModule(net.aspw.client.features.module.impl.other.DiscordRPC::class.java)?.state = true
-            moduleManager.getModule(ItemPhysics::class.java)?.state = true
             moduleManager.getModule(ThunderNotifier::class.java)?.state = true
             moduleManager.getModule(Trajectories::class.java)?.state = true
             moduleManager.getModule(MoreParticles::class.java)?.state = true

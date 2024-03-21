@@ -107,6 +107,12 @@ class RotationUtils : MinecraftInstance(), Listenable {
         @JvmField
         var cameraPitch = 0f
 
+        @JvmField
+        var prevCameraYaw = 0f
+
+        @JvmField
+        var prevCameraPitch = 0f
+
         @JvmStatic
         fun overrideMouse(): Boolean {
             if (mc.inGameHasFocus && Display.isActive()) {
@@ -118,6 +124,8 @@ class RotationUtils : MinecraftInstance(), Listenable {
                 val f2 = f1 * f1 * f1 * 8.0f
                 val f3 = mc.mouseHelper.deltaX * f2
                 val f4 = mc.mouseHelper.deltaY * f2
+                prevCameraYaw = cameraYaw
+                prevCameraPitch = cameraPitch
                 cameraYaw += f3 * 0.15f
                 cameraPitch -= f4 * 0.15f
                 if (cameraPitch > 90) cameraPitch = 90f

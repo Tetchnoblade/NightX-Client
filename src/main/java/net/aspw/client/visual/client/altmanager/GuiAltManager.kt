@@ -1,6 +1,5 @@
 package net.aspw.client.visual.client.altmanager
 
-import com.thealtening.AltService
 import net.aspw.client.Launch
 import net.aspw.client.Launch.fileManager
 import net.aspw.client.auth.account.CrackedAccount
@@ -8,14 +7,12 @@ import net.aspw.client.auth.account.MicrosoftAccount
 import net.aspw.client.auth.account.MinecraftAccount
 import net.aspw.client.event.SessionEvent
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.MinecraftInstance
 import net.aspw.client.utils.login.LoginUtils
 import net.aspw.client.utils.login.UserUtils.isValidTokenOffline
 import net.aspw.client.utils.misc.RandomUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.menus.GuiAddAccount
-import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening
 import net.aspw.client.visual.font.semi.Fonts
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
@@ -61,9 +58,6 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         buttonList.add(GuiButton(3, 5, startPositionY + 24, 90, 20, "Login").also { loginButton = it })
         buttonList.add(GuiButton(4, 5, startPositionY + 24 * 2, 90, 20, "Random Alt").also { randomButton = it })
         buttonList.add(GuiButton(99, 5, startPositionY + 24 * 3, 90, 20, "Random Cracked").also { randomCracked = it })
-
-        if (activeGenerators.getOrDefault("thealtening", true))
-            buttonList.add(GuiButton(9, 5, startPositionY + 24 * 4, 90, 20, "The Altening"))
     }
 
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
@@ -90,7 +84,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         )
         this.drawString(
             mc.fontRendererObj, "§7Type: §a${
-                if (altService.currentService == AltService.EnumAltService.THEALTENING) "Altening" else if (isValidTokenOffline(
+                if (isValidTokenOffline(
                         mc.getSession().token
                     )
                 ) "Microsoft" else "Cracked"
@@ -216,10 +210,6 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 })
             }
 
-            9 -> { // Altening Button
-                mc.displayGuiScreen(GuiTheAltening(this))
-            }
-
             727 -> {
                 loginButton.enabled = false
                 randomButton.enabled = false
@@ -233,22 +223,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     val loginResult = LoginUtils.loginSessionId(lastSessionToken!!)
 
                     status = when (loginResult) {
-                        LoginUtils.LoginResult.LOGGED -> {
-                            if (altService.currentService != AltService.EnumAltService.MOJANG) {
-                                try {
-                                    altService.switchService(AltService.EnumAltService.MOJANG)
-                                } catch (e: NoSuchFieldException) {
-                                    ClientUtils.getLogger()
-                                        .error("Something went wrong while trying to switch alt service.", e)
-                                } catch (e: IllegalAccessException) {
-                                    ClientUtils.getLogger()
-                                        .error("Something went wrong while trying to switch alt service.", e)
-                                }
-                            }
-
-                            "§cYour name is now §f§l${mc.session.username}§c"
-                        }
-
+                        LoginUtils.LoginResult.LOGGED -> "§cYour name is now §f§l${mc.session.username}§c"
                         LoginUtils.LoginResult.FAILED_PARSE_TOKEN -> "§cFailed to parse Session ID!"
                         LoginUtils.LoginResult.INVALID_ACCOUNT_DATA -> "§cInvalid Session ID!"
                     }
@@ -407,27 +382,12 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
     companion object {
 
-        val altService = AltService()
-        private val activeGenerators = mutableMapOf<String, Boolean>()
-
         fun login(
             minecraftAccount: MinecraftAccount,
             success: () -> Unit,
             error: (Exception) -> Unit,
             done: () -> Unit
         ) = thread(name = "LoginTask") {
-            if (altService.currentService != AltService.EnumAltService.MOJANG) {
-                try {
-                    altService.switchService(AltService.EnumAltService.MOJANG)
-                } catch (e: NoSuchFieldException) {
-                    error(e)
-                    ClientUtils.getLogger().error("Something went wrong while trying to switch alt service.", e)
-                } catch (e: IllegalAccessException) {
-                    error(e)
-                    ClientUtils.getLogger().error("Something went wrong while trying to switch alt service.", e)
-                }
-            }
-
             try {
                 minecraftAccount.update()
                 MinecraftInstance.mc.session = Session(

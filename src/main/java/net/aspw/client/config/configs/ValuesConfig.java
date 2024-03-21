@@ -7,7 +7,6 @@ import net.aspw.client.config.FileManager;
 import net.aspw.client.features.api.MacroManager;
 import net.aspw.client.features.module.Module;
 import net.aspw.client.value.Value;
-import net.aspw.client.visual.client.altmanager.menus.GuiTheAltening;
 
 import java.io.*;
 import java.util.Iterator;
@@ -48,12 +47,6 @@ public class ValuesConfig extends FileConfig {
 
                     MacroManager.INSTANCE.addMacro(keyValue.getAsInt(), commandValue.getAsString());
                 }
-            } else if (entry.getKey().equalsIgnoreCase("features")) {
-            } else if (entry.getKey().equalsIgnoreCase("thealtening")) {
-                final JsonObject jsonValue = (JsonObject) entry.getValue();
-
-                if (jsonValue.has("API-Key"))
-                    GuiTheAltening.Companion.setApiKey(jsonValue.get("API-Key").getAsString());
             } else {
 
                 final Module module = Launch.moduleManager.getModule(entry.getKey());
@@ -87,9 +80,6 @@ public class ValuesConfig extends FileConfig {
         final JsonObject jsonFeatures = new JsonObject();
 
         jsonObject.add("features", jsonFeatures);
-        final JsonObject theAlteningObject = new JsonObject();
-        theAlteningObject.addProperty("API-Key", GuiTheAltening.Companion.getApiKey());
-        jsonObject.add("thealtening", theAlteningObject);
 
         Launch.moduleManager.getModules().stream().filter(module -> !module.getValues().isEmpty()).forEach(module -> {
             final JsonObject jsonModule = new JsonObject();

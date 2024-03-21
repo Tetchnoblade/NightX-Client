@@ -15,7 +15,6 @@ import net.aspw.client.features.module.impl.combat.TPAura
 import net.aspw.client.protocol.ProtocolBase
 import net.aspw.client.utils.Access
 import net.aspw.client.utils.AnimationUtils
-import net.aspw.client.utils.CooldownHelper
 import net.aspw.client.utils.render.ColorUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.value.BoolValue
@@ -60,10 +59,8 @@ class Interface : Module() {
     private val targetHudXPosValue = FloatValue("TargetHud-XPos", 0F, -300F, 300F) { targetHudValue.get() }
     private val targetHudYPosValue = FloatValue("TargetHud-YPos", 0F, -300F, 300F) { targetHudValue.get() }
     private val informationValue = BoolValue("Information", true)
-    private val cooldownValue = BoolValue("Cooldown", true)
     val noAchievement = BoolValue("No-Achievements", true)
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
-    val tpDebugValue = BoolValue("TP-Debug", false)
     val animHotbarValue = BoolValue("Hotbar-Animations", false)
     private val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F) { animHotbarValue.get() }
     val blackHotbarValue = BoolValue("Black-Hotbar", false)
@@ -73,7 +70,7 @@ class Interface : Module() {
     val customFov = BoolValue("CustomFov", false)
     val customFovModifier = FloatValue("Fov", 1.4F, 1F, 1.8F) { customFov.get() }
     val chatRectValue = BoolValue("ChatRect", true)
-    val chatAnimationValue = BoolValue("Chat-Animations", true)
+    val chatAnimationValue = BoolValue("Chat-Animations", false)
     val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.06F, 0.01F, 0.5F) { chatAnimationValue.get() }
     private val toggleMessageValue = BoolValue("Toggle-Notification", false)
     private val toggleSoundValue = ListValue("Toggle-Sound", arrayOf("None", "Default", "Custom"), "None")
@@ -260,32 +257,6 @@ class Interface : Module() {
                     (xPos - 4f - fontRenderer.getStringWidth("Packets Received: " + PacketManager.receivePacketCounts)).toDouble(),
                     (yPos - 12f).toDouble(),
                     Color.WHITE.rgb
-                )
-            }
-
-            if (cooldownValue.get()) {
-                val xPos = (ScaledResolution(mc).scaledWidth / 2f) - 130f
-                val yPos = ScaledResolution(mc).scaledHeight
-                val progress = CooldownHelper.getAttackCooldownProgress()
-
-                RenderUtils.newDrawRect(xPos - 26f, yPos - 13f, xPos + 26f, yPos - 8f, Color(150, 150, 150).rgb)
-                RenderUtils.newDrawRect(xPos - 26f, yPos - 13f, xPos + 26f, yPos - 8f, Color(0, 0, 0).rgb)
-
-                if (progress < 1.0 && !mc.isIntegratedServerRunning) {
-                    RenderUtils.drawRect(xPos - 25f, yPos - 12f, xPos + 25f, yPos - 9f, Color(0, 0, 0, 150).rgb)
-                    RenderUtils.drawRect(
-                        xPos - 25f,
-                        yPos - 12f,
-                        xPos + 25f - 50f * progress.toFloat(),
-                        yPos - 9f,
-                        Color(255, 255, 255, 200).rgb
-                    )
-                } else RenderUtils.drawRect(
-                    xPos - 25f,
-                    yPos - 12f,
-                    xPos + 25f,
-                    yPos - 9f,
-                    Color(255, 255, 255, 200).rgb
                 )
             }
         } catch (_: Exception) {

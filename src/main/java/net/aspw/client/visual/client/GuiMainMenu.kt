@@ -72,21 +72,21 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         this.buttonList.add(
             GuiButton(
                 5,
-                (this.width - 100F - FontLoaders.SF21.getStringWidth("CONFIGURE")).toInt(),
+                (this.width - 112F - FontLoaders.SF21.getStringWidth("Configure")).toInt(),
                 8,
                 buttonWidth - 42,
                 buttonHeight,
-                "CONFIGURE"
+                "Configure"
             )
         )
         this.buttonList.add(
             GuiButton(
                 6,
-                (this.width - 14F - FontLoaders.SF21.getStringWidth("CONNECT API")).toInt(),
+                (this.width - 24F - FontLoaders.SF21.getStringWidth("Connect API")).toInt(),
                 8,
                 buttonWidth - 42,
                 buttonHeight,
-                "CONNECT API"
+                "Connect API"
             )
         )
         super.initGui()

@@ -91,11 +91,6 @@ dependencies {
         exclude module: "authlib"
     }
 
-    include('com.github.TheAltening:TheAltening4j:-SNAPSHOT') {
-        exclude module: "gson"
-    }
-    include 'com.github.TheAltening:TheAlteningAuth4j:-SNAPSHOT'
-
     include 'com.github.ben-manes.caffeine:caffeine:2.9.0'
 }
 
