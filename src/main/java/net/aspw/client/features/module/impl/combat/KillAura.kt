@@ -656,19 +656,10 @@ class KillAura : Module() {
 
         var found = false
 
-        // Find best target
         for (entity in targets) {
-            // Update rotations to current target
-            if (!updateRotations(entity)) // when failed then try another target
+            if (!updateRotations(entity))
                 continue
-            Launch.moduleManager.getModule(BackTrack::class.java)?.loopThroughBacktrackData(entity) {
-                if (updateRotations(entity)) {
-                    return@loopThroughBacktrackData true
-                }
-                return@loopThroughBacktrackData false
-            }
 
-            // Set target to current entity
             target = entity
             found = true
 
@@ -680,7 +671,6 @@ class KillAura : Module() {
 
         target = null
 
-        // Cleanup last targets when no target found and try again
         if (prevTargetEntities.isNotEmpty()) {
             prevTargetEntities.clear()
             updateTarget()

@@ -37,8 +37,10 @@ class Gui : Module() {
     val guiBlur = BoolValue("Blur", true)
 
     @JvmField
-    val animationValue: ListValue =
-        object : ListValue("Animation", arrayOf("None", "Zoom"), "Zoom", { styleValue.get() == "DropDown" }) {}
+    val pictureValue = BoolValue("Pictures", true) { styleValue.get() == "Smooth" }
+
+    @JvmField
+    val animationValue = ListValue("Animation", arrayOf("None", "Zoom"), "Zoom") { styleValue.get() == "DropDown" }
 
     @JvmField
     val scaleValue =

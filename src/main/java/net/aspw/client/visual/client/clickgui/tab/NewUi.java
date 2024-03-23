@@ -15,6 +15,7 @@ import net.aspw.client.visual.font.smooth.FontLoaders;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -85,7 +86,7 @@ public class NewUi extends GuiScreen {
             fading -= 0.2F * RenderUtils.deltaTime * 0.045F;
         fading = MathHelper.clamp_float(fading, 0F, 2F);
         GlStateManager.disableAlpha();
-        RenderUtils.drawImage(IconManager.removeIcon, this.width - 49, 34, 16, 16);
+        RenderUtils.drawImage(new ResourceLocation("client/clickgui/remove.png"), this.width - 49, 34, 16, 16);
         GlStateManager.enableAlpha();
         Stencil.write(true);
         Stencil.erase(true);

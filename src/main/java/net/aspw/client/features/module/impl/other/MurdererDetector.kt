@@ -1,21 +1,20 @@
 package net.aspw.client.features.module.impl.other
 
 import net.aspw.client.Launch
-import net.aspw.client.event.*
+import net.aspw.client.event.EventState
+import net.aspw.client.event.EventTarget
+import net.aspw.client.event.MotionEvent
+import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.value.BoolValue
-import net.aspw.client.visual.font.semi.Fonts
-import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
-import java.awt.Color
 
 @ModuleInfo(name = "MurdererDetector", spacedName = "Murderer Detector", category = ModuleCategory.OTHER)
 class MurdererDetector : Module() {
-    private val showText = BoolValue("ShowText", true)
     private val chatValue = BoolValue("Chat", true)
 
     var murderer1: EntityPlayer? = null
@@ -100,27 +99,6 @@ class MurdererDetector : Module() {
                     }
                 }
             }
-        }
-    }
-
-    @EventTarget
-    fun onRender2D(event: Render2DEvent) {
-        val sc = ScaledResolution(mc)
-        if (showText.get()) {
-            Fonts.minecraftFont.drawString(
-                if (murderer1 != null) "Murderer1: §e" + murderer1?.name else "Murderer1: §cNone",
-                sc.scaledWidth / 2F - Fonts.minecraftFont.getStringWidth(if (murderer1 != null) "Murder1: §e" + murderer1?.name else "Murder1: §cNone") / 2F,
-                66.5F,
-                Color(255, 255, 255).rgb,
-                true
-            )
-            Fonts.minecraftFont.drawString(
-                if (murderer2 != null) "Murderer2: §e" + murderer2?.name else "Murderer2: §cNone",
-                sc.scaledWidth / 2F - Fonts.minecraftFont.getStringWidth(if (murderer2 != null) "Murder2: §e" + murderer2?.name else "Murder2: §cNone") / 2F,
-                77.5F,
-                Color(255, 255, 255).rgb,
-                true
-            )
         }
     }
 }

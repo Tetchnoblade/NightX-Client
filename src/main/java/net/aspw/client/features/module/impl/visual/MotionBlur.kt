@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation
     category = ModuleCategory.VISUAL
 )
 class MotionBlur : Module() {
-    private val blurAmount = IntegerValue("Amount", 3, 1, 10)
+    private val blurAmount = IntegerValue("Amount", 5, 1, 10)
 
     override fun onDisable() {
         if (mc.entityRenderer.isShaderActive) mc.entityRenderer.stopUseShader()

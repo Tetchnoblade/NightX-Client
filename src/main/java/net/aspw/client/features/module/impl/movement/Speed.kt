@@ -363,12 +363,6 @@ class Speed : Module() {
     val motionYValue = FloatValue("MotionY", 0.42f, 0f, 2f) {
         modeName.equals("watchdogcustom", ignoreCase = true)
     }
-    val lowHopValue = BoolValue("LowHop", true) {
-        modeName.equals("watchdogground", ignoreCase = true)
-    }
-    val speedPotBoostValue = BoolValue("SpeedPotBoost", true) {
-        modeName.equals("watchdogground", ignoreCase = true)
-    }
 
     @JvmField
     val speedValue = FloatValue("CustomSpeed", 1.0f, 0.2f, 2f) { typeValue.get().equals("custom", ignoreCase = true) }

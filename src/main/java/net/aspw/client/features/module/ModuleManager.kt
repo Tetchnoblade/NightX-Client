@@ -142,7 +142,6 @@ class ModuleManager : Listenable {
             AntiFrozen::class.java,
             Trajectories::class.java,
             WTap::class.java,
-            BackTrack::class.java,
             TriggerBot::class.java,
             NoJumpDelay::class.java,
             InvManager::class.java,

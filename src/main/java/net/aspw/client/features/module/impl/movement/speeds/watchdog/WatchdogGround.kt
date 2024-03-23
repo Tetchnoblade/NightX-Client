@@ -30,14 +30,10 @@ class WatchdogGround : SpeedMode("WatchdogGround") {
                     mc.thePlayer.motionY += ((mc.thePlayer.getActivePotionEffect(Potion.jump).amplifier + 1).toFloat() * 0.1f).toDouble()
                 mc.thePlayer.isAirBorne = true
                 mc.thePlayer.triggerAchievement(StatList.jumpStat)
-                if (mc.thePlayer.isPotionActive(Potion.moveSpeed) && speed.speedPotBoostValue.get()) {
-                    MovementUtils.strafe(0.565f)
-                } else {
-                    MovementUtils.strafe(0.46f)
-                }
-            } else {
-                if (speed.lowHopValue.get())
-                    mc.thePlayer.motionY -= 0.00009
+                val baseSpeed = 0.48f
+                if (mc.thePlayer.isPotionActive(Potion.moveSpeed))
+                    MovementUtils.strafe(baseSpeed + ((mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1).toFloat() * 0.12f))
+                else MovementUtils.strafe(baseSpeed)
             }
         }
     }
