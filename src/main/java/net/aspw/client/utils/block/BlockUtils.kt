@@ -20,6 +20,14 @@ import kotlin.math.floor
 object BlockUtils : MinecraftInstance() {
 
     /**
+     * Get player is in block
+     */
+    @JvmStatic
+    fun isInsideBlock(): Boolean {
+        return isInsideBlock(mc.thePlayer.entityBoundingBox)
+    }
+
+    /**
      * Get aABB is in block
      */
     @JvmStatic
