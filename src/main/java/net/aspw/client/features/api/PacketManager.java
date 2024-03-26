@@ -174,7 +174,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 entity instanceof EntityItemFrame ||
                 entity instanceof EntityTNTPrimed ||
                 entity instanceof EntityArmorStand) &&
-                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 45.0f;
+                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 35.0f;
     }
 
     @Override

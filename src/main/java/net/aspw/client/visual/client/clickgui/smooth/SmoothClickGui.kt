@@ -74,15 +74,15 @@ class SmoothClickGui : GuiScreen() {
             "3" -> {
                 pictureX = width - 140f
                 pictureY = height - 160f
-                pictureWidth = 60 + 50
-                pictureHeight = 65 + 50
+                pictureWidth = 110
+                pictureHeight = 115
             }
 
             "4" -> {
                 pictureX = width - 140f
                 pictureY = height - 160f
-                pictureWidth = 81 + 40
-                pictureHeight = 70 + 40
+                pictureWidth = 121
+                pictureHeight = 110
             }
 
             else -> {
@@ -93,7 +93,7 @@ class SmoothClickGui : GuiScreen() {
             }
         }
 
-        if (Launch.moduleManager.getModule(Gui::class.java)?.pictureValue?.get()!!)
+        if (Launch.moduleManager.getModule(Gui::class.java)?.picturesValue?.get()!!)
             RenderUtils.drawImage2(
                 ResourceLocation("client/clickgui/pictures/$randomPicture.png"),
                 pictureX,

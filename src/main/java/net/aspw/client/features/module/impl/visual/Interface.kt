@@ -187,6 +187,10 @@ class Interface : Module() {
                     }
 
                     val healthLength = (entity.health / entity.maxHealth).coerceIn(0F, 1F)
+
+                    if (healthColor > 255)
+                        healthColor = 255
+
                     RenderUtils.drawRect(
                         xPos + 36F,
                         yPos + 26.5F,
@@ -195,14 +199,10 @@ class Interface : Module() {
                             entity.maxHealth
                         ) * (healthLength + 74F)),
                         yPos + 36F,
-                        Color(
-                            245,
-                            healthColor,
-                            1
-                        ).rgb
+                        Color(245, healthColor, 1).rgb
                     )
+                    font.drawStringWithShadow(healthString, xPos + 64.5F, yPos + 27F, Color(245, healthColor, 1).rgb)
 
-                    RenderUtils.newDrawRect(xPos - 1, yPos + 3, xPos + 33F, yPos + 37F, Color(150, 150, 150).rgb)
                     RenderUtils.newDrawRect(xPos - 1, yPos + 3, xPos + 33F, yPos + 37F, Color(0, 0, 0).rgb)
 
                     if (mc.netHandler.getPlayerInfo(entity.uniqueID) != null)
@@ -211,6 +211,11 @@ class Interface : Module() {
                             xPos.toInt(),
                             yPos.toInt() + 4
                         )
+                    else {
+                        font.drawStringWithShadow("No", xPos + 9, yPos + 7F, Color(120, 120, 120).rgb)
+                        font.drawStringWithShadow("Image", xPos + 2, yPos + 16F, Color(120, 120, 120).rgb)
+                        font.drawStringWithShadow("Found", xPos + 1, yPos + 25F, Color(120, 120, 120).rgb)
+                    }
 
                     updateAnim(entity.health)
 
@@ -220,17 +225,6 @@ class Interface : Module() {
                         xPos + 36F,
                         yPos + 15F,
                         Color(255, 255, 255).rgb
-                    )
-
-                    font.drawStringWithShadow(
-                        healthString,
-                        xPos + 64.5F,
-                        yPos + 27F,
-                        Color(
-                            245,
-                            healthColor,
-                            1
-                        ).rgb
                     )
                 } else if (easingHealth != 0F) easingHealth = 0F
             }
