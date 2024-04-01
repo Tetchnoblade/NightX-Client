@@ -73,6 +73,7 @@
     "render.MixinRenderEntityItem",
     "render.MixinRendererLivingEntity",
     "render.MixinRenderItem",
+    "render.MixinRenderManager",
     "render.MixinRenderPlayer",
     "render.MixinTileEntityRendererDispatcher",
     "render.MixinVisGraph",

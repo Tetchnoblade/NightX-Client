@@ -22,7 +22,6 @@ import net.aspw.client.protocol.ProtocolMod
 import net.aspw.client.utils.*
 import net.aspw.client.utils.ClassUtils.hasForge
 import net.aspw.client.utils.misc.sound.TipSoundManager
-import net.aspw.client.utils.APIConnecter
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.font.semi.Fonts
 
@@ -31,9 +30,9 @@ object Launch {
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Client"
-    const val CLIENT_VERSION = "B102"
-    const val CLIENT_PROTOCOL_RANGE = "1.8 to 1.20.5"
+    const val CLIENT_VERSION = "B103"
     const val CLIENT_CHAT = "§c$CLIENT_BEST: §r"
+    const val CLIENT_PROTOCOL_RANGE = "1.8 to 1.20.5"
 
     var isStarting = false
 

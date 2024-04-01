@@ -40,11 +40,6 @@ class Annoy : Module() {
 
             "spin" -> {
                 yaw += spinSpeed.get()
-                if (yaw > 175.0f) {
-                    yaw = -180.0f
-                } else if (yaw < -175.0f) {
-                    yaw = 180.0f
-                }
             }
 
             "jitter" -> {
@@ -71,10 +66,10 @@ class Annoy : Module() {
 
             "jitter" -> {
                 pitch += 30.0f
-                if (pitch > 90.0f) {
-                    pitch = -90.0f
-                } else if (pitch < -90.0f) {
-                    pitch = 90.0f
+                if (pitch > 80.0f) {
+                    pitch = -80.0f
+                } else if (pitch < -80.0f) {
+                    pitch = 80.0f
                 }
             }
         }

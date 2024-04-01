@@ -28,7 +28,7 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
         // Login via Microsoft account
         if (Launch.useAltManager)
             buttonList.add(GuiButton(3, width / 2 - 100, 133, "Microsoft Login"))
-        else buttonList.add(GuiButton(4, width / 2 - 100, 133, "Update Java for Microsoft Login"))
+        else buttonList.add(GuiButton(4, width / 2 - 100, 133, "Set Java Path for Microsoft Login"))
 
         // Add and back button
         buttonList.add(

@@ -1,7 +1,11 @@
 package net.aspw.client.utils
 
 import net.aspw.client.Launch
-import okhttp3.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 object APIConnecter {
 
@@ -15,10 +19,26 @@ object APIConnecter {
     var mushstafflist = ""
     var hypixelstafflist = ""
 
+    private val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+        override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {}
+        override fun checkServerTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {}
+        override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
+            return arrayOf()
+        }
+    })
+    private val sslContext = SSLContext.getInstance("TLS")
+
+    private fun tlsAuthConnectionFixes() {
+        sslContext.init(null, trustAllCerts, java.security.SecureRandom())
+    }
+
     fun checkStatus() {
         try {
             var gotData: String
-            val client = OkHttpClient()
+            tlsAuthConnectionFixes()
+            val client = OkHttpClient.Builder()
+                .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
+                .build()
             val builder = Request.Builder().url(URLComponent.STATUS)
             val request: Request = builder.build()
             client.newCall(request).execute().use { response ->
@@ -41,7 +61,10 @@ object APIConnecter {
     fun checkStaffList() {
         try {
             var gotData: String
-            val client = OkHttpClient()
+            tlsAuthConnectionFixes()
+            val client = OkHttpClient.Builder()
+                .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
+                .build()
             val builder = Request.Builder().url(URLComponent.STAFFS)
             val request: Request = builder.build()
             client.newCall(request).execute().use { response ->
@@ -60,7 +83,10 @@ object APIConnecter {
     fun configLoad(name: String): String {
         var gotData = ""
         try {
-            val client = OkHttpClient()
+            tlsAuthConnectionFixes()
+            val client = OkHttpClient.Builder()
+                .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
+                .build()
             val builder = Request.Builder().url(URLComponent.CONFIGS + name)
             val request: Request = builder.build()
             client.newCall(request).execute().use { response ->
@@ -76,7 +102,10 @@ object APIConnecter {
     fun configList(): String {
         var gotData = ""
         try {
-            val client = OkHttpClient()
+            tlsAuthConnectionFixes()
+            val client = OkHttpClient.Builder()
+                .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
+                .build()
             val builder = Request.Builder().url(URLComponent.CONFIGLIST)
             val request: Request = builder.build()
             client.newCall(request).execute().use { response ->

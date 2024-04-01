@@ -150,6 +150,10 @@ public final class ESP extends Module {
         drawScaledString(text, x - FontLoaders.SF21.getStringWidth(text) / 2F * 1.0, y);
     }
 
+    public static boolean shouldCancelNameTag(EntityLivingBase entity) {
+        return Objects.requireNonNull(Launch.moduleManager.getModule(ESP.class)).getState() && collectedEntities.contains(entity);
+    }
+
     private void collectEntities() {
         collectedEntities.clear();
         List<Entity> playerEntities = mc.theWorld.loadedEntityList;
@@ -161,7 +165,6 @@ public final class ESP extends Module {
                 collectedEntities.add(entity);
             }
         }
-
     }
 
     private Vector3d project2D(int scaleFactor, double x, double y, double z) {

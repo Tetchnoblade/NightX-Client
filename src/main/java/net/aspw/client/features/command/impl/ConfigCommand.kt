@@ -4,13 +4,9 @@ import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.utils.APIConnecter
+import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.SettingsUtils
-import net.aspw.client.utils.URLComponent
 import net.aspw.client.utils.misc.StringUtils
-import org.apache.http.client.methods.HttpGet
-import org.apache.http.impl.client.CloseableHttpClient
-import org.apache.http.impl.client.HttpClients
-import org.apache.http.util.EntityUtils
 import java.awt.Desktop
 import java.io.File
 import java.io.IOException
@@ -172,8 +168,8 @@ class ConfigCommand : Command("config", arrayOf("c")) {
 
                 args[1].equals("onlinelist", ignoreCase = true) -> {
                     try {
-                        chat("§cOnlineConfigs:")
-                        chat(APIConnecter.configList())
+                        chat("§cOnline Configs:")
+                        ClientUtils.displayChatMessage(APIConnecter.configList())
                     } catch (e: Exception) {
                         chat("§cAPI Error!")
                     }

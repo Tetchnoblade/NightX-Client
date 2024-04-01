@@ -3,6 +3,7 @@ package net.aspw.client.protocol.api;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.protocol.ProtocolBase;
+import net.aspw.client.visual.font.smooth.FontLoaders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -33,9 +34,9 @@ public class ProtocolSelector extends GuiScreen {
     @Override
     public void initGui() {
         super.initGui();
-        buttonList.add(new GuiButton(1, 5, height - 25, 20, 20, "<-"));
+        buttonList.add(new GuiButton(1, 5, height - 25, 60, 20, "Done"));
 
-        list = new SlotList(mc, width, height, -26 + (fontRendererObj.FONT_HEIGHT) * 3 /* title is 2 */, height, fontRendererObj.FONT_HEIGHT);
+        list = new SlotList(mc, width, height, -26 + (FontLoaders.SF21.getHeight()) * 3, height, FontLoaders.SF21.getHeight());
     }
 
     @Override
@@ -63,7 +64,6 @@ public class ProtocolSelector extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         list.drawScreen(mouseX, mouseY, partialTicks);
-
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
@@ -75,7 +75,7 @@ public class ProtocolSelector extends GuiScreen {
 
         @Override
         protected int getSize() {
-            return ProtocolVersionList.getProtocolsNewToOld().size();
+            return ProtocolVersionList.getProtocolsNewToOld().size() - 2;
         }
 
         @Override
@@ -105,7 +105,7 @@ public class ProtocolSelector extends GuiScreen {
                 color = ProtocolSelector.this.simple ? ChatFormatting.WHITE.toString() : ChatFormatting.DARK_RED.toString();
             }
 
-            drawCenteredString(mc.fontRendererObj, (color) + version.getName(), width / 2, y - 3, -1);
+            FontLoaders.SF21.drawCenteredStringWithShadow((color) + version.getName(), width / 2F, y - 2.5f, -1);
         }
     }
 

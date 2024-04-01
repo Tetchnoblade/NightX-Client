@@ -105,33 +105,13 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             width, height
         )
         GlStateManager.enableAlpha()
-        if (APIConnecter.canConnect) {
-            FontLoaders.SF20.drawStringWithShadow(
-                "API Connection: §eOK",
-                (this.width - 10F - FontLoaders.SF20.getStringWidth("API Connection: §eOK")).toDouble(),
-                32F.toDouble(),
-                -1
-            )
-            FontLoaders.SF20.drawStringWithShadow(
-                "Every modules, commands are working correctly",
-                (this.width - 10F - FontLoaders.SF20.getStringWidth("Every modules, commands are working correctly")).toDouble(),
-                42F.toDouble(),
-                -1
-            )
-        } else {
-            FontLoaders.SF20.drawStringWithShadow(
-                "API Connection: §cNo",
-                (this.width - 10F - FontLoaders.SF20.getStringWidth("API Connection: §cNo")).toDouble(),
-                32F.toDouble(),
-                -1
-            )
-            FontLoaders.SF20.drawStringWithShadow(
-                "Some modules, commands are not working",
-                (this.width - 10F - FontLoaders.SF20.getStringWidth("Some modules, commands are not working")).toDouble(),
-                42F.toDouble(),
-                -1
-            )
-        }
+        val apiMessage = if (APIConnecter.canConnect) "§eOK" else "§cNo"
+        FontLoaders.SF20.drawStringWithShadow(
+            "API Connection: $apiMessage",
+            (this.width - 10F - FontLoaders.SF20.getStringWidth("API Connection: $apiMessage")).toDouble(),
+            32F.toDouble(),
+            -1
+        )
         FontLoaders.SF20.drawStringWithShadow(
             Launch.CLIENT_BEST + " Client - " + Launch.CLIENT_PROTOCOL_RANGE,
             4F.toDouble(),

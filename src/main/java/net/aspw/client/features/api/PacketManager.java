@@ -54,7 +54,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onRender3D(Render3DEvent event) {
-        if (RotationUtils.targetRotation != null) {
+        if (RotationUtils.targetRotation != null && Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).getState()) {
             if (Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).getBodyTweaks().get()) {
                 mc.thePlayer.renderYawOffset = RotationUtils.targetRotation.getYaw();
                 mc.thePlayer.rotationYawHead = RotationUtils.targetRotation.getYaw();

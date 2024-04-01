@@ -92,14 +92,14 @@ class ModuleButton(x: Float, y: Float, width: Float, height: Float, var module: 
 
         if (module.state)
             FONT.drawHeightCenteredString(
-                module.name,
-                x - 4 + (height - getHeight(FONT)) / 2 + 3,
+                "> " + module.name,
+                x - 3.8f + (height - getHeight(FONT)) / 2 + 3,
                 y - 9 + height + 1 / 2,
                 -1
             )
         else FONT.drawHeightCenteredString(
             "§7" + module.name,
-            x - 4 + (height - getHeight(FONT)) / 2 + 3,
+            x - 3.8f + (height - getHeight(FONT)) / 2 + 3,
             y - 9 + height + 1 / 2,
             -1
         )

@@ -504,7 +504,7 @@ public abstract class MixinItemRenderer {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.01, Animations.blockPosY.get().doubleValue() - 0.07, Animations.blockPosZ.get().doubleValue() - 0.24);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, f1);
-                                else this.transformFirstPersonItem(f / 1.2f, f1);
+                                else this.transformFirstPersonItem(f, f1);
                                 this.doBlockTransformations();
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
@@ -674,7 +674,7 @@ public abstract class MixinItemRenderer {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, f1);
-                                else this.transformFirstPersonItem(f / 1.2f, f1);
+                                else this.transformFirstPersonItem(f, f1);
                                 this.doBlockTransformations();
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;

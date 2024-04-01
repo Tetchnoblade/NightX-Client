@@ -67,7 +67,7 @@ class Criticals : Module() {
 
     @EventTarget
     fun onAttack(event: AttackEvent) {
-        if (onlyAuraValue.get() && !Launch.moduleManager[KillAura::class.java]!!.state && !Launch.moduleManager[TPAura::class.java]!!.state) return
+        if (onlyAuraValue.get() && !Launch.moduleManager[KillAura::class.java]!!.state || Launch.moduleManager[TPAura::class.java]!!.state) return
 
         if (event.targetEntity is EntityLivingBase) {
             val entity = event.targetEntity
@@ -241,7 +241,7 @@ class Criticals : Module() {
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
-        if (onlyAuraValue.get() && !Launch.moduleManager[KillAura::class.java]!!.state) return
+        if (onlyAuraValue.get() && !Launch.moduleManager[KillAura::class.java]!!.state || Launch.moduleManager[TPAura::class.java]!!.state) return
 
         val packet = event.packet
 

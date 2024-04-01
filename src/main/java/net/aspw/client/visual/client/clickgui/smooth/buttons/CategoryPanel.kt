@@ -3,7 +3,6 @@ package net.aspw.client.visual.client.clickgui.smooth.buttons
 import net.aspw.client.Launch
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.utils.geom.Rectangle
-import net.aspw.client.utils.render.RenderUtils.drawBorderedRect
 import net.aspw.client.utils.render.RenderUtils.drawRect
 import net.aspw.client.visual.client.clickgui.smooth.SmoothConstants.BACKGROUND_CATEGORY
 import net.aspw.client.visual.client.clickgui.smooth.SmoothConstants.FONT
@@ -71,7 +70,7 @@ class CategoryPanel(x: Float, y: Float, var category: ModuleCategory, var color:
             "targets" -> Fonts.icons.drawStringWithShadow("I", x + xPos, y + 4, markColor)
         }
 
-        FONT.drawHeightCenteredString("§l" + category.displayName, x + 3, y + 1 + height / 2, -0x1)
+        FONT.drawHeightCenteredString("§l" + category.displayName, x + 4, y + 0.5f + height / 2, -0x1)
 
         var used = 0f
         if (open) {
@@ -83,8 +82,6 @@ class CategoryPanel(x: Float, y: Float, var category: ModuleCategory, var color:
                 used += box.height
             }
         }
-
-        drawBorderedRect(x, y, x + width, y + height + used, 1f, color.rgb, Color(10, 10, 10, 20).rgb)
 
         return Rectangle()
     }

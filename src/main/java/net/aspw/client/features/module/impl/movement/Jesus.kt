@@ -26,20 +26,20 @@ class Jesus : Module() {
         arrayOf(
             "Vanilla",
             "NCP",
-            "Bounce",
+            "Vulcan",
+            "Verus",
             "AAC",
             "AACFly",
             "AAC3.3.11",
             "AAC4.2.1",
+            "Bounce",
             "Twillight",
             "MatrixFast",
             "MatrixDolphin",
             "Dolphin",
-            "Swim",
-            "Vulcan",
-            "Verus"
+            "Swim"
         ),
-        "NCP"
+        "Vanilla"
     )
     private val aacFlyValue = FloatValue("Motion", 0.5f, 0.1f, 1f) { modeValue.get() == "AACFly" }
     private var nextTick = false
