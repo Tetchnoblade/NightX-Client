@@ -23,8 +23,8 @@ class FastMine : Module() {
     private var damage = 0f
 
     @EventTarget
-    fun onMotion(e: MotionEvent) {
-        if (e.eventState == EventState.PRE) {
+    fun onMotion(event: MotionEvent) {
+        if (event.eventState == EventState.PRE) {
             mc.playerController.blockHitDelay = 0
             if (pos != null && boost) {
                 val blockState = mc.theWorld.getBlockState(pos) ?: return
@@ -56,9 +56,9 @@ class FastMine : Module() {
     }
 
     @EventTarget
-    fun onPacket(e: PacketEvent) {
-        if (e.packet is C07PacketPlayerDigging) {
-            val packet = e.packet
+    fun onPacket(event: PacketEvent) {
+        val packet = event.packet
+        if (packet is C07PacketPlayerDigging) {
             if (packet.status == C07PacketPlayerDigging.Action.START_DESTROY_BLOCK) {
                 boost = true
                 pos = packet.position

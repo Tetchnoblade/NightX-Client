@@ -14,7 +14,6 @@ import net.aspw.client.features.module.impl.combat.TPAura
 import net.aspw.client.protocol.ProtocolBase
 import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.AnimationUtils
-import net.aspw.client.utils.render.ColorUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -150,7 +149,7 @@ class Interface : Module() {
                         displayString,
                         xPos.toDouble(),
                         module.arrayY + textY.toDouble(),
-                        ColorUtils.LiquidSlowly(System.nanoTime(), index * 25, 0.35f, 1f).rgb
+                        RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb
                     )
                 }
                 GlStateManager.resetColor()

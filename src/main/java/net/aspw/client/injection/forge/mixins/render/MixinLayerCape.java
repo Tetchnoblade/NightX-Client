@@ -1,5 +1,7 @@
 package net.aspw.client.injection.forge.mixins.render;
 
+import net.aspw.client.Launch;
+import net.aspw.client.features.module.impl.visual.Cape;
 import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.RotationUtils;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -10,6 +12,8 @@ import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.*;
+
+import java.util.Objects;
 
 /**
  * The type Mixin layer arrow.
@@ -40,11 +44,18 @@ public class MixinLayerCape {
             double d0 = entitylivingbaseIn.prevChasingPosX + (entitylivingbaseIn.chasingPosX - entitylivingbaseIn.prevChasingPosX) * (double) partialTicks - (entitylivingbaseIn.prevPosX + (entitylivingbaseIn.posX - entitylivingbaseIn.prevPosX) * (double) partialTicks);
             double d1 = entitylivingbaseIn.prevChasingPosY + (entitylivingbaseIn.chasingPosY - entitylivingbaseIn.prevChasingPosY) * (double) partialTicks - (entitylivingbaseIn.prevPosY + (entitylivingbaseIn.posY - entitylivingbaseIn.prevPosY) * (double) partialTicks);
             double d2 = entitylivingbaseIn.prevChasingPosZ + (entitylivingbaseIn.chasingPosZ - entitylivingbaseIn.prevChasingPosZ) * (double) partialTicks - (entitylivingbaseIn.prevPosZ + (entitylivingbaseIn.posZ - entitylivingbaseIn.prevPosZ) * (double) partialTicks);
-            float f;
-            if (entitylivingbaseIn == MinecraftInstance.mc.thePlayer)
-                f = RotationUtils.cameraYaw + (RotationUtils.cameraYaw - RotationUtils.prevCameraYaw) * partialTicks;
-            else
-                f = entitylivingbaseIn.prevRotationYaw + (entitylivingbaseIn.rotationYaw - entitylivingbaseIn.prevRotationYaw) * partialTicks;
+            float f = entitylivingbaseIn.prevRenderYawOffset + (entitylivingbaseIn.renderYawOffset - entitylivingbaseIn.prevRenderYawOffset) * partialTicks;
+            switch (Objects.requireNonNull(Launch.moduleManager.getModule(Cape.class)).getAnimationModeValue().get()) {
+                case "Vanilla":
+                    f = entitylivingbaseIn.prevRenderYawOffset + (entitylivingbaseIn.renderYawOffset - entitylivingbaseIn.prevRenderYawOffset) * partialTicks;
+                    break;
+                case "Smooth":
+                    if (entitylivingbaseIn == MinecraftInstance.mc.thePlayer)
+                        f = RotationUtils.cameraYaw + (RotationUtils.cameraYaw - RotationUtils.prevCameraYaw) * partialTicks;
+                    else
+                        f = entitylivingbaseIn.prevRotationYaw + (entitylivingbaseIn.rotationYaw - entitylivingbaseIn.prevRotationYaw) * partialTicks;
+                    break;
+            }
             double d3 = MathHelper.sin(f * 3.1415927F / 180.0F);
             double d4 = -MathHelper.cos(f * 3.1415927F / 180.0F);
             float f1 = (float) d1 * 10.0F;

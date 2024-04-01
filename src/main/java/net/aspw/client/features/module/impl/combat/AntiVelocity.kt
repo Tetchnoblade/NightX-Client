@@ -139,12 +139,12 @@ class AntiVelocity : Module() {
     // Grim
     private var cancelPacket = 6
     private var resetPersec = 8
-    private var grimTCancel = 0
+    private var tCancel = 0
     private var updates = 0
     private var start2 = 0
 
     override fun onDisable() {
-        grimTCancel = 0
+        tCancel = 0
         start2 = 0
     }
 
@@ -204,8 +204,8 @@ class AntiVelocity : Module() {
                 if (resetPersec > 0) {
                     if (updates >= 0) {
                         updates = 0
-                        if (grimTCancel > 0) {
-                            grimTCancel--
+                        if (tCancel > 0) {
+                            tCancel--
                         }
                     }
                 }
@@ -393,9 +393,9 @@ class AntiVelocity : Module() {
 
         when (modeValue.get().lowercase(Locale.getDefault())) {
             "vulcan" -> {
-                if (packet is S32PacketConfirmTransaction && grimTCancel > 0) {
+                if (packet is S32PacketConfirmTransaction && tCancel > 0) {
                     event.cancelEvent()
-                    grimTCancel--
+                    tCancel--
                 }
             }
 
@@ -467,7 +467,7 @@ class AntiVelocity : Module() {
                 "vulcan" -> {
                     if (packet.entityID == mc.thePlayer.entityId) {
                         event.cancelEvent()
-                        grimTCancel = cancelPacket
+                        tCancel = cancelPacket
                     }
                 }
 

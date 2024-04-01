@@ -39,8 +39,11 @@ class Animations : Module() {
                 "Stab",
                 "Float",
                 "Remix",
+                "Avatar",
                 "Winter",
                 "Xiv",
+                "SlideSwing",
+                "SmallPush",
                 "Reverse",
                 "Invent",
                 "Leaked",
@@ -83,12 +86,6 @@ class Animations : Module() {
 
         @JvmField
         val tabAnimations = ListValue("Tab-Animation", arrayOf("None", "Zoom", "Slide"), "None")
-
-        @JvmField
-        val fankeyBobbing = BoolValue("FankeyBobbing", false)
-
-        @JvmField
-        val bedrockEating = BoolValue("BedrockEating-ThirdPerson", true)
 
         @JvmField
         val cancelEquip = BoolValue("CancelEquip", false)

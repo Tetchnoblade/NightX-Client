@@ -147,8 +147,8 @@ class AntiBots : Module() {
     }
 
     @EventTarget
-    fun onAttack(e: AttackEvent) {
-        val entity = e.targetEntity
+    fun onAttack(event: AttackEvent) {
+        val entity = event.targetEntity
         if (entity is EntityLivingBase && !hitted.contains(entity.getEntityId())) hitted.add(entity.getEntityId())
     }
 

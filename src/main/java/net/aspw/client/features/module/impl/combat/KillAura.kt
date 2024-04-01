@@ -23,7 +23,6 @@ import net.aspw.client.protocol.ProtocolBase
 import net.aspw.client.utils.*
 import net.aspw.client.utils.extensions.getDistanceToEntityBox
 import net.aspw.client.utils.extensions.getNearestPointBB
-import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.utils.timer.TimeUtils
@@ -32,7 +31,6 @@ import net.aspw.client.value.FloatValue
 import net.aspw.client.value.IntegerValue
 import net.aspw.client.value.ListValue
 import net.minecraft.client.gui.inventory.GuiContainer
-import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
@@ -45,8 +43,6 @@ import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.Vec3
-import org.lwjgl.opengl.GL11
-import java.awt.Color
 import java.util.*
 import kotlin.math.cos
 import kotlin.math.max
@@ -224,12 +220,6 @@ class KillAura : Module() {
     private val limitedMultiTargetsValue =
         IntegerValue("LimitedMultiTargets", 6, 1, 20) { targetModeValue.get().equals("multi", true) }
 
-    // Visuals
-    private val waterParticleValue = BoolValue("WaterParticles", false)
-    private val espValue = BoolValue("CSGO-ESP", false)
-    private val boxEspValue = BoolValue("Box-ESP", false)
-    private val circleValue = BoolValue("Circle", false)
-
     /**
      * MODULE
      */
@@ -357,8 +347,6 @@ class KillAura : Module() {
         update()
 
         if (target != null) {
-            if (mc.thePlayer.ticksExisted % 6 == 0 && waterParticleValue.get())
-                mc.effectRenderer.emitParticleAtEntity(target, EnumParticleTypes.SPELL_MOB_AMBIENT)
             when (particleValue.get().lowercase()) {
                 "hit" -> {
                     if (target?.hurtTime!! > 9) {
@@ -420,105 +408,9 @@ class KillAura : Module() {
      */
     @EventTarget
     fun onRender3D(event: Render3DEvent) {
-        if (circleValue.get()) {
-            GL11.glPushMatrix()
-            GL11.glTranslated(
-                mc.thePlayer.lastTickPosX + (mc.thePlayer.posX - mc.thePlayer.lastTickPosX) * mc.timer.renderPartialTicks - mc.renderManager.renderPosX,
-                mc.thePlayer.lastTickPosY + (mc.thePlayer.posY - mc.thePlayer.lastTickPosY) * mc.timer.renderPartialTicks - mc.renderManager.renderPosY,
-                mc.thePlayer.lastTickPosZ + (mc.thePlayer.posZ - mc.thePlayer.lastTickPosZ) * mc.timer.renderPartialTicks - mc.renderManager.renderPosZ
-            )
-            GL11.glEnable(GL11.GL_BLEND)
-            GL11.glEnable(GL11.GL_LINE_SMOOTH)
-            GL11.glDisable(GL11.GL_TEXTURE_2D)
-            GL11.glDisable(GL11.GL_DEPTH_TEST)
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-
-            GL11.glLineWidth(1F)
-            GL11.glColor4f(
-                0.toFloat() / 255.0F,
-                255.toFloat() / 255.0F,
-                255.toFloat() / 255.0F,
-                200.toFloat() / 255.0F
-            )
-            GL11.glRotatef(90F, 1F, 0F, 0F)
-            GL11.glBegin(GL11.GL_LINE_STRIP)
-
-            for (i in 0..360 step 60 - 40) { // You can change circle accuracy  (60 - accuracy)
-                GL11.glVertex2f(
-                    cos(i * Math.PI / 180.0).toFloat() * rangeValue.get(),
-                    (sin(i * Math.PI / 180.0).toFloat() * rangeValue.get())
-                )
-            }
-
-            GL11.glEnd()
-
-            GL11.glDisable(GL11.GL_BLEND)
-            GL11.glEnable(GL11.GL_TEXTURE_2D)
-            GL11.glEnable(GL11.GL_DEPTH_TEST)
-            GL11.glDisable(GL11.GL_LINE_SMOOTH)
-
-            GL11.glPopMatrix()
-        }
-
         if (cancelRun) return
 
         target ?: return
-
-        if (boxEspValue.get())
-            RenderUtils.drawEntityBox(target!!, Color.WHITE, false)
-
-        if (espValue.get()) {
-            GL11.glPushMatrix()
-            GL11.glTranslated(
-                target!!.lastTickPosX + (target!!.posX - target!!.lastTickPosX) * mc.timer.renderPartialTicks - mc.renderManager.renderPosX,
-                target!!.lastTickPosY + (target!!.posY - target!!.lastTickPosY) * mc.timer.renderPartialTicks - mc.renderManager.renderPosY,
-                target!!.lastTickPosZ + (target!!.posZ - target!!.lastTickPosZ) * mc.timer.renderPartialTicks - mc.renderManager.renderPosZ
-            )
-            GL11.glEnable(GL11.GL_BLEND)
-            GL11.glEnable(GL11.GL_LINE_SMOOTH)
-            GL11.glDisable(GL11.GL_TEXTURE_2D)
-            GL11.glDisable(GL11.GL_DEPTH_TEST)
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-            GL11.glRotatef(90F, 1F, 0F, 0F)
-
-            GL11.glLineWidth(3 + 1.25F)
-            GL11.glColor3f(0F, 0F, 0F)
-            GL11.glBegin(GL11.GL_LINE_LOOP)
-
-            for (i in 0..360 step 60 - 14) { // You can change circle accuracy  (60 - accuracy)
-                GL11.glVertex2f(
-                    cos(i * Math.PI / 180.0).toFloat() * 1.5f,
-                    (sin(i * Math.PI / 180.0).toFloat() * 1.5f)
-                )
-            }
-
-            GL11.glEnd()
-
-            GL11.glLineWidth(3f)
-            GL11.glBegin(GL11.GL_LINE_LOOP)
-
-            for (i in 0..360 step 60 - 14) { // You can change circle accuracy  (60 - accuracy)
-                if (target!!.hurtTime == 0)
-                    GL11.glColor3f(0 / 255.0f, 255 / 255.0f, 255 / 255.0f)
-                else GL11.glColor3f(255 / 255.0f, 0 / 255.0f, 255 / 255.0f)
-                GL11.glVertex2f(
-                    cos(i * Math.PI / 180.0).toFloat() * 1.5f,
-                    (sin(i * Math.PI / 180.0).toFloat() * 1.5f)
-                )
-            }
-
-            GL11.glEnd()
-
-            GL11.glDisable(GL11.GL_BLEND)
-            GL11.glEnable(GL11.GL_TEXTURE_2D)
-            GL11.glEnable(GL11.GL_DEPTH_TEST)
-            GL11.glDisable(GL11.GL_LINE_SMOOTH)
-
-            GL11.glPopMatrix()
-
-            GlStateManager.resetColor()
-            GL11.glColor4f(1F, 1F, 1F, 1F)
-        }
 
         if (currentTarget != null && attackTimer.hasTimePassed(attackDelay) &&
             currentTarget!!.hurtTime <= 10

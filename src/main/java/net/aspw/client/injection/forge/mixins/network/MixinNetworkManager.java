@@ -5,7 +5,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import net.aspw.client.Launch;
 import net.aspw.client.event.PacketEvent;
-import net.aspw.client.features.module.impl.exploit.ExtendedPosition;
+import net.aspw.client.features.module.impl.combat.BackTrack;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.protocol.api.VFNetworkManager;
 import net.aspw.client.utils.PacketUtils;
@@ -68,11 +68,11 @@ public class MixinNetworkManager implements VFNetworkManager {
     @Overwrite
     protected void channelRead0(final ChannelHandlerContext p_channelRead0_1_, final Packet p_channelRead0_2_) {
         final PacketEvent event = new PacketEvent(p_channelRead0_2_);
-        final ExtendedPosition extendedPosition = Launch.moduleManager.getModule(ExtendedPosition.class);
-        assert extendedPosition != null;
-        if (extendedPosition.getState()) {
+        final BackTrack backTrack = Launch.moduleManager.getModule(BackTrack.class);
+        assert backTrack != null;
+        if (backTrack.getState()) {
             try {
-                extendedPosition.onPacket(event);
+                backTrack.onPacket(event);
             } catch (final Exception ignored) {
             }
         }
@@ -93,11 +93,11 @@ public class MixinNetworkManager implements VFNetworkManager {
     private void send(final Packet<?> packet, final CallbackInfo callback) {
         if (PacketUtils.handleSendPacket(packet)) return;
         final PacketEvent event = new PacketEvent(packet);
-        final ExtendedPosition extendedPosition = Launch.moduleManager.getModule(ExtendedPosition.class);
-        assert extendedPosition != null;
-        if (extendedPosition.getState()) {
+        final BackTrack backTrack = Launch.moduleManager.getModule(BackTrack.class);
+        assert backTrack != null;
+        if (backTrack.getState()) {
             try {
-                extendedPosition.onPacket(event);
+                backTrack.onPacket(event);
             } catch (final Exception ignored) {
             }
         }

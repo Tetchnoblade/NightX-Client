@@ -17,11 +17,11 @@ import net.minecraft.network.play.server.*
 import kotlin.concurrent.thread
 
 @ModuleInfo(
-    name = "StaffProtection",
-    spacedName = "Staff Protection",
+    name = "AdminDetector",
+    spacedName = "Admin Detector",
     category = ModuleCategory.OTHER
 )
-class StaffProtection : Module() {
+class AdminDetector : Module() {
     private val modeValue = ListValue("Mode", arrayOf("Hypixel", "BlocksMC", "MushMC"), "Hypixel")
     private val leaveValue = BoolValue("Leave", true)
 

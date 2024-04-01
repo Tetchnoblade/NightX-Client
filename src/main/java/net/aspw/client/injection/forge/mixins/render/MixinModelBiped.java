@@ -16,9 +16,6 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBucketMilk;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemSword;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -72,15 +69,6 @@ public abstract class MixinModelBiped {
             this.bipedLeftArm.rotateAngleY = swing;
             this.bipedRightArm.rotateAngleY = -swing;
             this.isSneak = false;
-        }
-
-        if (Animations.bedrockEating.get()) {
-            for (EntityPlayer player : MinecraftInstance.mc.theWorld.playerEntities) {
-                if (p_setRotationAngles7 == player && player.isUsingItem() && player.getHeldItem() != null && (player.getHeldItem().getItem() instanceof ItemFood || player.getHeldItem().getItem() instanceof ItemBucketMilk || player.getHeldItem().getItem() instanceof ItemPotion)) {
-                    this.bipedRightArm.rotateAngleX = this.bipedRightArm.rotateAngleX - ((float) Math.PI / 0.56f) * 0.034f;
-                    this.bipedRightArm.rotateAngleY = -0.6235988f;
-                }
-            }
         }
 
         if (silentSneak.getState() && silentSneak.modeValue.get().equals("Normal") && p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer))

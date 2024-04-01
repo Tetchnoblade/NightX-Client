@@ -18,7 +18,6 @@ import java.util.*
 class Cape : Module() {
 
     val customCape = BoolValue("CustomCape", true)
-
     val styleValue = ListValue(
         "Mode",
         arrayOf(
@@ -27,6 +26,14 @@ class Cape : Module() {
         ),
         "NightX"
     ) { customCape.get() }
+    val animationModeValue = ListValue(
+        "Animation-Mode",
+        arrayOf(
+            "Vanilla",
+            "Smooth"
+        ),
+        "Vanilla"
+    )
 
     private val capeCache = hashMapOf<String, CapeStyle>()
     fun getCapeLocation(value: String): ResourceLocation {

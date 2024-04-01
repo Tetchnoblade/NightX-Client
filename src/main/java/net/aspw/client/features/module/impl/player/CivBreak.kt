@@ -50,10 +50,6 @@ class CivBreak : Module() {
         enumFacing = event.enumFacing
     }
 
-    override fun onEnable() {
-        isBreaking = false
-    }
-
     override fun onDisable() {
         blockPos ?: return
         blockPos = null
@@ -130,20 +126,15 @@ class CivBreak : Module() {
                             "normal" -> mc.thePlayer.swingItem()
                             "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
                         }
-                        PacketUtils.sendPacketNoEvent(
-                            C07PacketPlayerDigging(
-                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                                blockPos,
-                                enumFacing
+                        repeat(2) {
+                            PacketUtils.sendPacketNoEvent(
+                                C07PacketPlayerDigging(
+                                    C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
+                                    blockPos,
+                                    enumFacing
+                                )
                             )
-                        )
-                        PacketUtils.sendPacketNoEvent(
-                            C07PacketPlayerDigging(
-                                C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK,
-                                blockPos,
-                                enumFacing
-                            )
-                        )
+                        }
                     }
                 }
             }

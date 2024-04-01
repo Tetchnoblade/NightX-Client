@@ -10,11 +10,11 @@ import net.aspw.client.features.module.impl.other.BrandSpoofer;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.SilentRotations;
 import net.aspw.client.protocol.ProtocolBase;
-import net.aspw.client.utils.*;
+import net.aspw.client.utils.AnimationUtils;
+import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.utils.RotationUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.utils.timer.MSTimer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.*;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 
@@ -42,23 +42,8 @@ public class PacketManager extends MinecraftInstance implements Listenable {
     }
 
     @EventTarget
-    public void onUpdate(UpdateEvent event) {
-        for (Entity en : mc.theWorld.loadedEntityList) {
-            if (shouldStopRender(en)) {
-                en.renderDistanceWeight = 0.0;
-            } else {
-                en.renderDistanceWeight = 1.0;
-            }
-        }
-    }
-
-    @EventTarget
     public void onRender3D(Render3DEvent event) {
         if (RotationUtils.targetRotation != null && Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).getState()) {
-            if (Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).getBodyTweaks().get()) {
-                mc.thePlayer.renderYawOffset = RotationUtils.targetRotation.getYaw();
-                mc.thePlayer.rotationYawHead = RotationUtils.targetRotation.getYaw();
-            }
             mc.thePlayer.prevRenderArmYaw = RotationUtils.targetRotation.getYaw();
             mc.thePlayer.prevRenderArmPitch = RotationUtils.targetRotation.getPitch();
             mc.thePlayer.renderArmYaw = RotationUtils.targetRotation.getYaw();
@@ -120,11 +105,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         } else if (mc.thePlayer.swingProgress >= Animations.swingLimit.get()) {
             mc.thePlayer.isSwingInProgress = false;
         }
-
-        if (Animations.fankeyBobbing.get() && MovementUtils.isMoving() && mc.thePlayer.onGround && !mc.thePlayer.isSneaking()) {
-            mc.thePlayer.cameraYaw = 0.18f;
-            mc.thePlayer.cameraPitch = 0.0f;
-        }
     }
 
     @EventTarget
@@ -163,18 +143,6 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 ((C08PacketPlayerBlockPlacement) packet).facingZ = 0.5F;
             }
         }
-    }
-
-    public static boolean shouldStopRender(Entity entity) {
-        return (EntityUtils.isMob(entity) ||
-                EntityUtils.isAnimal(entity) ||
-                entity.isInvisible() ||
-                entity instanceof EntityBoat ||
-                entity instanceof EntityMinecart ||
-                entity instanceof EntityItemFrame ||
-                entity instanceof EntityTNTPrimed ||
-                entity instanceof EntityArmorStand) &&
-                entity != mc.thePlayer && mc.thePlayer.getDistanceToEntity(entity) > 35.0f;
     }
 
     @Override

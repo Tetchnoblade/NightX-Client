@@ -1,11 +1,10 @@
-package net.aspw.client.features.module.impl.exploit
+package net.aspw.client.features.module.impl.combat
 
 import net.aspw.client.Launch
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.utils.EntityUtils
 import net.aspw.client.utils.PacketUtils
 import net.aspw.client.utils.extensions.*
@@ -24,13 +23,11 @@ import java.util.*
 import kotlin.math.abs
 
 @ModuleInfo(
-    name = "ExtendedPosition",
-    spacedName = "Extended Position",
-    category = ModuleCategory.EXPLOIT
+    name = "BackTrack",
+    spacedName = "Back Track",
+    category = ModuleCategory.COMBAT
 )
-class ExtendedPosition : Module() {
-    private val onlyKillAura = BoolValue("Only-KillAura", false)
-    private val onlyPlayer = BoolValue("Only-Player", true)
+class BackTrack : Module() {
     private val resetOnVelocity = BoolValue("ResetOnVelocity", true)
     private val resetOnLagging = BoolValue("ResetOnLagging", true)
 
@@ -45,8 +42,6 @@ class ExtendedPosition : Module() {
     private var smoothPointer = System.nanoTime()
     private var needFreeze = false
 
-    //    @EventTarget
-    // for safety, see in met.minecraft.network.NetworkManager
     fun onPacket(event: PacketEvent) {
         mc.thePlayer ?: return
         val packet = event.packet
@@ -56,14 +51,14 @@ class ExtendedPosition : Module() {
             if (packet is S14PacketEntity) {
                 val entity = packet.getEntity(theWorld) ?: return
                 if (entity !is EntityLivingBase) return
-                if (onlyPlayer.get() && entity !is EntityPlayer) return
+                if (entity !is EntityPlayer) return
                 entity.serverPosX += packet.func_149062_c().toInt()
                 entity.serverPosY += packet.func_149061_d().toInt()
                 entity.serverPosZ += packet.func_149064_e().toInt()
                 val x = entity.serverPosX.toDouble() / 32.0
                 val y = entity.serverPosY.toDouble() / 32.0
                 val z = entity.serverPosZ.toDouble() / 32.0
-                if ((!onlyKillAura.get() || killAura!!.state || needFreeze) && EntityUtils.isSelected(entity, true)) {
+                if (EntityUtils.isSelected(entity, true)) {
                     val afterBB = AxisAlignedBB(x - 0.4F, y - 0.1F, z - 0.4F, x + 0.4F, y + 1.9F, z + 0.4F)
                     val eyes = mc.thePlayer!!.getPositionEyes(1F)
                     val afterRange = getNearestPointBB(eyes, afterBB).distanceTo(eyes)
@@ -106,7 +101,7 @@ class ExtendedPosition : Module() {
             } else if (packet is S18PacketEntityTeleport) {
                 val entity = theWorld.getEntityByID(packet.entityId)
                 if (entity !is EntityLivingBase) return
-                if (onlyPlayer.get() && entity !is EntityPlayer) return
+                if (entity !is EntityPlayer) return
                 entity.serverPosX = packet.x
                 entity.serverPosY = packet.y
                 entity.serverPosZ = packet.z

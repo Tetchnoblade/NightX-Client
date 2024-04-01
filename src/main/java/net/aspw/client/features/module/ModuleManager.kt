@@ -98,7 +98,7 @@ class ModuleManager : Listenable {
             Spider::class.java,
             FakeLag::class.java,
             GamePlay::class.java,
-            StaffProtection::class.java,
+            AdminDetector::class.java,
             TPAura::class.java,
             AutoHeal::class.java,
             AntiAFK::class.java,
@@ -136,7 +136,7 @@ class ModuleManager : Listenable {
             AntiSuffocation::class.java,
             SnakeGame::class.java,
             ESP::class.java,
-            ExtendedPosition::class.java,
+            BackTrack::class.java,
             InfiniteReach::class.java,
             MotionBlur::class.java,
             AntiFrozen::class.java,
@@ -153,7 +153,9 @@ class ModuleManager : Listenable {
             KillAuraRecode::class.java,
             NoHurtCam::class.java,
             DrinkingAlert::class.java,
-            AutoGetter::class.java
+            AutoGetter::class.java,
+            Spammer::class.java,
+            PacketMine::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded modules")
