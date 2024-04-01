@@ -30,7 +30,7 @@ object Launch {
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Client"
-    const val CLIENT_VERSION = "B103"
+    const val CLIENT_VERSION = "B104"
     const val CLIENT_CHAT = "§c$CLIENT_BEST: §r"
     const val CLIENT_PROTOCOL_RANGE = "1.8 to 1.20.5"
 
