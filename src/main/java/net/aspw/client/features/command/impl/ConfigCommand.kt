@@ -3,7 +3,9 @@ package net.aspw.client.features.command.impl
 import net.aspw.client.Launch
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.visual.Interface
+import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.SettingsUtils
+import net.aspw.client.utils.URLComponent
 import net.aspw.client.utils.misc.StringUtils
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.CloseableHttpClient
@@ -46,15 +48,7 @@ class ConfigCommand : Command("config", arrayOf("c")) {
                 args[1].equals("onlineload", ignoreCase = true) -> {
                     if (args.size > 2) {
                         try {
-                            val httpClient: CloseableHttpClient = HttpClients.createDefault()
-                            val request = HttpGet(Launch.CLIENT_CONFIGS + args[2])
-                            val response = httpClient.execute(request)
-                            val entity = response.entity
-                            val content = EntityUtils.toString(entity)
-                            EntityUtils.consume(entity)
-                            response.close()
-                            httpClient.close()
-                            SettingsUtils.executeScript(content)
+                            SettingsUtils.executeScript(APIConnecter.configLoad(args[2]))
                             if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                                 Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                             }
@@ -178,16 +172,8 @@ class ConfigCommand : Command("config", arrayOf("c")) {
 
                 args[1].equals("onlinelist", ignoreCase = true) -> {
                     try {
-                        val httpClient: CloseableHttpClient = HttpClients.createDefault()
-                        val request = HttpGet(Launch.CLIENT_CONFIGLIST)
-                        val response = httpClient.execute(request)
-                        val entity = response.entity
-                        val content = EntityUtils.toString(entity)
-                        EntityUtils.consume(entity)
-                        response.close()
-                        httpClient.close()
                         chat("§cOnlineConfigs:")
-                        chat(content)
+                        chat(APIConnecter.configList())
                     } catch (e: Exception) {
                         chat("§cAPI Error!")
                     }

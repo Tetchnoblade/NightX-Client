@@ -1,7 +1,7 @@
 package net.aspw.client.visual.client
 
 import net.aspw.client.Launch
-import net.aspw.client.utils.Access
+import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.aspw.client.visual.font.smooth.FontLoaders
@@ -105,7 +105,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             width, height
         )
         GlStateManager.enableAlpha()
-        if (Access.canConnect) {
+        if (APIConnecter.canConnect) {
             FontLoaders.SF20.drawStringWithShadow(
                 "API Connection: §eOK",
                 (this.width - 10F - FontLoaders.SF20.getStringWidth("API Connection: §eOK")).toDouble(),
@@ -139,7 +139,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             -1
         )
         val uiMessage =
-            if (Access.canConnect && Access.isLatest) " §e(Latest)" else if (!Access.canConnect && Access.isLatest) " §c(API Dead)" else " §c(Outdated)"
+            if (APIConnecter.canConnect && APIConnecter.isLatest) " §e(Latest)" else if (!APIConnecter.canConnect && APIConnecter.isLatest) " §c(API Dead)" else " §c(Outdated)"
         FontLoaders.SF20.drawStringWithShadow(
             "Your currently build is " + Launch.CLIENT_VERSION + uiMessage,
             width - 4F - FontLoaders.SF20.getStringWidth("Your currently build is " + Launch.CLIENT_VERSION + uiMessage)
@@ -163,8 +163,8 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             5 -> mc.displayGuiScreen(GuiInfo(this))
 
             6 -> {
-                Access.checkStatus()
-                Access.checkStaffList()
+                APIConnecter.checkStatus()
+                APIConnecter.checkStaffList()
             }
         }
     }

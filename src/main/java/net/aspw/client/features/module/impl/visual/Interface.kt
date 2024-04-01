@@ -12,7 +12,7 @@ import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.features.module.impl.combat.KillAuraRecode
 import net.aspw.client.features.module.impl.combat.TPAura
 import net.aspw.client.protocol.ProtocolBase
-import net.aspw.client.utils.Access
+import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.AnimationUtils
 import net.aspw.client.utils.render.ColorUtils
 import net.aspw.client.utils.render.RenderUtils
@@ -88,7 +88,7 @@ class Interface : Module() {
         try {
             if (watermarkValue.get()) {
                 val inputString = clientNameValue.get()
-                val connectChecks = if (!Access.canConnect) " - Disconnected" else ""
+                val connectChecks = if (!APIConnecter.canConnect) " - Disconnected" else ""
                 val fpsChecks = if (watermarkFpsValue.get()) " [" + Minecraft.getDebugFPS() + " FPS]" else ""
                 val protocolChecks =
                     if (watermarkProtocolValue.get()) " [version: " + (if (!mc.isIntegratedServerRunning) ProtocolBase.getManager().targetVersion.name else "1.8.x") + "]" else ""

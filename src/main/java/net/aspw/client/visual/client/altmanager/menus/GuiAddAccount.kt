@@ -3,6 +3,7 @@ package net.aspw.client.visual.client.altmanager.menus
 import net.aspw.client.Launch
 import net.aspw.client.auth.account.CrackedAccount
 import net.aspw.client.features.module.impl.visual.Interface
+import net.aspw.client.utils.URLComponent
 import net.aspw.client.utils.misc.MiscUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
@@ -85,7 +86,7 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
 
             3 -> mc.displayGuiScreen(GuiMicrosoftLogin(this))
 
-            4 -> MiscUtils.showURL("https://www.oracle.com/jp/java/technologies/javase/javase8-archive-downloads.html")
+            4 -> MiscUtils.showURL(URLComponent.JAVAUPDATE)
         }
     }
 

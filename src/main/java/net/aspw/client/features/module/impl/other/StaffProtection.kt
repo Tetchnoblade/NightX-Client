@@ -7,7 +7,7 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.Access
+import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.EntityUtils
 import net.aspw.client.utils.render.ColorUtils
 import net.aspw.client.value.BoolValue
@@ -41,9 +41,9 @@ class StaffProtection : Module() {
     override fun onEnable() {
         thread {
             totalCount = obStaffs.count { it.isWhitespace() }
-            blocksmcstaffs.addAll(Access.bmcstafflist.split(","))
-            mushmcstaffs.addAll(Access.mushstafflist.split(","))
-            hypixelstaffs.addAll(Access.hypixelstafflist.split(","))
+            blocksmcstaffs.addAll(APIConnecter.bmcstafflist.split(","))
+            mushmcstaffs.addAll(APIConnecter.mushstafflist.split(","))
+            hypixelstaffs.addAll(APIConnecter.hypixelstafflist.split(","))
         }
         detected = false
         staffsInWorld.clear()

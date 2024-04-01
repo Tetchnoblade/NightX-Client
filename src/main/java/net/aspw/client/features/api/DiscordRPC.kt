@@ -5,7 +5,7 @@ import com.jagrosh.discordipc.IPCListener
 import com.jagrosh.discordipc.entities.RichPresence
 import com.jagrosh.discordipc.entities.pipe.PipeStatus
 import net.aspw.client.Launch
-import net.aspw.client.utils.Access
+import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.MinecraftInstance
 import org.json.JSONObject
@@ -87,7 +87,7 @@ class DiscordRPC : MinecraftInstance() {
 
         // Set display infos
         builder.setDetails(Launch.CLIENT_VERSION)
-        builder.setState(Access.discord)
+        builder.setState(APIConnecter.discord)
 
         // Check ipc client is connected and send rpc
         if (ipcClient?.status == PipeStatus.CONNECTED)
@@ -110,7 +110,7 @@ class DiscordRPC : MinecraftInstance() {
     }
 
     private fun loadConfiguration() {
-        appID = Access.discordApp.toLong()
+        appID = APIConnecter.discordApp.toLong()
         assets["rpc"] = "rpc"
     }
 }

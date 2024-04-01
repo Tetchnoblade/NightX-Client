@@ -35,7 +35,9 @@ class Jesus : Module() {
             "MatrixFast",
             "MatrixDolphin",
             "Dolphin",
-            "Swim"
+            "Swim",
+            "Vulcan",
+            "Verus"
         ),
         "NCP"
     )
@@ -75,6 +77,19 @@ class Jesus : Module() {
                         -0.004 else if (mc.thePlayer.isInWater) mc.thePlayer.motionY = 0.09
                 }
                 if (mc.thePlayer.hurtTime != 0) mc.thePlayer.onGround = false
+            }
+
+            "verus" -> if (mc.thePlayer.isInWater) {
+                mc.thePlayer.motionY = 0.0
+                MovementUtils.strafe(0.32f)
+            }
+
+            "vulcan" -> if (mc.thePlayer.isInWater) {
+                mc.thePlayer.motionY = 0.015 *
+                        if (!MovementUtils.isMoving()) 0
+                        else if (mc.thePlayer.ticksExisted % 2 == 0) 1
+                        else -1
+                MovementUtils.strafe(0.145f)
             }
 
             "matrixfast" -> if (mc.thePlayer.isInWater) {

@@ -65,6 +65,8 @@ dependencies {
         exclude module: "log4j-core"
     }
 
+    include "com.squareup.okhttp3:okhttp:4.9.1"
+
     for (final def via in viaLibs) {
         include(via)
     }

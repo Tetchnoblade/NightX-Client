@@ -22,9 +22,9 @@ import net.aspw.client.protocol.ProtocolMod
 import net.aspw.client.utils.*
 import net.aspw.client.utils.ClassUtils.hasForge
 import net.aspw.client.utils.misc.sound.TipSoundManager
+import net.aspw.client.utils.APIConnecter
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.font.semi.Fonts
-import net.minecraft.util.ResourceLocation
 
 object Launch {
 
@@ -33,12 +33,7 @@ object Launch {
     const val CLIENT_FOLDER = "NightX-Client"
     const val CLIENT_VERSION = "B102"
     const val CLIENT_PROTOCOL_RANGE = "1.8 to 1.20.5"
-    const val CLIENT_WEBSITE = "https://aspw-w.github.io/AspieAPI/NightX"
     const val CLIENT_CHAT = "§c$CLIENT_BEST: §r"
-    const val CLIENT_STATUS = "$CLIENT_WEBSITE/database/data.txt"
-    const val CLIENT_STAFFS = "$CLIENT_WEBSITE/database/staffs.txt"
-    const val CLIENT_CONFIGLIST = "$CLIENT_WEBSITE/configs/str/list.txt"
-    const val CLIENT_CONFIGS = "$CLIENT_WEBSITE/configs/"
 
     var isStarting = false
 
@@ -50,9 +45,6 @@ object Launch {
     lateinit var tipSoundManager: TipSoundManager
 
     lateinit var clickGui: ClickGui
-
-    // Menu Background
-    var background: ResourceLocation? = null
 
     private var lastTick: Long = 0L
 
@@ -76,8 +68,8 @@ object Launch {
         ProtocolBase.init(ProtocolMod.PLATFORM)
 
         // Check update
-        Access.checkStaffList()
-        Access.checkStatus()
+        APIConnecter.checkStaffList()
+        APIConnecter.checkStatus()
 
         // Create file manager
         fileManager = FileManager()

@@ -1,7 +1,8 @@
 package net.aspw.client.visual.client
 
 import net.aspw.client.Launch
-import net.aspw.client.utils.Access
+import net.aspw.client.utils.APIConnecter
+import net.aspw.client.utils.URLComponent
 import net.aspw.client.utils.misc.MiscUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.minecraft.client.gui.GuiButton
@@ -40,8 +41,8 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
 
     override fun actionPerformed(button: GuiButton) {
         when (button.id) {
-            1 -> MiscUtils.showURL(Launch.CLIENT_WEBSITE)
-            2 -> MiscUtils.showURL(Access.discord)
+            1 -> MiscUtils.showURL(URLComponent.WEBSITE)
+            2 -> MiscUtils.showURL(APIConnecter.discord)
             3 -> mc.displayGuiScreen(GuiModList(this))
             4 -> mc.displayGuiScreen(prevGui)
         }
