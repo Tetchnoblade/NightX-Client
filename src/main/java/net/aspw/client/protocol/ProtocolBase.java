@@ -30,11 +30,6 @@ public class ProtocolBase {
             return;
         }
 
-        final ProtocolVersion version = ProtocolVersion.getProtocol(platform.getGameVersion());
-
-        if (version == ProtocolVersion.unknown)
-            throw new IllegalArgumentException("Unknown Version " + platform.getGameVersion());
-
         manager = new ProtocolBase();
 
         ViaLoader.init(new ViaVersionPlatformImpl(null), new ProtocolVLLoader(platform), new ProtocolVLInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new, null, null);

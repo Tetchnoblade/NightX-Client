@@ -1,5 +1,6 @@
 package net.aspw.client
 
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion
 import net.aspw.client.config.FileManager
 import net.aspw.client.event.ClientShutdownEvent
 import net.aspw.client.event.EventManager
@@ -24,15 +25,16 @@ import net.aspw.client.utils.ClassUtils.hasForge
 import net.aspw.client.utils.misc.sound.TipSoundManager
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.font.semi.Fonts
+import net.raphimc.vialoader.util.ProtocolVersionList
 
 object Launch {
 
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Client"
-    const val CLIENT_VERSION = "B104"
+    const val CLIENT_VERSION = "B105"
     const val CLIENT_CHAT = "§c$CLIENT_BEST: §r"
-    const val CLIENT_PROTOCOL_RANGE = "1.8 to 1.20.5"
+    const val CLIENT_PROTOCOL_RANGE = "1.8 to 1.20.4"
 
     var isStarting = false
 
@@ -55,6 +57,9 @@ object Launch {
     // Discord RPC
     lateinit var discordRPC: DiscordRPC
 
+    // ViaVersion
+    var versions = mutableListOf<ProtocolVersion>()
+
     /**
      * Execute if client will be started
      */
@@ -62,9 +67,22 @@ object Launch {
         isStarting = true
 
         ClientUtils.getLogger().info("Launching...")
+
         lastTick = System.currentTimeMillis()
 
         ProtocolBase.init(ProtocolMod.PLATFORM)
+
+        versions.addAll(ProtocolVersionList.getProtocolsNewToOld())
+
+        try {
+            for (i in versions) {
+                if (i == ProtocolVersion.unknown || i == ProtocolVersion.v1_20_5) {
+                    versions.remove(i)
+                    ClientUtils.getLogger().info("Removed Unknown Protocols ($i)")
+                }
+            }
+        } catch (_: Exception) {
+        }
 
         // Check update
         APIConnecter.checkStaffList()
