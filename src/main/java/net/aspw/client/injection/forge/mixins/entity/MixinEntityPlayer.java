@@ -1,7 +1,6 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
 import com.mojang.authlib.GameProfile;
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
 import net.aspw.client.features.api.McUpdatesHandler;
 import net.aspw.client.features.api.PacketManager;
@@ -10,7 +9,7 @@ import net.aspw.client.features.module.impl.movement.Flight;
 import net.aspw.client.features.module.impl.movement.LongJump;
 import net.aspw.client.features.module.impl.movement.Speed;
 import net.aspw.client.features.module.impl.player.BowJump;
-import net.aspw.client.protocol.ProtocolBase;
+import net.aspw.client.protocol.api.ProtocolFixes;
 import net.aspw.client.utils.CooldownHelper;
 import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.PacketUtils;
@@ -145,7 +144,7 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
         final Flight flight = Objects.requireNonNull(Launch.moduleManager.getModule(Flight.class));
         final Speed speed = Objects.requireNonNull(Launch.moduleManager.getModule(Speed.class));
         final BowJump bowJump = Objects.requireNonNull(Launch.moduleManager.getModule(BowJump.class));
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning() && McUpdatesHandler.doingEyeRot)
+        if (ProtocolFixes.newerThanOrEqualsTo1_13() && McUpdatesHandler.doingEyeRot)
             return McUpdatesHandler.lastEyeHeight + (McUpdatesHandler.eyeHeight - McUpdatesHandler.lastEyeHeight) * mc.timer.renderPartialTicks;
         if (this.isPlayerSleeping())
             return 0.2F;
@@ -181,7 +180,7 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
     @Inject(method = "dropItem", at = @At("HEAD"))
     private void dropItem(ItemStack p_dropItem_1_, boolean p_dropItem_2_, boolean p_dropItem_3_, CallbackInfoReturnable<EntityItem> cir) {
         for (int i = 0; i < this.mainInventory.length; ++i) {
-            if (!MinecraftInstance.mc.isIntegratedServerRunning() && ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_16))
+            if (ProtocolFixes.newerThanOrEqualsTo1_16())
                 PacketUtils.sendPacketNoEvent(new C0APacketAnimation());
             if (this.mainInventory[i] != null) {
                 this.mainInventory[i] = null;
@@ -189,7 +188,7 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
         }
 
         for (int j = 0; j < this.armorInventory.length; ++j) {
-            if (!MinecraftInstance.mc.isIntegratedServerRunning() && ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_16))
+            if (ProtocolFixes.newerThanOrEqualsTo1_16())
                 PacketUtils.sendPacketNoEvent(new C0APacketAnimation());
             if (this.armorInventory[j] != null) {
                 this.armorInventory[j] = null;

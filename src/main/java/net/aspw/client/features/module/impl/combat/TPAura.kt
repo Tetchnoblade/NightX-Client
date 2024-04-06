@@ -1,13 +1,12 @@
 package net.aspw.client.features.module.impl.combat
 
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.UpdateEvent
 import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.protocol.ProtocolBase
+import net.aspw.client.protocol.api.ProtocolFixes
 import net.aspw.client.utils.EntityUtils
 import net.aspw.client.utils.PacketUtils
 import net.aspw.client.utils.RotationUtils
@@ -134,7 +133,7 @@ class TPAura : Module() {
 
             lastTarget = it
 
-            if (ProtocolBase.getManager().targetVersion.newerThan(ProtocolVersion.v1_8))
+            if (ProtocolFixes.newerThan1_8())
                 mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             when (swingValue.get().lowercase(Locale.getDefault())) {
@@ -142,7 +141,7 @@ class TPAura : Module() {
                 "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
             }
 
-            if (!ProtocolBase.getManager().targetVersion.newerThan(ProtocolVersion.v1_8))
+            if (!ProtocolFixes.newerThan1_8())
                 mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             path.reverse()

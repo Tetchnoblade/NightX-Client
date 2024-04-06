@@ -1,8 +1,7 @@
 package net.aspw.client.features.api;
 
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.event.*;
-import net.aspw.client.protocol.ProtocolBase;
+import net.aspw.client.protocol.api.ProtocolFixes;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.render.RenderUtils;
@@ -46,7 +45,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onPushOut(PushOutEvent event) {
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning() && (shouldAnimation() || mc.thePlayer.isSneaking()))
+        if (ProtocolFixes.newerThanOrEqualsTo1_13() && (shouldAnimation() || mc.thePlayer.isSneaking()))
             event.cancelEvent();
     }
 
@@ -57,7 +56,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onMotion(MotionEvent event) {
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning()) {
+        if (ProtocolFixes.newerThanOrEqualsTo1_13()) {
             float START_HEIGHT = 1.62f;
             float END_HEIGHT;
 
@@ -81,7 +80,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onUpdate(UpdateEvent event) {
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning()) {
+        if (ProtocolFixes.newerThanOrEqualsTo1_13()) {
             if (isSwimming()) {
                 if (mc.thePlayer.motionX < -0.4D) {
                     mc.thePlayer.motionX = -0.39F;
@@ -120,9 +119,9 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
         float sneakLength;
 
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9) && ProtocolBase.getManager().getTargetVersion().olderThanOrEqualTo(ProtocolVersion.v1_13_2) && !mc.isIntegratedServerRunning())
+        if (ProtocolFixes.newerThanOrEqualsTo1_9() && ProtocolFixes.olderThanOrEqualsTo1_13_2())
             sneakLength = 1.65f;
-        else if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !mc.isIntegratedServerRunning())
+        else if (ProtocolFixes.newerThanOrEqualsTo1_14())
             sneakLength = 1.5f;
         else sneakLength = 1.8f;
 
@@ -135,12 +134,12 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
         float newHeight;
         float newWidth;
 
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning() && isSwimmingOrCrawling && underWater() && mc.thePlayer.rotationPitch >= 0.0) {
+        if (ProtocolFixes.newerThanOrEqualsTo1_13() && isSwimmingOrCrawling && underWater() && mc.thePlayer.rotationPitch >= 0.0) {
             newHeight = 0.6f;
             newWidth = 0.6f;
             isSwimmingOrCrawling = true;
             mc.thePlayer.setEntityBoundingBox(setThrough);
-        } else if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !mc.isIntegratedServerRunning() && (isSwimming() && underWater() || !mc.theWorld.getCollisionBoxes(crawl).isEmpty())) {
+        } else if (ProtocolFixes.newerThanOrEqualsTo1_13() && (isSwimming() && underWater() || !mc.theWorld.getCollisionBoxes(crawl).isEmpty())) {
             newHeight = 0.6f;
             newWidth = 0.6f;
             isSwimmingOrCrawling = true;
@@ -157,7 +156,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
             mc.thePlayer.setEntityBoundingBox(setThrough);
         }
 
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9) && !mc.isIntegratedServerRunning() && mc.thePlayer.onGround && !mc.thePlayer.isSneaking() && !underWater() && (mc.thePlayer.height == sneakLength || mc.thePlayer.height == 0.6F) && !mc.theWorld.getCollisionBoxes(sneak).isEmpty()) {
+        if (ProtocolFixes.newerThanOrEqualsTo1_9() && mc.thePlayer.onGround && !mc.thePlayer.isSneaking() && !underWater() && (mc.thePlayer.height == sneakLength || mc.thePlayer.height == 0.6F) && !mc.theWorld.getCollisionBoxes(sneak).isEmpty()) {
             mc.gameSettings.keyBindSneak.pressed = true;
         } else if (!GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && mc.theWorld.getCollisionBoxes(sneak).isEmpty()) {
             mc.gameSettings.keyBindSneak.pressed = false;

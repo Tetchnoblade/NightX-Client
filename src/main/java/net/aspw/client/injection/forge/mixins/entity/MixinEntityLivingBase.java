@@ -1,14 +1,12 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
 import net.aspw.client.event.JumpEvent;
 import net.aspw.client.features.module.impl.movement.Jesus;
 import net.aspw.client.features.module.impl.movement.NoJumpDelay;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.VisualAbilities;
-import net.aspw.client.protocol.ProtocolBase;
-import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.protocol.api.ProtocolFixes;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
@@ -176,7 +174,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @ModifyConstant(method = "onLivingUpdate", constant = @Constant(doubleValue = 0.005D))
     private double ViaVersion_MovementThreshold(double constant) {
-        if (ProtocolBase.getManager().getTargetVersion().newerThan(ProtocolVersion.v1_8) && !MinecraftInstance.mc.isIntegratedServerRunning())
+        if (ProtocolFixes.newerThan1_8())
             return 0.003D;
         return 0.005D;
     }

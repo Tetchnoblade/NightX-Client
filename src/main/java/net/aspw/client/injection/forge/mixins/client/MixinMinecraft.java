@@ -1,11 +1,9 @@
 package net.aspw.client.injection.forge.mixins.client;
 
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.other.FastPlace;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
-import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.protocol.api.ProtocolFixes;
 import net.aspw.client.utils.CPSCounter;
 import net.aspw.client.utils.MinecraftInstance;
@@ -270,7 +268,7 @@ public abstract class MixinMinecraft {
             if (leftClick && this.objectMouseOver != null && this.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
                 BlockPos blockPos = this.objectMouseOver.getBlockPos();
 
-                if (this.thePlayer.isUsingItem() && ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_8))
+                if (this.thePlayer.isUsingItem() && ProtocolFixes.newerThanOrEqualsTo1_8())
                     return;
 
                 if (this.leftClickCounter == 0)

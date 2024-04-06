@@ -1,6 +1,5 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.exploit.PortalMenu;
@@ -8,7 +7,7 @@ import net.aspw.client.features.module.impl.movement.NoSlow;
 import net.aspw.client.features.module.impl.movement.SilentSneak;
 import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.features.module.impl.visual.Interface;
-import net.aspw.client.protocol.ProtocolBase;
+import net.aspw.client.protocol.api.ProtocolFixes;
 import net.aspw.client.utils.CooldownHelper;
 import net.aspw.client.utils.MovementUtils;
 import net.aspw.client.utils.Rotation;
@@ -217,7 +216,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
     @Redirect(method = "onUpdateWalkingPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/NetHandlerPlayClient;addToSendQueue(Lnet/minecraft/network/Packet;)V", ordinal = 7))
     public void emulateIdlePacket(final NetHandlerPlayClient instance, final Packet<?> p_addToSendQueue_1_) {
-        if (ProtocolBase.getManager().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
+        if (ProtocolFixes.newerThan1_8()) {
             if (this.viaForge$prevOnGround == this.onGround) {
                 return;
             }

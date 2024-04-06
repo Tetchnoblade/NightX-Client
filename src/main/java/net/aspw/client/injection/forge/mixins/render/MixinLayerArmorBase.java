@@ -1,10 +1,9 @@
 package net.aspw.client.injection.forge.mixins.render;
 
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
 import net.aspw.client.features.api.McUpdatesHandler;
 import net.aspw.client.features.module.impl.visual.CustomModel;
-import net.aspw.client.protocol.ProtocolBase;
+import net.aspw.client.protocol.api.ProtocolFixes;
 import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.renderer.entity.layers.LayerArmorBase;
 import net.minecraft.entity.EntityLivingBase;
@@ -37,7 +36,7 @@ public class MixinLayerArmorBase {
     public void doRenderLayer(final EntityLivingBase entitylivingbaseIn, final float limbSwing, final float limbSwingAmount, final float partialTicks, final float ageInTicks, final float netHeadYaw, final float headPitch, final float scale, final CallbackInfo ci) {
         final CustomModel customModel = Objects.requireNonNull(Launch.moduleManager.getModule(CustomModel.class));
 
-        if (ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !MinecraftInstance.mc.isIntegratedServerRunning() && McUpdatesHandler.shouldAnimation() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer)
+        if (ProtocolFixes.newerThanOrEqualsTo1_13() && McUpdatesHandler.shouldAnimation() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer)
             ci.cancel();
 
         if (customModel.getState() && customModel.getOnlySelf().get() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer) {
