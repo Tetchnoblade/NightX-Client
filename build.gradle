@@ -52,7 +52,8 @@ def viaLibs = [
         "com.viaversion:viaversion:${project.viaversion_version}",
         "com.viaversion:viabackwards:${project.viabackwards_version}",
         "com.viaversion:viarewind-universal:${project.viarewind_version}",
-        "net.raphimc:ViaLoader:${project.vialoader_version}"
+        "net.raphimc:ViaLoader:${project.vialoader_version}",
+        "net.raphimc:ViaAprilFools:${project.viaaprilfools_version}"
 ]
 
 dependencies {
@@ -69,6 +70,10 @@ dependencies {
 
     for (final def via in viaLibs) {
         include(via)
+    }
+
+    include ("net.raphimc:ViaLegacy:${project.vialegacy_version}") {
+        exclude group: "com.google.code.gson", module: "gson"
     }
 
     include('com.github.half-cambodian-hacker-man:Koffee:d8cee73') {

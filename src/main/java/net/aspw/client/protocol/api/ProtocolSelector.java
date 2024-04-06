@@ -2,7 +2,6 @@ package net.aspw.client.protocol.api;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
-import net.aspw.client.Launch;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.visual.font.smooth.FontLoaders;
 import net.minecraft.client.Minecraft;
@@ -75,12 +74,12 @@ public class ProtocolSelector extends GuiScreen {
 
         @Override
         protected int getSize() {
-            return Launch.INSTANCE.getVersions().size() - 2;
+            return ProtocolBase.versions.size();
         }
 
         @Override
         protected void elementClicked(int index, boolean b, int i1, int i2) {
-            finishedCallback.finished(Launch.INSTANCE.getVersions().get(index), parent);
+            finishedCallback.finished(ProtocolBase.versions.get(index), parent);
         }
 
         @Override
@@ -96,7 +95,7 @@ public class ProtocolSelector extends GuiScreen {
         @Override
         protected void drawSlot(int index, int x, int y, int slotHeight, int mouseX, int mouseY) {
             final ProtocolVersion targetVersion = ProtocolBase.getManager().getTargetVersion();
-            final ProtocolVersion version = Launch.INSTANCE.getVersions().get(index);
+            final ProtocolVersion version = ProtocolBase.versions.get(index);
 
             String color;
             if (targetVersion == version) {

@@ -10,10 +10,13 @@ import io.netty.util.AttributeKey;
 import net.aspw.client.protocol.api.*;
 import net.aspw.client.utils.ClientUtils;
 import net.raphimc.vialoader.ViaLoader;
-import net.raphimc.vialoader.impl.platform.ViaBackwardsPlatformImpl;
-import net.raphimc.vialoader.impl.platform.ViaRewindPlatformImpl;
-import net.raphimc.vialoader.impl.platform.ViaVersionPlatformImpl;
+import net.raphimc.vialoader.impl.platform.*;
 import net.raphimc.vialoader.netty.CompressionReorderEvent;
+import net.raphimc.vialoader.util.ProtocolVersionList;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class ProtocolBase {
 
@@ -21,6 +24,7 @@ public class ProtocolBase {
     public static final AttributeKey<UserConnection> LOCAL_VIA_USER = AttributeKey.valueOf("local_via_user");
     public static final AttributeKey<VFNetworkManager> VF_NETWORK_MANAGER = AttributeKey.valueOf("encryption_setup");
     private static ProtocolBase manager;
+    public static List<ProtocolVersion> versions = new ArrayList<>();
 
     public ProtocolBase() {
     }
@@ -30,9 +34,28 @@ public class ProtocolBase {
             return;
         }
 
+        final ProtocolVersion version = ProtocolVersion.getProtocol(platform.getGameVersion());
+
+        if (version == ProtocolVersion.unknown)
+            throw new IllegalArgumentException("Unknown Protocol Found (" + platform.getGameVersion() + ")");
+
         manager = new ProtocolBase();
 
-        ViaLoader.init(new ViaVersionPlatformImpl(null), new ProtocolVLLoader(platform), new ProtocolVLInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new, null, null);
+        ViaLoader.init(new ViaVersionPlatformImpl(null), new ProtocolVLLoader(platform), new ProtocolVLInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new, ViaLegacyPlatformImpl::new, ViaAprilFoolsPlatformImpl::new);
+
+        versions.addAll(ProtocolVersionList.getProtocolsNewToOld());
+
+        try {
+            Iterator<ProtocolVersion> iterator = versions.iterator();
+            while (iterator.hasNext()) {
+                ProtocolVersion i = iterator.next();
+                if (i == ProtocolVersion.unknown || i.olderThan(ProtocolVersion.v1_7_2) || i == ProtocolVersion.v1_20_5) {
+                    iterator.remove();
+                    ClientUtils.getLogger().info("Removed Protocol (" + i + ")");
+                }
+            }
+        } catch (Exception ignored) {
+        }
 
         ClientUtils.getLogger().info("ViaVersion Injected");
     }
