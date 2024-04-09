@@ -127,6 +127,40 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             height - 12F.toDouble(),
             -1
         )
+        FontLoaders.SF21.drawStringWithShadow(
+            "Changelogs:",
+            3F.toDouble(),
+            4F.toDouble(),
+            -1
+        )
+        var changeY = 16
+        val changeDetails = APIConnecter.changelogs.split("\n")
+        for (i in changeDetails) {
+            FontLoaders.SF20.drawStringWithShadow(
+                i,
+                4F.toDouble(),
+                changeY.toDouble(),
+                -1
+            )
+            changeY += 11
+        }
+        FontLoaders.SF21.drawStringWithShadow(
+            "Known Bugs:",
+            (this.width - 6F - FontLoaders.SF21.getStringWidth("Known Bugs")).toDouble(),
+            48F.toDouble(),
+            -1
+        )
+        var bugsY = 60
+        val bugDetails = APIConnecter.bugs.split("\n")
+        for (i in bugDetails) {
+            FontLoaders.SF20.drawStringWithShadow(
+                i,
+                (this.width - 4F - FontLoaders.SF20.getStringWidth(i)).toDouble(),
+                bugsY.toDouble(),
+                -1
+            )
+            bugsY += 11
+        }
         GlStateManager.disableAlpha()
         GlStateManager.enableAlpha()
         GL11.glPopMatrix()
@@ -144,6 +178,8 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
             6 -> {
                 APIConnecter.checkStatus()
+                APIConnecter.checkChangelogs()
+                APIConnecter.checkBugs()
                 APIConnecter.checkStaffList()
             }
         }

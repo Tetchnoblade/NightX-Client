@@ -15,6 +15,8 @@ object APIConnecter {
     var discordApp = ""
     var appClientID = ""
     var appClientSecret = ""
+    var changelogs = ""
+    var bugs = ""
     var bmcstafflist = ""
     var mushstafflist = ""
     var hypixelstafflist = ""
@@ -55,6 +57,44 @@ object APIConnecter {
         } catch (e: Exception) {
             canConnect = false
             ClientUtils.getLogger().info("Failed to load API")
+        }
+    }
+
+    fun checkChangelogs() {
+        try {
+            var gotData: String
+            tlsAuthConnectionFixes()
+            val client = OkHttpClient.Builder()
+                .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
+                .build()
+            val builder = Request.Builder().url(URLComponent.CHANGELOGS)
+            val request: Request = builder.build()
+            client.newCall(request).execute().use { response ->
+                gotData = response.body!!.string()
+            }
+            changelogs = gotData
+            ClientUtils.getLogger().info("Loaded Changelogs")
+        } catch (e: Exception) {
+            ClientUtils.getLogger().info("Failed to load Changelogs")
+        }
+    }
+
+    fun checkBugs() {
+        try {
+            var gotData: String
+            tlsAuthConnectionFixes()
+            val client = OkHttpClient.Builder()
+                .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
+                .build()
+            val builder = Request.Builder().url(URLComponent.BUGS)
+            val request: Request = builder.build()
+            client.newCall(request).execute().use { response ->
+                gotData = response.body!!.string()
+            }
+            bugs = gotData
+            ClientUtils.getLogger().info("Loaded Bugs")
+        } catch (e: Exception) {
+            ClientUtils.getLogger().info("Failed to load Bugs")
         }
     }
 

@@ -68,8 +68,10 @@ object Launch {
         ProtocolBase.init(ProtocolMod.PLATFORM)
 
         // Check update
-        APIConnecter.checkStaffList()
         APIConnecter.checkStatus()
+        APIConnecter.checkChangelogs()
+        APIConnecter.checkBugs()
+        APIConnecter.checkStaffList()
 
         // Create file manager
         fileManager = FileManager()
