@@ -4,7 +4,7 @@ Selling
 > https://japanaltsreborn.mysellix.io
 
 Join discord server
-> https://discord.gg/SGBccUXFK
+> https://discord.gg/SGBccUXFKZ
 
 Developer youtube channel
 > https://www.youtube.com/@Aspw001
