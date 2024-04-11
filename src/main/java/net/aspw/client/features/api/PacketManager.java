@@ -9,13 +9,13 @@ import net.aspw.client.features.module.impl.other.BrandSpoofer;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.SilentRotations;
 import net.aspw.client.protocol.api.ProtocolFixes;
-import net.aspw.client.utils.AnimationUtils;
-import net.aspw.client.utils.MinecraftInstance;
-import net.aspw.client.utils.RotationUtils;
+import net.aspw.client.utils.*;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.utils.timer.MSTimer;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 
 import java.util.Objects;
 

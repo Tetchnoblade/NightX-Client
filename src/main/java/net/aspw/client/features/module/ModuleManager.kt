@@ -155,7 +155,8 @@ class ModuleManager : Listenable {
             DrinkingAlert::class.java,
             AutoGetter::class.java,
             Spammer::class.java,
-            PacketMine::class.java
+            PacketMine::class.java,
+            PacketTracker::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded modules")

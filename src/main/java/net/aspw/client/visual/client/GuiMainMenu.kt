@@ -114,8 +114,8 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         )
         FontLoaders.SF20.drawStringWithShadow(
             Launch.CLIENT_BEST + " Client - " + Launch.CLIENT_PROTOCOL_RANGE,
-            4F.toDouble(),
-            height - 12F.toDouble(),
+            width - 4F - FontLoaders.SF20.getStringWidth(Launch.CLIENT_BEST + " Client - " + Launch.CLIENT_PROTOCOL_RANGE).toDouble(),
+            height - 23F.toDouble(),
             -1
         )
         val uiMessage =
@@ -136,17 +136,47 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         var changeY = 16
         val changeDetails = APIConnecter.changelogs.split("\n")
         for (i in changeDetails) {
-            FontLoaders.SF20.drawStringWithShadow(
-                i,
-                4F.toDouble(),
-                changeY.toDouble(),
-                -1
-            )
-            changeY += 11
+            if (i.startsWith("~ ")) {
+                FontLoaders.SF16.drawStringWithShadow(
+                    "§r $i".uppercase(),
+                    4F.toDouble(),
+                    changeY.toDouble(),
+                    -1
+                )
+            } else if (i.startsWith("+ ")) {
+                FontLoaders.SF16.drawStringWithShadow(
+                    "§a  $i",
+                    4F.toDouble(),
+                    changeY.toDouble(),
+                    -1
+                )
+            } else if (i.startsWith("- ")) {
+                FontLoaders.SF16.drawStringWithShadow(
+                    "§c  $i",
+                    4F.toDouble(),
+                    changeY.toDouble(),
+                    -1
+                )
+            } else if (i.startsWith("* ")) {
+                FontLoaders.SF16.drawStringWithShadow(
+                    "§e  $i",
+                    4F.toDouble(),
+                    changeY.toDouble(),
+                    -1
+                )
+            } else {
+                FontLoaders.SF16.drawStringWithShadow(
+                    i,
+                    4F.toDouble(),
+                    changeY.toDouble(),
+                    -1
+                )
+            }
+            changeY += 8
         }
         FontLoaders.SF21.drawStringWithShadow(
             "Known Bugs:",
-            (this.width - 6F - FontLoaders.SF21.getStringWidth("Known Bugs")).toDouble(),
+            (this.width - 3F - FontLoaders.SF21.getStringWidth("Known Bugs:")).toDouble(),
             48F.toDouble(),
             -1
         )
