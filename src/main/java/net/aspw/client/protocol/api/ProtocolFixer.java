@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MovingObjectPosition;
 import net.raphimc.vialoader.util.VersionEnum;
 
-public class ProtocolFixes {
+public class ProtocolFixer {
     private static final Minecraft mc = MinecraftInstance.mc;
 
     public static void sendConditionalSwing(final MovingObjectPosition mop) {
@@ -27,12 +27,12 @@ public class ProtocolFixes {
         }
     }
 
-    public static boolean newerThan1_8() {
-        return ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning();
+    public static boolean newerThanOrEqualsTo1_8() {
+        return ProtocolBase.getManager().getTargetVersion().isNewerThanOrEqualTo(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning() || MinecraftInstance.mc.isIntegratedServerRunning();
     }
 
-    public static boolean newerThanOrEqualsTo1_8(boolean localCheck) {
-        return ProtocolBase.getManager().getTargetVersion().isNewerThanOrEqualTo(VersionEnum.r1_8) && (!localCheck || !MinecraftInstance.mc.isIntegratedServerRunning());
+    public static boolean newerThan1_8() {
+        return ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning();
     }
 
     public static boolean newerThanOrEqualsTo1_9() {

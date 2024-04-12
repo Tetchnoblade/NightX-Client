@@ -8,7 +8,7 @@ import net.aspw.client.features.module.impl.combat.KillAuraRecode;
 import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.movement.SilentSneak;
 import net.aspw.client.features.module.impl.visual.Animations;
-import net.aspw.client.protocol.api.ProtocolFixes;
+import net.aspw.client.protocol.api.ProtocolFixer;
 import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
@@ -55,7 +55,7 @@ public abstract class MixinModelBiped {
         final KillAuraRecode killAuraRecode = Objects.requireNonNull(Launch.moduleManager.getModule(KillAuraRecode.class));
         final SilentSneak silentSneak = Objects.requireNonNull(Launch.moduleManager.getModule(SilentSneak.class));
 
-        if (ProtocolFixes.newerThanOrEqualsTo1_13() && McUpdatesHandler.shouldAnimation() && p_setRotationAngles7 instanceof EntityPlayer && p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer)) {
+        if (ProtocolFixer.newerThanOrEqualsTo1_13() && McUpdatesHandler.shouldAnimation() && p_setRotationAngles7 instanceof EntityPlayer && p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer)) {
             GlStateManager.rotate(45.0F, 1F, 0.0F, 0.0F);
             GlStateManager.translate(0.0F, 0.0F, -0.7F);
 

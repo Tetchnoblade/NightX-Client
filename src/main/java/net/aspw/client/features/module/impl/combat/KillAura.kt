@@ -18,7 +18,7 @@ import net.aspw.client.features.module.impl.player.LegitScaffold
 import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.features.module.impl.targets.AntiBots
 import net.aspw.client.features.module.impl.targets.AntiTeams
-import net.aspw.client.protocol.api.ProtocolFixes
+import net.aspw.client.protocol.api.ProtocolFixer
 import net.aspw.client.utils.*
 import net.aspw.client.utils.extensions.getDistanceToEntityBox
 import net.aspw.client.utils.extensions.getNearestPointBB
@@ -427,7 +427,7 @@ class KillAura : Module() {
         if (multiCombo.get()) {
             event.targetEntity ?: return
             repeat(amountValue.get()) {
-                if (ProtocolFixes.newerThan1_8())
+                if (ProtocolFixer.newerThan1_8())
                     mc.netHandler.addToSendQueue(
                         C02PacketUseEntity(
                             event.targetEntity,
@@ -437,7 +437,7 @@ class KillAura : Module() {
 
                 mc.netHandler.addToSendQueue(C0APacketAnimation())
 
-                if (!ProtocolFixes.newerThan1_8())
+                if (!ProtocolFixer.newerThan1_8())
                     mc.netHandler.addToSendQueue(
                         C02PacketUseEntity(
                             event.targetEntity,
@@ -623,7 +623,7 @@ class KillAura : Module() {
         }
 
         // Attack target
-        if (ProtocolFixes.newerThan1_8())
+        if (ProtocolFixer.newerThan1_8())
             mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         when (swingValue.get().lowercase(Locale.getDefault())) {
@@ -637,7 +637,7 @@ class KillAura : Module() {
             "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
         }
 
-        if (!ProtocolFixes.newerThan1_8())
+        if (!ProtocolFixer.newerThan1_8())
             mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         when (particleValue.get().lowercase()) {
@@ -794,7 +794,7 @@ class KillAura : Module() {
             }
 
             "1.9+" -> {
-                if (ProtocolFixes.newerThanOrEqualsTo1_9()) {
+                if (ProtocolFixer.newerThanOrEqualsTo1_9()) {
                     val useItem =
                         PacketWrapper.create(29, null, Via.getManager().connectionManager.connections.iterator().next())
                     useItem.write(Type.VAR_INT, 1)

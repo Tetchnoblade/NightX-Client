@@ -1,7 +1,7 @@
 package net.aspw.client.features.api;
 
 import net.aspw.client.event.*;
-import net.aspw.client.protocol.api.ProtocolFixes;
+import net.aspw.client.protocol.api.ProtocolFixer;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.render.RenderUtils;
@@ -45,7 +45,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onPushOut(PushOutEvent event) {
-        if (ProtocolFixes.newerThanOrEqualsTo1_13() && (shouldAnimation() || mc.thePlayer.isSneaking()))
+        if (ProtocolFixer.newerThanOrEqualsTo1_13() && (shouldAnimation() || mc.thePlayer.isSneaking()))
             event.cancelEvent();
     }
 
@@ -56,7 +56,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onMotion(MotionEvent event) {
-        if (ProtocolFixes.newerThanOrEqualsTo1_13()) {
+        if (ProtocolFixer.newerThanOrEqualsTo1_13()) {
             float START_HEIGHT = 1.62f;
             float END_HEIGHT;
 
@@ -80,7 +80,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onUpdate(UpdateEvent event) {
-        if (ProtocolFixes.newerThanOrEqualsTo1_13()) {
+        if (ProtocolFixer.newerThanOrEqualsTo1_13()) {
             if (isSwimming()) {
                 if (mc.thePlayer.motionX < -0.4D) {
                     mc.thePlayer.motionX = -0.39F;
@@ -119,9 +119,9 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
 
         float sneakLength;
 
-        if (ProtocolFixes.newerThanOrEqualsTo1_9() && ProtocolFixes.olderThanOrEqualsTo1_13_2())
+        if (ProtocolFixer.newerThanOrEqualsTo1_9() && ProtocolFixer.olderThanOrEqualsTo1_13_2())
             sneakLength = 1.65f;
-        else if (ProtocolFixes.newerThanOrEqualsTo1_14())
+        else if (ProtocolFixer.newerThanOrEqualsTo1_14())
             sneakLength = 1.5f;
         else sneakLength = 1.8f;
 
@@ -134,12 +134,12 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
         float newHeight;
         float newWidth;
 
-        if (ProtocolFixes.newerThanOrEqualsTo1_13() && isSwimmingOrCrawling && underWater() && mc.thePlayer.rotationPitch >= 0.0) {
+        if (ProtocolFixer.newerThanOrEqualsTo1_13() && isSwimmingOrCrawling && underWater() && mc.thePlayer.rotationPitch >= 0.0) {
             newHeight = 0.6f;
             newWidth = 0.6f;
             isSwimmingOrCrawling = true;
             mc.thePlayer.setEntityBoundingBox(setThrough);
-        } else if (ProtocolFixes.newerThanOrEqualsTo1_13() && (isSwimming() && underWater() || !mc.theWorld.getCollisionBoxes(crawl).isEmpty())) {
+        } else if (ProtocolFixer.newerThanOrEqualsTo1_13() && (isSwimming() && underWater() || !mc.theWorld.getCollisionBoxes(crawl).isEmpty())) {
             newHeight = 0.6f;
             newWidth = 0.6f;
             isSwimmingOrCrawling = true;
@@ -156,7 +156,7 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
             mc.thePlayer.setEntityBoundingBox(setThrough);
         }
 
-        if (ProtocolFixes.newerThanOrEqualsTo1_9() && mc.thePlayer.onGround && !mc.thePlayer.isSneaking() && !underWater() && (mc.thePlayer.height == sneakLength || mc.thePlayer.height == 0.6F) && !mc.theWorld.getCollisionBoxes(sneak).isEmpty()) {
+        if (ProtocolFixer.newerThanOrEqualsTo1_9() && mc.thePlayer.onGround && !mc.thePlayer.isSneaking() && !underWater() && (mc.thePlayer.height == sneakLength || mc.thePlayer.height == 0.6F) && !mc.theWorld.getCollisionBoxes(sneak).isEmpty()) {
             mc.gameSettings.keyBindSneak.pressed = true;
         } else if (!GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && mc.theWorld.getCollisionBoxes(sneak).isEmpty()) {
             mc.gameSettings.keyBindSneak.pressed = false;

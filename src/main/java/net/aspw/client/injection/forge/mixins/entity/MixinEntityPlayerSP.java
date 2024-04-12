@@ -7,7 +7,7 @@ import net.aspw.client.features.module.impl.movement.NoSlow;
 import net.aspw.client.features.module.impl.movement.SilentSneak;
 import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.features.module.impl.visual.Interface;
-import net.aspw.client.protocol.api.ProtocolFixes;
+import net.aspw.client.protocol.api.ProtocolFixer;
 import net.aspw.client.utils.CooldownHelper;
 import net.aspw.client.utils.MovementUtils;
 import net.aspw.client.utils.Rotation;
@@ -216,7 +216,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
     @Redirect(method = "onUpdateWalkingPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/NetHandlerPlayClient;addToSendQueue(Lnet/minecraft/network/Packet;)V", ordinal = 7))
     public void emulateIdlePacket(final NetHandlerPlayClient instance, final Packet<?> p_addToSendQueue_1_) {
-        if (ProtocolFixes.newerThan1_8()) {
+        if (ProtocolFixer.newerThan1_8()) {
             if (this.viaForge$prevOnGround == this.onGround) {
                 return;
             }

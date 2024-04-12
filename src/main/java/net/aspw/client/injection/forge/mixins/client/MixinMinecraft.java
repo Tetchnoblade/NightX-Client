@@ -4,7 +4,7 @@ import net.aspw.client.Launch;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.other.FastPlace;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
-import net.aspw.client.protocol.api.ProtocolFixes;
+import net.aspw.client.protocol.api.ProtocolFixer;
 import net.aspw.client.utils.CPSCounter;
 import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.render.RenderUtils;
@@ -193,7 +193,7 @@ public abstract class MixinMinecraft {
             if (this.objectMouseOver != null) {
                 switch (this.objectMouseOver.typeOfHit) {
                     case ENTITY:
-                        ProtocolFixes.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);
+                        ProtocolFixer.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);
                         break;
 
                     case BLOCK:
@@ -219,7 +219,7 @@ public abstract class MixinMinecraft {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;swingItem()V")
     )
     private void fixAttackOrder_VanillaSwing() {
-        ProtocolFixes.sendConditionalSwing(this.objectMouseOver);
+        ProtocolFixer.sendConditionalSwing(this.objectMouseOver);
     }
 
     @Inject(method = "middleClickMouse", at = @At("HEAD"))
@@ -268,7 +268,7 @@ public abstract class MixinMinecraft {
             if (leftClick && this.objectMouseOver != null && this.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
                 BlockPos blockPos = this.objectMouseOver.getBlockPos();
 
-                if (this.thePlayer.isUsingItem() && ProtocolFixes.newerThanOrEqualsTo1_8(false))
+                if (this.thePlayer.isUsingItem() && ProtocolFixer.newerThanOrEqualsTo1_8())
                     return;
 
                 if (this.leftClickCounter == 0)

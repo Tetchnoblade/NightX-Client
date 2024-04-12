@@ -6,7 +6,7 @@ import net.aspw.client.features.module.impl.movement.Jesus;
 import net.aspw.client.features.module.impl.movement.NoJumpDelay;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.VisualAbilities;
-import net.aspw.client.protocol.api.ProtocolFixes;
+import net.aspw.client.protocol.api.ProtocolFixer;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
@@ -174,7 +174,7 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @ModifyConstant(method = "onLivingUpdate", constant = @Constant(doubleValue = 0.005D))
     private double ViaVersion_MovementThreshold(double constant) {
-        if (ProtocolFixes.newerThan1_8())
+        if (ProtocolFixer.newerThan1_8())
             return 0.003D;
         return 0.005D;
     }

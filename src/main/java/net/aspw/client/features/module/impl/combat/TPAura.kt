@@ -6,7 +6,7 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.protocol.api.ProtocolFixes
+import net.aspw.client.protocol.api.ProtocolFixer
 import net.aspw.client.utils.EntityUtils
 import net.aspw.client.utils.PacketUtils
 import net.aspw.client.utils.RotationUtils
@@ -133,7 +133,7 @@ class TPAura : Module() {
 
             lastTarget = it
 
-            if (ProtocolFixes.newerThan1_8())
+            if (ProtocolFixer.newerThan1_8())
                 mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             when (swingValue.get().lowercase(Locale.getDefault())) {
@@ -141,7 +141,7 @@ class TPAura : Module() {
                 "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
             }
 
-            if (!ProtocolFixes.newerThan1_8())
+            if (!ProtocolFixer.newerThan1_8())
                 mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             path.reverse()

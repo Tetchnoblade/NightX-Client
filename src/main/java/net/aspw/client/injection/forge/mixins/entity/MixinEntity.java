@@ -4,7 +4,7 @@ import net.aspw.client.Launch;
 import net.aspw.client.event.StrafeEvent;
 import net.aspw.client.features.module.impl.combat.HitBox;
 import net.aspw.client.features.module.impl.movement.Flight;
-import net.aspw.client.protocol.api.ProtocolFixes;
+import net.aspw.client.protocol.api.ProtocolFixer;
 import net.aspw.client.utils.EntityUtils;
 import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.block.Block;
@@ -354,12 +354,12 @@ public abstract class MixinEntity implements ICommandSender {
         final HitBox hitBoxes = Objects.requireNonNull(Launch.moduleManager.getModule(HitBox.class));
 
         if (hitBoxes.getState() && EntityUtils.isSelected(((Entity) ((Object) this)), true)) {
-            if (ProtocolFixes.newerThan1_8()) {
+            if (ProtocolFixer.newerThan1_8()) {
                 callbackInfoReturnable.setReturnValue(hitBoxes.getSizeValue().get());
             } else {
                 callbackInfoReturnable.setReturnValue(0.1F + hitBoxes.getSizeValue().get());
             }
-        } else if (ProtocolFixes.newerThan1_8()) {
+        } else if (ProtocolFixer.newerThan1_8()) {
             callbackInfoReturnable.setReturnValue(0.0F);
         }
     }

@@ -8,14 +8,14 @@ import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.other.BrandSpoofer;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.SilentRotations;
-import net.aspw.client.protocol.api.ProtocolFixes;
-import net.aspw.client.utils.*;
+import net.aspw.client.protocol.api.ProtocolFixer;
+import net.aspw.client.utils.AnimationUtils;
+import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.utils.RotationUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.utils.timer.MSTimer;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
-import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 
 import java.util.Objects;
 
@@ -59,16 +59,16 @@ public class PacketManager extends MinecraftInstance implements Listenable {
 
         lastEyeHeight = eyeHeight;
 
-        if (ProtocolFixes.newerThanOrEqualsTo1_9() && ProtocolFixes.olderThanOrEqualsTo1_13_2())
+        if (ProtocolFixer.newerThanOrEqualsTo1_9() && ProtocolFixer.olderThanOrEqualsTo1_13_2())
             END_HEIGHT = 1.47f;
-        else if (ProtocolFixes.newerThanOrEqualsTo1_14())
+        else if (ProtocolFixer.newerThanOrEqualsTo1_14())
             END_HEIGHT = 1.32f;
         else END_HEIGHT = 1.54f;
 
         float delta;
-        if (ProtocolFixes.newerThanOrEqualsTo1_9() && ProtocolFixes.olderThanOrEqualsTo1_13_2())
+        if (ProtocolFixer.newerThanOrEqualsTo1_9() && ProtocolFixer.olderThanOrEqualsTo1_13_2())
             delta = 0.147f;
-        else if (ProtocolFixes.newerThanOrEqualsTo1_14())
+        else if (ProtocolFixer.newerThanOrEqualsTo1_14())
             delta = 0.132f;
         else delta = 0.154f;
 
@@ -135,7 +135,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
             packetCountTimer.reset();
         }
 
-        if (ProtocolFixes.newerThanOrEqualsTo1_10()) {
+        if (ProtocolFixer.newerThanOrEqualsTo1_10()) {
             if (packet instanceof C08PacketPlayerBlockPlacement) {
                 ((C08PacketPlayerBlockPlacement) packet).facingX = 0.5F;
                 ((C08PacketPlayerBlockPlacement) packet).facingY = 0.5F;
