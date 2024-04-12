@@ -31,8 +31,8 @@ public class ProtocolFixes {
         return ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning();
     }
 
-    public static boolean newerThanOrEqualsTo1_8() {
-        return ProtocolBase.getManager().getTargetVersion().isNewerThanOrEqualTo(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning();
+    public static boolean newerThanOrEqualsTo1_8(boolean localCheck) {
+        return ProtocolBase.getManager().getTargetVersion().isNewerThanOrEqualTo(VersionEnum.r1_8) && (!localCheck || !MinecraftInstance.mc.isIntegratedServerRunning());
     }
 
     public static boolean newerThanOrEqualsTo1_9() {

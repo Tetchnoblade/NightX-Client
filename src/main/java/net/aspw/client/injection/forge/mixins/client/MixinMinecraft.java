@@ -268,7 +268,7 @@ public abstract class MixinMinecraft {
             if (leftClick && this.objectMouseOver != null && this.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
                 BlockPos blockPos = this.objectMouseOver.getBlockPos();
 
-                if (this.thePlayer.isUsingItem() && ProtocolFixes.newerThanOrEqualsTo1_8())
+                if (this.thePlayer.isUsingItem() && ProtocolFixes.newerThanOrEqualsTo1_8(false))
                     return;
 
                 if (this.leftClickCounter == 0)
