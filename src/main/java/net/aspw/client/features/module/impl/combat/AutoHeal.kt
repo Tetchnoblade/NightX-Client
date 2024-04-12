@@ -274,8 +274,12 @@ class AutoHeal : Module() {
                     if (mc.thePlayer.inventory.currentItem == potIndex - 36) {
                         mc.thePlayer.inventory.currentItem = oldSlot
                         mc.playerController.updateController()
+                        potting = false
+                        throwing = false
+                        tickTimer.reset()
                         debug("switch back")
                     }
+                    return
                 }
                 if (throwing && mc.currentScreen !is GuiContainer
                     && mc.inGameHasFocus && Display.isActive()

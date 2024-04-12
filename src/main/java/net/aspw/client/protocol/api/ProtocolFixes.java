@@ -1,12 +1,12 @@
 package net.aspw.client.protocol.api;
 
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MovingObjectPosition;
+import net.raphimc.vialoader.util.VersionEnum;
 
 public class ProtocolFixes {
     private static final Minecraft mc = MinecraftInstance.mc;
@@ -28,34 +28,34 @@ public class ProtocolFixes {
     }
 
     public static boolean newerThan1_8() {
-        return ProtocolBase.getManager().getTargetVersion().newerThan(ProtocolVersion.v1_8) && !MinecraftInstance.mc.isIntegratedServerRunning();
+        return ProtocolBase.getManager().getTargetVersion().isNewerThan(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning();
     }
 
     public static boolean newerThanOrEqualsTo1_8() {
-        return ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_8) && !MinecraftInstance.mc.isIntegratedServerRunning();
+        return ProtocolBase.getManager().getTargetVersion().isNewerThanOrEqualTo(VersionEnum.r1_8) && !MinecraftInstance.mc.isIntegratedServerRunning();
     }
 
     public static boolean newerThanOrEqualsTo1_9() {
-        return ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9) && !MinecraftInstance.mc.isIntegratedServerRunning();
+        return ProtocolBase.getManager().getTargetVersion().isNewerThanOrEqualTo(VersionEnum.r1_9) && !MinecraftInstance.mc.isIntegratedServerRunning();
     }
 
     public static boolean newerThanOrEqualsTo1_10() {
-        return ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_10) && !MinecraftInstance.mc.isIntegratedServerRunning();
+        return ProtocolBase.getManager().getTargetVersion().isNewerThanOrEqualTo(VersionEnum.r1_10) && !MinecraftInstance.mc.isIntegratedServerRunning();
     }
 
     public static boolean newerThanOrEqualsTo1_13() {
-        return ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13) && !MinecraftInstance.mc.isIntegratedServerRunning();
+        return ProtocolBase.getManager().getTargetVersion().isNewerThanOrEqualTo(VersionEnum.r1_13) && !MinecraftInstance.mc.isIntegratedServerRunning();
     }
 
     public static boolean olderThanOrEqualsTo1_13_2() {
-        return ProtocolBase.getManager().getTargetVersion().olderThanOrEqualTo(ProtocolVersion.v1_13_2) && !MinecraftInstance.mc.isIntegratedServerRunning();
+        return ProtocolBase.getManager().getTargetVersion().isOlderThanOrEqualTo(VersionEnum.r1_13_2) && !MinecraftInstance.mc.isIntegratedServerRunning();
     }
 
     public static boolean newerThanOrEqualsTo1_14() {
-        return ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !MinecraftInstance.mc.isIntegratedServerRunning();
+        return ProtocolBase.getManager().getTargetVersion().isNewerThanOrEqualTo(VersionEnum.r1_14) && !MinecraftInstance.mc.isIntegratedServerRunning();
     }
 
     public static boolean newerThanOrEqualsTo1_16() {
-        return ProtocolBase.getManager().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_14) && !MinecraftInstance.mc.isIntegratedServerRunning();
+        return ProtocolBase.getManager().getTargetVersion().isNewerThanOrEqualTo(VersionEnum.r1_14) && !MinecraftInstance.mc.isIntegratedServerRunning();
     }
 }

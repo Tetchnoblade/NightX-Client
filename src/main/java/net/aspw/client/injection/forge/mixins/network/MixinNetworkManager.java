@@ -1,6 +1,5 @@
 package net.aspw.client.injection.forge.mixins.network;
 
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import net.aspw.client.Launch;
@@ -14,6 +13,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.ThreadQuickExitException;
 import net.minecraft.util.LazyLoadBase;
+import net.raphimc.vialoader.util.VersionEnum;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -39,7 +39,7 @@ public class MixinNetworkManager implements VFNetworkManager {
     private INetHandler packetListener;
 
     @Unique
-    private ProtocolVersion viaForge$targetVersion;
+    private VersionEnum viaForge$targetVersion;
 
     @Inject(method = "func_181124_a", at = @At(value = "INVOKE", target = "Lio/netty/bootstrap/Bootstrap;group(Lio/netty/channel/EventLoopGroup;)Lio/netty/bootstrap/AbstractBootstrap;"), locals = LocalCapture.CAPTURE_FAILHARD, remap = false)
     private static void trackSelfTarget(final InetAddress address, final int serverPort, final boolean useNativeTransport, final CallbackInfoReturnable<NetworkManager> cir, final NetworkManager networkmanager, final Class oclass, final LazyLoadBase lazyloadbase) {
@@ -52,12 +52,12 @@ public class MixinNetworkManager implements VFNetworkManager {
     }
 
     @Override
-    public ProtocolVersion viaForge$getTrackedVersion() {
+    public VersionEnum viaForge$getTrackedVersion() {
         return viaForge$targetVersion;
     }
 
     @Override
-    public void viaForge$setTrackedVersion(final ProtocolVersion version) {
+    public void viaForge$setTrackedVersion(final VersionEnum version) {
         viaForge$targetVersion = version;
     }
 

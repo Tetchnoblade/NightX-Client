@@ -90,9 +90,6 @@ class LegitScaffold : Module() {
             BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1.0, mc.thePlayer.posZ)
         ).block === Blocks.air
 
-        if (sneakValue.get())
-            mc.gameSettings.keyBindSneak.pressed = shouldEagle
-
         if (shouldEagle && (tickTimer.hasTimePassed(delayValue.get()) || !mc.thePlayer.onGround)) {
             if (mc.thePlayer.heldItem != null && mc.thePlayer.heldItem.item is ItemBlock)
                 KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
@@ -107,6 +104,15 @@ class LegitScaffold : Module() {
             mc.gameSettings.keyBindSneak.pressed = true
             return
         }
+
+        val shouldEagle = mc.theWorld.getBlockState(
+            BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1.0, mc.thePlayer.posZ)
+        ).block === Blocks.air
+
+        if (sneakValue.get() && shouldEagle || GameSettings.isKeyDown(mc.gameSettings.keyBindSneak))
+            mc.gameSettings.keyBindSneak.pressed = true
+        else if (!GameSettings.isKeyDown(mc.gameSettings.keyBindSneak))
+            mc.gameSettings.keyBindSneak.pressed = false
 
         if (stopSprintValue.get())
             mc.thePlayer.isSprinting = false

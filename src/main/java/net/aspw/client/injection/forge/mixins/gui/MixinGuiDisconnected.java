@@ -1,7 +1,6 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import com.google.gson.JsonObject;
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
 import net.aspw.client.auth.account.CrackedAccount;
 import net.aspw.client.auth.account.MinecraftAccount;
@@ -22,6 +21,7 @@ import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.Session;
+import net.raphimc.vialoader.util.VersionEnum;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -104,7 +104,7 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
 
     @Inject(method = "drawScreen", at = @At("RETURN"))
     private void drawScreen(CallbackInfo callbackInfo) {
-        final ProtocolVersion version = ProtocolBase.getManager().getTargetVersion();
+        final VersionEnum version = ProtocolBase.getManager().getTargetVersion();
 
         Fonts.minecraftFont.drawStringWithShadow(
                 "§7Username: §d" + mc.getSession().getUsername(),
