@@ -36,6 +36,8 @@ class WatchdogGround : SpeedMode("WatchdogGround") {
                 else MovementUtils.strafe(baseSpeed)
             }
         } else {
+            if (mc.thePlayer.hurtTime >= 8)
+                MovementUtils.strafe(MovementUtils.getSpeed() * 0.75f)
             if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
                 mc.thePlayer.motionX *= (1.0002 + 0.0008 * (mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1))
                 mc.thePlayer.motionZ *= (1.0002 + 0.0008 * (mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1))

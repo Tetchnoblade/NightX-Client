@@ -126,7 +126,8 @@ class Scaffold : Module() {
         "Normal"
     )
     private val preRotationValue = ListValue("WaitRotationMode", arrayOf("Normal", "Lock", "None"), "Normal")
-    private val autoJumpValue = ListValue("AutoJumpMode", arrayOf("Off", "Normal", "KeepY", "Breezily"), "Off")
+    private val autoJumpValue =
+        ListValue("AutoJumpMode", arrayOf("Off", "Normal", "HypixelKeepY", "KeepY", "Breezily"), "Off")
     private val breezilyDelayValue =
         IntegerValue("Breezily-Delay", 7, 2, 12) { autoJumpValue.get().equals("breezily", true) }
     private val timerValue = FloatValue("Timer", 1f, 0.1f, 1.4f)
@@ -203,6 +204,7 @@ class Scaffold : Module() {
     // Launch position
     private var launchY = 0
     private var placeCount = 0
+    private var hypixelCount = 0
     private var faceBlock = false
 
     // Rotation lock
@@ -241,6 +243,7 @@ class Scaffold : Module() {
         spinYaw = 0f
         wdTick = 5
         placeCount = 0
+        hypixelCount = 0
         firstPitch = mc.thePlayer.rotationPitch
         firstRotate = mc.thePlayer.rotationYaw
         launchY = mc.thePlayer.posY.toInt()
@@ -492,7 +495,16 @@ class Scaffold : Module() {
         if (mc.thePlayer.onGround) {
             offGroundTicks = 0
         } else offGroundTicks++
-
+        if ((hypixelCount == 0 || !mc.thePlayer.isPotionActive(Potion.moveSpeed) && hypixelCount >= 4 || mc.thePlayer.isPotionActive(
+                Potion.moveSpeed
+            ) && hypixelCount >= 6) && autoJumpValue.get().equals("hypixelkeepy", true)
+        ) {
+            MovementUtils.strafe(0.1F)
+            if (!mc.thePlayer.onGround && shouldEagle) {
+                hypixelCount = 0
+                KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
+            }
+        }
         if (desyncValue.get()) {
             synchronized(positions) {
                 positions.add(
@@ -517,16 +529,22 @@ class Scaffold : Module() {
         ) {
             mc.thePlayer.isSprinting = false
         }
-        if (!autoJumpValue.get().equals("keepy", true) && !(smartSpeedValue.get() && Launch.moduleManager.getModule(
+        if (!autoJumpValue.get().equals("keepy", true) && !autoJumpValue.get()
+                .equals("hypixelkeepy", true) && !(smartSpeedValue.get() && Launch.moduleManager.getModule(
                 Speed::class.java
             )!!.state) || GameSettings.isKeyDown(mc.gameSettings.keyBindJump) || mc.thePlayer.posY < launchY
         ) launchY = mc.thePlayer.posY.toInt()
-        if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && mc.thePlayer.onGround)
+        if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && mc.thePlayer.onGround) {
             placeCount = 0
-        if ((autoJumpValue.get().equals(
+            hypixelCount = 0
+        }
+        if (((autoJumpValue.get().equals(
                 "keepy",
                 true
-            ) && !Launch.moduleManager.getModule(Speed::class.java)!!.state || autoJumpValue.get()
+            ) || autoJumpValue.get().equals(
+                "hypixelkeepy",
+                true
+            )) && !Launch.moduleManager.getModule(Speed::class.java)!!.state || autoJumpValue.get()
                 .equals("normal", true) && faceBlock || autoJumpValue.get().equals(
                 "breezily",
                 true
@@ -550,26 +568,6 @@ class Scaffold : Module() {
                     wdSpoof = false
                 }
             }
-        }
-
-        if (packet is C08PacketPlayerBlockPlacement) {
-            packet.facingX = packet.facingX.coerceIn(-1.00000F, 1.00000F)
-            packet.facingY = packet.facingY.coerceIn(-1.00000F, 1.00000F)
-            packet.facingZ = packet.facingZ.coerceIn(-1.00000F, 1.00000F)
-        }
-
-        if (packet is C08PacketPlayerBlockPlacement && !mc.isIntegratedServerRunning) {
-            event.cancelEvent()
-            PacketUtils.sendPacketNoEvent(
-                C08PacketPlayerBlockPlacement(
-                    packet.position,
-                    packet.placedBlockDirection,
-                    null,
-                    packet.placedBlockOffsetX,
-                    packet.placedBlockOffsetY,
-                    packet.placedBlockOffsetZ
-                )
-            )
         }
 
         if (desyncValue.get()) {
@@ -746,7 +744,8 @@ class Scaffold : Module() {
     private fun findBlock() {
         val blockPosition =
             if (!canTower && ((autoJumpValue.get()
-                    .equals("keepy", true) || smartSpeedValue.get() && Launch.moduleManager.getModule(
+                    .equals("keepy", true) || autoJumpValue.get()
+                    .equals("hypixelkeepy", true) || smartSpeedValue.get() && Launch.moduleManager.getModule(
                     Speed::class.java
                 )!!.state) && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) && launchY <= mc.thePlayer.posY
             ) BlockPos(
@@ -785,7 +784,8 @@ class Scaffold : Module() {
             return
         }
         if (!canTower && (!delayTimer.hasTimePassed(delay) || ((autoJumpValue.get()
-                .equals("keepy", true) || smartSpeedValue.get() && Launch.moduleManager.getModule(
+                .equals("keepy", true) || autoJumpValue.get()
+                .equals("hypixelkeepy", true) || smartSpeedValue.get() && Launch.moduleManager.getModule(
                 Speed::class.java
             )!!.state) && !GameSettings.isKeyDown(mc.gameSettings.keyBindJump)) && launchY - 1 != (targetPlace)!!.vec3.yCoord.toInt())
         ) return
@@ -803,6 +803,7 @@ class Scaffold : Module() {
             mc.thePlayer.motionZ *= modifier.toDouble()
         }
         placeCount += 1
+        hypixelCount += 1
         targetPlace = null
     }
 
@@ -815,6 +816,7 @@ class Scaffold : Module() {
         startPlaceTimer.reset()
         faceBlock = false
         placeCount = 0
+        hypixelCount = 0
         firstPitch = 0f
         firstRotate = 0f
         wdTick = 5
