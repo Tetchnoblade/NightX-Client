@@ -20,44 +20,48 @@ class MurdererDetector : Module() {
     var murderer1: EntityPlayer? = null
     var murderer2: EntityPlayer? = null
 
-    private val murderItems = mutableListOf(
-        267,  // Items.iron_sword,
-        272,  // Items.stone_sword,
-        256,  // Items.iron_shovel,
-        280,  // Items.stick,
-        271,  // Items.wooden_axe,
-        268,  // Items.wooden_sword,
-        273,  // Items.stone_shovel,
-        369,  // Items.blaze_rod,
-        277,  // Items.diamond_shovel,
-        359,  // Items.shears,
-        400,  // Items.pumpkin_pie,
-        285,  // Items.golden_pickaxe,
-        398,  // Items.carrot_on_a_stick,
-        357,  // Items.cookie,
-        279,  // Items.diamond_axe,
-        283,  // Items.golden_sword,
-        276,  // Items.diamond_sword,
-        293,  // Items.diamond_hoe,
-        421,  // Items.name_tag,
-        333,  // Items.boat,
-        409,  // Items.prismarine_shard,
-        349,  // Items.fish,
-        364,  // Items.cooked_beef,
-        382,  // Items.speckled_melon,
-        351,  // Items.dye,
-        340,  // Items.book,
-        406,  // Items.quartz,
-        396,  // Items.golden_carrot,
-        260,  // Items.apple,
+    // Murderer Items Updated 2024 04/21
+    private val murdererItems = mutableListOf(
+        267,  // Items.iron_sword
+        130,  // Blocks.ender_chest
+        272,  // Items.stone_sword
+        256,  // Items.iron_shovel
+        280,  // Items.stick
+        271,  // Items.wooden_axe
+        268,  // Items.wooden_sword
+        32,   // Blocks.deadbush
+        273,  // Items.stone_shovel
+        369,  // Items.blaze_rod
+        277,  // Items.diamond_shovel
+        406,  // Items.quartz
+        400,  // Items.pumpkin_pie
+        285,  // Items.golden_pickaxe
+        260,  // Items.apple
+        421,  // Items.name_tag
+        19,   // Blocks.sponge
+        398,  // Items.carrot_on_a_stick
+        352,  // Items.bone
+        391,  // Items.carrot
+        396,  // Items.golden_carrot
+        357,  // Items.cookie
+        279,  // Items.diamond_axe
+        175,  // Blocks.double_plant
+        409,  // Items.prismarine_shard
+        364,  // Items.cooked_beef
+        405,  // Blocks.nether_brick
+        366,  // Items.cooked_chicken
         2258, // Items.record_blocks
-        76,   // Blocks.redstone_torch,
-        32,   // Blocks.deadbush,
-        19,   // Blocks.sponge,
-        122,  // Blocks.dragon_egg,
-        175,  // Blocks.double_plant,
-        405,  // Blocks.nether_brick,
-        130   // Blocks.ender_chest
+        294,  // Items.golden_hoe
+        283,  // Items.golden_sword
+        276,  // Items.diamond_sword
+        293,  // Items.diamond_hoe
+        359,  // Items.shears
+        349,  // Items.fish
+        351,  // Items.dye
+        333,  // Items.boat
+        382,  // Items.speckled_melon
+        340,  // Items.book
+        6     // Blocks.sapling
     )
 
     override fun onDisable() {
@@ -78,7 +82,7 @@ class MurdererDetector : Module() {
                 if (player.heldItem != null && (player.heldItem.displayName.contains(
                         "Knife",
                         ignoreCase = true
-                    ) || murderItems.contains(Item.getIdFromItem(player.heldItem.item)))
+                    ) || murdererItems.contains(Item.getIdFromItem(player.heldItem.item)))
                 ) {
                     if (murderer1 == null) {
                         if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {

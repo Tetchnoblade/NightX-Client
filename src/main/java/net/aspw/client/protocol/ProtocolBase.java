@@ -9,7 +9,10 @@ import io.netty.util.AttributeKey;
 import net.aspw.client.protocol.api.*;
 import net.aspw.client.utils.ClientUtils;
 import net.raphimc.vialoader.ViaLoader;
-import net.raphimc.vialoader.impl.platform.*;
+import net.raphimc.vialoader.impl.platform.ViaBackwardsPlatformImpl;
+import net.raphimc.vialoader.impl.platform.ViaLegacyPlatformImpl;
+import net.raphimc.vialoader.impl.platform.ViaRewindPlatformImpl;
+import net.raphimc.vialoader.impl.platform.ViaVersionPlatformImpl;
 import net.raphimc.vialoader.netty.CompressionReorderEvent;
 import net.raphimc.vialoader.util.VersionEnum;
 
@@ -39,7 +42,7 @@ public class ProtocolBase {
 
         manager = new ProtocolBase();
 
-        ViaLoader.init(new ViaVersionPlatformImpl(null), new ProtocolVLLoader(platform), new ProtocolVLInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new, ViaLegacyPlatformImpl::new, ViaAprilFoolsPlatformImpl::new);
+        ViaLoader.init(new ViaVersionPlatformImpl(null), new ProtocolVLLoader(platform), new ProtocolVLInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new, ViaLegacyPlatformImpl::new, null);
 
         versions.addAll(VersionEnum.SORTED_VERSIONS);
 
