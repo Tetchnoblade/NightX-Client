@@ -1,10 +1,5 @@
 package net.aspw.client.features.module.impl.combat
 
-import com.viaversion.viarewind.protocol.protocol1_8to1_9.Protocol1_8To1_9
-import com.viaversion.viarewind.utils.PacketUtil
-import com.viaversion.viaversion.api.Via
-import com.viaversion.viaversion.api.protocol.packet.PacketWrapper
-import com.viaversion.viaversion.api.type.Type
 import net.aspw.client.Launch
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
@@ -195,7 +190,6 @@ class KillAura : Module() {
                 "Vanilla",
                 "ReBlock",
                 "Perfect",
-                "1.9+",
                 "Fake",
                 "None"
             ),
@@ -295,7 +289,7 @@ class KillAura : Module() {
                     }
                 }
 
-                "vanilla", "1.9+" -> {
+                "vanilla" -> {
                     if (mc.thePlayer.isBlocking || canBlock)
                         startBlocking(target!!, interactAutoBlockValue.get())
                 }
@@ -609,7 +603,7 @@ class KillAura : Module() {
         // Call attack event
         Launch.eventManager.callEvent(AttackEvent(entity))
 
-        if (autoBlockModeValue.get().equals("vanilla", true) || autoBlockModeValue.get().equals("1.9+", true)) {
+        if (autoBlockModeValue.get().equals("vanilla", true)) {
             if (blockingStatus && canBlock && endTimer.hasTimePassed(1)) {
                 blockingStatus = false
                 PacketUtils.sendPacketNoEvent(
@@ -791,16 +785,6 @@ class KillAura : Module() {
             "reblock", "vanilla", "perfect" -> {
                 mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
                 blockingStatus = true
-            }
-
-            "1.9+" -> {
-                if (ProtocolFixer.newerThanOrEqualsTo1_9()) {
-                    val useItem =
-                        PacketWrapper.create(29, null, Via.getManager().connectionManager.connections.iterator().next())
-                    useItem.write(Type.VAR_INT, 1)
-                    PacketUtil.sendToServer(useItem, Protocol1_8To1_9::class.java, true, true)
-                    blockingStatus = true
-                }
             }
 
             "fake" -> {

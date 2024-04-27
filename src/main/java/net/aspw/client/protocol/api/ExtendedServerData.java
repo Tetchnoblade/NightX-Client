@@ -1,14 +1,11 @@
 package net.aspw.client.protocol.api;
 
-import net.raphimc.vialoader.util.VersionEnum;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 
-/**
- * This interface is used to store the target version for a specific server in the server list.
- */
 public interface ExtendedServerData {
 
-    VersionEnum viaForge$getVersion();
+    ProtocolVersion viaForge$getVersion();
 
-    void viaForge$setVersion(final VersionEnum version);
+    void viaForge$setVersion(final ProtocolVersion version);
 
 }

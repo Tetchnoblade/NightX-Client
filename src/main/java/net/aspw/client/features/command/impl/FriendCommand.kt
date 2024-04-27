@@ -57,7 +57,7 @@ class FriendCommand : Command("friend", arrayOf("friends")) {
                     val friends = friendsConfig.friends.size
                     friendsConfig.clearFriends()
                     Launch.fileManager.saveConfig(friendsConfig)
-                    chat("Removed $friends friend(s).")
+                    chat("Removed $friends friend (s).")
                     return
                 }
 

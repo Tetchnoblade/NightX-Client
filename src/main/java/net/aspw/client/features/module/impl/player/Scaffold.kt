@@ -154,7 +154,7 @@ class Scaffold : Module() {
     private val placeSlowDownValue = BoolValue("Place-SlowDown", false)
     private val speedModifierValue = FloatValue("Speed-Multiplier", 0.8f, 0f, 1.4f, "x") { placeSlowDownValue.get() }
     private val slowDownValue = BoolValue("SlowDown", false)
-    private val xzMultiplier = FloatValue("XZ-Multiplier", 0.6f, 0f, 1.1f, "x") { slowDownValue.get() }
+    private val xzMultiplier = FloatValue("XZ-Multiplier", 0.7f, 0f, 1.2f, "x") { slowDownValue.get() }
     private val noSpeedPotValue = BoolValue("NoSpeedPot", false)
     private val speedSlowDown = FloatValue("SpeedPot-SlowDown", 0.8f, 0.0f, 1.1f, "x") { noSpeedPotValue.get() }
     private val customSpeedValue = BoolValue("CustomSpeed", false)

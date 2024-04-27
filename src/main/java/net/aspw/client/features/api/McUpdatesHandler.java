@@ -4,7 +4,6 @@ import net.aspw.client.event.*;
 import net.aspw.client.protocol.api.ProtocolFixer;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.MinecraftInstance;
-import net.aspw.client.utils.render.RenderUtils;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.item.EntityBoat;
@@ -68,10 +67,10 @@ public class McUpdatesHandler extends MinecraftInstance implements Listenable {
             delta = 0.085f;
 
             if (shouldAnimation()) {
-                eyeHeight = AnimationUtils.animate(END_HEIGHT, eyeHeight, RenderUtils.deltaTime * delta);
+                eyeHeight = AnimationUtils.animate(END_HEIGHT, eyeHeight, 2 * delta);
                 doingEyeRot = true;
             } else if (eyeHeight < START_HEIGHT)
-                eyeHeight = AnimationUtils.animate(START_HEIGHT, eyeHeight, RenderUtils.deltaTime * delta);
+                eyeHeight = AnimationUtils.animate(START_HEIGHT, eyeHeight, 2 * delta);
 
             if (eyeHeight >= START_HEIGHT && doingEyeRot)
                 doingEyeRot = false;

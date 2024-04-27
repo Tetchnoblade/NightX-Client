@@ -12,7 +12,6 @@ import net.aspw.client.protocol.api.ProtocolFixer;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.RotationUtils;
-import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.utils.timer.MSTimer;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
@@ -73,9 +72,9 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         else delta = 0.154f;
 
         if (mc.thePlayer.isSneaking())
-            eyeHeight = AnimationUtils.animate(END_HEIGHT, eyeHeight, RenderUtils.deltaTime * delta);
+            eyeHeight = AnimationUtils.animate(END_HEIGHT, eyeHeight, 2 * delta);
         else if (eyeHeight < START_HEIGHT)
-            eyeHeight = AnimationUtils.animate(START_HEIGHT, eyeHeight, RenderUtils.deltaTime * delta);
+            eyeHeight = AnimationUtils.animate(START_HEIGHT, eyeHeight, 2 * delta);
 
         if (!Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).getState())
             Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).setState(true);

@@ -163,7 +163,7 @@ class Interface : Module() {
             if (targetHudValue.get()) {
                 val xPos = (ScaledResolution(mc).scaledWidth / 2) - 214f + targetHudXPosValue.get()
                 val yPos = (ScaledResolution(mc).scaledHeight / 2) - 90f + targetHudYPosValue.get()
-                val font = Fonts.minecraftFont
+                val font = FontLoaders.SF21
                 val killAura = Launch.moduleManager.getModule(KillAura::class.java)
                 val tpAura = Launch.moduleManager.getModule(TPAura::class.java)
                 val killAuraRecode = Launch.moduleManager.getModule(KillAuraRecode::class.java)
@@ -200,7 +200,12 @@ class Interface : Module() {
                         yPos + 36F,
                         Color(245, healthColor, 1).rgb
                     )
-                    font.drawStringWithShadow(healthString, xPos + 64.5F, yPos + 27F, Color(245, healthColor, 1).rgb)
+                    Fonts.minecraftFont.drawStringWithShadow(
+                        healthString,
+                        xPos + 64.5F,
+                        yPos + 27F,
+                        Color(245, healthColor, 1).rgb
+                    )
 
                     RenderUtils.newDrawRect(xPos - 1, yPos + 3, xPos + 33F, yPos + 37F, Color(0, 0, 0).rgb)
 
@@ -211,18 +216,38 @@ class Interface : Module() {
                             yPos.toInt() + 4
                         )
                     else {
-                        font.drawStringWithShadow("No", xPos + 9, yPos + 7F, Color(120, 120, 120).rgb)
-                        font.drawStringWithShadow("Image", xPos + 2, yPos + 16F, Color(120, 120, 120).rgb)
-                        font.drawStringWithShadow("Found", xPos + 1, yPos + 25F, Color(120, 120, 120).rgb)
+                        font.drawStringWithShadow(
+                            "No",
+                            (xPos + 9).toDouble(),
+                            (yPos + 7F).toDouble(),
+                            Color(120, 120, 120).rgb
+                        )
+                        font.drawStringWithShadow(
+                            "Image",
+                            (xPos + 2).toDouble(),
+                            (yPos + 16F).toDouble(),
+                            Color(120, 120, 120).rgb
+                        )
+                        font.drawStringWithShadow(
+                            "Found",
+                            (xPos + 1).toDouble(),
+                            (yPos + 25F).toDouble(),
+                            Color(120, 120, 120).rgb
+                        )
                     }
 
                     updateAnim(entity.health)
 
-                    font.drawStringWithShadow(entity.name, xPos + 36F, yPos + 4F, Color(255, 255, 255).rgb)
+                    font.drawStringWithShadow(
+                        entity.name,
+                        (xPos + 36F).toDouble(),
+                        (yPos + 4F).toDouble(),
+                        Color(255, 255, 255).rgb
+                    )
                     font.drawStringWithShadow(
                         mc.thePlayer.getDistanceToEntity(entity).toInt().toString() + " blocks away",
-                        xPos + 36F,
-                        yPos + 15F,
+                        (xPos + 36F).toDouble(),
+                        (yPos + 15F).toDouble(),
                         Color(255, 255, 255).rgb
                     )
                 } else if (easingHealth != 0F) easingHealth = 0F
@@ -288,7 +313,7 @@ class Interface : Module() {
     }
 
     private fun updateAnim(targetHealth: Float) {
-        easingHealth += ((targetHealth - easingHealth) / 2.0F.pow(10.0F - targetHudSpeedValue.get())) * RenderUtils.deltaTime
+        easingHealth += ((targetHealth - easingHealth) / 2.0F.pow(10.0F - targetHudSpeedValue.get())) * 2
     }
 
     private fun getModName(mod: Module): String {

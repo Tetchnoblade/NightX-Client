@@ -1,13 +1,13 @@
 package net.aspw.client.protocol.api;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.protocol.ProtocolBase;
 import net.aspw.client.visual.font.smooth.FontLoaders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
-import net.raphimc.vialoader.util.VersionEnum;
 import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
@@ -94,8 +94,8 @@ public class ProtocolSelector extends GuiScreen {
 
         @Override
         protected void drawSlot(int index, int x, int y, int slotHeight, int mouseX, int mouseY) {
-            final VersionEnum targetVersion = ProtocolBase.getManager().getTargetVersion();
-            final VersionEnum version = ProtocolBase.versions.get(index);
+            final ProtocolVersion targetVersion = ProtocolBase.getManager().getTargetVersion();
+            final ProtocolVersion version = ProtocolBase.versions.get(index);
 
             String color;
             if (targetVersion == version) {
@@ -110,7 +110,7 @@ public class ProtocolSelector extends GuiScreen {
 
     public interface FinishedCallback {
 
-        void finished(final VersionEnum version, final GuiScreen parent);
+        void finished(final ProtocolVersion version, final GuiScreen parent);
 
     }
 

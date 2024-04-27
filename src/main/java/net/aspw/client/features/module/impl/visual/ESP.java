@@ -112,7 +112,7 @@ public final class ESP extends Module {
                         final AntiBots antiBots = Objects.requireNonNull(Launch.moduleManager.getModule(AntiBots.class));
                         entityLivingBase = (EntityLivingBase) entity;
                         String entName;
-                        if (murdererDetector.getState() && (entity == murdererDetector.getMurderer1() || entity == murdererDetector.getMurderer2())) {
+                        if (murdererDetector.getState() && MurdererDetector.isMurderer(entityLivingBase)) {
                             entName = "§c[Murderer] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();
                         } else if (EntityUtils.isFriend(entity)) {
                             entName = "§e[Friend] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();

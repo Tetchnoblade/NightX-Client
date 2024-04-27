@@ -1,12 +1,12 @@
 package net.aspw.client.protocol.api;
 
 import com.viaversion.viaversion.api.connection.UserConnection;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.raphimc.vialoader.netty.VLLegacyPipeline;
-import net.raphimc.vialoader.util.VersionEnum;
 
 public class ProtocolVLLegacyPipeline extends VLLegacyPipeline {
 
-    public ProtocolVLLegacyPipeline(UserConnection user, VersionEnum version) {
+    public ProtocolVLLegacyPipeline(UserConnection user, ProtocolVersion version) {
         super(user, version);
     }
 

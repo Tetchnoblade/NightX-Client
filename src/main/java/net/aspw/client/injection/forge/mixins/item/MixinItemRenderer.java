@@ -533,7 +533,7 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Small": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.01, Animations.blockPosY.get().doubleValue() - 0.07, Animations.blockPosZ.get().doubleValue() - 0.24);
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.01, Animations.blockPosY.get().doubleValue() + 0.03, Animations.blockPosZ.get().doubleValue() - 0.24);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, f1);
                                 else this.transformFirstPersonItem(f, f1);

@@ -10,6 +10,7 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.value.BoolValue
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 
@@ -17,8 +18,16 @@ import net.minecraft.item.Item
 class MurdererDetector : Module() {
     private val chatValue = BoolValue("Chat", true)
 
-    var murderer1: EntityPlayer? = null
-    var murderer2: EntityPlayer? = null
+    companion object {
+        var murderers = mutableListOf<EntityLivingBase>()
+
+        @JvmStatic
+        fun isMurderer(entity: EntityLivingBase): Boolean {
+            if (entity !is EntityPlayer) return false
+            if (entity in murderers) return true
+            return false
+        }
+    }
 
     // Murderer Items Updated 2024 04/21
     private val murdererItems = mutableListOf(
@@ -65,14 +74,12 @@ class MurdererDetector : Module() {
     )
 
     override fun onDisable() {
-        murderer1 = null
-        murderer2 = null
+        murderers.clear()
     }
 
     @EventTarget
     fun onWorld(event: WorldEvent) {
-        murderer1 = null
-        murderer2 = null
+        murderers.clear()
     }
 
     @EventTarget
@@ -83,24 +90,14 @@ class MurdererDetector : Module() {
                         "Knife",
                         ignoreCase = true
                     ) || murdererItems.contains(Item.getIdFromItem(player.heldItem.item)))
+                    && player !in murderers
                 ) {
-                    if (murderer1 == null) {
-                        if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                            Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
-                        }
-                        if (chatValue.get())
-                            chat("§e" + player.name + "§r is Murderer!")
-                        murderer1 = player
-                        return
+                    if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                        Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                     }
-                    if (murderer2 == null && player != murderer1) {
-                        if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                            Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
-                        }
-                        if (chatValue.get())
-                            chat("§e" + player.name + "§r is Murderer!")
-                        murderer2 = player
-                    }
+                    if (chatValue.get())
+                        chat("§e" + player.name + "§r is Murderer!")
+                    murderers.add(player)
                 }
             }
         }

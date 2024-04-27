@@ -1,6 +1,7 @@
 package net.aspw.client.protocol;
 
 import com.viaversion.viaversion.api.connection.UserConnection;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.connection.UserConnectionImpl;
 import com.viaversion.viaversion.protocol.ProtocolPipelineImpl;
 import io.netty.channel.Channel;
@@ -14,18 +15,17 @@ import net.raphimc.vialoader.impl.platform.ViaLegacyPlatformImpl;
 import net.raphimc.vialoader.impl.platform.ViaRewindPlatformImpl;
 import net.raphimc.vialoader.impl.platform.ViaVersionPlatformImpl;
 import net.raphimc.vialoader.netty.CompressionReorderEvent;
-import net.raphimc.vialoader.util.VersionEnum;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProtocolBase {
 
-    private VersionEnum targetVersion = VersionEnum.r1_8;
+    private ProtocolVersion targetVersion = ProtocolVersion.v1_8;
     public static final AttributeKey<UserConnection> LOCAL_VIA_USER = AttributeKey.valueOf("local_via_user");
     public static final AttributeKey<VFNetworkManager> VF_NETWORK_MANAGER = AttributeKey.valueOf("encryption_setup");
     private static ProtocolBase manager;
-    public static List<VersionEnum> versions = new ArrayList<>();
+    public static List<ProtocolVersion> versions = new ArrayList<>();
 
     public ProtocolBase() {
     }
@@ -35,18 +35,18 @@ public class ProtocolBase {
             return;
         }
 
-        final VersionEnum version = VersionEnum.fromProtocolId(platform.getGameVersion());
+        final ProtocolVersion version = ProtocolVersion.getProtocol(platform.getGameVersion());
 
-        if (version == VersionEnum.UNKNOWN)
+        if (version == ProtocolVersion.unknown)
             throw new IllegalArgumentException("Unknown Protocol Found (" + platform.getGameVersion() + ")");
 
         manager = new ProtocolBase();
 
         ViaLoader.init(new ViaVersionPlatformImpl(null), new ProtocolVLLoader(platform), new ProtocolVLInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new, ViaLegacyPlatformImpl::new, null);
 
-        versions.addAll(VersionEnum.SORTED_VERSIONS);
+        versions.addAll(ProtocolVersion.getProtocols());
 
-        versions.removeIf(i -> i == VersionEnum.UNKNOWN || i.isOlderThan(VersionEnum.r1_7_2tor1_7_5));
+        versions.removeIf(i -> i == ProtocolVersion.unknown || i.olderThan(ProtocolVersion.v1_7_2));
 
         ClientUtils.getLogger().info("ViaVersion Injected");
     }
@@ -63,15 +63,15 @@ public class ProtocolBase {
         }
     }
 
-    public VersionEnum getTargetVersion() {
+    public ProtocolVersion getTargetVersion() {
         return targetVersion;
     }
 
-    public void setTargetVersionSilent(final VersionEnum targetVersion) {
+    public void setTargetVersionSilent(final ProtocolVersion targetVersion) {
         this.targetVersion = targetVersion;
     }
 
-    public void setTargetVersion(final VersionEnum targetVersion) {
+    public void setTargetVersion(final ProtocolVersion targetVersion) {
         this.targetVersion = targetVersion;
     }
 
