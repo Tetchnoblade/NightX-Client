@@ -113,8 +113,8 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             -1
         )
         FontLoaders.SF20.drawStringWithShadow(
-            Launch.CLIENT_BEST + " Client - " + Launch.CLIENT_PROTOCOL_RANGE,
-            width - 4F - FontLoaders.SF20.getStringWidth(Launch.CLIENT_BEST + " Client - " + Launch.CLIENT_PROTOCOL_RANGE).toDouble(),
+            Launch.CLIENT_BEST + " Client",
+            width - 4F - FontLoaders.SF20.getStringWidth(Launch.CLIENT_BEST + " Client").toDouble(),
             height - 23F.toDouble(),
             -1
         )

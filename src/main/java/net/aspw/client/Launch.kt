@@ -29,7 +29,6 @@ object Launch {
     const val CLIENT_FOLDER = "NightX-Client"
     const val CLIENT_VERSION = "B110"
     const val CLIENT_CHAT = "§c[$CLIENT_BEST] §r"
-    const val CLIENT_PROTOCOL_RANGE = "1.7.2 to 1.20.6"
 
     var isStarting = false
 
