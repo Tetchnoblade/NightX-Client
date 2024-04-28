@@ -6,9 +6,6 @@ import net.aspw.client.event.EventManager
 import net.aspw.client.features.api.DiscordRPC
 import net.aspw.client.features.api.MacroManager
 import net.aspw.client.features.api.PacketManager
-import net.aspw.client.features.api.inventory.EnchantItems
-import net.aspw.client.features.api.inventory.ModItems
-import net.aspw.client.features.api.inventory.StackItems
 import net.aspw.client.features.command.CommandManager
 import net.aspw.client.features.module.ModuleManager
 import net.aspw.client.features.module.impl.other.BrandSpoofer
@@ -17,7 +14,6 @@ import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.features.module.impl.visual.SilentRotations
 import net.aspw.client.features.module.impl.visual.Trajectories
 import net.aspw.client.utils.*
-import net.aspw.client.utils.ClassUtils.hasForge
 import net.aspw.client.utils.misc.sound.TipSoundManager
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui
 import net.aspw.client.visual.font.semi.Fonts
@@ -119,13 +115,6 @@ object Launch {
         )
 
         clickGui = ClickGui()
-
-        // Creative items
-        if (hasForge()) {
-            ModItems()
-            StackItems()
-            EnchantItems()
-        }
 
         ClientUtils.getLogger().info("Launched!")
 

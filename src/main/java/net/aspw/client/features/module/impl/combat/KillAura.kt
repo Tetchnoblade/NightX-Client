@@ -192,7 +192,6 @@ class KillAura : Module() {
             arrayOf(
                 "Vanilla",
                 "ReBlock",
-                "Blink",
                 "Perfect",
                 "Fake",
                 "None"
@@ -202,13 +201,6 @@ class KillAura : Module() {
 
     private val reBlockDelayValue =
         IntegerValue("ReBlock-Delay", 10, 1, 100) { autoBlockModeValue.get().equals("reblock", true) }
-
-    private val blinkDelay = IntegerValue(
-        "Blink-Delay",
-        5,
-        2,
-        10
-    ) { autoBlockModeValue.get().equals("Blink", true) }
 
     private val interactAutoBlockValue = BoolValue("InteractAutoBlock", false) {
         !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true)
@@ -281,26 +273,7 @@ class KillAura : Module() {
         target ?: return
         currentTarget ?: return
 
-        if (event.eventState == EventState.PRE) {
-            if (autoBlockModeValue.get().equals(
-                    "Blink",
-                    true
-                ) && mc.thePlayer.inventory.getCurrentItem().item is ItemSword && mc.thePlayer.heldItem != null
-            ) {
-                if (mc.thePlayer.ticksExisted % blinkDelay.get() == 0) {
-                    if (blockingStatus) {
-                        stopBlocking()
-                        currentTarget = target
-                        allowedClicks = maxCPS.get()
-                    }
-                } else {
-                    startBlocking(target!!, interactAutoBlockValue.get())
-                }
-            }
-        }
-
         if (event.eventState == EventState.POST) {
-            // Update hitable
             updateHitable()
 
             when (autoBlockModeValue.get().lowercase()) {
@@ -353,39 +326,6 @@ class KillAura : Module() {
     @EventTarget
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
-        if (packet is C09PacketHeldItemChange && autoBlockModeValue.get().equals(
-                "Blink",
-                true
-            ) && blockingStatus && mc.thePlayer.inventory.getCurrentItem().item is ItemSword && mc.thePlayer.heldItem != null
-        ) {
-            fakeBlock = false
-            blockingStatus = false
-            currentTarget = null
-
-            event.cancelEvent()
-            mc.netHandler.addToSendQueue(
-                C07PacketPlayerDigging(
-                    C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                    BlockPos.ORIGIN,
-                    EnumFacing.DOWN
-                )
-            )
-            mc.netHandler.addToSendQueue(packet)
-            mc.netHandler.addToSendQueue(
-                C0BPacketEntityAction(
-                    mc.thePlayer,
-                    C0BPacketEntityAction.Action.START_SPRINTING
-                )
-            )
-            if (!mc.thePlayer.isSprinting) blinkABPackets.add(
-                C0BPacketEntityAction(
-                    mc.thePlayer,
-                    C0BPacketEntityAction.Action.STOP_SPRINTING
-                )
-            )
-            releasePackets()
-            return
-        }
 
         if (autoBlockModeValue.get().equals("perfect", true)) {
             if (blockingStatus
@@ -397,14 +337,6 @@ class KillAura : Module() {
 
             if (packet is C09PacketHeldItemChange)
                 blockingStatus = false
-        }
-
-        if (!event.isCancelled && autoBlockModeValue.get()
-                .equals("blink", true) && blockingStatus && packet.javaClass.simpleName.startsWith("c", true)
-            && mc.thePlayer.inventory.getCurrentItem().item is ItemSword && mc.thePlayer.heldItem != null
-        ) {
-            event.cancelEvent()
-            blinkABPackets.add(packet)
         }
     }
 
@@ -510,8 +442,6 @@ class KillAura : Module() {
         if (currentTarget != null && attackTimer.hasTimePassed(attackDelay) &&
             currentTarget!!.hurtTime <= 10
         ) {
-            if (autoBlockModeValue.get().equals("Blink", true) && allowedClicks <= 0) return
-
             clicks++
             allowedClicks--
             attackTimer.reset()
@@ -854,13 +784,6 @@ class KillAura : Module() {
                 blockingStatus = true
             }
 
-            "blink" -> {
-                if (mc.thePlayer.inventory.getCurrentItem().item is ItemSword && mc.thePlayer.heldItem != null) {
-                    mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
-                    blockingStatus = true
-                }
-            }
-
             "fake" -> {
                 fakeBlock = true
             }
@@ -880,28 +803,6 @@ class KillAura : Module() {
         currentTarget = null
         if (endTimer.hasTimePassed(1)) {
             if (canBlock || mc.thePlayer.isBlocking) {
-                if (autoBlockModeValue.get().equals("Blink", true)) {
-                    mc.netHandler.addToSendQueue(
-                        C07PacketPlayerDigging(
-                            C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                            BlockPos.ORIGIN,
-                            EnumFacing.DOWN
-                        )
-                    )
-                    mc.netHandler.addToSendQueue(
-                        C0BPacketEntityAction(
-                            mc.thePlayer,
-                            C0BPacketEntityAction.Action.START_SPRINTING
-                        )
-                    )
-                    if (!mc.thePlayer.isSprinting) blinkABPackets.add(
-                        C0BPacketEntityAction(
-                            mc.thePlayer,
-                            C0BPacketEntityAction.Action.STOP_SPRINTING
-                        )
-                    )
-                    releasePackets()
-                }
                 if (!autoBlockModeValue.get().equals("fake", true) && !autoBlockModeValue.get().equals("none", true)) {
                     mc.netHandler.addToSendQueue(
                         C07PacketPlayerDigging(
@@ -913,12 +814,6 @@ class KillAura : Module() {
                 }
             }
             endTimer.reset()
-        }
-    }
-
-    private fun releasePackets() {
-        while (blinkABPackets.isNotEmpty()) {
-            mc.netHandler.networkManager.sendPacket(blinkABPackets.take())
         }
     }
 
