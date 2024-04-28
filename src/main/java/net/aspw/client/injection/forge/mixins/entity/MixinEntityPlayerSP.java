@@ -148,93 +148,89 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
      */
     @Overwrite
     public void onUpdateWalkingPlayer() {
-        try {
-            final MotionEvent event = new MotionEvent(this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround);
-            Launch.eventManager.callEvent(event);
+        final MotionEvent event = new MotionEvent(this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround);
+        Launch.eventManager.callEvent(event);
 
-            final SilentSneak sneak = Objects.requireNonNull(Launch.moduleManager.getModule(SilentSneak.class));
-            final boolean fakeSprint = sneak.getState() && (!MovementUtils.isMoving());
+        final SilentSneak sneak = Objects.requireNonNull(Launch.moduleManager.getModule(SilentSneak.class));
+        final boolean fakeSprint = sneak.getState() && (!MovementUtils.isMoving());
 
-            final ActionEvent actionEvent = new ActionEvent(this.isSprinting() && !fakeSprint, this.isSneaking());
+        final ActionEvent actionEvent = new ActionEvent(this.isSprinting() && !fakeSprint, this.isSneaking());
 
-            final boolean sprinting = actionEvent.getSprinting();
-            final boolean sneaking = actionEvent.getSneaking();
+        final boolean sprinting = actionEvent.getSprinting();
+        final boolean sneaking = actionEvent.getSneaking();
 
-            if (sprinting != this.serverSprintState) {
-                if (sprinting)
-                    this.sendQueue.addToSendQueue(new C0BPacketEntityAction((EntityPlayerSP) (Object) this, C0BPacketEntityAction.Action.START_SPRINTING));
-                else
-                    this.sendQueue.addToSendQueue(new C0BPacketEntityAction((EntityPlayerSP) (Object) this, C0BPacketEntityAction.Action.STOP_SPRINTING));
+        if (sprinting != this.serverSprintState) {
+            if (sprinting)
+                this.sendQueue.addToSendQueue(new C0BPacketEntityAction((EntityPlayerSP) (Object) this, C0BPacketEntityAction.Action.START_SPRINTING));
+            else
+                this.sendQueue.addToSendQueue(new C0BPacketEntityAction((EntityPlayerSP) (Object) this, C0BPacketEntityAction.Action.STOP_SPRINTING));
 
-                this.serverSprintState = sprinting;
-            }
-
-            if (sneaking != this.serverSneakState && (!sneak.getState() || sneak.modeValue.get().equalsIgnoreCase("Legit"))) {
-                if (sneaking)
-                    this.sendQueue.addToSendQueue(new C0BPacketEntityAction((EntityPlayerSP) (Object) this, C0BPacketEntityAction.Action.START_SNEAKING));
-                else
-                    this.sendQueue.addToSendQueue(new C0BPacketEntityAction((EntityPlayerSP) (Object) this, C0BPacketEntityAction.Action.STOP_SNEAKING));
-
-                this.serverSneakState = sneaking;
-            }
-
-            if (this.isCurrentViewEntity()) {
-                float yaw = event.getYaw();
-                float pitch = event.getPitch();
-                final Rotation currentRotation = RotationUtils.targetRotation;
-
-                if (currentRotation != null) {
-                    yaw = currentRotation.getYaw();
-                    pitch = currentRotation.getPitch();
-                }
-
-                final double xDiff = event.getX() - this.lastReportedPosX;
-                final double yDiff = event.getY() - this.lastReportedPosY;
-                final double zDiff = event.getZ() - this.lastReportedPosZ;
-                final double yawDiff = yaw - lastReportedYaw;
-                final double pitchDiff = pitch - lastReportedPitch;
-                boolean moved = xDiff * xDiff + yDiff * yDiff + zDiff * zDiff > 9.0E-4 || this.positionUpdateTicks >= 20;
-                final boolean rotated = yawDiff != 0.0D || pitchDiff != 0.0D;
-
-                if (this.ridingEntity == null) {
-                    if (moved && rotated) {
-                        sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(posX, getEntityBoundingBox().minY, posZ, yaw, pitch, onGround));
-                    } else if (moved) {
-                        sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(posX, getEntityBoundingBox().minY, posZ, onGround));
-                    } else if (rotated) {
-                        sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(yaw, pitch, onGround));
-                    } else {
-                        sendQueue.addToSendQueue(new C03PacketPlayer(onGround));
-                    }
-                } else {
-                    sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(motionX, -999, motionZ, yaw, pitch, onGround));
-                    moved = false;
-                }
-
-                ++this.positionUpdateTicks;
-
-                if (moved) {
-                    lastReportedPosX = posX;
-                    lastReportedPosY = getEntityBoundingBox().minY;
-                    lastReportedPosZ = posZ;
-                    positionUpdateTicks = 0;
-                }
-
-                if (rotated) {
-                    this.lastReportedYaw = yaw;
-                    this.lastReportedPitch = pitch;
-                }
-            }
-
-            if (this.isCurrentViewEntity())
-                lastOnGround = event.getOnGround();
-
-            event.setEventState(EventState.POST);
-
-            Launch.eventManager.callEvent(event);
-        } catch (final Exception e) {
-            e.printStackTrace();
+            this.serverSprintState = sprinting;
         }
+
+        if (sneaking != this.serverSneakState && (!sneak.getState() || sneak.modeValue.get().equalsIgnoreCase("Legit"))) {
+            if (sneaking)
+                this.sendQueue.addToSendQueue(new C0BPacketEntityAction((EntityPlayerSP) (Object) this, C0BPacketEntityAction.Action.START_SNEAKING));
+            else
+                this.sendQueue.addToSendQueue(new C0BPacketEntityAction((EntityPlayerSP) (Object) this, C0BPacketEntityAction.Action.STOP_SNEAKING));
+
+            this.serverSneakState = sneaking;
+        }
+
+        if (this.isCurrentViewEntity()) {
+            float yaw = event.getYaw();
+            float pitch = event.getPitch();
+            final Rotation currentRotation = RotationUtils.targetRotation;
+
+            if (currentRotation != null) {
+                yaw = currentRotation.getYaw();
+                pitch = currentRotation.getPitch();
+            }
+
+            final double xDiff = event.getX() - this.lastReportedPosX;
+            final double yDiff = event.getY() - this.lastReportedPosY;
+            final double zDiff = event.getZ() - this.lastReportedPosZ;
+            final double yawDiff = yaw - lastReportedYaw;
+            final double pitchDiff = pitch - lastReportedPitch;
+            boolean moved = xDiff * xDiff + yDiff * yDiff + zDiff * zDiff > 9.0E-4 || this.positionUpdateTicks >= 20;
+            final boolean rotated = yawDiff != 0.0D || pitchDiff != 0.0D;
+
+            if (this.ridingEntity == null) {
+                if (moved && rotated) {
+                    sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(posX, getEntityBoundingBox().minY, posZ, yaw, pitch, onGround));
+                } else if (moved) {
+                    sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(posX, getEntityBoundingBox().minY, posZ, onGround));
+                } else if (rotated) {
+                    sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(yaw, pitch, onGround));
+                } else {
+                    sendQueue.addToSendQueue(new C03PacketPlayer(onGround));
+                }
+            } else {
+                sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(motionX, -999, motionZ, yaw, pitch, onGround));
+                moved = false;
+            }
+
+            ++this.positionUpdateTicks;
+
+            if (moved) {
+                lastReportedPosX = posX;
+                lastReportedPosY = getEntityBoundingBox().minY;
+                lastReportedPosZ = posZ;
+                positionUpdateTicks = 0;
+            }
+
+            if (rotated) {
+                this.lastReportedYaw = yaw;
+                this.lastReportedPitch = pitch;
+            }
+        }
+
+        if (this.isCurrentViewEntity())
+            lastOnGround = event.getOnGround();
+
+        event.setEventState(EventState.POST);
+
+        Launch.eventManager.callEvent(event);
     }
 
     @Inject(method = "swingItem", at = @At("HEAD"))

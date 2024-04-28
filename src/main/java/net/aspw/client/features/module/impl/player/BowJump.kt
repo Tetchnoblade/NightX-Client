@@ -145,7 +145,6 @@ class BowJump : Module() {
     }
 
     override fun onDisable() {
-        mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
         mc.timer.timerSpeed = 1.0f
         if (!mc.thePlayer.isSneaking) {
             mc.thePlayer.motionX = 0.0

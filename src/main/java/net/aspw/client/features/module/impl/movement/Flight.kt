@@ -569,7 +569,6 @@ class Flight : Module() {
         val speed = Launch.moduleManager.getModule(
             Speed::class.java
         )
-        mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
         wasDead = false
         fly = false
         bmcSpeed = 0.0

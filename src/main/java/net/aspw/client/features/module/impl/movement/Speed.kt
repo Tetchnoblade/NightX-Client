@@ -247,7 +247,6 @@ class Speed : Module() {
     }
 
     override fun onDisable() {
-        mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
         if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump))
             mc.gameSettings.keyBindJump.pressed = true
         if (mc.thePlayer == null) return

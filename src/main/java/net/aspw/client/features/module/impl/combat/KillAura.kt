@@ -148,6 +148,8 @@ class KillAura : Module() {
     private val wallCheckValue = BoolValue("WallCheck", false)
     private val checkSprintValue = BoolValue("StopSprint", false)
     private val antiBlinkValue = BoolValue("AntiBlink", false)
+    private val multiCombo = BoolValue("MultiCombo", false)
+    private val amountValue = IntegerValue("Multi-Packet", 5, 0, 20, "x") { multiCombo.get() }
 
     private val noHitCheck = BoolValue(
         "NoHitCheck",
@@ -212,10 +214,6 @@ class KillAura : Module() {
         !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true)
     }
 
-    private val swapUnblockValue = BoolValue("SwapUnblock", false) {
-        autoBlockModeValue.get().equals("Blink", true)
-    }
-
     private val fovValue = FloatValue("Fov", 180f, 0f, 180f)
 
     private val failRateValue = FloatValue("FailRate", 0f, 0f, 100f)
@@ -235,7 +233,6 @@ class KillAura : Module() {
     private val attackTimer = MSTimer()
     private val endTimer = TickTimer()
     private val switchTimer = MSTimer()
-    private val fakeTimer = MSTimer()
     private var failedHit = false
     private var attackDelay = 0L
     private var clicks = 0
@@ -458,6 +455,32 @@ class KillAura : Module() {
             while (clicks > 0) {
                 runAttack()
                 clicks--
+            }
+        }
+    }
+
+    @EventTarget
+    fun onAttack(event: AttackEvent) {
+        if (multiCombo.get()) {
+            event.targetEntity ?: return
+            repeat(amountValue.get()) {
+                if (newAttackValue.get())
+                    mc.netHandler.addToSendQueue(
+                        C02PacketUseEntity(
+                            event.targetEntity,
+                            C02PacketUseEntity.Action.ATTACK
+                        )
+                    )
+
+                mc.netHandler.addToSendQueue(C0APacketAnimation())
+
+                if (!newAttackValue.get())
+                    mc.netHandler.addToSendQueue(
+                        C02PacketUseEntity(
+                            event.targetEntity,
+                            C02PacketUseEntity.Action.ATTACK
+                        )
+                    )
             }
         }
     }
@@ -819,12 +842,7 @@ class KillAura : Module() {
         }
 
         when (autoBlockModeValue.get().lowercase()) {
-            "reblock", "vanilla", "perfect" -> {
-                mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
-                blockingStatus = true
-            }
-
-            "blink" -> {
+            "reblock", "vanilla", "perfect", "blink" -> {
                 mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
                 blockingStatus = true
             }
@@ -843,27 +861,19 @@ class KillAura : Module() {
      * Stop blocking
      */
     private fun stopBlocking() {
-//        if (autoBlockModeValue.get().equals("Blink", true) && !blinkABPackets.any { it is C03PacketPlayer } && currentTarget != null) {
-//            return
-//        }
         fakeBlock = false
         blockingStatus = false
         currentTarget = null
         if (endTimer.hasTimePassed(1)) {
             if (canBlock || mc.thePlayer.isBlocking) {
                 if (autoBlockModeValue.get().equals("Blink", true)) {
-                    if (swapUnblockValue.get()) {
-                        mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem % 8 + 1))
-                        mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
-                    } else {
-                        mc.netHandler.addToSendQueue(
-                            C07PacketPlayerDigging(
-                                C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
-                                BlockPos.ORIGIN,
-                                EnumFacing.DOWN
-                            )
+                    mc.netHandler.addToSendQueue(
+                        C07PacketPlayerDigging(
+                            C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
+                            BlockPos.ORIGIN,
+                            EnumFacing.DOWN
                         )
-                    }
+                    )
                     mc.netHandler.addToSendQueue(
                         C0BPacketEntityAction(
                             mc.thePlayer,
@@ -876,11 +886,8 @@ class KillAura : Module() {
                             C0BPacketEntityAction.Action.STOP_SPRINTING
                         )
                     )
-                    releasePackets()
-                    // ClientUtils.displayChatMessage("tard " + mc.thePlayer.ticksExisted)
-                } else if (!autoBlockModeValue.get().equals("fake", true) && !autoBlockModeValue.get()
-                        .equals("none", true)
-                ) {
+                }
+                if (!autoBlockModeValue.get().equals("fake", true) && !autoBlockModeValue.get().equals("none", true)) {
                     mc.netHandler.addToSendQueue(
                         C07PacketPlayerDigging(
                             C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,

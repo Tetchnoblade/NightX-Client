@@ -579,7 +579,6 @@ class LongJump : Module() {
             fulljumped = false
             stage = 0
         }
-        mc.thePlayer.eyeHeight = mc.thePlayer.defaultEyeHeight
         mc.timer.timerSpeed = 1.0f
         if (!mc.thePlayer.isSneaking && (modeValue.get().equals("ncp", true) || modeValue.get()
                 .equals("mineplex1", true) || modeValue.get().equals("mineplex2", true) || modeValue.get()
