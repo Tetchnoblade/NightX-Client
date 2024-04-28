@@ -500,9 +500,9 @@ class Scaffold : Module() {
             ) && hypixelCount >= 6) && autoJumpValue.get().equals("hypixelkeepy", true)
         ) {
             MovementUtils.strafe(0.1F)
+            KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
             if (!mc.thePlayer.onGround && shouldEagle) {
                 hypixelCount = 0
-                KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
             }
         }
         if (desyncValue.get()) {
