@@ -282,10 +282,12 @@ class KillAura : Module() {
         currentTarget ?: return
 
         if (event.eventState == EventState.PRE) {
-            if (autoBlockModeValue.get().equals("Blink", true)) {
-                // ClientUtils.displayChatMessage(reblockInstant.toString())
+            if (autoBlockModeValue.get().equals(
+                    "Blink",
+                    true
+                ) && mc.thePlayer.inventory.getCurrentItem().item is ItemSword && mc.thePlayer.heldItem != null
+            ) {
                 if (mc.thePlayer.ticksExisted % blinkDelay.get() == 0) {
-                    // ClientUtils.displayChatMessage(mc.thePlayer.ticksExisted.toString())
                     if (blockingStatus) {
                         stopBlocking()
                         currentTarget = target
@@ -351,7 +353,11 @@ class KillAura : Module() {
     @EventTarget
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
-        if (packet is C09PacketHeldItemChange && autoBlockModeValue.get().equals("Blink", true) && blockingStatus) {
+        if (packet is C09PacketHeldItemChange && autoBlockModeValue.get().equals(
+                "Blink",
+                true
+            ) && blockingStatus && mc.thePlayer.inventory.getCurrentItem().item is ItemSword && mc.thePlayer.heldItem != null
+        ) {
             fakeBlock = false
             blockingStatus = false
             currentTarget = null
@@ -395,6 +401,7 @@ class KillAura : Module() {
 
         if (!event.isCancelled && autoBlockModeValue.get()
                 .equals("blink", true) && blockingStatus && packet.javaClass.simpleName.startsWith("c", true)
+            && mc.thePlayer.inventory.getCurrentItem().item is ItemSword && mc.thePlayer.heldItem != null
         ) {
             event.cancelEvent()
             blinkABPackets.add(packet)
@@ -842,9 +849,16 @@ class KillAura : Module() {
         }
 
         when (autoBlockModeValue.get().lowercase()) {
-            "reblock", "vanilla", "perfect", "blink" -> {
+            "reblock", "vanilla", "perfect" -> {
                 mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
                 blockingStatus = true
+            }
+
+            "blink" -> {
+                if (mc.thePlayer.inventory.getCurrentItem().item is ItemSword && mc.thePlayer.heldItem != null) {
+                    mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
+                    blockingStatus = true
+                }
             }
 
             "fake" -> {
@@ -912,7 +926,7 @@ class KillAura : Module() {
      * Check if run should be cancelled
      */
     private val cancelRun: Boolean
-        get() = mc.thePlayer.isSpectator || mc.thePlayer.isRiding || mc.thePlayer.inventory.getCurrentItem().item !is ItemSword || !isAlive(
+        get() = mc.thePlayer.isSpectator || mc.thePlayer.isRiding || !isAlive(
             mc.thePlayer
         ) || Launch.moduleManager[Flight::class.java]!!.state && Launch.moduleManager[Flight::class.java]!!.modeValue.get()
             .equals(
