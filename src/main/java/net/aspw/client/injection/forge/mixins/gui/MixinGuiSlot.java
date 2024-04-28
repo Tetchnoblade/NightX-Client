@@ -17,140 +17,62 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-/**
- * The type Mixin gui slot.
- */
 @Mixin(GuiSlot.class)
 public abstract class MixinGuiSlot implements IMixinGuiSlot {
-    /**
-     * The Left.
-     */
+
     @Shadow
     public int left;
-    /**
-     * The Top.
-     */
     @Shadow
     public int top;
-    /**
-     * The Width.
-     */
     @Shadow
     public int width;
-    /**
-     * The Right.
-     */
     @Shadow
     public int right;
-    /**
-     * The Bottom.
-     */
     @Shadow
     public int bottom;
-    /**
-     * The Height.
-     */
     @Shadow
     public int height;
-    /**
-     * The Field 178041 q.
-     */
     @Shadow
     protected boolean field_178041_q;
-    /**
-     * The Mouse x.
-     */
     @Shadow
     protected int mouseX;
-    /**
-     * The Mouse y.
-     */
     @Shadow
     protected int mouseY;
-    /**
-     * The Amount scrolled.
-     */
     @Shadow
     protected float amountScrolled;
-    /**
-     * The Has list header.
-     */
     @Shadow
     protected boolean hasListHeader;
-    /**
-     * The Mc.
-     */
+
     @Shadow
     @Final
     protected Minecraft mc;
+
     private int listWidth = 220;
 
-    /**
-     * Draw background.
-     */
     @Shadow
     protected abstract void drawBackground();
 
-    /**
-     * Bind amount scrolled.
-     */
     @Shadow
     protected abstract void bindAmountScrolled();
 
-    /**
-     * Draw list header.
-     *
-     * @param p_148129_1_ the p 148129 1
-     * @param p_148129_2_ the p 148129 2
-     * @param p_148129_3_ the p 148129 3
-     */
     @Shadow
     protected abstract void drawListHeader(int p_148129_1_, int p_148129_2_, Tessellator p_148129_3_);
 
-    /**
-     * Draw selection box.
-     *
-     * @param p_148120_1_ the p 148120 1
-     * @param p_148120_2_ the p 148120 2
-     * @param mouseXIn    the mouse x in
-     * @param mouseYIn    the mouse y in
-     */
     @Shadow
     protected abstract void drawSelectionBox(int p_148120_1_, int p_148120_2_, int mouseXIn, int mouseYIn);
 
-    /**
-     * Gets content height.
-     *
-     * @return the content height
-     */
     @Shadow
     protected abstract int getContentHeight();
 
-    /**
-     * Func 148135 f int.
-     *
-     * @return the int
-     */
     @Shadow
     public abstract int func_148135_f();
 
-    /**
-     * Func 148142 b.
-     *
-     * @param p_148142_1_ the p 148142 1
-     * @param p_148142_2_ the p 148142 2
-     */
     @Shadow
     protected abstract void func_148142_b(int p_148142_1_, int p_148142_2_);
 
     /**
-     * Draw screen.
-     *
-     * @param mouseXIn    the mouse x in
-     * @param mouseYIn    the mouse y in
-     * @param p_148128_3_ the p 148128 3
      * @author As_pw
-     * @reason Draw
+     * @reason Draw Screen
      */
     @Overwrite
     public void drawScreen(int mouseXIn, int mouseYIn, float p_148128_3_) {
@@ -242,27 +164,17 @@ public abstract class MixinGuiSlot implements IMixinGuiSlot {
     }
 
     /**
-     * Gets scroll bar x.
-     *
-     * @return the scroll bar x
      * @author As_pw
-     * @reason ScrollBar
+     * @reason Scroll Bar
      */
     @Overwrite
     protected int getScrollBarX() {
         return this.width - 5;
     }
 
-    @Override
-    public void setEnableScissor(boolean enableScissor) {
-    }
-
     /**
-     * Gets list width.
-     *
-     * @return the list width
      * @author As_pw
-     * @reason Width
+     * @reason Line Width
      */
     @Overwrite
     public int getListWidth() {
@@ -273,5 +185,4 @@ public abstract class MixinGuiSlot implements IMixinGuiSlot {
     public void setListWidth(int listWidth) {
         this.listWidth = listWidth;
     }
-
 }

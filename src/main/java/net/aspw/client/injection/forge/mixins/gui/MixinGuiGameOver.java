@@ -8,11 +8,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * The type Mixin gui game over.
- */
 @Mixin(GuiGameOver.class)
 public abstract class MixinGuiGameOver extends MixinGuiScreen implements GuiYesNoCallback {
+
     @Shadow
     public int enableButtonsTimer;
 

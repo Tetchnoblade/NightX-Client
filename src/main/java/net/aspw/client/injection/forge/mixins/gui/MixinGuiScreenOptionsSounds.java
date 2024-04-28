@@ -8,13 +8,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * The type Mixin gui screen options sounds.
- */
 @Mixin(targets = "net.minecraft.client.gui.GuiScreenOptionsSounds$Button")
 public class MixinGuiScreenOptionsSounds {
 
-    // don't send a packet for every frame the slider is dragged, instead save that for when the slider is released
     @Redirect(method = "mouseDragged(Lnet/minecraft/client/Minecraft;II)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/settings/GameSettings;saveOptions()V"))
     private void cancelSaving(GameSettings instance) {
         // no-op

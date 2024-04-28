@@ -18,16 +18,11 @@ import java.awt.*;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * The type Mixin gui chat.
- */
 @Mixin(GuiChat.class)
 public abstract class MixinGuiChat extends MixinGuiScreen {
+
     @Unique
     private final float fade = 14;
-    /**
-     * The Input field.
-     */
     @Shadow
     protected GuiTextField inputField;
     @Shadow
@@ -37,11 +32,6 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
     @Unique
     private float yPosOfInputField;
 
-    /**
-     * On autocomplete response.
-     *
-     * @param p_onAutocompleteResponse_1_ the p on autocomplete response 1
-     */
     @Shadow
     public abstract void onAutocompleteResponse(String[] p_onAutocompleteResponse_1_);
 
@@ -87,13 +77,8 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
     }
 
     /**
-     * Draw screen.
-     *
-     * @param mouseX       the mouse x
-     * @param mouseY       the mouse y
-     * @param partialTicks the partial ticks
      * @author As_pw
-     * @reason Draw
+     * @reason Draw Chat
      */
     @Overwrite
     public void drawScreen(final int mouseX, final int mouseY, final float partialTicks) {

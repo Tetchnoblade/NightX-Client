@@ -17,32 +17,19 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-/**
- * The type Mixin render entity item.
- */
 @Mixin(RenderEntityItem.class)
 public abstract class MixinRenderEntityItem extends Render<EntityItem> {
-    /**
-     * Instantiates a new Mixin render entity item.
-     *
-     * @param p_i46179_1_ the p i 46179 1
-     */
+
     protected MixinRenderEntityItem(final RenderManager p_i46179_1_) {
         super(p_i46179_1_);
     }
 
-    /**
-     * Func 177078 a int.
-     *
-     * @param p0 the p 0
-     * @return the int
-     */
     @Shadow
     protected abstract int func_177078_a(final ItemStack p0);
 
     /**
      * @author As_pw
-     * @reason ItemPhysics
+     * @reason Item Physics
      */
     @Overwrite
     private int func_177077_a(EntityItem itemIn, double p_177077_2_, double p_177077_4_, double p_177077_6_, float p_177077_8_, IBakedModel p_177077_9_) {

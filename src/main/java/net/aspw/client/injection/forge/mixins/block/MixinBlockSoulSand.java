@@ -10,9 +10,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 
-/**
- * The type Mixin block soul sand.
- */
 @Mixin(BlockSoulSand.class)
 public class MixinBlockSoulSand {
 

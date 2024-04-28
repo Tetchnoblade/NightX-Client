@@ -12,9 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
 
-/**
- * The type Mixin block liquid.
- */
 @Mixin(BlockLiquid.class)
 public class MixinBlockLiquid {
 

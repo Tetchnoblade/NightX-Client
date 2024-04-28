@@ -13,21 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
 
-/**
- * The type Mixin render player.
- */
 @Mixin(RenderPlayer.class)
 public class MixinRenderPlayer {
+
     private final ResourceLocation rabbit = new ResourceLocation("client/models/rabbit.png");
     private final ResourceLocation fred = new ResourceLocation("client/models/freddy.png");
     private final ResourceLocation imposter = new ResourceLocation("client/models/imposter.png");
 
-    /**
-     * Gets entity texture.
-     *
-     * @param entity the entity
-     * @param ci     the ci
-     */
     @Inject(method = {"getEntityTexture"}, at = {@At("HEAD")}, cancellable = true)
     public void getEntityTexture(AbstractClientPlayer entity, CallbackInfoReturnable<ResourceLocation> ci) {
         final CustomModel customModel = Objects.requireNonNull(Launch.moduleManager.getModule(CustomModel.class));

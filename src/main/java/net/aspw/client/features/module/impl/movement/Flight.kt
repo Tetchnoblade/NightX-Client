@@ -223,7 +223,6 @@ class Flight : Module() {
     private val lagCheck = BoolValue("LagCheck", false)
     private val worldCheck = BoolValue("WorldCheck", true)
     private val fakeDmgValue = BoolValue("FakeDamage", false)
-    val fakeYValue = BoolValue("FakeY", false)
     private val viewBobbingValue = BoolValue("ViewBobbing", false)
     private val bobbingAmountValue = FloatValue("BobbingAmount", 0.1f, 0f, 0.1f) { viewBobbingValue.get() }
     private val sprintTimerBoostValue = BoolValue("SprintKey-TimerBoost", false)
@@ -1323,8 +1322,6 @@ class Flight : Module() {
         if (mc.thePlayer == null) return
         if (MovementUtils.isMoving() && viewBobbingValue.get())
             mc.thePlayer.cameraYaw = bobbingAmountValue.get()
-        if (fakeYValue.get())
-            mc.thePlayer.cameraPitch = 0f
         when (modeValue.get().lowercase()) {
             "verussmooth" -> {
                 mc.thePlayer.cameraPitch = 0f

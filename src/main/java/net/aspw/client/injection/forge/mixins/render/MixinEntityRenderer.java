@@ -33,11 +33,9 @@ import java.util.Objects;
 
 import static org.objectweb.asm.Opcodes.GETFIELD;
 
-/**
- * The type Mixin entity renderer.
- */
 @Mixin(EntityRenderer.class)
 public abstract class MixinEntityRenderer {
+
     @Mutable
     @Final
     @Shadow
@@ -63,18 +61,6 @@ public abstract class MixinEntityRenderer {
     @Shadow
     private boolean lightmapUpdateNeeded;
 
-    /**
-     * Instantiates a new Mixin entity renderer.
-     *
-     * @param lightmapColors          the lightmap colors
-     * @param lightmapTexture         the lightmap texture
-     * @param torchFlickerX           the torch flicker x
-     * @param bossColorModifier       the boss color modifier
-     * @param bossColorModifierPrev   the boss color modifier prev
-     * @param mc                      the mc
-     * @param thirdPersonDistanceTemp the third person distance temp
-     * @param thirdPersonDistance     the third person distance
-     */
     protected MixinEntityRenderer(int[] lightmapColors, DynamicTexture lightmapTexture, float torchFlickerX, float bossColorModifier, float bossColorModifierPrev, Minecraft mc, float thirdPersonDistanceTemp, float thirdPersonDistance) {
         this.lightmapColors = lightmapColors;
         this.lightmapTexture = lightmapTexture;
@@ -241,12 +227,6 @@ public abstract class MixinEntityRenderer {
         ci.cancel();
     }
 
-    /**
-     * Update camera and render boolean.
-     *
-     * @param minecraft the minecraft
-     * @return the boolean
-     */
     @Redirect(method = "updateCameraAndRender", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;inGameHasFocus:Z", opcode = GETFIELD))
     public boolean updateCameraAndRender(Minecraft minecraft) {
         if (RotationUtils.perspectiveToggled) {
@@ -254,45 +234,21 @@ public abstract class MixinEntityRenderer {
         } else return mc.inGameHasFocus && Display.isActive();
     }
 
-    /**
-     * Gets rotation yaw.
-     *
-     * @param entity the entity
-     * @return the rotation yaw
-     */
     @Redirect(method = "orientCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;rotationYaw:F", opcode = GETFIELD))
     public float getRotationYaw(Entity entity) {
         return RotationUtils.perspectiveToggled ? RotationUtils.cameraYaw : entity.rotationYaw;
     }
 
-    /**
-     * Gets prev rotation yaw.
-     *
-     * @param entity the entity
-     * @return the prev rotation yaw
-     */
     @Redirect(method = "orientCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;prevRotationYaw:F", opcode = GETFIELD))
     public float getPrevRotationYaw(Entity entity) {
         return RotationUtils.perspectiveToggled ? RotationUtils.cameraYaw : entity.prevRotationYaw;
     }
 
-    /**
-     * Gets rotation pitch.
-     *
-     * @param entity the entity
-     * @return the rotation pitch
-     */
     @Redirect(method = "orientCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;rotationPitch:F", opcode = GETFIELD))
     public float getRotationPitch(Entity entity) {
         return RotationUtils.perspectiveToggled ? RotationUtils.cameraPitch : entity.rotationPitch;
     }
 
-    /**
-     * Gets prev rotation pitch.
-     *
-     * @param entity the entity
-     * @return the prev rotation pitch
-     */
     @Redirect(method = "orientCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/Entity;prevRotationPitch:F"))
     public float getPrevRotationPitch(Entity entity) {
         return RotationUtils.perspectiveToggled ? RotationUtils.cameraPitch : entity.prevRotationPitch;
@@ -300,7 +256,7 @@ public abstract class MixinEntityRenderer {
 
     /**
      * @author As_pw
-     * @reason LightMap
+     * @reason Light Map Renderer
      */
     @Overwrite
     private void updateLightmap(float f2) {

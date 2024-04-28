@@ -15,9 +15,6 @@ import org.spongepowered.asm.mixin.*;
 
 import java.util.Objects;
 
-/**
- * The type Mixin layer arrow.
- */
 @Mixin(LayerCape.class)
 public class MixinLayerCape {
 
@@ -32,7 +29,7 @@ public class MixinLayerCape {
 
     /**
      * @author As_pw
-     * @reason Improve Cape Renderer
+     * @reason Cape Renderer
      */
     @Overwrite
     public void doRenderLayer(final AbstractClientPlayer entitylivingbaseIn, final float p_177141_2_, final float p_177141_3_, final float partialTicks, final float p_177141_5_, final float p_177141_6_, final float p_177141_7_, final float scale) {
@@ -46,7 +43,7 @@ public class MixinLayerCape {
             double d2 = entitylivingbaseIn.prevChasingPosZ + (entitylivingbaseIn.chasingPosZ - entitylivingbaseIn.prevChasingPosZ) * (double) partialTicks - (entitylivingbaseIn.prevPosZ + (entitylivingbaseIn.posZ - entitylivingbaseIn.prevPosZ) * (double) partialTicks);
             float f = entitylivingbaseIn.prevRenderYawOffset + (entitylivingbaseIn.renderYawOffset - entitylivingbaseIn.prevRenderYawOffset) * partialTicks;
             switch (Objects.requireNonNull(Launch.moduleManager.getModule(Cape.class)).getAnimationModeValue().get()) {
-                case "Vanilla":
+                case "Normal":
                     f = entitylivingbaseIn.prevRenderYawOffset + (entitylivingbaseIn.renderYawOffset - entitylivingbaseIn.prevRenderYawOffset) * partialTicks;
                     break;
                 case "Smooth":

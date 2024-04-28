@@ -9,11 +9,9 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/**
- * The type Mixin item stack.
- */
 @Mixin(ItemStack.class)
 public class MixinItemStack implements IItemStack {
+
     private long itemDelay;
     private String cachedDisplayName;
 

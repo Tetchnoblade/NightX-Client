@@ -10,18 +10,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * The type Mixin render.
- */
 @Mixin(Render.class)
 public abstract class MixinRender {
-    /**
-     * Bind entity texture boolean.
-     *
-     * @param <T>    the type parameter
-     * @param entity the entity
-     * @return the boolean
-     */
+
     @Shadow
     protected abstract <T extends Entity> boolean bindEntityTexture(T entity);
 

@@ -25,205 +25,67 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.awt.*;
 import java.util.Objects;
 
-/**
- * The type Mixin model player fix.
- */
 @Mixin(ModelPlayer.class)
 public class MixinModelPlayerFix extends ModelBiped {
 
-    /**
-     * The Left leg.
-     */
     public ModelRenderer left_leg;
-    /**
-     * The Right leg.
-     */
     public ModelRenderer right_leg;
-    /**
-     * The Body.
-     */
     public ModelRenderer body;
-    /**
-     * The Eye.
-     */
     public ModelRenderer eye;
-    /**
-     * The Rabbit bone.
-     */
     public ModelRenderer rabbitBone;
-    /**
-     * The Rabbit rleg.
-     */
     public ModelRenderer rabbitRleg;
-    /**
-     * The Rabbit larm.
-     */
     public ModelRenderer rabbitLarm;
-    /**
-     * The Rabbit rarm.
-     */
     public ModelRenderer rabbitRarm;
-    /**
-     * The Rabbit lleg.
-     */
     public ModelRenderer rabbitLleg;
-    /**
-     * The Rabbit head.
-     */
     public ModelRenderer rabbitHead;
-    /**
-     * The Fredhead.
-     */
     public ModelRenderer fredhead;
-    /**
-     * The Arm left.
-     */
     public ModelRenderer armLeft;
-    /**
-     * The Leg right.
-     */
     public ModelRenderer legRight;
-    /**
-     * The Leg left.
-     */
     public ModelRenderer legLeft;
-    /**
-     * The Arm right.
-     */
     public ModelRenderer armRight;
-    /**
-     * The Fredbody.
-     */
     public ModelRenderer fredbody;
-    /**
-     * The Arm leftpad 2.
-     */
     public ModelRenderer armLeftpad2;
-    /**
-     * The Torso.
-     */
     public ModelRenderer torso;
-    /**
-     * The Ear rightpad 1.
-     */
     public ModelRenderer earRightpad_1;
-    /**
-     * The Arm rightpad 2.
-     */
     public ModelRenderer armRightpad2;
-    /**
-     * The Leg leftpad.
-     */
     public ModelRenderer legLeftpad;
-    /**
-     * The Hat.
-     */
     public ModelRenderer hat;
-    /**
-     * The Leg leftpad 2.
-     */
     public ModelRenderer legLeftpad2;
-    /**
-     * The Arm right 2.
-     */
     public ModelRenderer armRight2;
-    /**
-     * The Leg right 2.
-     */
     public ModelRenderer legRight2;
-    /**
-     * The Ear rightpad.
-     */
     public ModelRenderer earRightpad;
-    /**
-     * The Arm left 2.
-     */
     public ModelRenderer armLeft2;
-    /**
-     * The Frednose.
-     */
     public ModelRenderer frednose;
-    /**
-     * The Ear left.
-     */
     public ModelRenderer earLeft;
-    /**
-     * The Foot right.
-     */
     public ModelRenderer footRight;
-    /**
-     * The Leg rightpad 2.
-     */
     public ModelRenderer legRightpad2;
-    /**
-     * The Leg rightpad.
-     */
     public ModelRenderer legRightpad;
-    /**
-     * The Arm leftpad.
-     */
     public ModelRenderer armLeftpad;
-    /**
-     * The Leg left 2.
-     */
     public ModelRenderer legLeft2;
-    /**
-     * The Foot left.
-     */
     public ModelRenderer footLeft;
-    /**
-     * The Hat 2.
-     */
     public ModelRenderer hat2;
-    /**
-     * The Arm rightpad.
-     */
     public ModelRenderer armRightpad;
-    /**
-     * The Ear right.
-     */
     public ModelRenderer earRight;
-    /**
-     * The Crotch.
-     */
     public ModelRenderer crotch;
-    /**
-     * The Jaw.
-     */
     public ModelRenderer jaw;
-    /**
-     * The Hand right.
-     */
     public ModelRenderer handRight;
-    /**
-     * The Hand left.
-     */
     public ModelRenderer handLeft;
-    /**
-     * The Biped left armwear.
-     */
+
     @Shadow
     public ModelRenderer bipedLeftArmwear;
-    /**
-     * The Biped right armwear.
-     */
+
     @Shadow
     public ModelRenderer bipedRightArmwear;
-    /**
-     * The Biped left legwear.
-     */
+
     @Shadow
     public ModelRenderer bipedLeftLegwear;
-    /**
-     * The Biped right legwear.
-     */
+
     @Shadow
     public ModelRenderer bipedRightLegwear;
-    /**
-     * The Biped body wear.
-     */
+
     @Shadow
     public ModelRenderer bipedBodyWear;
+
     @Shadow
     private boolean smallArms;
 
@@ -234,7 +96,7 @@ public class MixinModelPlayerFix extends ModelBiped {
 
     /**
      * @author As_pw
-     * @reason PostRender
+     * @reason Post Arm Renderer
      */
     @Override
     @Overwrite
@@ -248,18 +110,6 @@ public class MixinModelPlayerFix extends ModelBiped {
         }
     }
 
-    /**
-     * Render hook.
-     *
-     * @param entityIn        the entity in
-     * @param limbSwing       the limb swing
-     * @param limbSwingAmount the limb swing amount
-     * @param ageInTicks      the age in ticks
-     * @param netHeadYaw      the net head yaw
-     * @param headPitch       the head pitch
-     * @param scale           the scale
-     * @param ci              the ci
-     */
     @Inject(method = {"render"}, at = {@At("HEAD")}, cancellable = true)
     public void renderHook(final Entity entityIn, final float limbSwing, final float limbSwingAmount, final float ageInTicks, final float netHeadYaw, final float headPitch, final float scale, final CallbackInfo ci) {
         final CustomModel customModel = Objects.requireNonNull(Launch.moduleManager.getModule(CustomModel.class));
@@ -269,23 +119,12 @@ public class MixinModelPlayerFix extends ModelBiped {
         }
     }
 
-    /**
-     * Sets rotation angle.
-     *
-     * @param modelRenderer the model renderer
-     * @param x             the x
-     * @param y             the y
-     * @param z             the z
-     */
     public void setRotationAngle(final ModelRenderer modelRenderer, final float x, final float y, final float z) {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
     }
 
-    /**
-     * Generatemodel.
-     */
     public void generatemodel() {
         body = new ModelRenderer(this);
         body.setRotationPoint(0.0F, 0.0F, 0.0F);
@@ -503,22 +342,10 @@ public class MixinModelPlayerFix extends ModelBiped {
         this.fredhead.addChild(this.earLeft);
     }
 
-    /**
-     * Render custom.
-     *
-     * @param entityIn        the entity in
-     * @param limbSwing       the limb swing
-     * @param limbSwingAmount the limb swing amount
-     * @param ageInTicks      the age in ticks
-     * @param netHeadYaw      the net head yaw
-     * @param headPitch       the head pitch
-     * @param scale           the scale
-     */
     public void renderCustom(final Entity entityIn, final float limbSwing, final float limbSwingAmount, final float ageInTicks, final float netHeadYaw, final float headPitch, final float scale) {
         if (left_leg == null) {
             generatemodel();
         }
-
 
         final CustomModel customModel = Objects.requireNonNull(Launch.moduleManager.getModule(CustomModel.class));
         GlStateManager.pushMatrix();

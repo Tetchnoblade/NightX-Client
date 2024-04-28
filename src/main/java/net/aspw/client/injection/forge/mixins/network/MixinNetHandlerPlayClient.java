@@ -43,15 +43,9 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * The type Mixin net handler play client.
- */
 @Mixin(NetHandlerPlayClient.class)
 public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient {
 
-    /**
-     * The Current server max players.
-     */
     @Shadow
     public int currentServerMaxPlayers;
     @Shadow
@@ -64,12 +58,6 @@ public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient
     @Shadow
     private WorldClient clientWorldController;
 
-    /**
-     * Gets player info.
-     *
-     * @param p_175102_1_ the p 175102 1
-     * @return the player info
-     */
     @Shadow
     public abstract NetworkPlayerInfo getPlayerInfo(UUID p_175102_1_);
 
@@ -101,8 +89,7 @@ public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient
             if (list != null) {
                 entityotherplayermp.getDataWatcher().updateWatchedObjectsFromList(list);
             }
-        } catch (Exception e) {
-            // ignore
+        } catch (Exception ignored) {
         }
         callbackInfo.cancel();
     }
@@ -142,7 +129,6 @@ public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;addChatMessage(Lnet/minecraft/util/IChatComponent;)V", ordinal = 0)
     )
     private void removeDebugMessage(EntityPlayerSP instance, IChatComponent component) {
-
     }
 
     @Inject(method = {"handleAnimation"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/network/PacketThreadUtil;checkThreadAndEnqueue(Lnet/minecraft/network/Packet;Lnet/minecraft/network/INetHandler;Lnet/minecraft/util/IThreadListener;)V", shift = At.Shift.AFTER)}, cancellable = true)

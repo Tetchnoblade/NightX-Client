@@ -20,88 +20,36 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.awt.*;
 
-
-/**
- * The type Mixin gui button.
- */
 @Mixin(GuiButton.class)
 public abstract class MixinGuiButton extends Gui {
 
-    /**
-     * The constant buttonTextures.
-     */
     @Shadow
     @Final
     protected static ResourceLocation buttonTextures;
-    /**
-     * The Visible.
-     */
     @Shadow
     public boolean visible;
-    /**
-     * The X position.
-     */
     @Shadow
     public int xPosition;
-    /**
-     * The Y position.
-     */
     @Shadow
     public int yPosition;
-    /**
-     * The Width.
-     */
     @Shadow
     public int width;
-    /**
-     * The Height.
-     */
     @Shadow
     public int height;
-    /**
-     * The Enabled.
-     */
     @Shadow
     public boolean enabled;
-    /**
-     * The Display string.
-     */
     @Shadow
     public String displayString;
-    /**
-     * The Hovered.
-     */
     @Shadow
     protected boolean hovered;
     private float alpha;
 
-    /**
-     * Mouse dragged.
-     *
-     * @param mc     the mc
-     * @param mouseX the mouse x
-     * @param mouseY the mouse y
-     */
     @Shadow
     protected abstract void mouseDragged(Minecraft mc, int mouseX, int mouseY);
 
     /**
-     * Gets hover state.
-     *
-     * @param mouseOver the mouse over
-     * @return the hover state
-     */
-    @Shadow
-    protected abstract int getHoverState(boolean mouseOver);
-
-    /**
-     * Draw button.
-     *
-     * @param mc     the mc
-     * @param mouseX the mouse x
-     * @param mouseY the mouse y
      * @author As_pw
-     * @reason Font Render
+     * @reason Button Renderer
      */
     @Overwrite
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {

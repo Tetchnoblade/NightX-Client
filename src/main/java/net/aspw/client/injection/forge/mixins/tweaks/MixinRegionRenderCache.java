@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(RegionRenderCache.class)
 public class MixinRegionRenderCache {
+
     @Shadow
     @Final
     private static IBlockState DEFAULT_STATE;

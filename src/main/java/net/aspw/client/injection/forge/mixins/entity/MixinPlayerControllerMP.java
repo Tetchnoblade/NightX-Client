@@ -13,9 +13,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/**
- * The type Mixin player controller mp.
- */
 @Mixin(PlayerControllerMP.class)
 public class MixinPlayerControllerMP {
 

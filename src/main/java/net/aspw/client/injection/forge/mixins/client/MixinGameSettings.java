@@ -7,18 +7,12 @@ import org.lwjgl.input.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
-/**
- * The type Mixin game settings.
- */
 @Mixin(GameSettings.class)
 public class MixinGameSettings {
+
     /**
-     * Is key down boolean.
-     *
-     * @param key the key
-     * @return the boolean
      * @author As_pw
-     * @reason Game Settings
+     * @reason Get Keybinding
      */
     @Overwrite
     public static boolean isKeyDown(KeyBinding key) {

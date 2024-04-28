@@ -1,13 +1,13 @@
 [
   {
-    "modid": "NightX",
+    "modid": "nightx",
     "name": "NightX Client",
-    "description": "A Minecraft Forge Mixin-Based Hacked Client. Equipped with ViaForge.",
+    "description": "A Minecraft Forge Mixin-Based Hacked Client.",
     "version": "Release",
     "mcversion": "1.8.9",
     "url": "https://aspw-w.github.io/NightX",
     "authorList": [
-      "As_pw (NightX), FlorianMichael/EnZaXD (ViaForge)"
+      "As_pw"
     ],
     "screenshots": [],
     "dependencies": []

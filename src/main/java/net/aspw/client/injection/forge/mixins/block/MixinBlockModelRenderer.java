@@ -15,9 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
 
-/**
- * The type Mixin block model renderer.
- */
 @Mixin(BlockModelRenderer.class)
 public class MixinBlockModelRenderer {
 

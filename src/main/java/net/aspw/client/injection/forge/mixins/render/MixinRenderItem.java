@@ -20,25 +20,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.awt.*;
 import java.util.Objects;
 
-/**
- * The type Mixin render item.
- */
 @Mixin(RenderItem.class)
 
 public abstract class MixinRenderItem {
+
     @Final
     @Shadow
     private static ResourceLocation RES_ITEM_GLINT;
+
     @Final
     @Shadow
     private TextureManager textureManager;
 
-    /**
-     * Render model.
-     *
-     * @param model the model
-     * @param color the color
-     */
     @Shadow
     protected abstract void renderModel(IBakedModel model, int color);
 

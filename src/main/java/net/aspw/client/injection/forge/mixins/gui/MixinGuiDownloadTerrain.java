@@ -38,6 +38,5 @@ public abstract class MixinGuiDownloadTerrain extends MixinGuiScreen {
                 this.mc.displayGuiScreen(new GuiMultiplayer(new GuiMainMenu()));
             }
         }
-
     }
 }

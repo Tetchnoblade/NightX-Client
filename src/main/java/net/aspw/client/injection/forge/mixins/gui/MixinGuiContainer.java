@@ -21,53 +21,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 
-/**
- * The type Mixin gui container.
- */
 @Mixin(GuiContainer.class)
 public abstract class MixinGuiContainer extends MixinGuiScreen {
-    /**
-     * The X size.
-     */
+
     @Shadow
     protected int xSize;
-    /**
-     * The Y size.
-     */
-    @Shadow
-    protected int ySize;
-    /**
-     * The Gui left.
-     */
     @Shadow
     protected int guiLeft;
-    /**
-     * The Gui top.
-     */
-    @Shadow
-    protected int guiTop;
     @Shadow
     private int dragSplittingButton;
     @Shadow
     private int dragSplittingRemnant;
-    private GuiButton stealButton, chestStealerButton, invManagerButton, killAuraButton;
+    private GuiButton chestStealerButton, invManagerButton, killAuraButton;
     private float progress = 0F;
     private long lastMS = 0L;
 
-    /**
-     * Check hotbar keys boolean.
-     *
-     * @param keyCode the key code
-     * @return the boolean
-     */
     @Shadow
     protected abstract boolean checkHotbarKeys(int keyCode);
 
-    /**
-     * Inject init gui.
-     *
-     * @param callbackInfo the callback info
-     */
     @Inject(method = "initGui", at = @At("HEAD"))
     public void injectInitGui(final CallbackInfo callbackInfo) {
         final GuiScreen guiScreen = MinecraftInstance.mc.currentScreen;
@@ -114,7 +85,6 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
         try {
             final GuiScreen guiScreen = mc.currentScreen;
 
-            if (stealButton != null) stealButton.enabled = !stealer.getState();
             if (killAuraButton != null)
                 killAuraButton.enabled = killAura.getState();
             if (chestStealerButton != null) chestStealerButton.enabled = stealer.getState();
@@ -149,8 +119,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
                 if (!stealer.getOnce() && !stealer.getStillDisplayValue().get())
                     callbackInfo.cancel();
             }
-        } catch (final Exception e) {
-            //e.printStackTrace();
+        } catch (final Exception ignored) {
         }
     }
 
@@ -159,11 +128,6 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
         return false;
     }
 
-    /**
-     * Draw screen return.
-     *
-     * @param callbackInfo the callback info
-     */
     @Inject(method = "drawScreen", at = @At("RETURN"))
     public void drawScreenReturn(final CallbackInfo callbackInfo) {
         final Animations animMod = Objects.requireNonNull(Launch.moduleManager.getModule(Animations.class));

@@ -6,7 +6,6 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.protocol.api.ProtocolFixer
 import net.aspw.client.utils.EntityUtils
 import net.aspw.client.utils.PacketUtils
 import net.aspw.client.utils.RotationUtils
@@ -37,6 +36,7 @@ class TPAura : Module() {
     private val rangeValue = IntegerValue("Range", 30, 10, 70, "m")
     private val fovValue = FloatValue("Fov", 180F, 0F, 180F, "°")
     private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Normal")
+    private val newAttackValue = BoolValue("1.9+Attack", false)
     private val rotationValue = BoolValue("Rotations", true)
     private val autoBlock = BoolValue("AutoBlock", true)
 
@@ -133,7 +133,7 @@ class TPAura : Module() {
 
             lastTarget = it
 
-            if (ProtocolFixer.newerThan1_8())
+            if (newAttackValue.get())
                 mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             when (swingValue.get().lowercase(Locale.getDefault())) {
@@ -141,7 +141,7 @@ class TPAura : Module() {
                 "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
             }
 
-            if (!ProtocolFixer.newerThan1_8())
+            if (!newAttackValue.get())
                 mc.netHandler.addToSendQueue(C02PacketUseEntity(it, C02PacketUseEntity.Action.ATTACK))
 
             path.reverse()

@@ -20,31 +20,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.PLAYER_LIST;
 
-/**
- * The type Mixin gui ingame forge.
- */
 @Mixin(GuiIngameForge.class)
 public abstract class MixinGuiIngameForge extends MixinGuiInGame {
 
-    /**
-     * The X scale.
-     */
     public float xScale = 0F;
 
-    /**
-     * Pre boolean.
-     *
-     * @param type the type
-     * @return the boolean
-     */
     @Shadow(remap = false)
     protected abstract boolean pre(ElementType type);
 
-    /**
-     * Post.
-     *
-     * @param type the type
-     */
     @Shadow(remap = false)
     protected abstract void post(ElementType type);
 
@@ -71,12 +54,8 @@ public abstract class MixinGuiIngameForge extends MixinGuiInGame {
     }
 
     /**
-     * Render player list.
-     *
-     * @param width  the width
-     * @param height the height
      * @author As_pw
-     * @reason PlayerList
+     * @reason Player List Renderer
      */
     @Overwrite(remap = false)
     protected void renderPlayerList(int width, int height) {

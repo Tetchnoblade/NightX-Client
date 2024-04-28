@@ -10,9 +10,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 
-/**
- * The type Mixin vis graph.
- */
 @Mixin(VisGraph.class)
 public class MixinVisGraph {
 

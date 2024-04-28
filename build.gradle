@@ -59,14 +59,6 @@ dependencies {
         exclude module: "slf4j-api"
     }
 
-    include "com.viaversion:viaversion:${project.viaversion_version}"
-    include "com.viaversion:viabackwards:${project.viabackwards_version}"
-    include "com.viaversion:viarewind:${project.viarewind_version}"
-    include ("net.raphimc:ViaLegacy:${project.vialegacy_version}") {
-        exclude group: "com.google.code.gson", module: "gson"
-    }
-    include "net.raphimc:ViaLoader:${project.vialoader_version}"
-
     include "org.slf4j:slf4j-api:${project.slf4j_version}"
     include "org.yaml:snakeyaml:${project.snake_yml_version}"
 

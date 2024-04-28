@@ -139,8 +139,6 @@ class Speed : Module() {
             mc.thePlayer.cameraPitch = 0f
             mc.thePlayer.cameraYaw = 0f
         }
-        if (fakeYValue.get())
-            mc.thePlayer.cameraPitch = 0f
         if (mc.thePlayer.isSneaking || event.eventState !== EventState.PRE) return
         val speedMode = mode
         if (speedMode != null) {
@@ -438,5 +436,4 @@ class Speed : Module() {
 
     @JvmField
     val noBob = BoolValue("NoBob", false)
-    val fakeYValue = BoolValue("FakeY", false)
 }

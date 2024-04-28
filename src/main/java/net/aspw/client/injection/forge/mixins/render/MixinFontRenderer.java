@@ -10,15 +10,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/**
- * The type Mixin font renderer.
- */
 @Mixin(FontRenderer.class)
 public abstract class MixinFontRenderer {
 
-    /**
-     * Reset styles.
-     */
     @Shadow
     protected abstract void resetStyles();
 
@@ -56,5 +50,4 @@ public abstract class MixinFontRenderer {
         Launch.eventManager.callEvent(textEvent);
         return textEvent.getText();
     }
-
 }

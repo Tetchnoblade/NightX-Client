@@ -11,7 +11,6 @@ import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.features.module.impl.combat.KillAuraRecode
 import net.aspw.client.features.module.impl.combat.TPAura
-import net.aspw.client.protocol.ProtocolBase
 import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.AnimationUtils
 import net.aspw.client.utils.render.RenderUtils
@@ -49,7 +48,6 @@ class Interface : Module() {
     private val watermarkValue = BoolValue("WaterMark", true)
     private val clientNameValue = TextValue("ClientName", "NightX") { watermarkValue.get() }
     private val watermarkFpsValue = BoolValue("WaterMark-ShowFPS", true) { watermarkValue.get() }
-    private val watermarkProtocolValue = BoolValue("WaterMark-ShowProtocol", true) { watermarkValue.get() }
     private val arrayListValue = BoolValue("ArrayList", true)
     private val arrayListSpeedValue = FloatValue("ArrayList-AnimationSpeed", 0.3F, 0F, 0.6F) { arrayListValue.get() }
     private val targetHudValue = BoolValue("TargetHud", true)
@@ -89,15 +87,13 @@ class Interface : Module() {
                 val inputString = clientNameValue.get()
                 val connectChecks = if (!APIConnecter.canConnect) " - Disconnected" else ""
                 val fpsChecks = if (watermarkFpsValue.get()) " [" + Minecraft.getDebugFPS() + " FPS]" else ""
-                val protocolChecks =
-                    if (watermarkProtocolValue.get()) " [version: " + (if (!mc.isIntegratedServerRunning) ProtocolBase.getManager().targetVersion.getName() else "1.8.x") + "]" else ""
                 var firstChar = ""
                 var restOfString = ""
                 if (inputString != "") {
                     firstChar = inputString[0].toString()
                     restOfString = inputString.substring(1)
                 }
-                val showName = "$firstChar§r§f$restOfString$fpsChecks$protocolChecks$connectChecks"
+                val showName = "$firstChar§r§f$restOfString$fpsChecks$connectChecks"
                 fontRenderer.drawStringWithShadow(
                     showName,
                     2.0,

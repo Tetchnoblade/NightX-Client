@@ -28,9 +28,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 
-/**
- * The type Mixin item renderer.
- */
 @Mixin(ItemRenderer.class)
 public abstract class MixinItemRenderer {
 
@@ -45,85 +42,31 @@ public abstract class MixinItemRenderer {
     @Shadow
     private ItemStack itemToRender;
     private float delay = 0;
-    @Shadow
-    private int equippedItemSlot;
 
-    /**
-     * Rotate arround x and y.
-     *
-     * @param angle  the angle
-     * @param angleY the angle y
-     */
     @Shadow
     protected abstract void rotateArroundXAndY(float angle, float angleY);
 
-    /**
-     * Sets light map from player.
-     *
-     * @param clientPlayer the client player
-     */
     @Shadow
     protected abstract void setLightMapFromPlayer(AbstractClientPlayer clientPlayer);
 
-    /**
-     * Rotate with player rotations.
-     *
-     * @param entityplayerspIn the entityplayersp in
-     * @param partialTicks     the partial ticks
-     */
     @Shadow
     protected abstract void rotateWithPlayerRotations(EntityPlayerSP entityplayerspIn, float partialTicks);
 
-    /**
-     * Render item map.
-     *
-     * @param clientPlayer      the client player
-     * @param pitch             the pitch
-     * @param equipmentProgress the equipment progress
-     * @param swingProgress     the swing progress
-     */
     @Shadow
     protected abstract void renderItemMap(AbstractClientPlayer clientPlayer, float pitch, float equipmentProgress, float swingProgress);
 
-    /**
-     * Perform drinking.
-     *
-     * @param clientPlayer the client player
-     * @param partialTicks the partial ticks
-     */
     @Shadow
     protected abstract void performDrinking(AbstractClientPlayer clientPlayer, float partialTicks);
 
-    /**
-     * Do block transformations.
-     */
     @Shadow
     protected abstract void doBlockTransformations();
 
-    /**
-     * Do bow transformations.
-     *
-     * @param partialTicks the partial ticks
-     * @param clientPlayer the client player
-     */
     @Shadow
     protected abstract void doBowTransformations(float partialTicks, AbstractClientPlayer clientPlayer);
 
-    /**
-     * Do item used transformations.
-     *
-     * @param swingProgress the swing progress
-     */
     @Shadow
     protected abstract void doItemUsedTransformations(float swingProgress);
 
-    /**
-     * Render item.
-     *
-     * @param entityIn  the entity in
-     * @param heldStack the held stack
-     * @param transform the transform
-     */
     @Shadow
     public abstract void renderItem(EntityLivingBase entityIn, ItemStack heldStack, ItemCameraTransforms.TransformType transform);
 
@@ -213,11 +156,8 @@ public abstract class MixinItemRenderer {
     }
 
     /**
-     * Render item in first person.
-     *
-     * @param partialTicks the partial ticks
      * @author As_pw
-     * @reason RenderItem
+     * @reason Render Item in First Person
      */
     @Overwrite
     public void renderItemInFirstPerson(final float partialTicks) {
@@ -846,10 +786,9 @@ public abstract class MixinItemRenderer {
 
     @Inject(method = "renderFireInFirstPerson", at = @At("HEAD"), cancellable = true)
     private void renderFireInFirstPerson(final CallbackInfo callbackInfo) {
-        final VisualAbilities visualAbilities = Launch.moduleManager.getModule(VisualAbilities.class);
+        final VisualAbilities visualAbilities = Objects.requireNonNull(Launch.moduleManager.getModule(VisualAbilities.class));
 
         if (visualAbilities.getState() && visualAbilities.getFireEffect().get()) {
-            //vanilla's method
             GlStateManager.color(1.0F, 1.0F, 1.0F, 0.9F);
             GlStateManager.depthFunc(519);
             GlStateManager.depthMask(false);

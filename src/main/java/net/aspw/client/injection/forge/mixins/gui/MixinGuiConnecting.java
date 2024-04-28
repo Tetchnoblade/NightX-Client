@@ -53,7 +53,7 @@ public abstract class MixinGuiConnecting extends GuiScreen {
 
     /**
      * @author As_pw
-     * @reason Fix Connect
+     * @reason Connection Fix
      */
     @Overwrite
     private void connect(final String ip, final int port) {

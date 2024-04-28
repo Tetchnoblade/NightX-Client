@@ -27,9 +27,6 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * The type Mixin gui new chat.
- */
 @Mixin(GuiNewChat.class)
 public abstract class MixinGuiNewChat {
 
@@ -46,66 +43,21 @@ public abstract class MixinGuiNewChat {
     private int scrollPos;
     @Shadow
     private boolean isScrolled;
-    @Shadow
-    @Final
-    private List<ChatLine> chatLines;
     private int line;
     private Interface anInterface;
 
-    /**
-     * Gets line count.
-     *
-     * @return the line count
-     */
     @Shadow
     public abstract int getLineCount();
 
-    /**
-     * Gets chat open.
-     *
-     * @return the chat open
-     */
     @Shadow
     public abstract boolean getChatOpen();
 
-    /**
-     * Gets chat scale.
-     *
-     * @return the chat scale
-     */
     @Shadow
     public abstract float getChatScale();
 
-    /**
-     * Gets chat width.
-     *
-     * @return the chat width
-     */
     @Shadow
     public abstract int getChatWidth();
 
-    /**
-     * Delete chat line.
-     *
-     * @param p_deleteChatLine_1_ the p delete chat line 1
-     */
-    @Shadow
-    public abstract void deleteChatLine(int p_deleteChatLine_1_);
-
-    /**
-     * Scroll.
-     *
-     * @param p_scroll_1_ the p scroll 1
-     */
-    @Shadow
-    public abstract void scroll(int p_scroll_1_);
-
-    /**
-     * Print chat message with optional deletion.
-     *
-     * @param chatComponent the chat component
-     * @param chatLineId    the chat line id
-     */
     @Shadow
     public abstract void printChatMessageWithOptionalDeletion(IChatComponent chatComponent, int chatLineId);
 
@@ -121,11 +73,8 @@ public abstract class MixinGuiNewChat {
     }
 
     /**
-     * Print chat message.
-     *
-     * @param chatComponent the chat component
      * @author As_pw
-     * @reason Print
+     * @reason Print Chat
      */
     @Overwrite
     public void printChatMessage(IChatComponent chatComponent) {
@@ -139,11 +88,8 @@ public abstract class MixinGuiNewChat {
     }
 
     /**
-     * Draw chat.
-     *
-     * @param updateCounter the update counter
      * @author As_pw
-     * @reason Draw
+     * @reason Draw Chat
      */
     @Overwrite
     public void drawChat(int updateCounter) {
@@ -282,13 +228,8 @@ public abstract class MixinGuiNewChat {
     }
 
     /**
-     * Gets chat component.
-     *
-     * @param p_146236_1_ the p 146236 1
-     * @param p_146236_2_ the p 146236 2
-     * @return the chat component
      * @author As_pw
-     * @reason ChatComponent
+     * @reason Chat Component
      */
     @Overwrite
     public IChatComponent getChatComponent(int p_146236_1_, int p_146236_2_) {

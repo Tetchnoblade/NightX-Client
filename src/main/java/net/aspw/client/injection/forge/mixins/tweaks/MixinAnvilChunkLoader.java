@@ -20,7 +20,6 @@ public class MixinAnvilChunkLoader {
                     target = "Lnet/minecraft/nbt/CompressedStreamTools;read(Ljava/io/DataInputStream;)Lnet/minecraft/nbt/NBTTagCompound;"
             )
     )
-
     private NBTTagCompound redirectReadChunkData(DataInputStream inputStream) throws IOException {
         try (DataInputStream stream = inputStream) {
             return CompressedStreamTools.read(stream);

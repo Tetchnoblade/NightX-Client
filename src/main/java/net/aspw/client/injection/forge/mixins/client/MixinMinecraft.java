@@ -4,7 +4,6 @@ import net.aspw.client.Launch;
 import net.aspw.client.event.*;
 import net.aspw.client.features.module.impl.other.FastPlace;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
-import net.aspw.client.protocol.api.ProtocolFixer;
 import net.aspw.client.utils.CPSCounter;
 import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.render.RenderUtils;
@@ -23,7 +22,6 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.stream.IStream;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.MinecraftForgeClient;
 import org.apache.commons.lang3.SystemUtils;
@@ -31,9 +29,11 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
@@ -52,8 +52,6 @@ public abstract class MixinMinecraft {
     @Shadow
     public EntityPlayerSP thePlayer;
     @Shadow
-    public EffectRenderer effectRenderer;
-    @Shadow
     public EntityRenderer entityRenderer;
     @Shadow
     public PlayerControllerMP playerController;
@@ -66,18 +64,10 @@ public abstract class MixinMinecraft {
     @Shadow
     public GameSettings gameSettings;
     @Shadow
-    private Entity renderViewEntity;
-    @Shadow
     private boolean fullscreen;
     @Shadow
     public int leftClickCounter;
     private long lastFrame = Minecraft.getSystemTime();
-
-    @Shadow
-    public abstract IResourceManager getResourceManager();
-
-    @Shadow
-    public abstract RenderManager getRenderManager();
 
     @Inject(method = "run", at = @At("HEAD"))
     private void init(CallbackInfo callbackInfo) {
@@ -115,22 +105,6 @@ public abstract class MixinMinecraft {
         MinecraftForgeClient.getRenderPass();
         MinecraftForgeClientAccessor.getRegionCache().invalidateAll();
         MinecraftForgeClientAccessor.getRegionCache().cleanUp();
-    }
-
-    @Redirect(
-            method = "runGameLoop",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/stream/IStream;func_152935_j()V")
-    )
-    private void skipTwitchCode1(IStream instance) {
-        // No-op
-    }
-
-    @Redirect(
-            method = "runGameLoop",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/stream/IStream;func_152922_k()V")
-    )
-    private void skipTwitchCode2(IStream instance) {
-        // No-op
     }
 
     @Inject(method = "displayGuiScreen", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/GuiScreen;", shift = At.Shift.AFTER))
@@ -178,50 +152,6 @@ public abstract class MixinMinecraft {
         Launch.INSTANCE.stopClient();
     }
 
-    /**
-     * @author As_pw
-     * @reason Fix Attack Order
-     */
-    @Overwrite
-    public void clickMouse() {
-        CPSCounter.registerClick(CPSCounter.MouseButton.LEFT);
-        if (this.leftClickCounter <= 0) {
-            if (this.objectMouseOver != null && Objects.requireNonNull(this.objectMouseOver.typeOfHit) != MovingObjectPosition.MovingObjectType.ENTITY) {
-                this.thePlayer.swingItem();
-            }
-
-            if (this.objectMouseOver != null) {
-                switch (this.objectMouseOver.typeOfHit) {
-                    case ENTITY:
-                        ProtocolFixer.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);
-                        break;
-
-                    case BLOCK:
-                        BlockPos blockpos = this.objectMouseOver.getBlockPos();
-
-                        if (this.theWorld.getBlockState(blockpos).getBlock().getMaterial() != Material.air) {
-                            this.playerController.clickBlock(blockpos, this.objectMouseOver.sideHit);
-                            break;
-                        }
-
-                    case MISS:
-                    default:
-                        if (this.playerController.isNotCreative()) {
-                            this.leftClickCounter = 10;
-                        }
-                }
-            }
-        }
-    }
-
-    @Redirect(
-            method = "clickMouse",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;swingItem()V")
-    )
-    private void fixAttackOrder_VanillaSwing() {
-        ProtocolFixer.sendConditionalSwing(this.objectMouseOver);
-    }
-
     @Inject(method = "middleClickMouse", at = @At("HEAD"))
     private void middleClickMouse(CallbackInfo ci) {
         CPSCounter.registerClick(CPSCounter.MouseButton.MIDDLE);
@@ -253,39 +183,5 @@ public abstract class MixinMinecraft {
     @Redirect(method = "dispatchKeypresses", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventCharacter()C", remap = false))
     private char resolveForeignKeyboards() {
         return (char) (Keyboard.getEventCharacter() + 256);
-    }
-
-    /**
-     * @author As_pw
-     * @reason Fix ClickDelay
-     */
-    @Overwrite
-    private void sendClickBlockToController(boolean leftClick) {
-        if (!leftClick)
-            this.leftClickCounter = 0;
-
-        if (this.leftClickCounter <= 0) {
-            if (leftClick && this.objectMouseOver != null && this.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-                BlockPos blockPos = this.objectMouseOver.getBlockPos();
-
-                if (this.thePlayer.isUsingItem() && ProtocolFixer.newerThanOrEqualsTo1_8())
-                    return;
-
-                if (this.leftClickCounter == 0)
-                    Launch.eventManager.callEvent(new ClickBlockEvent(blockPos, this.objectMouseOver.sideHit));
-
-                if (this.theWorld.getBlockState(blockPos).getBlock().getMaterial() != Material.air && this.playerController.onPlayerDamageBlock(blockPos, this.objectMouseOver.sideHit)) {
-                    this.effectRenderer.addBlockHitEffects(blockPos, this.objectMouseOver.sideHit);
-                    this.thePlayer.swingItem();
-                }
-            } else {
-                this.playerController.resetBlockRemoving();
-            }
-        }
-    }
-
-    @ModifyConstant(method = "getLimitFramerate", constant = @Constant(intValue = 30))
-    public int getLimitFramerate(int constant) {
-        return 60;
     }
 }

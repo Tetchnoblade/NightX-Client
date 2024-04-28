@@ -23,9 +23,6 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.UUID;
 
-/**
- * The type Mixin layer held item.
- */
 @Mixin(LayerHeldItem.class)
 public class MixinLayerHeldItem {
 
@@ -34,18 +31,8 @@ public class MixinLayerHeldItem {
     private RendererLivingEntity<?> livingEntityRenderer;
 
     /**
-     * Do render layer.
-     *
-     * @param entitylivingbaseIn the entitylivingbase in
-     * @param p_177141_2_        the p 177141 2
-     * @param p_177141_3_        the p 177141 3
-     * @param partialTicks       the partial ticks
-     * @param p_177141_5_        the p 177141 5
-     * @param p_177141_6_        the p 177141 6
-     * @param p_177141_7_        the p 177141 7
-     * @param scale              the scale
      * @author As_pw
-     * @reason doLayer
+     * @reason Render Layer
      */
     @Overwrite
     public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale) {

@@ -30,7 +30,6 @@ class BowJump : Module() {
     private val timerValue = FloatValue("Timer", 1f, 0.1f, 10f, "x")
     private val delayBeforeLaunch = IntegerValue("DelayBeforeArrowLaunch", 1, 1, 20, " tick")
     private val autoDisable = BoolValue("AutoDisable", true)
-    val fakeYValue = BoolValue("FakeY", false)
     private val viewBobbingValue = BoolValue("ViewBobbing", false)
     private val bobbingAmountValue = FloatValue("BobbingAmount", 0.1f, 0f, 0.1f) { viewBobbingValue.get() }
     private val renderValue = BoolValue("RenderStatus", false)
@@ -51,8 +50,6 @@ class BowJump : Module() {
     fun onMotion(event: MotionEvent?) {
         if (MovementUtils.isMoving() && viewBobbingValue.get())
             mc.thePlayer.cameraYaw = bobbingAmountValue.get()
-        if (fakeYValue.get())
-            mc.thePlayer.cameraPitch = 0f
     }
 
     @EventTarget

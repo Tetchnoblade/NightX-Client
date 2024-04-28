@@ -10,14 +10,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/**
- * The type Mixin network player info.
- */
 @Mixin(NetworkPlayerInfo.class)
 public class MixinNetworkPlayerInfo {
-    @Shadow
-    @Final
-    private GameProfile gameProfile;
 
     @Inject(method = "getLocationSkin", at = @At("HEAD"))
     private void injectSkinProtect(CallbackInfoReturnable<ResourceLocation> cir) {

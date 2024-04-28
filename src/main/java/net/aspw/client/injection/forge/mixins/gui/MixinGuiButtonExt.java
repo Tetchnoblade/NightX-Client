@@ -17,25 +17,12 @@ import org.spongepowered.asm.mixin.Unique;
 
 import java.awt.*;
 
-/**
- * The type Mixin gui button ext.
- */
 @Mixin(GuiButtonExt.class)
 public abstract class MixinGuiButtonExt extends GuiButton {
 
     @Unique
     private float alpha;
 
-    /**
-     * Instantiates a new Mixin gui button ext.
-     *
-     * @param p_i46323_1_ the p i 46323 1
-     * @param p_i46323_2_ the p i 46323 2
-     * @param p_i46323_3_ the p i 46323 3
-     * @param p_i46323_4_ the p i 46323 4
-     * @param p_i46323_5_ the p i 46323 5
-     * @param p_i46323_6_ the p i 46323 6
-     */
     public MixinGuiButtonExt(final int p_i46323_1_, final int p_i46323_2_, final int p_i46323_3_, final int p_i46323_4_,
                              final int p_i46323_5_, final String p_i46323_6_) {
         super(p_i46323_1_, p_i46323_2_, p_i46323_3_, p_i46323_4_, p_i46323_5_, p_i46323_6_);
@@ -43,7 +30,7 @@ public abstract class MixinGuiButtonExt extends GuiButton {
 
     /**
      * @author As_pw
-     * @reason Button
+     * @reason Button Renderer
      */
     @Override
     @Overwrite

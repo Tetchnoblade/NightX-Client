@@ -13,7 +13,6 @@ import net.aspw.client.features.module.impl.player.LegitScaffold
 import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.features.module.impl.targets.AntiBots
 import net.aspw.client.features.module.impl.targets.AntiTeams
-import net.aspw.client.protocol.api.ProtocolFixer
 import net.aspw.client.utils.*
 import net.aspw.client.utils.extensions.getDistanceToEntityBox
 import net.aspw.client.utils.extensions.getNearestPointBB
@@ -31,6 +30,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityArmorStand
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemSword
+import net.minecraft.network.Packet
 import net.minecraft.network.play.client.*
 import net.minecraft.potion.Potion
 import net.minecraft.util.BlockPos
@@ -38,6 +38,7 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.Vec3
 import java.util.*
+import java.util.concurrent.LinkedBlockingQueue
 import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.min
@@ -142,12 +143,11 @@ class KillAura : Module() {
         40
     ) { !rotations.get().equals("none", true) }
 
+    private val newAttackValue = BoolValue("1.9+Attack", false)
     private val noInventoryAttackValue = BoolValue("NoInvAttack", false)
     private val wallCheckValue = BoolValue("WallCheck", false)
     private val checkSprintValue = BoolValue("StopSprint", false)
     private val antiBlinkValue = BoolValue("AntiBlink", false)
-    private val multiCombo = BoolValue("MultiCombo", false)
-    private val amountValue = IntegerValue("Multi-Packet", 5, 0, 20, "x") { multiCombo.get() }
 
     private val noHitCheck = BoolValue(
         "NoHitCheck",
@@ -159,17 +159,18 @@ class KillAura : Module() {
         arrayOf(
             "Health",
             "Distance",
-            "Direction",
-            "LivingTime",
-            "Armor",
-            "HurtResistance",
-            "HurtTime",
-            "HealthAbsorption",
-            "RegenAmplifier"
+            "Adaptive",
+            "Switch"
         ),
         "Distance"
     )
-    private val targetModeValue = ListValue("TargetMode", arrayOf("Single", "Switch", "Multi"), "Single")
+
+    private val switchDelay = IntegerValue(
+        "Switch-Delay",
+        400,
+        0,
+        1000
+    ) { priorityValue.get().equals("Adaptive", true) || priorityValue.get().equals("Switch", true) }
 
     // Bypasses
     private val swingValue = ListValue("Swing", arrayOf("Full", "Smart", "Packet", "None"), "Full")
@@ -189,6 +190,7 @@ class KillAura : Module() {
             arrayOf(
                 "Vanilla",
                 "ReBlock",
+                "Blink",
                 "Perfect",
                 "Fake",
                 "None"
@@ -199,19 +201,24 @@ class KillAura : Module() {
     private val reBlockDelayValue =
         IntegerValue("ReBlock-Delay", 10, 1, 100) { autoBlockModeValue.get().equals("reblock", true) }
 
-    private val interactAutoBlockValue = BoolValue(
-        "InteractAutoBlock",
-        false
-    ) {
-        !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get()
-            .equals("None", true)
+    private val blinkDelay = IntegerValue(
+        "Blink-Delay",
+        5,
+        2,
+        10
+    ) { autoBlockModeValue.get().equals("Blink", true) }
+
+    private val interactAutoBlockValue = BoolValue("InteractAutoBlock", false) {
+        !autoBlockModeValue.get().equals("Fake", true) && !autoBlockModeValue.get().equals("None", true)
+    }
+
+    private val swapUnblockValue = BoolValue("SwapUnblock", false) {
+        autoBlockModeValue.get().equals("Blink", true)
     }
 
     private val fovValue = FloatValue("Fov", 180f, 0f, 180f)
 
     private val failRateValue = FloatValue("FailRate", 0f, 0f, 100f)
-    private val limitedMultiTargetsValue =
-        IntegerValue("LimitedMultiTargets", 6, 1, 20) { targetModeValue.get().equals("multi", true) }
 
     /**
      * MODULE
@@ -227,13 +234,21 @@ class KillAura : Module() {
     private val reBlockTimer = TickTimer()
     private val attackTimer = MSTimer()
     private val endTimer = TickTimer()
+    private val switchTimer = MSTimer()
+    private val fakeTimer = MSTimer()
     private var failedHit = false
     private var attackDelay = 0L
     private var clicks = 0
+    private var allowedClicks = 0
 
     // Fake Block
     var blockingStatus = false
     var fakeBlock = false
+
+    /**
+     * BlinkAB
+     */
+    private var blinkABPackets = LinkedBlockingQueue<Packet<*>>()
 
     /**
      * Enable kill aura module
@@ -243,6 +258,8 @@ class KillAura : Module() {
         mc.theWorld ?: return
 
         updateTarget()
+
+        allowedClicks = maxCPS.get()
     }
 
     /**
@@ -264,10 +281,26 @@ class KillAura : Module() {
      */
     @EventTarget
     fun onMotion(event: MotionEvent) {
-        if (event.eventState == EventState.POST) {
-            target ?: return
-            currentTarget ?: return
+        target ?: return
+        currentTarget ?: return
 
+        if (event.eventState == EventState.PRE) {
+            if (autoBlockModeValue.get().equals("Blink", true)) {
+                // ClientUtils.displayChatMessage(reblockInstant.toString())
+                if (mc.thePlayer.ticksExisted % blinkDelay.get() == 0) {
+                    // ClientUtils.displayChatMessage(mc.thePlayer.ticksExisted.toString())
+                    if (blockingStatus) {
+                        stopBlocking()
+                        currentTarget = target
+                        allowedClicks = maxCPS.get()
+                    }
+                } else {
+                    startBlocking(target!!, interactAutoBlockValue.get())
+                }
+            }
+        }
+
+        if (event.eventState == EventState.POST) {
             // Update hitable
             updateHitable()
 
@@ -312,13 +345,45 @@ class KillAura : Module() {
         // Target
         currentTarget = target
 
-        if (!targetModeValue.get().equals("Switch", ignoreCase = true) && isEnemy(currentTarget))
+        if (!(priorityValue.get().equals("Switch", ignoreCase = true) || priorityValue.get()
+                .equals("Adaptive", true)) && isEnemy(currentTarget)
+        )
             target = currentTarget
     }
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
+        if (packet is C09PacketHeldItemChange && autoBlockModeValue.get().equals("Blink", true) && blockingStatus) {
+            fakeBlock = false
+            blockingStatus = false
+            currentTarget = null
+
+            event.cancelEvent()
+            mc.netHandler.addToSendQueue(
+                C07PacketPlayerDigging(
+                    C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
+                    BlockPos.ORIGIN,
+                    EnumFacing.DOWN
+                )
+            )
+            mc.netHandler.addToSendQueue(packet)
+            mc.netHandler.addToSendQueue(
+                C0BPacketEntityAction(
+                    mc.thePlayer,
+                    C0BPacketEntityAction.Action.START_SPRINTING
+                )
+            )
+            if (!mc.thePlayer.isSprinting) blinkABPackets.add(
+                C0BPacketEntityAction(
+                    mc.thePlayer,
+                    C0BPacketEntityAction.Action.STOP_SPRINTING
+                )
+            )
+            releasePackets()
+            return
+        }
+
         if (autoBlockModeValue.get().equals("perfect", true)) {
             if (blockingStatus
                 && ((packet is C07PacketPlayerDigging
@@ -329,6 +394,13 @@ class KillAura : Module() {
 
             if (packet is C09PacketHeldItemChange)
                 blockingStatus = false
+        }
+
+        if (!event.isCancelled && autoBlockModeValue.get()
+                .equals("blink", true) && blockingStatus && packet.javaClass.simpleName.startsWith("c", true)
+        ) {
+            event.cancelEvent()
+            blinkABPackets.add(packet)
         }
     }
 
@@ -408,37 +480,14 @@ class KillAura : Module() {
         if (currentTarget != null && attackTimer.hasTimePassed(attackDelay) &&
             currentTarget!!.hurtTime <= 10
         ) {
+            if (autoBlockModeValue.get().equals("Blink", true) && allowedClicks <= 0) return
+
             clicks++
+            allowedClicks--
             attackTimer.reset()
             attackDelay = if (coolDownCheck.get())
                 TimeUtils.randomClickDelay(20, 20)
             else TimeUtils.randomClickDelay(minCPS.get(), maxCPS.get())
-        }
-    }
-
-    @EventTarget
-    fun onAttack(event: AttackEvent) {
-        if (multiCombo.get()) {
-            event.targetEntity ?: return
-            repeat(amountValue.get()) {
-                if (ProtocolFixer.newerThan1_8())
-                    mc.netHandler.addToSendQueue(
-                        C02PacketUseEntity(
-                            event.targetEntity,
-                            C02PacketUseEntity.Action.ATTACK
-                        )
-                    )
-
-                mc.netHandler.addToSendQueue(C0APacketAnimation())
-
-                if (!ProtocolFixer.newerThan1_8())
-                    mc.netHandler.addToSendQueue(
-                        C02PacketUseEntity(
-                            event.targetEntity,
-                            C02PacketUseEntity.Action.ATTACK
-                        )
-                    )
-            }
         }
     }
 
@@ -464,7 +513,6 @@ class KillAura : Module() {
 
         // Settings
         val failRate = failRateValue.get()
-        val multi = targetModeValue.get().equals("Multi", ignoreCase = true)
         val failHit = failRate > 0 && Random().nextInt(100) <= failRate
 
         // Check is not hitable or check failrate
@@ -472,48 +520,33 @@ class KillAura : Module() {
             if (failHit)
                 failedHit = true
         } else {
-            if (!multi) {
-                attackEntity(currentTarget!!)
-            } else {
-                var targets = 0
-
-                for (entity in mc.theWorld.loadedEntityList) {
-                    val distance = mc.thePlayer.getDistanceToEntityBox(entity)
-
-                    if (entity is EntityLivingBase && isEnemy(entity) && distance <= rangeValue.get()) {
-                        attackEntity(entity)
-
-                        targets += 1
-
-                        if (limitedMultiTargetsValue.get() != 0 && limitedMultiTargetsValue.get() <= targets)
-                            break
-                    }
-                }
-            }
-
-            prevTargetEntities.add(currentTarget!!.entityId)
+            attackEntity(currentTarget!!)
 
             if (target == currentTarget)
                 target = null
+
+            if (switchTimer.hasTimePassed(switchDelay.get().toLong())) {
+                prevTargetEntities.add(currentTarget!!.entityId)
+                switchTimer.reset()
+            }
         }
     }
 
     /**
      * Update current target
      */
-    private fun updateTarget() {
+    private fun updateTarget(switchMode: Boolean = priorityValue.get().equals("Switch", true)) {
         // Reset fixed target to null
 
         // Settings
         val hurtTime = 10
         val fov = fovValue.get()
-        val switchMode = targetModeValue.get().equals("Switch", ignoreCase = true)
 
         // Find possible targets
         val targets = mutableListOf<EntityLivingBase>()
 
         for (entity in mc.theWorld.loadedEntityList) {
-            if (entity !is EntityLivingBase || !isEnemy(entity) || (switchMode && prevTargetEntities.contains(entity.entityId))/* || (!focusEntityName.isEmpty() && !focusEntityName.contains(entity.name.toLowerCase()))*/)
+            if (entity !is EntityLivingBase || !isEnemy(entity)/* || (!focusEntityName.isEmpty() && !focusEntityName.contains(entity.name.toLowerCase()))*/)
                 continue
 
             val distance = mc.thePlayer.getDistanceToEntityBox(entity)
@@ -523,20 +556,24 @@ class KillAura : Module() {
                 targets.add(entity)
         }
 
+        if (targets.isNotEmpty() && targets.any { mc.thePlayer.getDistanceToEntityBox(it) <= attackRangeValue.get() }) {
+            targets.retainAll { mc.thePlayer.getDistanceToEntityBox(it) <= attackRangeValue.get() }
+        }
+
+        if (switchMode) targets.retainAll { !prevTargetEntities.contains(it.entityId) }
+
         // Sort targets by priority
         when (priorityValue.get().lowercase(Locale.getDefault())) {
-            "distance" -> targets.sortBy { mc.thePlayer.getDistanceToEntityBox(it) } // Sort by distance
+            "distance", "switch" -> {
+                targets.sortBy { mc.thePlayer.getDistanceToEntityBox(it) }
+            }  // Sort by distance
             "health" -> targets.sortBy { it.health } // Sort by health
-            "direction" -> targets.sortBy { RotationUtils.getRotationDifference(it) } // Sort by FOV
-            "livingtime" -> targets.sortBy { -it.ticksExisted } // Sort by existence
-            "hurtresistance" -> targets.sortBy { it.hurtResistantTime } // Sort by armor hurt time
-            "hurttime" -> targets.sortBy { it.hurtTime } // Sort by hurt time
-            "healthabsorption" -> targets.sortBy { it.health + it.absorptionAmount } // Sort by full health with absorption effect
-            "regenamplifier" -> targets.sortBy {
-                if (it.isPotionActive(Potion.regeneration)) it.getActivePotionEffect(
-                    Potion.regeneration
-                ).amplifier else -1
-            }
+            "adaptive" -> {
+                targets.sortBy { it.health }
+                if (targets.isNotEmpty() && targets[0].health > 5 && !switchMode) {
+                    return updateTarget(true)
+                }
+            } // Sort by health
         }
 
         var found = false
@@ -558,7 +595,7 @@ class KillAura : Module() {
 
         if (prevTargetEntities.isNotEmpty()) {
             prevTargetEntities.clear()
-            updateTarget()
+            updateTarget(switchMode)
         }
     }
 
@@ -617,7 +654,7 @@ class KillAura : Module() {
         }
 
         // Attack target
-        if (ProtocolFixer.newerThan1_8())
+        if (newAttackValue.get())
             mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         when (swingValue.get().lowercase(Locale.getDefault())) {
@@ -631,7 +668,7 @@ class KillAura : Module() {
             "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
         }
 
-        if (!ProtocolFixer.newerThan1_8())
+        if (!newAttackValue.get())
             mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         when (particleValue.get().lowercase()) {
@@ -694,9 +731,9 @@ class KillAura : Module() {
                     RotationUtils.OtherRotation(
                         boundingBox,
                         RotationUtils.getCenter(entity.entityBoundingBox),
-                        false,
-                        true,
-                        maxRange
+                        predict = false,
+                        throughWalls = true,
+                        distance = maxRange
                     ), (Math.random() * (maxTurnSpeed.get() - minTurnSpeed.get()) + minTurnSpeed.get()).toFloat()
                 )
             }
@@ -787,6 +824,11 @@ class KillAura : Module() {
                 blockingStatus = true
             }
 
+            "blink" -> {
+                mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
+                blockingStatus = true
+            }
+
             "fake" -> {
                 fakeBlock = true
             }
@@ -801,15 +843,45 @@ class KillAura : Module() {
      * Stop blocking
      */
     private fun stopBlocking() {
+//        if (autoBlockModeValue.get().equals("Blink", true) && !blinkABPackets.any { it is C03PacketPlayer } && currentTarget != null) {
+//            return
+//        }
         fakeBlock = false
         blockingStatus = false
         currentTarget = null
         if (endTimer.hasTimePassed(1)) {
             if (canBlock || mc.thePlayer.isBlocking) {
-                if (!autoBlockModeValue.get().equals("fake", true) && !autoBlockModeValue.get()
+                if (autoBlockModeValue.get().equals("Blink", true)) {
+                    if (swapUnblockValue.get()) {
+                        mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem % 8 + 1))
+                        mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
+                    } else {
+                        mc.netHandler.addToSendQueue(
+                            C07PacketPlayerDigging(
+                                C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
+                                BlockPos.ORIGIN,
+                                EnumFacing.DOWN
+                            )
+                        )
+                    }
+                    mc.netHandler.addToSendQueue(
+                        C0BPacketEntityAction(
+                            mc.thePlayer,
+                            C0BPacketEntityAction.Action.START_SPRINTING
+                        )
+                    )
+                    if (!mc.thePlayer.isSprinting) blinkABPackets.add(
+                        C0BPacketEntityAction(
+                            mc.thePlayer,
+                            C0BPacketEntityAction.Action.STOP_SPRINTING
+                        )
+                    )
+                    releasePackets()
+                    // ClientUtils.displayChatMessage("tard " + mc.thePlayer.ticksExisted)
+                } else if (!autoBlockModeValue.get().equals("fake", true) && !autoBlockModeValue.get()
                         .equals("none", true)
                 ) {
-                    PacketUtils.sendPacketNoEvent(
+                    mc.netHandler.addToSendQueue(
                         C07PacketPlayerDigging(
                             C07PacketPlayerDigging.Action.RELEASE_USE_ITEM,
                             BlockPos.ORIGIN,
@@ -819,6 +891,12 @@ class KillAura : Module() {
                 }
             }
             endTimer.reset()
+        }
+    }
+
+    private fun releasePackets() {
+        while (blinkABPackets.isNotEmpty()) {
+            mc.netHandler.networkManager.sendPacket(blinkABPackets.take())
         }
     }
 
@@ -857,5 +935,5 @@ class KillAura : Module() {
      * HUD Tag
      */
     override val tag: String
-        get() = targetModeValue.get()
+        get() = priorityValue.get()
 }

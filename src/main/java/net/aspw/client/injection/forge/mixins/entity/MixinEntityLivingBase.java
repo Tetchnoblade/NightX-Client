@@ -6,7 +6,6 @@ import net.aspw.client.features.module.impl.movement.Jesus;
 import net.aspw.client.features.module.impl.movement.NoJumpDelay;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.VisualAbilities;
-import net.aspw.client.protocol.api.ProtocolFixer;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,112 +18,47 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
 
-/**
- * The type Mixin entity living base.
- */
 @Mixin(EntityLivingBase.class)
 public abstract class MixinEntityLivingBase extends MixinEntity {
 
-    /**
-     * The Is jumping.
-     */
     @Shadow
     protected boolean isJumping;
-    /**
-     * The Jump ticks.
-     */
     @Shadow
     public int jumpTicks;
-
     @Shadow
     public float moveStrafing;
-
     @Shadow
     public float moveForward;
-
-    /**
-     * Gets jump upwards motion.
-     *
-     * @return the jump upwards motion
-     */
     @Shadow
     protected abstract float getJumpUpwardsMotion();
-
-    /**
-     * Gets active potion effect.
-     *
-     * @param potionIn the potion in
-     * @return the active potion effect
-     */
     @Shadow
     public abstract PotionEffect getActivePotionEffect(Potion potionIn);
-
-    /**
-     * Is potion active boolean.
-     *
-     * @param potionIn the potion in
-     * @return the boolean
-     */
     @Shadow
     public abstract boolean isPotionActive(Potion potionIn);
-
-    /**
-     * On living update.
-     */
     @Shadow
     public void onLivingUpdate() {
     }
-
-    /**
-     * Update fall state.
-     *
-     * @param y          the y
-     * @param onGroundIn the on ground in
-     * @param blockIn    the block in
-     * @param pos        the pos
-     */
     @Shadow
     protected abstract void updateFallState(double y, boolean onGroundIn, Block blockIn, BlockPos pos);
-
-    /**
-     * Gets health.
-     *
-     * @return the health
-     */
     @Shadow
     public abstract float getHealth();
-
-    /**
-     * Gets held item.
-     *
-     * @return the held item
-     */
     @Shadow
     public abstract ItemStack getHeldItem();
-
-    /**
-     * Update ai tick.
-     */
     @Shadow
     protected abstract void updateAITick();
-
     @Shadow
     protected void updateEntityActionState() {
     }
 
     /**
-     * Jump.
-     *
      * @author As_pw
-     * @reason Jump
+     * @reason Jump Event
      */
     @Overwrite
     protected void jump() {
@@ -170,13 +104,6 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
         if ((p_isPotionActive_1_ == Potion.confusion || p_isPotionActive_1_ == Potion.blindness) && visualAbilities.getState() && visualAbilities.getConfusionEffect().get())
             callbackInfoReturnable.setReturnValue(false);
-    }
-
-    @ModifyConstant(method = "onLivingUpdate", constant = @Constant(doubleValue = 0.005D))
-    private double ViaVersion_MovementThreshold(double constant) {
-        if (ProtocolFixer.newerThan1_8())
-            return 0.003D;
-        return 0.005D;
     }
 
     /**

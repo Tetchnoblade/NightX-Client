@@ -29,10 +29,10 @@ class Cape : Module() {
     val animationModeValue = ListValue(
         "Animation-Mode",
         arrayOf(
-            "Vanilla",
+            "Normal",
             "Smooth"
         ),
-        "Vanilla"
+        "Smooth"
     )
 
     private val capeCache = hashMapOf<String, CapeStyle>()

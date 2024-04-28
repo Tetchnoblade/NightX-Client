@@ -1,14 +1,11 @@
 package net.aspw.client.injection.forge.mixins.gui;
 
 import com.google.gson.JsonObject;
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.aspw.client.Launch;
 import net.aspw.client.auth.account.CrackedAccount;
 import net.aspw.client.auth.account.MinecraftAccount;
 import net.aspw.client.event.SessionEvent;
 import net.aspw.client.features.module.impl.visual.Interface;
-import net.aspw.client.protocol.ProtocolBase;
-import net.aspw.client.protocol.api.ProtocolSelector;
 import net.aspw.client.utils.ServerUtils;
 import net.aspw.client.utils.SessionUtils;
 import net.aspw.client.utils.misc.RandomUtils;
@@ -32,9 +29,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-/**
- * The type Mixin gui disconnected.
- */
 @Mixin(GuiDisconnected.class)
 public abstract class MixinGuiDisconnected extends MixinGuiScreen {
 
@@ -49,7 +43,6 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
         buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 100, 20, "Reconnect with Alt"));
         buttonList.add(new GuiButton(4, this.width / 2 + 2, this.height / 2 + field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 44, 98, 20, "Random Cracked"));
         buttonList.add(new GuiButton(998, width - 94, 5, 88, 20, "Alt Manager"));
-        buttonList.add(new GuiButton(1151, 4, height - 24, 68, 20, "Protocol"));
     }
 
     @Inject(method = "actionPerformed", at = @At("HEAD"))
@@ -96,22 +89,15 @@ public abstract class MixinGuiDisconnected extends MixinGuiScreen {
             case 998:
                 mc.displayGuiScreen(new GuiAltManager((GuiScreen) (Object) this));
                 break;
-            case 1151:
-                mc.displayGuiScreen(new ProtocolSelector((GuiScreen) (Object) this));
-                break;
         }
     }
 
     @Inject(method = "drawScreen", at = @At("RETURN"))
     private void drawScreen(CallbackInfo callbackInfo) {
-        final ProtocolVersion version = ProtocolBase.getManager().getTargetVersion();
-
         Fonts.minecraftFont.drawStringWithShadow(
                 "§7Username: §d" + mc.getSession().getUsername(),
                 6f,
                 6f,
                 0xffffff);
-
-        Fonts.minecraftFont.drawStringWithShadow("§7Protocol: §d" + version.getName(), 6f, 16f, 0xffffff);
     }
 }

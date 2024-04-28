@@ -7,7 +7,6 @@ import net.aspw.client.features.module.impl.movement.NoSlow;
 import net.aspw.client.features.module.impl.movement.SilentSneak;
 import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.features.module.impl.visual.Interface;
-import net.aspw.client.protocol.api.ProtocolFixer;
 import net.aspw.client.utils.CooldownHelper;
 import net.aspw.client.utils.MovementUtils;
 import net.aspw.client.utils.Rotation;
@@ -30,7 +29,6 @@ import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemSword;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.potion.Potion;
@@ -38,57 +36,29 @@ import net.minecraft.util.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 import java.util.Objects;
 
-/**
- * The type Mixin entity player sp.
- */
 @Mixin(EntityPlayerSP.class)
 public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
-    /**
-     * The Server sprint state.
-     */
     @Shadow
     public boolean serverSprintState;
-    /**
-     * The Sprinting ticks left.
-     */
     @Shadow
     public int sprintingTicksLeft;
-    /**
-     * The Time in portal.
-     */
     @Shadow
     public float timeInPortal;
-    /**
-     * The Prev time in portal.
-     */
     @Shadow
     public float prevTimeInPortal;
-    /**
-     * The Movement input.
-     */
     @Shadow
     public MovementInput movementInput;
-    /**
-     * The Horse jump power.
-     */
     @Shadow
     public float horseJumpPower;
-    /**
-     * The Horse jump power counter.
-     */
     @Shadow
     public int horseJumpPowerCounter;
-    /**
-     * The Send queue.
-     */
     @Shadow
     @Final
     public NetHandlerPlayClient sendQueue;
@@ -102,18 +72,10 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     public float prevRenderArmYaw;
     @Shadow
     public float prevRenderArmPitch;
-    /**
-     * The Sprint toggle timer.
-     */
     @Shadow
     protected int sprintToggleTimer;
-    /**
-     * The Mc.
-     */
     @Shadow
     protected Minecraft mc;
-    @Unique
-    private boolean viaForge$prevOnGround;
     @Shadow
     private boolean serverSneakState;
     @Shadow
@@ -129,52 +91,21 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     @Unique
     private boolean lastOnGround;
 
-    /**
-     * Play sound.
-     *
-     * @param name   the name
-     * @param volume the volume
-     * @param pitch  the pitch
-     */
     @Shadow
     public abstract void playSound(String name, float volume, float pitch);
 
-    /**
-     * Sets sprinting.
-     *
-     * @param sprinting the sprinting
-     */
     @Shadow
     public abstract void setSprinting(boolean sprinting);
 
-    /**
-     * Push out of blocks boolean.
-     *
-     * @param x the x
-     * @param y the y
-     * @param z the z
-     * @return the boolean
-     */
     @Shadow
     protected abstract boolean pushOutOfBlocks(double x, double y, double z);
 
-    /**
-     * Send player abilities.
-     */
     @Shadow
     public abstract void sendPlayerAbilities();
 
-    /**
-     * Send horse jump.
-     */
     @Shadow
     protected abstract void sendHorseJump();
 
-    /**
-     * Is riding horse boolean.
-     *
-     * @return the boolean
-     */
     @Shadow
     public abstract boolean isRidingHorse();
 
@@ -183,11 +114,8 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     public abstract boolean isSneaking();
 
     /**
-     * Is current view entity boolean.
-     *
-     * @return the boolean
      * @author As_pw
-     * @reason Fix Video
+     * @reason RemoteView Fix
      */
     @Overwrite
     protected boolean isCurrentViewEntity() {
@@ -196,7 +124,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
     /**
      * @author As_pw
-     * @reason Fix Arm
+     * @reason ArmPos Fix
      */
     @Override
     @Overwrite
@@ -214,26 +142,9 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         }
     }
 
-    @Redirect(method = "onUpdateWalkingPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/NetHandlerPlayClient;addToSendQueue(Lnet/minecraft/network/Packet;)V", ordinal = 7))
-    public void emulateIdlePacket(final NetHandlerPlayClient instance, final Packet<?> p_addToSendQueue_1_) {
-        if (ProtocolFixer.newerThan1_8()) {
-            if (this.viaForge$prevOnGround == this.onGround) {
-                return;
-            }
-        }
-        instance.addToSendQueue(p_addToSendQueue_1_);
-    }
-
-    @Inject(method = "onUpdateWalkingPlayer", at = @At("RETURN"))
-    public void saveGroundState(final CallbackInfo ci) {
-        this.viaForge$prevOnGround = this.onGround;
-    }
-
     /**
-     * On update walking player.
-     *
      * @author As_pw
-     * @reason Update Event
+     * @reason Motion Event
      */
     @Overwrite
     public void onUpdateWalkingPlayer() {
@@ -346,7 +257,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
     /**
      * @author As_pw
-     * @reason Fix Gui
+     * @reason Update Event
      */
     @Override
     @Overwrite

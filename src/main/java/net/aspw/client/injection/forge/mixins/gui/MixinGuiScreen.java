@@ -23,61 +23,27 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * The type Mixin gui screen.
- */
 @Mixin(GuiScreen.class)
 public abstract class MixinGuiScreen {
-    /**
-     * The Mc.
-     */
+
     @Shadow
     public Minecraft mc;
-    /**
-     * The Width.
-     */
     @Shadow
     public int width;
-    /**
-     * The Height.
-     */
     @Shadow
     public int height;
-    /**
-     * The Button list.
-     */
     @Shadow
     protected List<GuiButton> buttonList;
-    /**
-     * The Font renderer obj.
-     */
     @Shadow
     protected FontRenderer fontRendererObj;
 
-    /**
-     * Update screen.
-     */
     @Shadow
     public void updateScreen() {
     }
 
-    /**
-     * Handle component hover.
-     *
-     * @param component the component
-     * @param x         the x
-     * @param y         the y
-     */
     @Shadow
     public abstract void handleComponentHover(IChatComponent component, int x, int y);
 
-    /**
-     * Draw hovering text.
-     *
-     * @param textLines the text lines
-     * @param x         the x
-     * @param y         the y
-     */
     @Shadow
     protected abstract void drawHoveringText(List<String> textLines, int x, int y);
 
@@ -98,7 +64,6 @@ public abstract class MixinGuiScreen {
             callbackInfo.cancel();
         }
     }
-
 
     @Inject(method = "drawBackground", at = @At("HEAD"), cancellable = true)
     private void drawClientBackground(final CallbackInfo callbackInfo) {
@@ -136,31 +101,15 @@ public abstract class MixinGuiScreen {
         drawHoveringText(Collections.singletonList("§c§l" + clickEvent.getAction().getCanonicalName().toUpperCase() + ": §a" + clickEvent.getValue()), x, y - (hoverEvent != null ? 17 : 0));
     }
 
-    /**
-     * Inject action performed.
-     *
-     * @param button       the button
-     * @param callbackInfo the callback info
-     */
     @Inject(method = "actionPerformed", at = @At("RETURN"))
     protected void injectActionPerformed(GuiButton button, CallbackInfo callbackInfo) {
         this.injectedActionPerformed(button);
     }
 
-    /**
-     * Should render background boolean.
-     *
-     * @return the boolean
-     */
     protected boolean shouldRenderBackground() {
         return true;
     }
 
-    /**
-     * Injected action performed.
-     *
-     * @param button the button
-     */
     protected void injectedActionPerformed(GuiButton button) {
 
     }

@@ -31,34 +31,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
 
-/**
- * The type Mixin gui in game.
- */
 @Mixin(GuiIngame.class)
 public abstract class MixinGuiInGame extends Gui {
 
-    /**
-     * The constant widgetsTexPath.
-     */
     @Shadow
     @Final
     protected static ResourceLocation widgetsTexPath;
-    /**
-     * The Overlay player list.
-     */
+
     @Final
     @Shadow
     public GuiPlayerTabOverlay overlayPlayerList;
 
-    /**
-     * Render hotbar item.
-     *
-     * @param index        the index
-     * @param xPos         the x pos
-     * @param yPos         the y pos
-     * @param partialTicks the partial ticks
-     * @param player       the player
-     */
     @Shadow
     protected abstract void renderHotbarItem(int index, int xPos, int yPos, float partialTicks, EntityPlayer player);
 
@@ -92,7 +75,7 @@ public abstract class MixinGuiInGame extends Gui {
 
     /**
      * @author As_pw
-     * @reason Hotbar Spoof
+     * @reason Hotbar Renderer
      */
     @Overwrite
     protected void renderTooltip(ScaledResolution sr, float partialTicks) {

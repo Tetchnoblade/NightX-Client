@@ -5,7 +5,6 @@ import net.aspw.client.event.ClientShutdownEvent
 import net.aspw.client.event.EventManager
 import net.aspw.client.features.api.DiscordRPC
 import net.aspw.client.features.api.MacroManager
-import net.aspw.client.features.api.McUpdatesHandler
 import net.aspw.client.features.api.PacketManager
 import net.aspw.client.features.api.inventory.EnchantItems
 import net.aspw.client.features.api.inventory.ModItems
@@ -17,8 +16,6 @@ import net.aspw.client.features.module.impl.other.ThunderNotifier
 import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.features.module.impl.visual.SilentRotations
 import net.aspw.client.features.module.impl.visual.Trajectories
-import net.aspw.client.protocol.ProtocolBase
-import net.aspw.client.protocol.ProtocolMod
 import net.aspw.client.utils.*
 import net.aspw.client.utils.ClassUtils.hasForge
 import net.aspw.client.utils.misc.sound.TipSoundManager
@@ -30,7 +27,7 @@ object Launch {
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Client"
-    const val CLIENT_VERSION = "B109"
+    const val CLIENT_VERSION = "B110"
     const val CLIENT_CHAT = "§c[$CLIENT_BEST] §r"
     const val CLIENT_PROTOCOL_RANGE = "1.7.2 to 1.20.6"
 
@@ -65,8 +62,6 @@ object Launch {
 
         lastTick = System.currentTimeMillis()
 
-        ProtocolBase.init(ProtocolMod.PLATFORM)
-
         // Check update
         APIConnecter.checkStatus()
         APIConnecter.checkChangelogs()
@@ -82,7 +77,6 @@ object Launch {
         // Register listeners
         eventManager.registerListener(RotationUtils())
         eventManager.registerListener(PacketManager())
-        eventManager.registerListener(McUpdatesHandler())
         eventManager.registerListener(InventoryUtils())
         eventManager.registerListener(InventoryHelper)
         eventManager.registerListener(PacketUtils())
