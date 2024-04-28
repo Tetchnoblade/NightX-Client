@@ -27,7 +27,7 @@ object Launch {
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Client"
-    const val CLIENT_VERSION = "B110"
+    const val CLIENT_VERSION = "B111"
     const val CLIENT_CHAT = "§c[$CLIENT_BEST] §r"
 
     var isStarting = false

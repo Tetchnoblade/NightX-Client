@@ -886,6 +886,7 @@ class KillAura : Module() {
                             C0BPacketEntityAction.Action.STOP_SPRINTING
                         )
                     )
+                    releasePackets()
                 }
                 if (!autoBlockModeValue.get().equals("fake", true) && !autoBlockModeValue.get().equals("none", true)) {
                     mc.netHandler.addToSendQueue(
@@ -911,14 +912,16 @@ class KillAura : Module() {
      * Check if run should be cancelled
      */
     private val cancelRun: Boolean
-        get() = mc.thePlayer.isSpectator || !isAlive(mc.thePlayer) || Launch.moduleManager[Flight::class.java]!!.state && Launch.moduleManager[Flight::class.java]!!.modeValue.get()
+        get() = mc.thePlayer.isSpectator || mc.thePlayer.isRiding || mc.thePlayer.inventory.getCurrentItem().item !is ItemSword || !isAlive(
+            mc.thePlayer
+        ) || Launch.moduleManager[Flight::class.java]!!.state && Launch.moduleManager[Flight::class.java]!!.modeValue.get()
             .equals(
                 "VerusSmooth",
                 true
             ) || Launch.moduleManager[LongJump::class.java]!!.state && Launch.moduleManager[LongJump::class.java]!!.modeValue.get()
             .equals("VerusHigh", true)
                 || Launch.moduleManager[Freecam::class.java]!!.state ||
-                Launch.moduleManager[Scaffold::class.java]!!.state || Launch.moduleManager[LegitScaffold::class.java]!!.state || Launch.moduleManager[Blink::class.java]!!.state && antiBlinkValue.get() || clickOnly.get() && !mc.gameSettings.keyBindAttack.isKeyDown || mc.thePlayer.isRiding || noInventoryAttackValue.get() && mc.currentScreen is GuiContainer
+                Launch.moduleManager[Scaffold::class.java]!!.state || Launch.moduleManager[LegitScaffold::class.java]!!.state || Launch.moduleManager[Blink::class.java]!!.state && antiBlinkValue.get() || clickOnly.get() && !mc.gameSettings.keyBindAttack.isKeyDown || noInventoryAttackValue.get() && mc.currentScreen is GuiContainer
 
     /**
      * Check if [entity] is alive
