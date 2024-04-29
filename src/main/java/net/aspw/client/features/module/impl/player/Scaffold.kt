@@ -495,15 +495,21 @@ class Scaffold : Module() {
         if (mc.thePlayer.onGround) {
             offGroundTicks = 0
         } else offGroundTicks++
-        if ((hypixelCount == 0 || !mc.thePlayer.isPotionActive(Potion.moveSpeed) && hypixelCount >= 4 || mc.thePlayer.isPotionActive(
+        if ((hypixelCount == 0 || !mc.thePlayer.isPotionActive(Potion.moveSpeed) && hypixelCount >= 5 || mc.thePlayer.isPotionActive(
                 Potion.moveSpeed
             ) && hypixelCount >= 6) && autoJumpValue.get().equals("hypixelkeepy", true)
         ) {
-            MovementUtils.strafe(0.1F)
-            KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
-            if (!mc.thePlayer.onGround && shouldEagle) {
-                hypixelCount = 0
+            mc.thePlayer.motionX = 0.0
+            mc.thePlayer.motionZ = 0.0
+            if (mc.thePlayer.posY >= launchY + 1 && mc.thePlayer.posY < launchY + 2) {
+                KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
+                hypixelCount++
             }
+            if (!mc.thePlayer.isPotionActive(Potion.moveSpeed) && hypixelCount >= 6 || mc.thePlayer.isPotionActive(
+                    Potion.moveSpeed
+                ) && hypixelCount >= 7
+            )
+                hypixelCount = 0
         }
         if (desyncValue.get()) {
             synchronized(positions) {
@@ -658,7 +664,6 @@ class Scaffold : Module() {
         try {
             if (faceBlock) {
                 place()
-                mc.thePlayer.isSwingInProgress = false
             } else if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex) {
                 mc.thePlayer.inventory.currentItem = InventoryUtils.findAutoBlockBlock() - 36
                 mc.playerController.updateController()
