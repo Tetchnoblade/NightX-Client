@@ -499,8 +499,8 @@ class Scaffold : Module() {
                 Potion.moveSpeed
             ) && hypixelCount >= 6) && autoJumpValue.get().equals("hypixelkeepy", true)
         ) {
-            mc.thePlayer.motionX = 0.0
-            mc.thePlayer.motionZ = 0.0
+            mc.thePlayer.motionX *= 0.1
+            mc.thePlayer.motionZ *= 0.1
             if (mc.thePlayer.posY >= launchY + 1 && mc.thePlayer.posY < launchY + 2) {
                 KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
                 hypixelCount++

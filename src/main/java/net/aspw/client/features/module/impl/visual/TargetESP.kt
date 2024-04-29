@@ -2,10 +2,11 @@ package net.aspw.client.features.module.impl.visual
 
 import net.aspw.client.event.AttackEvent
 import net.aspw.client.event.EventTarget
-import net.aspw.client.event.Render2DEvent
+import net.aspw.client.event.Render3DEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.utils.EntityUtils
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.Entity
 import org.lwjgl.opengl.GL11
@@ -14,6 +15,7 @@ import kotlin.math.sin
 
 @ModuleInfo(name = "TargetESP", spacedName = "Target ESP", category = ModuleCategory.VISUAL)
 class TargetESP : Module() {
+
     var targets = mutableListOf<Entity?>()
 
     override fun onDisable() {
@@ -22,21 +24,17 @@ class TargetESP : Module() {
 
     @EventTarget
     fun onAttack(event: AttackEvent) {
-        if (event.targetEntity !in targets) {
+        if (event.targetEntity !in targets && EntityUtils.isSelected(event.targetEntity, true))
             targets.add(event.targetEntity)
-            chat("ADD " + event.targetEntity)
-        }
     }
 
     @EventTarget
-    fun onRender2D(event: Render2DEvent) {
+    fun onRender3D(event: Render3DEvent) {
         if (targets.isEmpty()) return
 
         for (target in targets) {
-            if (target?.isDead!!) {
-                chat("remove dead")
+            if (target?.isDead!!)
                 targets.remove(target)
-            }
 
             if (6 >= mc.thePlayer.getDistanceToEntity(target)) {
                 GL11.glPushMatrix()
@@ -87,10 +85,7 @@ class TargetESP : Module() {
 
                 GlStateManager.resetColor()
                 GL11.glColor4f(1F, 1F, 1F, 1F)
-            } else {
-                chat("remove range")
-                targets.remove(target)
-            }
+            } else targets.remove(target)
         }
     }
 }

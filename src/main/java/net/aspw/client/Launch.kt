@@ -12,6 +12,7 @@ import net.aspw.client.features.module.impl.other.BrandSpoofer
 import net.aspw.client.features.module.impl.other.ThunderNotifier
 import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.features.module.impl.visual.SilentRotations
+import net.aspw.client.features.module.impl.visual.TargetESP
 import net.aspw.client.features.module.impl.visual.Trajectories
 import net.aspw.client.utils.*
 import net.aspw.client.utils.misc.sound.TipSoundManager
@@ -100,6 +101,7 @@ object Launch {
             moduleManager.getModule(Interface::class.java)?.state = true
             moduleManager.getModule(SilentRotations::class.java)?.state = true
             moduleManager.getModule(BrandSpoofer::class.java)?.state = true
+            moduleManager.getModule(TargetESP::class.java)?.state = true
             moduleManager.getModule(net.aspw.client.features.module.impl.other.DiscordRPC::class.java)?.state = true
             moduleManager.getModule(ThunderNotifier::class.java)?.state = true
             moduleManager.getModule(Trajectories::class.java)?.state = true
