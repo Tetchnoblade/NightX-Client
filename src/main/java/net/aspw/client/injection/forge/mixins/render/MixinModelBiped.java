@@ -7,6 +7,7 @@ import net.aspw.client.features.module.impl.combat.KillAuraRecode;
 import net.aspw.client.features.module.impl.combat.TPAura;
 import net.aspw.client.features.module.impl.movement.SilentSneak;
 import net.aspw.client.features.module.impl.visual.Animations;
+import net.aspw.client.features.module.impl.visual.CustomModel;
 import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
@@ -39,6 +40,7 @@ public abstract class MixinModelBiped {
         final TPAura tpAura = Objects.requireNonNull(Launch.moduleManager.getModule(TPAura.class));
         final KillAuraRecode killAuraRecode = Objects.requireNonNull(Launch.moduleManager.getModule(KillAuraRecode.class));
         final SilentSneak silentSneak = Objects.requireNonNull(Launch.moduleManager.getModule(SilentSneak.class));
+        final CustomModel customModel = Objects.requireNonNull(Launch.moduleManager.getModule(CustomModel.class));
 
         if (silentSneak.getState() && silentSneak.modeValue.get().equals("Normal") && p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer))
             this.isSneak = true;
@@ -53,6 +55,6 @@ public abstract class MixinModelBiped {
             this.bipedRightArm.rotateAngleX = this.bipedRightArm.rotateAngleX - ((float) Math.PI / 0.94f) * 0.034f;
             this.bipedRightArm.rotateAngleY = -0.5235988f;
         }
-        PacketManager.isVisualBlocking = (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking() || killAuraRecode.getState() && killAuraRecode.isBlocking()) && p_setRotationAngles7 instanceof EntityPlayer && p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer) && MinecraftInstance.mc.thePlayer.getHeldItem().getItem() instanceof ItemSword && MinecraftInstance.mc.thePlayer.getHeldItem() != null;
+        PacketManager.isVisualBlocking = (killAura.getState() && killAura.getTarget() != null && !killAura.getAutoBlockModeValue().get().equals("None") || tpAura.getState() && tpAura.isBlocking() || killAuraRecode.getState() && killAuraRecode.isBlocking()) && p_setRotationAngles7 instanceof EntityPlayer && p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer) && MinecraftInstance.mc.thePlayer.getHeldItem().getItem() instanceof ItemSword && MinecraftInstance.mc.thePlayer.getHeldItem() != null && !customModel.getState();
     }
 }

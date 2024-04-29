@@ -1,27 +1,23 @@
 package net.aspw.client.injection.forge.mixins.client;
 
 import net.aspw.client.Launch;
-import net.aspw.client.event.*;
+import net.aspw.client.event.KeyEvent;
+import net.aspw.client.event.ScreenEvent;
+import net.aspw.client.event.TickEvent;
+import net.aspw.client.event.WorldEvent;
 import net.aspw.client.features.module.impl.other.FastPlace;
 import net.aspw.client.injection.forge.mixins.accessors.MinecraftForgeClientAccessor;
-import net.aspw.client.utils.CPSCounter;
 import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.visual.client.GuiMainMenu;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.client.stream.IStream;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.MinecraftForgeClient;
 import org.apache.commons.lang3.SystemUtils;
@@ -140,27 +136,13 @@ public abstract class MixinMinecraft {
             Launch.eventManager.callEvent(new KeyEvent(Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey()));
     }
 
-    @Inject(method = "sendClickBlockToController", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/MovingObjectPosition;getBlockPos()Lnet/minecraft/util/BlockPos;"))
-    private void onClickBlock(CallbackInfo callbackInfo) {
-        if (this.leftClickCounter == 0 && theWorld.getBlockState(objectMouseOver.getBlockPos()).getBlock().getMaterial() != Material.air) {
-            Launch.eventManager.callEvent(new ClickBlockEvent(objectMouseOver.getBlockPos(), this.objectMouseOver.sideHit));
-        }
-    }
-
     @Inject(method = "shutdown", at = @At("HEAD"))
     private void shutdown(CallbackInfo callbackInfo) {
         Launch.INSTANCE.stopClient();
     }
 
-    @Inject(method = "middleClickMouse", at = @At("HEAD"))
-    private void middleClickMouse(CallbackInfo ci) {
-        CPSCounter.registerClick(CPSCounter.MouseButton.MIDDLE);
-    }
-
     @Inject(method = "rightClickMouse", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;rightClickDelayTimer:I", shift = At.Shift.AFTER))
     private void rightClickMouse(final CallbackInfo callbackInfo) {
-        CPSCounter.registerClick(CPSCounter.MouseButton.RIGHT);
-
         final FastPlace fastPlace = Objects.requireNonNull(Launch.moduleManager.getModule(FastPlace.class));
 
         if (fastPlace.getState())

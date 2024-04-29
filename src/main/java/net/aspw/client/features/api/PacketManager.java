@@ -11,6 +11,7 @@ import net.aspw.client.features.module.impl.visual.SilentRotations;
 import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.RotationUtils;
 import net.aspw.client.utils.timer.MSTimer;
+import net.minecraft.block.material.Material;
 import net.minecraft.network.Packet;
 
 import java.util.Objects;
@@ -36,6 +37,9 @@ public class PacketManager extends MinecraftInstance implements Listenable {
 
     @EventTarget
     public void onRender3D(Render3DEvent event) {
+        if (mc.gameSettings.keyBindAttack.isKeyDown() && mc.leftClickCounter == 0 && mc.theWorld.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock().getMaterial() != Material.air)
+            Launch.eventManager.callEvent(new ClickBlockEvent(mc.objectMouseOver.getBlockPos(), mc.objectMouseOver.sideHit));
+
         if (RotationUtils.targetRotation != null && Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).getState()) {
             mc.thePlayer.prevRenderArmYaw = RotationUtils.targetRotation.getYaw();
             mc.thePlayer.prevRenderArmPitch = RotationUtils.targetRotation.getPitch();
