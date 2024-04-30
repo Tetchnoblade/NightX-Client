@@ -23,6 +23,13 @@ class ReverseFreecam : Module() {
     private var startY: Double? = null
     private var startZ: Double? = null
 
+    override fun onEnable() {
+        if (mc.isIntegratedServerRunning) {
+            state = false
+            chat("Don't works on single player!")
+        }
+    }
+
     override fun onDisable() {
         reset()
     }
