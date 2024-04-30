@@ -495,22 +495,26 @@ class Scaffold : Module() {
         if (mc.thePlayer.onGround) {
             offGroundTicks = 0
         } else offGroundTicks++
-        if ((hypixelCount == 0 || !mc.thePlayer.isPotionActive(Potion.moveSpeed) && hypixelCount >= 5 || mc.thePlayer.isPotionActive(
-                Potion.moveSpeed
-            ) && hypixelCount >= 6) && autoJumpValue.get().equals("hypixelkeepy", true)
-        ) {
-            mc.thePlayer.motionX *= 0.1
-            mc.thePlayer.motionZ *= 0.1
-            if (mc.thePlayer.posY >= launchY + 1 && mc.thePlayer.posY < launchY + 2) {
-                KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
-                hypixelCount++
-            }
-            if (!mc.thePlayer.isPotionActive(Potion.moveSpeed) && hypixelCount >= 6 || mc.thePlayer.isPotionActive(
+
+        if (autoJumpValue.get().equals("hypixelkeepy", true)) {
+            if (hypixelCount == 0 || !mc.thePlayer.isPotionActive(Potion.moveSpeed) && hypixelCount >= 5 || mc.thePlayer.isPotionActive(
                     Potion.moveSpeed
-                ) && hypixelCount >= 7
-            )
-                hypixelCount = 0
+                ) && hypixelCount >= 6
+            ) {
+                mc.thePlayer.motionX *= 0.1
+                mc.thePlayer.motionZ *= 0.1
+                if (mc.thePlayer.posY >= launchY + 1 && mc.thePlayer.posY < launchY + 2) {
+                    KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
+                    hypixelCount++
+                }
+                if (!mc.thePlayer.isPotionActive(Potion.moveSpeed) && hypixelCount >= 6 || mc.thePlayer.isPotionActive(
+                        Potion.moveSpeed
+                    ) && hypixelCount >= 7
+                )
+                    hypixelCount = 0
+            }
         }
+
         if (desyncValue.get()) {
             synchronized(positions) {
                 positions.add(
@@ -527,7 +531,6 @@ class Scaffold : Module() {
             }
         }
 
-        // scaffold custom speed if enabled
         if (customSpeedValue.get()) MovementUtils.strafe(customMoveSpeedValue.get())
         if (sprintModeValue.get().equals("off", ignoreCase = true) || sprintModeValue.get()
                 .equals("ground", ignoreCase = true) && !mc.thePlayer.onGround || sprintModeValue.get()
@@ -662,12 +665,8 @@ class Scaffold : Module() {
             faceBlock = true
 
         try {
-            if (faceBlock) {
+            if (faceBlock)
                 place()
-            } else if (slot != mc.thePlayer.inventoryContainer.getSlot(InventoryUtils.findAutoBlockBlock()).slotIndex) {
-                mc.thePlayer.inventory.currentItem = InventoryUtils.findAutoBlockBlock() - 36
-                mc.playerController.updateController()
-            }
         } catch (ignored: Exception) {
         }
 

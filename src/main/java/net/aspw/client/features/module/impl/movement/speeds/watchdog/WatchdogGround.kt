@@ -32,7 +32,7 @@ class WatchdogGround : SpeedMode("WatchdogGround") {
                 mc.thePlayer.triggerAchievement(StatList.jumpStat)
                 val baseSpeed = 0.482f
                 if (mc.thePlayer.isPotionActive(Potion.moveSpeed))
-                    MovementUtils.strafe(baseSpeed + ((mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1).toFloat() * 0.0575f))
+                    MovementUtils.strafe(baseSpeed + ((mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1).toFloat() * 0.057f))
                 else MovementUtils.strafe(baseSpeed)
             }
         } else {

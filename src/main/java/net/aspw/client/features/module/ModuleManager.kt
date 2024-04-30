@@ -157,7 +157,8 @@ class ModuleManager : Listenable {
             Spammer::class.java,
             PacketMine::class.java,
             PacketTracker::class.java,
-            TargetESP::class.java
+            TargetESP::class.java,
+            ReverseFreecam::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded modules")

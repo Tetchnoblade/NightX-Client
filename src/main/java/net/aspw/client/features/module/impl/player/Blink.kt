@@ -31,6 +31,7 @@ class Blink : Module() {
     private val pulseTimer = MSTimer()
     private var fakePlayer: EntityOtherPlayerMP? = null
     private var disableLogger = false
+
     override fun onEnable() {
         if (mc.thePlayer == null) return
         if (!pulseValue.get()) {

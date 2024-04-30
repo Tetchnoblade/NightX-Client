@@ -621,7 +621,7 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Moon": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.08, Animations.blockPosY.get().doubleValue() + 0.06, Animations.blockPosZ.get().doubleValue());
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() - 0.08, Animations.blockPosY.get().doubleValue() + 0.12, Animations.blockPosZ.get().doubleValue());
                                 final float var9 = MathHelper.sin(MathHelper.sqrt_float(this.mc.thePlayer.getSwingProgress(partialTicks)) * 3.1415927F);
                                 GL11.glTranslated(0.0D, 0.0D, 0.0D);
                                 if (Animations.cancelEquip.get())

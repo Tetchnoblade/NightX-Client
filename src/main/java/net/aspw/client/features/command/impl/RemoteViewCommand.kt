@@ -1,11 +1,8 @@
 package net.aspw.client.features.command.impl
 
 import net.aspw.client.Launch
-import net.aspw.client.event.EventTarget
-import net.aspw.client.event.PacketEvent
 import net.aspw.client.features.command.Command
 import net.aspw.client.features.module.impl.visual.Interface
-import net.minecraft.network.play.client.C0BPacketEntityAction
 
 class RemoteViewCommand : Command("remoteview", arrayOf("rv")) {
     /**
@@ -33,14 +30,6 @@ class RemoteViewCommand : Command("remoteview", arrayOf("rv")) {
                 chat("Execute §8.remoteview §3again to go back to yours.")
                 break
             }
-        }
-    }
-
-    @EventTarget
-    fun onPacket(event: PacketEvent) {
-        val packet = event.packet
-        if (packet is C0BPacketEntityAction) {
-            event.cancelEvent()
         }
     }
 
