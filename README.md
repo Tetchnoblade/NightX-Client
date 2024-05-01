@@ -1,8 +1,5 @@
 # NightX Client
 
-Selling
-> https://japanaltsreborn.mysellix.io
-
 Join discord server
 > https://discord.gg/SGBccUXFKZ
 
@@ -31,3 +28,6 @@ If NightX fails to launch or provides an error:
 
 # Configs
 Loading configs is done via the command `.config onlinelist` or `.config onlineload <config_name>`
+
+# Wants ViaVersion?
+Install my [ViaForgePlus](https://github.com/Aspw-w/ViaForgePlus) Mod
