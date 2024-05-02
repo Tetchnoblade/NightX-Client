@@ -2,6 +2,7 @@ package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.player.Freecam;
+import net.aspw.client.features.module.impl.player.ReverseFreecam;
 import net.aspw.client.features.module.impl.visual.ESP;
 import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.model.ModelBase;
@@ -49,7 +50,7 @@ public abstract class MixinRendererLivingEntity extends MixinRender {
     protected <T extends EntityLivingBase> void renderModel(T entitylivingbaseIn, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float scaleFactor) {
         boolean visible = !entitylivingbaseIn.isInvisible();
         boolean semiVisible = !visible && (!entitylivingbaseIn.isInvisibleToPlayer(MinecraftInstance.mc.thePlayer));
-        boolean fakeVisible = Objects.requireNonNull(Launch.moduleManager.getModule(Freecam.class)).getState() && entitylivingbaseIn == Objects.requireNonNull(Launch.moduleManager.getModule(Freecam.class)).getFakePlayer();
+        boolean fakeVisible = Objects.requireNonNull(Launch.moduleManager.getModule(Freecam.class)).getState() && entitylivingbaseIn == Objects.requireNonNull(Launch.moduleManager.getModule(Freecam.class)).getFakePlayer() || Objects.requireNonNull(Launch.moduleManager.getModule(ReverseFreecam.class)).getState() && entitylivingbaseIn == Objects.requireNonNull(Launch.moduleManager.getModule(ReverseFreecam.class)).getFakePlayer();
 
         if (visible || semiVisible || fakeVisible) {
             if (!this.bindEntityTexture(entitylivingbaseIn))

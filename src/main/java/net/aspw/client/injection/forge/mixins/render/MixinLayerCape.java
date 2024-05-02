@@ -1,6 +1,8 @@
 package net.aspw.client.injection.forge.mixins.render;
 
 import net.aspw.client.Launch;
+import net.aspw.client.features.module.impl.player.Freecam;
+import net.aspw.client.features.module.impl.player.ReverseFreecam;
 import net.aspw.client.features.module.impl.visual.Cape;
 import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.RotationUtils;
@@ -33,7 +35,7 @@ public class MixinLayerCape {
      */
     @Overwrite
     public void doRenderLayer(final AbstractClientPlayer entitylivingbaseIn, final float p_177141_2_, final float p_177141_3_, final float partialTicks, final float p_177141_5_, final float p_177141_6_, final float p_177141_7_, final float scale) {
-        if (entitylivingbaseIn.getLocationCape() != null && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE)) {
+        if (entitylivingbaseIn.getLocationCape() != null && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && (!Objects.requireNonNull(Launch.moduleManager.getModule(Freecam.class)).getState() || entitylivingbaseIn != Objects.requireNonNull(Launch.moduleManager.getModule(Freecam.class)).getFakePlayer()) && (!Objects.requireNonNull(Launch.moduleManager.getModule(ReverseFreecam.class)).getState() || entitylivingbaseIn != Objects.requireNonNull(Launch.moduleManager.getModule(ReverseFreecam.class)).getFakePlayer())) {
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.playerRenderer.bindTexture(entitylivingbaseIn.getLocationCape());
             GL11.glPushMatrix();

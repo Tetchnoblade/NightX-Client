@@ -2,7 +2,7 @@ package net.aspw.client.utils
 
 import net.aspw.client.Launch
 import net.aspw.client.event.*
-import net.aspw.client.features.module.impl.combat.FastBow
+import net.aspw.client.features.module.impl.exploit.QuickExploits
 import net.aspw.client.features.module.impl.visual.SilentRotations
 import net.aspw.client.utils.misc.RandomUtils
 import net.minecraft.entity.Entity
@@ -335,7 +335,10 @@ class RotationUtils : MinecraftInstance(), Listenable {
                 target.posZ + (if (predict) (target.posZ - target.prevPosZ) * predictSize else 0.toDouble()) - (player.posZ + if (predict) player.posZ - player.prevPosZ else 0.toDouble())
             val posSqrt = sqrt(posX * posX + posZ * posZ)
             var velocity =
-                if (Launch.moduleManager.getModule(FastBow::class.java)!!.state) 1f else player.itemInUseDuration / 20f
+                if (Launch.moduleManager.getModule(QuickExploits::class.java)?.state!! && Launch.moduleManager.getModule(
+                        QuickExploits::class.java
+                    )?.fastBowValue?.get()!!
+                ) 1f else player.itemInUseDuration / 20f
             velocity = (velocity * velocity + velocity * 2) / 3
             if (velocity > 1) velocity = 1f
             val rotation = Rotation(

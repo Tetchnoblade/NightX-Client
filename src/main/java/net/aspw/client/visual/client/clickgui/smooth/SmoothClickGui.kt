@@ -30,7 +30,7 @@ class SmoothClickGui : GuiScreen() {
             panels.add(CategoryPanel(xPos, 20f, cat, Color(200, 200, 200, 80)))
             xPos += SmoothConstants.PANEL_WIDTH.toInt() + 10
         }
-        randomPicture = RandomUtils.nextInt(1, 5).toString()
+        randomPicture = RandomUtils.nextInt(1, 7).toString()
     }
 
     override fun drawScreen(mouseXIn: Int, mouseYIn: Int, partialTicks: Float) {
@@ -83,6 +83,20 @@ class SmoothClickGui : GuiScreen() {
                 pictureY = height - 160f
                 pictureWidth = 121
                 pictureHeight = 110
+            }
+
+            "5" -> {
+                pictureX = width - 120f
+                pictureY = height - 180f
+                pictureWidth = 112
+                pictureHeight = 150
+            }
+
+            "6" -> {
+                pictureX = width - 120f
+                pictureY = height - 180f
+                pictureWidth = 112
+                pictureHeight = 150
             }
 
             else -> {

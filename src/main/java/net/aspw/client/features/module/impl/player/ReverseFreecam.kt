@@ -18,7 +18,7 @@ class ReverseFreecam : Module() {
     private var speedValue = FloatValue("Speed", 0.5f, 0f, 1f)
     private var vSpeedValue = FloatValue("V-Speed", 0.5f, 0f, 1f)
 
-    private var fakePlayer: EntityOtherPlayerMP? = null
+    var fakePlayer: EntityOtherPlayerMP? = null
     private var startX: Double? = null
     private var startY: Double? = null
     private var startZ: Double? = null
