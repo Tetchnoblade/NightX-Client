@@ -25,7 +25,7 @@ class Spammer : Module() {
     fun onUpdate(event: UpdateEvent) {
         if (spamTimer.hasTimePassed(delayValue.get().toLong())) {
             if (messageValue.get().startsWith("."))
-                Launch.commandManager.executeCommands(messageValue.get().drop(1))
+                Launch.commandManager.executeCommands(messageValue.get())
             else if (randomValue.get())
                 mc.thePlayer.sendChatMessage(messageValue.get() + " " + RandomUtils.randomString(3))
             else mc.thePlayer.sendChatMessage(messageValue.get())
