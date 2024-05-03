@@ -1,5 +1,6 @@
 package net.aspw.client.features.module.impl.other
 
+import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
@@ -23,7 +24,9 @@ class Spammer : Module() {
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         if (spamTimer.hasTimePassed(delayValue.get().toLong())) {
-            if (randomValue.get())
+            if (messageValue.get().startsWith("."))
+                Launch.commandManager.executeCommands(messageValue.get().drop(1))
+            else if (randomValue.get())
                 mc.thePlayer.sendChatMessage(messageValue.get() + " " + RandomUtils.randomString(3))
             else mc.thePlayer.sendChatMessage(messageValue.get())
             spamTimer.reset()

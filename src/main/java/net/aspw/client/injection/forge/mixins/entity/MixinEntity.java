@@ -2,14 +2,18 @@ package net.aspw.client.injection.forge.mixins.entity;
 
 import net.aspw.client.Launch;
 import net.aspw.client.event.StrafeEvent;
+import net.aspw.client.features.module.impl.combat.HitBox;
 import net.aspw.client.features.module.impl.movement.Flight;
+import net.aspw.client.utils.EntityUtils;
 import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityDispatcher;
@@ -24,7 +28,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
 import java.util.Random;
-import java.util.UUID;
 
 @Mixin(Entity.class)
 public abstract class MixinEntity implements ICommandSender {
@@ -148,6 +151,14 @@ public abstract class MixinEntity implements ICommandSender {
 
     @Shadow
     public void moveEntity(double x, double y, double z) {
+    }
+
+    @Inject(method = "getCollisionBorderSize", at = @At("HEAD"), cancellable = true)
+    private void getCollisionBorderSize(final CallbackInfoReturnable<Float> callbackInfoReturnable) {
+        final HitBox hitBox = Objects.requireNonNull(Launch.moduleManager.getModule(HitBox.class));
+
+        if (hitBox.getState() && EntityUtils.isSelected(((Entity) ((Object) this)), true))
+            callbackInfoReturnable.setReturnValue(0.1F + hitBox.getSizeValue().get());
     }
 
     /**
