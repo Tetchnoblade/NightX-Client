@@ -20,20 +20,6 @@ public final class ServerUtils extends MinecraftInstance {
         mc.displayGuiScreen(new GuiConnecting(new GuiMultiplayer(new GuiMainMenu()), mc, serverData));
     }
 
-    public static String getRemoteIp() {
-        if (mc.theWorld == null) return "Undefined";
-
-        String serverIp = "Singleplayer";
-
-        if (mc.theWorld.isRemote) {
-            final ServerData serverData = mc.getCurrentServerData();
-            if (serverData != null)
-                serverIp = serverData.serverIP;
-        }
-
-        return serverIp;
-    }
-
     public static boolean isHypixelLobby() {
         if (mc.theWorld == null) return false;
 
@@ -47,5 +33,4 @@ public final class ServerUtils extends MinecraftInstance {
         }
         return false;
     }
-
 }
