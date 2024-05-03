@@ -775,8 +775,11 @@ public abstract class MixinItemRenderer {
             }
 
             this.renderItem(abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
-        } else if (!abstractclientplayer.isInvisible())
-            this.renderPlayerArm(abstractclientplayer, f, f1);
+        } else if (!abstractclientplayer.isInvisible()) {
+            if (Animations.cancelEquip.get())
+                this.renderPlayerArm(abstractclientplayer, 0.0F, f1);
+            else this.renderPlayerArm(abstractclientplayer, f, f1);
+        }
 
         GlStateManager.popMatrix();
         GlStateManager.disableRescaleNormal();
