@@ -113,6 +113,18 @@ class RotationUtils : MinecraftInstance(), Listenable {
         @JvmField
         var prevCameraPitch = 0f
 
+        @JvmField
+        var cameraArmYaw = 0f
+
+        @JvmField
+        var cameraArmPitch = 0f
+
+        @JvmField
+        var prevCameraArmYaw = 0f
+
+        @JvmField
+        var prevCameraArmPitch = 0f
+
         @JvmStatic
         fun overrideMouse(): Boolean {
             if (mc.inGameHasFocus && Display.isActive()) {

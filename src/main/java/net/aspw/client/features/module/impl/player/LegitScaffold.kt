@@ -44,7 +44,7 @@ class LegitScaffold : Module() {
         }
 
     private val tickTimer = TickTimer()
-    private var lastSlot = 0
+    var lastSlot = 0
 
     override fun onEnable() {
         lastSlot = mc.thePlayer.inventory.currentItem

@@ -139,6 +139,11 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             this.prevRenderArmPitch = this.renderArmPitch;
             this.renderArmPitch = (float) ((double) this.renderArmPitch + (double) (this.rotationPitch - this.renderArmPitch) * 0.5D);
             this.renderArmYaw = (float) ((double) this.renderArmYaw + (double) (this.rotationYaw - this.renderArmYaw) * 0.5D);
+
+            RotationUtils.prevCameraArmYaw = RotationUtils.cameraArmYaw;
+            RotationUtils.prevCameraArmPitch = RotationUtils.cameraArmPitch;
+            RotationUtils.cameraArmPitch = (float) ((double) RotationUtils.cameraArmPitch + (double) (RotationUtils.cameraPitch - RotationUtils.cameraArmPitch) * 0.5D);
+            RotationUtils.cameraArmYaw = (float) ((double) RotationUtils.cameraArmYaw + (double) (RotationUtils.cameraYaw - RotationUtils.cameraArmYaw) * 0.5D);
         }
     }
 

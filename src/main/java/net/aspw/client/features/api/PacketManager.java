@@ -40,11 +40,18 @@ public class PacketManager extends MinecraftInstance implements Listenable {
         if (mc.gameSettings.keyBindAttack.isKeyDown() && mc.leftClickCounter == 0 && mc.theWorld.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock().getMaterial() != Material.air)
             Launch.eventManager.callEvent(new ClickBlockEvent(mc.objectMouseOver.getBlockPos(), mc.objectMouseOver.sideHit));
 
-        if (RotationUtils.targetRotation != null && Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).getState()) {
-            mc.thePlayer.prevRenderArmYaw = RotationUtils.targetRotation.getYaw();
-            mc.thePlayer.prevRenderArmPitch = RotationUtils.targetRotation.getPitch();
-            mc.thePlayer.renderArmYaw = RotationUtils.targetRotation.getYaw();
-            mc.thePlayer.renderArmPitch = RotationUtils.targetRotation.getPitch();
+        if (Objects.requireNonNull(Launch.moduleManager.getModule(SilentRotations.class)).getState()) {
+            if (RotationUtils.targetRotation != null) {
+                mc.thePlayer.prevRenderArmYaw = RotationUtils.targetRotation.getYaw();
+                mc.thePlayer.prevRenderArmPitch = RotationUtils.targetRotation.getPitch();
+                mc.thePlayer.renderArmYaw = RotationUtils.targetRotation.getYaw();
+                mc.thePlayer.renderArmPitch = RotationUtils.targetRotation.getPitch();
+            } else {
+                mc.thePlayer.prevRenderArmYaw = RotationUtils.prevCameraArmYaw;
+                mc.thePlayer.prevRenderArmPitch = RotationUtils.prevCameraArmPitch;
+                mc.thePlayer.renderArmYaw = RotationUtils.cameraArmYaw;
+                mc.thePlayer.renderArmPitch = RotationUtils.cameraArmPitch;
+            }
         }
     }
 

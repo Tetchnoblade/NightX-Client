@@ -213,7 +213,7 @@ class Scaffold : Module() {
 
     // Auto block slot
     private var slot = 0
-    private var lastSlot = 0
+    var lastSlot = 0
 
     private var delay: Long = 0
 

@@ -73,6 +73,7 @@ class SilentRotations : Module() {
         if (mc.thePlayer == null || RotationUtils.targetRotation == null) {
             if (rotating)
                 rotating = false
+
             mc.thePlayer.prevRotationYaw = RotationUtils.prevCameraYaw
             mc.thePlayer.prevRotationPitch = RotationUtils.prevCameraPitch
             mc.thePlayer.rotationYaw = RotationUtils.cameraYaw
