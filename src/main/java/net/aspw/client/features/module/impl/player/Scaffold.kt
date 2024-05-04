@@ -899,11 +899,10 @@ class Scaffold : Module() {
     fun onRender2D(event: Render2DEvent) {
         val scaledResolution = ScaledResolution(mc)
         val counter = "$blocksAmount Blocks"
-        val infoWidth = FontLoaders.SF20.getStringWidth(counter)
-        FontLoaders.SF20.drawStringWithShadow(
+        FontLoaders.SF20.drawCenteredStringWithShadow(
             counter,
-            (scaledResolution.scaledWidth / 2 - infoWidth + 21).toDouble(),
-            (scaledResolution.scaledHeight / 2 - 30).toDouble(),
+            scaledResolution.scaledWidth / 2f,
+            scaledResolution.scaledHeight / 2f - 30f,
             -0x1111111
         )
     }

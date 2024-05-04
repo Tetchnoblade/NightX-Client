@@ -40,6 +40,7 @@ class CommandManager {
         registerCommand(PayPayCommand())
         registerCommand(PlaytimeCommand())
         registerCommand(UnicodeCommand())
+        registerCommand(RouteCommand())
     }
 
     /**

@@ -5,6 +5,7 @@ import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.utils.*
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.utils.timer.MSTimer
@@ -1560,6 +1561,9 @@ class Flight : Module() {
         if (lagCheck.get()) {
             state = false
             chat("Disabling Flight due to lag back")
+            if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
+            }
         }
     }
 

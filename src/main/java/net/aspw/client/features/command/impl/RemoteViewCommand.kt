@@ -27,7 +27,7 @@ class RemoteViewCommand : Command("remoteview", arrayOf("rv")) {
                     Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
                 }
                 chat("Now viewing perspective of §8${entity.name}§3.")
-                chat("Execute §8.remoteview §3again to go back to yours.")
+                chat("Execute §8.remoteview §ragain to go back to yours.")
                 break
             }
         }

@@ -1,9 +1,11 @@
 package net.aspw.client.features.module.impl.movement
 
+import net.aspw.client.Launch
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.utils.MovementUtils
 import net.aspw.client.utils.PacketUtils
 import net.aspw.client.utils.PosLookInstance
@@ -445,6 +447,9 @@ class LongJump : Module() {
         if (lagCheck.get()) {
             state = false
             chat("Disabling LongJump due to lag back")
+            if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package net.aspw.client.features.module.impl.movement
 
+import net.aspw.client.Launch
 import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
@@ -20,6 +21,7 @@ import net.aspw.client.features.module.impl.movement.speeds.verus.VerusLowHop
 import net.aspw.client.features.module.impl.movement.speeds.vulcan.VulcanYPort
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogCustom
 import net.aspw.client.features.module.impl.movement.speeds.watchdog.WatchdogGround
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.utils.MovementUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -200,6 +202,9 @@ class Speed : Module() {
         if (lagCheck.get()) {
             state = false
             chat("Disabling Speed due to lag back")
+            if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package net.aspw.client.features.module.impl.player
 
+import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.TeleportEvent
 import net.aspw.client.event.UpdateEvent
@@ -7,6 +8,7 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.utils.MovementUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -56,6 +58,9 @@ class Timer : Module() {
         if (lagCheck.get()) {
             state = false
             chat("Disabling Timer due to lag back")
+            if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
+            }
         }
     }
 }

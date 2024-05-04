@@ -7,7 +7,6 @@ import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.render.ColorUtils.rainbow
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.value.BoolValue
@@ -18,6 +17,7 @@ import net.minecraft.network.play.client.*
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
 import org.lwjgl.opengl.GL11
+import java.awt.Color
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 
@@ -98,7 +98,7 @@ class Blink : Module() {
 
     @EventTarget
     fun onRender3D(event: Render3DEvent?) {
-        val color = rainbow()
+        val color = Color(255, 255, 255, 180)
         synchronized(positions) {
             GL11.glPushMatrix()
             GL11.glDisable(GL11.GL_TEXTURE_2D)

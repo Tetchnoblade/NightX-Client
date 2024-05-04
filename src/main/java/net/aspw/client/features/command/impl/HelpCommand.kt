@@ -56,6 +56,8 @@ class HelpCommand : Command("help", emptyArray()) {
             chat("§a------------")
             chat(".(teleport, tp) <player name/x y z>")
             chat("§a------------")
+            chat(".route <x y z>")
+            chat("§a------------")
             chat(".(toggle, t) <module> [on/off]")
             chat("§a------------")
             chat(".vclip <value>")

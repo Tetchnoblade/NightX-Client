@@ -7,7 +7,6 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
-import net.aspw.client.utils.PacketUtils
 import net.aspw.client.value.BoolValue
 import net.minecraft.client.entity.EntityOtherPlayerMP
 import net.minecraft.network.play.client.C03PacketPlayer
@@ -23,7 +22,6 @@ class Freecam : Module() {
     private var oldZ = 0.0
     private var oldYaw = 0f
     private var oldPitch = 0f
-    private var oldGround = false
     private var oldFlying = false
 
     override fun onEnable() {
@@ -33,7 +31,6 @@ class Freecam : Module() {
         oldZ = mc.thePlayer.posZ
         oldYaw = mc.thePlayer.rotationYaw
         oldPitch = mc.thePlayer.rotationPitch
-        oldGround = mc.thePlayer.onGround
         oldFlying = mc.thePlayer.capabilities.isFlying
         mc.thePlayer.motionY += 0.42f
         fakePlayer = EntityOtherPlayerMP(mc.theWorld, mc.thePlayer.gameProfile)
@@ -70,18 +67,8 @@ class Freecam : Module() {
     @EventTarget
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
-        if (packet is C03PacketPlayer) {
+
+        if (packet is C03PacketPlayer)
             event.cancelEvent()
-            PacketUtils.sendPacketNoEvent(
-                C03PacketPlayer.C06PacketPlayerPosLook(
-                    oldX,
-                    oldY,
-                    oldZ,
-                    oldYaw,
-                    oldPitch,
-                    oldGround
-                )
-            )
-        }
     }
 }

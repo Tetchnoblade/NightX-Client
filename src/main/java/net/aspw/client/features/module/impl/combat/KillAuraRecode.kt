@@ -8,6 +8,7 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.features.module.impl.player.Blink
 import net.aspw.client.features.module.impl.player.Freecam
 import net.aspw.client.features.module.impl.player.LegitScaffold
 import net.aspw.client.features.module.impl.player.Scaffold
@@ -94,7 +95,7 @@ class KillAuraRecode : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
-        if (mc.thePlayer == null || mc.theWorld == null || Launch.moduleManager[Freecam::class.java]!!.state || Launch.moduleManager[Freecam::class.java]!!.state && antiBlinkValue.get() || Launch.moduleManager[Scaffold::class.java]!!.state || Launch.moduleManager[LegitScaffold::class.java]!!.state) return
+        if (mc.thePlayer == null || mc.theWorld == null || Launch.moduleManager[Freecam::class.java]!!.state || Launch.moduleManager[Freecam::class.java]!!.state || Launch.moduleManager[Blink::class.java]!!.state && antiBlinkValue.get() || Launch.moduleManager[Scaffold::class.java]!!.state || Launch.moduleManager[LegitScaffold::class.java]!!.state) return
 
         if (lastTarget != null && mc.thePlayer.canEntityBeSeen(lastTarget))
             RotationUtils.faceLook(lastTarget!!, minTurnSpeed.get(), maxTurnSpeed.get())
@@ -102,7 +103,7 @@ class KillAuraRecode : Module() {
 
     @EventTarget
     fun onRender3D(event: Render3DEvent) {
-        if (mc.thePlayer == null || mc.theWorld == null || Launch.moduleManager[Freecam::class.java]!!.state || Launch.moduleManager[Scaffold::class.java]!!.state || Launch.moduleManager[LegitScaffold::class.java]!!.state) {
+        if (mc.thePlayer == null || mc.theWorld == null || Launch.moduleManager[Freecam::class.java]!!.state || Launch.moduleManager[Freecam::class.java]!!.state || Launch.moduleManager[Blink::class.java]!!.state && antiBlinkValue.get() || Launch.moduleManager[Scaffold::class.java]!!.state || Launch.moduleManager[LegitScaffold::class.java]!!.state) {
             isBlocking = false
             isTargeting = false
             blockTick = 0

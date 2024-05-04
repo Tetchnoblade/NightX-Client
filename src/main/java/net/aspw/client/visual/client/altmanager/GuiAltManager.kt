@@ -8,7 +8,6 @@ import net.aspw.client.auth.account.MinecraftAccount
 import net.aspw.client.event.SessionEvent
 import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.utils.MinecraftInstance
-import net.aspw.client.utils.login.LoginUtils
 import net.aspw.client.utils.login.UserUtils.isValidTokenOffline
 import net.aspw.client.utils.misc.RandomUtils
 import net.aspw.client.utils.render.RenderUtils
@@ -54,6 +53,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         val startPositionY = 22
         buttonList.add(GuiButton(1, width - 80, startPositionY + 24, 70, 20, "Add"))
         buttonList.add(GuiButton(2, width - 80, startPositionY + 24 * 2, 70, 20, "Delete"))
+        buttonList.add(GuiButton(9, width - 80, startPositionY + 24 * 3, 70, 20, "Reload"))
         buttonList.add(GuiButton(0, width - 80, height - 65, 70, 20, "Done"))
         buttonList.add(GuiButton(3, 5, startPositionY + 24, 90, 20, "Login").also { loginButton = it })
         buttonList.add(GuiButton(4, 5, startPositionY + 24 * 2, 90, 20, "Random Alt").also { randomButton = it })
@@ -183,6 +183,13 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                 } ?: "§cYou do not have any accounts."
             }
 
+            9 -> {
+                fileManager.loadConfig(fileManager.accountsConfig)
+                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
+                }
+            }
+
             99 -> {
                 if (lastSessionToken == null)
                     lastSessionToken = mc.session.token
@@ -208,32 +215,6 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     randomButton.enabled = true
                     randomCracked.enabled = true
                 })
-            }
-
-            727 -> {
-                loginButton.enabled = false
-                randomButton.enabled = false
-                randomCracked.enabled = false
-                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
-                }
-                status = "§aLogging in..."
-
-                thread {
-                    val loginResult = LoginUtils.loginSessionId(lastSessionToken!!)
-
-                    status = when (loginResult) {
-                        LoginUtils.LoginResult.LOGGED -> "§cYour name is now §f§l${mc.session.username}§c"
-                        LoginUtils.LoginResult.FAILED_PARSE_TOKEN -> "§cFailed to parse Session ID!"
-                        LoginUtils.LoginResult.INVALID_ACCOUNT_DATA -> "§cInvalid Session ID!"
-                    }
-
-                    loginButton.enabled = true
-                    randomButton.enabled = true
-                    randomCracked.enabled = true
-
-                    lastSessionToken = null
-                }
             }
         }
     }
