@@ -7,9 +7,11 @@ import net.aspw.client.event.WorldEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
+import net.aspw.client.utils.PacketUtils
 import net.aspw.client.value.BoolValue
 import net.minecraft.client.entity.EntityOtherPlayerMP
 import net.minecraft.network.play.client.C03PacketPlayer
+import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
 import org.lwjgl.input.Keyboard
 
 @ModuleInfo(name = "Freecam", category = ModuleCategory.PLAYER, keyBind = Keyboard.KEY_F8)
@@ -17,6 +19,7 @@ class Freecam : Module() {
     private val noClipValue = BoolValue("NoClip", true)
 
     var fakePlayer: EntityOtherPlayerMP? = null
+    private var packetCount = 0
     private var oldX = 0.0
     private var oldY = 0.0
     private var oldZ = 0.0
@@ -42,6 +45,7 @@ class Freecam : Module() {
 
     override fun onDisable() {
         if (mc.thePlayer == null || fakePlayer == null) return
+        packetCount = 0
         mc.thePlayer.setPositionAndRotation(oldX, oldY, oldZ, oldYaw, oldPitch)
         mc.theWorld.removeEntityFromWorld(fakePlayer!!.entityId)
         fakePlayer = null
@@ -68,7 +72,24 @@ class Freecam : Module() {
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
 
-        if (packet is C03PacketPlayer)
+        if (packet is C03PacketPlayer && (packet.rotating || packet.isMoving)) {
+            if (packetCount >= 20) {
+                packetCount = 0
+                PacketUtils.sendPacketNoEvent(
+                    C06PacketPlayerPosLook(
+                        fakePlayer?.posX!!,
+                        fakePlayer?.posY!!,
+                        fakePlayer?.posZ!!,
+                        fakePlayer?.rotationYaw!!,
+                        fakePlayer?.rotationPitch!!,
+                        fakePlayer?.onGround!!
+                    )
+                )
+            } else {
+                packetCount++
+                PacketUtils.sendPacketNoEvent(C03PacketPlayer(fakePlayer?.onGround!!))
+            }
             event.cancelEvent()
+        }
     }
 }
