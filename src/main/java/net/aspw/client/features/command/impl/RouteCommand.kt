@@ -11,19 +11,26 @@ class RouteCommand : Command("route", emptyArray()) {
      */
     override fun execute(args: Array<String>) {
         if (args.size == 4) {
-            if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
+            try {
+                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
+                }
+                val posX = if (args[1].equals("~", true)) mc.thePlayer.posX else args[1].toDouble()
+                val posY = if (args[2].equals("~", true)) mc.thePlayer.posY else args[2].toDouble()
+                val posZ = if (args[3].equals("~", true)) mc.thePlayer.posZ else args[3].toDouble()
+                PacketManager.routeX = posX
+                PacketManager.routeY = posY
+                PacketManager.routeZ = posZ
+                PacketManager.isRouteTracking = true
+                chat("Started route tracking. (X: ${posX}, Y: ${posY}, Z: ${posZ})")
+                chat("Execute §8.route §ragain to stop tracking.")
+            } catch (e: NumberFormatException) {
+                chat("Failed to start route tracking.")
             }
-            PacketManager.routeX = args[1].toDouble()
-            PacketManager.routeY = args[2].toDouble()
-            PacketManager.routeZ = args[3].toDouble()
-            PacketManager.isRouteTracking = true
-            chat("Started Route Tracking. (X: ${args[1]}, Y: ${args[2]}, Z: ${args[3]})")
-            chat("Execute §8.route §ragain to stop tracking.")
         } else {
             if (PacketManager.isRouteTracking) {
                 PacketManager.isRouteTracking = false
-                chat("Stopped Route Tracking.")
+                chat("Stopped route tracking.")
             } else {
                 chatSyntax("route <x y z>")
             }
