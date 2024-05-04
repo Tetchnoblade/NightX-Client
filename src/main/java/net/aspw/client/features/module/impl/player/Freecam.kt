@@ -95,6 +95,9 @@ class Freecam : Module() {
 
         if (packet is S08PacketPlayerPosLook) {
             fakePlayer?.setPosition(packet.x, packet.y, packet.z)
+            oldX = packet.x
+            oldY = packet.y
+            oldZ = packet.z
             PacketUtils.sendPacketNoEvent(
                 C06PacketPlayerPosLook(
                     fakePlayer?.posX!!,
