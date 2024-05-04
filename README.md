@@ -1,9 +1,9 @@
 # NightX Client
 
-Join discord server
+Join Discord Server
 > https://discord.gg/SGBccUXFKZ
 
-Developer youtube channel
+Developer Youtube Channel
 > https://www.youtube.com/@Aspw001
 
 # Installation Guide

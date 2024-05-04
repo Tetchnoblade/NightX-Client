@@ -27,7 +27,7 @@ class Blink : Module() {
     private val packets = LinkedBlockingQueue<Packet<*>>()
     private val positions = LinkedList<DoubleArray>()
     private val c0FValue = BoolValue("C0FCancel", false)
-    private val pulseDelayValue = IntegerValue("PulseDelay", 400, 10, 5000, "ms")
+    private val pulseDelayValue = IntegerValue("PulseDelay", 400, 10, 5000, "ms") { pulseValue.get() }
     private val pulseTimer = MSTimer()
     private var fakePlayer: EntityOtherPlayerMP? = null
     private var disableLogger = false
