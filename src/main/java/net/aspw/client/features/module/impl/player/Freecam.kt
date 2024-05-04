@@ -12,6 +12,7 @@ import net.aspw.client.value.BoolValue
 import net.minecraft.client.entity.EntityOtherPlayerMP
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
+import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import org.lwjgl.input.Keyboard
 
 @ModuleInfo(name = "Freecam", category = ModuleCategory.PLAYER, keyBind = Keyboard.KEY_F8)
@@ -89,6 +90,21 @@ class Freecam : Module() {
                 packetCount++
                 PacketUtils.sendPacketNoEvent(C03PacketPlayer(fakePlayer?.onGround!!))
             }
+            event.cancelEvent()
+        }
+
+        if (packet is S08PacketPlayerPosLook) {
+            fakePlayer?.setPosition(packet.x, packet.y, packet.z)
+            PacketUtils.sendPacketNoEvent(
+                C06PacketPlayerPosLook(
+                    fakePlayer?.posX!!,
+                    fakePlayer?.posY!!,
+                    fakePlayer?.posZ!!,
+                    fakePlayer?.rotationYaw!!,
+                    fakePlayer?.rotationPitch!!,
+                    fakePlayer?.onGround!!
+                )
+            )
             event.cancelEvent()
         }
     }

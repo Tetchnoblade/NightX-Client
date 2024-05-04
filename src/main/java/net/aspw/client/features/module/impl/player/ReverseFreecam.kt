@@ -10,6 +10,7 @@ import net.aspw.client.value.FloatValue
 import net.minecraft.client.entity.EntityOtherPlayerMP
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.play.client.C03PacketPlayer
+import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -83,14 +84,6 @@ class ReverseFreecam : Module() {
     }
 
     @EventTarget
-    fun onTeleport(event: TeleportEvent) {
-        startX = event.posX
-        startY = event.posY
-        startZ = event.posZ
-        event.cancelEvent()
-    }
-
-    @EventTarget
     fun onMove(event: MoveEvent) {
         event.zero()
     }
@@ -127,6 +120,21 @@ class ReverseFreecam : Module() {
                         packet.onGround
                     )
                 )
+        }
+
+        if (packet is S08PacketPlayerPosLook) {
+            fakePlayer?.setPosition(packet.x, packet.y, packet.z)
+            PacketUtils.sendPacketNoEvent(
+                C03PacketPlayer.C06PacketPlayerPosLook(
+                    fakePlayer?.posX!!,
+                    fakePlayer?.posY!!,
+                    fakePlayer?.posZ!!,
+                    fakePlayer?.rotationYaw!!,
+                    fakePlayer?.rotationPitch!!,
+                    fakePlayer?.onGround!!
+                )
+            )
+            event.cancelEvent()
         }
     }
 }
