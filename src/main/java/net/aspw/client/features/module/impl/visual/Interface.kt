@@ -57,7 +57,7 @@ class Interface : Module() {
     private val pingValue = BoolValue("Ping", true)
     val noAchievement = BoolValue("No-Achievements", true)
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
-    val animHotbarValue = BoolValue("Hotbar-Animations", false)
+    val animHotbarValue = BoolValue("Hotbar-Animation", false)
     private val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F) { animHotbarValue.get() }
     val blackHotbarValue = BoolValue("Black-Hotbar", false)
     private val noInvClose = BoolValue("NoInvClose", true)
@@ -66,7 +66,7 @@ class Interface : Module() {
     val customFov = BoolValue("CustomFov", false)
     val customFovModifier = FloatValue("Fov", 1.4F, 1F, 1.8F) { customFov.get() }
     val chatRectValue = BoolValue("ChatRect", true)
-    val chatAnimationValue = BoolValue("Chat-Animations", false)
+    val chatAnimationValue = BoolValue("Chat-Animation", true)
     val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.06F, 0.01F, 0.5F) { chatAnimationValue.get() }
     private val toggleMessageValue = BoolValue("Toggle-Notification", false)
     private val toggleSoundValue = ListValue("Toggle-Sound", arrayOf("None", "Default", "Custom"), "None")

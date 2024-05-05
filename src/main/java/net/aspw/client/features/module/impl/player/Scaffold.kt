@@ -233,6 +233,7 @@ class Scaffold : Module() {
     private var lastMS = 0L
     private var jumpGround = 0.0
     private var verusState = 0
+    private var isHypixeling = false
 
     /**
      * Enable module
@@ -497,21 +498,25 @@ class Scaffold : Module() {
         } else offGroundTicks++
 
         if (autoJumpValue.get().equals("hypixelkeepy", true)) {
-            if (hypixelCount == 0 || !mc.thePlayer.isPotionActive(Potion.moveSpeed) && hypixelCount >= 5 || mc.thePlayer.isPotionActive(
-                    Potion.moveSpeed
-                ) && hypixelCount >= 6
-            ) {
-                mc.thePlayer.motionX *= 0.1
-                mc.thePlayer.motionZ *= 0.1
-                if (mc.thePlayer.posY >= launchY + 1 && mc.thePlayer.posY < launchY + 2) {
+            if (hypixelCount == 0) {
+                mc.thePlayer.motionX = 0.0
+                mc.thePlayer.motionZ = 0.0
+                place()
+                if (shouldEagle) {
                     KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
                     hypixelCount++
                 }
-                if (!mc.thePlayer.isPotionActive(Potion.moveSpeed) && hypixelCount >= 6 || mc.thePlayer.isPotionActive(
-                        Potion.moveSpeed
-                    ) && hypixelCount >= 7
-                )
-                    hypixelCount = 0
+            }
+            if (hypixelCount >= 3) {
+                if (mc.thePlayer.posY >= launchY + 0.2) {
+                    isHypixeling = true
+                    KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
+                    hypixelCount++
+                }
+                if (isHypixeling && (hypixelCount >= 9 || mc.thePlayer.posY >= launchY + 1)) {
+                    isHypixeling = false
+                    hypixelCount = 1
+                }
             }
         }
 
@@ -783,6 +788,7 @@ class Scaffold : Module() {
             else startPlaceTimer.update()
             return
         }
+        if (hypixelCount >= 3 && isHypixeling) return
         if ((targetPlace) == null) {
             if (placeableDelay.get()) delayTimer.reset()
             return
@@ -818,6 +824,7 @@ class Scaffold : Module() {
         if (mc.thePlayer == null) return
         blink()
         startPlaceTimer.reset()
+        isHypixeling = false
         faceBlock = false
         placeCount = 0
         hypixelCount = 0

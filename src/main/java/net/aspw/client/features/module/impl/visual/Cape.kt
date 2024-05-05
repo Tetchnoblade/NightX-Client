@@ -27,12 +27,12 @@ class Cape : Module() {
         "NightX"
     ) { customCape.get() }
     val animationModeValue = ListValue(
-        "Animation-Mode",
+        "Animations-Mode",
         arrayOf(
             "Normal",
             "Smooth"
         ),
-        "Smooth"
+        "Normal"
     )
 
     private val capeCache = hashMapOf<String, CapeStyle>()

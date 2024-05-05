@@ -52,7 +52,7 @@ public class MixinLayerCape {
                     if (entitylivingbaseIn == MinecraftInstance.mc.thePlayer)
                         f = RotationUtils.cameraYaw + (RotationUtils.cameraYaw - RotationUtils.prevCameraYaw) * partialTicks;
                     else
-                        f = entitylivingbaseIn.prevRotationYaw + (entitylivingbaseIn.rotationYaw - entitylivingbaseIn.prevRotationYaw) * partialTicks;
+                        f = entitylivingbaseIn.prevRenderYawOffset + (entitylivingbaseIn.renderYawOffset - entitylivingbaseIn.prevRenderYawOffset) * partialTicks;
                     break;
             }
             double d3 = MathHelper.sin(f * 3.1415927F / 180.0F);
