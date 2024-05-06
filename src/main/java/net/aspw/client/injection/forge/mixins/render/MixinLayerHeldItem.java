@@ -42,9 +42,9 @@ public class MixinLayerHeldItem {
     public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale) {
         ItemStack itemstack;
 
-        if (Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getState())
+        if (Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getState() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer)
             itemstack = MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getLastSlot());
-        else if (Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getState())
+        else if (Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getState() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer)
             itemstack = MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getLastSlot());
         else itemstack = entitylivingbaseIn.getHeldItem();
 

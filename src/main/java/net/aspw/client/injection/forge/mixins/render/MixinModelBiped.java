@@ -50,7 +50,7 @@ public abstract class MixinModelBiped {
         if (silentSneak.getState() && silentSneak.modeValue.get().equals("Normal") && p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer))
             this.isSneak = true;
 
-        if (scaffold.getState() && MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(scaffold.getLastSlot()) == null || legitScaffold.getState() && MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(legitScaffold.getLastSlot()) == null)
+        if (p_setRotationAngles7.equals(MinecraftInstance.mc.thePlayer) && (scaffold.getState() && MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(scaffold.getLastSlot()) == null || legitScaffold.getState() && MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(legitScaffold.getLastSlot()) == null))
             this.bipedRightArm.rotateAngleX = MathHelper.cos(p_setRotationAngles1 * 0.6662F + (float) Math.PI) * 2.0F * p_setRotationAngles2 * 0.5F;
 
         if (heldItemRight == 3) {
