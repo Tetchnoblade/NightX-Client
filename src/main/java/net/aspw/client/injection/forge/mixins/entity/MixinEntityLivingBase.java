@@ -35,23 +35,32 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
     public float moveStrafing;
     @Shadow
     public float moveForward;
+
     @Shadow
     protected abstract float getJumpUpwardsMotion();
+
     @Shadow
     public abstract PotionEffect getActivePotionEffect(Potion potionIn);
+
     @Shadow
     public abstract boolean isPotionActive(Potion potionIn);
+
     @Shadow
     public void onLivingUpdate() {
     }
+
     @Shadow
     protected abstract void updateFallState(double y, boolean onGroundIn, Block blockIn, BlockPos pos);
+
     @Shadow
     public abstract float getHealth();
+
     @Shadow
     public abstract ItemStack getHeldItem();
+
     @Shadow
     protected abstract void updateAITick();
+
     @Shadow
     protected void updateEntityActionState() {
     }

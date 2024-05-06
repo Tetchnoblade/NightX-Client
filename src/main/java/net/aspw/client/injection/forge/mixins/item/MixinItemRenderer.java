@@ -783,7 +783,8 @@ public abstract class MixinItemRenderer {
                 this.renderItem(abstractclientplayer, this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getLastSlot()), ItemCameraTransforms.TransformType.FIRST_PERSON);
             else if (Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getLastSlot()) != null)
                 this.renderItem(abstractclientplayer, this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getLastSlot()), ItemCameraTransforms.TransformType.FIRST_PERSON);
-            else this.renderItem(abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
+            else
+                this.renderItem(abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
         } else if (!abstractclientplayer.isInvisible()) {
             if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
                 this.renderPlayerArm(abstractclientplayer, 0.0F, f1);

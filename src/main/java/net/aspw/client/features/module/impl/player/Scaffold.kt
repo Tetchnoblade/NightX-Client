@@ -12,9 +12,7 @@ import net.aspw.client.utils.block.BlockUtils
 import net.aspw.client.utils.block.BlockUtils.canBeClicked
 import net.aspw.client.utils.block.BlockUtils.isReplaceable
 import net.aspw.client.utils.block.PlaceInfo
-import net.aspw.client.utils.extensions.toRadians
 import net.aspw.client.utils.misc.RandomUtils
-import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.utils.timer.TimeUtils
@@ -34,7 +32,6 @@ import net.minecraft.network.play.client.*
 import net.minecraft.potion.Potion
 import net.minecraft.stats.StatList
 import net.minecraft.util.*
-import java.awt.Color
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 import kotlin.math.*

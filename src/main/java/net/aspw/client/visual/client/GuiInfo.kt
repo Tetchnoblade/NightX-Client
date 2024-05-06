@@ -1,6 +1,5 @@
 package net.aspw.client.visual.client
 
-import net.aspw.client.Launch
 import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.URLComponent
 import net.aspw.client.utils.misc.MiscUtils

@@ -10,7 +10,6 @@ import net.aspw.client.features.module.impl.player.LegitScaffold;
 import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.CustomModel;
-import net.aspw.client.utils.ClientUtils;
 import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
