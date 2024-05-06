@@ -190,8 +190,7 @@ class AntiVoid : Module() {
                 val NewFallingPlayer = NewFallingPlayer(mc.thePlayer)
                 try {
                     detectedLocation = NewFallingPlayer.findCollision(maxFindRangeValue.get())
-                } catch (e: Exception) {
-                    // do nothing. i hate errors
+                } catch (_: Exception) {
                 }
                 if (detectedLocation != null && abs(mc.thePlayer.posY - detectedLocation.y) +
                     mc.thePlayer.fallDistance <= maxFallDistSimulateValue.get()

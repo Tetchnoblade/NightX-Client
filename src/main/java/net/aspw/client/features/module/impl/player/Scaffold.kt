@@ -12,7 +12,9 @@ import net.aspw.client.utils.block.BlockUtils
 import net.aspw.client.utils.block.BlockUtils.canBeClicked
 import net.aspw.client.utils.block.BlockUtils.isReplaceable
 import net.aspw.client.utils.block.PlaceInfo
+import net.aspw.client.utils.extensions.toRadians
 import net.aspw.client.utils.misc.RandomUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.utils.timer.TimeUtils
@@ -32,6 +34,7 @@ import net.minecraft.network.play.client.*
 import net.minecraft.potion.Potion
 import net.minecraft.stats.StatList
 import net.minecraft.util.*
+import java.awt.Color
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 import kotlin.math.*
@@ -503,6 +506,7 @@ class Scaffold : Module() {
                 mc.thePlayer.motionZ = 0.0
                 place()
                 if (shouldEagle) {
+                    mc.thePlayer.isSwingInProgress = false
                     KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
                     hypixelCount++
                 }
@@ -510,6 +514,7 @@ class Scaffold : Module() {
             if (hypixelCount >= 3) {
                 if (mc.thePlayer.posY >= launchY + 0.2) {
                     isHypixeling = true
+                    mc.thePlayer.isSwingInProgress = false
                     KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
                     hypixelCount++
                 }
@@ -782,6 +787,7 @@ class Scaffold : Module() {
             mc.thePlayer.inventory.currentItem = InventoryUtils.findAutoBlockBlock() - 36
             mc.playerController.updateController()
         }
+        mc.thePlayer.isSwingInProgress = false
         if (startPlaceDelayValue.get() && faceBlock && !startPlaceTimer.hasTimePassed(startPlaceDelay.get())) {
             if (!mc.thePlayer.onGround)
                 startPlaceTimer.tick = startPlaceDelay.get()

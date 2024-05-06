@@ -82,185 +82,182 @@ class Interface : Module() {
 
     @EventTarget
     fun onRender2D(event: Render2DEvent) {
-        try {
-            if (watermarkValue.get()) {
-                val inputString = clientNameValue.get()
-                val connectChecks = if (!APIConnecter.canConnect) " - Disconnected" else ""
-                val fpsChecks = if (watermarkFpsValue.get()) " [" + Minecraft.getDebugFPS() + " FPS]" else ""
-                var firstChar = ""
-                var restOfString = ""
-                if (inputString != "") {
-                    firstChar = inputString[0].toString()
-                    restOfString = inputString.substring(1)
-                }
-                val showName = "$firstChar§r§f$restOfString$fpsChecks$connectChecks"
-                fontRenderer.drawStringWithShadow(
-                    showName,
-                    2.0,
-                    3.0,
-                    RenderUtils.skyRainbow(0, 0.5f, 1f).rgb
-                )
+        if (watermarkValue.get()) {
+            val inputString = clientNameValue.get()
+            val connectChecks = if (!APIConnecter.canConnect) " - Disconnected" else ""
+            val fpsChecks = if (watermarkFpsValue.get()) " [" + Minecraft.getDebugFPS() + " FPS]" else ""
+            var firstChar = ""
+            var restOfString = ""
+            if (inputString != "") {
+                firstChar = inputString[0].toString()
+                restOfString = inputString.substring(1)
             }
+            val showName = "$firstChar§r§f$restOfString$fpsChecks$connectChecks"
+            fontRenderer.drawStringWithShadow(
+                showName,
+                2.0,
+                3.0,
+                RenderUtils.skyRainbow(0, 0.5f, 1f).rgb
+            )
+        }
 
-            if (arrayListValue.get()) {
-                val counter = intArrayOf(0)
-                val delta = RenderUtils.deltaTime
-                var inx = 0
-                for (module in sortedModules) {
-                    if (module.array && (module.state || module.slide != 0F)) {
-                        val displayString = getModName(module)
-
-                        val width = fontRenderer.getStringWidth(displayString)
-
-                        if (module.state) {
-                            if (module.slide < width) {
-                                module.slide += arrayListSpeedValue.get() * delta
-                                module.slideStep = delta / 1.2F
-                            }
-                        } else if (module.slide > 0) {
-                            module.slide -= arrayListSpeedValue.get() * delta
-                            module.slideStep = delta / 1.2F
-                        }
-
-                        module.slide = module.slide.coerceIn(0F, width.toFloat())
-                        module.slideStep = module.slideStep.coerceIn(0F, width.toFloat())
-                    }
-
-                    val yPos = 10.24f * inx
-
-                    if (module.array && module.slide > 0F) {
-                        module.arrayY = yPos
-                        inx++
-                    }
-                }
-                val textY = 2.2f
-                modules.forEachIndexed { index, module ->
+        if (arrayListValue.get()) {
+            val counter = intArrayOf(0)
+            val delta = RenderUtils.deltaTime
+            var inx = 0
+            for (module in sortedModules) {
+                if (module.array && (module.state || module.slide != 0F)) {
                     val displayString = getModName(module)
 
-                    val xPos = ScaledResolution(mc).scaledWidth - module.slide - 2
+                    val width = fontRenderer.getStringWidth(displayString)
 
-                    counter[0] = counter[0] - 1
+                    if (module.state) {
+                        if (module.slide < width) {
+                            module.slide += arrayListSpeedValue.get() * delta
+                            module.slideStep = delta / 1.2F
+                        }
+                    } else if (module.slide > 0) {
+                        module.slide -= arrayListSpeedValue.get() * delta
+                        module.slideStep = delta / 1.2F
+                    }
 
-                    fontRenderer.drawStringWithShadow(
-                        displayString,
-                        xPos.toDouble(),
-                        module.arrayY + textY.toDouble(),
-                        RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb
+                    module.slide = module.slide.coerceIn(0F, width.toFloat())
+                    module.slideStep = module.slideStep.coerceIn(0F, width.toFloat())
+                }
+
+                val yPos = 10.24f * inx
+
+                if (module.array && module.slide > 0F) {
+                    module.arrayY = yPos
+                    inx++
+                }
+            }
+            val textY = 2.2f
+            modules.forEachIndexed { index, module ->
+                val displayString = getModName(module)
+
+                val xPos = ScaledResolution(mc).scaledWidth - module.slide - 2
+
+                counter[0] = counter[0] - 1
+
+                fontRenderer.drawStringWithShadow(
+                    displayString,
+                    xPos.toDouble(),
+                    module.arrayY + textY.toDouble(),
+                    RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb
+                )
+            }
+            GlStateManager.resetColor()
+            modules = Launch.moduleManager.modules
+                .filter { it.array && it.slide > 0 }
+                .sortedBy { -fontRenderer.getStringWidth(getModName(it)) }
+            sortedModules =
+                Launch.moduleManager.modules.sortedBy { -fontRenderer.getStringWidth(getModName(it)) }.toList()
+        }
+
+        if (targetHudValue.get()) {
+            val xPos = (ScaledResolution(mc).scaledWidth / 2) - 214f + targetHudXPosValue.get()
+            val yPos = (ScaledResolution(mc).scaledHeight / 2) - 90f + targetHudYPosValue.get()
+            val font = FontLoaders.SF21
+            val killAura = Launch.moduleManager.getModule(KillAura::class.java)
+            val tpAura = Launch.moduleManager.getModule(TPAura::class.java)
+            val killAuraRecode = Launch.moduleManager.getModule(KillAuraRecode::class.java)
+            val decimalFormat = DecimalFormat("##0.0", DecimalFormatSymbols(Locale.ENGLISH))
+            val entity =
+                if (killAura?.state!! && killAura.currentTarget != null) killAura.currentTarget!! else if (tpAura?.state!! && tpAura.lastTarget != null) tpAura.lastTarget!! else if (killAuraRecode?.state!! && killAuraRecode.lastTarget != null) killAuraRecode.lastTarget!! else mc.thePlayer!!
+            val healthString = decimalFormat.format(entity.health)
+
+            if (easingHealth < 0 || easingHealth > entity.maxHealth || abs(easingHealth - entity.health) < 0.01)
+                easingHealth = entity.health
+
+            updateAnim(entity.health)
+
+            if (entity != mc.thePlayer || entity == mc.thePlayer && mc.currentScreen is GuiChat) {
+                RenderUtils.drawRect(xPos - 3F, yPos + 1F, xPos + 114F, yPos + 39.5F, Color(0, 0, 0, 120).rgb)
+
+                var healthColor = 91
+                repeat(8) {
+                    healthColor += entity.health.toInt()
+                }
+
+                val healthLength = (entity.health / entity.maxHealth).coerceIn(0F, 1F)
+
+                if (healthColor > 255)
+                    healthColor = 255
+
+                RenderUtils.drawRect(
+                    xPos + 36F,
+                    yPos + 26.5F,
+                    xPos + (36F + (easingHealth / entity.maxHealth).coerceIn(
+                        0F,
+                        entity.maxHealth
+                    ) * (healthLength + 74F)),
+                    yPos + 36F,
+                    Color(245, healthColor, 1).rgb
+                )
+                Fonts.minecraftFont.drawStringWithShadow(
+                    healthString,
+                    xPos + 64.5F,
+                    yPos + 27F,
+                    Color(245, healthColor, 1).rgb
+                )
+
+                RenderUtils.newDrawRect(xPos - 1, yPos + 3, xPos + 33F, yPos + 37F, Color(0, 0, 0).rgb)
+
+                if (mc.netHandler.getPlayerInfo(entity.uniqueID) != null)
+                    drawHead(
+                        mc.netHandler.getPlayerInfo(entity.uniqueID).locationSkin,
+                        xPos.toInt(),
+                        yPos.toInt() + 4
+                    )
+                else {
+                    font.drawStringWithShadow(
+                        "No",
+                        (xPos + 9).toDouble(),
+                        (yPos + 7F).toDouble(),
+                        Color(120, 120, 120).rgb
+                    )
+                    font.drawStringWithShadow(
+                        "Image",
+                        (xPos + 2).toDouble(),
+                        (yPos + 16F).toDouble(),
+                        Color(120, 120, 120).rgb
+                    )
+                    font.drawStringWithShadow(
+                        "Found",
+                        (xPos + 1).toDouble(),
+                        (yPos + 25F).toDouble(),
+                        Color(120, 120, 120).rgb
                     )
                 }
-                GlStateManager.resetColor()
-                modules = Launch.moduleManager.modules
-                    .filter { it.array && it.slide > 0 }
-                    .sortedBy { -fontRenderer.getStringWidth(getModName(it)) }
-                sortedModules =
-                    Launch.moduleManager.modules.sortedBy { -fontRenderer.getStringWidth(getModName(it)) }.toList()
-            }
-
-            if (targetHudValue.get()) {
-                val xPos = (ScaledResolution(mc).scaledWidth / 2) - 214f + targetHudXPosValue.get()
-                val yPos = (ScaledResolution(mc).scaledHeight / 2) - 90f + targetHudYPosValue.get()
-                val font = FontLoaders.SF21
-                val killAura = Launch.moduleManager.getModule(KillAura::class.java)
-                val tpAura = Launch.moduleManager.getModule(TPAura::class.java)
-                val killAuraRecode = Launch.moduleManager.getModule(KillAuraRecode::class.java)
-                val decimalFormat = DecimalFormat("##0.0", DecimalFormatSymbols(Locale.ENGLISH))
-                val entity =
-                    if (killAura?.state!! && killAura.currentTarget != null) killAura.currentTarget!! else if (tpAura?.state!! && tpAura.lastTarget != null) tpAura.lastTarget!! else if (killAuraRecode?.state!! && killAuraRecode.lastTarget != null) killAuraRecode.lastTarget!! else mc.thePlayer!!
-                val healthString = decimalFormat.format(entity.health)
-
-                if (easingHealth < 0 || easingHealth > entity.maxHealth || abs(easingHealth - entity.health) < 0.01)
-                    easingHealth = entity.health
 
                 updateAnim(entity.health)
 
-                if (entity != mc.thePlayer || entity == mc.thePlayer && mc.currentScreen is GuiChat) {
-                    RenderUtils.drawRect(xPos - 3F, yPos + 1F, xPos + 114F, yPos + 39.5F, Color(0, 0, 0, 120).rgb)
-
-                    var healthColor = 91
-                    repeat(8) {
-                        healthColor += entity.health.toInt()
-                    }
-
-                    val healthLength = (entity.health / entity.maxHealth).coerceIn(0F, 1F)
-
-                    if (healthColor > 255)
-                        healthColor = 255
-
-                    RenderUtils.drawRect(
-                        xPos + 36F,
-                        yPos + 26.5F,
-                        xPos + (36F + (easingHealth / entity.maxHealth).coerceIn(
-                            0F,
-                            entity.maxHealth
-                        ) * (healthLength + 74F)),
-                        yPos + 36F,
-                        Color(245, healthColor, 1).rgb
-                    )
-                    Fonts.minecraftFont.drawStringWithShadow(
-                        healthString,
-                        xPos + 64.5F,
-                        yPos + 27F,
-                        Color(245, healthColor, 1).rgb
-                    )
-
-                    RenderUtils.newDrawRect(xPos - 1, yPos + 3, xPos + 33F, yPos + 37F, Color(0, 0, 0).rgb)
-
-                    if (mc.netHandler.getPlayerInfo(entity.uniqueID) != null)
-                        drawHead(
-                            mc.netHandler.getPlayerInfo(entity.uniqueID).locationSkin,
-                            xPos.toInt(),
-                            yPos.toInt() + 4
-                        )
-                    else {
-                        font.drawStringWithShadow(
-                            "No",
-                            (xPos + 9).toDouble(),
-                            (yPos + 7F).toDouble(),
-                            Color(120, 120, 120).rgb
-                        )
-                        font.drawStringWithShadow(
-                            "Image",
-                            (xPos + 2).toDouble(),
-                            (yPos + 16F).toDouble(),
-                            Color(120, 120, 120).rgb
-                        )
-                        font.drawStringWithShadow(
-                            "Found",
-                            (xPos + 1).toDouble(),
-                            (yPos + 25F).toDouble(),
-                            Color(120, 120, 120).rgb
-                        )
-                    }
-
-                    updateAnim(entity.health)
-
-                    font.drawStringWithShadow(
-                        entity.name,
-                        (xPos + 36F).toDouble(),
-                        (yPos + 4F).toDouble(),
-                        Color(255, 255, 255).rgb
-                    )
-                    font.drawStringWithShadow(
-                        mc.thePlayer.getDistanceToEntity(entity).toInt().toString() + " blocks away",
-                        (xPos + 36F).toDouble(),
-                        (yPos + 15F).toDouble(),
-                        Color(255, 255, 255).rgb
-                    )
-                } else if (easingHealth != 0F) easingHealth = 0F
-            }
-
-            if (pingValue.get()) {
-                val xPos = ScaledResolution(mc).scaledWidth
-                val yPos = ScaledResolution(mc).scaledHeight
-
-                fontRenderer.drawStringWithShadow(
-                    "Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms",
-                    (xPos - 4f - fontRenderer.getStringWidth("Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms")).toDouble(),
-                    (yPos - 12f).toDouble(),
-                    Color.WHITE.rgb
+                font.drawStringWithShadow(
+                    entity.name,
+                    (xPos + 36F).toDouble(),
+                    (yPos + 4F).toDouble(),
+                    Color(255, 255, 255).rgb
                 )
-            }
-        } catch (_: Exception) {
+                font.drawStringWithShadow(
+                    mc.thePlayer.getDistanceToEntity(entity).toInt().toString() + " blocks away",
+                    (xPos + 36F).toDouble(),
+                    (yPos + 15F).toDouble(),
+                    Color(255, 255, 255).rgb
+                )
+            } else if (easingHealth != 0F) easingHealth = 0F
+        }
+
+        if (pingValue.get()) {
+            val xPos = ScaledResolution(mc).scaledWidth
+            val yPos = ScaledResolution(mc).scaledHeight
+
+            fontRenderer.drawStringWithShadow(
+                "Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms",
+                (xPos - 4f - fontRenderer.getStringWidth("Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms")).toDouble(),
+                (yPos - 12f).toDouble(),
+                Color.WHITE.rgb
+            )
         }
     }
 

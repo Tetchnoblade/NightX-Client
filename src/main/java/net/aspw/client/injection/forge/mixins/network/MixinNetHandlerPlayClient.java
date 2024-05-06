@@ -63,33 +63,30 @@ public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient
 
     @Inject(method = "handleSpawnPlayer", at = @At("HEAD"), cancellable = true)
     private void handleSpawnPlayer(S0CPacketSpawnPlayer packetIn, CallbackInfo callbackInfo) {
-        try {
-            PacketThreadUtil.checkThreadAndEnqueue(packetIn, (NetHandlerPlayClient) (Object) this, gameController);
-            double d0 = (double) packetIn.getX() / 32.0D;
-            double d1 = (double) packetIn.getY() / 32.0D;
-            double d2 = (double) packetIn.getZ() / 32.0D;
-            float f = (float) (packetIn.getYaw() * 360) / 256.0F;
-            float f1 = (float) (packetIn.getPitch() * 360) / 256.0F;
-            EntityOtherPlayerMP entityotherplayermp = new EntityOtherPlayerMP(gameController.theWorld, getPlayerInfo(packetIn.getPlayer()).getGameProfile());
-            entityotherplayermp.prevPosX = entityotherplayermp.lastTickPosX = entityotherplayermp.serverPosX = packetIn.getX();
-            entityotherplayermp.prevPosY = entityotherplayermp.lastTickPosY = entityotherplayermp.serverPosY = packetIn.getY();
-            entityotherplayermp.prevPosZ = entityotherplayermp.lastTickPosZ = entityotherplayermp.serverPosZ = packetIn.getZ();
-            int i = packetIn.getCurrentItemID();
+        PacketThreadUtil.checkThreadAndEnqueue(packetIn, (NetHandlerPlayClient) (Object) this, gameController);
+        double d0 = (double) packetIn.getX() / 32.0D;
+        double d1 = (double) packetIn.getY() / 32.0D;
+        double d2 = (double) packetIn.getZ() / 32.0D;
+        float f = (float) (packetIn.getYaw() * 360) / 256.0F;
+        float f1 = (float) (packetIn.getPitch() * 360) / 256.0F;
+        EntityOtherPlayerMP entityotherplayermp = new EntityOtherPlayerMP(gameController.theWorld, getPlayerInfo(packetIn.getPlayer()).getGameProfile());
+        entityotherplayermp.prevPosX = entityotherplayermp.lastTickPosX = entityotherplayermp.serverPosX = packetIn.getX();
+        entityotherplayermp.prevPosY = entityotherplayermp.lastTickPosY = entityotherplayermp.serverPosY = packetIn.getY();
+        entityotherplayermp.prevPosZ = entityotherplayermp.lastTickPosZ = entityotherplayermp.serverPosZ = packetIn.getZ();
+        int i = packetIn.getCurrentItemID();
 
-            if (i == 0) {
-                entityotherplayermp.inventory.mainInventory[entityotherplayermp.inventory.currentItem] = null;
-            } else {
-                entityotherplayermp.inventory.mainInventory[entityotherplayermp.inventory.currentItem] = new ItemStack(Item.getItemById(i), 1, 0);
-            }
+        if (i == 0) {
+            entityotherplayermp.inventory.mainInventory[entityotherplayermp.inventory.currentItem] = null;
+        } else {
+            entityotherplayermp.inventory.mainInventory[entityotherplayermp.inventory.currentItem] = new ItemStack(Item.getItemById(i), 1, 0);
+        }
 
-            entityotherplayermp.setPositionAndRotation(d0, d1, d2, f, f1);
-            clientWorldController.addEntityToWorld(packetIn.getEntityID(), entityotherplayermp);
-            List<DataWatcher.WatchableObject> list = packetIn.func_148944_c();
+        entityotherplayermp.setPositionAndRotation(d0, d1, d2, f, f1);
+        clientWorldController.addEntityToWorld(packetIn.getEntityID(), entityotherplayermp);
+        List<DataWatcher.WatchableObject> list = packetIn.func_148944_c();
 
-            if (list != null) {
-                entityotherplayermp.getDataWatcher().updateWatchedObjectsFromList(list);
-            }
-        } catch (Exception ignored) {
+        if (list != null) {
+            entityotherplayermp.getDataWatcher().updateWatchedObjectsFromList(list);
         }
         callbackInfo.cancel();
     }

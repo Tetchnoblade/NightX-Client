@@ -58,7 +58,6 @@ class InvManager : Module() {
     private val armorValue = BoolValue("Armor", true)
     private val noCombatValue = BoolValue("NoCombat", false)
     private val itemDelayValue = IntegerValue("ItemDelay", 150, 0, 5000)
-    private val onlySwordDamage = BoolValue("OnlySwordWeapon", false)
     private val nbtGoalValue =
         ListValue("NBTGoal", ItemHelper.EnumNBTPriorityType.values().map { it.toString() }.toTypedArray(), "NONE")
     private val nbtItemNotGarbage = BoolValue("NBTItemNotGarbage", true) { !nbtGoalValue.equals("NONE") }
@@ -259,7 +258,7 @@ class InvManager : Module() {
                         false
                     }
                 }
-            } else if (item is ItemSword || (item is ItemTool && !onlySwordDamage.get())) {
+            } else if (item is ItemSword) {
                 if (slot >= 36 && findBetterItem(
                         slot - 36,
                         mc.thePlayer.inventory.getStackInSlot(slot - 36)
@@ -269,7 +268,7 @@ class InvManager : Module() {
                 }
 
                 for (i in 0..8) {
-                    if (type(i).equals("sword", true) && item is ItemSword
+                    if (type(i).equals("sword", true)
                     ) {
                         if (findBetterItem(i, mc.thePlayer.inventory.getStackInSlot(i)) == null) {
                             return true
@@ -388,7 +387,7 @@ class InvManager : Module() {
                     if (itemStack?.item?.javaClass == currentType && !type(index).equals(
                             type,
                             ignoreCase = true
-                        ) && (!onlySwordDamage.get() || type.equals("Sword", ignoreCase = true))
+                        )
                     ) {
                         if (bestWeapon == -1) {
                             bestWeapon = index

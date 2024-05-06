@@ -37,13 +37,8 @@ class Cape : Module() {
 
     private val capeCache = hashMapOf<String, CapeStyle>()
     fun getCapeLocation(value: String): ResourceLocation {
-        if (capeCache[value.uppercase(Locale.getDefault())] == null) {
-            try {
-                capeCache[value.uppercase(Locale.getDefault())] =
-                    CapeStyle.valueOf(value.uppercase(Locale.getDefault()))
-            } catch (_: Exception) {
-            }
-        }
+        if (capeCache[value.uppercase(Locale.getDefault())] == null)
+            capeCache[value.uppercase(Locale.getDefault())] = CapeStyle.valueOf(value.uppercase(Locale.getDefault()))
         return capeCache[value.uppercase(Locale.getDefault())]!!.location
     }
 

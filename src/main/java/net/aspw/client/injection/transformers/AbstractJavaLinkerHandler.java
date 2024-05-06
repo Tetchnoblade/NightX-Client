@@ -22,46 +22,42 @@ public class AbstractJavaLinkerHandler implements IClassTransformer {
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
         if (name.equals("jdk.internal.dynalink.beans.AbstractJavaLinker")) {
-            try {
-                final ClassNode classNode = ClassUtils.INSTANCE.toClassNode(basicClass);
+            final ClassNode classNode = ClassUtils.INSTANCE.toClassNode(basicClass);
 
-                classNode.methods.forEach(methodNode -> {
-                    switch (methodNode.name + methodNode.desc) {
-                        case "addMember(Ljava/lang/String;Ljava/lang/reflect/AccessibleObject;Ljava/util/Map;)V":
-                            methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), ClassUtils.INSTANCE.toNodes(
-                                    new VarInsnNode(ALOAD, 0),
-                                    new FieldInsnNode(GETFIELD, "jdk/internal/dynalink/beans/AbstractJavaLinker", "clazz", "Ljava/lang/Class;"),
-                                    new VarInsnNode(ALOAD, 1),
-                                    new VarInsnNode(ALOAD, 2),
-                                    new MethodInsnNode(INVOKESTATIC, "net/aspw/client/injection/transformers/AbstractJavaLinkerHandler", "addMember", "(Ljava/lang/Class;Ljava/lang/String;Ljava/lang/reflect/AccessibleObject;)Ljava/lang/String;", false),
-                                    new VarInsnNode(ASTORE, 1)
-                            ));
-                            break;
-                        case "addMember(Ljava/lang/String;Ljdk/internal/dynalink/beans/SingleDynamicMethod;Ljava/util/Map;)V":
-                            methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), ClassUtils.INSTANCE.toNodes(
-                                    new VarInsnNode(ALOAD, 0),
-                                    new FieldInsnNode(GETFIELD, "jdk/internal/dynalink/beans/AbstractJavaLinker", "clazz", "Ljava/lang/Class;"),
-                                    new VarInsnNode(ALOAD, 1),
-                                    new MethodInsnNode(INVOKESTATIC, "net/aspw/client/injection/transformers/AbstractJavaLinkerHandler", "addMember", "(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/String;", false),
-                                    new VarInsnNode(ASTORE, 1)
-                            ));
-                            break;
-                        case "setPropertyGetter(Ljava/lang/String;Ljdk/internal/dynalink/beans/SingleDynamicMethod;Ljdk/internal/dynalink/beans/GuardedInvocationComponent$ValidationType;)V":
-                            methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), ClassUtils.INSTANCE.toNodes(
-                                    new VarInsnNode(ALOAD, 0),
-                                    new FieldInsnNode(GETFIELD, "jdk/internal/dynalink/beans/AbstractJavaLinker", "clazz", "Ljava/lang/Class;"),
-                                    new VarInsnNode(ALOAD, 1),
-                                    new MethodInsnNode(INVOKESTATIC, "net/aspw/client/injection/transformers/AbstractJavaLinkerHandler", "setPropertyGetter", "(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/String;", false),
-                                    new VarInsnNode(ASTORE, 1)
-                            ));
-                            break;
-                    }
-                });
+            classNode.methods.forEach(methodNode -> {
+                switch (methodNode.name + methodNode.desc) {
+                    case "addMember(Ljava/lang/String;Ljava/lang/reflect/AccessibleObject;Ljava/util/Map;)V":
+                        methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), ClassUtils.INSTANCE.toNodes(
+                                new VarInsnNode(ALOAD, 0),
+                                new FieldInsnNode(GETFIELD, "jdk/internal/dynalink/beans/AbstractJavaLinker", "clazz", "Ljava/lang/Class;"),
+                                new VarInsnNode(ALOAD, 1),
+                                new VarInsnNode(ALOAD, 2),
+                                new MethodInsnNode(INVOKESTATIC, "net/aspw/client/injection/transformers/AbstractJavaLinkerHandler", "addMember", "(Ljava/lang/Class;Ljava/lang/String;Ljava/lang/reflect/AccessibleObject;)Ljava/lang/String;", false),
+                                new VarInsnNode(ASTORE, 1)
+                        ));
+                        break;
+                    case "addMember(Ljava/lang/String;Ljdk/internal/dynalink/beans/SingleDynamicMethod;Ljava/util/Map;)V":
+                        methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), ClassUtils.INSTANCE.toNodes(
+                                new VarInsnNode(ALOAD, 0),
+                                new FieldInsnNode(GETFIELD, "jdk/internal/dynalink/beans/AbstractJavaLinker", "clazz", "Ljava/lang/Class;"),
+                                new VarInsnNode(ALOAD, 1),
+                                new MethodInsnNode(INVOKESTATIC, "net/aspw/client/injection/transformers/AbstractJavaLinkerHandler", "addMember", "(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/String;", false),
+                                new VarInsnNode(ASTORE, 1)
+                        ));
+                        break;
+                    case "setPropertyGetter(Ljava/lang/String;Ljdk/internal/dynalink/beans/SingleDynamicMethod;Ljdk/internal/dynalink/beans/GuardedInvocationComponent$ValidationType;)V":
+                        methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), ClassUtils.INSTANCE.toNodes(
+                                new VarInsnNode(ALOAD, 0),
+                                new FieldInsnNode(GETFIELD, "jdk/internal/dynalink/beans/AbstractJavaLinker", "clazz", "Ljava/lang/Class;"),
+                                new VarInsnNode(ALOAD, 1),
+                                new MethodInsnNode(INVOKESTATIC, "net/aspw/client/injection/transformers/AbstractJavaLinkerHandler", "setPropertyGetter", "(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/String;", false),
+                                new VarInsnNode(ASTORE, 1)
+                        ));
+                        break;
+                }
+            });
 
-                return ClassUtils.INSTANCE.toBytes(classNode);
-            } catch (final Throwable throwable) {
-                throwable.printStackTrace();
-            }
+            return ClassUtils.INSTANCE.toBytes(classNode);
         }
 
         return basicClass;

@@ -25,49 +25,41 @@ public class ForgeNetworkTransformer implements IClassTransformer {
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
         if (name.equals("net.minecraftforge.fml.common.network.handshake.NetworkDispatcher")) {
-            try {
-                final ClassNode classNode = ClassUtils.INSTANCE.toClassNode(basicClass);
+            final ClassNode classNode = ClassUtils.INSTANCE.toClassNode(basicClass);
 
-                classNode.methods.stream().filter(methodNode -> methodNode.name.equals("handleVanilla")).forEach(methodNode -> {
-                    final LabelNode labelNode = new LabelNode();
+            classNode.methods.stream().filter(methodNode -> methodNode.name.equals("handleVanilla")).forEach(methodNode -> {
+                final LabelNode labelNode = new LabelNode();
 
-                    methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), NodeUtils.INSTANCE.toNodes(
-                            new MethodInsnNode(INVOKESTATIC, "net/aspw/client/injection/transformers/ForgeNetworkTransformer", "returnMethod", "()Z", false),
-                            new JumpInsnNode(IFEQ, labelNode),
-                            new InsnNode(ICONST_0),
-                            new InsnNode(IRETURN),
-                            labelNode
-                    ));
-                });
+                methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), NodeUtils.INSTANCE.toNodes(
+                        new MethodInsnNode(INVOKESTATIC, "net/aspw/client/injection/transformers/ForgeNetworkTransformer", "returnMethod", "()Z", false),
+                        new JumpInsnNode(IFEQ, labelNode),
+                        new InsnNode(ICONST_0),
+                        new InsnNode(IRETURN),
+                        labelNode
+                ));
+            });
 
-                return ClassUtils.INSTANCE.toBytes(classNode);
-            } catch (final Throwable throwable) {
-                throwable.printStackTrace();
-            }
+            return ClassUtils.INSTANCE.toBytes(classNode);
         }
 
         if (name.equals("net.minecraftforge.fml.common.network.handshake.HandshakeMessageHandler")) {
-            try {
-                final ClassNode classNode = ClassUtils.INSTANCE.toClassNode(basicClass);
+            final ClassNode classNode = ClassUtils.INSTANCE.toClassNode(basicClass);
 
-                classNode.methods.stream().filter(method -> method.name.equals("channelRead0")).forEach(methodNode -> {
-                    final LabelNode labelNode = new LabelNode();
+            classNode.methods.stream().filter(method -> method.name.equals("channelRead0")).forEach(methodNode -> {
+                final LabelNode labelNode = new LabelNode();
 
-                    methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), NodeUtils.INSTANCE.toNodes(
-                            new MethodInsnNode(INVOKESTATIC,
-                                    "net/aspw/client/injection/transformers/ForgeNetworkTransformer",
-                                    "returnMethod", "()Z", false
-                            ),
-                            new JumpInsnNode(IFEQ, labelNode),
-                            new InsnNode(RETURN),
-                            labelNode
-                    ));
-                });
+                methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), NodeUtils.INSTANCE.toNodes(
+                        new MethodInsnNode(INVOKESTATIC,
+                                "net/aspw/client/injection/transformers/ForgeNetworkTransformer",
+                                "returnMethod", "()Z", false
+                        ),
+                        new JumpInsnNode(IFEQ, labelNode),
+                        new InsnNode(RETURN),
+                        labelNode
+                ));
+            });
 
-                return ClassUtils.INSTANCE.toBytes(classNode);
-            } catch (final Throwable throwable) {
-                throwable.printStackTrace();
-            }
+            return ClassUtils.INSTANCE.toBytes(classNode);
         }
 
         return basicClass;

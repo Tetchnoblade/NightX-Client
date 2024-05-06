@@ -123,10 +123,7 @@ public final class ESP extends Module {
                         } else {
                             entName = entityLivingBase.getDisplayName().getFormattedText();
                         }
-                        try {
-                            drawScaledCenteredString(entName, posX + (endPosX - posX) / 2F, posY - 1F - FontLoaders.SF21.getHeight() * 1F);
-                        } catch (Exception ignored) {
-                        }
+                        drawScaledCenteredString(entName, posX + (endPosX - posX) / 2F, posY - 1F - FontLoaders.SF21.getHeight() * 1F);
                     }
                 }
             }

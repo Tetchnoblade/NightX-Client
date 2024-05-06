@@ -105,6 +105,8 @@ class LegitScaffold : Module() {
             return
         }
 
+        mc.thePlayer.isSwingInProgress = false
+
         val shouldEagle = mc.theWorld.getBlockState(
             BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1.0, mc.thePlayer.posZ)
         ).block === Blocks.air

@@ -82,44 +82,41 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
                 || stealer.getStillDisplayValue().get()))
             RenderUtils.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
 
-        try {
-            final GuiScreen guiScreen = mc.currentScreen;
+        final GuiScreen guiScreen = mc.currentScreen;
 
-            if (killAuraButton != null)
-                killAuraButton.enabled = killAura.getState();
-            if (chestStealerButton != null) chestStealerButton.enabled = stealer.getState();
-            if (invManagerButton != null)
-                invManagerButton.enabled = invManager.getState();
+        if (killAuraButton != null)
+            killAuraButton.enabled = killAura.getState();
+        if (chestStealerButton != null) chestStealerButton.enabled = stealer.getState();
+        if (invManagerButton != null)
+            invManagerButton.enabled = invManager.getState();
 
-            if (stealer.getState() && stealer.getSilenceValue().get() && guiScreen instanceof GuiChest) {
-                mc.setIngameFocus();
-                mc.currentScreen = guiScreen;
+        if (stealer.getState() && stealer.getSilenceValue().get() && guiScreen instanceof GuiChest) {
+            mc.setIngameFocus();
+            mc.currentScreen = guiScreen;
 
-                //hide GUI
-                if (stealer.getShowStringValue().get() && !stealer.getStillDisplayValue().get()) {
-                    final String tipString = "Stealing... Press Esc to stop.";
+            //hide GUI
+            if (stealer.getShowStringValue().get() && !stealer.getStillDisplayValue().get()) {
+                final String tipString = "Stealing... Press Esc to stop.";
 
-                    mc.fontRendererObj.drawString(tipString,
-                            (width / 2F) - (mc.fontRendererObj.getStringWidth(tipString) / 2F) - 0.5F,
-                            (height / 2F) + 30, 0, false);
-                    mc.fontRendererObj.drawString(tipString,
-                            (width / 2F) - (mc.fontRendererObj.getStringWidth(tipString) / 2F) + 0.5F,
-                            (height / 2F) + 30, 0, false);
-                    mc.fontRendererObj.drawString(tipString,
-                            (width / 2F) - (mc.fontRendererObj.getStringWidth(tipString) / 2F),
-                            (height / 2F) + 29.5F, 0, false);
-                    mc.fontRendererObj.drawString(tipString,
-                            (width / 2F) - (mc.fontRendererObj.getStringWidth(tipString) / 2F),
-                            (height / 2F) + 30.5F, 0, false);
-                    mc.fontRendererObj.drawString(tipString,
-                            (width / 2F) - (mc.fontRendererObj.getStringWidth(tipString) / 2F),
-                            (height / 2F) + 30, 0xffffffff, false);
-                }
-
-                if (!stealer.getOnce() && !stealer.getStillDisplayValue().get())
-                    callbackInfo.cancel();
+                mc.fontRendererObj.drawString(tipString,
+                        (width / 2F) - (mc.fontRendererObj.getStringWidth(tipString) / 2F) - 0.5F,
+                        (height / 2F) + 30, 0, false);
+                mc.fontRendererObj.drawString(tipString,
+                        (width / 2F) - (mc.fontRendererObj.getStringWidth(tipString) / 2F) + 0.5F,
+                        (height / 2F) + 30, 0, false);
+                mc.fontRendererObj.drawString(tipString,
+                        (width / 2F) - (mc.fontRendererObj.getStringWidth(tipString) / 2F),
+                        (height / 2F) + 29.5F, 0, false);
+                mc.fontRendererObj.drawString(tipString,
+                        (width / 2F) - (mc.fontRendererObj.getStringWidth(tipString) / 2F),
+                        (height / 2F) + 30.5F, 0, false);
+                mc.fontRendererObj.drawString(tipString,
+                        (width / 2F) - (mc.fontRendererObj.getStringWidth(tipString) / 2F),
+                        (height / 2F) + 30, 0xffffffff, false);
             }
-        } catch (final Exception ignored) {
+
+            if (!stealer.getOnce() && !stealer.getStillDisplayValue().get())
+                callbackInfo.cancel();
         }
     }
 
