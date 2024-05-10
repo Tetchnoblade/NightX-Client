@@ -102,7 +102,6 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
     }
 
     public override fun actionPerformed(button: GuiButton) {
-        // Not enabled buttons should be ignored
         if (!button.enabled)
             return
 

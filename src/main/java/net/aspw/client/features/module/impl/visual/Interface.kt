@@ -55,6 +55,7 @@ class Interface : Module() {
     private val targetHudXPosValue = FloatValue("TargetHud-XPos", 0F, -300F, 300F) { targetHudValue.get() }
     private val targetHudYPosValue = FloatValue("TargetHud-YPos", 0F, -300F, 300F) { targetHudValue.get() }
     private val pingValue = BoolValue("Ping", true)
+    private val cFontValue = BoolValue("C-Font", true)
     val noAchievement = BoolValue("No-Achievements", true)
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)
@@ -78,7 +79,6 @@ class Interface : Module() {
 
     private var modules = emptyList<Module>()
     private var sortedModules = emptyList<Module>()
-    private val fontRenderer = FontLoaders.SF20
 
     @EventTarget
     fun onRender2D(event: Render2DEvent) {
@@ -93,12 +93,9 @@ class Interface : Module() {
                 restOfString = inputString.substring(1)
             }
             val showName = "$firstChar§r§f$restOfString$fpsChecks$connectChecks"
-            fontRenderer.drawStringWithShadow(
-                showName,
-                2.0,
-                3.0,
-                RenderUtils.skyRainbow(0, 0.5f, 1f).rgb
-            )
+            if (cFontValue.get())
+                FontLoaders.SF20.drawStringWithShadow(showName, 2.0, 3.0, RenderUtils.skyRainbow(0, 0.5f, 1f).rgb)
+            else Fonts.minecraftFont.drawStringWithShadow(showName, 2.0f, 3.0f, RenderUtils.skyRainbow(0, 0.5f, 1f).rgb)
         }
 
         if (arrayListValue.get()) {
@@ -109,7 +106,7 @@ class Interface : Module() {
                 if (module.array && (module.state || module.slide != 0F)) {
                     val displayString = getModName(module)
 
-                    val width = fontRenderer.getStringWidth(displayString)
+                    val width = if (cFontValue.get()) FontLoaders.SF20.getStringWidth(displayString) else Fonts.minecraftFont.getStringWidth(displayString)
 
                     if (module.state) {
                         if (module.slide < width) {
@@ -140,25 +137,21 @@ class Interface : Module() {
 
                 counter[0] = counter[0] - 1
 
-                fontRenderer.drawStringWithShadow(
-                    displayString,
-                    xPos.toDouble(),
-                    module.arrayY + textY.toDouble(),
-                    RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb
-                )
+                if (cFontValue.get())
+                    FontLoaders.SF20.drawStringWithShadow(displayString, xPos.toDouble(), module.arrayY + textY.toDouble(), RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb)
+                else Fonts.minecraftFont.drawStringWithShadow(displayString, xPos, module.arrayY + textY, RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb)
             }
             GlStateManager.resetColor()
             modules = Launch.moduleManager.modules
                 .filter { it.array && it.slide > 0 }
-                .sortedBy { -fontRenderer.getStringWidth(getModName(it)) }
+                .sortedBy { if (cFontValue.get()) -FontLoaders.SF20.getStringWidth(getModName(it)) else -Fonts.minecraftFont.getStringWidth(getModName(it)) }
             sortedModules =
-                Launch.moduleManager.modules.sortedBy { -fontRenderer.getStringWidth(getModName(it)) }.toList()
+                Launch.moduleManager.modules.sortedBy { if (cFontValue.get()) -FontLoaders.SF20.getStringWidth(getModName(it)) else -Fonts.minecraftFont.getStringWidth(getModName(it)) }.toList()
         }
 
         if (targetHudValue.get()) {
             val xPos = (ScaledResolution(mc).scaledWidth / 2) - 214f + targetHudXPosValue.get()
             val yPos = (ScaledResolution(mc).scaledHeight / 2) - 90f + targetHudYPosValue.get()
-            val font = FontLoaders.SF21
             val killAura = Launch.moduleManager.getModule(KillAura::class.java)
             val tpAura = Launch.moduleManager.getModule(TPAura::class.java)
             val killAuraRecode = Launch.moduleManager.getModule(KillAuraRecode::class.java)
@@ -210,41 +203,75 @@ class Interface : Module() {
                         xPos.toInt(),
                         yPos.toInt() + 4
                     )
-                else {
-                    font.drawStringWithShadow(
+                else if (cFontValue.get()) {
+                    FontLoaders.SF21.drawStringWithShadow(
                         "No",
                         (xPos + 9).toDouble(),
                         (yPos + 7F).toDouble(),
                         Color(120, 120, 120).rgb
                     )
-                    font.drawStringWithShadow(
+                    FontLoaders.SF21.drawStringWithShadow(
                         "Image",
                         (xPos + 2).toDouble(),
                         (yPos + 16F).toDouble(),
                         Color(120, 120, 120).rgb
                     )
-                    font.drawStringWithShadow(
+                    FontLoaders.SF21.drawStringWithShadow(
                         "Found",
                         (xPos + 1).toDouble(),
                         (yPos + 25F).toDouble(),
+                        Color(120, 120, 120).rgb
+                    )
+                } else {
+                    Fonts.minecraftFont.drawStringWithShadow(
+                        "No",
+                        xPos + 9,
+                        yPos + 7F,
+                        Color(120, 120, 120).rgb
+                    )
+                    Fonts.minecraftFont.drawStringWithShadow(
+                        "Image",
+                        xPos + 2,
+                        yPos + 16F,
+                        Color(120, 120, 120).rgb
+                    )
+                    Fonts.minecraftFont.drawStringWithShadow(
+                        "Found",
+                        xPos + 1,
+                        yPos + 25F,
                         Color(120, 120, 120).rgb
                     )
                 }
 
                 updateAnim(entity.health)
 
-                font.drawStringWithShadow(
-                    entity.name,
-                    (xPos + 36F).toDouble(),
-                    (yPos + 4F).toDouble(),
-                    Color(255, 255, 255).rgb
-                )
-                font.drawStringWithShadow(
-                    mc.thePlayer.getDistanceToEntity(entity).toInt().toString() + " blocks away",
-                    (xPos + 36F).toDouble(),
-                    (yPos + 15F).toDouble(),
-                    Color(255, 255, 255).rgb
-                )
+                if (cFontValue.get()) {
+                    FontLoaders.SF21.drawStringWithShadow(
+                        entity.name,
+                        (xPos + 36F).toDouble(),
+                        (yPos + 4F).toDouble(),
+                        Color(255, 255, 255).rgb
+                    )
+                    FontLoaders.SF21.drawStringWithShadow(
+                        mc.thePlayer.getDistanceToEntity(entity).toInt().toString() + " blocks away",
+                        (xPos + 36F).toDouble(),
+                        (yPos + 15F).toDouble(),
+                        Color(255, 255, 255).rgb
+                    )
+                } else {
+                    Fonts.minecraftFont.drawStringWithShadow(
+                        entity.name,
+                        xPos + 36F,
+                        yPos + 4F,
+                        Color(255, 255, 255).rgb
+                    )
+                    Fonts.minecraftFont.drawStringWithShadow(
+                        mc.thePlayer.getDistanceToEntity(entity).toInt().toString() + " blocks away",
+                        xPos + 36F,
+                        yPos + 15F,
+                        Color(255, 255, 255).rgb
+                    )
+                }
             } else if (easingHealth != 0F) easingHealth = 0F
         }
 
@@ -252,12 +279,9 @@ class Interface : Module() {
             val xPos = ScaledResolution(mc).scaledWidth
             val yPos = ScaledResolution(mc).scaledHeight
 
-            fontRenderer.drawStringWithShadow(
-                "Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms",
-                (xPos - 4f - fontRenderer.getStringWidth("Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms")).toDouble(),
-                (yPos - 12f).toDouble(),
-                Color.WHITE.rgb
-            )
+            if (cFontValue.get())
+                FontLoaders.SF20.drawStringWithShadow("Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms", (xPos - 4f - FontLoaders.SF20.getStringWidth("Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms")).toDouble(), (yPos - 12f).toDouble(), Color.WHITE.rgb)
+            else Fonts.minecraftFont.drawStringWithShadow("Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms", xPos - 4f - Fonts.minecraftFont.getStringWidth("Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms"), yPos - 12f, Color.WHITE.rgb)
         }
     }
 
