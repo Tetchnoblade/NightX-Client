@@ -75,7 +75,15 @@ public abstract class MixinGuiButton extends Gui {
                         this.enabled ? new Color(0F, 0F, 0F, this.alpha / 255F).getRGB() :
                                 new Color(120F, 120F, 120F, 100F).getRGB());
             else {
-                RenderUtils.originalRoundedRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, 0F, new Color(0F, 0F, 0F, this.alpha / 255F).getRGB());
+                if (this.enabled && this.hovered) {
+                    RenderUtils.drawGradientRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + 1, new Color(0, 0, 255, 80).getRGB(), new Color(0, 0, 255, 80).getRGB());
+                    RenderUtils.drawGradientRect(this.xPosition, this.yPosition + this.height - 1, this.xPosition + this.width, this.yPosition + this.height, new Color(0, 0, 255, 80).getRGB(), new Color(0, 0, 255, 80).getRGB());
+                    RenderUtils.drawGradientRect(this.xPosition, this.yPosition, this.xPosition + 1, this.yPosition + this.height, new Color(0, 0, 255, 80).getRGB(), new Color(0, 0, 255, 80).getRGB());
+                    RenderUtils.drawGradientRect(this.xPosition + this.width - 1, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, new Color(0, 0, 255, 80).getRGB(), new Color(0, 0, 255, 80).getRGB());
+                    RenderUtils.originalRoundedRect(this.xPosition + 1, this.yPosition + 1, this.xPosition + this.width - 1, this.yPosition + this.height - 1, 0F, new Color(0F, 0F, 0F, this.alpha / 255F).getRGB());
+                } else {
+                    RenderUtils.originalRoundedRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, 0F, new Color(0F, 0F, 0F, this.alpha / 255F).getRGB());
+                }
             }
 
             int j = 13816530;

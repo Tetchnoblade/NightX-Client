@@ -26,14 +26,6 @@ class Cape : Module() {
         ),
         "NightX"
     ) { customCape.get() }
-    val animationModeValue = ListValue(
-        "Animations-Mode",
-        arrayOf(
-            "Normal",
-            "Smooth"
-        ),
-        "Normal"
-    )
 
     private val capeCache = hashMapOf<String, CapeStyle>()
     fun getCapeLocation(value: String): ResourceLocation {

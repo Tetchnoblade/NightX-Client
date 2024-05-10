@@ -56,6 +56,7 @@ class Interface : Module() {
     private val targetHudYPosValue = FloatValue("TargetHud-YPos", 0F, -300F, 300F) { targetHudValue.get() }
     private val pingValue = BoolValue("Ping", true)
     private val cFontValue = BoolValue("C-Font", true)
+    val oldRotationRendererValue = BoolValue("CrazyRotation-Renderer", true)
     val noAchievement = BoolValue("No-Achievements", true)
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)

@@ -85,6 +85,10 @@ class SilentRotations : Module() {
             RotationUtils.enableLook()
 
         mc.thePlayer.rotationYaw = RotationUtils.targetRotation?.yaw!!
+        if (Launch.moduleManager.getModule(Interface::class.java)?.state!! && Launch.moduleManager.getModule(Interface::class.java)?.oldRotationRendererValue?.get()!!) {
+            mc.thePlayer.rotationYawHead = mc.thePlayer.rotationYaw
+            mc.thePlayer.renderYawOffset = mc.thePlayer.rotationYaw
+        }
         mc.thePlayer.rotationPitch = RotationUtils.targetRotation?.pitch!!
     }
 }
