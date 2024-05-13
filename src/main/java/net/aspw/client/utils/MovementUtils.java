@@ -7,13 +7,20 @@ import net.minecraft.block.BlockIce;
 import net.minecraft.block.BlockPackedIce;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.potion.Potion;
+import net.minecraft.stats.StatFileWriter;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovementInputFromOptions;
+import net.minecraft.util.Vec3;
+
+import java.util.LinkedList;
 
 /**
  * The type Movement utils.
  */
 public final class MovementUtils extends MinecraftInstance {
+
+    public static boolean predicting = false;
 
     /**
      * Gets speed.
@@ -97,6 +104,38 @@ public final class MovementUtils extends MinecraftInstance {
 
     public static boolean isRidingBlock() {
         return !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1.8, mc.thePlayer.posZ)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 0.5, mc.thePlayer.posZ)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX + 0.5, mc.thePlayer.posY - 1.8, mc.thePlayer.posZ + 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX - 0.5, mc.thePlayer.posY - 1.8, mc.thePlayer.posZ + 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX + 0.5, mc.thePlayer.posY - 1.8, mc.thePlayer.posZ - 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX - 0.5, mc.thePlayer.posY - 1.8, mc.thePlayer.posZ - 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX + 0.5, mc.thePlayer.posY - 1, mc.thePlayer.posZ + 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX - 0.5, mc.thePlayer.posY - 1, mc.thePlayer.posZ + 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX + 0.5, mc.thePlayer.posY - 1, mc.thePlayer.posZ - 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX - 0.5, mc.thePlayer.posY - 1, mc.thePlayer.posZ - 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX + 0.5, mc.thePlayer.posY - 0.5, mc.thePlayer.posZ + 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX - 0.5, mc.thePlayer.posY - 0.5, mc.thePlayer.posZ + 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX + 0.5, mc.thePlayer.posY - 0.5, mc.thePlayer.posZ - 0.5)).getBlock() instanceof BlockAir) || !(mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX - 0.5, mc.thePlayer.posY - 0.5, mc.thePlayer.posZ - 0.5)).getBlock() instanceof BlockAir);
+    }
+
+    public static LinkedList<Vec3> predict(int tick) {
+        predicting = true;
+        LinkedList<Vec3> positions = new LinkedList<>();
+        EntityPlayerSP sp = new EntityPlayerSP(
+                mc,
+                mc.theWorld,
+                mc.getNetHandler(),
+                new StatFileWriter()
+        );
+        sp.setPositionAndRotation(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch);
+        sp.onGround = mc.thePlayer.onGround;
+        sp.setSprinting(mc.thePlayer.isSprinting());
+        sp.setSneaking(mc.thePlayer.isSneaking());
+        sp.motionX = mc.thePlayer.motionX;
+        sp.motionY = mc.thePlayer.motionY;
+        sp.motionZ = mc.thePlayer.motionZ;
+        sp.movementInput = new MovementInputFromOptions(mc.gameSettings);
+        for (int i = 0; i < tick; i++) {
+            sp.movementInput.moveStrafe = mc.thePlayer.movementInput.moveStrafe;
+            sp.movementInput.moveForward = mc.thePlayer.movementInput.moveForward;
+            sp.movementInput.jump = mc.thePlayer.movementInput.jump;
+            sp.movementInput.sneak = mc.thePlayer.movementInput.sneak;
+            sp.moveForward = mc.thePlayer.moveForward;
+            sp.moveStrafing = mc.thePlayer.moveStrafing;
+            sp.setJumping(mc.thePlayer.movementInput.jump);
+            sp.onUpdate();
+            positions.add(new Vec3(sp.posX, sp.posY, sp.posZ));
+        }
+        predicting = false;
+        return positions;
     }
 
     /**

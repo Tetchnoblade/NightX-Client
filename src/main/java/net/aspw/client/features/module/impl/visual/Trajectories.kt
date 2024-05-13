@@ -188,7 +188,7 @@ class Trajectories : Module() {
         RenderUtils.disableGlCap(GL11.GL_DEPTH_TEST, GL11.GL_ALPHA_TEST, GL11.GL_TEXTURE_2D)
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
         GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST)
-        RenderUtils.glColor(Color(255, 255, 255, 180))
+        RenderUtils.glColor(Color(255, 255, 255, 160))
         GL11.glLineWidth(2f)
 
         worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION)

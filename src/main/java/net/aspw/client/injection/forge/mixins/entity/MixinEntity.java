@@ -6,6 +6,7 @@ import net.aspw.client.features.module.impl.combat.HitBox;
 import net.aspw.client.features.module.impl.movement.Flight;
 import net.aspw.client.utils.EntityUtils;
 import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.utils.MovementUtils;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.crash.CrashReportCategory;
@@ -216,7 +217,7 @@ public abstract class MixinEntity implements ICommandSender {
 
     @Inject(method = "spawnRunningParticles", at = @At("HEAD"), cancellable = true)
     private void checkGroundState(CallbackInfo ci) {
-        if (!this.onGround) ci.cancel();
+        if (!this.onGround || MovementUtils.predicting) ci.cancel();
     }
 
     /**

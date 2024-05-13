@@ -27,13 +27,11 @@ import net.minecraft.client.settings.GameSettings
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemBlock
-import net.minecraft.network.Packet
 import net.minecraft.network.play.client.*
 import net.minecraft.potion.Potion
 import net.minecraft.stats.StatList
 import net.minecraft.util.*
 import java.util.*
-import java.util.concurrent.LinkedBlockingQueue
 import kotlin.math.*
 
 
@@ -164,8 +162,6 @@ class Scaffold : Module() {
     private val safeWalkValue = BoolValue("SafeWalk", false)
     private val airSafeValue = BoolValue("AirSafe", false) { safeWalkValue.get() }
     private val autoDisableSpeedValue = BoolValue("AutoDisable-Speed", false)
-    private val desyncValue = BoolValue("Desync", false)
-    private val desyncDelayValue = IntegerValue("DesyncDelay", 400, 10, 810, "ms") { desyncValue.get() }
     private val maxTurnSpeed: FloatValue =
         object : FloatValue("MaxTurnSpeed", 120f, 0f, 180f, "°") {
             override fun onChanged(oldValue: Float, newValue: Float) {
@@ -194,12 +190,6 @@ class Scaffold : Module() {
      */
     // Target block
     private var targetPlace: PlaceInfo? = null
-
-    // Desync
-    private val packets = LinkedBlockingQueue<Packet<*>>()
-    private val positions = LinkedList<DoubleArray>()
-    private val pulseTimer = MSTimer()
-    private var disableLogger = false
 
     // Launch position
     private var launchY = 0
@@ -252,22 +242,8 @@ class Scaffold : Module() {
         slot = mc.thePlayer.inventory.currentItem
         canTower = false
         lastMS = System.currentTimeMillis()
-        if (desyncValue.get()) {
-            synchronized(positions) {
-                positions.add(
-                    doubleArrayOf(
-                        mc.thePlayer.posX,
-                        mc.thePlayer.entityBoundingBox.minY + mc.thePlayer.getEyeHeight() / 2,
-                        mc.thePlayer.posZ
-                    )
-                )
-                positions.add(doubleArrayOf(mc.thePlayer.posX, mc.thePlayer.entityBoundingBox.minY, mc.thePlayer.posZ))
-            }
-            pulseTimer.reset()
-        }
     }
 
-    //Send jump packets, bypasses Hypixel.
     private fun fakeJump() {
         mc.thePlayer.isAirBorne = true
         mc.thePlayer.triggerAchievement(StatList.jumpStat)
@@ -522,22 +498,6 @@ class Scaffold : Module() {
             }
         }
 
-        if (desyncValue.get()) {
-            synchronized(positions) {
-                positions.add(
-                    doubleArrayOf(
-                        mc.thePlayer.posX,
-                        mc.thePlayer.entityBoundingBox.minY,
-                        mc.thePlayer.posZ
-                    )
-                )
-            }
-            if (pulseTimer.hasTimePassed(desyncDelayValue.get().toLong())) {
-                blink()
-                pulseTimer.reset()
-            }
-        }
-
         if (customSpeedValue.get()) MovementUtils.strafe(customMoveSpeedValue.get())
         if (sprintModeValue.get().equals("off", ignoreCase = true) || sprintModeValue.get()
                 .equals("ground", ignoreCase = true) && !mc.thePlayer.onGround || sprintModeValue.get()
@@ -586,20 +546,6 @@ class Scaffold : Module() {
             }
         }
 
-        if (desyncValue.get()) {
-            if (disableLogger) return
-            if (packet is C03PacketPlayer)
-                event.cancelEvent()
-            if (packet is C03PacketPlayer.C04PacketPlayerPosition || packet is C03PacketPlayer.C06PacketPlayerPosLook ||
-                packet is C08PacketPlayerBlockPlacement ||
-                packet is C0APacketAnimation ||
-                packet is C0BPacketEntityAction || packet is C02PacketUseEntity
-            ) {
-                event.cancelEvent()
-                packets.add(packet)
-            }
-        }
-
         // Sprint
         if (sprintModeValue.get().equals("silent", ignoreCase = true)) {
             if (packet is C0BPacketEntityAction &&
@@ -634,20 +580,6 @@ class Scaffold : Module() {
         val placeWhenNegativeMotion = placeConditionValue.get().equals("negativemotion", ignoreCase = true)
         val alwaysPlace = placeConditionValue.get().equals("always", ignoreCase = true)
         return alwaysPlace || canTower || placeWhenAir && !mc.thePlayer.onGround || placeWhenFall && mc.thePlayer.fallDistance > 0 || placeWhenNegativeMotion && mc.thePlayer.motionY < 0
-    }
-
-    private fun blink() {
-        try {
-            disableLogger = true
-            while (!packets.isEmpty()) {
-                mc.netHandler.networkManager.sendPacket(packets.take())
-            }
-            disableLogger = false
-        } catch (e: Exception) {
-            e.printStackTrace()
-            disableLogger = false
-        }
-        synchronized(positions) { positions.clear() }
     }
 
     @EventTarget
@@ -825,7 +757,6 @@ class Scaffold : Module() {
      */
     override fun onDisable() {
         if (mc.thePlayer == null) return
-        blink()
         startPlaceTimer.reset()
         isHypixeling = false
         faceBlock = false

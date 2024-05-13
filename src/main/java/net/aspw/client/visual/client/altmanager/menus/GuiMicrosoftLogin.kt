@@ -17,39 +17,46 @@ class GuiMicrosoftLogin(private val prevGui: GuiScreen) : GuiScreen() {
     private lateinit var server: OAuthServer
 
     override fun initGui() {
-        server = MicrosoftAccount.buildFromOpenBrowser(object : MicrosoftAccount.OAuthHandler {
-            override fun openUrl(url: String) {
-                stage = "Logging in..."
-                ClientUtils.getLogger().info("Opening URL: $url")
+        try {
+            server = MicrosoftAccount.buildFromOpenBrowser(object : MicrosoftAccount.OAuthHandler {
+                override fun openUrl(url: String) {
+                    stage = "Logging in..."
+                    ClientUtils.getLogger().info("Opening URL: $url")
 
-                MiscUtils.showURL(url)
-            }
-
-            override fun authError(error: String) {
-                stage = "Error: $error"
-            }
-
-            override fun authResult(account: MicrosoftAccount) {
-                if (Launch.fileManager.accountsConfig.accountExists(account)) {
-                    stage = "§cThe account has already been added."
-                    return
+                    MiscUtils.showURL(url)
                 }
-                Launch.fileManager.accountsConfig.addAccount(account)
-                Launch.fileManager.saveConfig(Launch.fileManager.accountsConfig)
-                if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
-                    Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
+
+                override fun authError(error: String) {
+                    stage = "Error: $error"
                 }
-                stage = "§aThe account has been added."
-                mc.displayGuiScreen(prevGui)
-            }
-        })
+
+                override fun authResult(account: MicrosoftAccount) {
+                    if (Launch.fileManager.accountsConfig.accountExists(account)) {
+                        stage = "§cThe account has already been added."
+                        return
+                    }
+                    Launch.fileManager.accountsConfig.addAccount(account)
+                    Launch.fileManager.saveConfig(Launch.fileManager.accountsConfig)
+                    if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
+                        Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
+                    }
+                    stage = "§aThe account has been added."
+                    mc.displayGuiScreen(prevGui)
+                }
+            })
+        } catch (e: Exception) {
+            stage = "Failed [$e]"
+        }
 
         buttonList.add(GuiButton(0, width / 2 - 100, height / 4 + 120 + 12, "Cancel"))
     }
 
     override fun actionPerformed(button: GuiButton) {
         if (button.id == 0) {
-            server.stop(true)
+            try {
+                server.stop(true)
+            } catch (ignored: Exception) {
+            }
             mc.displayGuiScreen(prevGui)
         }
     }

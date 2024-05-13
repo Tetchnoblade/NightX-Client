@@ -18,7 +18,7 @@ import java.util.*
 @ModuleInfo(name = "FastEat", spacedName = "Fast Eat", category = ModuleCategory.PLAYER)
 class FastEat : Module() {
 
-    private val modeValue = ListValue("Mode", arrayOf("NCP", "AAC", "AAC4", "Matrix", "BlocksMC", "Delayed"), "NCP")
+    private val modeValue = ListValue("Mode", arrayOf("NCP", "AAC", "AAC4", "Matrix", "Delayed"), "NCP")
 
     private val delayValue = IntegerValue("CustomDelay", 0, 0, 300) { modeValue.get().equals("delayed", true) }
     private val customSpeedValue =
@@ -54,21 +54,6 @@ class FastEat : Module() {
                     }
 
                     mc.playerController.onStoppedUsingItem(mc.thePlayer)
-                }
-
-                "blocksmc" -> {
-                    for (i in 0 until 2) {
-                        mc.netHandler.addToSendQueue(
-                            C03PacketPlayer.C06PacketPlayerPosLook(
-                                mc.thePlayer.posX,
-                                mc.thePlayer.posY,
-                                mc.thePlayer.posZ,
-                                mc.thePlayer.rotationYaw,
-                                mc.thePlayer.rotationPitch,
-                                mc.thePlayer.onGround
-                            )
-                        )
-                    }
                 }
 
                 "matrix" -> {

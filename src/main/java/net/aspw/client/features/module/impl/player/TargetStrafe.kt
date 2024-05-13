@@ -33,7 +33,7 @@ class TargetStrafe : Module() {
     val killAura = Launch.moduleManager.getModule(KillAura::class.java)
     val speed = Launch.moduleManager.getModule(Speed::class.java)
     private val longJump = Launch.moduleManager.getModule(LongJump::class.java)
-    val flight = Launch.moduleManager.getModule(Flight::class.java)
+    private val flight = Launch.moduleManager.getModule(Flight::class.java)
 
     private var direction = 1
     private var lastView = 0
@@ -49,7 +49,7 @@ class TargetStrafe : Module() {
 
     @EventTarget
     fun onMotion(event: MotionEvent) {
-        if (thirdPerson.get()) { // smart change back
+        if (thirdPerson.get()) {
             if (canStrafe) {
                 if (hasChangedThirdPerson) lastView = mc.gameSettings.thirdPersonView
                 mc.gameSettings.thirdPersonView = 1

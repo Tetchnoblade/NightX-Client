@@ -343,6 +343,14 @@ class Flight : Module() {
                 MovementUtils.strafe()
             }
 
+            "blocksmc" -> {
+                val bb = mc.thePlayer.entityBoundingBox.offset(0.0, 1.0, 0.0)
+                if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, bb).isEmpty() && !starteds) {
+                    chat("failed to toggle fly")
+                    state = false
+                } else chat("waiting...")
+            }
+
             "vulcanzoom" -> {
                 pog = false
                 lastSentX = mc.thePlayer.posX
@@ -1331,15 +1339,51 @@ class Flight : Module() {
                 if (event.eventState === EventState.PRE) {
                     val bb = mc.thePlayer.entityBoundingBox.offset(0.0, 1.0, 0.0)
 
-                    if (starteds) {
-                        mc.thePlayer.motionY += 0.025
-                        MovementUtils.strafe(0.95f.let { bmcSpeed *= it; bmcSpeed }.toFloat())
-                    }
-
                     if (mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, bb).isEmpty() && !starteds) {
                         starteds = true
                         mc.thePlayer.jump()
-                        MovementUtils.strafe(4.also { bmcSpeed = it.toDouble() }.toFloat())
+                        MovementUtils.strafe(5.also { bmcSpeed = it.toDouble() }.toFloat())
+                        chat("started")
+                    }
+
+                    if (starteds) {
+                        val pos = mc.thePlayer.position.add(0.0, -1.5, 0.0)
+                        if (mc.thePlayer.onGround) {
+                            PacketUtils.sendPacketNoEvent(
+                                C08PacketPlayerBlockPlacement(
+                                    pos,
+                                    1,
+                                    ItemStack(Blocks.stone.getItem(mc.theWorld, pos)),
+                                    0.0F,
+                                    0.5F + Math.random().toFloat() * 0.44.toFloat(),
+                                    0.0F
+                                )
+                            )
+                        }
+                        if (mc.thePlayer.ticksExisted % 4 == 0) {
+                            chat("sent c08")
+                            PacketUtils.sendPacketNoEvent(
+                                C08PacketPlayerBlockPlacement(
+                                    pos,
+                                    1,
+                                    ItemStack(Blocks.stone.getItem(mc.theWorld, pos)),
+                                    0.0F,
+                                    0.5F + Math.random().toFloat() * 0.44.toFloat(),
+                                    0.0F
+                                )
+                            )
+                        }
+                        MovementUtils.strafe(0.95f.let { bmcSpeed *= it; bmcSpeed }.toFloat())
+                        if (bmcSpeed >= 3.1f)
+                            mc.timer.timerSpeed = 0.45f
+                        else mc.timer.timerSpeed = 0.2f
+                        chat(bmcSpeed.toString())
+                        if (bmcSpeed <= 3f) {
+                            mc.thePlayer.motionX = 0.0
+                            mc.thePlayer.motionZ = 0.0
+                            chat("disabled")
+                            state = false
+                        }
                     }
                 }
             }

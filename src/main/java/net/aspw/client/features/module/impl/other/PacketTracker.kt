@@ -19,9 +19,9 @@ class PacketTracker : Module() {
         val packet = event.packet
 
         if (transactionIDValue.get() && packet is C0FPacketConfirmTransaction)
-            chat("§c[Transaction ID]: §r" + packet.uid.toString())
+            chat("§c[Transaction ID] §r" + packet.uid.toString())
 
         if (keepAliveKeyValue.get() && packet is C00PacketKeepAlive)
-            chat("§c[KeepAlive Key]: §r" + packet.key.toString())
+            chat("§c[KeepAlive Key] §r" + packet.key.toString())
     }
 }

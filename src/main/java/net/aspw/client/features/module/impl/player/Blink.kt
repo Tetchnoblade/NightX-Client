@@ -16,8 +16,7 @@ import net.minecraft.network.Packet
 import net.minecraft.network.play.client.*
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
-import org.lwjgl.opengl.GL11
-import java.awt.Color
+import net.minecraft.util.Vec3
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 
@@ -25,7 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue
 class Blink : Module() {
     private val pulseValue = BoolValue("Pulse", true)
     private val packets = LinkedBlockingQueue<Packet<*>>()
-    private val positions = LinkedList<DoubleArray>()
+    private val positions = LinkedList<Vec3>()
     private val c0FValue = BoolValue("C0FCancel", false)
     private val pulseDelayValue = IntegerValue("PulseDelay", 400, 10, 5000, "ms") { pulseValue.get() }
     private val pulseTimer = MSTimer()
@@ -34,22 +33,20 @@ class Blink : Module() {
 
     override fun onEnable() {
         if (mc.thePlayer == null) return
-        if (!pulseValue.get()) {
-            fakePlayer = EntityOtherPlayerMP(mc.theWorld, mc.thePlayer.gameProfile)
-            fakePlayer!!.clonePlayer(mc.thePlayer, true)
-            fakePlayer!!.copyLocationAndAnglesFrom(mc.thePlayer)
-            fakePlayer!!.rotationYawHead = mc.thePlayer.rotationYawHead
-            mc.theWorld.addEntityToWorld(-1337, fakePlayer)
-        }
+        fakePlayer = EntityOtherPlayerMP(mc.theWorld, mc.thePlayer.gameProfile)
+        fakePlayer!!.clonePlayer(mc.thePlayer, true)
+        fakePlayer!!.copyLocationAndAnglesFrom(mc.thePlayer)
+        fakePlayer!!.rotationYawHead = mc.thePlayer.rotationYawHead
+        mc.theWorld.addEntityToWorld(-1337, fakePlayer)
         synchronized(positions) {
             positions.add(
-                doubleArrayOf(
+                Vec3(
                     mc.thePlayer.posX,
                     mc.thePlayer.entityBoundingBox.minY + mc.thePlayer.getEyeHeight() / 2,
                     mc.thePlayer.posZ
                 )
             )
-            positions.add(doubleArrayOf(mc.thePlayer.posX, mc.thePlayer.entityBoundingBox.minY, mc.thePlayer.posZ))
+            positions.add(Vec3(mc.thePlayer.posX, mc.thePlayer.entityBoundingBox.minY, mc.thePlayer.posZ))
         }
         pulseTimer.reset()
     }
@@ -67,7 +64,7 @@ class Blink : Module() {
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
         if (mc.thePlayer == null || disableLogger) return
-        if (packet is C03PacketPlayer) // Cancel all movement stuff
+        if (packet is C03PacketPlayer)
             event.cancelEvent()
         if (packet is C04PacketPlayerPosition || packet is C06PacketPlayerPosLook ||
             packet is C08PacketPlayerBlockPlacement ||
@@ -83,7 +80,7 @@ class Blink : Module() {
     fun onUpdate(event: UpdateEvent?) {
         synchronized(positions) {
             positions.add(
-                doubleArrayOf(
+                Vec3(
                     mc.thePlayer.posX,
                     mc.thePlayer.entityBoundingBox.minY,
                     mc.thePlayer.posZ
@@ -91,6 +88,11 @@ class Blink : Module() {
             )
         }
         if (pulseValue.get() && pulseTimer.hasTimePassed(pulseDelayValue.get().toLong())) {
+            fakePlayer = EntityOtherPlayerMP(mc.theWorld, mc.thePlayer.gameProfile)
+            fakePlayer!!.clonePlayer(mc.thePlayer, true)
+            fakePlayer!!.copyLocationAndAnglesFrom(mc.thePlayer)
+            fakePlayer!!.rotationYawHead = mc.thePlayer.rotationYawHead
+            mc.theWorld.addEntityToWorld(-1337, fakePlayer)
             blink()
             pulseTimer.reset()
         }
@@ -98,29 +100,7 @@ class Blink : Module() {
 
     @EventTarget
     fun onRender3D(event: Render3DEvent?) {
-        val color = Color(255, 255, 255, 180)
-        synchronized(positions) {
-            GL11.glPushMatrix()
-            GL11.glDisable(GL11.GL_TEXTURE_2D)
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
-            GL11.glEnable(GL11.GL_LINE_SMOOTH)
-            GL11.glEnable(GL11.GL_BLEND)
-            GL11.glDisable(GL11.GL_DEPTH_TEST)
-            mc.entityRenderer.disableLightmap()
-            GL11.glBegin(GL11.GL_LINE_STRIP)
-            RenderUtils.glColor(color)
-            val renderPosX = mc.renderManager.viewerPosX
-            val renderPosY = mc.renderManager.viewerPosY
-            val renderPosZ = mc.renderManager.viewerPosZ
-            for (pos in positions) GL11.glVertex3d(pos[0] - renderPosX, pos[1] - renderPosY, pos[2] - renderPosZ)
-            GL11.glColor4d(1.0, 1.0, 1.0, 1.0)
-            GL11.glEnd()
-            GL11.glEnable(GL11.GL_DEPTH_TEST)
-            GL11.glDisable(GL11.GL_LINE_SMOOTH)
-            GL11.glDisable(GL11.GL_BLEND)
-            GL11.glEnable(GL11.GL_TEXTURE_2D)
-            GL11.glPopMatrix()
-        }
+        RenderUtils.renderLine(positions)
     }
 
     override val tag: String

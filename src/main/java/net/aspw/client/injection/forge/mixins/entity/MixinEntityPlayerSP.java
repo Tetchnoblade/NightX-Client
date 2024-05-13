@@ -113,6 +113,9 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     @Shadow
     public abstract boolean isSneaking();
 
+    @Shadow
+    public abstract void onUpdate();
+
     /**
      * @author As_pw
      * @reason RemoteView Fix

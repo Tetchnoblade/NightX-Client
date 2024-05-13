@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import net.aspw.client.Launch;
 import net.aspw.client.event.PacketEvent;
 import net.aspw.client.features.module.impl.combat.BackTrack;
+import net.aspw.client.utils.MovementUtils;
 import net.aspw.client.utils.PacketUtils;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.NetworkManager;
@@ -56,6 +57,7 @@ public class MixinNetworkManager {
 
     @Inject(method = "sendPacket(Lnet/minecraft/network/Packet;)V", at = @At("HEAD"), cancellable = true)
     private void send(final Packet<?> packet, final CallbackInfo callback) {
+        if (MovementUtils.predicting) callback.cancel();
         if (PacketUtils.handleSendPacket(packet)) return;
         final PacketEvent event = new PacketEvent(packet);
         final BackTrack backTrack = Launch.moduleManager.getModule(BackTrack.class);

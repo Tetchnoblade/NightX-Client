@@ -3,6 +3,7 @@ package net.aspw.client.features.module.impl.movement
 import net.aspw.client.event.EventState
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.MotionEvent
+import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
@@ -22,25 +23,28 @@ class SilentSneak : Module() {
         get() = modeValue.get()
 
     @EventTarget
-    fun onMotion(event: MotionEvent) {
-        if (mc.thePlayer.isSneaking)
-            sneaking = false
-        if (!sneaking && !mc.thePlayer.isSneaking) {
-            when (modeValue.get().lowercase(Locale.getDefault())) {
-                "legit" -> mc.gameSettings.keyBindSneak.pressed = true
+    fun onUpdate(event: UpdateEvent) {
+        if (modeValue.get().equals("legit", true))
+            mc.gameSettings.keyBindSneak.pressed = true
+    }
 
-                "normal" -> {
-                    if (event.eventState === EventState.PRE) {
-                        mc.netHandler.addToSendQueue(
-                            C0BPacketEntityAction(
-                                mc.thePlayer,
-                                C0BPacketEntityAction.Action.START_SNEAKING
-                            )
+    @EventTarget
+    fun onMotion(event: MotionEvent) {
+        if (modeValue.get().equals("normal", true)) {
+            if (mc.thePlayer.isSneaking)
+                sneaking = false
+            if (!sneaking && !mc.thePlayer.isSneaking) {
+                if (event.eventState === EventState.PRE) {
+                    mc.netHandler.addToSendQueue(
+                        C0BPacketEntityAction(
+                            mc.thePlayer,
+                            C0BPacketEntityAction.Action.START_SNEAKING
                         )
-                    }
+                    )
                 }
+                sneaking = true
+                chat("fix")
             }
-            sneaking = true
         }
     }
 
@@ -48,17 +52,17 @@ class SilentSneak : Module() {
         sneaking = false
         if (mc.thePlayer == null) return
         when (modeValue.get().lowercase(Locale.getDefault())) {
-            "legit" -> if (!GameSettings.isKeyDown(
-                    mc.gameSettings.keyBindSneak
-                )
-            ) mc.gameSettings.keyBindSneak.pressed = false
-
             "normal" -> mc.netHandler.addToSendQueue(
                 C0BPacketEntityAction(
                     mc.thePlayer,
                     C0BPacketEntityAction.Action.STOP_SNEAKING
                 )
             )
+
+            "legit" -> if (!GameSettings.isKeyDown(
+                    mc.gameSettings.keyBindSneak
+                )
+            ) mc.gameSettings.keyBindSneak.pressed = false
         }
     }
 }

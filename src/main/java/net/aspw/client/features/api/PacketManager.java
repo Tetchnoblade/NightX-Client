@@ -18,9 +18,7 @@ import net.aspw.client.visual.font.smooth.FontLoaders;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.network.Packet;
-import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -78,31 +76,7 @@ public class PacketManager extends MinecraftInstance implements Listenable {
                 findPos(routeX, routeY, routeZ);
                 routeTimer.reset();
             }
-            Color color = new Color(255, 255, 255, 180);
-            synchronized (routePositions) {
-                GL11.glPushMatrix();
-                GL11.glDisable(GL11.GL_TEXTURE_2D);
-                GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                GL11.glEnable(GL11.GL_LINE_SMOOTH);
-                GL11.glEnable(GL11.GL_BLEND);
-                GL11.glDisable(GL11.GL_DEPTH_TEST);
-                mc.entityRenderer.disableLightmap();
-                GL11.glBegin(GL11.GL_LINE_STRIP);
-                RenderUtils.glColor(color);
-                double renderPosX = mc.getRenderManager().viewerPosX;
-                double renderPosY = mc.getRenderManager().viewerPosY;
-                double renderPosZ = mc.getRenderManager().viewerPosZ;
-                for (Vec3 pos : routePositions) {
-                    GL11.glVertex3d(pos.getX() - renderPosX, pos.getY() - renderPosY, pos.getZ() - renderPosZ);
-                }
-                GL11.glColor4d(1.0, 1.0, 1.0, 1.0);
-                GL11.glEnd();
-                GL11.glEnable(GL11.GL_DEPTH_TEST);
-                GL11.glDisable(GL11.GL_LINE_SMOOTH);
-                GL11.glDisable(GL11.GL_BLEND);
-                GL11.glEnable(GL11.GL_TEXTURE_2D);
-                GL11.glPopMatrix();
-            }
+            RenderUtils.renderPathFinderLine(routePositions);
         } else if (!routePositions.isEmpty())
             routePositions.clear();
 

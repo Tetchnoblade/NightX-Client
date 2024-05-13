@@ -20,18 +20,15 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Timer;
+import net.minecraft.util.*;
+import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import static java.lang.Math.*;
-import static net.minecraft.client.renderer.GlStateManager.disableBlend;
-import static net.minecraft.client.renderer.GlStateManager.enableTexture2D;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
@@ -89,61 +86,58 @@ public final class RenderUtils extends MinecraftInstance {
         glEndList();
     }
 
-    /**
-     * Draw textured modal rect.
-     *
-     * @param x        the x
-     * @param y        the y
-     * @param textureX the texture x
-     * @param textureY the texture y
-     * @param width    the width
-     * @param height   the height
-     * @param zLevel   the z level
-     */
-    public static void drawTexturedModalRect(final int x, final int y, final int textureX, final int textureY, final int width, final int height, final float zLevel) {
-        final float f = 0.00390625F;
-        final float f1 = 0.00390625F;
-        final Tessellator tessellator = Tessellator.getInstance();
-        final WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        worldrenderer.pos(x, y + height, zLevel).tex((float) (textureX) * f, (float) (textureY + height) * f1).endVertex();
-        worldrenderer.pos(x + width, y + height, zLevel).tex((float) (textureX + width) * f, (float) (textureY + height) * f1).endVertex();
-        worldrenderer.pos(x + width, y, zLevel).tex((float) (textureX + width) * f, (float) (textureY) * f1).endVertex();
-        worldrenderer.pos(x, y, zLevel).tex((float) (textureX) * f, (float) (textureY) * f1).endVertex();
-        tessellator.draw();
+    public static void renderLine(final LinkedList<Vec3> positions) {
+        synchronized (positions) {
+            GL11.glPushMatrix();
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GL11.glEnable(GL11.GL_LINE_SMOOTH);
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
+            mc.entityRenderer.disableLightmap();
+            GL11.glBegin(GL11.GL_LINE_STRIP);
+            RenderUtils.glColor(new Color(255, 255, 255, 160));
+            double renderPosX = mc.getRenderManager().viewerPosX;
+            double renderPosY = mc.getRenderManager().viewerPosY;
+            double renderPosZ = mc.getRenderManager().viewerPosZ;
+            for (Vec3 pos : positions) {
+                GL11.glVertex3d(pos.xCoord - renderPosX, pos.yCoord - renderPosY, pos.zCoord - renderPosZ);
+            }
+            GL11.glColor4d(1.0, 1.0, 1.0, 1.0);
+            GL11.glEnd();
+            GL11.glEnable(GL11.GL_DEPTH_TEST);
+            GL11.glDisable(GL11.GL_LINE_SMOOTH);
+            GL11.glDisable(GL11.GL_BLEND);
+            GL11.glEnable(GL11.GL_TEXTURE_2D);
+            GL11.glPopMatrix();
+        }
     }
 
-    public static void drawRects(double left, double top, double right, double bottom, final int color) {
-        if (left < right) {
-            final double i = left;
-            left = right;
-            right = i;
+    public static void renderPathFinderLine(final LinkedList<net.aspw.client.utils.pathfinder.Vec3> positions) {
+        synchronized (positions) {
+            GL11.glPushMatrix();
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GL11.glEnable(GL11.GL_LINE_SMOOTH);
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
+            mc.entityRenderer.disableLightmap();
+            GL11.glBegin(GL11.GL_LINE_STRIP);
+            RenderUtils.glColor(new Color(255, 255, 255, 160));
+            double renderPosX = mc.getRenderManager().viewerPosX;
+            double renderPosY = mc.getRenderManager().viewerPosY;
+            double renderPosZ = mc.getRenderManager().viewerPosZ;
+            for (net.aspw.client.utils.pathfinder.Vec3 pos : positions) {
+                GL11.glVertex3d(pos.getX() - renderPosX, pos.getY() - renderPosY, pos.getZ() - renderPosZ);
+            }
+            GL11.glColor4d(1.0, 1.0, 1.0, 1.0);
+            GL11.glEnd();
+            GL11.glEnable(GL11.GL_DEPTH_TEST);
+            GL11.glDisable(GL11.GL_LINE_SMOOTH);
+            GL11.glDisable(GL11.GL_BLEND);
+            GL11.glEnable(GL11.GL_TEXTURE_2D);
+            GL11.glPopMatrix();
         }
-
-        if (top < bottom) {
-            final double j = top;
-            top = bottom;
-            bottom = j;
-        }
-
-        final float f3 = (float) (color >> 24 & 255) / 255.0F;
-        final float f = (float) (color >> 16 & 255) / 255.0F;
-        final float f1 = (float) (color >> 8 & 255) / 255.0F;
-        final float f2 = (float) (color & 255) / 255.0F;
-        final Tessellator tessellator = Tessellator.getInstance();
-        final WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        GlStateManager.enableBlend();
-        GlStateManager.disableTexture2D();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.color(f, f1, f2, f3);
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION);
-        worldrenderer.pos(left, bottom, 0.0D).endVertex();
-        worldrenderer.pos(right, bottom, 0.0D).endVertex();
-        worldrenderer.pos(right, top, 0.0D).endVertex();
-        worldrenderer.pos(left, top, 0.0D).endVertex();
-        tessellator.draw();
-        enableTexture2D();
-        disableBlend();
     }
 
     public static void drawRect(final Rectangle rect, final int color) {

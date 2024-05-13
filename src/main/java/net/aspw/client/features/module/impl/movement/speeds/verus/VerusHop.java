@@ -7,14 +7,8 @@ import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.utils.MovementUtils;
 import net.minecraft.potion.Potion;
 
-/**
- * The type Verus hop.
- */
 public class VerusHop extends SpeedMode {
 
-    /**
-     * Instantiates a new Verus hop.
-     */
     public VerusHop() {
         super("VerusHop");
     }
@@ -31,12 +25,11 @@ public class VerusHop extends SpeedMode {
                 if (mc.thePlayer.onGround) {
                     mc.thePlayer.jump();
                     if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                        MovementUtils.strafe(0.56f);
+                        MovementUtils.strafe(0.55f);
                     } else {
-                        MovementUtils.strafe(0.48f);
+                        MovementUtils.strafe(0.47f);
                     }
-                }
-                MovementUtils.strafe();
+                } else MovementUtils.strafe();
             }
         }
     }
