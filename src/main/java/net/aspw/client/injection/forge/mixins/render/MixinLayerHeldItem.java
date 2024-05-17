@@ -1,9 +1,6 @@
 package net.aspw.client.injection.forge.mixins.render;
 
-import net.aspw.client.Launch;
 import net.aspw.client.features.api.PacketManager;
-import net.aspw.client.features.module.impl.player.LegitScaffold;
-import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.block.Block;
@@ -24,7 +21,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import java.util.Objects;
 import java.util.UUID;
 
 @Mixin(LayerHeldItem.class)
@@ -40,13 +36,7 @@ public class MixinLayerHeldItem {
      */
     @Overwrite
     public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale) {
-        ItemStack itemstack;
-
-        if (Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getState() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer)
-            itemstack = MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getLastSlot());
-        else if (Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getState() && entitylivingbaseIn == MinecraftInstance.mc.thePlayer)
-            itemstack = MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getLastSlot());
-        else itemstack = entitylivingbaseIn.getHeldItem();
+        ItemStack itemstack = entitylivingbaseIn.getHeldItem();
 
         if (itemstack != null) {
             GlStateManager.pushMatrix();

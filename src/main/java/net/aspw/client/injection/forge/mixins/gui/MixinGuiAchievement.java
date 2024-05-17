@@ -16,7 +16,7 @@ public class MixinGuiAchievement {
     private void injectAchievements(CallbackInfo ci) {
         final Interface anInterface = Objects.requireNonNull(Launch.moduleManager.getModule(Interface.class));
 
-        if (anInterface.getState() && anInterface.getNoAchievement().get())
+        if (anInterface.getState() && anInterface.getNoAchievements().get())
             ci.cancel();
     }
 }

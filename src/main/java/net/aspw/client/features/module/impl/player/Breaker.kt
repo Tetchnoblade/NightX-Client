@@ -122,10 +122,6 @@ class Breaker : Module() {
 
         when {
             actionValue.get().equals("destroy", true) || surroundings -> {
-                val autoTool = Launch.moduleManager[AutoTool::class.java] as AutoTool
-                if (autoTool.state)
-                    autoTool.switchSlot(currentPos!!)
-
                 if (instantValue.get()) {
                     mc.netHandler.addToSendQueue(
                         C07PacketPlayerDigging(

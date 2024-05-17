@@ -4,10 +4,9 @@ import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.combat.KillAura;
 import net.aspw.client.features.module.impl.combat.KillAuraRecode;
 import net.aspw.client.features.module.impl.combat.TPAura;
-import net.aspw.client.features.module.impl.player.LegitScaffold;
-import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.VisualAbilities;
+import net.aspw.client.utils.PlayerUtils;
 import net.aspw.client.utils.TimerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -739,7 +738,7 @@ public abstract class MixinItemRenderer {
                         GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                 }
             } else {
-                if (Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getLastSlot()) == null && !abstractclientplayer.isInvisible() || Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getLastSlot()) == null && !abstractclientplayer.isInvisible())
+                if (PlayerUtils.INSTANCE.isSpoofing() && PlayerUtils.INSTANCE.isItemNull() && !abstractclientplayer.isInvisible())
                     this.renderPlayerArm(abstractclientplayer, 0.0F, f1);
 
                 if (Animations.swingAnimValue.get().equals("1.7")) {
@@ -748,30 +747,30 @@ public abstract class MixinItemRenderer {
                         GlStateManager.translate(-0.06F, 0.003F, 0.05F);
                     }
                     this.doItemUsedTransformations(f1);
-                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get() || Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getLastSlot()) != null || Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getLastSlot()) != null)
+                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get() || PlayerUtils.INSTANCE.isSpoofing() && !PlayerUtils.INSTANCE.isItemNull() && !PlayerUtils.isHeldItemNull() && PlayerUtils.cancelEquip())
                         this.transformFirstPersonItem(0.0F, f1);
                     else this.transformFirstPersonItem(f, f1);
                 }
                 if (Animations.swingAnimValue.get().equals("1.8")) {
                     this.doItemUsedTransformations(f1);
-                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get() || Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getLastSlot()) != null || Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getLastSlot()) != null)
+                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get() || PlayerUtils.INSTANCE.isSpoofing() && !PlayerUtils.INSTANCE.isItemNull() && !PlayerUtils.isHeldItemNull() && PlayerUtils.cancelEquip())
                         this.transformFirstPersonItem(0.0F, f1);
                     else this.transformFirstPersonItem(f, f1);
                 }
                 if (Animations.swingAnimValue.get().equals("Flux")) {
-                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get() || Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getLastSlot()) != null || Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getLastSlot()) != null)
+                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get() || PlayerUtils.INSTANCE.isSpoofing() && !PlayerUtils.INSTANCE.isItemNull() && !PlayerUtils.isHeldItemNull() && PlayerUtils.cancelEquip())
                         this.transformFirstPersonItem(0.0F, f1);
                     else this.transformFirstPersonItem(f, f1);
                 }
                 if (Animations.swingAnimValue.get().equals("Smooth")) {
-                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get() || Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getLastSlot()) != null || Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getLastSlot()) != null)
+                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get() || PlayerUtils.INSTANCE.isSpoofing() && !PlayerUtils.INSTANCE.isItemNull() && !PlayerUtils.isHeldItemNull() && PlayerUtils.cancelEquip())
                         this.transformFirstPersonItem(0.0F, f1);
                     else this.transformFirstPersonItem(f, f1);
                     func_178105_d(f1);
                 }
                 if (Animations.swingAnimValue.get().equals("Dash")) {
                     this.doItemUsedTransformations(f1);
-                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get() || Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getLastSlot()) != null || Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getLastSlot()) != null)
+                    if (Animations.cancelEquip.get() && !Animations.blockingOnly.get() || PlayerUtils.INSTANCE.isSpoofing() && !PlayerUtils.INSTANCE.isItemNull() && !PlayerUtils.isHeldItemNull() && PlayerUtils.cancelEquip())
                         this.transformFirstPersonItem(0.0F, 0.0F);
                     else this.transformFirstPersonItem(f, 0.0F);
                     func_178105_d(f1);
@@ -779,12 +778,9 @@ public abstract class MixinItemRenderer {
                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
             }
 
-            if (Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getLastSlot()) != null)
-                this.renderItem(abstractclientplayer, this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getLastSlot()), ItemCameraTransforms.TransformType.FIRST_PERSON);
-            else if (Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getState() && this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getLastSlot()) != null)
-                this.renderItem(abstractclientplayer, this.mc.thePlayer.inventory.getStackInSlot(Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getLastSlot()), ItemCameraTransforms.TransformType.FIRST_PERSON);
-            else
-                this.renderItem(abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
+            PlayerUtils.INSTANCE.setItemToRender(this.itemToRender);
+
+            this.renderItem(abstractclientplayer, PlayerUtils.spoofItem(), ItemCameraTransforms.TransformType.FIRST_PERSON);
         } else if (!abstractclientplayer.isInvisible()) {
             if (Animations.cancelEquip.get() && !Animations.blockingOnly.get())
                 this.renderPlayerArm(abstractclientplayer, 0.0F, f1);

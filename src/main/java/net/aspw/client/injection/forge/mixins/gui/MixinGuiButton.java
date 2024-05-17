@@ -63,7 +63,9 @@ public abstract class MixinGuiButton extends Gui {
 
             if (anInterface == null) return;
 
-            if (enabled && hovered) {
+            if (mc.currentScreen instanceof GuiMainMenu && enabled && hovered) {
+                alpha = 160;
+            } else if (enabled && hovered) {
                 alpha = 190;
             } else {
                 alpha = 120;

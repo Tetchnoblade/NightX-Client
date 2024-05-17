@@ -61,6 +61,9 @@ public abstract class MixinEntityRenderer {
     @Shadow
     private boolean lightmapUpdateNeeded;
 
+    @Shadow
+    private boolean cloudFog;
+
     protected MixinEntityRenderer(int[] lightmapColors, DynamicTexture lightmapTexture, float torchFlickerX, float bossColorModifier, float bossColorModifierPrev, Minecraft mc, float thirdPersonDistanceTemp, float thirdPersonDistance) {
         this.lightmapColors = lightmapColors;
         this.lightmapTexture = lightmapTexture;

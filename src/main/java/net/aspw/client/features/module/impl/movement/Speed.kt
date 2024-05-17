@@ -75,6 +75,7 @@ class Speed : Module() {
         YPort2(),
         Minemen(),
         NoRules(),
+        Sparky(),
         VerusHop(),
         VerusLowHop(),
         VerusFloat(),
@@ -271,7 +272,8 @@ class Speed : Module() {
             "SlowHop",
             "Jump",
             "Minemen",
-            "NoRules"
+            "NoRules",
+            "Sparky"
         ),
         "YPort",
         { typeValue.get().equals("server", ignoreCase = true) }) {

@@ -8,6 +8,7 @@ import java.io.InputStream;
 
 public abstract class FontLoaders {
 
+    public static CFontRenderer SF15 = new CFontRenderer(FontLoaders.getSF(15), true, true);
     public static CFontRenderer SF16 = new CFontRenderer(FontLoaders.getSF(16), true, true);
     public static CFontRenderer SF18 = new CFontRenderer(FontLoaders.getSF(18), true, true);
     public static CFontRenderer SF20 = new CFontRenderer(FontLoaders.getSF(20), true, true);

@@ -1,16 +1,15 @@
 package net.aspw.client.features.module.impl.visual
 
 import net.aspw.client.Launch
-import net.aspw.client.event.EventTarget
-import net.aspw.client.event.PacketEvent
-import net.aspw.client.event.Render2DEvent
-import net.aspw.client.event.TickEvent
+import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.features.module.impl.combat.KillAuraRecode
 import net.aspw.client.features.module.impl.combat.TPAura
+import net.aspw.client.features.module.impl.player.LegitScaffold
+import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.AnimationUtils
 import net.aspw.client.utils.render.RenderUtils
@@ -57,7 +56,9 @@ class Interface : Module() {
     private val pingValue = BoolValue("Ping", true)
     private val cFontValue = BoolValue("C-Font", true)
     val oldRotationRendererValue = BoolValue("CrazyRotation-Renderer", true)
-    val noAchievement = BoolValue("No-Achievements", true)
+    val itemVisualSpoofsValue = BoolValue("ItemVisualSpoof", true)
+    private val visualCancelSwingValue = BoolValue("VisualCancelSwing", true)
+    val noAchievements = BoolValue("No-Achievements", true)
     val nof5crossHair = BoolValue("NoF5-Crosshair", true)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)
     private val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F) { animHotbarValue.get() }
@@ -312,6 +313,15 @@ class Interface : Module() {
 
         if (Launch.moduleManager.toggleVolume != 83f)
             Launch.moduleManager.toggleVolume = 83f
+    }
+
+    @EventTarget
+    fun onUpdate(event: UpdateEvent) {
+        if (visualCancelSwingValue.get() && (Launch.moduleManager.getModule(Scaffold::class.java)?.state!! || Launch.moduleManager.getModule(
+                LegitScaffold::class.java
+            )?.state!!)
+        )
+            mc.thePlayer.isSwingInProgress = false
     }
 
     private fun drawHead(skin: ResourceLocation, x: Int = 2, y: Int = 2) {

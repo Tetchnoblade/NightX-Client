@@ -43,7 +43,6 @@ class SilentSneak : Module() {
                     )
                 }
                 sneaking = true
-                chat("fix")
             }
         }
     }

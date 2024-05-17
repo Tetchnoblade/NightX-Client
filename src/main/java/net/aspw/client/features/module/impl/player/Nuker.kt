@@ -1,6 +1,5 @@
 package net.aspw.client.features.module.impl.player
 
-import net.aspw.client.Launch
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
@@ -146,11 +145,6 @@ class Nuker : Module() {
                 // Set next target block
                 currentBlock = blockPos
                 attackedBlocks.add(blockPos)
-
-                // Call auto tool
-                val autoTool = Launch.moduleManager.getModule(AutoTool::class.java) as AutoTool
-                if (autoTool.state)
-                    autoTool.switchSlot(blockPos)
 
                 // Start block breaking
                 if (currentDamage == 0F) {

@@ -2,6 +2,7 @@ package net.aspw.client.features.module.impl.combat
 
 import net.aspw.client.event.AttackEvent
 import net.aspw.client.event.EventTarget
+import net.aspw.client.event.UpdateEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
@@ -16,10 +17,15 @@ import net.minecraft.network.play.client.C0BPacketEntityAction
     category = ModuleCategory.COMBAT
 )
 class WTap : Module() {
-    private val modeValue = ListValue("Mode", arrayOf("FullPacket", "LessPacket", "FakeSneak"), "FullPacket")
+    private val modeValue = ListValue("Mode", arrayOf("FullPacket", "FakeSneak", "Legit"), "FullPacket")
     private val delayValue = IntegerValue("Delay", 4, 1, 10)
 
     private val delayTimer = MSTimer()
+    private var attackTicks = 0
+
+    override fun onDisable() {
+        attackTicks = 0
+    }
 
     @EventTarget
     fun onAttack(event: AttackEvent) {
@@ -36,11 +42,6 @@ class WTap : Module() {
                     if (mc.thePlayer.isSprinting)
                         mc.thePlayer.isSprinting = true
                     mc.thePlayer.serverSprintState = true
-                }
-
-                "lesspacket" -> {
-                    mc.thePlayer.isSprinting = false
-                    mc.thePlayer.serverSprintState = false
                 }
 
                 "fakesneak" -> {
@@ -69,9 +70,28 @@ class WTap : Module() {
                         )
                     )
                 }
+
+                "legit" -> attackTicks = 2
             }
 
             delayTimer.reset()
+        }
+    }
+
+    @EventTarget
+    fun onUpdate(event: UpdateEvent) {
+        when (modeValue.get().lowercase()) {
+            "legit" -> {
+                if (MovementUtils.isMoving()) {
+                    if (attackTicks == 2) {
+                        mc.thePlayer.isSprinting = false
+                        attackTicks = 1
+                    } else if (attackTicks == 1) {
+                        mc.thePlayer.isSprinting = true
+                        attackTicks = 0
+                    }
+                } else if (attackTicks != 0) attackTicks = 0
+            }
         }
     }
 

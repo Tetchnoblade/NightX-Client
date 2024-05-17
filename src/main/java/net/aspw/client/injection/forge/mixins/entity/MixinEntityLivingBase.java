@@ -65,6 +65,9 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
     protected void updateEntityActionState() {
     }
 
+    @Shadow
+    public abstract void setSprinting(boolean p_setSprinting_1_);
+
     /**
      * @author As_pw
      * @reason Jump Event

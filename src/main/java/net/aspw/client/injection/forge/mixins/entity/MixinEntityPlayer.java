@@ -72,6 +72,8 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase {
         if (keepSprint.getState()) {
             this.motionX = this.motionX / 0.6;
             this.motionZ = this.motionZ / 0.6;
+            if (MinecraftInstance.mc.thePlayer.moveForward > 0)
+                this.setSprinting(true);
         }
     }
 }

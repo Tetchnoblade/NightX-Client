@@ -114,7 +114,7 @@ class Scaffold : Module() {
 
     // Timing
     @JvmField
-    val sprintModeValue = ListValue("SprintMode", arrayOf("Same", "Silent", "Ground", "Air", "Off"), "Same")
+    val sprintModeValue = ListValue("SprintMode", arrayOf("Same", "Ground", "Air", "Off"), "Same")
     private val placeConditionValue =
         ListValue("Place-Condition", arrayOf("Air", "FallDown", "NegativeMotion", "Always"), "Always")
 
@@ -479,7 +479,6 @@ class Scaffold : Module() {
                 mc.thePlayer.motionZ = 0.0
                 place()
                 if (shouldEagle) {
-                    mc.thePlayer.isSwingInProgress = false
                     KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
                     hypixelCount++
                 }
@@ -487,7 +486,6 @@ class Scaffold : Module() {
             if (hypixelCount >= 3) {
                 if (mc.thePlayer.posY >= launchY + 0.2) {
                     isHypixeling = true
-                    mc.thePlayer.isSwingInProgress = false
                     KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
                     hypixelCount++
                 }
@@ -546,14 +544,6 @@ class Scaffold : Module() {
             }
         }
 
-        // Sprint
-        if (sprintModeValue.get().equals("silent", ignoreCase = true)) {
-            if (packet is C0BPacketEntityAction &&
-                (packet.action == C0BPacketEntityAction.Action.STOP_SPRINTING || packet.action == C0BPacketEntityAction.Action.START_SPRINTING)
-            ) event.cancelEvent()
-        }
-
-        // AutoBlock
         if (packet is C09PacketHeldItemChange)
             slot = packet.slotId
     }
@@ -716,7 +706,6 @@ class Scaffold : Module() {
             mc.thePlayer.inventory.currentItem = InventoryUtils.findAutoBlockBlock() - 36
             mc.playerController.updateController()
         }
-        mc.thePlayer.isSwingInProgress = false
         if (startPlaceDelayValue.get() && faceBlock && !startPlaceTimer.hasTimePassed(startPlaceDelay.get())) {
             if (!mc.thePlayer.onGround)
                 startPlaceTimer.tick = startPlaceDelay.get()
@@ -767,22 +756,6 @@ class Scaffold : Module() {
         wdTick = 5
         canTower = false
         mc.gameSettings.keyBindSneak.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)
-        if (sprintModeValue.get().equals("silent", ignoreCase = true)) {
-            if (mc.thePlayer.isSprinting) {
-                PacketUtils.sendPacketNoEvent(
-                    C0BPacketEntityAction(
-                        mc.thePlayer,
-                        C0BPacketEntityAction.Action.STOP_SPRINTING
-                    )
-                )
-                PacketUtils.sendPacketNoEvent(
-                    C0BPacketEntityAction(
-                        mc.thePlayer,
-                        C0BPacketEntityAction.Action.START_SPRINTING
-                    )
-                )
-            }
-        }
         if (!GameSettings.isKeyDown(mc.gameSettings.keyBindRight)) mc.gameSettings.keyBindRight.pressed = false
         if (!GameSettings.isKeyDown(mc.gameSettings.keyBindLeft)) mc.gameSettings.keyBindLeft.pressed = false
         lockRotation = null

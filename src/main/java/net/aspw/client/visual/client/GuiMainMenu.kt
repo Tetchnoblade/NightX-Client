@@ -17,6 +17,8 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     private var alrUpdate = false
     private val buttonWidth = 112
     private val buttonHeight = 20
+    private var level = 0
+    private var ticks = 0
 
     override fun initGui() {
         this.buttonList.add(
@@ -100,10 +102,12 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         GL11.glPushMatrix()
         GlStateManager.disableAlpha()
         drawBackground(0)
+        loadGif()
         RenderUtils.drawImage(
-            ResourceLocation("client/background/mainmenu.png"), 0, 0,
+            ResourceLocation("client/background/mainmenu/$ticks.png"), 0, 0,
             width, height
         )
+        RenderUtils.drawGradientRect(0, 0, width, height, -13158600, -804253680)
         GlStateManager.enableAlpha()
         val apiMessage = if (APIConnecter.canConnect) "§eOK" else "§cNo"
         FontLoaders.SF20.drawStringWithShadow(
@@ -137,35 +141,38 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         val changeDetails = APIConnecter.changelogs.split("\n")
         for (i in changeDetails) {
             if (i.startsWith("~ ")) {
-                FontLoaders.SF16.drawStringWithShadow(
+                FontLoaders.SF15.drawStringWithShadow(
                     "§r $i".uppercase(),
                     4F.toDouble(),
                     changeY.toDouble(),
                     -1
                 )
             } else if (i.startsWith("+ ")) {
-                FontLoaders.SF16.drawStringWithShadow(
-                    "§a  $i",
+                val clear = i.replace("+ ", "").trim()
+                FontLoaders.SF15.drawStringWithShadow(
+                    "§7[§a+§7]  §r$clear",
                     4F.toDouble(),
                     changeY.toDouble(),
                     -1
                 )
             } else if (i.startsWith("- ")) {
-                FontLoaders.SF16.drawStringWithShadow(
-                    "§c  $i",
+                val clear = i.replace("- ", "").trim()
+                FontLoaders.SF15.drawStringWithShadow(
+                    "§7[§c-§7]  §r$clear",
                     4F.toDouble(),
                     changeY.toDouble(),
                     -1
                 )
             } else if (i.startsWith("* ")) {
-                FontLoaders.SF16.drawStringWithShadow(
-                    "§e  $i",
+                val clear = i.replace("* ", "").trim()
+                FontLoaders.SF15.drawStringWithShadow(
+                    "§7[§e*§7]  §r$clear",
                     4F.toDouble(),
                     changeY.toDouble(),
                     -1
                 )
             } else {
-                FontLoaders.SF16.drawStringWithShadow(
+                FontLoaders.SF15.drawStringWithShadow(
                     i,
                     4F.toDouble(),
                     changeY.toDouble(),
@@ -176,16 +183,16 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         }
         FontLoaders.SF21.drawStringWithShadow(
             "Known Bugs:",
-            (this.width - 3F - FontLoaders.SF21.getStringWidth("Known Bugs:")).toDouble(),
-            48F.toDouble(),
+            (this.width - 10F - FontLoaders.SF21.getStringWidth("Known Bugs:")).toDouble(),
+            43F.toDouble(),
             -1
         )
-        var bugsY = 60
+        var bugsY = 55
         val bugDetails = APIConnecter.bugs.split("\n")
         for (i in bugDetails) {
-            FontLoaders.SF20.drawStringWithShadow(
+            FontLoaders.SF15.drawStringWithShadow(
                 i,
-                (this.width - 4F - FontLoaders.SF20.getStringWidth(i)).toDouble(),
+                (this.width - 12F - FontLoaders.SF15.getStringWidth(i)).toDouble(),
                 bugsY.toDouble(),
                 -1
             )
@@ -215,5 +222,20 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         }
     }
 
+    private fun loadGif() {
+        level++
+        if (level >= 2) {
+            ticks++
+            level = 0
+        }
+        if (ticks > 149)
+            ticks = 0
+    }
+
     override fun keyTyped(typedChar: Char, keyCode: Int) {}
+
+    override fun onGuiClosed() {
+        level = 0
+        ticks = 0
+    }
 }

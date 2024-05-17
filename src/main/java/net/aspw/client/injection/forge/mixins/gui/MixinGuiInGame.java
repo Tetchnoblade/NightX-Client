@@ -3,11 +3,10 @@ package net.aspw.client.injection.forge.mixins.gui;
 import net.aspw.client.Launch;
 import net.aspw.client.event.Render2DEvent;
 import net.aspw.client.features.module.impl.other.SnakeGame;
-import net.aspw.client.features.module.impl.player.LegitScaffold;
-import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.features.module.impl.visual.Interface;
 import net.aspw.client.features.module.impl.visual.VisualAbilities;
 import net.aspw.client.utils.MinecraftInstance;
+import net.aspw.client.utils.PlayerUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.visual.font.semi.AWTFontRenderer;
 import net.minecraft.client.Minecraft;
@@ -87,13 +86,7 @@ public abstract class MixinGuiInGame extends Gui {
         final Minecraft mc = MinecraftInstance.mc;
         EntityPlayer entityPlayer = (EntityPlayer) mc.getRenderViewEntity();
 
-        int slot;
-
-        if (Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getState())
-            slot = Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class)).getLastSlot();
-        else if (Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getState())
-            slot = Objects.requireNonNull(Launch.moduleManager.getModule(LegitScaffold.class)).getLastSlot();
-        else slot = entityPlayer.inventory.currentItem;
+        int slot = PlayerUtils.renderGuiSlot(entityPlayer);
 
         final Interface anInterface = Objects.requireNonNull(Launch.moduleManager.getModule(Interface.class));
 
