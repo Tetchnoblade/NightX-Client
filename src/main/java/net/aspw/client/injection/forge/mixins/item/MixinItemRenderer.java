@@ -300,7 +300,7 @@ public abstract class MixinItemRenderer {
                             }
                             case "Hide": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
-                                if (Animations.swingAnimValue.get().equals("1.7")) {
+                                if (Animations.swingAnimValue.get().equals("1_7")) {
                                     if (f1 != 0.0F) {
                                         GlStateManager.scale(0.85F, 0.85F, 0.85F);
                                         GlStateManager.translate(-0.06F, 0.003F, 0.05F);
@@ -310,7 +310,7 @@ public abstract class MixinItemRenderer {
                                         this.transformFirstPersonItem(0.0F, f1);
                                     else this.transformFirstPersonItem(f, f1);
                                 }
-                                if (Animations.swingAnimValue.get().equals("1.8")) {
+                                if (Animations.swingAnimValue.get().equals("1_8")) {
                                     this.doItemUsedTransformations(f1);
                                     if (Animations.cancelEquip.get())
                                         this.transformFirstPersonItem(0.0F, f1);
@@ -634,7 +634,7 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
-                            case "1.8": {
+                            case "1_8": {
                                 GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
@@ -741,7 +741,7 @@ public abstract class MixinItemRenderer {
                 if (PlayerUtils.INSTANCE.isSpoofing() && PlayerUtils.INSTANCE.isItemNull() && !abstractclientplayer.isInvisible())
                     this.renderPlayerArm(abstractclientplayer, 0.0F, f1);
 
-                if (Animations.swingAnimValue.get().equals("1.7")) {
+                if (Animations.swingAnimValue.get().equals("1_7")) {
                     if (f1 != 0.0F) {
                         GlStateManager.scale(0.85F, 0.85F, 0.85F);
                         GlStateManager.translate(-0.06F, 0.003F, 0.05F);
@@ -751,7 +751,7 @@ public abstract class MixinItemRenderer {
                         this.transformFirstPersonItem(0.0F, f1);
                     else this.transformFirstPersonItem(f, f1);
                 }
-                if (Animations.swingAnimValue.get().equals("1.8")) {
+                if (Animations.swingAnimValue.get().equals("1_8")) {
                     this.doItemUsedTransformations(f1);
                     if (Animations.cancelEquip.get() && !Animations.blockingOnly.get() || PlayerUtils.INSTANCE.isSpoofing() && !PlayerUtils.INSTANCE.isItemNull() && !PlayerUtils.isHeldItemNull() && PlayerUtils.cancelEquip())
                         this.transformFirstPersonItem(0.0F, f1);

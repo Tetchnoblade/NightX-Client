@@ -51,7 +51,7 @@ public abstract class MixinModelBiped {
         }
         if (heldItemRight == 0 || heldItemRight == 2)
             return;
-        if (!Animations.thirdPersonBlockingValue.get().equals("Off") && PacketManager.isVisualBlocking && (Animations.thirdPersonBlockingValue.get().equals("1.7") || Animations.thirdPersonBlockingValue.get().equals("1.8"))) {
+        if (!Animations.thirdPersonBlockingValue.get().equals("Off") && PacketManager.isVisualBlocking && (Animations.thirdPersonBlockingValue.get().equals("1_7") || Animations.thirdPersonBlockingValue.get().equals("1_8"))) {
             this.bipedRightArm.rotateAngleX = this.bipedRightArm.rotateAngleX - ((float) Math.PI / 0.94f) * 0.034f;
             this.bipedRightArm.rotateAngleY = -0.5235988f;
         }

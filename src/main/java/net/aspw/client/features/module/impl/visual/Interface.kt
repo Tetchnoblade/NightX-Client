@@ -1,15 +1,16 @@
 package net.aspw.client.features.module.impl.visual
 
 import net.aspw.client.Launch
-import net.aspw.client.event.*
+import net.aspw.client.event.EventTarget
+import net.aspw.client.event.PacketEvent
+import net.aspw.client.event.Render2DEvent
+import net.aspw.client.event.TickEvent
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.features.module.impl.combat.KillAuraRecode
 import net.aspw.client.features.module.impl.combat.TPAura
-import net.aspw.client.features.module.impl.player.LegitScaffold
-import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.AnimationUtils
 import net.aspw.client.utils.render.RenderUtils
@@ -22,7 +23,6 @@ import net.aspw.client.visual.client.clickgui.smooth.SmoothClickGui
 import net.aspw.client.visual.client.clickgui.tab.NewUi
 import net.aspw.client.visual.font.semi.Fonts
 import net.aspw.client.visual.font.smooth.FontLoaders
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.ScaledResolution
@@ -46,20 +46,15 @@ import kotlin.math.pow
 class Interface : Module() {
     private val watermarkValue = BoolValue("WaterMark", true)
     private val clientNameValue = TextValue("ClientName", "NightX") { watermarkValue.get() }
-    private val watermarkFpsValue = BoolValue("WaterMark-ShowFPS", true) { watermarkValue.get() }
     private val arrayListValue = BoolValue("ArrayList", true)
     private val arrayListSpeedValue = FloatValue("ArrayList-AnimationSpeed", 0.3F, 0F, 0.6F) { arrayListValue.get() }
     private val targetHudValue = BoolValue("TargetHud", true)
     private val targetHudSpeedValue = FloatValue("TargetHud-AnimationSpeed", 3F, 0F, 6F) { targetHudValue.get() }
     private val targetHudXPosValue = FloatValue("TargetHud-XPos", 0F, -300F, 300F) { targetHudValue.get() }
     private val targetHudYPosValue = FloatValue("TargetHud-YPos", 0F, -300F, 300F) { targetHudValue.get() }
-    private val pingValue = BoolValue("Ping", true)
     private val cFontValue = BoolValue("C-Font", true)
-    val oldRotationRendererValue = BoolValue("CrazyRotation-Renderer", true)
     val itemVisualSpoofsValue = BoolValue("ItemVisualSpoof", true)
-    private val visualCancelSwingValue = BoolValue("VisualCancelSwing", true)
     val noAchievements = BoolValue("No-Achievements", true)
-    val nof5crossHair = BoolValue("NoF5-Crosshair", true)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)
     private val animHotbarSpeedValue = FloatValue("Hotbar-AnimationSpeed", 0.03F, 0.01F, 0.2F) { animHotbarValue.get() }
     val blackHotbarValue = BoolValue("Black-Hotbar", false)
@@ -87,14 +82,13 @@ class Interface : Module() {
         if (watermarkValue.get()) {
             val inputString = clientNameValue.get()
             val connectChecks = if (!APIConnecter.canConnect) " - Disconnected" else ""
-            val fpsChecks = if (watermarkFpsValue.get()) " [" + Minecraft.getDebugFPS() + " FPS]" else ""
             var firstChar = ""
             var restOfString = ""
             if (inputString != "") {
                 firstChar = inputString[0].toString()
                 restOfString = inputString.substring(1)
             }
-            val showName = "$firstChar§r§f$restOfString$fpsChecks$connectChecks"
+            val showName = "$firstChar§r§f$restOfString$connectChecks"
             if (cFontValue.get())
                 FontLoaders.SF20.drawStringWithShadow(showName, 2.0, 3.0, RenderUtils.skyRainbow(0, 0.5f, 1f).rgb)
             else Fonts.minecraftFont.drawStringWithShadow(showName, 2.0f, 3.0f, RenderUtils.skyRainbow(0, 0.5f, 1f).rgb)
@@ -276,15 +270,6 @@ class Interface : Module() {
                 }
             } else if (easingHealth != 0F) easingHealth = 0F
         }
-
-        if (pingValue.get()) {
-            val xPos = ScaledResolution(mc).scaledWidth
-            val yPos = ScaledResolution(mc).scaledHeight
-
-            if (cFontValue.get())
-                FontLoaders.SF20.drawStringWithShadow("Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms", (xPos - 4f - FontLoaders.SF20.getStringWidth("Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms")).toDouble(), (yPos - 12f).toDouble(), Color.WHITE.rgb)
-            else Fonts.minecraftFont.drawStringWithShadow("Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms", xPos - 4f - Fonts.minecraftFont.getStringWidth("Ping: " + mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID).responseTime + "ms"), yPos - 12f, Color.WHITE.rgb)
-        }
     }
 
     @EventTarget
@@ -313,15 +298,6 @@ class Interface : Module() {
 
         if (Launch.moduleManager.toggleVolume != 83f)
             Launch.moduleManager.toggleVolume = 83f
-    }
-
-    @EventTarget
-    fun onUpdate(event: UpdateEvent) {
-        if (visualCancelSwingValue.get() && (Launch.moduleManager.getModule(Scaffold::class.java)?.state!! || Launch.moduleManager.getModule(
-                LegitScaffold::class.java
-            )?.state!!)
-        )
-            mc.thePlayer.isSwingInProgress = false
     }
 
     private fun drawHead(skin: ResourceLocation, x: Int = 2, y: Int = 2) {

@@ -48,10 +48,9 @@ public abstract class MixinGuiInGame extends Gui {
 
     @Inject(method = "showCrosshair", at = @At("HEAD"), cancellable = true)
     private void injectCrosshair(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        final Interface anInterface = Objects.requireNonNull(Launch.moduleManager.getModule(Interface.class));
         final SnakeGame snakeGame = Objects.requireNonNull(Launch.moduleManager.getModule(SnakeGame.class));
 
-        if (snakeGame.getState() || MinecraftInstance.mc.gameSettings.thirdPersonView != 0 && anInterface.getNof5crossHair().get())
+        if (snakeGame.getState())
             callbackInfoReturnable.setReturnValue(false);
     }
 

@@ -8,5 +8,4 @@ object URLComponent {
     const val BUGS = "$WEBSITE/database/bugs.txt"
     const val CONFIGLIST = "$WEBSITE/configs/str/list.txt"
     const val CONFIGS = "$WEBSITE/configs/"
-    const val JAVAUPDATE = "https://www.java.com/download"
 }

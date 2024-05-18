@@ -20,7 +20,7 @@ class Animations : Module() {
         @JvmField
         val Sword = ListValue(
             "Mode", arrayOf(
-                "1.8",
+                "1_8",
                 "Hide",
                 "Swing",
                 "Old",
@@ -67,21 +67,21 @@ class Animations : Module() {
         @JvmField
         val swingAnimValue = ListValue(
             "Swing-Animation", arrayOf(
-                "1.7",
-                "1.8",
+                "1_7",
+                "1_8",
                 "Flux",
                 "Smooth",
                 "Dash"
-            ), "1.8"
+            ), "1_8"
         )
 
         @JvmField
         val thirdPersonBlockingValue = ListValue(
             "ThirdPerson-Blocking", arrayOf(
                 "Off",
-                "1.7",
-                "1.8"
-            ), "1.8"
+                "1_7",
+                "1_8"
+            ), "1_7"
         )
 
         @JvmField

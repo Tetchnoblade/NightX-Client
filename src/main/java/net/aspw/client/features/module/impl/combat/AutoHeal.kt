@@ -64,6 +64,7 @@ class AutoHeal : Module() {
     private val throwQueue = arrayListOf<Int>()
 
     val killAura = Launch.moduleManager.getModule(KillAura::class.java)
+    val killAuraRecode = Launch.moduleManager.getModule(KillAuraRecode::class.java)
     val scaffold = Launch.moduleManager.getModule(Scaffold::class.java)
     private val legitScaffold = Launch.moduleManager.getModule(LegitScaffold::class.java)
 
@@ -164,7 +165,7 @@ class AutoHeal : Module() {
                     oldSlot = mc.thePlayer.inventory.currentItem
                 }
 
-                if (throwing && !mc.thePlayer.isEating && !mc.thePlayer.isInWater && MovementUtils.isRidingBlock() && mc.inGameHasFocus && Display.isActive() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!! && !legitScaffold?.state!!) {
+                if (throwing && !mc.thePlayer.isEating && !mc.thePlayer.isInWater && MovementUtils.isRidingBlock() && mc.inGameHasFocus && Display.isActive() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && (!killAuraRecode?.state!! || !killAuraRecode.isTargeting) && !scaffold?.state!! && !legitScaffold?.state!!) {
                     if (mc.thePlayer.onGround) {
                         potting = false
                         RotationUtils.setTargetRotation(
@@ -286,7 +287,7 @@ class AutoHeal : Module() {
                     && !mc.thePlayer.isEating
                     && MovementUtils.isRidingBlock()
                     && !mc.thePlayer.isInWater
-                    && tickTimer.hasTimePassed(4) && (!killAura?.state!! || killAura.target == null) && !scaffold?.state!! && !legitScaffold?.state!!
+                    && tickTimer.hasTimePassed(4) && (!killAura?.state!! || killAura.target == null) && (!killAuraRecode?.state!! || !killAuraRecode.isTargeting) && !scaffold?.state!! && !legitScaffold?.state!!
                 ) {
                     val potionEffects = getPotionFromSlot(potIndex)
                     if (potionEffects != null) {

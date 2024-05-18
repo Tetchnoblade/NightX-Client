@@ -3,8 +3,6 @@ package net.aspw.client.visual.client.altmanager.menus
 import net.aspw.client.Launch
 import net.aspw.client.auth.account.CrackedAccount
 import net.aspw.client.features.module.impl.visual.Interface
-import net.aspw.client.utils.URLComponent
-import net.aspw.client.utils.misc.MiscUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.minecraft.client.gui.GuiButton
@@ -26,9 +24,7 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
         Keyboard.enableRepeatEvents(true)
 
         // Login via Microsoft account
-        if (Launch.useAltManager)
-            buttonList.add(GuiButton(3, width / 2 - 100, 133, "Microsoft Login"))
-        else buttonList.add(GuiButton(4, width / 2 - 100, 133, "Set Java Path for Microsoft Login"))
+        buttonList.add(GuiButton(3, width / 2 - 100, 133, "Microsoft Login"))
 
         // Add and back button
         buttonList.add(
@@ -85,8 +81,6 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
             1 -> checkAndAddAccount(username.text, account = CrackedAccount())
 
             3 -> mc.displayGuiScreen(GuiMicrosoftLogin(this))
-
-            4 -> MiscUtils.showURL(URLComponent.JAVAUPDATE)
         }
     }
 

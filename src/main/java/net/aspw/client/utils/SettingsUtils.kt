@@ -5,7 +5,6 @@ import net.aspw.client.features.api.MacroManager
 import net.aspw.client.features.module.impl.exploit.Plugins
 import net.aspw.client.features.module.impl.other.DiscordRPC
 import net.aspw.client.features.module.impl.other.SnakeGame
-import net.aspw.client.features.module.impl.other.ThunderNotifier
 import net.aspw.client.features.module.impl.player.Freecam
 import net.aspw.client.features.module.impl.visual.*
 import net.aspw.client.utils.misc.HttpUtils.get
@@ -141,7 +140,7 @@ object SettingsUtils {
         MacroManager.macroMapping.filter { it.key != 0 }
             .forEach { stringBuilder.append("macro ${it.key} ${it.value}").append("\n") }
 
-        Launch.moduleManager.modules.filter { it !is SnakeGame && it !is TargetESP && it !is Gui && it !is Cape && it !is Trajectories && it !is XRay && it !is MotionBlur && it !is DiscordRPC && it !is CustomModel && it !is EnchantColor && it !is ItemPhysics && it !is StreamerMode && it !is Tracers && it !is Freecam && it !is Plugins && it !is ThunderNotifier && it !is Interface && it !is Animations }
+        Launch.moduleManager.modules.filter { it !is SnakeGame && it !is TargetESP && it !is Gui && it !is Cape && it !is Trajectories && it !is XRay && it !is MotionBlur && it !is DiscordRPC && it !is CustomModel && it !is EnchantColor && it !is ItemPhysics && it !is StreamerMode && it !is Tracers && it !is Freecam && it !is Plugins && it !is Interface && it !is Animations }
             .forEach {
                 if (values)
                     it.values.forEach { value ->

@@ -37,6 +37,8 @@ class XRay : Module() {
         Blocks.end_portal_frame,
         Blocks.enchanting_table,
         Blocks.bookshelf,
+        Blocks.chest,
+        Blocks.trapped_chest,
         Blocks.command_block,
         Blocks.lava,
         Blocks.flowing_lava,

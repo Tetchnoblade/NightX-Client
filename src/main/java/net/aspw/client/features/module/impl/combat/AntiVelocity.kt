@@ -441,8 +441,11 @@ class AntiVelocity : Module() {
                 }
 
                 "minemen" -> {
-                    if (velocity > 20) {
+                    if (velocity > 14) {
                         if (packet.entityID == mc.thePlayer.entityId) {
+                            mc.thePlayer.motionX = packet.getMotionX().toDouble() / 42000.0
+                            mc.thePlayer.motionY = packet.getMotionY().toDouble() / 8000.0
+                            mc.thePlayer.motionZ = packet.getMotionZ().toDouble() / 42000.0
                             event.cancelEvent()
                             velocity = 0
                         }

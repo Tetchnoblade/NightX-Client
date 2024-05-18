@@ -9,7 +9,6 @@ import net.aspw.client.features.api.PacketManager
 import net.aspw.client.features.command.CommandManager
 import net.aspw.client.features.module.ModuleManager
 import net.aspw.client.features.module.impl.other.BrandSpoofer
-import net.aspw.client.features.module.impl.other.ThunderNotifier
 import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.features.module.impl.visual.SilentRotations
 import net.aspw.client.features.module.impl.visual.TargetESP
@@ -24,7 +23,7 @@ object Launch {
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Client"
-    const val CLIENT_VERSION = "B122"
+    const val CLIENT_VERSION = "B123"
     const val CLIENT_CHAT = "§7[§5N§di§3g§bh§6t§aX§7] [§eInfo§7] §r"
 
     var isStarting = false
@@ -39,11 +38,6 @@ object Launch {
     lateinit var clickGui: ClickGui
 
     private var lastTick: Long = 0L
-
-    private var javaVersion =
-        System.getProperty("java.version").substring(6, minOf(9, System.getProperty("java.version").length))
-            .toIntOrNull() ?: 0
-    var useAltManager = javaVersion >= 181 && MinecraftInstance.mc.isJava64bit
 
     // Discord RPC
     lateinit var discordRPC: DiscordRPC
@@ -103,7 +97,6 @@ object Launch {
             moduleManager.getModule(BrandSpoofer::class.java)?.state = true
             moduleManager.getModule(TargetESP::class.java)?.state = true
             moduleManager.getModule(net.aspw.client.features.module.impl.other.DiscordRPC::class.java)?.state = true
-            moduleManager.getModule(ThunderNotifier::class.java)?.state = true
             moduleManager.getModule(Trajectories::class.java)?.state = true
         }
 

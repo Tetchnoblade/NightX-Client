@@ -235,6 +235,12 @@ class InvManager : Module() {
         return try {
             val item = itemStack.item
 
+            if (item == Item.getItemById(88) || item == Item.getItemById(269) || item == Item.getItemById(273) || item == Item.getItemById(
+                    284
+                ) || item == Item.getItemById(256) || item == Item.getItemById(277)
+            )
+                return false
+
             if (item is ItemTool) {
                 val harvestLevel = item.toolMaterial.harvestLevel
 
