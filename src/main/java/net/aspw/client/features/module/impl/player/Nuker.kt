@@ -18,9 +18,11 @@ import net.minecraft.block.BlockLiquid
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemSword
 import net.minecraft.network.play.client.C07PacketPlayerDigging
+import net.minecraft.network.play.client.C0APacketAnimation
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.Vec3
+import java.util.*
 import kotlin.math.roundToInt
 
 @ModuleInfo(name = "Nuker", category = ModuleCategory.PLAYER)
@@ -33,6 +35,7 @@ class Nuker : Module() {
     private val radiusValue = FloatValue("Radius", 4.2F, 1F, 6F)
     private val throughWallsValue = BoolValue("ThroughWalls", true)
     private val priorityValue = ListValue("Priority", arrayOf("Distance", "Hardness"), "Distance")
+    private val swingValue = ListValue("Swing", arrayOf("Normal", "Packet", "None"), "Packet")
     private val rotationsValue = BoolValue("Rotations", true)
     private val layerValue = BoolValue("Layer", false)
     private val hitDelayValue = IntegerValue("HitDelay", 0, 0, 20)
@@ -183,6 +186,14 @@ class Nuker : Module() {
                     blockHitDelay = hitDelayValue.get()
                     currentDamage = 0F
                 }
+
+                if (isBreaking) {
+                    when (swingValue.get().lowercase(Locale.getDefault())) {
+                        "normal" -> mc.thePlayer.swingItem()
+                        "packet" -> mc.netHandler.addToSendQueue(C0APacketAnimation())
+                    }
+                }
+
                 return // Break out
             } while (nuke < nukeValue.get())
         } else {

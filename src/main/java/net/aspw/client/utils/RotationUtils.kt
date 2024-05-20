@@ -139,7 +139,9 @@ class RotationUtils : MinecraftInstance(), Listenable {
                 prevCameraYaw = cameraYaw
                 prevCameraPitch = cameraPitch
                 cameraYaw += f3 * 0.15f
-                cameraPitch -= f4 * 0.15f
+                if (mc.gameSettings.invertMouse)
+                    cameraPitch += f4 * 0.15f
+                else cameraPitch -= f4 * 0.15f
                 if (cameraPitch > 90) cameraPitch = 90f
                 if (cameraPitch < -90) cameraPitch = -90f
             }
