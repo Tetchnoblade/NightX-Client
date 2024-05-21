@@ -35,10 +35,6 @@ public class FileManager extends MinecraftInstance {
      */
     public final File soundsDir = new File(dir, "sounds");
     /**
-     * The Sounds dir.
-     */
-    public final File capesDir = new File(dir, "capes");
-    /**
      * The Modules config.
      */
     public final FileConfig modulesConfig = new ModulesConfig(new File(dir, "toggled.json"));
@@ -74,9 +70,6 @@ public class FileManager extends MinecraftInstance {
 
         if (!soundsDir.exists())
             soundsDir.mkdir();
-
-        if (!capesDir.exists())
-            capesDir.mkdir();
     }
 
     /**

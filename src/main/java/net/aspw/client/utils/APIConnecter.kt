@@ -1,6 +1,7 @@
 package net.aspw.client.utils
 
 import net.aspw.client.Launch
+import net.minecraft.client.renderer.texture.DynamicTexture
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper
@@ -37,8 +38,8 @@ object APIConnecter {
     var mushstafflist = ""
     var hypixelstafflist = ""
 
-    private var donorCapeLocations = mutableListOf<Pair<String, ResourceLocation>>()
-    private var donorIDs = mutableListOf<String>()
+    var donorCapeLocations = mutableListOf<Pair<String, BufferedImage>>()
+    var donorIDs = mutableListOf<String>()
 
     private val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
         override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {}
@@ -60,52 +61,34 @@ object APIConnecter {
             val nameClient = OkHttpClient.Builder()
                 .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
                 .build()
-            val builder = Request.Builder().url(URLComponent.DONORS + "users.txt")
-            val nameRequest: Request = builder.build()
+            val nameBuilder = Request.Builder().url(URLComponent.DONORS + "users.txt")
+            val nameRequest: Request = nameBuilder.build()
             nameClient.newCall(nameRequest).execute().use { response ->
                 gotNames = response.body!!.string()
             }
             val details = gotNames.split("///")
             for (i in details) {
-                var gotCapeImage: BufferedImage?
+                var gotCapes: BufferedImage
                 val name = i.split(":")[0]
                 val cape = i.split(":")[1]
                 tlsAuthConnectionFixes()
-                val client = OkHttpClient()
-                val request = Request.Builder()
-                    .url(URLComponent.DONORS + cape)
+                val donorClient = OkHttpClient.Builder()
+                    .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
                     .build()
-                client.newCall(request).execute().use { response ->
-                    gotCapeImage = response.body?.byteStream()?.let { ImageIO.read(it) }
+                val donorBuilder = Request.Builder().url(URLComponent.DONORS + cape)
+                val donorRequest: Request = donorBuilder.build()
+                donorClient.newCall(donorRequest).execute().use { response ->
+                    gotCapes = response.body?.byteStream().let { ImageIO.read(it) }
                 }
                 donorIDs.add(name)
-                val file = File(Launch.fileManager.capesDir, cape)
-                ImageIO.write(gotCapeImage, "PNG", file)
-                val sourcePath = Paths.get(Launch.fileManager.capesDir.canonicalPath, cape)
-                val targetPath = Paths.get("src", "main", "resources", "assets", "minecraft", "client", "cape", "cache", cape)
-                if (sourcePath.exists() && targetPath.exists()) {
-                    ClientUtils.getLogger().info("Copying...")
-                    Files.copy(sourcePath, targetPath)
-                }
-                donorCapeLocations.add(Pair(name, ResourceLocation("client/cape/cache/$cape")))
+                donorCapeLocations.add(Pair(name, gotCapes))
             }
             canConnect = true
             ClientUtils.getLogger().info("Loaded Donor Capes")
         } catch (e: Exception) {
-            println(e)
             canConnect = false
             ClientUtils.getLogger().info("Failed to load Donor Capes")
         }
-    }
-
-    fun loadDonorCape(player: EntityPlayer): ResourceLocation? {
-        if (player.name in donorIDs) {
-            for ((i, l) in donorCapeLocations) {
-                if (i == player.name)
-                    return l
-            }
-        }
-        return null
     }
 
     fun checkStatus() {

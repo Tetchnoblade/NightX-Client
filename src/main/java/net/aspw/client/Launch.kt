@@ -67,9 +67,6 @@ object Launch {
         eventManager.registerListener(SessionUtils())
         eventManager.registerListener(MacroManager)
 
-        // Init Discord RPC
-        discordRPC = DiscordRPC()
-
         // Create command manager
         commandManager = CommandManager()
 
@@ -111,6 +108,9 @@ object Launch {
         APIConnecter.checkBugs()
         APIConnecter.checkStaffList()
         APIConnecter.loadDonors()
+
+        // Init Discord RPC
+        discordRPC = DiscordRPC()
 
         ClientUtils.getLogger().info("Launched!")
 
