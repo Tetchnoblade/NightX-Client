@@ -6,6 +6,7 @@ object URLComponent {
     const val STAFFS = "$WEBSITE/database/staffs.txt"
     const val CHANGELOGS = "$WEBSITE/database/changelogs.txt"
     const val BUGS = "$WEBSITE/database/bugs.txt"
+    const val DONORS = "$WEBSITE/donors/"
     const val CONFIGLIST = "$WEBSITE/configs/str/list.txt"
     const val CONFIGS = "$WEBSITE/configs/"
 }

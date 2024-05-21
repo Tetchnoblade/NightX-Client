@@ -218,6 +218,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                 APIConnecter.checkChangelogs()
                 APIConnecter.checkBugs()
                 APIConnecter.checkStaffList()
+                APIConnecter.loadDonors()
             }
         }
     }

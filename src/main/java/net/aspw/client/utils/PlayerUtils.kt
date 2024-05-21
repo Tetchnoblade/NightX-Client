@@ -19,8 +19,6 @@ object PlayerUtils {
     var isItemNull = false
     var itemToRender: ItemStack? = null
 
-    var predicting = false
-
     private val anInterface = Launch.moduleManager.getModule(Interface::class.java)
     private val scaffold = Launch.moduleManager.getModule(Scaffold::class.java)
     private val legitScaffold = Launch.moduleManager.getModule(LegitScaffold::class.java)
@@ -73,44 +71,5 @@ object PlayerUtils {
     @JvmStatic
     fun cancelEquip(): Boolean {
         return scaffold?.state!! || legitScaffold?.state!!
-    }
-
-    @JvmStatic
-    fun predict(tick: Int): LinkedList<Vec3> {
-        predicting = true
-        val positions = LinkedList<Vec3>()
-        val sp = EntityPlayerSP(
-            MinecraftInstance.mc,
-            MinecraftInstance.mc.theWorld,
-            MinecraftInstance.mc.netHandler,
-            StatFileWriter()
-        )
-        sp.setPositionAndRotation(
-            MinecraftInstance.mc.thePlayer.posX,
-            MinecraftInstance.mc.thePlayer.posY,
-            MinecraftInstance.mc.thePlayer.posZ,
-            MinecraftInstance.mc.thePlayer.rotationYaw,
-            MinecraftInstance.mc.thePlayer.rotationPitch
-        )
-        sp.onGround = MinecraftInstance.mc.thePlayer.onGround
-        sp.isSprinting = MinecraftInstance.mc.thePlayer.isSprinting
-        sp.isSneaking = MinecraftInstance.mc.thePlayer.isSneaking
-        sp.motionX = MinecraftInstance.mc.thePlayer.motionX
-        sp.motionY = MinecraftInstance.mc.thePlayer.motionY
-        sp.motionZ = MinecraftInstance.mc.thePlayer.motionZ
-        sp.movementInput = MovementInputFromOptions(MinecraftInstance.mc.gameSettings)
-        for (i in 0 until tick) {
-            sp.movementInput.moveStrafe = MinecraftInstance.mc.thePlayer.movementInput.moveStrafe
-            sp.movementInput.moveForward = MinecraftInstance.mc.thePlayer.movementInput.moveForward
-            sp.movementInput.jump = MinecraftInstance.mc.thePlayer.movementInput.jump
-            sp.movementInput.sneak = MinecraftInstance.mc.thePlayer.movementInput.sneak
-            sp.moveForward = MinecraftInstance.mc.thePlayer.moveForward
-            sp.moveStrafing = MinecraftInstance.mc.thePlayer.moveStrafing
-            sp.setJumping(MinecraftInstance.mc.thePlayer.movementInput.jump)
-            sp.onUpdate()
-            positions.add(Vec3(sp.posX, sp.posY, sp.posZ))
-        }
-        predicting = false
-        return positions
     }
 }

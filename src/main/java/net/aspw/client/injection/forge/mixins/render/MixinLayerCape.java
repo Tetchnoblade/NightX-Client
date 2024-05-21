@@ -3,6 +3,7 @@ package net.aspw.client.injection.forge.mixins.render;
 import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.player.Freecam;
 import net.aspw.client.features.module.impl.player.ReverseFreecam;
+import net.aspw.client.utils.APIConnecter;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
@@ -11,7 +12,12 @@ import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.struct.InjectorGroupInfo;
+import scala.collection.mutable.MutableList;
 
+import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Mixin(LayerCape.class)
@@ -34,7 +40,9 @@ public class MixinLayerCape {
     public void doRenderLayer(final AbstractClientPlayer entitylivingbaseIn, final float p_177141_2_, final float p_177141_3_, final float partialTicks, final float p_177141_5_, final float p_177141_6_, final float p_177141_7_, final float scale) {
         if (entitylivingbaseIn.getLocationCape() != null && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && (!Objects.requireNonNull(Launch.moduleManager.getModule(Freecam.class)).getState() || entitylivingbaseIn != Objects.requireNonNull(Launch.moduleManager.getModule(Freecam.class)).getFakePlayer()) && (!Objects.requireNonNull(Launch.moduleManager.getModule(ReverseFreecam.class)).getState() || entitylivingbaseIn != Objects.requireNonNull(Launch.moduleManager.getModule(ReverseFreecam.class)).getFakePlayer())) {
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.playerRenderer.bindTexture(entitylivingbaseIn.getLocationCape());
+            if (APIConnecter.INSTANCE.loadDonorCape(entitylivingbaseIn) != null)
+                this.playerRenderer.bindTexture(APIConnecter.INSTANCE.loadDonorCape(entitylivingbaseIn));
+            else this.playerRenderer.bindTexture(entitylivingbaseIn.getLocationCape());
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, 0.0F, 0.125F);
             double d0 = entitylivingbaseIn.prevChasingPosX + (entitylivingbaseIn.chasingPosX - entitylivingbaseIn.prevChasingPosX) * (double) partialTicks - (entitylivingbaseIn.prevPosX + (entitylivingbaseIn.posX - entitylivingbaseIn.prevPosX) * (double) partialTicks);

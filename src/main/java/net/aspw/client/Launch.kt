@@ -52,12 +52,6 @@ object Launch {
 
         lastTick = System.currentTimeMillis()
 
-        // Check update
-        APIConnecter.checkStatus()
-        APIConnecter.checkChangelogs()
-        APIConnecter.checkBugs()
-        APIConnecter.checkStaffList()
-
         // Create file manager
         fileManager = FileManager()
 
@@ -111,6 +105,13 @@ object Launch {
 
         clickGui = ClickGui()
 
+        // Check update
+        APIConnecter.checkStatus()
+        APIConnecter.checkChangelogs()
+        APIConnecter.checkBugs()
+        APIConnecter.checkStaffList()
+        APIConnecter.loadDonors()
+
         ClientUtils.getLogger().info("Launched!")
 
         isStarting = false
@@ -129,5 +130,4 @@ object Launch {
         // Shutdown discord rpc
         discordRPC.shutdown()
     }
-
 }
