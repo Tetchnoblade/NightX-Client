@@ -40,7 +40,9 @@ public class MixinLayerHeldItem {
 
         if (itemstack != null) {
             GlStateManager.pushMatrix();
-            GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
+
+            if (entitylivingbaseIn == MinecraftInstance.mc.thePlayer)
+                GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
 
             if (this.livingEntityRenderer.getMainModel().isChild) {
                 float f = 0.5F;

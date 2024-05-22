@@ -239,13 +239,13 @@ public abstract class MixinItemRenderer {
                                 break;
                             }
                             case "Leaked": {
-                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.08, Animations.blockPosY.get().doubleValue() - 0.03, Animations.blockPosZ.get().doubleValue() - 0.02);
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue() + 0.08, Animations.blockPosY.get().doubleValue() + 0.02, Animations.blockPosZ.get().doubleValue());
                                 final float var = MathHelper.sin((float) (MathHelper.sqrt_float(f1) * Math.PI));
                                 if (Animations.cancelEquip.get())
                                     transformFirstPersonItem(0.0F, 0.0f);
                                 else transformFirstPersonItem(f / 1.4F, 0.0f);
                                 doBlockTransformations();
-                                GlStateManager.rotate(-var * 35.5F, 1.0F, 0.7F, -0.2F);
+                                GlStateManager.rotate(-var * 42.5F, 1.1F, 0.8F, -0.3F);
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
@@ -592,6 +592,18 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.rotate(-var9 * 40.0F / 2.0F, var9 / 2.0F, 1.0F, 4.0F);
                                 GlStateManager.rotate(-var9 * 30.0F, 1.0F, var9 / 3.0F, -0.0F);
                                 doBlockTransformations();
+                                GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
+                                break;
+                            }
+                            case "Yamato": {
+                                GL11.glTranslated(Animations.blockPosX.get().doubleValue(), Animations.blockPosY.get().doubleValue(), Animations.blockPosZ.get().doubleValue());
+                                final float var9 = MathHelper.sin(MathHelper.sqrt_float(f1) * 3.1415927F);
+                                GL11.glTranslated(0.0D, 0.0D, 0.0D);
+                                if (Animations.cancelEquip.get())
+                                    this.transformFirstPersonItem(0.0F, 0.0F);
+                                else this.transformFirstPersonItem(f / 2.5f, 0.0f);
+                                doBlockTransformations();
+                                GL11.glRotatef(-var9 * 200F / 2.0F, -9.0F, 5.0F, 9.0F);
                                 GlStateManager.scale(Animations.scale.get() + 1, Animations.scale.get() + 1, Animations.scale.get() + 1);
                                 break;
                             }
