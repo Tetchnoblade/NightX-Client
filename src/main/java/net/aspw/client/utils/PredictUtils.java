@@ -4,11 +4,8 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.stats.StatFileWriter;
 import net.minecraft.util.MovementInputFromOptions;
 import net.minecraft.util.Vec3;
-import scala.collection.mutable.MutableList;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public class PredictUtils extends MinecraftInstance {
 

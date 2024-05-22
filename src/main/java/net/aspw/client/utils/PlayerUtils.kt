@@ -5,13 +5,8 @@ import net.aspw.client.features.module.impl.player.AutoTool
 import net.aspw.client.features.module.impl.player.LegitScaffold
 import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.features.module.impl.visual.Interface
-import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.stats.StatFileWriter
-import net.minecraft.util.MovementInputFromOptions
-import net.minecraft.util.Vec3
-import java.util.*
 
 object PlayerUtils {
 

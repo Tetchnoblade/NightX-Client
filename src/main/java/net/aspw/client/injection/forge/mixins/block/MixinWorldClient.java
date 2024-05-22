@@ -1,6 +1,5 @@
 package net.aspw.client.injection.forge.mixins.block;
 
-import net.aspw.client.utils.PlayerUtils;
 import net.aspw.client.utils.PredictUtils;
 import net.minecraft.client.multiplayer.WorldClient;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,16 +1,13 @@
 package net.aspw.client.utils
 
 import net.aspw.client.Launch
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.texture.DynamicTexture
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.awt.image.BufferedImage
-import java.io.IOException
 import java.net.URL
-import java.util.UUID
 import javax.imageio.ImageIO
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
@@ -74,7 +71,15 @@ object APIConnecter {
                 val cape = i.split(":")[1]
                 tlsAuthConnectionFixes()
                 gotCapes = ImageIO.read(URL(URLComponent.DONORS + cape))
-                donorCapeLocations.add(Pair(uuid, MinecraftInstance.mc.textureManager.getDynamicTextureLocation(Launch.CLIENT_FOLDER, DynamicTexture(gotCapes))))
+                donorCapeLocations.add(
+                    Pair(
+                        uuid,
+                        MinecraftInstance.mc.textureManager.getDynamicTextureLocation(
+                            Launch.CLIENT_FOLDER,
+                            DynamicTexture(gotCapes)
+                        )
+                    )
+                )
             }
             canConnect = true
             ClientUtils.getLogger().info("Loaded Donor Capes")

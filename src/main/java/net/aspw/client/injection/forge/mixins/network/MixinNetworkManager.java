@@ -6,7 +6,6 @@ import net.aspw.client.Launch;
 import net.aspw.client.event.PacketEvent;
 import net.aspw.client.features.module.impl.combat.BackTrack;
 import net.aspw.client.utils.PacketUtils;
-import net.aspw.client.utils.PlayerUtils;
 import net.aspw.client.utils.PredictUtils;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.NetworkManager;

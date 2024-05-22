@@ -1,22 +1,17 @@
 package net.aspw.client.injection.forge.mixins.entity;
 
-import kotlin.Pair;
 import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.visual.Cape;
 import net.aspw.client.features.module.impl.visual.Interface;
-import net.aspw.client.utils.APIConnecter;
 import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.Objects;
 
 @Mixin(AbstractClientPlayer.class)
 public abstract class MixinAbstractClientPlayer extends MixinEntityPlayer {

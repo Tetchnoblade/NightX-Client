@@ -6,7 +6,6 @@ import net.aspw.client.features.module.impl.combat.HitBox;
 import net.aspw.client.features.module.impl.movement.Flight;
 import net.aspw.client.utils.EntityUtils;
 import net.aspw.client.utils.MinecraftInstance;
-import net.aspw.client.utils.PlayerUtils;
 import net.aspw.client.utils.PredictUtils;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandSender;

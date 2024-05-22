@@ -1,6 +1,5 @@
 package net.aspw.client.injection.forge.mixins.block;
 
-import net.aspw.client.utils.PlayerUtils;
 import net.aspw.client.utils.PredictUtils;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;

@@ -102,7 +102,10 @@ class Interface : Module() {
                 if (module.array && (module.state || module.slide != 0F)) {
                     val displayString = getModName(module)
 
-                    val width = if (cFontValue.get()) FontLoaders.SF20.getStringWidth(displayString) else Fonts.minecraftFont.getStringWidth(displayString)
+                    val width =
+                        if (cFontValue.get()) FontLoaders.SF20.getStringWidth(displayString) else Fonts.minecraftFont.getStringWidth(
+                            displayString
+                        )
 
                     if (module.state) {
                         if (module.slide < width) {
@@ -134,15 +137,33 @@ class Interface : Module() {
                 counter[0] = counter[0] - 1
 
                 if (cFontValue.get())
-                    FontLoaders.SF20.drawStringWithShadow(displayString, xPos.toDouble(), module.arrayY + textY.toDouble(), RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb)
-                else Fonts.minecraftFont.drawStringWithShadow(displayString, xPos, module.arrayY + textY, RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb)
+                    FontLoaders.SF20.drawStringWithShadow(
+                        displayString,
+                        xPos.toDouble(),
+                        module.arrayY + textY.toDouble(),
+                        RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb
+                    )
+                else Fonts.minecraftFont.drawStringWithShadow(
+                    displayString,
+                    xPos,
+                    module.arrayY + textY,
+                    RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb
+                )
             }
             GlStateManager.resetColor()
             modules = Launch.moduleManager.modules
                 .filter { it.array && it.slide > 0 }
-                .sortedBy { if (cFontValue.get()) -FontLoaders.SF20.getStringWidth(getModName(it)) else -Fonts.minecraftFont.getStringWidth(getModName(it)) }
+                .sortedBy {
+                    if (cFontValue.get()) -FontLoaders.SF20.getStringWidth(getModName(it)) else -Fonts.minecraftFont.getStringWidth(
+                        getModName(it)
+                    )
+                }
             sortedModules =
-                Launch.moduleManager.modules.sortedBy { if (cFontValue.get()) -FontLoaders.SF20.getStringWidth(getModName(it)) else -Fonts.minecraftFont.getStringWidth(getModName(it)) }.toList()
+                Launch.moduleManager.modules.sortedBy {
+                    if (cFontValue.get()) -FontLoaders.SF20.getStringWidth(
+                        getModName(it)
+                    ) else -Fonts.minecraftFont.getStringWidth(getModName(it))
+                }.toList()
         }
 
         if (targetHudValue.get()) {

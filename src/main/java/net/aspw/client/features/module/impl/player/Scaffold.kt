@@ -419,7 +419,9 @@ class Scaffold : Module() {
             }
         }
 
-        if (autoJumpValue.get().equals("hypixelkeepy", true) && mc.thePlayer.fallDistance >= 0.00001 && mc.thePlayer.fallDistance < 1.4)
+        if (autoJumpValue.get()
+                .equals("hypixelkeepy", true) && mc.thePlayer.fallDistance >= 0.00001 && mc.thePlayer.fallDistance < 1.4
+        )
             KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
 
         if (customSpeedValue.get()) MovementUtils.strafe(customMoveSpeedValue.get())

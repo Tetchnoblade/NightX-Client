@@ -1,28 +1,19 @@
 package net.aspw.client.injection.forge.mixins.render;
 
-import kotlin.Pair;
 import net.aspw.client.Launch;
 import net.aspw.client.features.module.impl.player.Freecam;
 import net.aspw.client.features.module.impl.player.ReverseFreecam;
 import net.aspw.client.utils.APIConnecter;
-import net.aspw.client.utils.MinecraftInstance;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerCape;
-import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.struct.InjectorGroupInfo;
-import scala.collection.mutable.MutableList;
 
-import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @Mixin(LayerCape.class)
