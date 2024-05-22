@@ -94,10 +94,10 @@ class Animations : Module() {
         val blockingOnly = BoolValue("CancelEquip-BlockingOnly", true) { cancelEquip.get() }
 
         @JvmField
-        val scale = FloatValue("Scale", 0f, -0.5f, 0.5f)
+        val scale = FloatValue("Item-Size", 0f, -0.5f, 0.5f)
 
         @JvmField
-        val itemFov = FloatValue("ItemFov", 0f, -5f, 5f)
+        val itemFov = FloatValue("Item-Fov", 0f, -5f, 5f)
 
         @JvmField
         val itemPosX = FloatValue("ItemPos-X", 0f, -1f, 1f)

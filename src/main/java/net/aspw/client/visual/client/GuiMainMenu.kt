@@ -2,6 +2,7 @@ package net.aspw.client.visual.client
 
 import net.aspw.client.Launch
 import net.aspw.client.utils.APIConnecter
+import net.aspw.client.utils.misc.MiscUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.aspw.client.visual.font.smooth.FontLoaders
@@ -74,6 +75,16 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         this.buttonList.add(
             GuiButton(
                 5,
+                (this.width - 24F - FontLoaders.SF21.getStringWidth("Connect API")).toInt(),
+                8,
+                buttonWidth - 42,
+                buttonHeight,
+                "Connect API"
+            )
+        )
+        this.buttonList.add(
+            GuiButton(
+                6,
                 (this.width - 112F - FontLoaders.SF21.getStringWidth("Configure")).toInt(),
                 8,
                 buttonWidth - 42,
@@ -83,12 +94,12 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         )
         this.buttonList.add(
             GuiButton(
-                6,
-                (this.width - 24F - FontLoaders.SF21.getStringWidth("Connect API")).toInt(),
+                7,
+                (this.width - 177F - FontLoaders.SF21.getStringWidth("Donate Now")).toInt(),
                 8,
                 buttonWidth - 42,
                 buttonHeight,
-                "Connect API"
+                "Donate Now"
             )
         )
         super.initGui()
@@ -211,15 +222,17 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             2 -> mc.displayGuiScreen(GuiAltManager(this))
             3 -> mc.displayGuiScreen(GuiOptions(this, mc.gameSettings))
             4 -> mc.shutdown()
-            5 -> mc.displayGuiScreen(GuiInfo(this))
 
-            6 -> {
+            5 -> {
                 APIConnecter.checkStatus()
                 APIConnecter.checkChangelogs()
                 APIConnecter.checkBugs()
                 APIConnecter.checkStaffList()
                 APIConnecter.loadDonors()
             }
+
+            6 -> mc.displayGuiScreen(GuiInfo(this))
+            7 -> MiscUtils.showURL(APIConnecter.donate)
         }
     }
 

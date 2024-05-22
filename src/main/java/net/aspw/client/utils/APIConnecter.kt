@@ -25,6 +25,7 @@ object APIConnecter {
     var discordApp = ""
     var appClientID = ""
     var appClientSecret = ""
+    var donate = ""
     var changelogs = ""
     var bugs = ""
     var bmcstafflist = ""
@@ -96,8 +97,9 @@ object APIConnecter {
                 gotData = response.body!!.string()
             }
             val details = gotData.split("///")
-            isLatest = details[4] == Launch.CLIENT_VERSION
-            discord = details[3]
+            isLatest = details[5] == Launch.CLIENT_VERSION
+            discord = details[4]
+            donate = details[3]
             discordApp = details[2]
             appClientSecret = details[1]
             appClientID = details[0]
