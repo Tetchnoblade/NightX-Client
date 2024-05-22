@@ -54,6 +54,8 @@ object APIConnecter {
 
     fun loadDonors() {
         try {
+            if (donorCapeLocations.isNotEmpty())
+                donorCapeLocations.clear()
             var gotNames: String
             tlsAuthConnectionFixes()
             val nameClient = OkHttpClient.Builder()
