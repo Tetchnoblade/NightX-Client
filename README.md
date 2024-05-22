@@ -3,6 +3,9 @@
 Website
 > https://aspw-w.github.io/NightX
 
+Donate (Get Cape)
+> https://nightx-donations.mysellix.io
+
 Join Discord Server
 > https://discord.gg/SGBccUXFKZ
 
