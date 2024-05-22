@@ -80,6 +80,16 @@ object Launch {
         moduleManager = ModuleManager()
         moduleManager.registerModules()
 
+        // Check update
+        APIConnecter.checkStatus()
+        APIConnecter.checkChangelogs()
+        APIConnecter.checkBugs()
+        APIConnecter.checkStaffList()
+        APIConnecter.loadDonors()
+
+        // Init Discord RPC
+        discordRPC = DiscordRPC()
+
         // Setup default states on first launch
         if (!fileManager.modulesConfig.hasConfig() || !fileManager.valuesConfig.hasConfig()) {
             ClientUtils.getLogger().info("Setting up default modules...")
@@ -101,16 +111,6 @@ object Launch {
         )
 
         clickGui = ClickGui()
-
-        // Check update
-        APIConnecter.checkStatus()
-        APIConnecter.checkChangelogs()
-        APIConnecter.checkBugs()
-        APIConnecter.checkStaffList()
-        APIConnecter.loadDonors()
-
-        // Init Discord RPC
-        discordRPC = DiscordRPC()
 
         ClientUtils.getLogger().info("Launched!")
 

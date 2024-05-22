@@ -186,7 +186,6 @@ class Scaffold : Module() {
     // Launch position
     private var launchY = 0
     private var placeCount = 0
-    private var hypixelCount = 0
     private var faceBlock = false
 
     // Rotation lock
@@ -212,7 +211,6 @@ class Scaffold : Module() {
     private var lastMS = 0L
     private var jumpGround = 0.0
     private var verusState = 0
-    private var isHypixeling = false
 
     /**
      * Enable module
@@ -222,7 +220,6 @@ class Scaffold : Module() {
         progress = 0f
         spinYaw = 0f
         placeCount = 0
-        hypixelCount = 0
         firstPitch = mc.thePlayer.rotationPitch
         firstRotate = mc.thePlayer.rotationYaw
         launchY = mc.thePlayer.posY.toInt()
@@ -410,7 +407,7 @@ class Scaffold : Module() {
             offGroundTicks = 0
         } else offGroundTicks++
 
-        if (autoJumpValue.get().equals("hypixelkeepy", true) && hypixelCount != 0 && !canTower && !isHypixeling) {
+        if (autoJumpValue.get().equals("hypixelkeepy", true) && !canTower) {
             if (mc.thePlayer.isInWater) return
             if (mc.thePlayer.onGround && !mc.thePlayer.isPotionActive(Potion.moveSpeed) && MovementUtils.isMoving()) {
                 mc.thePlayer.motionY = 0.41999998688698
@@ -422,28 +419,8 @@ class Scaffold : Module() {
             }
         }
 
-        if (autoJumpValue.get().equals("hypixelkeepy", true) && !canTower) {
-            if (hypixelCount == 0) {
-                mc.thePlayer.motionX = 0.0
-                mc.thePlayer.motionZ = 0.0
-                place()
-                if (shouldEagle) {
-                    KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
-                    hypixelCount++
-                }
-            }
-            if (hypixelCount >= 3) {
-                if (mc.thePlayer.posY >= launchY + 0.4 && mc.thePlayer.posY < launchY + 1.7) {
-                    isHypixeling = true
-                    KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
-                    hypixelCount++
-                }
-                if (isHypixeling && (hypixelCount >= 9 || mc.thePlayer.posY >= launchY + 1)) {
-                    isHypixeling = false
-                    hypixelCount = 1
-                }
-            }
-        }
+        if (autoJumpValue.get().equals("hypixelkeepy", true) && mc.thePlayer.fallDistance >= 0.00001 && mc.thePlayer.fallDistance < 1.4)
+            KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
 
         if (customSpeedValue.get()) MovementUtils.strafe(customMoveSpeedValue.get())
         if (sprintModeValue.get().equals("off", ignoreCase = true) || sprintModeValue.get()
@@ -460,7 +437,6 @@ class Scaffold : Module() {
         ) launchY = mc.thePlayer.posY.toInt()
         if (GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && mc.thePlayer.onGround) {
             placeCount = 0
-            hypixelCount = 0
         }
 
         if (((autoJumpValue.get().equals(
@@ -638,7 +614,6 @@ class Scaffold : Module() {
             else startPlaceTimer.update()
             return
         }
-        if (hypixelCount >= 3 && isHypixeling) return
         if ((targetPlace) == null) {
             if (placeableDelay.get()) delayTimer.reset()
             return
@@ -663,7 +638,6 @@ class Scaffold : Module() {
             mc.thePlayer.motionZ *= modifier.toDouble()
         }
         placeCount += 1
-        hypixelCount += 1
         targetPlace = null
     }
 
@@ -673,10 +647,8 @@ class Scaffold : Module() {
     override fun onDisable() {
         if (mc.thePlayer == null) return
         startPlaceTimer.reset()
-        isHypixeling = false
         faceBlock = false
         placeCount = 0
-        hypixelCount = 0
         firstPitch = 0f
         firstRotate = 0f
         canTower = false
@@ -710,7 +682,7 @@ class Scaffold : Module() {
         if (autoJumpValue.get().equals(
                 "hypixelkeepy",
                 true
-            ) && !mc.thePlayer.isPotionActive(Potion.moveSpeed) && MovementUtils.isMoving() && hypixelCount != 0 && !isHypixeling
+            ) && !mc.thePlayer.isPotionActive(Potion.moveSpeed) && MovementUtils.isMoving()
         ) event.cancelEvent()
         if (Launch.moduleManager.getModule(SilentRotations::class.java)?.state!! && !Launch.moduleManager.getModule(
                 SilentRotations::class.java

@@ -1,27 +1,20 @@
 package net.aspw.client.utils
 
 import net.aspw.client.Launch
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.texture.DynamicTexture
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.awt.image.BufferedImage
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
 import java.net.URL
-import java.nio.ByteBuffer
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
+import java.util.UUID
 import javax.imageio.ImageIO
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
-import kotlin.io.path.exists
 
 
 object APIConnecter {
@@ -38,8 +31,7 @@ object APIConnecter {
     var mushstafflist = ""
     var hypixelstafflist = ""
 
-    var donorCapeLocations = mutableListOf<Pair<String, BufferedImage>>()
-    var donorIDs = mutableListOf<String>()
+    private var donorCapeLocations = mutableListOf<Pair<String, ResourceLocation>>()
 
     private val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
         override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {}
@@ -52,6 +44,14 @@ object APIConnecter {
 
     private fun tlsAuthConnectionFixes() {
         sslContext.init(null, trustAllCerts, java.security.SecureRandom())
+    }
+
+    fun loadCape(player: EntityPlayer): ResourceLocation? {
+        for ((i, l) in donorCapeLocations) {
+            if (i == player.uniqueID.toString())
+                return l
+        }
+        return null
     }
 
     fun loadDonors() {
@@ -69,19 +69,11 @@ object APIConnecter {
             val details = gotNames.split("///")
             for (i in details) {
                 var gotCapes: BufferedImage
-                val name = i.split(":")[0]
+                val uuid = i.split(":")[0]
                 val cape = i.split(":")[1]
                 tlsAuthConnectionFixes()
-                val donorClient = OkHttpClient.Builder()
-                    .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
-                    .build()
-                val donorBuilder = Request.Builder().url(URLComponent.DONORS + cape)
-                val donorRequest: Request = donorBuilder.build()
-                donorClient.newCall(donorRequest).execute().use { response ->
-                    gotCapes = response.body?.byteStream().let { ImageIO.read(it) }
-                }
-                donorIDs.add(name)
-                donorCapeLocations.add(Pair(name, gotCapes))
+                gotCapes = ImageIO.read(URL(URLComponent.DONORS + cape))
+                donorCapeLocations.add(Pair(uuid, MinecraftInstance.mc.textureManager.getDynamicTextureLocation(Launch.CLIENT_FOLDER, DynamicTexture(gotCapes))))
             }
             canConnect = true
             ClientUtils.getLogger().info("Loaded Donor Capes")

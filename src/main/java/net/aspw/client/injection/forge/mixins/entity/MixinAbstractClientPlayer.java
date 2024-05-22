@@ -21,27 +21,10 @@ import java.util.*;
 @Mixin(AbstractClientPlayer.class)
 public abstract class MixinAbstractClientPlayer extends MixinEntityPlayer {
 
-    private final Map<String, BufferedImage> donorCapeLocations = new HashMap<>();
-    private boolean capeInjected = false;
-
     @Inject(method = "getLocationCape", at = @At("HEAD"), cancellable = true)
     private void getCape(CallbackInfoReturnable<ResourceLocation> callbackInfoReturnable) {
         final Cape cape = Objects.requireNonNull(Launch.moduleManager.getModule(Cape.class));
-        String playerName = getGameProfile().getName();
-        if (!this.capeInjected) {
-            for (Pair<String, BufferedImage> pair : APIConnecter.INSTANCE.getDonorCapeLocations()) {
-                donorCapeLocations.put(pair.getFirst(), pair.getSecond());
-            }
-            this.capeInjected = true;
-        }
-
-        if (donorCapeLocations.containsKey(playerName)) {
-            BufferedImage image = donorCapeLocations.get(playerName);
-            callbackInfoReturnable.setReturnValue(MinecraftInstance.mc.getTextureManager().getDynamicTextureLocation(Launch.CLIENT_FOLDER, new DynamicTexture(image)));
-            return;
-        }
-
-        if (cape.getCustomCape().get() && playerName.equalsIgnoreCase(MinecraftInstance.mc.thePlayer.getGameProfile().getName()))
+        if (cape.getCustomCape().get() && getGameProfile().getName().equalsIgnoreCase(MinecraftInstance.mc.thePlayer.getGameProfile().getName()))
             callbackInfoReturnable.setReturnValue(cape.getCapeLocation(cape.getStyleValue().get()));
     }
 

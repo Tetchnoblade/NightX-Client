@@ -13,12 +13,14 @@ import net.minecraft.client.renderer.entity.layers.LayerCape;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.struct.InjectorGroupInfo;
 import scala.collection.mutable.MutableList;
 
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -41,9 +43,12 @@ public class MixinLayerCape {
      */
     @Overwrite
     public void doRenderLayer(final AbstractClientPlayer entitylivingbaseIn, final float p_177141_2_, final float p_177141_3_, final float partialTicks, final float p_177141_5_, final float p_177141_6_, final float p_177141_7_, final float scale) {
-        if (entitylivingbaseIn.getLocationCape() != null && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && (!Objects.requireNonNull(Launch.moduleManager.getModule(Freecam.class)).getState() || entitylivingbaseIn != Objects.requireNonNull(Launch.moduleManager.getModule(Freecam.class)).getFakePlayer()) && (!Objects.requireNonNull(Launch.moduleManager.getModule(ReverseFreecam.class)).getState() || entitylivingbaseIn != Objects.requireNonNull(Launch.moduleManager.getModule(ReverseFreecam.class)).getFakePlayer())) {
+        ResourceLocation cape = APIConnecter.INSTANCE.loadCape(entitylivingbaseIn);
+        if ((entitylivingbaseIn.getLocationCape() != null || cape != null) && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && (!Objects.requireNonNull(Launch.moduleManager.getModule(Freecam.class)).getState() || entitylivingbaseIn != Objects.requireNonNull(Launch.moduleManager.getModule(Freecam.class)).getFakePlayer()) && (!Objects.requireNonNull(Launch.moduleManager.getModule(ReverseFreecam.class)).getState() || entitylivingbaseIn != Objects.requireNonNull(Launch.moduleManager.getModule(ReverseFreecam.class)).getFakePlayer())) {
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.playerRenderer.bindTexture(entitylivingbaseIn.getLocationCape());
+            if (cape != null)
+                this.playerRenderer.bindTexture(cape);
+            else this.playerRenderer.bindTexture(entitylivingbaseIn.getLocationCape());
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, 0.0F, 0.125F);
             double d0 = entitylivingbaseIn.prevChasingPosX + (entitylivingbaseIn.chasingPosX - entitylivingbaseIn.prevChasingPosX) * (double) partialTicks - (entitylivingbaseIn.prevPosX + (entitylivingbaseIn.posX - entitylivingbaseIn.prevPosX) * (double) partialTicks);
