@@ -55,10 +55,18 @@ class Scaffold : Module() {
             "AAC3.3.9",
             "AAC3.6.4",
             "BlocksMC",
+            "Watchdog",
             "Float"
         ), "ConstantMotion"
     ) { allowTower.get() }
     private val towerTimerValue = FloatValue("TowerTimer", 1f, 0.1f, 1.4f) { allowTower.get() }
+
+    // Watchdog
+    private val watchdogTowerBoostValue =
+        BoolValue("WatchdogTowerBoost", true) { allowTower.get() && towerModeValue.get().equals("Watchdog", true) }
+    private val watchdogTowerSpeed = FloatValue("Watchdog-TowerSpeed", 1.7f, 1.5f, 2.5f, "x") {
+        allowTower.get() && towerModeValue.get().equals("Watchdog", true) && watchdogTowerBoostValue.get()
+    }
 
     // Jump mode
     private val jumpMotionValue = FloatValue("JumpMotion", 0.42f, 0.3681289f, 0.79f) {
@@ -202,6 +210,9 @@ class Scaffold : Module() {
     // Tower
     private var offGroundTicks: Int = 0
     private var verusJumped = false
+    private var wdTick = 0
+    private var wdSpoof = false
+    private var towerTick = 0
 
     // Render thingy
     var canTower = false
@@ -221,6 +232,7 @@ class Scaffold : Module() {
         if (mc.thePlayer == null) return
         progress = 0f
         spinYaw = 0f
+        wdTick = 5
         placeCount = 0
         hypixelCount = 0
         firstPitch = mc.thePlayer.rotationPitch
@@ -287,6 +299,11 @@ class Scaffold : Module() {
             mc.gameSettings.keyBindSneak.pressed = true
         else if (!GameSettings.isKeyDown(mc.gameSettings.keyBindSneak))
             mc.gameSettings.keyBindSneak.pressed = false
+        if (!canTower && towerModeValue.get().equals("watchdog", true) && mc.thePlayer.ticksExisted % 2 == 0) {
+            wdTick = 5
+            towerTick = 0
+            wdSpoof = false
+        }
         if (allowTower.get() && GameSettings.isKeyDown(mc.gameSettings.keyBindJump) && !GameSettings.isKeyDown(mc.gameSettings.keyBindSneak) && blocksAmount > 0 && MovementUtils.isRidingBlock() && (towerMove.get()
                 .equals("always", true) || !MovementUtils.isMoving() && towerMove.get()
                 .equals("standing", true) || MovementUtils.isMoving() && towerMove.get().equals("moving", true))
@@ -357,6 +374,52 @@ class Scaffold : Module() {
                     }
                 }
 
+                "watchdog" -> {
+                    if (wdTick != 0) {
+                        towerTick = 0
+                        return
+                    }
+                    if (towerTick > 0) {
+                        ++towerTick
+                        if (towerTick > 6) {
+                            mc.thePlayer.motionX *= 0.9f
+                            mc.thePlayer.motionZ *= 0.9f
+                        }
+                        if (towerTick > 16) {
+                            towerTick = 0
+                        }
+                    }
+                    if (mc.thePlayer.onGround) {
+                        if (towerTick == 0 || towerTick == 5) {
+                            if (watchdogTowerBoostValue.get()) {
+                                mc.thePlayer.motionX *= watchdogTowerSpeed.get()
+                                mc.thePlayer.motionZ *= watchdogTowerSpeed.get()
+                            }
+                            mc.thePlayer.motionY = 0.42
+                            towerTick = 1
+                        }
+                    }
+                    if (mc.thePlayer.motionY > -0.0784000015258789) {
+                        if (!mc.thePlayer.onGround) {
+                            when ((mc.thePlayer.posY % 1.0 * 100.0).roundToInt()) {
+                                42 -> {
+                                    mc.thePlayer.motionY = 0.33
+                                }
+
+                                75 -> {
+                                    mc.thePlayer.motionY = 1.0 - mc.thePlayer.posY % 1.0
+                                    wdSpoof = true
+                                }
+
+                                0 -> {
+                                    if (MovementUtils.isRidingBlock())
+                                        mc.thePlayer.motionY = -0.0784000015258789
+                                }
+                            }
+                        }
+                    } else mc.thePlayer.jump()
+                }
+
                 "blocksmc" -> {
                     if (mc.thePlayer.posY % 1 <= 0.00153598) {
                         mc.thePlayer.setPosition(
@@ -410,19 +473,7 @@ class Scaffold : Module() {
             offGroundTicks = 0
         } else offGroundTicks++
 
-        if (autoJumpValue.get().equals("hypixelkeepy", true) && hypixelCount != 0 && !canTower && !isHypixeling) {
-            if (mc.thePlayer.isInWater) return
-            if (mc.thePlayer.onGround && !mc.thePlayer.isPotionActive(Potion.moveSpeed) && MovementUtils.isMoving()) {
-                mc.thePlayer.motionY = 0.41999998688698
-                if (mc.thePlayer.isPotionActive(Potion.jump))
-                    mc.thePlayer.motionY += ((mc.thePlayer.getActivePotionEffect(Potion.jump).amplifier + 1).toFloat() * 0.1f).toDouble()
-                mc.thePlayer.isAirBorne = true
-                mc.thePlayer.triggerAchievement(StatList.jumpStat)
-                MovementUtils.strafe(0.482f)
-            }
-        }
-
-        if (autoJumpValue.get().equals("hypixelkeepy", true) && !canTower) {
+        if (autoJumpValue.get().equals("hypixelkeepy", true)) {
             if (hypixelCount == 0) {
                 mc.thePlayer.motionX = 0.0
                 mc.thePlayer.motionZ = 0.0
@@ -433,7 +484,7 @@ class Scaffold : Module() {
                 }
             }
             if (hypixelCount >= 3) {
-                if (mc.thePlayer.posY >= launchY + 0.4 && mc.thePlayer.posY < launchY + 1.7) {
+                if (mc.thePlayer.posY >= launchY + 0.2) {
                     isHypixeling = true
                     KeyBinding.onTick(mc.gameSettings.keyBindUseItem.keyCode)
                     hypixelCount++
@@ -452,7 +503,6 @@ class Scaffold : Module() {
         ) {
             mc.thePlayer.isSprinting = false
         }
-
         if (!autoJumpValue.get().equals("keepy", true) && !autoJumpValue.get()
                 .equals("hypixelkeepy", true) && !(smartSpeedValue.get() && Launch.moduleManager.getModule(
                 Speed::class.java
@@ -462,7 +512,6 @@ class Scaffold : Module() {
             placeCount = 0
             hypixelCount = 0
         }
-
         if (((autoJumpValue.get().equals(
                 "keepy",
                 true
@@ -478,6 +527,25 @@ class Scaffold : Module() {
             mc.thePlayer.jump()
             placeCount = 0
         }
+    }
+
+    @EventTarget
+    fun onPacket(event: PacketEvent) {
+        if (mc.thePlayer == null) return
+
+        val packet = event.packet
+
+        if (towerModeValue.get().equals("watchdog", true)) {
+            if (packet is C03PacketPlayer) {
+                if (wdSpoof) {
+                    packet.onGround = true
+                    wdSpoof = false
+                }
+            }
+        }
+
+        if (packet is C09PacketHeldItemChange)
+            slot = packet.slotId
     }
 
     @EventTarget
@@ -510,6 +578,12 @@ class Scaffold : Module() {
         if (canTower && !MovementUtils.isMoving() && event.eventState == EventState.POST) {
             mc.thePlayer.motionX = 0.0
             mc.thePlayer.motionZ = 0.0
+        }
+
+        if (towerModeValue.get().equals("watchdog", true)) {
+            if (wdTick > 0) {
+                wdTick--
+            }
         }
 
         val shouldEagle = mc.theWorld.getBlockState(
@@ -679,6 +753,7 @@ class Scaffold : Module() {
         hypixelCount = 0
         firstPitch = 0f
         firstRotate = 0f
+        wdTick = 5
         canTower = false
         mc.gameSettings.keyBindSneak.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindSneak)
         if (!GameSettings.isKeyDown(mc.gameSettings.keyBindRight)) mc.gameSettings.keyBindRight.pressed = false
@@ -687,6 +762,8 @@ class Scaffold : Module() {
         lookupRotation = null
         mc.timer.timerSpeed = 1f
         faceBlock = false
+        if (slot != mc.thePlayer.inventory.currentItem)
+            mc.netHandler.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
         if (lastSlot != mc.thePlayer.inventory.currentItem) {
             mc.thePlayer.inventory.currentItem = lastSlot
             mc.playerController.updateController()
@@ -707,11 +784,6 @@ class Scaffold : Module() {
     @EventTarget
     fun onJump(event: JumpEvent) {
         if (blocksAmount <= 0 || RotationUtils.targetRotation == null) return
-        if (autoJumpValue.get().equals(
-                "hypixelkeepy",
-                true
-            ) && !mc.thePlayer.isPotionActive(Potion.moveSpeed) && MovementUtils.isMoving() && hypixelCount != 0 && !isHypixeling
-        ) event.cancelEvent()
         if (Launch.moduleManager.getModule(SilentRotations::class.java)?.state!! && !Launch.moduleManager.getModule(
                 SilentRotations::class.java
             )?.customStrafe?.get()!!
