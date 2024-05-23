@@ -2,7 +2,9 @@ package net.aspw.client.visual.client
 
 import net.aspw.client.Launch
 import net.aspw.client.utils.APIConnecter
+import net.aspw.client.utils.URLComponent
 import net.aspw.client.utils.misc.MiscUtils
+import net.aspw.client.utils.render.BlurUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.aspw.client.visual.font.smooth.FontLoaders
@@ -15,13 +17,21 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
     var alpha = 255
     private var lastAnimTick: Long = 0L
+    private var previousTime = System.nanoTime()
+    private val moveMouseStrength = 200
     private var alrUpdate = false
     private val buttonWidth = 112
     private val buttonHeight = 20
-    private var level = 0
     private var ticks = 0
+    private val particles = mutableListOf<Particle>()
+    private var lastUpdateTime = System.currentTimeMillis()
 
     override fun initGui() {
+        if (particles.isNotEmpty())
+            particles.clear()
+        for (i in 0 until 600) {
+            particles.add(Particle((Math.random() * width).toFloat(), (Math.random() * height).toFloat()))
+        }
         this.buttonList.add(
             GuiButton(
                 0,
@@ -110,16 +120,44 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             lastAnimTick = System.currentTimeMillis()
             alrUpdate = true
         }
+        val currentTime = System.currentTimeMillis()
+        val deltaTime = (currentTime - lastUpdateTime) / 1000.0f
+        lastUpdateTime = currentTime
         GL11.glPushMatrix()
         GlStateManager.disableAlpha()
         drawBackground(0)
+        moveMouseEffect(mouseX, mouseY, moveMouseStrength - (moveMouseStrength / 2).toFloat())
         loadGif()
         RenderUtils.drawImage(
-            ResourceLocation("client/background/mainmenu/$ticks.png"), 0, 0,
-            width, height
+            ResourceLocation("client/background/mainmenu/$ticks.png"),
+            -moveMouseStrength + (moveMouseStrength / 2),
+            -moveMouseStrength + (moveMouseStrength / 2),
+            width + moveMouseStrength,
+            height + moveMouseStrength
         )
-        RenderUtils.drawGradientRect(0, 0, width, height, -13158600, -804253680)
+        moveMouseEffect(mouseX, mouseY, -moveMouseStrength + (moveMouseStrength / 2).toFloat())
+        BlurUtils.blurArea(
+            0f,
+            0f,
+            width.toFloat(),
+            height.toFloat(),
+            5f
+        )
+        if (URLComponent.gifLoaded)
+            RenderUtils.drawImage2(
+                ResourceLocation("client/background/nightx.png"),
+                width / 2F - 50F,
+                height / 2F - 130F,
+                100,
+                100
+            )
         GlStateManager.enableAlpha()
+        if (URLComponent.gifLoaded) {
+            particles.forEach { it.update(deltaTime) }
+            particles.forEach { it.render() }
+        }
+        if (!URLComponent.gifLoaded)
+            FontLoaders.SF20.drawCenteredStringWithShadow("Loading...", width / 2f, height / 2f - 85f, -0x1111111)
         val apiMessage = if (APIConnecter.canConnect) "§eOK" else "§cNo"
         FontLoaders.SF20.drawStringWithShadow(
             "API Connection: $apiMessage",
@@ -236,20 +274,37 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         }
     }
 
+    private fun moveMouseEffect(mouseX: Int, mouseY: Int, strength: Float) {
+        val mX = mouseX - width / 2
+        val mY = mouseY - height / 2
+        val xDelta = mX.toFloat() / (width / 2).toFloat()
+        val yDelta = mY.toFloat() / (height / 2).toFloat()
+
+        GL11.glTranslatef(xDelta * strength, yDelta * strength, 0F)
+    }
+
     private fun loadGif() {
-        level++
-        if (level >= 2) {
+        val currentTime = System.nanoTime()
+        val deltaTime = currentTime - previousTime
+
+        if (deltaTime >= URLComponent.interval) {
             ticks++
-            level = 0
+            if (ticks > 149) {
+                if (!URLComponent.gifLoaded) {
+                    URLComponent.interval = 1_000_000_000L / 15
+                    URLComponent.gifLoaded = true
+                }
+                ticks = 0
+            }
+            previousTime = currentTime
         }
-        if (ticks > 149)
-            ticks = 0
     }
 
     override fun keyTyped(typedChar: Char, keyCode: Int) {}
 
     override fun onGuiClosed() {
-        level = 0
+        if (particles.isNotEmpty())
+            particles.clear()
         ticks = 0
     }
 }

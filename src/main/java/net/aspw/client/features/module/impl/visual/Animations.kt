@@ -60,8 +60,7 @@ class Animations : Module() {
                 "Tap1",
                 "Tap2",
                 "Sigma3",
-                "Sigma4",
-                "Spin"
+                "Sigma4"
             ), "Swing"
         )
 
