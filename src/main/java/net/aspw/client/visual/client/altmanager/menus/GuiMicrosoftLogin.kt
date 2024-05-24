@@ -4,12 +4,12 @@ import net.aspw.client.Launch
 import net.aspw.client.auth.account.MicrosoftAccount
 import net.aspw.client.auth.compat.OAuthServer
 import net.aspw.client.features.module.impl.visual.Interface
+import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.ClientUtils
 import net.aspw.client.utils.misc.MiscUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
-import net.minecraft.util.ResourceLocation
 import org.lwjgl.input.Keyboard
 
 class GuiMicrosoftLogin(private val prevGui: GuiScreen) : GuiScreen() {
@@ -74,7 +74,7 @@ class GuiMicrosoftLogin(private val prevGui: GuiScreen) : GuiScreen() {
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
         this.drawDefaultBackground()
         RenderUtils.drawImage(
-            ResourceLocation("client/background/portal.png"), 0, 0,
+            APIConnecter.callImage("portal", "background"), 0, 0,
             width, height
         )
         this.drawCenteredString(mc.fontRendererObj, stage, width / 2, height / 2 - 50, 0xffffff)

@@ -1,5 +1,6 @@
 package net.aspw.client.visual.client.clickgui.tab.value.impl
 
+import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.MouseUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.value.ListValue
@@ -8,7 +9,6 @@ import net.aspw.client.visual.client.clickgui.tab.extensions.animSmooth
 import net.aspw.client.visual.client.clickgui.tab.value.ValueElement
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11.*
 import java.awt.Color
 
@@ -20,7 +20,7 @@ class ListElement(val saveValue: ListValue) : ValueElement<String>(saveValue) {
         -(saveValue.values.map { -FontLoaders.SF20.getStringWidth(it) }.sorted().firstOrNull() ?: 0F).toFloat() + 20F
 
     companion object {
-        val expanding = ResourceLocation("client/clickgui/expand.png")
+        val expanding = APIConnecter.callImage("expand", "clickgui")
     }
 
     override fun drawElement(

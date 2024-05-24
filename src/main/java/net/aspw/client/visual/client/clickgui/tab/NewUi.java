@@ -3,6 +3,7 @@ package net.aspw.client.visual.client.clickgui.tab;
 import net.aspw.client.Launch;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.impl.visual.Gui;
+import net.aspw.client.utils.APIConnecter;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.MouseUtils;
 import net.aspw.client.utils.render.BlurUtils;
@@ -15,7 +16,6 @@ import net.aspw.client.visual.font.smooth.FontLoaders;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -86,7 +86,7 @@ public class NewUi extends GuiScreen {
             fading -= 0.2F * RenderUtils.deltaTime * 0.045F;
         fading = MathHelper.clamp_float(fading, 0F, 2F);
         GlStateManager.disableAlpha();
-        RenderUtils.drawImage(new ResourceLocation("client/clickgui/remove.png"), this.width - 49, 34, 16, 16);
+        RenderUtils.drawImage(APIConnecter.INSTANCE.callImage("remove", "clickgui"), this.width - 49, 34, 16, 16);
         GlStateManager.enableAlpha();
         Stencil.write(true);
         Stencil.erase(true);

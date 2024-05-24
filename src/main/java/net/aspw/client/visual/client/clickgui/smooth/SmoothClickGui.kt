@@ -3,12 +3,12 @@ package net.aspw.client.visual.client.clickgui.smooth
 import net.aspw.client.Launch
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.impl.visual.Gui
+import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.misc.RandomUtils
 import net.aspw.client.utils.render.BlurUtils.blurArea
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.clickgui.smooth.buttons.CategoryPanel
 import net.minecraft.client.gui.GuiScreen
-import net.minecraft.util.ResourceLocation
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.GL11
 import java.awt.Color
@@ -109,7 +109,7 @@ class SmoothClickGui : GuiScreen() {
 
         if (Launch.moduleManager.getModule(Gui::class.java)?.picturesValue?.get()!!)
             RenderUtils.drawImage2(
-                ResourceLocation("client/clickgui/pictures/$randomPicture.png"),
+                APIConnecter.callImage(randomPicture, "clickgui/pictures"),
                 pictureX,
                 pictureY,
                 pictureWidth,

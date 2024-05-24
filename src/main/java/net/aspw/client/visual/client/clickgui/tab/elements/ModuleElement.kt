@@ -1,6 +1,7 @@
 package net.aspw.client.visual.client.clickgui.tab.elements
 
 import net.aspw.client.features.module.Module
+import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.MinecraftInstance
 import net.aspw.client.utils.MouseUtils
 import net.aspw.client.utils.render.BlendUtils
@@ -20,7 +21,6 @@ import net.aspw.client.visual.client.clickgui.tab.value.impl.IntElement
 import net.aspw.client.visual.client.clickgui.tab.value.impl.ListElement
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.util.ResourceLocation
 import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.GL11.*
 import java.awt.Color
@@ -28,7 +28,7 @@ import java.awt.Color
 class ModuleElement(val module: Module) : MinecraftInstance() {
 
     companion object {
-        protected val expandIcon = ResourceLocation("client/clickgui/expand.png")
+        protected val expandIcon = APIConnecter.callImage("expand", "clickgui")
     }
 
     private val toggleSwitch = ToggleSwitch()

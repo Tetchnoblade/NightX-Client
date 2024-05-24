@@ -29,6 +29,9 @@ object APIConnecter {
     var mushstafflist = ""
     var hypixelstafflist = ""
 
+    var maxTicks = 0
+    private var mainmenu = mutableListOf<Pair<Int, ResourceLocation>>()
+    private var pictures = mutableListOf<Triple<String, String, ResourceLocation>>()
     private var donorCapeLocations = mutableListOf<Pair<String, ResourceLocation>>()
 
     private val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
@@ -42,6 +45,88 @@ object APIConnecter {
 
     private fun tlsAuthConnectionFixes() {
         sslContext.init(null, trustAllCerts, java.security.SecureRandom())
+    }
+
+    fun callImage(image: String, location: String): ResourceLocation? {
+        for ((i, l, s) in pictures) {
+            if (i == image && l == location)
+                return s
+        }
+        return null
+    }
+
+    fun callMainMenu(image: Int): ResourceLocation? {
+        for ((i, l) in mainmenu) {
+            if (i == image)
+                return l
+        }
+        return null
+    }
+
+    fun loadPictures() {
+        try {
+            if (pictures.isNotEmpty())
+                pictures.clear()
+            var gotNames: String
+            tlsAuthConnectionFixes()
+            val nameClient = OkHttpClient.Builder()
+                .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
+                .build()
+            val nameBuilder = Request.Builder().url(URLComponent.PICTURES + "locations.txt")
+            val nameRequest: Request = nameBuilder.build()
+            nameClient.newCall(nameRequest).execute().use { response ->
+                gotNames = response.body!!.string()
+            }
+            val details = gotNames.split("---")
+            for (i in details) {
+                var gotImage: BufferedImage
+                val fileName = i.split(":")[0]
+                val picType = i.split(":")[1]
+                tlsAuthConnectionFixes()
+                gotImage = ImageIO.read(URL(URLComponent.PICTURES + picType + "/" + fileName + ".png"))
+                pictures.add(
+                    Triple(
+                        fileName,
+                        picType,
+                        MinecraftInstance.mc.textureManager.getDynamicTextureLocation(
+                            Launch.CLIENT_FOLDER,
+                            DynamicTexture(gotImage)
+                        )
+                    )
+                )
+                ClientUtils.getLogger().info("Load Picture $fileName, $picType")
+            }
+            canConnect = true
+            ClientUtils.getLogger().info("Loaded Pictures")
+        } catch (e: Exception) {
+            canConnect = false
+            ClientUtils.getLogger().info("Failed to load Pictures")
+        }
+    }
+
+    fun loadMainMenu() {
+        try {
+            if (mainmenu.isNotEmpty())
+                mainmenu.clear()
+            for ((counter, i) in (0..Int.MAX_VALUE).withIndex()) {
+                tlsAuthConnectionFixes()
+                val gotImage: BufferedImage =
+                    ImageIO.read(URL(URLComponent.PICTURES + "background/mainmenu/" + counter + ".png"))
+                mainmenu.add(
+                    Pair(
+                        i,
+                        MinecraftInstance.mc.textureManager.getDynamicTextureLocation(
+                            Launch.CLIENT_FOLDER,
+                            DynamicTexture(gotImage)
+                        )
+                    )
+                )
+                ClientUtils.getLogger().info("Load MainMenu $counter")
+                maxTicks = counter
+            }
+        } catch (e: Exception) {
+            ClientUtils.getLogger().info("Loaded MainMenu")
+        }
     }
 
     fun loadCape(player: EntityPlayer): ResourceLocation? {

@@ -7,6 +7,7 @@ import net.aspw.client.auth.account.MicrosoftAccount
 import net.aspw.client.auth.account.MinecraftAccount
 import net.aspw.client.event.SessionEvent
 import net.aspw.client.features.module.impl.visual.Interface
+import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.MinecraftInstance
 import net.aspw.client.utils.login.UserUtils.isValidTokenOffline
 import net.aspw.client.utils.misc.RandomUtils
@@ -17,7 +18,6 @@ import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.GuiSlot
 import net.minecraft.client.gui.GuiTextField
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.Session
 import org.lwjgl.input.Keyboard
 import java.awt.Color
@@ -63,7 +63,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
         drawBackground(0)
         RenderUtils.drawImage(
-            ResourceLocation("client/background/portal.png"), 0, 0,
+            APIConnecter.callImage("portal", "background"), 0, 0,
             width, height
         )
         altsList.drawScreen(mouseX, mouseY, partialTicks)

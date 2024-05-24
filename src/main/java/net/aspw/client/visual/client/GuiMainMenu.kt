@@ -2,7 +2,6 @@ package net.aspw.client.visual.client
 
 import net.aspw.client.Launch
 import net.aspw.client.utils.APIConnecter
-import net.aspw.client.utils.URLComponent
 import net.aspw.client.utils.misc.MiscUtils
 import net.aspw.client.utils.render.BlurUtils
 import net.aspw.client.utils.render.RenderUtils
@@ -10,7 +9,6 @@ import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11
 
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
@@ -18,6 +16,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     var alpha = 255
     private var lastAnimTick: Long = 0L
     private var previousTime = System.nanoTime()
+    private var interval = 1_000_000_000L / 15
     private val moveMouseStrength = 200
     private var alrUpdate = false
     private val buttonWidth = 112
@@ -129,7 +128,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         moveMouseEffect(mouseX, mouseY, moveMouseStrength - (moveMouseStrength / 2).toFloat())
         loadGif()
         RenderUtils.drawImage(
-            ResourceLocation("client/background/mainmenu/$ticks.png"),
+            APIConnecter.callMainMenu(ticks),
             -moveMouseStrength + (moveMouseStrength / 2),
             -moveMouseStrength + (moveMouseStrength / 2),
             width + moveMouseStrength,
@@ -143,21 +142,16 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             height.toFloat(),
             5f
         )
-        if (URLComponent.gifLoaded)
-            RenderUtils.drawImage2(
-                ResourceLocation("client/background/nightx.png"),
-                width / 2F - 50F,
-                height / 2F - 130F,
-                100,
-                100
-            )
+        RenderUtils.drawImage2(
+            APIConnecter.callImage("nightx", "background"),
+            width / 2F - 50F,
+            height / 2F - 130F,
+            100,
+            100
+        )
         GlStateManager.enableAlpha()
-        if (URLComponent.gifLoaded) {
-            particles.forEach { it.update(deltaTime) }
-            particles.forEach { it.render() }
-        }
-        if (!URLComponent.gifLoaded)
-            FontLoaders.SF20.drawCenteredStringWithShadow("Loading...", width / 2f, height / 2f - 85f, -0x1111111)
+        particles.forEach { it.update(deltaTime) }
+        particles.forEach { it.render() }
         val apiMessage = if (APIConnecter.canConnect) "§eOK" else "§cNo"
         FontLoaders.SF20.drawStringWithShadow(
             "API Connection: $apiMessage",
@@ -266,6 +260,8 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                 APIConnecter.checkChangelogs()
                 APIConnecter.checkBugs()
                 APIConnecter.checkStaffList()
+                APIConnecter.loadPictures()
+                APIConnecter.loadMainMenu()
                 APIConnecter.loadDonors()
             }
 
@@ -287,15 +283,10 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         val currentTime = System.nanoTime()
         val deltaTime = currentTime - previousTime
 
-        if (deltaTime >= URLComponent.interval) {
+        if (deltaTime >= interval) {
             ticks++
-            if (ticks > 149) {
-                if (!URLComponent.gifLoaded) {
-                    URLComponent.interval = 1_000_000_000L / 15
-                    URLComponent.gifLoaded = true
-                }
+            if (ticks > APIConnecter.maxTicks)
                 ticks = 0
-            }
             previousTime = currentTime
         }
     }

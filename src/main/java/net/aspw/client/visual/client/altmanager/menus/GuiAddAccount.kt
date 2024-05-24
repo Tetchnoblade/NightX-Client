@@ -3,12 +3,12 @@ package net.aspw.client.visual.client.altmanager.menus
 import net.aspw.client.Launch
 import net.aspw.client.auth.account.CrackedAccount
 import net.aspw.client.features.module.impl.visual.Interface
+import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.GuiTextField
-import net.minecraft.util.ResourceLocation
 import org.lwjgl.input.Keyboard
 import java.io.IOException
 import kotlin.concurrent.thread
@@ -46,7 +46,7 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
         drawBackground(0)
         RenderUtils.drawImage(
-            ResourceLocation("client/background/portal.png"), 0, 0,
+            APIConnecter.callImage("portal", "background"), 0, 0,
             width, height
         )
         RenderUtils.drawRect(30F, 30F, width - 30F, height - 30F, Int.MIN_VALUE)

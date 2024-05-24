@@ -125,7 +125,7 @@ public class CustomSplashProgress {
         barBackgroundColor = new Color(200, 200, 255).getRGB();
         final ResourceLocation fontLoc = new ResourceLocation(getString("fontTexture", "minecraft:textures/font/ascii.png"));
         final ResourceLocation logoLoc = new ResourceLocation(getString("logoTexture", "minecraft:textures/gui/title/mojang.png"));
-        final ResourceLocation backgroundLoc = new ResourceLocation(getString("backgroundTexture", "client/background/splash.png"));
+        final ResourceLocation backgroundLoc = new ResourceLocation(getString("backgroundTexture", "client/splash.png"));
         final ResourceLocation forgeLoc = new ResourceLocation(getString("forgeTexture", "fml:textures/gui/forge.gif"));
         final File miscPackFile = new File(MinecraftInstance.mc.mcDataDir, getString("resourcePackPath", "resources"));
         FileWriter w = null;

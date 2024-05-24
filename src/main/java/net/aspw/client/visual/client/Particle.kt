@@ -1,16 +1,16 @@
 package net.aspw.client.visual.client
 
+import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.MinecraftInstance
 import net.aspw.client.utils.misc.RandomUtils
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
-import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11
 
 class Particle(var x: Float, var y: Float) {
     private var velocityY = (Math.random() * 100).toFloat()
     private val size = 1f
-    private val texture = ResourceLocation("client/background/particle.png")
+    private val texture = APIConnecter.callImage("particle", "background")
     private var delay = RandomUtils.nextInt(0, 800)
 
     fun update(deltaTime: Float) {

@@ -6,7 +6,6 @@ import net.aspw.client.utils.misc.MiscUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
-import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.client.GuiModList
 import org.lwjgl.input.Keyboard
 
@@ -23,7 +22,7 @@ class GuiInfo(private val prevGui: GuiScreen) : GuiScreen() {
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
         drawBackground(0)
         RenderUtils.drawImage(
-            ResourceLocation("client/background/portal.png"), 0, 0,
+            APIConnecter.callImage("portal", "background"), 0, 0,
             width, height
         )
         super.drawScreen(mouseX, mouseY, partialTicks)
