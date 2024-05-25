@@ -157,7 +157,8 @@ class ModuleManager : Listenable {
             ReverseFreecam::class.java,
             HiderESP::class.java,
             LegitVelocity::class.java,
-            Debug::class.java
+            PredictRender::class.java,
+            Test::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded modules")

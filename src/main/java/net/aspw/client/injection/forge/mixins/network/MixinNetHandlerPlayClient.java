@@ -3,12 +3,14 @@ package net.aspw.client.injection.forge.mixins.network;
 import net.aspw.client.Launch;
 import net.aspw.client.event.EntityMovementEvent;
 import net.aspw.client.event.TeleportEvent;
+import net.aspw.client.utils.PredictUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
 import net.minecraft.network.PacketThreadUtil;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.network.play.client.C03PacketPlayer;
@@ -20,6 +22,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(NetHandlerPlayClient.class)
@@ -41,6 +44,11 @@ public abstract class MixinNetHandlerPlayClient implements INetHandlerPlayClient
 
         if (entity != null)
             Launch.eventManager.callEvent(new EntityMovementEvent(entity));
+    }
+
+    @Inject(method = "addToSendQueue", at = @At("HEAD"), cancellable = true)
+    private void addToSendQueue(Packet<?> packet, CallbackInfo callbackInfo) {
+        if (PredictUtils.predicting) callbackInfo.cancel();
     }
 
     /**

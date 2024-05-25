@@ -57,7 +57,6 @@ public class MixinNetworkManager {
 
     @Inject(method = "sendPacket(Lnet/minecraft/network/Packet;)V", at = @At("HEAD"), cancellable = true)
     private void send(final Packet<?> packet, final CallbackInfo callback) {
-        if (PredictUtils.predicting) callback.cancel();
         if (PacketUtils.handleSendPacket(packet)) return;
         final PacketEvent event = new PacketEvent(packet);
         final BackTrack backTrack = Launch.moduleManager.getModule(BackTrack.class);

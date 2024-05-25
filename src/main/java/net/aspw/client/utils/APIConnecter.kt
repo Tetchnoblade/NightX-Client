@@ -47,20 +47,20 @@ object APIConnecter {
         sslContext.init(null, trustAllCerts, java.security.SecureRandom())
     }
 
-    fun callImage(image: String, location: String): ResourceLocation? {
+    fun callImage(image: String, location: String): ResourceLocation {
         for ((i, l, s) in pictures) {
             if (i == image && l == location)
                 return s
         }
-        return null
+        return ResourceLocation("client/temp.png")
     }
 
-    fun callMainMenu(image: Int): ResourceLocation? {
+    fun callMainMenu(image: Int): ResourceLocation {
         for ((i, l) in mainmenu) {
             if (i == image)
                 return l
         }
-        return null
+        return ResourceLocation("client/temp.png")
     }
 
     fun loadPictures() {
@@ -124,8 +124,7 @@ object APIConnecter {
                 ClientUtils.getLogger().info("Load MainMenu $counter")
                 maxTicks = counter
             }
-        } catch (e: Exception) {
-            ClientUtils.getLogger().info("Loaded MainMenu")
+        } catch (_: Exception) {
         }
     }
 

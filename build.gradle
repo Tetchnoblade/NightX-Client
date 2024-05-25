@@ -82,8 +82,6 @@ dependencies {
         exclude module: "kotlin-stdlib"
         exclude module: "authlib"
     }
-
-    include 'com.github.ben-manes.caffeine:caffeine:2.9.0'
 }
 
 shadowJar {

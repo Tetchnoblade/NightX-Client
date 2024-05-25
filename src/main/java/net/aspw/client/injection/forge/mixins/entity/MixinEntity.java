@@ -216,7 +216,7 @@ public abstract class MixinEntity implements ICommandSender {
     }
 
     @Inject(method = "spawnRunningParticles", at = @At("HEAD"), cancellable = true)
-    private void checkGroundState(CallbackInfo ci) {
+    private void spawnRunningParticles(CallbackInfo ci) {
         if (!this.onGround || PredictUtils.predicting) ci.cancel();
     }
 
