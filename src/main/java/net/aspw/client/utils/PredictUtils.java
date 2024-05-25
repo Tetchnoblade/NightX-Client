@@ -64,8 +64,8 @@ public class PredictUtils extends MinecraftInstance {
                 mc.getNetHandler(),
                 new StatFileWriter()
         );
-        sp.setPositionAndRotation(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch);
-        sp.onGround = mc.thePlayer.onGround;
+        sp.setPositionAndRotation(mc.thePlayer.posX, mc.thePlayer.posY + 1, mc.thePlayer.posZ, mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch);
+        sp.onGround = false;
         sp.setSneaking(mc.thePlayer.isSneaking());
         sp.motionX = mc.thePlayer.motionX;
         sp.motionY = mc.thePlayer.motionY;
@@ -98,6 +98,6 @@ public class PredictUtils extends MinecraftInstance {
                 break;
             }
         }
-        return doing && sp.fallDistance != 0 && mc.thePlayer != null && mc.theWorld != null;
+        return doing && sp.fallDistance != 0 && mc.thePlayer != null && mc.theWorld != null && !mc.thePlayer.isSneaking() && !mc.thePlayer.capabilities.isFlying;
     }
 }

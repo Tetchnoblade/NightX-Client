@@ -9,11 +9,12 @@ import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.GuiTextField
+import net.minecraft.util.Session
 import org.lwjgl.input.Keyboard
 import java.io.IOException
 import kotlin.concurrent.thread
 
-class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
+class GuiAddAccount(private val prevGui: GuiAltManager, private val directLogin: Boolean) : GuiScreen() {
 
     private lateinit var addButton: GuiButton
     private lateinit var username: GuiTextField
@@ -24,7 +25,8 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
         Keyboard.enableRepeatEvents(true)
 
         // Login via Microsoft account
-        buttonList.add(GuiButton(3, width / 2 - 100, 133, "Microsoft Login"))
+        if (!directLogin)
+            buttonList.add(GuiButton(3, width / 2 - 100, 133, "Microsoft Login"))
 
         // Add and back button
         buttonList.add(
@@ -34,7 +36,7 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
                 height - 54,
                 98,
                 20,
-                "Add"
+                if (directLogin) "Login" else "Add"
             ).also { addButton = it })
         buttonList.add(GuiButton(0, width / 2 + 2, height - 54, 98, 20, "Done"))
 
@@ -51,7 +53,7 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
         )
         RenderUtils.drawRect(30F, 30F, width - 30F, height - 30F, Int.MIN_VALUE)
         this.drawCenteredString(
-            mc.fontRendererObj, "Add Account",
+            mc.fontRendererObj, if (directLogin) "Direct Login" else "Add Account",
             width / 2,
             34,
             0xffffff
@@ -129,12 +131,20 @@ class GuiAddAccount(private val prevGui: GuiAltManager) : GuiScreen() {
         addButton.enabled = false
 
         thread(name = "Account-Checking-Task") {
-            Launch.fileManager.accountsConfig.addAccount(account)
-            Launch.fileManager.saveConfig(Launch.fileManager.accountsConfig)
+            if (directLogin) {
+                mc.session = Session(
+                    account.session.username,
+                    account.session.uuid, account.session.token, "mojang"
+                )
+                status = "§aLogged successfully to ${mc.session.username}."
+            } else {
+                Launch.fileManager.accountsConfig.addAccount(account)
+                Launch.fileManager.saveConfig(Launch.fileManager.accountsConfig)
+                status = "§aThe account has been added."
+            }
             if (Launch.moduleManager.getModule(Interface::class.java)?.flagSoundValue!!.get()) {
                 Launch.tipSoundManager.popSound.asyncPlay(Launch.moduleManager.popSoundPower)
             }
-            status = "§aThe account has been added."
             prevGui.status = status
             mc.displayGuiScreen(prevGui)
         }

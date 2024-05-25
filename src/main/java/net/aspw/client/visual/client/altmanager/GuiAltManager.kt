@@ -52,8 +52,9 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
         val startPositionY = 22
         buttonList.add(GuiButton(1, width - 80, startPositionY + 24, 70, 20, "Add"))
-        buttonList.add(GuiButton(2, width - 80, startPositionY + 24 * 2, 70, 20, "Delete"))
-        buttonList.add(GuiButton(9, width - 80, startPositionY + 24 * 3, 70, 20, "Reload"))
+        buttonList.add(GuiButton(6, width - 80, startPositionY + 24 * 2, 70, 20, "Direct"))
+        buttonList.add(GuiButton(2, width - 80, startPositionY + 24 * 3, 70, 20, "Delete"))
+        buttonList.add(GuiButton(9, width - 80, startPositionY + 24 * 4, 70, 20, "Reload"))
         buttonList.add(GuiButton(0, width - 80, height - 65, 70, 20, "Done"))
         buttonList.add(GuiButton(3, 5, startPositionY + 24, 90, 20, "Login").also { loginButton = it })
         buttonList.add(GuiButton(4, 5, startPositionY + 24 * 2, 90, 20, "Random Alt").also { randomButton = it })
@@ -107,7 +108,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
 
         when (button.id) {
             0 -> mc.displayGuiScreen(prevGui)
-            1 -> mc.displayGuiScreen(GuiAddAccount(this))
+            1 -> mc.displayGuiScreen(GuiAddAccount(this, false))
             2 -> {
                 status = if (altsList.selectedSlot != -1 && altsList.selectedSlot < altsList.size) {
                     fileManager.accountsConfig.removeAccount(altsList.accounts[altsList.selectedSlot])
@@ -181,6 +182,8 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
                     "§aLogging in..."
                 } ?: "§cYou do not have any accounts."
             }
+
+            6 -> mc.displayGuiScreen(GuiAddAccount(this, true))
 
             9 -> {
                 fileManager.loadConfig(fileManager.accountsConfig)

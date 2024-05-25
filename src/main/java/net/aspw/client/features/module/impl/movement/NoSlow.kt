@@ -66,7 +66,6 @@ class NoSlow : Module() {
     private val debugValue =
         BoolValue("Debug", false) { modeValue.get().equals("watchdog", true) || modeValue.get().equals("blink", true) }
 
-    // Soulsand
     val soulsandValue = BoolValue("Soulsand", true)
     val liquidPushValue = BoolValue("LiquidPush", true)
 

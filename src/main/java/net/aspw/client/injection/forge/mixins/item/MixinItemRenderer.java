@@ -274,11 +274,11 @@ public abstract class MixinItemRenderer {
                                 GlStateManager.rotate(this.delay, 0.0F, 0.0F, -0.1F);
                                 if (Animations.cancelEquip.get())
                                     this.transformFirstPersonItem(0.0F, 0.0F);
-                                else this.transformFirstPersonItem(f / 1.2F, 0.0F);
+                                else this.transformFirstPersonItem(f / 1.1F, 0.0F);
                                 long currentTime = System.currentTimeMillis();
                                 long elapsedTime = currentTime - lastUpdateTime;
                                 if (this.rotateTimer.hasReached(1L)) {
-                                    this.delay += elapsedTime * 360.0 / 1000.0;
+                                    this.delay += elapsedTime * 360.0 / 850.0;
                                     this.rotateTimer.reset();
                                 }
                                 lastUpdateTime = currentTime;
