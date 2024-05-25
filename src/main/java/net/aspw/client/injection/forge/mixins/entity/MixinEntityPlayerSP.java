@@ -7,10 +7,7 @@ import net.aspw.client.features.module.impl.movement.NoSlow;
 import net.aspw.client.features.module.impl.movement.SilentSneak;
 import net.aspw.client.features.module.impl.player.Scaffold;
 import net.aspw.client.features.module.impl.visual.Interface;
-import net.aspw.client.utils.CooldownHelper;
-import net.aspw.client.utils.MovementUtils;
-import net.aspw.client.utils.Rotation;
-import net.aspw.client.utils.RotationUtils;
+import net.aspw.client.utils.*;
 import net.aspw.client.visual.client.clickgui.dropdown.ClickGui;
 import net.aspw.client.visual.client.clickgui.smooth.SmoothClickGui;
 import net.aspw.client.visual.client.clickgui.tab.NewUi;
@@ -27,10 +24,12 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
+import net.minecraft.network.play.client.C0CPacketInput;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.*;
 import org.spongepowered.asm.mixin.*;
@@ -157,7 +156,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     @Overwrite
     public void onUpdateWalkingPlayer() {
         final MotionEvent event = new MotionEvent(this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround);
-        Launch.eventManager.callEvent(event);
+        if (!PredictUtils.predicting) Launch.eventManager.callEvent(event);
 
         final SilentSneak sneak = Objects.requireNonNull(Launch.moduleManager.getModule(SilentSneak.class));
         final boolean fakeSprint = sneak.getState() && (!MovementUtils.isMoving());
@@ -168,18 +167,18 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         final boolean sneaking = actionEvent.getSneaking();
 
         if (sprinting != this.serverSprintState) {
-            if (sprinting)
+            if (sprinting && !PredictUtils.predicting)
                 this.sendQueue.addToSendQueue(new C0BPacketEntityAction((EntityPlayerSP) (Object) this, C0BPacketEntityAction.Action.START_SPRINTING));
-            else
+            else if (!PredictUtils.predicting)
                 this.sendQueue.addToSendQueue(new C0BPacketEntityAction((EntityPlayerSP) (Object) this, C0BPacketEntityAction.Action.STOP_SPRINTING));
 
             this.serverSprintState = sprinting;
         }
 
         if (sneaking != this.serverSneakState && (!sneak.getState() || sneak.modeValue.get().equalsIgnoreCase("Legit"))) {
-            if (sneaking)
+            if (sneaking && !PredictUtils.predicting)
                 this.sendQueue.addToSendQueue(new C0BPacketEntityAction((EntityPlayerSP) (Object) this, C0BPacketEntityAction.Action.START_SNEAKING));
-            else
+            else if (!PredictUtils.predicting)
                 this.sendQueue.addToSendQueue(new C0BPacketEntityAction((EntityPlayerSP) (Object) this, C0BPacketEntityAction.Action.STOP_SNEAKING));
 
             this.serverSneakState = sneaking;
@@ -205,16 +204,16 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
             if (this.ridingEntity == null) {
                 if (moved && rotated) {
-                    sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(posX, getEntityBoundingBox().minY, posZ, yaw, pitch, onGround));
+                    if (!PredictUtils.predicting) sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(posX, getEntityBoundingBox().minY, posZ, yaw, pitch, onGround));
                 } else if (moved) {
-                    sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(posX, getEntityBoundingBox().minY, posZ, onGround));
+                    if (!PredictUtils.predicting) sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(posX, getEntityBoundingBox().minY, posZ, onGround));
                 } else if (rotated) {
-                    sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(yaw, pitch, onGround));
+                    if (!PredictUtils.predicting) sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(yaw, pitch, onGround));
                 } else {
-                    sendQueue.addToSendQueue(new C03PacketPlayer(onGround));
+                    if (!PredictUtils.predicting) sendQueue.addToSendQueue(new C03PacketPlayer(onGround));
                 }
             } else {
-                sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(motionX, -999, motionZ, yaw, pitch, onGround));
+                if (!PredictUtils.predicting) sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(motionX, -999, motionZ, yaw, pitch, onGround));
                 moved = false;
             }
 
@@ -236,9 +235,9 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
         if (this.isCurrentViewEntity())
             lastOnGround = event.getOnGround();
 
-        event.setEventState(EventState.POST);
+        if (!PredictUtils.predicting) event.setEventState(EventState.POST);
 
-        Launch.eventManager.callEvent(event);
+        if (!PredictUtils.predicting) Launch.eventManager.callEvent(event);
     }
 
     @Inject(method = "swingItem", at = @At("HEAD"))
@@ -266,7 +265,6 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
     @Override
     @Overwrite
     public void onLivingUpdate() {
-        Launch.eventManager.callEvent(new UpdateEvent());
         if (mc.currentScreen instanceof NewUi || mc.currentScreen instanceof ClickGui || mc.currentScreen instanceof SmoothClickGui) {
             mc.gameSettings.keyBindForward.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindForward);
             mc.gameSettings.keyBindBack.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindBack);
@@ -276,11 +274,13 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             mc.gameSettings.keyBindSprint.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindSprint);
         }
 
+        if (!PredictUtils.predicting) Launch.eventManager.callEvent(new UpdateEvent());
+
         if (this.sprintingTicksLeft > 0) {
             --this.sprintingTicksLeft;
 
             if (this.sprintingTicksLeft == 0) {
-                this.setSprinting(false);
+                if (!PredictUtils.predicting) this.setSprinting(false);
             }
         }
 
@@ -339,7 +339,7 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
 
         if (getHeldItem() != null && (this.isUsingItem() || (getHeldItem().getItem() instanceof ItemSword && mc.thePlayer.isBlocking() && !this.isRiding()))) {
             final SlowDownEvent slowDownEvent = new SlowDownEvent(0.2F, 0.2F);
-            Launch.eventManager.callEvent(slowDownEvent);
+            if (!PredictUtils.predicting) Launch.eventManager.callEvent(slowDownEvent);
             this.movementInput.moveStrafe *= slowDownEvent.getStrafe();
             this.movementInput.moveForward *= slowDownEvent.getForward();
             this.sprintToggleTimer = 0;
@@ -356,19 +356,19 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer {
             if (this.sprintToggleTimer <= 0 && !this.mc.gameSettings.keyBindSprint.isKeyDown()) {
                 this.sprintToggleTimer = 7;
             } else {
-                this.setSprinting(true);
+                if (!PredictUtils.predicting) this.setSprinting(true);
             }
         }
 
-        if (!this.isSprinting() && this.movementInput.moveForward >= f && flag3 && (noSlow.getState() || !this.isUsingItem()) && !this.isPotionActive(Potion.blindness) && this.mc.gameSettings.keyBindSprint.isKeyDown())
+        if (!PredictUtils.predicting && !this.isSprinting() && this.movementInput.moveForward >= f && flag3 && (noSlow.getState() || !this.isUsingItem()) && !this.isPotionActive(Potion.blindness) && this.mc.gameSettings.keyBindSprint.isKeyDown())
             this.setSprinting(true);
 
         final Scaffold scaffold = Objects.requireNonNull(Launch.moduleManager.getModule(Scaffold.class));
 
-        if ((scaffold.getState() && scaffold.getCanTower() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || (scaffold.getState() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || RotationUtils.targetRotation != null && RotationUtils.getRotationDifference(new Rotation(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch)) > 30)
+        if (!PredictUtils.predicting && ((scaffold.getState() && scaffold.getCanTower() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || (scaffold.getState() && scaffold.sprintModeValue.get().equalsIgnoreCase("Off")) || RotationUtils.targetRotation != null && RotationUtils.getRotationDifference(new Rotation(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch)) > 30))
             this.setSprinting(false);
 
-        if (this.isSprinting() && (this.movementInput.moveForward < f || mc.thePlayer.isCollidedHorizontally || !flag3))
+        if (!PredictUtils.predicting && (this.isSprinting() && (this.movementInput.moveForward < f || mc.thePlayer.isCollidedHorizontally || !flag3)))
             this.setSprinting(false);
 
         if (this.capabilities.allowFlying) {

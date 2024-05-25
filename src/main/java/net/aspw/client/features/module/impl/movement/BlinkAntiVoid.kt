@@ -1,4 +1,4 @@
-package net.aspw.client.features.module.impl.visual
+package net.aspw.client.features.module.impl.movement
 
 import net.aspw.client.event.EventTarget
 import net.aspw.client.event.PacketEvent
@@ -13,8 +13,8 @@ import net.minecraft.network.play.client.C03PacketPlayer
 import java.util.concurrent.LinkedBlockingQueue
 import kotlin.math.abs
 
-@ModuleInfo(name = "Test", spacedName = "Test", category = ModuleCategory.VISUAL)
-class Test : Module() {
+@ModuleInfo(name = "BlinkAntiVoid", spacedName = "Blink Anti Void", category = ModuleCategory.MOVEMENT)
+class BlinkAntiVoid : Module() {
 
     private var packets = LinkedBlockingQueue<Packet<*>>()
     private var safeTimer = TickTimer()
@@ -23,6 +23,8 @@ class Test : Module() {
     private var preX: Double? = null
     private var preY: Double? = null
     private var preZ: Double? = null
+    private var preYaw: Float? = null
+    private var prePitch: Float? = null
 
     override fun onDisable() {
         reset()
@@ -30,17 +32,16 @@ class Test : Module() {
 
     @EventTarget
     fun onRender3D(event: Render3DEvent) {
-        togglePrevent = PredictUtils.checkVoid()
+        togglePrevent = PredictUtils.checkVoid(5)
         if (togglePrevent) {
             if (abs(mc.thePlayer.posY - preY!!) > 8) {
+                mc.thePlayer.setPositionAndRotation(preX!!, preY!!, preZ!!, preYaw!!, prePitch!!)
                 mc.thePlayer.motionX = 0.0
+                mc.thePlayer.motionY = 0.0
                 mc.thePlayer.motionZ = 0.0
-                mc.thePlayer.setPositionAndUpdate(preX!!, preY!!, preZ!!)
-                chat("set back")
                 reset()
-            } else if (safeTimer.hasTimePassed(60)) {
+            } else if (safeTimer.hasTimePassed(60) || mc.thePlayer.onGround) {
                 sync()
-                chat("realsync")
             }
         } else sync()
     }
@@ -50,13 +51,16 @@ class Test : Module() {
         val packet = event.packet
         if (mc.thePlayer == null || disableLogger) return
         if (packet is C03PacketPlayer && togglePrevent) {
-            chat("CANCEL")
             if (preX == null)
                 preX = mc.thePlayer.posX
             if (preY == null)
                 preY = mc.thePlayer.posY
             if (preZ == null)
                 preZ = mc.thePlayer.posZ
+            if (preYaw == null)
+                preYaw = mc.thePlayer.rotationYaw
+            if (prePitch == null)
+                prePitch = mc.thePlayer.rotationPitch
             packets.add(packet)
             safeTimer.update()
             event.cancelEvent()
@@ -83,5 +87,7 @@ class Test : Module() {
         preX = null
         preY = null
         preZ = null
+        preYaw = null
+        prePitch = null
     }
 }

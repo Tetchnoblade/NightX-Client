@@ -158,7 +158,7 @@ class ModuleManager : Listenable {
             HiderESP::class.java,
             LegitVelocity::class.java,
             PredictRender::class.java,
-            Test::class.java
+            BlinkAntiVoid::class.java
         )
 
         ClientUtils.getLogger().info("Successfully loaded modules")

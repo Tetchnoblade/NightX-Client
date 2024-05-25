@@ -1,5 +1,6 @@
 package net.aspw.client.utils;
 
+import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.block.BlockUtils;
 import net.minecraft.block.BlockAir;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
@@ -55,7 +56,7 @@ public class PredictUtils extends MinecraftInstance {
         return positions;
     }
 
-    public static boolean checkVoid() {
+    public static boolean checkVoid(int tick) {
         predicting = true;
         EntityPlayerSP sp = new EntityPlayerSP(
                 mc,
@@ -70,7 +71,7 @@ public class PredictUtils extends MinecraftInstance {
         sp.motionY = mc.thePlayer.motionY;
         sp.motionZ = mc.thePlayer.motionZ;
         sp.movementInput = new MovementInputFromOptions(mc.gameSettings);
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < tick; i++) {
             sp.movementInput.moveStrafe = mc.thePlayer.movementInput.moveStrafe;
             sp.movementInput.moveForward = mc.thePlayer.movementInput.moveForward;
             sp.movementInput.sneak = mc.thePlayer.movementInput.sneak;

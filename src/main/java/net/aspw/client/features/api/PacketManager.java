@@ -9,7 +9,6 @@ import net.aspw.client.features.module.impl.other.BrandSpoofer;
 import net.aspw.client.features.module.impl.visual.Animations;
 import net.aspw.client.features.module.impl.visual.SilentRotations;
 import net.aspw.client.utils.MinecraftInstance;
-import net.aspw.client.utils.PredictUtils;
 import net.aspw.client.utils.RotationUtils;
 import net.aspw.client.utils.pathfinder.MainPathFinder;
 import net.aspw.client.utils.pathfinder.Vec3;
