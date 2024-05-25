@@ -1,24 +1,14 @@
 package net.aspw.client.utils;
 
-import net.aspw.client.utils.MinecraftInstance;
 import net.aspw.client.utils.block.BlockUtils;
 import net.minecraft.block.BlockAir;
-import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.settings.GameSettings;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.stats.StatFileWriter;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovementInputFromOptions;
 import net.minecraft.util.Vec3;
-import org.lwjgl.opengl.GL11;
 
 import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class PredictUtils extends MinecraftInstance {
 

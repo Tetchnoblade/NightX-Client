@@ -86,7 +86,37 @@ class BlinkAntiVoid : Module() {
     }
 
     private fun shouldSync(y: Float): Boolean {
-        return mc.theWorld.getBlockState(BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - y, mc.thePlayer.posZ)).block !is BlockAir || mc.theWorld.getBlockState(BlockPos(mc.thePlayer.posX + 0.2, mc.thePlayer.posY - y, mc.thePlayer.posZ + 0.2)).block !is BlockAir || mc.theWorld.getBlockState(BlockPos(mc.thePlayer.posX + 0.2, mc.thePlayer.posY - y, mc.thePlayer.posZ - 0.2)).block !is BlockAir || mc.theWorld.getBlockState(BlockPos(mc.thePlayer.posX - 0.2, mc.thePlayer.posY - y, mc.thePlayer.posZ + 0.2)).block !is BlockAir || mc.theWorld.getBlockState(BlockPos(mc.thePlayer.posX - 0.2, mc.thePlayer.posY - y, mc.thePlayer.posZ - 0.2)).block !is BlockAir
+        return mc.theWorld.getBlockState(
+            BlockPos(
+                mc.thePlayer.posX,
+                mc.thePlayer.posY - y,
+                mc.thePlayer.posZ
+            )
+        ).block !is BlockAir || mc.theWorld.getBlockState(
+            BlockPos(
+                mc.thePlayer.posX + 0.2,
+                mc.thePlayer.posY - y,
+                mc.thePlayer.posZ + 0.2
+            )
+        ).block !is BlockAir || mc.theWorld.getBlockState(
+            BlockPos(
+                mc.thePlayer.posX + 0.2,
+                mc.thePlayer.posY - y,
+                mc.thePlayer.posZ - 0.2
+            )
+        ).block !is BlockAir || mc.theWorld.getBlockState(
+            BlockPos(
+                mc.thePlayer.posX - 0.2,
+                mc.thePlayer.posY - y,
+                mc.thePlayer.posZ + 0.2
+            )
+        ).block !is BlockAir || mc.theWorld.getBlockState(
+            BlockPos(
+                mc.thePlayer.posX - 0.2,
+                mc.thePlayer.posY - y,
+                mc.thePlayer.posZ - 0.2
+            )
+        ).block !is BlockAir
     }
 
     private fun sync() {
