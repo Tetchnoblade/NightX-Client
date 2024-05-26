@@ -1,18 +1,18 @@
 package net.aspw.client.features.module.impl.visual
 
 import net.aspw.client.Launch
-import net.aspw.client.event.EventTarget
-import net.aspw.client.event.PacketEvent
-import net.aspw.client.event.Render2DEvent
-import net.aspw.client.event.TickEvent
+import net.aspw.client.event.*
 import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.combat.KillAura
 import net.aspw.client.features.module.impl.combat.KillAuraRecode
 import net.aspw.client.features.module.impl.combat.TPAura
+import net.aspw.client.features.module.impl.player.LegitScaffold
+import net.aspw.client.features.module.impl.player.Scaffold
 import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.AnimationUtils
+import net.aspw.client.utils.MovementUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -47,12 +47,16 @@ class Interface : Module() {
     private val watermarkValue = BoolValue("WaterMark", true)
     private val clientNameValue = TextValue("ClientName", "NightX") { watermarkValue.get() }
     private val arrayListValue = BoolValue("ArrayList", true)
+    private val arrayListBackGroundValue = BoolValue("ArrayList-BackGround", true)
+    private val arrayListRectValue = BoolValue("ArrayList-Rect", true)
     private val arrayListSpeedValue = FloatValue("ArrayList-AnimationSpeed", 0.3F, 0F, 0.6F) { arrayListValue.get() }
     private val targetHudValue = BoolValue("TargetHud", true)
     private val targetHudSpeedValue = FloatValue("TargetHud-AnimationSpeed", 3F, 0F, 6F) { targetHudValue.get() }
     private val targetHudXPosValue = FloatValue("TargetHud-XPos", 0F, -300F, 300F) { targetHudValue.get() }
     private val targetHudYPosValue = FloatValue("TargetHud-YPos", 0F, -300F, 300F) { targetHudValue.get() }
     private val cFontValue = BoolValue("C-Font", true)
+    val csgoCrosshairValue = BoolValue("CSGO-Crosshair", true)
+    private val motionVisualsValue = BoolValue("MotionVisuals", true)
     val itemVisualSpoofsValue = BoolValue("ItemVisualSpoof", true)
     val noAchievements = BoolValue("No-Achievements", true)
     val animHotbarValue = BoolValue("Hotbar-Animation", false)
@@ -62,7 +66,7 @@ class Interface : Module() {
     private val noTitle = BoolValue("NoTitle", false)
     private val antiTabComplete = BoolValue("AntiTabComplete", false)
     val customFov = BoolValue("CustomFov", false)
-    val customFovModifier = FloatValue("Fov", 1.4F, 1F, 1.8F) { customFov.get() }
+    val customFovModifier = FloatValue("Fov", 1.45F, 1F, 1.5F) { customFov.get() }
     val chatRectValue = BoolValue("ChatRect", true)
     val chatAnimationValue = BoolValue("Chat-Animation", true)
     val chatAnimationSpeedValue = FloatValue("Chat-AnimationSpeed", 0.06F, 0.01F, 0.5F) { chatAnimationValue.get() }
@@ -121,20 +125,74 @@ class Interface : Module() {
                     module.slideStep = module.slideStep.coerceIn(0F, width.toFloat())
                 }
 
-                val yPos = 10.24f * inx
+                val yPos = 11f * inx
 
                 if (module.array && module.slide > 0F) {
                     module.arrayY = yPos
                     inx++
                 }
             }
-            val textY = 2.2f
+            val textY = 2
             modules.forEachIndexed { index, module ->
                 val displayString = getModName(module)
 
                 val xPos = ScaledResolution(mc).scaledWidth - module.slide - 2
 
                 counter[0] = counter[0] - 1
+
+                if (arrayListRectValue.get()) {
+                    RenderUtils.drawGradientRect(
+                        xPos.toInt() - 1,
+                        module.arrayY.toInt() + 11,
+                        xPos.toInt() - 2,
+                        (module.arrayY - textY).toInt() + 2,
+                        RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb,
+                        RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb
+                    )
+
+                    if (module != modules[0]) {
+                        RenderUtils.drawGradientRect(
+                            xPos.toInt() - 1,
+                            module.arrayY.toInt(),
+                            xPos.toInt() - 2 - if (cFontValue.get()) (FontLoaders.SF20.getStringWidth(getModName(modules[index - 1])) - FontLoaders.SF20.getStringWidth(
+                                displayString
+                            )) else (Fonts.minecraftFont.getStringWidth(getModName(modules[index - 1])) - Fonts.minecraftFont.getStringWidth(
+                                displayString
+                            )),
+                            module.arrayY.toInt() - 1,
+                            RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb,
+                            RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb
+                        )
+                        if (module == modules[modules.size - 1]) {
+                            RenderUtils.drawGradientRect(
+                                xPos.toInt() - 1,
+                                module.arrayY.toInt() + 12,
+                                xPos.toInt() - 2,
+                                module.arrayY.toInt() + 11,
+                                RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb,
+                                RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb
+                            )
+                            RenderUtils.drawGradientRect(
+                                ScaledResolution(mc).scaledWidth,
+                                module.arrayY.toInt() + 12,
+                                xPos.toInt() - 1,
+                                module.arrayY.toInt() + 11,
+                                RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb,
+                                RenderUtils.skyRainbow(index * 50, 0.6f, 1f).rgb
+                            )
+                        }
+                    }
+                }
+
+                if (arrayListBackGroundValue.get())
+                    RenderUtils.drawGradientRect(
+                        ScaledResolution(mc).scaledWidth,
+                        module.arrayY.toInt() + 11,
+                        xPos.toInt() - 1,
+                        (module.arrayY - textY).toInt() + 2,
+                        Color(0, 0, 0, 120).rgb,
+                        Color(0, 0, 0, 120).rgb
+                    )
 
                 if (cFontValue.get())
                     FontLoaders.SF20.drawStringWithShadow(
@@ -290,6 +348,61 @@ class Interface : Module() {
                     )
                 }
             } else if (easingHealth != 0F) easingHealth = 0F
+        }
+
+        if (csgoCrosshairValue.get()) {
+            val range = if (MovementUtils.isMoving()) 5 else 0
+            RenderUtils.drawGradientRect(
+                ScaledResolution(mc).scaledWidth / 2 + 1,
+                ScaledResolution(mc).scaledHeight / 2 + 1,
+                ScaledResolution(mc).scaledWidth / 2,
+                ScaledResolution(mc).scaledHeight / 2,
+                Color(1f, 1f, 1f, 0.85f).rgb,
+                Color(1f, 1f, 1f, 0.85f).rgb
+            )
+            RenderUtils.drawGradientRect(
+                ScaledResolution(mc).scaledWidth / 2,
+                ScaledResolution(mc).scaledHeight / 2 - 8 - range,
+                ScaledResolution(mc).scaledWidth / 2 + 1,
+                ScaledResolution(mc).scaledHeight / 2 - 3 - range,
+                Color(1f, 1f, 1f, 0.85f).rgb,
+                Color(1f, 1f, 1f, 0.85f).rgb
+            )
+            RenderUtils.drawGradientRect(
+                ScaledResolution(mc).scaledWidth / 2,
+                ScaledResolution(mc).scaledHeight / 2 + 4 + range,
+                ScaledResolution(mc).scaledWidth / 2 + 1,
+                ScaledResolution(mc).scaledHeight / 2 + 9 + range,
+                Color(1f, 1f, 1f, 0.85f).rgb,
+                Color(1f, 1f, 1f, 0.85f).rgb
+            )
+            RenderUtils.drawGradientRect(
+                ScaledResolution(mc).scaledWidth / 2 + 9 + range,
+                ScaledResolution(mc).scaledHeight / 2 + 1,
+                ScaledResolution(mc).scaledWidth / 2 + 4 + range,
+                ScaledResolution(mc).scaledHeight / 2,
+                Color(1f, 1f, 1f, 0.85f).rgb,
+                Color(1f, 1f, 1f, 0.85f).rgb
+            )
+            RenderUtils.drawGradientRect(
+                ScaledResolution(mc).scaledWidth / 2 - 3 - range,
+                ScaledResolution(mc).scaledHeight / 2 + 1,
+                ScaledResolution(mc).scaledWidth / 2 - 8 - range,
+                ScaledResolution(mc).scaledHeight / 2,
+                Color(1f, 1f, 1f, 0.85f).rgb,
+                Color(1f, 1f, 1f, 0.85f).rgb
+            )
+        }
+    }
+
+    @EventTarget
+    fun onUpdate(event: UpdateEvent) {
+        if (motionVisualsValue.get() && (Launch.moduleManager.getModule(Scaffold::class.java)?.state!! || Launch.moduleManager.getModule(
+                LegitScaffold::class.java
+            )?.state!!)
+        ) {
+            mc.thePlayer.isSwingInProgress = false
+            mc.thePlayer.distanceWalkedModified = 0f
         }
     }
 

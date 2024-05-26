@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation
     category = ModuleCategory.VISUAL
 )
 class MotionBlur : Module() {
-    private val blurAmount = IntegerValue("Amount", 5, 1, 10)
+    private val blurAmount = IntegerValue("Amount", 6, 1, 10)
 
     override fun onDisable() {
         if (mc.entityRenderer.isShaderActive) mc.entityRenderer.stopUseShader()
@@ -22,22 +22,18 @@ class MotionBlur : Module() {
 
     @EventTarget
     fun onTick(event: TickEvent) {
-        try {
-            if (mc.thePlayer != null) {
-                if (mc.entityRenderer.shaderGroup == null) mc.entityRenderer.loadShader(
-                    ResourceLocation(
-                        "minecraft",
-                        "shaders/post/motion_blur.json"
-                    )
+        if (mc.thePlayer != null) {
+            if (mc.entityRenderer.shaderGroup == null) mc.entityRenderer.loadShader(
+                ResourceLocation(
+                    "minecraft",
+                    "shaders/post/motion_blur.json"
                 )
-                val uniform = 1f - (blurAmount.get() / 10f).coerceAtMost(0.9f)
-                if (mc.entityRenderer.shaderGroup != null) {
-                    mc.entityRenderer.shaderGroup.listShaders[0].shaderManager.getShaderUniform("Phosphor")
-                        .set(uniform, 0f, 0f)
-                }
+            )
+            val uniform = 1f - (blurAmount.get() / 10f).coerceAtMost(0.9f)
+            if (mc.entityRenderer.shaderGroup != null) {
+                mc.entityRenderer.shaderGroup.listShaders[0].shaderManager.getShaderUniform("Phosphor")
+                    .set(uniform, 0f, 0f)
             }
-        } catch (a: Exception) {
-            a.printStackTrace()
         }
     }
 }

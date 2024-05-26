@@ -1,6 +1,7 @@
 package net.aspw.client.utils
 
 import net.aspw.client.Launch
+import net.aspw.client.features.module.impl.combat.AutoHeal
 import net.aspw.client.features.module.impl.player.AutoTool
 import net.aspw.client.features.module.impl.player.LegitScaffold
 import net.aspw.client.features.module.impl.player.Scaffold
@@ -18,6 +19,7 @@ object PlayerUtils {
     private val scaffold = Launch.moduleManager.getModule(Scaffold::class.java)
     private val legitScaffold = Launch.moduleManager.getModule(LegitScaffold::class.java)
     private val autoTool = Launch.moduleManager.getModule(AutoTool::class.java)
+    private val autoHeal = Launch.moduleManager.getModule(AutoHeal::class.java)
 
     @JvmStatic
     fun spoofItem(): ItemStack? {
@@ -34,6 +36,10 @@ object PlayerUtils {
                 isSpoofing = true
                 isItemNull = MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(autoTool.lastSlot) == null
                 return MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(autoTool.lastSlot)
+            } else if (autoHeal?.state!! && autoHeal.equipTime) {
+                isSpoofing = true
+                isItemNull = MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(autoHeal.oldSlot) == null
+                return MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(autoHeal.oldSlot)
             }
         }
         isSpoofing = false
@@ -50,6 +56,8 @@ object PlayerUtils {
                 return legitScaffold.lastSlot
             else if (autoTool?.state!! && autoTool.isBreaking)
                 return autoTool.lastSlot
+            else if (autoHeal?.state!! && autoHeal.equipTime)
+                return autoHeal.oldSlot
         }
         return if (entity == MinecraftInstance.mc.thePlayer) MinecraftInstance.mc.thePlayer.inventory.currentItem else entity.inventory.currentItem
     }
@@ -60,11 +68,13 @@ object PlayerUtils {
             legitScaffold.lastSlot
         ) == null || autoTool?.state!! && autoTool.isBreaking && MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(
             autoTool.lastSlot
+        ) == null || autoHeal?.state!! && autoHeal.equipTime && MinecraftInstance.mc.thePlayer.inventory.getStackInSlot(
+            autoHeal.oldSlot
         ) == null || MinecraftInstance.mc.thePlayer.heldItem == null
     }
 
     @JvmStatic
     fun cancelEquip(): Boolean {
-        return scaffold?.state!! || legitScaffold?.state!!
+        return scaffold?.state!! || legitScaffold?.state!! || autoHeal?.state!! && autoHeal.equipTime
     }
 }

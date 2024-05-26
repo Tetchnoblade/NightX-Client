@@ -47,10 +47,11 @@ public abstract class MixinGuiInGame extends Gui {
     protected abstract void renderHotbarItem(int index, int xPos, int yPos, float partialTicks, EntityPlayer player);
 
     @Inject(method = "showCrosshair", at = @At("HEAD"), cancellable = true)
-    private void injectCrosshair(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+    private void showCrosshair(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+        final Interface anInterface = Objects.requireNonNull(Launch.moduleManager.getModule(Interface.class));
         final SnakeGame snakeGame = Objects.requireNonNull(Launch.moduleManager.getModule(SnakeGame.class));
 
-        if (snakeGame.getState())
+        if (snakeGame.getState() || anInterface.getState() && anInterface.getCsgoCrosshairValue().get())
             callbackInfoReturnable.setReturnValue(false);
     }
 

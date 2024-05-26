@@ -4,7 +4,6 @@ import net.aspw.client.Launch;
 import net.aspw.client.features.module.Module;
 import net.aspw.client.features.module.ModuleCategory;
 import net.aspw.client.features.module.impl.visual.Gui;
-import net.aspw.client.utils.render.BlurUtils;
 import net.aspw.client.utils.render.EaseUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.visual.client.clickgui.dropdown.elements.ButtonElement;
@@ -64,15 +63,6 @@ public class ClickGui extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, final float partialTicks) {
-        if (Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).getGuiBlur().get()) {
-            BlurUtils.blurArea(
-                    0,
-                    0,
-                    this.width,
-                    this.height,
-                    10
-            );
-        }
         RenderUtils.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
         if (progress < 1) progress = (float) (System.currentTimeMillis() - lastMS) / (600F / 1.4F); // fully fps async
         else progress = 1;

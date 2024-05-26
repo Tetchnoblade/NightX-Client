@@ -5,7 +5,6 @@ import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.impl.visual.Gui
 import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.misc.RandomUtils
-import net.aspw.client.utils.render.BlurUtils.blurArea
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.clickgui.smooth.buttons.CategoryPanel
 import net.minecraft.client.gui.GuiScreen
@@ -37,15 +36,6 @@ class SmoothClickGui : GuiScreen() {
         val mouseX = (mouseXIn / scale).roundToInt()
         val mouseY = (mouseYIn / scale).roundToInt()
 
-        if (Objects.requireNonNull(Launch.moduleManager.getModule(Gui::class.java))?.guiBlur?.get()!!) {
-            blurArea(
-                0f,
-                0f,
-                width.toFloat(),
-                height.toFloat(),
-                10f
-            )
-        }
         RenderUtils.drawGradientRect(0, 0, width, height, -1072689136, -804253680)
 
         GL11.glPushMatrix()

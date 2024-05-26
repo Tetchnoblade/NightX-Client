@@ -56,11 +56,7 @@ dependencies {
         exclude module: "gson"
         exclude module: "launchwrapper"
         exclude module: "log4j-core"
-        exclude module: "slf4j-api"
     }
-
-    include "org.slf4j:slf4j-api:${project.slf4j_version}"
-    include "org.yaml:snakeyaml:${project.snake_yml_version}"
 
     include "com.squareup.okhttp3:okhttp:${project.okhttp_version}"
 

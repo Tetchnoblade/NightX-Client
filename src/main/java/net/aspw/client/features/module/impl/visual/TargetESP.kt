@@ -54,7 +54,7 @@ class TargetESP : Module() {
                 GL11.glColor3f(0F, 0F, 0F)
                 GL11.glBegin(GL11.GL_LINE_LOOP)
 
-                for (i in 0..360 step 60 - 14) {
+                for (i in 0..360 step 60 - 24) {
                     GL11.glVertex2f(
                         cos(i * Math.PI / 180.0).toFloat() * 0.8f,
                         (sin(i * Math.PI / 180.0).toFloat() * 0.8f)
@@ -66,8 +66,8 @@ class TargetESP : Module() {
                 GL11.glLineWidth(3f)
                 GL11.glBegin(GL11.GL_LINE_LOOP)
 
-                for (i in 0..360 step 60 - 14) {
-                    GL11.glColor3f(255 / 255.0f, 0 / 255.0f, 255 / 255.0f)
+                for (i in 0..360 step 60 - 24) {
+                    GL11.glColor3f(255 / 255.0f, 140 / 255.0f, 255 / 255.0f)
                     GL11.glVertex2f(
                         cos(i * Math.PI / 180.0).toFloat() * 0.8f,
                         (sin(i * Math.PI / 180.0).toFloat() * 0.8f)

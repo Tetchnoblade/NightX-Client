@@ -43,7 +43,7 @@ class AutoTool : Module() {
                     bestSlot = i
                 }
             }
-
+            if (bestSlot == mc.thePlayer.inventory.currentItem) return
             if (bestSlot != -1) {
                 if (mc.thePlayer.inventory.currentItem != bestSlot && !isBreaking)
                     lastSlot = mc.thePlayer.inventory.currentItem

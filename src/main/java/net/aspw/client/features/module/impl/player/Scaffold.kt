@@ -13,6 +13,7 @@ import net.aspw.client.utils.block.BlockUtils.canBeClicked
 import net.aspw.client.utils.block.BlockUtils.isReplaceable
 import net.aspw.client.utils.block.PlaceInfo
 import net.aspw.client.utils.misc.RandomUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.utils.timer.MSTimer
 import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.utils.timer.TimeUtils
@@ -31,6 +32,7 @@ import net.minecraft.network.play.client.*
 import net.minecraft.potion.Potion
 import net.minecraft.stats.StatList
 import net.minecraft.util.*
+import java.awt.Color
 import java.util.*
 import kotlin.math.*
 
@@ -782,6 +784,15 @@ class Scaffold : Module() {
     }
 
     @EventTarget
+    fun onRender3D(event: Render3DEvent) {
+        RenderUtils.drawBlockBox(
+            BlockPos(mc.thePlayer.posX, launchY.toDouble() - 1, mc.thePlayer.posZ),
+            Color(255, 255, 255, 40),
+            false
+        )
+    }
+
+    @EventTarget
     fun onJump(event: JumpEvent) {
         if (blocksAmount <= 0 || RotationUtils.targetRotation == null) return
         if (Launch.moduleManager.getModule(SilentRotations::class.java)?.state!! && !Launch.moduleManager.getModule(
@@ -813,10 +824,18 @@ class Scaffold : Module() {
     fun onRender2D(event: Render2DEvent) {
         val scaledResolution = ScaledResolution(mc)
         val counter = "$blocksAmount Blocks"
+        RenderUtils.drawGradientRect(
+            scaledResolution.scaledWidth / 2 - 25,
+            scaledResolution.scaledHeight / 2 - 93,
+            ScaledResolution(mc).scaledWidth / 2 + 25,
+            ScaledResolution(mc).scaledHeight / 2 - 80,
+            Color(0, 0, 0, 100).rgb,
+            Color(0, 0, 0, 100).rgb
+        )
         FontLoaders.SF20.drawCenteredStringWithShadow(
             counter,
             scaledResolution.scaledWidth / 2f,
-            scaledResolution.scaledHeight / 2f - 30f,
+            scaledResolution.scaledHeight / 2f - 90f,
             -0x1111111
         )
     }

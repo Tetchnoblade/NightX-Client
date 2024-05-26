@@ -10,6 +10,7 @@ import net.aspw.client.utils.InventoryUtils
 import net.aspw.client.utils.Rotation
 import net.aspw.client.utils.RotationUtils
 import net.aspw.client.utils.misc.RandomUtils
+import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.utils.timer.TickTimer
 import net.aspw.client.value.BoolValue
 import net.aspw.client.value.FloatValue
@@ -19,6 +20,7 @@ import net.minecraft.client.settings.KeyBinding
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemBlock
 import net.minecraft.util.BlockPos
+import java.awt.Color
 
 @ModuleInfo(name = "LegitScaffold", spacedName = "Legit Scaffold", category = ModuleCategory.PLAYER)
 class LegitScaffold : Module() {
@@ -126,6 +128,15 @@ class LegitScaffold : Module() {
                 ),
                 RandomUtils.nextFloat(minTurnSpeed.get(), maxTurnSpeed.get())
             )
+        )
+    }
+
+    @EventTarget
+    fun onRender3D(event: Render3DEvent) {
+        RenderUtils.drawBlockBox(
+            BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ),
+            Color(255, 255, 255, 40),
+            false
         )
     }
 

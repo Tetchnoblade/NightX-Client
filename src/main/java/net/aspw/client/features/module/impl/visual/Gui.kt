@@ -34,8 +34,6 @@ class Gui : Module() {
     ) {
     }
 
-    val guiBlur = BoolValue("Blur", true)
-
     @JvmField
     val picturesValue = BoolValue("Pictures", true) { styleValue.get() == "Smooth" }
 

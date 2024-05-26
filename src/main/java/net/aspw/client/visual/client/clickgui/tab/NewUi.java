@@ -6,7 +6,6 @@ import net.aspw.client.features.module.impl.visual.Gui;
 import net.aspw.client.utils.APIConnecter;
 import net.aspw.client.utils.AnimationUtils;
 import net.aspw.client.utils.MouseUtils;
-import net.aspw.client.utils.render.BlurUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.utils.render.Stencil;
 import net.aspw.client.visual.client.clickgui.tab.elements.CategoryElement;
@@ -69,15 +68,6 @@ public class NewUi extends GuiScreen {
     }
 
     private void drawFullSized(final int mouseX, final int mouseY, final float partialTicks, final Color accentColor) {
-        if (Objects.requireNonNull(Launch.moduleManager.getModule(Gui.class)).getGuiBlur().get()) {
-            BlurUtils.blurArea(
-                    0,
-                    0,
-                    this.width,
-                    this.height,
-                    10
-            );
-        }
         RenderUtils.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
         RenderUtils.drawRoundedRect(31F, 31F, this.width - 31F, this.height - 31F, 8F, new Color(5, 5, 5, 170).getRGB());
         if (MouseUtils.mouseWithinBounds(mouseX, mouseY, this.width - 54F, 30F, this.width - 30F, 50F))

@@ -10,6 +10,7 @@ import net.aspw.client.features.module.impl.other.MurdererDetector;
 import net.aspw.client.features.module.impl.targets.AntiBots;
 import net.aspw.client.features.module.impl.targets.AntiTeams;
 import net.aspw.client.utils.EntityUtils;
+import net.aspw.client.utils.render.BlendUtils;
 import net.aspw.client.utils.render.RenderUtils;
 import net.aspw.client.value.BoolValue;
 import net.aspw.client.visual.font.smooth.FontLoaders;
@@ -29,6 +30,7 @@ import org.lwjgl.util.glu.GLU;
 
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector4d;
+import java.awt.*;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
@@ -39,7 +41,7 @@ import java.util.Objects;
 @ModuleInfo(name = "ESP", category = ModuleCategory.VISUAL)
 public final class ESP extends Module {
     public static List<Entity> collectedEntities = new ArrayList<>();
-    public final BoolValue localPlayer = new BoolValue("Local-Player", false);
+    public final BoolValue localPlayer = new BoolValue("Local-Player", true);
     private final IntBuffer viewport;
     private final FloatBuffer modelview;
     private final FloatBuffer projection;
@@ -107,10 +109,13 @@ public final class ESP extends Module {
                     EntityLivingBase entityLivingBase;
 
                     if (living) {
+                        entityLivingBase = (EntityLivingBase) entity;
+                        RenderUtils.newDrawRect(posX - 3.5D, posY - 0.5D, posX - 1.5D, position.w + 0.5D, new Color(0, 0, 0, 120).getRGB());
+                        int healthColor = BlendUtils.getHealthColor(entityLivingBase.getHealth(), entityLivingBase.getMaxHealth()).getRGB();
+                        RenderUtils.newDrawRect(posX - 3.0D, position.w, posX - 2.0D, position.w - (position.w - posY) * entityLivingBase.getHealth() / entityLivingBase.getMaxHealth(), healthColor);
                         final MurdererDetector murdererDetector = Objects.requireNonNull(Launch.moduleManager.getModule(MurdererDetector.class));
                         final AntiTeams antiTeams = Objects.requireNonNull(Launch.moduleManager.getModule(AntiTeams.class));
                         final AntiBots antiBots = Objects.requireNonNull(Launch.moduleManager.getModule(AntiBots.class));
-                        entityLivingBase = (EntityLivingBase) entity;
                         String entName;
                         if (murdererDetector.getState() && MurdererDetector.isMurderer(entityLivingBase)) {
                             entName = "§c[Murderer] §7- §r" + entityLivingBase.getDisplayName().getFormattedText();

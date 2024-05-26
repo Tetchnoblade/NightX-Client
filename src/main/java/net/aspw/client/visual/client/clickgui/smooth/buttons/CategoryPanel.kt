@@ -58,7 +58,7 @@ class CategoryPanel(x: Float, y: Float, var category: ModuleCategory, var color:
             )
         }
 
-        val xPos = 74
+        val xPos = 78
 
         when (category.displayName.lowercase()) {
             "combat" -> Fonts.icons.drawStringWithShadow("J", x + xPos, y + 4, markColor)
@@ -70,7 +70,7 @@ class CategoryPanel(x: Float, y: Float, var category: ModuleCategory, var color:
             "targets" -> Fonts.icons.drawStringWithShadow("I", x + xPos, y + 4, markColor)
         }
 
-        FONT.drawHeightCenteredString("§l" + category.displayName, x + 4, y + 0.5f + height / 2, -0x1)
+        FONT.drawHeightCenteredString("§l§n" + category.displayName, x + 4, y + 0.5f + height / 2, -0x1)
 
         var used = 0f
         if (open) {

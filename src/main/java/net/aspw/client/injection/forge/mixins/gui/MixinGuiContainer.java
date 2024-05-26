@@ -43,7 +43,7 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
     public void injectInitGui(final CallbackInfo callbackInfo) {
         final GuiScreen guiScreen = MinecraftInstance.mc.currentScreen;
 
-        if (guiScreen instanceof GuiChest) {
+        if (guiScreen instanceof GuiContainer) {
             buttonList.add(killAuraButton = new GuiButton(1024576, 5, 5, 150, 20, "Disable KillAura"));
             buttonList.add(chestStealerButton = new GuiButton(727, 5, 27, 150, 20, "Disable Stealer"));
             buttonList.add(invManagerButton = new GuiButton(321123, 5, 49, 150, 20, "Disable InvManager"));

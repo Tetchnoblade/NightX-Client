@@ -3,7 +3,6 @@ package net.aspw.client.visual.client
 import net.aspw.client.Launch
 import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.misc.MiscUtils
-import net.aspw.client.utils.render.BlurUtils
 import net.aspw.client.utils.render.RenderUtils
 import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.aspw.client.visual.font.smooth.FontLoaders
@@ -135,13 +134,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             height + moveMouseStrength
         )
         moveMouseEffect(mouseX, mouseY, -moveMouseStrength + (moveMouseStrength / 2).toFloat())
-        BlurUtils.blurArea(
-            0f,
-            0f,
-            width.toFloat(),
-            height.toFloat(),
-            5f
-        )
         RenderUtils.drawImage2(
             APIConnecter.callImage("nightx", "background"),
             width / 2F - 50F,

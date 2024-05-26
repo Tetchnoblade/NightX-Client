@@ -441,5 +441,5 @@ class Speed : Module() {
     private val worldCheck = BoolValue("WorldCheck", true)
 
     @JvmField
-    val noBob = BoolValue("NoBob", false)
+    val noBob = BoolValue("NoBob", true)
 }

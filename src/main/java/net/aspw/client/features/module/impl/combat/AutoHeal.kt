@@ -52,7 +52,8 @@ class AutoHeal : Module() {
     private var rotated = false
     private var potting = false
     private var potIndex = -1
-    private var oldSlot = -1
+    var oldSlot = -1
+    var equipTime = false
 
     private var throwTimer = MSTimer()
     private var resetTimer = MSTimer()
@@ -64,7 +65,7 @@ class AutoHeal : Module() {
     private val throwQueue = arrayListOf<Int>()
 
     val killAura = Launch.moduleManager.getModule(KillAura::class.java)
-    val killAuraRecode = Launch.moduleManager.getModule(KillAuraRecode::class.java)
+    private val killAuraRecode = Launch.moduleManager.getModule(KillAuraRecode::class.java)
     val scaffold = Launch.moduleManager.getModule(Scaffold::class.java)
     private val legitScaffold = Launch.moduleManager.getModule(LegitScaffold::class.java)
 
@@ -75,6 +76,7 @@ class AutoHeal : Module() {
 
     private fun resetAll() {
         potting = false
+        equipTime = false
         throwing = false
         isRotating = false
         rotated = false
@@ -167,6 +169,7 @@ class AutoHeal : Module() {
 
                 if (throwing && !mc.thePlayer.isEating && !mc.thePlayer.isInWater && MovementUtils.isRidingBlock() && mc.inGameHasFocus && Display.isActive() && mc.currentScreen !is GuiContainer && (!killAura?.state!! || killAura.target == null) && (!killAuraRecode?.state!! || !killAuraRecode.isTargeting) && !scaffold?.state!! && !legitScaffold?.state!!) {
                     if (mc.thePlayer.onGround) {
+                        equipTime = true
                         potting = false
                         RotationUtils.setTargetRotation(
                             Rotation(
@@ -276,6 +279,7 @@ class AutoHeal : Module() {
                         mc.thePlayer.inventory.currentItem = oldSlot
                         mc.playerController.updateController()
                         potting = false
+                        equipTime = false
                         throwing = false
                         tickTimer.reset()
                         debug("switch back")
@@ -303,6 +307,7 @@ class AutoHeal : Module() {
                         potIndex = -1
                         oldSlot = -1
                         throwing = false
+                        equipTime = false
                         throwTimer.reset()
                         isRotating = false
                         tickTimer.reset()
@@ -312,6 +317,7 @@ class AutoHeal : Module() {
                         mc.thePlayer.inventory.currentItem = oldSlot
                         mc.playerController.updateController()
                         potting = false
+                        equipTime = false
                         throwing = false
                         tickTimer.reset()
                         debug("failed to retrieve potion info, retrying...")
