@@ -9,6 +9,9 @@ Donate (Get Cape)
 Join Discord Server
 > https://discord.gg/SGBccUXFKZ
 
+Join Telegram
+> https://t.me/nightxclient
+
 Developer Youtube Channel
 > https://www.youtube.com/@Aspw001
 
