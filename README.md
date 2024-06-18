@@ -1,5 +1,7 @@
 # NightX Client
 
+# 140スターありがとう
+
 Website
 > https://aspw-w.github.io/NightX
 
