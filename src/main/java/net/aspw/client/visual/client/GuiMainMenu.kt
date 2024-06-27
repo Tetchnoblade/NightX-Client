@@ -8,6 +8,7 @@ import net.aspw.client.visual.client.altmanager.GuiAltManager
 import net.aspw.client.visual.font.smooth.FontLoaders
 import net.minecraft.client.gui.*
 import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11
 
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
@@ -127,7 +128,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         moveMouseEffect(mouseX, mouseY, moveMouseStrength - (moveMouseStrength / 2).toFloat())
         loadGif()
         RenderUtils.drawImage(
-            APIConnecter.callMainMenu(ticks),
+            ResourceLocation("client/mainmenu/$ticks.png"),
             -moveMouseStrength + (moveMouseStrength / 2),
             -moveMouseStrength + (moveMouseStrength / 2),
             width + moveMouseStrength,
@@ -253,7 +254,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
                 APIConnecter.checkBugs()
                 APIConnecter.checkStaffList()
                 APIConnecter.loadPictures()
-                APIConnecter.loadMainMenu()
                 APIConnecter.loadDonors()
             }
 
@@ -277,7 +277,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
         if (deltaTime >= interval) {
             ticks++
-            if (ticks > APIConnecter.maxTicks)
+            if (ticks > 20)
                 ticks = 0
             previousTime = currentTime
         }

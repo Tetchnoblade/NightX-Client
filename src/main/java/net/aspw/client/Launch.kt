@@ -23,7 +23,7 @@ object Launch {
     // Client information
     const val CLIENT_BEST = "NightX"
     const val CLIENT_FOLDER = "NightX-Client"
-    const val CLIENT_VERSION = "B129"
+    const val CLIENT_VERSION = "B130"
     const val CLIENT_CHAT = "§7[§5N§di§3g§bh§6t§aX§7] [§eInfo§7] §r"
 
     var isStarting = false
@@ -86,7 +86,6 @@ object Launch {
         APIConnecter.checkBugs()
         APIConnecter.checkStaffList()
         APIConnecter.loadPictures()
-        APIConnecter.loadMainMenu()
         APIConnecter.loadDonors()
 
         // Init Discord RPC

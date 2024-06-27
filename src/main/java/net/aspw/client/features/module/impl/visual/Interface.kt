@@ -10,7 +10,6 @@ import net.aspw.client.features.module.impl.combat.KillAuraRecode
 import net.aspw.client.features.module.impl.combat.TPAura
 import net.aspw.client.features.module.impl.player.LegitScaffold
 import net.aspw.client.features.module.impl.player.Scaffold
-import net.aspw.client.utils.APIConnecter
 import net.aspw.client.utils.AnimationUtils
 import net.aspw.client.utils.MovementUtils
 import net.aspw.client.utils.render.RenderUtils
@@ -56,6 +55,8 @@ class Interface : Module() {
     private val targetHudYPosValue = FloatValue("TargetHud-YPos", 0F, -300F, 300F) { targetHudValue.get() }
     private val cFontValue = BoolValue("C-Font", true)
     val csgoCrosshairValue = BoolValue("CSGO-Crosshair", true)
+    val scaffoldCounteValue = BoolValue("ScaffoldCounter", true)
+    val scaffoldHighlight = BoolValue("ScaffoldHighlight", true)
     private val motionVisualsValue = BoolValue("MotionVisuals", true)
     val itemVisualSpoofsValue = BoolValue("ItemVisualSpoof", true)
     val noAchievements = BoolValue("No-Achievements", true)
@@ -85,14 +86,13 @@ class Interface : Module() {
     fun onRender2D(event: Render2DEvent) {
         if (watermarkValue.get()) {
             val inputString = clientNameValue.get()
-            val connectChecks = if (!APIConnecter.canConnect) " - Disconnected" else ""
             var firstChar = ""
             var restOfString = ""
             if (inputString != "") {
                 firstChar = inputString[0].toString()
                 restOfString = inputString.substring(1)
             }
-            val showName = "$firstChar§r§f$restOfString$connectChecks"
+            val showName = "$firstChar§r§f$restOfString"
             if (cFontValue.get())
                 FontLoaders.SF20.drawStringWithShadow(showName, 2.0, 3.0, RenderUtils.skyRainbow(0, 0.5f, 1f).rgb)
             else Fonts.minecraftFont.drawStringWithShadow(showName, 2.0f, 3.0f, RenderUtils.skyRainbow(0, 0.5f, 1f).rgb)

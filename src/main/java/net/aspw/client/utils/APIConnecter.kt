@@ -29,8 +29,6 @@ object APIConnecter {
     var mushstafflist = ""
     var hypixelstafflist = ""
 
-    var maxTicks = 0
-    private var mainmenu = mutableListOf<Pair<Int, ResourceLocation>>()
     private var pictures = mutableListOf<Triple<String, String, ResourceLocation>>()
     private var donorCapeLocations = mutableListOf<Pair<String, ResourceLocation>>()
 
@@ -51,14 +49,6 @@ object APIConnecter {
         for ((i, l, s) in pictures) {
             if (i == image && l == location)
                 return s
-        }
-        return ResourceLocation("client/temp.png")
-    }
-
-    fun callMainMenu(image: Int): ResourceLocation {
-        for ((i, l) in mainmenu) {
-            if (i == image)
-                return l
         }
         return ResourceLocation("client/temp.png")
     }
@@ -101,30 +91,6 @@ object APIConnecter {
         } catch (e: Exception) {
             canConnect = false
             ClientUtils.getLogger().info("Failed to load Pictures")
-        }
-    }
-
-    fun loadMainMenu() {
-        try {
-            if (mainmenu.isNotEmpty())
-                mainmenu.clear()
-            for ((counter, i) in (0..Int.MAX_VALUE).withIndex()) {
-                tlsAuthConnectionFixes()
-                val gotImage: BufferedImage =
-                    ImageIO.read(URL(URLComponent.PICTURES + "background/mainmenu/" + counter + ".png"))
-                mainmenu.add(
-                    Pair(
-                        i,
-                        MinecraftInstance.mc.textureManager.getDynamicTextureLocation(
-                            Launch.CLIENT_FOLDER,
-                            DynamicTexture(gotImage)
-                        )
-                    )
-                )
-                ClientUtils.getLogger().info("Load MainMenu $counter")
-                maxTicks = counter
-            }
-        } catch (_: Exception) {
         }
     }
 

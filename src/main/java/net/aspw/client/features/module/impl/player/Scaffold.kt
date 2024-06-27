@@ -6,6 +6,7 @@ import net.aspw.client.features.module.Module
 import net.aspw.client.features.module.ModuleCategory
 import net.aspw.client.features.module.ModuleInfo
 import net.aspw.client.features.module.impl.movement.Speed
+import net.aspw.client.features.module.impl.visual.Interface
 import net.aspw.client.features.module.impl.visual.SilentRotations
 import net.aspw.client.utils.*
 import net.aspw.client.utils.block.BlockUtils
@@ -785,11 +786,12 @@ class Scaffold : Module() {
 
     @EventTarget
     fun onRender3D(event: Render3DEvent) {
-        RenderUtils.drawBlockBox(
-            BlockPos(mc.thePlayer.posX, launchY.toDouble() - 1, mc.thePlayer.posZ),
-            Color(255, 255, 255, 40),
-            false
-        )
+        if (Launch.moduleManager.getModule(Interface::class.java)?.state!! && Launch.moduleManager.getModule(Interface::class.java)?.scaffoldHighlight?.get()!!)
+            RenderUtils.drawBlockBox(
+                BlockPos(mc.thePlayer.posX, launchY.toDouble() - 1, mc.thePlayer.posZ),
+                Color(255, 255, 255, 40),
+                false
+            )
     }
 
     @EventTarget
@@ -824,20 +826,22 @@ class Scaffold : Module() {
     fun onRender2D(event: Render2DEvent) {
         val scaledResolution = ScaledResolution(mc)
         val counter = "$blocksAmount Blocks"
-        RenderUtils.drawGradientRect(
-            scaledResolution.scaledWidth / 2 - 25,
-            scaledResolution.scaledHeight / 2 - 93,
-            ScaledResolution(mc).scaledWidth / 2 + 25,
-            ScaledResolution(mc).scaledHeight / 2 - 80,
-            Color(0, 0, 0, 100).rgb,
-            Color(0, 0, 0, 100).rgb
-        )
-        FontLoaders.SF20.drawCenteredStringWithShadow(
-            counter,
-            scaledResolution.scaledWidth / 2f,
-            scaledResolution.scaledHeight / 2f - 90f,
-            -0x1111111
-        )
+        if (Launch.moduleManager.getModule(Interface::class.java)?.state!! && Launch.moduleManager.getModule(Interface::class.java)?.scaffoldCounteValue?.get()!!) {
+            RenderUtils.drawGradientRect(
+                scaledResolution.scaledWidth / 2 - 25,
+                scaledResolution.scaledHeight / 2 - 93,
+                ScaledResolution(mc).scaledWidth / 2 + 25,
+                ScaledResolution(mc).scaledHeight / 2 - 80,
+                Color(0, 0, 0, 100).rgb,
+                Color(0, 0, 0, 100).rgb
+            )
+            FontLoaders.SF20.drawCenteredStringWithShadow(
+                counter,
+                scaledResolution.scaledWidth / 2f,
+                scaledResolution.scaledHeight / 2f - 90f,
+                -0x1111111
+            )
+        }
     }
 
     /**
