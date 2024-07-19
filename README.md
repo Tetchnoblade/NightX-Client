@@ -38,5 +38,5 @@ If NightX fails to launch or provides an error:
 # Configs
 Loading configs is done via the command `.config onlinelist` or `.config onlineload <config_name>`
 
-# Wants ViaVersion?
+# Want ViaVersion?
 Install my [ViaForgePlus](https://aspw-w.github.io/ViaForgePlus) Mod
