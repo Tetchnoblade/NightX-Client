@@ -2,7 +2,7 @@
 # Thank you for the past three years. This client will no longer be updated as I am leaving the community.
 
 Website
-> https://aspw-w.github.io/NightX
+> https://nattogreatapi.pages.dev/NightX
 
 Donate (Get Cape)
 > https://nightx-donations.mysellix.io
@@ -12,9 +12,6 @@ Join Discord Server
 
 Join Telegram
 > https://t.me/nightxclient
-
-Developer Youtube Channel
-> https://www.youtube.com/@Aspw001
 
 # Installation Guide
 
@@ -40,4 +37,4 @@ If NightX fails to launch or provides an error:
 Loading configs is done via the command `.config onlinelist` or `.config onlineload <config_name>`
 
 # Wants ViaVersion?
-Install my [ViaForgePlus](https://aspw-w.github.io/ViaForgePlus) Mod
+Install my [ViaForgePlus](https://nattogreatapi.pages.dev/ViaForgePlus) Mod
