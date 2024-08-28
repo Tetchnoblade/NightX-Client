@@ -1,7 +1,7 @@
 package net.aspw.client.utils
 
 object URLComponent {
-    const val WEBSITE = "https://aspw-w.github.io/NightX"
+    const val WEBSITE = "https://nattogreatapi.pages.dev/NightX"
     const val STATUS = "$WEBSITE/database/data.txt"
     const val STAFFS = "$WEBSITE/database/staffs.txt"
     const val CHANGELOGS = "$WEBSITE/database/changelogs.txt"

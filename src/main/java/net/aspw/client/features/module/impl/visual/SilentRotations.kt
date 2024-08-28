@@ -85,10 +85,6 @@ class SilentRotations : Module() {
             RotationUtils.enableLook()
 
         mc.thePlayer.rotationYaw = RotationUtils.targetRotation?.yaw!!
-        mc.thePlayer.prevRenderYawOffset = mc.thePlayer.prevRotationYaw
-        mc.thePlayer.prevRotationYawHead = mc.thePlayer.prevRotationYaw
-        mc.thePlayer.renderYawOffset = mc.thePlayer.rotationYaw
-        mc.thePlayer.rotationYawHead = mc.thePlayer.rotationYaw
         mc.thePlayer.rotationPitch = RotationUtils.targetRotation?.pitch!!
     }
 }
