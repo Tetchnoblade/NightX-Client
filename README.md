@@ -1,7 +1,7 @@
 # NightX Client
 # Thank you for the past three years. This client will no longer be updated.
-# Wait for new minecraft hacked client
-## (https://nattogreatapi.pages.dev/Mirage/)
+# Wait for the new minecraft hacked client releases
+## https://nattogreatapi.pages.dev/Mirage/
 
 Website
 > https://nattogreatapi.pages.dev/NightX
