@@ -1,7 +1,8 @@
 # NightX Client
 # Thank you for the past three years. This client will no longer be updated.
-# Wait for the new minecraft hacked client releases
-## https://nattogreatapi.pages.dev/Mirage/
+
+# NEW CLIENT GETTING RELEASED (25/01/19)
+## [Elite Client GitHub](https://github.com/Aspw-w/Elite-Client)
 
 Website
 > https://nattogreatapi.pages.dev/NightX
